@@ -7,9 +7,14 @@
     "@types/node": "12.6.2",
     "@types/react": "16.8.23",
     "@types/react-dom": "16.8.4",
+    "husky": "^3.0.0",
+    "lint-staged": "^9.2.0",
+    "prettier": "^1.18.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
+    "react-redux": "^7.1.0",
     "react-scripts": "3.0.1",
+    "redux": "^4.0.4",
     "typescript": "3.5.3"
   },
   "scripts": {
@@ -32,5 +37,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/react-redux": "^7.1.1"
   }
 }
