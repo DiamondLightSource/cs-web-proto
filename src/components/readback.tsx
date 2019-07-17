@@ -1,37 +1,17 @@
-import React, { useState } from 'react';
-import { store } from '../redux/store';
-import { CREATE_CONNECTION } from '../redux/actions';
-import {useDispatch, useSelector} from 'react-redux';
-
-let connected: boolean = false;
+import React  from 'react';
+import { useSelector } from 'react-redux';
+import { useSubscription } from '../hooks/useCs';
 
 
-function selector(state: any) {
-    return state.valueCache;
-}
-
-function useConnection(pvName: string) {
-    //const [stateValue, setLatestValue] = useState(0);
-    const dispatch = useDispatch();
-    const latestValue = useSelector(selector);
-    console.log(`useConnection ${latestValue}`);
-    console.log(latestValue);
-   if (!connected) {
-        dispatch({type: CREATE_CONNECTION, payload: {'url': 'wsurl', 'pvName': 'pv'}});
-        connected = true;
-   }
-    return latestValue[pvName];
-}
-
-export const Readback = (props: any) => (
-    <p>{ props.value }</p>
+export const Readback = (props: {pvName: string, value: any}) => (
+    <div>{ props.pvName }: { props.value }</div>
 );
 
-export const ConnectedReadback = (props: any) => {
-    const latestValue = useConnection(props.pv);
-    console.log(`latestValue ${latestValue}`);
+export const ConnectedReadback = (props: {pv: string}): any => {
+    useSubscription(props.pv);
+    const latestValue = useSelector((state: any) => state.valueCache[props.pv]);
     return (
-        <Readback value={latestValue} />
+        <Readback pvName={props.pv} value={latestValue} />
     )
 
 }
