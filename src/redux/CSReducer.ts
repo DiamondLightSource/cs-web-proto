@@ -1,29 +1,27 @@
 import { PV_CHANGED, ActionType, SUBSCRIBE } from "./actions";
 
 interface ValueCache {
-    [key: string]: any;
+  [key: string]: any;
 }
 
 interface StoreType {
-    valueCache: ValueCache;
+  valueCache: ValueCache;
 }
 
 const initialState: StoreType = {
-    valueCache: {}
-}
+  valueCache: {}
+};
 
 export function csReducer(state = initialState, action: ActionType) {
-
-    switch (action.type) {
-
-        case PV_CHANGED: {
-            const newValueCache: ValueCache = Object.assign({}, state.valueCache);
-            newValueCache[action.payload.pvName] = action.payload.value;
-            return Object.assign({}, state, {valueCache: newValueCache});
-        }
-        case SUBSCRIBE: {
-            console.log('create connection')
-        }
+  switch (action.type) {
+    case PV_CHANGED: {
+      const newValueCache: ValueCache = Object.assign({}, state.valueCache);
+      newValueCache[action.payload.pvName] = action.payload.value;
+      return Object.assign({}, state, { valueCache: newValueCache });
     }
-    return state;
+    case SUBSCRIBE: {
+      console.log("create connection");
+    }
+  }
+  return state;
 }

@@ -5,11 +5,8 @@
   "dependencies": {
     "@types/jest": "24.0.15",
     "@types/node": "12.6.2",
-    "@types/react": "16.8.23",
     "@types/react-dom": "16.8.4",
-    "husky": "^3.0.0",
     "lint-staged": "^9.2.0",
-    "prettier": "^1.18.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-redux": "^7.1.0",
@@ -24,7 +21,30 @@
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": [
+      "react-app",
+      "eslint:recommended",
+      "plugin:react/recommended",
+      "plugin:@typescript-eslint/recommended",
+      "prettier/@typescript-eslint",
+      "plugin:prettier/recommended"
+    ],
+    "plugins": ["react", "@typescript-eslint", "prettier"],
+    "env": {
+      "browser": true,
+      "jasmine": true,
+      "jest": true
+    },
+    "rules": {
+      "prettier/prettier": ["error", { "singleQuote": true }]
+    },
+    "settings": {
+      "react": {
+        "pragma": "React",
+        "version": "detect"
+        }
+    },
+    "parser": "@typescript-eslint/parser"
   },
   "browserslist": {
     "production": [
@@ -39,6 +59,13 @@
     ]
   },
   "devDependencies": {
-    "@types/react-redux": "^7.1.1"
+    "@types/react": "^16.8.23",
+    "@types/react-redux": "^7.1.1",
+    "@typescript-eslint/eslint-plugin": "^1.12.0",
+    "@typescript-eslint/parser": "^1.12.0",
+    "eslint-config-prettier": "^6.0.0",
+    "eslint-config-react": "^1.1.7",
+    "eslint-plugin-prettier": "^3.1.0",
+    "prettier": "^1.18.2"
   }
 }
