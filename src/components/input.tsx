@@ -4,16 +4,16 @@ import { store } from "../redux/store";
 
 interface InputProps {
   value: any;
-  keyDown: (event: React.KeyboardEvent<HTMLInputElement>) => void;
-  change: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onKeyDown: (event: React.KeyboardEvent<HTMLInputElement>) => void;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export const Input = (props: InputProps) => (
   <input
     type="text"
     value={props.value}
-    onKeyDown={props.keyDown}
-    onChange={props.change}
+    onKeyDown={props.onKeyDown}
+    onChange={props.onChange}
   />
 );
 
@@ -26,8 +26,6 @@ export const ConnectedInput = (props: ConnectedInputProps) => {
 
   function onKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
     const target = event.target as HTMLInputElement;
-    console.log(`target value is ${target.value}`);
-    setInputValue(inputValue + event.key);
     if (event.key === "Enter") {
       store.dispatch({
         type: WRITE_PV,
@@ -37,8 +35,9 @@ export const ConnectedInput = (props: ConnectedInputProps) => {
     }
   }
   function onChange(event: React.ChangeEvent<HTMLInputElement>) {
-    console.log("changed");
+    const target = event.target as HTMLInputElement;
+    setInputValue(target.value);
   }
 
-  return Input({ value: inputValue, keyDown: onKeyDown, change: onChange });
+  return Input({ value: inputValue, onKeyDown: onKeyDown, onChange: onChange });
 };
