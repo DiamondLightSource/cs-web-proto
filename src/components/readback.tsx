@@ -8,8 +8,10 @@ export const Readback = (props: { pvName: string; value: any }) => (
   </div>
 );
 
-export const ConnectedReadback = (props: { pv: string }): any => {
-  useSubscription(props.pv);
-  const latestValue = useSelector((state: any) => state.valueCache[props.pv]);
-  return <Readback pvName={props.pv} value={latestValue} />;
+export const ConnectedReadback = (props: { pvName: string }): any => {
+  useSubscription(props.pvName);
+  const latestValue = useSelector(
+    (state: any) => state.valueCache[props.pvName]
+  );
+  return <Readback pvName={props.pvName} value={latestValue} />;
 };

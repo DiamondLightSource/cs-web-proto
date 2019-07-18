@@ -11,9 +11,9 @@ const App: React.FC = () => {
   return (
     <Provider store={store}>
       <div className="App">
-        <ConnectedReadback pv={pv + "1"} />
-        <ConnectedReadback pv={pv + "2"} />
-        <ConnectedReadback pv={"sim://sine"} />
+        <ConnectedReadback pvName={pv + "1"} />
+        <ConnectedReadback pvName={pv + "2"} />
+        <ConnectedReadback pvName={"sim://sine"} />
         <ConnectedInput pvName={"loc://pv1"} />
       </div>
     </Provider>
