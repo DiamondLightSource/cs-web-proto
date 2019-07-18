@@ -14,6 +14,11 @@ export class SimulatorPlugin {
     this.onUpdate = onUpdate;
     this.subscribe = this.subscribe.bind(this);
     this.putPv = this.putPv.bind(this);
+    /* Set up the sine PV. */
+    setInterval(
+      () => this.onUpdate("sim://sine", this.getValue("sim://sine")),
+      2000
+    );
   }
 
   subscribe(pvName: string): void {
@@ -21,8 +26,6 @@ export class SimulatorPlugin {
     if (pvName.startsWith("loc://")) {
       this.localPvs[pvName] = 0;
       this.onUpdate(pvName, 0);
-    } else if (pvName === "sim://sine") {
-      setInterval(() => this.onUpdate(pvName, this.getValue(pvName)), 500);
     }
   }
 

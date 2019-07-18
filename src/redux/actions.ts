@@ -1,6 +1,6 @@
 export const SUBSCRIBE: string = "subscribe";
 export const UNSUBSCRIBE: string = "unsubscribe";
-export const PV_CHANGED: string = "pv_update";
+export const PV_CHANGED: string = "pv_changed";
 export const WRITE_PV: string = "write_pv";
 
 export interface Action {
