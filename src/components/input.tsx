@@ -27,11 +27,18 @@ interface ConnectedInputProps {
 
 export const ConnectedInput = (props: ConnectedInputProps) => {
   const [inputValue, setInputValue] = useState("");
+  const [editing, setEditing] = useState(false);
   useSubscription(props.pvName);
-  const latestValue = useSelector(
-    (state: any) => state.valueCache[props.pvName]
-  );
-
+  /* It would be nice to be able to share a selector, but it's
+     not immediately obvious how to make a selector that takes
+     an argument other than state. */
+  const latestValue = useSelector((state: any) => {
+    let value = state.valueCache[props.pvName];
+    if (value == null) {
+      value = "";
+    }
+    return value;
+  });
   function onKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
     if (event.key === "Enter") {
       writePv(props.pvName, event.currentTarget.value);
@@ -43,10 +50,18 @@ export const ConnectedInput = (props: ConnectedInputProps) => {
   }
   function onClick(event: any) {
     /* When focus gained allow editing. */
-    setInputValue("");
+    if (!editing) {
+      setInputValue("");
+      setEditing(true);
+    }
   }
   function onBlur(event: any) {
+    setEditing(false);
     /* When focus lost show PV value. */
+    setInputValue(latestValue);
+  }
+
+  if (!editing && inputValue !== latestValue) {
     setInputValue(latestValue);
   }
 

@@ -15,6 +15,7 @@ const App: React.FC = () => {
         <ConnectedReadback pvName={pv + "2"} />
         <ConnectedReadback pvName={"sim://sine"} />
         <ConnectedInput pvName={"loc://pv1"} />
+        <ConnectedInput pvName={"sim://sine"} />
       </div>
     </Provider>
   );

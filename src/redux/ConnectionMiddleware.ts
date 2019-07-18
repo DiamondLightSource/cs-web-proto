@@ -1,11 +1,14 @@
 import { SimulatorPlugin } from "../connection/plugin";
-import { SUBSCRIBE, WRITE_PV } from "./actions";
+import { SUBSCRIBE, WRITE_PV, PV_CHANGED } from "./actions";
 import { store } from "./store";
 
 let connection: SimulatorPlugin | null = null;
 
-function writePv(pvName: string, value: any): void {
-  store.dispatch({ type: WRITE_PV, payload: { pvName: pvName, value: value } });
+function pvChanged(pvName: string, value: any): void {
+  store.dispatch({
+    type: PV_CHANGED,
+    payload: { pvName: pvName, value: value }
+  });
 }
 
 /* Cheating with the types here. */
@@ -15,18 +18,17 @@ export const connectionMiddleware = (store: any) => (next: any) => (
   switch (action.type) {
     case SUBSCRIBE: {
       if (connection === null) {
-        connection = new SimulatorPlugin(action.payload.url, writePv);
+        connection = new SimulatorPlugin(action.payload.url, pvChanged);
       }
       connection.subscribe(action.payload.pvName);
+      break;
     }
-  }
-
-  switch (action.type) {
     case WRITE_PV: {
       if (connection === null) {
-        connection = new SimulatorPlugin(action.payload.url, writePv);
+        connection = new SimulatorPlugin(action.payload.url, pvChanged);
       }
       connection.putPv(action.payload.pvName, action.payload.value);
+      break;
     }
   }
   return next(action);

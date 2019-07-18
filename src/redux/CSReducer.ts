@@ -1,4 +1,4 @@
-import { PV_CHANGED, ActionType, SUBSCRIBE } from "./actions";
+import { PV_CHANGED, ActionType, SUBSCRIBE, WRITE_PV } from "./actions";
 
 interface ValueCache {
   [key: string]: any;
@@ -20,7 +20,12 @@ export function csReducer(state = initialState, action: ActionType) {
       return Object.assign({}, state, { valueCache: newValueCache });
     }
     case SUBSCRIBE: {
-      console.log("create connection");
+      // Handled by middleware.
+      break;
+    }
+    case WRITE_PV: {
+      // Handled by middleware.
+      break;
     }
   }
   return state;
