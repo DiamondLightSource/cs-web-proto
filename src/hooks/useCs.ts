@@ -1,5 +1,6 @@
 import { useEffect } from "react";
-import { SUBSCRIBE, UNSUBSCRIBE } from "../redux/actions";
+import { store } from "../redux/store";
+import { SUBSCRIBE, UNSUBSCRIBE, WRITE_PV } from "../redux/actions";
 import { useDispatch } from "react-redux";
 
 export function useSubscription(pvName: string): void {
@@ -10,4 +11,11 @@ export function useSubscription(pvName: string): void {
       dispatch({ type: UNSUBSCRIBE, payload: { url: "wsurl" } });
     };
   }, [dispatch, pvName]);
+}
+
+export function writePv(pvName: string, value: any): void {
+  store.dispatch({
+    type: WRITE_PV,
+    payload: { pvName: pvName, value: value }
+  });
 }

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { WRITE_PV } from "../redux/actions";
-import { store } from "../redux/store";
+import { writePv } from "../hooks/useCs";
 
 interface InputProps {
   value: any;
@@ -27,10 +26,7 @@ export const ConnectedInput = (props: ConnectedInputProps) => {
   function onKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
     const target = event.target as HTMLInputElement;
     if (event.key === "Enter") {
-      store.dispatch({
-        type: WRITE_PV,
-        payload: { pvName: props.pvName, value: target.value }
-      });
+      writePv(props.pvName, target.value);
       setInputValue("");
     }
   }
