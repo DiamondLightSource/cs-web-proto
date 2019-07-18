@@ -26,9 +26,10 @@ export class SimulatorPlugin {
     }
   }
 
-  putPv(pvName: string, value: any) {
+  putPv(pvName: string, value: any): void {
     if (pvName.startsWith("loc://")) {
       this.localPvs[pvName] = value;
+      this.onUpdate(pvName, value);
     }
   }
 
