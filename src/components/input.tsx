@@ -1,19 +1,20 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { useSubscription, writePv } from "../hooks/useCs";
+import { NType } from "../cs";
 
-interface InputProps {
-  value: any;
+export interface InputProps {
+  value: NType;
   onKeyDown: (event: React.KeyboardEvent<HTMLInputElement>) => void;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onBlur: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onClick: (event: React.MouseEvent<HTMLInputElement>) => void;
 }
 
-export const Input = (props: InputProps) => (
+export const Input: React.FC<InputProps> = (props: InputProps): JSX.Element => (
   <input
     type="text"
-    value={props.value}
+    value={props.value.value}
     onKeyDown={props.onKeyDown}
     onChange={props.onChange}
     onBlur={props.onBlur}
@@ -25,7 +26,9 @@ interface ConnectedInputProps {
   pvName: string;
 }
 
-export const ConnectedInput = (props: ConnectedInputProps) => {
+export const ConnectedInput: React.FC<ConnectedInputProps> = (
+  props: ConnectedInputProps
+): JSX.Element => {
   const [inputValue, setInputValue] = useState("");
   const [editing, setEditing] = useState(false);
   useSubscription(props.pvName);

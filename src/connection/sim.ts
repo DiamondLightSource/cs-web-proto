@@ -4,7 +4,7 @@ export class SimulatorPlugin {
   localPvs: any;
   onUpdate: (pvName: string, value: any) => void;
 
-  constructor(
+  public constructor(
     websocketUrl: string,
     onUpdate: (pvName: string, value: any) => void
   ) {
@@ -21,7 +21,7 @@ export class SimulatorPlugin {
     );
   }
 
-  subscribe(pvName: string): void {
+  public subscribe(pvName: string): void {
     console.log(`creating connection to ${pvName}`);
     if (pvName.startsWith("loc://")) {
       this.localPvs[pvName] = 0;
@@ -29,14 +29,14 @@ export class SimulatorPlugin {
     }
   }
 
-  putPv(pvName: string, value: any): void {
+  public putPv(pvName: string, value: any): void {
     if (pvName.startsWith("loc://")) {
       this.localPvs[pvName] = value;
       this.onUpdate(pvName, value);
     }
   }
 
-  getValue(pvName: string): any {
+  public getValue(pvName: string): any {
     if (pvName.startsWith("loc://")) {
       return this.localPvs[pvName];
     } else if (pvName === "sim://sine") {

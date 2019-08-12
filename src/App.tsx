@@ -7,7 +7,7 @@ import { ConnectedInput } from "./components/input";
 
 const pv = "loc://pv";
 
-const App: React.FC = () => {
+const App: React.FC = (): any => {
   return (
     <Provider store={store}>
       <div className="App">
