@@ -61,7 +61,7 @@ export class ConiqlPlugin {
     this.callback = callback;
   }
 
-  public subscribe1(pvName1: string): void {
+  public subscribe(pvName1: string): void {
     this.client
       .subscribe({
         query: PV_SUBSCRIPTION,
@@ -70,7 +70,7 @@ export class ConiqlPlugin {
       .subscribe({
         next: data => {
           console.log("data", data);
-          this.callback(pvName1, data.data);
+          this.callback(pvName1, data.data.subscribeFloatScalar);
         },
         error: err => {
           console.error("err", err);
