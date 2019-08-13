@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { useSubscription, writePv } from "../hooks/useCs";
-import { NType } from "../cs";
 
 export interface InputProps {
-  value: NType;
+  value: string;
   onKeyDown: (event: React.KeyboardEvent<HTMLInputElement>) => void;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onBlur: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -14,7 +13,7 @@ export interface InputProps {
 export const Input: React.FC<InputProps> = (props: InputProps): JSX.Element => (
   <input
     type="text"
-    value={props.value.value}
+    value={props.value}
     onKeyDown={props.onKeyDown}
     onChange={props.onChange}
     onBlur={props.onBlur}
@@ -35,30 +34,33 @@ export const ConnectedInput: React.FC<ConnectedInputProps> = (
   /* It would be nice to be able to share a selector, but it's
      not immediately obvious how to make a selector that takes
      an argument other than state. */
-  const latestValue = useSelector((state: any) => {
-    let value = state.valueCache[props.pvName];
+  const latestValue: string = useSelector((store: any): string => {
+    let value = store.valueCache[props.pvName];
     if (value == null) {
       value = "";
     }
     return value;
   });
-  function onKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
+  function onKeyDown(event: React.KeyboardEvent<HTMLInputElement>): void {
     if (event.key === "Enter") {
-      writePv(props.pvName, event.currentTarget.value);
+      writePv(props.pvName, {
+        type: "NTScalar",
+        value: event.currentTarget.value
+      });
       setInputValue("");
     }
   }
-  function onChange(event: React.ChangeEvent<HTMLInputElement>) {
+  function onChange(event: React.ChangeEvent<HTMLInputElement>): void {
     setInputValue(event.currentTarget.value);
   }
-  function onClick(event: any) {
+  function onClick(event: React.MouseEvent<HTMLInputElement>): void {
     /* When focus gained allow editing. */
     if (!editing) {
       setInputValue("");
       setEditing(true);
     }
   }
-  function onBlur(event: any) {
+  function onBlur(event: React.ChangeEvent<HTMLInputElement>): void {
     setEditing(false);
     /* When focus lost show PV value. */
     setInputValue(latestValue);
@@ -68,11 +70,13 @@ export const ConnectedInput: React.FC<ConnectedInputProps> = (
     setInputValue(latestValue);
   }
 
-  return Input({
-    value: inputValue,
-    onKeyDown: onKeyDown,
-    onChange: onChange,
-    onBlur: onBlur,
-    onClick: onClick
-  });
+  return (
+    <Input
+      value={inputValue}
+      onKeyDown={onKeyDown}
+      onChange={onChange}
+      onBlur={onBlur}
+      onClick={onClick}
+    />
+  );
 };

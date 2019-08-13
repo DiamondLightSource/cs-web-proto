@@ -6,6 +6,7 @@ import { getMainDefinition } from "apollo-utilities";
 import gql from "graphql-tag";
 import { InMemoryCache, NormalizedCacheObject } from "apollo-cache-inmemory";
 import { NType } from "../cs";
+import { ConnectionPlugin } from "./plugin";
 
 const httpUri = "htop://localhost:8000/graphql";
 const wsUri = "ws://localhost:8000/subscriptions";
@@ -31,23 +32,14 @@ const link: ApolloLink = ApolloLink.split(
 const cache = new InMemoryCache(window.__APOLLO_STATE);
 
 const PV_SUBSCRIPTION = gql`
-  subscription sub {
-    subscribeFloatScalar(channel: "TMC43-TS-IOC-01:AI") {
-      value
-    }
-  }
-`;
-/*
-const PV_SUBSCRIPTION1 = gql`
-  subscription($pvName: String!) {
+  subscription sub1($pvName: String!) {
     subscribeFloatScalar(channel: $pvName) {
       value
     }
   }
 `;
-*/
 
-export class ConiqlPlugin {
+export class ConiqlPlugin implements ConnectionPlugin {
   private url: string;
   private client: ApolloClient<NormalizedCacheObject>;
   private callback: (pvName: string, data: NType) => void;

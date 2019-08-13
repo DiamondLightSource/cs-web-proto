@@ -1,8 +1,11 @@
-export class SimulatorPlugin {
-  url: string;
-  value: number;
-  localPvs: any;
-  onUpdate: (pvName: string, value: any) => void;
+import { ConnectionPlugin } from "./plugin";
+import { NType } from "../cs";
+
+export class SimulatorPlugin implements ConnectionPlugin {
+  private url: string;
+  private value: number;
+  private localPvs: any;
+  private onUpdate: (pvName: string, value: any) => void;
 
   public constructor(
     websocketUrl: string,
@@ -29,22 +32,25 @@ export class SimulatorPlugin {
     }
   }
 
-  public putPv(pvName: string, value: any): void {
+  public putPv(pvName: string, value: NType): void {
     if (pvName.startsWith("loc://")) {
       this.localPvs[pvName] = value;
       this.onUpdate(pvName, value);
     }
   }
 
-  public getValue(pvName: string): any {
+  public getValue(pvName: string): NType {
     if (pvName.startsWith("loc://")) {
       return this.localPvs[pvName];
     } else if (pvName === "sim://sine") {
-      return Math.sin(
+      const val = Math.sin(
         new Date().getSeconds() + new Date().getMilliseconds() * 0.001
       );
+      return { type: "NTScalarDouble", value: val };
     } else if (pvName === "sim://random") {
-      return Math.random();
+      return { type: "NTScalarDouble", value: Math.random() };
+    } else {
+      return { type: "NTScalarDouble", value: 0 };
     }
   }
 }

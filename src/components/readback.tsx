@@ -21,8 +21,8 @@ export const Readback = (props: {
 export const ConnectedReadback = (props: { pvName: string }): JSX.Element => {
   useSubscription(props.pvName);
   const latestValue = useSelector(
-    (state: any): NType => {
-      return state.valueCache[props.pvName];
+    (store: any): NType => {
+      return store.valueCache[props.pvName];
     }
   );
   return <Readback pvName={props.pvName} value={latestValue} />;
