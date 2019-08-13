@@ -29,7 +29,7 @@ const link: ApolloLink = ApolloLink.split(
   new HttpLink({ uri: httpUri })
 );
 
-const cache = new InMemoryCache(window.__APOLLO_STATE);
+const cache = new InMemoryCache();
 
 const PV_SUBSCRIPTION = gql`
   subscription sub1($pvName: String!) {
@@ -68,5 +68,13 @@ export class ConiqlPlugin implements ConnectionPlugin {
           console.error("err", err);
         }
       });
+  }
+
+  public putPv(pvName: string, value: NType): void {
+    // noop
+  }
+
+  public getValue(pvName: string): NType {
+    return { type: "NTScalarDouble", value: "" };
   }
 }

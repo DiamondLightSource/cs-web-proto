@@ -1,10 +1,10 @@
-import { SimulatorPlugin } from "../connection/sim";
+import { ConnectionPlugin } from "../connection/plugin";
+import { ConiqlPlugin } from "../connection/coniql";
 import { SUBSCRIBE, WRITE_PV, PV_CHANGED } from "./actions";
 import { store } from "./store";
-import { ConiqlPlugin } from "../connection/coniql";
 import { NType } from "../cs";
 
-let connection: SimulatorPlugin | ConiqlPlugin | null = null;
+let connection: ConnectionPlugin | null = null;
 
 function pvChanged(pvName: string, value: NType): void {
   console.log(`pv changed ${pvName}`);
