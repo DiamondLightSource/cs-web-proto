@@ -1,18 +1,19 @@
 import { PV_CHANGED, ActionType, SUBSCRIBE, WRITE_PV } from "./actions";
+import { NType } from "../cs";
 
 interface ValueCache {
-  [key: string]: any;
+  [key: string]: NType;
 }
 
-interface StoreType {
+export interface CsStore {
   valueCache: ValueCache;
 }
 
-const initialState: StoreType = {
+const initialState: CsStore = {
   valueCache: {}
 };
 
-export function csReducer(state = initialState, action: ActionType) {
+export function csReducer(state = initialState, action: ActionType): CsStore {
   switch (action.type) {
     case PV_CHANGED: {
       const newValueCache: ValueCache = Object.assign({}, state.valueCache);

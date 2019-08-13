@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { useSubscription, writePv } from "../hooks/useCs";
+import { CsStore } from "../redux/csReducer";
 
 export interface InputProps {
   value: string;
@@ -34,12 +35,13 @@ export const ConnectedInput: React.FC<ConnectedInputProps> = (
   /* It would be nice to be able to share a selector, but it's
      not immediately obvious how to make a selector that takes
      an argument other than state. */
-  const latestValue: string = useSelector((store: any): string => {
+  const latestValue: string = useSelector((store: CsStore): string => {
     let value = store.valueCache[props.pvName];
     if (value == null) {
-      value = "";
+      return "";
+    } else {
+      return value.value.toString();
     }
-    return value;
   });
   function onKeyDown(event: React.KeyboardEvent<HTMLInputElement>): void {
     if (event.key === "Enter") {

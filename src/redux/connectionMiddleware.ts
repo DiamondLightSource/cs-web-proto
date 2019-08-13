@@ -7,7 +7,6 @@ import { NType } from "../cs";
 let connection: ConnectionPlugin | null = null;
 
 function pvChanged(pvName: string, value: NType): void {
-  console.log(`pv changed ${pvName}`);
   store.dispatch({
     type: PV_CHANGED,
     payload: { pvName: pvName, value: value }
@@ -15,15 +14,14 @@ function pvChanged(pvName: string, value: NType): void {
 }
 
 /* Cheating with the types here. */
-export const connectionMiddleware = (store: any) => (next: any) => (
+export const connectionMiddleware = (store: any) => (next: any): any => (
   action: any
-) => {
+): any => {
   switch (action.type) {
     case SUBSCRIBE: {
       if (connection === null) {
         connection = new ConiqlPlugin(action.payload.url, pvChanged);
       }
-      console.log(`subscribing to ${action.payload.pvName}`);
       connection.subscribe(action.payload.pvName);
       break;
     }
