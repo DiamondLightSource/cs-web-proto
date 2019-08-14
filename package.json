@@ -12,7 +12,7 @@
     "react-redux": "^7.1.0",
     "react-scripts": "3.0.1",
     "redux": "^4.0.4",
-    "typescript": "3.5.3"
+    "typescript": "^3.5.3"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -29,20 +29,29 @@
       "prettier/@typescript-eslint",
       "plugin:prettier/recommended"
     ],
-    "plugins": ["react", "@typescript-eslint", "prettier"],
+    "plugins": [
+      "react",
+      "@typescript-eslint",
+      "prettier"
+    ],
     "env": {
       "browser": true,
       "jasmine": true,
       "jest": true
     },
     "rules": {
-      "prettier/prettier": ["error", { "singleQuote": true }]
+      "prettier/prettier": [
+        "error",
+        {
+          "singleQuote": true
+        }
+      ]
     },
     "settings": {
       "react": {
         "pragma": "React",
         "version": "detect"
-        }
+      }
     },
     "parser": "@typescript-eslint/parser"
   },
