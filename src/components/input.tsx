@@ -1,16 +1,17 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { useSubscription, writePv } from "../hooks/useCs";
+import { CsStore } from "../redux/csReducer";
 
-interface InputProps {
-  value: any;
+export interface InputProps {
+  value: string;
   onKeyDown: (event: React.KeyboardEvent<HTMLInputElement>) => void;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onBlur: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onClick: (event: React.MouseEvent<HTMLInputElement>) => void;
 }
 
-export const Input = (props: InputProps) => (
+export const Input: React.FC<InputProps> = (props: InputProps): JSX.Element => (
   <input
     type="text"
     value={props.value}
@@ -25,37 +26,43 @@ interface ConnectedInputProps {
   pvName: string;
 }
 
-export const ConnectedInput = (props: ConnectedInputProps) => {
+export const ConnectedInput: React.FC<ConnectedInputProps> = (
+  props: ConnectedInputProps
+): JSX.Element => {
   const [inputValue, setInputValue] = useState("");
   const [editing, setEditing] = useState(false);
   useSubscription(props.pvName);
   /* It would be nice to be able to share a selector, but it's
      not immediately obvious how to make a selector that takes
      an argument other than state. */
-  const latestValue = useSelector((state: any) => {
-    let value = state.valueCache[props.pvName];
+  const latestValue: string = useSelector((store: CsStore): string => {
+    let value = store.valueCache[props.pvName];
     if (value == null) {
-      value = "";
+      return "";
+    } else {
+      return value.value.toString();
     }
-    return value;
   });
-  function onKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
+  function onKeyDown(event: React.KeyboardEvent<HTMLInputElement>): void {
     if (event.key === "Enter") {
-      writePv(props.pvName, event.currentTarget.value);
+      writePv(props.pvName, {
+        type: "NTScalar",
+        value: event.currentTarget.value
+      });
       setInputValue("");
     }
   }
-  function onChange(event: React.ChangeEvent<HTMLInputElement>) {
+  function onChange(event: React.ChangeEvent<HTMLInputElement>): void {
     setInputValue(event.currentTarget.value);
   }
-  function onClick(event: any) {
+  function onClick(event: React.MouseEvent<HTMLInputElement>): void {
     /* When focus gained allow editing. */
     if (!editing) {
       setInputValue("");
       setEditing(true);
     }
   }
-  function onBlur(event: any) {
+  function onBlur(event: React.ChangeEvent<HTMLInputElement>): void {
     setEditing(false);
     /* When focus lost show PV value. */
     setInputValue(latestValue);
@@ -65,11 +72,13 @@ export const ConnectedInput = (props: ConnectedInputProps) => {
     setInputValue(latestValue);
   }
 
-  return Input({
-    value: inputValue,
-    onKeyDown: onKeyDown,
-    onChange: onChange,
-    onBlur: onBlur,
-    onClick: onClick
-  });
+  return (
+    <Input
+      value={inputValue}
+      onKeyDown={onKeyDown}
+      onChange={onChange}
+      onBlur={onBlur}
+      onClick={onClick}
+    />
+  );
 };

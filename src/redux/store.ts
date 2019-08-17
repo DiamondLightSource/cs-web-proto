@@ -1,7 +1,7 @@
 import { createStore, applyMiddleware } from "redux";
 
-import { csReducer } from "./CSReducer";
-import { connectionMiddleware } from "./ConnectionMiddleware";
+import { csReducer } from "./csReducer";
+import { connectionMiddleware } from "./connectionMiddleware";
 
 const middleware = applyMiddleware(connectionMiddleware);
 
