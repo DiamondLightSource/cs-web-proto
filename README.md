@@ -1,3 +1,17 @@
+## Setup
+
+Move into the directory and install the packages to node:
+
+`npm install`
+
+It may also be necessary to install typescript, as it is used by this application:
+
+`npm install typescript`
+
+Now run the server:
+
+`npm start`
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts

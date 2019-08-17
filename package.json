@@ -24,7 +24,7 @@
     "react-scripts": "3.0.1",
     "redux": "^4.0.4",
     "subscriptions-transport-ws": "^0.9.16",
-    "typescript": "3.5.3"
+    "typescript": "^3.5.3"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -51,7 +51,14 @@
       "jasmine": true,
       "jest": true
     },
-    "rules": {},
+    "rules": {
+      "prettier/prettier": [
+        "error",
+        {
+          "singleQuote": true
+        }
+      ]
+    },
     "settings": {
       "react": {
         "pragma": "React",
