@@ -1,6 +1,6 @@
 import { ConnectionPlugin } from "./plugin";
 import { NType } from "../cs";
-import { ValueCache } from "../redux/store";
+import { ValueCache } from "../redux/csReducer";
 
 export class SimulatorPlugin implements ConnectionPlugin {
   private url: string;

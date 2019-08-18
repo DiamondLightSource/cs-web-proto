@@ -1,9 +1,18 @@
 import { PV_CHANGED, ActionType, SUBSCRIBE, WRITE_PV } from "./actions";
-import { ValueCache, CsState } from "./store";
+import { ValueCache, CsState } from "./csReducer";
+import { NType } from "../cs";
 
 const initialState: CsState = {
   valueCache: {}
 };
+
+export interface ValueCache {
+  [key: string]: NType;
+}
+
+export interface CsState {
+  valueCache: ValueCache;
+}
 
 export function csReducer(state = initialState, action: ActionType): CsState {
   switch (action.type) {

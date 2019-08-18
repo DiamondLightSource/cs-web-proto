@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { useSubscription } from "../hooks/useCs";
-import { CsState } from "../redux/store";
+import { CsState } from "../redux/csReducer";
 
 export const Readback = (props: {
   pvName: string;

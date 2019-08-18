@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { useSubscription, writePv } from "../hooks/useCs";
-import { CsState } from "../redux/store";
+import { CsState } from "../redux/csReducer";
 
 export interface InputProps {
   value: string;
