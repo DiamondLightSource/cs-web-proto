@@ -1,13 +1,13 @@
 import { ConnectionPlugin } from "../connection/plugin";
 import { ConiqlPlugin } from "../connection/coniql";
 import { SUBSCRIBE, WRITE_PV, PV_CHANGED } from "./actions";
-import { store } from "./store";
+import { getStore } from "./store";
 import { NType } from "../cs";
 
 let connection: ConnectionPlugin | null = null;
 
 function pvChanged(pvName: string, value: NType): void {
-  store.dispatch({
+  getStore().dispatch({
     type: PV_CHANGED,
     payload: { pvName: pvName, value: value }
   });
