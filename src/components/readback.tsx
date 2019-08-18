@@ -1,7 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { useSubscription } from "../hooks/useCs";
-import { NType } from "../cs";
 import { CsState } from "../redux/store";
 
 export const Readback = (props: {
