@@ -1,10 +1,11 @@
 import { ConnectionPlugin } from "./plugin";
 import { NType } from "../cs";
+import { ValueCache } from "../redux/store";
 
 export class SimulatorPlugin implements ConnectionPlugin {
   private url: string;
   private value: number;
-  private localPvs: any;
+  private localPvs: ValueCache;
   private onUpdate: (pvName: string, value: any) => void;
 
   public constructor(
@@ -27,8 +28,8 @@ export class SimulatorPlugin implements ConnectionPlugin {
   public subscribe(pvName: string): void {
     console.log(`creating connection to ${pvName}`);
     if (pvName.startsWith("loc://")) {
-      this.localPvs[pvName] = 0;
-      this.onUpdate(pvName, 0);
+      this.localPvs[pvName] = { type: "NTScalarDouble", value: 0 };
+      this.onUpdate(pvName, { type: "NTScalarDouble", value: 0 });
     }
   }
 
