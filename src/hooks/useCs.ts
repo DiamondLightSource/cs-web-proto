@@ -6,10 +6,10 @@ import { NType } from "../cs";
 
 export function useSubscription(pvName: string): void {
   const dispatch = useDispatch();
-  useEffect((): any => {
-    dispatch({ type: SUBSCRIBE, payload: { url: "wsurl", pvName: pvName } });
-    return (): any => {
-      dispatch({ type: UNSUBSCRIBE, payload: { url: "wsurl" } });
+    useEffect((): any => {
+    dispatch({ type: SUBSCRIBE, payload: { pvName: pvName } });
+        return ():any => {
+      dispatch({ type: UNSUBSCRIBE, payload: {} });
     };
   }, [dispatch, pvName]);
 }

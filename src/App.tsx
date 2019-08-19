@@ -5,13 +5,13 @@ import { getStore, initialiseStore } from "./redux/store";
 
 import { ConnectedReadback } from "./components/readback";
 import { ConnectedInput } from "./components/input";
-
+import { ConiqlPlugin } from "./connection/coniql";
 
 const App: React.FC = (): JSX.Element => {
-  initialiseStore();
+  initialiseStore(new ConiqlPlugin("wsurl"));
   let store = getStore();
   return (
-      <Provider store={store}>
+    <Provider store={store}>
       <div className="App">
         <ConnectedReadback pvName={"TMC43-TS-IOC-01:AI"} />
         <ConnectedReadback pvName={"TMC43-TS-IOC-01:CURRENT"} />

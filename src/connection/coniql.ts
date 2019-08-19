@@ -6,7 +6,7 @@ import { getMainDefinition } from "apollo-utilities";
 import gql from "graphql-tag";
 import { InMemoryCache, NormalizedCacheObject } from "apollo-cache-inmemory";
 import { NType } from "../cs";
-import { ConnectionPlugin } from "./plugin";
+import { Connection, ConnectionCallback } from "./plugin";
 
 const httpUri = "htop://localhost:8000/graphql";
 const wsUri = "ws://localhost:8000/subscriptions";
@@ -39,22 +39,30 @@ const PV_SUBSCRIPTION = gql`
   }
 `;
 
-export class ConiqlPlugin implements ConnectionPlugin {
+export class ConiqlPlugin implements Connection {
   private url: string;
-  private client: ApolloClient<NormalizedCacheObject>;
-  private callback: (pvName: string, data: NType) => void;
+  private client: ApolloClient<NormalizedCacheObject> | null;
+  private callback: ((pvName: string, data: NType) => void) | null;
 
   public constructor(
-    websocketUrl: string,
-    callback: (pvName: string, data: NType) => void
+    websocketUrl: string
   ) {
     this.url = websocketUrl;
+    this.client = null;
+    this.callback = null;
+  }
+
+  public connect(callback: ConnectionCallback):void {
     this.client = new ApolloClient({ link, cache });
     this.callback = callback;
   }
 
+  public isConnected(): boolean {
+    return this.client != null;
+  }
+
   public subscribe(pvName1: string): void {
-    this.client
+    this.client!
       .subscribe({
         query: PV_SUBSCRIPTION,
         variables: { pvName: pvName1 }
@@ -62,7 +70,7 @@ export class ConiqlPlugin implements ConnectionPlugin {
       .subscribe({
         next: (data): void => {
           console.log("data", data); //eslint-disable-line no-console
-          this.callback(pvName1, data.data.subscribeFloatScalar);
+          this.callback!(pvName1, data.data.subscribeFloatScalar);
         },
         error: (err): void => {
           console.error("err", err); //eslint-disable-line no-console
