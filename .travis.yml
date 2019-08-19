@@ -5,4 +5,4 @@ script:
   - npm test
   - npx prettier-check **/*.ts[x]
   - npm run coveralls
-
+  - npm run lint

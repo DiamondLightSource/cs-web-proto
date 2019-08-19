@@ -6,9 +6,9 @@ import { NType } from "../cs";
 
 export function useSubscription(pvName: string): void {
   const dispatch = useDispatch();
-  useEffect(() => {
+  useEffect((): any => {
     dispatch({ type: SUBSCRIBE, payload: { url: "wsurl", pvName: pvName } });
-    return () => {
+    return (): any => {
       dispatch({ type: UNSUBSCRIBE, payload: { url: "wsurl" } });
     };
   }, [dispatch, pvName]);

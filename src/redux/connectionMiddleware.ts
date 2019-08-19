@@ -14,7 +14,10 @@ function pvChanged(pvName: string, value: NType): void {
 }
 
 /* Cheating with the types here. */
-export const connectionMiddleware = (store: any) => (next: any): any => (
+// eslint doesn't deal with currying very well:
+// (x:any): any => (y:any): any => (z:any): any is perverse
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+export const connectionMiddleware = (store: any) => (next: any) => (
   action: any
 ): any => {
   switch (action.type) {
