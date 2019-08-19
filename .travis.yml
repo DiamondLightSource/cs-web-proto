@@ -9,3 +9,5 @@ script:
   - npm test
   - npx prettier-check **/*.ts[x]
   - jest --coverage --coverageReporters=text-lcov | coveralls
+after-scripts:
+  - cat ./coverage/lcov.info | coveralls
