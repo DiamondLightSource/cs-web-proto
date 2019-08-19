@@ -6,6 +6,6 @@ module.exports = {
   snapshotSerializers: ["enzyme-to-json/serializer"],
   setupTestFrameworkScriptFile: "<rootDir>/src/setupTests.ts",
   collectCoverage: true,
-  collectCoverageFrom: ["**/*.ts", "!<rootDir>/node_modules/**"]
+  collectCoverageFrom: ["**/*.ts", "!<rootDir>/node_modules/**"],
   coverageReporters: ["lcov", "text-summary", "html"]
 };
