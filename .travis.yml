@@ -8,3 +8,4 @@ script:
   - npm run build
   - npm test
   - npx prettier-check **/*.ts[x]
+  - jest --coverage --coverageReporters=text-lcov | coveralls
