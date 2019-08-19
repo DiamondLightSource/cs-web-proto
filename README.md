@@ -15,6 +15,25 @@ Now run the server:
 
 `npm start`
 
+## Libraries
+
+### Runtime
+
+* [React](https://github.com/facebook/react) is fundamental to the design.
+Its use of components maps well to the widgets used in control system user
+interfaces
+* [Redux](https://github.com/reduxjs/redux) also fits well with the design.
+All control system data may be cached in the global store and widgets will
+update according to changes to that store
+
+### Development
+
+* [Create React App](https://github.com/facebook/create-react-app) - a
+framework for starting React apps quickly. See below for more
+* [Jest](https://github.com/facebook/jest) is a widely-used testing framework
+developed by Facebook
+* [Prettier](https://github.com/prettier/prettier) is used for code formatting
+
 ## Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
