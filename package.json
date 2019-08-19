@@ -30,8 +30,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --coverage",
+    "eject": "react-scripts eject",
     "coveralls": "cat ./coverage/lcov.info | node node_modules/.bin/coveralls",
-    "eject": "react-scripts eject"
+    "lint": "node_modules/.bin/eslint src/**/*.ts[x]"
   },
   "eslintConfig": {
     "extends": [
