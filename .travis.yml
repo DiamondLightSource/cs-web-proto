@@ -4,4 +4,5 @@ node_js:
 script:
   - npm test
   - npx prettier-check **/*.ts[x]
+  - npm run coveralls
 
