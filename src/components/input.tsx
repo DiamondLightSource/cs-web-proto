@@ -4,6 +4,7 @@ import { useSubscription, writePv } from "../hooks/useCs";
 import { CsStore } from "../redux/csReducer";
 
 export interface InputProps {
+  type?: string;
   value: string;
   onKeyDown: (event: React.KeyboardEvent<HTMLInputElement>) => void;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;

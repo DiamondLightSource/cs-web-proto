@@ -1,7 +1,10 @@
 language: node_js
 node_js:
   - 11
+cache:
+  directories:
+    - node_modules
 script:
+  - npm run build
   - npm test
   - npx prettier-check **/*.ts[x]
-
