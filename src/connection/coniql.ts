@@ -60,12 +60,12 @@ export class ConiqlPlugin implements ConnectionPlugin {
         variables: { pvName: pvName1 }
       })
       .subscribe({
-        next: data => {
-          console.log("data", data);
+        next: (data): void => {
+          console.log("data", data); //eslint-disable-line no-console
           this.callback(pvName1, data.data.subscribeFloatScalar);
         },
-        error: err => {
-          console.error("err", err);
+        error: (err): void => {
+          console.error("err", err); //eslint-disable-line no-console
         }
       });
   }

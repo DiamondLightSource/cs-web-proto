@@ -20,13 +20,13 @@ export class SimulatorPlugin implements ConnectionPlugin {
     this.putPv = this.putPv.bind(this);
     /* Set up the sine PV. */
     setInterval(
-      () => this.onUpdate("sim://sine", this.getValue("sim://sine")),
+      (): void => this.onUpdate("sim://sine", this.getValue("sim://sine")),
       2000
     );
   }
 
   public subscribe(pvName: string): void {
-    console.log(`creating connection to ${pvName}`);
+    console.log(`creating connection to ${pvName}`); //eslint-disable-line no-console
     if (pvName.startsWith("loc://")) {
       this.localPvs[pvName] = { type: "NTScalarDouble", value: 0 };
       this.onUpdate(pvName, { type: "NTScalarDouble", value: 0 });
