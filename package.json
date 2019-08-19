@@ -4,7 +4,6 @@
   "private": true,
   "dependencies": {
     "@types/enzyme-adapter-react-16": "^1.0.5",
-    "@types/jest": "24.0.15",
     "@types/node": "12.6.2",
     "@types/react-dom": "16.8.4",
     "apollo-cache-inmemory": "^1.6.2",
@@ -75,6 +74,7 @@
   "devDependencies": {
     "@types/enzyme": "^3.10.3",
     "@types/graphql": "^14.2.3",
+    "@types/jest": "^24.0.15",
     "@types/react": "^16.9.0",
     "@types/react-redux": "^7.1.1",
     "@types/react-test-renderer": "^16.9.0",
@@ -85,8 +85,8 @@
     "eslint-config-prettier": "^6.0.0",
     "eslint-config-react": "^1.1.7",
     "eslint-plugin-prettier": "^3.1.0",
-    "jest": "^24.9.0",
     "prettier": "^1.18.2",
-    "react-test-renderer": "^16.9.0"
+    "react-test-renderer": "^16.9.0",
+    "ts-jest": "^24.0.2"
   }
 }
