@@ -2,8 +2,8 @@ import React from "react";
 import "./App.css";
 import { Provider } from "react-redux";
 import { store } from "./redux/store";
-import { ConnectedReadback } from "./components/readback";
-import { ConnectedInput } from "./components/input";
+import { ConnectedReadback } from "./components/Readback/readback";
+import { ConnectedInput } from "./components/Input/input";
 import { ConnectedProgressBar } from "./components/ProgressBar/ProgressBar";
 const App: React.FC = (): JSX.Element => {
   return (
