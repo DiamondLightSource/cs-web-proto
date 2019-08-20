@@ -8,26 +8,27 @@ import { InMemoryCache, NormalizedCacheObject } from "apollo-cache-inmemory";
 import { NType } from "../cs";
 import { Connection, ConnectionCallback } from "./plugin";
 
-const httpUri = "htop://localhost:8000/graphql";
-const wsUri = "ws://localhost:8000/subscriptions";
+function createLink(socket: string): ApolloLink {
+  const link: ApolloLink = ApolloLink.split(
+    ({ query }): boolean => {
+      // https://github.com/apollographql/apollo-client/issues/3090
+      const definition = getMainDefinition(query);
+      return (
+        definition.kind === "OperationDefinition" &&
+        definition.operation === "subscription"
+      );
+    },
+    new WebSocketLink({
+      uri: `ws://${socket}/subscriptions`,
+      options: {
+        reconnect: true
+      }
+    }),
+    new HttpLink({ uri: `http://${socket}/graphql` })
+  );
 
-const link: ApolloLink = ApolloLink.split(
-  ({ query }): boolean => {
-    // https://github.com/apollographql/apollo-client/issues/3090
-    const definition = getMainDefinition(query);
-    return (
-      definition.kind === "OperationDefinition" &&
-      definition.operation === "subscription"
-    );
-  },
-  new WebSocketLink({
-    uri: wsUri,
-    options: {
-      reconnect: true
-    }
-  }),
-  new HttpLink({ uri: httpUri })
-);
+  return link;
+}
 
 const cache = new InMemoryCache();
 
@@ -40,18 +41,16 @@ const PV_SUBSCRIPTION = gql`
 `;
 
 export class ConiqlPlugin implements Connection {
-  private url: string;
-  private client: ApolloClient<NormalizedCacheObject> | null;
-  private callback: ((pvName: string, data: NType) => void) | null;
+  private client: ApolloClient<NormalizedCacheObject>;
+  private callback: (pvName: string, data: NType) => void;
 
-  public constructor(websocketUrl: string) {
-    this.url = websocketUrl;
-    this.client = null;
-    this.callback = null;
+  public constructor(socket: string) {
+    const link = createLink(socket);
+    this.client = new ApolloClient({ link, cache });
+    this.callback = (_p, _v): void => {};
   }
 
   public connect(callback: ConnectionCallback): void {
-    this.client = new ApolloClient({ link, cache });
     this.callback = callback;
   }
 
@@ -60,18 +59,20 @@ export class ConiqlPlugin implements Connection {
   }
 
   public subscribe(pvName1: string): void {
-    this.client!.subscribe({
-      query: PV_SUBSCRIPTION,
-      variables: { pvName: pvName1 }
-    }).subscribe({
-      next: (data): void => {
-        console.log("data", data); //eslint-disable-line no-console
-        this.callback!(pvName1, data.data.subscribeFloatScalar);
-      },
-      error: (err): void => {
-        console.error("err", err); //eslint-disable-line no-console
-      }
-    });
+    this.client
+      .subscribe({
+        query: PV_SUBSCRIPTION,
+        variables: { pvName: pvName1 }
+      })
+      .subscribe({
+        next: (data): void => {
+          console.log("data", data); //eslint-disable-line no-console
+          this.callback(pvName1, data.data.subscribeFloatScalar);
+        },
+        error: (err): void => {
+          console.error("err", err); //eslint-disable-line no-console
+        }
+      });
   }
 
   public putPv(pvName: string, value: NType): void {

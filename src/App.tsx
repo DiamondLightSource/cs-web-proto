@@ -8,7 +8,7 @@ import { ConnectedInput } from "./components/input";
 import { ConiqlPlugin } from "./connection/coniql";
 
 const App: React.FC = (): JSX.Element => {
-  initialiseStore(new ConiqlPlugin("wsurl"));
+  initialiseStore(new ConiqlPlugin("localhost:8000"));
   let store = getStore();
   return (
     <Provider store={store}>
