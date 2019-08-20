@@ -1,11 +1,15 @@
 import React from "react";
 import "./App.css";
 import { Provider } from "react-redux";
-import { store } from "./redux/store";
+import { getStore, initialiseStore } from "./redux/store";
+
 import { ConnectedReadback } from "./components/readback";
 import { ConnectedInput } from "./components/input";
+import { ConiqlPlugin } from "./connection/coniql";
 
 const App: React.FC = (): JSX.Element => {
+  initialiseStore(new ConiqlPlugin("wsurl"));
+  let store = getStore();
   return (
     <Provider store={store}>
       <div className="App">
