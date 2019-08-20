@@ -2,8 +2,11 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { useSubscription, writePv } from "../hooks/useCs";
 import { CsState } from "../redux/store";
+import { Base } from "./Base/Base";
+import { PV_CHANGED } from "../redux/actions";
 
 export interface InputProps {
+  pvName: string;
   value: string;
   onKeyDown: (event: React.KeyboardEvent<HTMLInputElement>) => void;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -12,14 +15,20 @@ export interface InputProps {
 }
 
 export const Input: React.FC<InputProps> = (props: InputProps): JSX.Element => (
-  <input
-    type="text"
+  <Base
+    pvName={props.pvName}
     value={props.value}
-    onKeyDown={props.onKeyDown}
-    onChange={props.onChange}
-    onBlur={props.onBlur}
-    onClick={props.onClick}
-  />
+    timestamp={new Date().toLocaleString()}
+  >
+    <input
+      type="text"
+      value={props.value}
+      onKeyDown={props.onKeyDown}
+      onChange={props.onChange}
+      onBlur={props.onBlur}
+      onClick={props.onClick}
+    />
+  </Base>
 );
 
 interface ConnectedInputProps {
@@ -74,6 +83,7 @@ export const ConnectedInput: React.FC<ConnectedInputProps> = (
 
   return (
     <Input
+      pvName={props.pvName}
       value={inputValue}
       onKeyDown={onKeyDown}
       onChange={onChange}
