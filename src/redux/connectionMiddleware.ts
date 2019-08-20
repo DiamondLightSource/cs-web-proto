@@ -14,10 +14,9 @@ function pvChanged(pvName: string, value: NType): void {
 // eslint doesn't deal with currying very well:
 // (x:any): any => (y:any): any => (z:any): any is perverse
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export const connectionMiddleware = (connection:Connection) => (store: any) => (next: any): any => (
-  action: any
-): any => {
-
+export const connectionMiddleware = (connection: Connection) => (
+  store: any
+) => (next: any): any => (action: any): any => {
   if (!connection.isConnected()) {
     connection.connect(pvChanged);
   }

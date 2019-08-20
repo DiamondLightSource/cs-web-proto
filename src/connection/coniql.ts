@@ -44,15 +44,13 @@ export class ConiqlPlugin implements Connection {
   private client: ApolloClient<NormalizedCacheObject> | null;
   private callback: ((pvName: string, data: NType) => void) | null;
 
-  public constructor(
-    websocketUrl: string
-  ) {
+  public constructor(websocketUrl: string) {
     this.url = websocketUrl;
     this.client = null;
     this.callback = null;
   }
 
-  public connect(callback: ConnectionCallback):void {
+  public connect(callback: ConnectionCallback): void {
     this.client = new ApolloClient({ link, cache });
     this.callback = callback;
   }
@@ -62,20 +60,18 @@ export class ConiqlPlugin implements Connection {
   }
 
   public subscribe(pvName1: string): void {
-    this.client!
-      .subscribe({
-        query: PV_SUBSCRIPTION,
-        variables: { pvName: pvName1 }
-      })
-      .subscribe({
-        next: (data): void => {
-          console.log("data", data); //eslint-disable-line no-console
-          this.callback!(pvName1, data.data.subscribeFloatScalar);
-        },
-        error: (err): void => {
-          console.error("err", err); //eslint-disable-line no-console
-        }
-      });
+    this.client!.subscribe({
+      query: PV_SUBSCRIPTION,
+      variables: { pvName: pvName1 }
+    }).subscribe({
+      next: (data): void => {
+        console.log("data", data); //eslint-disable-line no-console
+        this.callback!(pvName1, data.data.subscribeFloatScalar);
+      },
+      error: (err): void => {
+        console.error("err", err); //eslint-disable-line no-console
+      }
+    });
   }
 
   public putPv(pvName: string, value: NType): void {

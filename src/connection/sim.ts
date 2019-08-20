@@ -9,9 +9,7 @@ export class SimulatorPlugin implements Connection {
   private onUpdate: ConnectionCallback | null;
   private timeout: NodeJS.Timeout | null;
 
-  public constructor(
-    websocketUrl: string
-  ) {
+  public constructor(websocketUrl: string) {
     this.url = websocketUrl;
     this.value = 0;
     this.localPvs = {};
@@ -22,7 +20,7 @@ export class SimulatorPlugin implements Connection {
     this.timeout = null;
   }
 
-  public connect(callback:ConnectionCallback){
+  public connect(callback: ConnectionCallback) {
     this.onUpdate = callback;
     this.timeout = setInterval(
       (): void => this.onUpdate!("sim://sine", this.getValue("sim://sine")),
@@ -30,7 +28,7 @@ export class SimulatorPlugin implements Connection {
     );
   }
 
-  public isConnected(): boolean{
+  public isConnected(): boolean {
     return this.onUpdate != null;
   }
 
