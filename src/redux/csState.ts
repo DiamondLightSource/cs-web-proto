@@ -1,5 +1,5 @@
 import { PV_CHANGED, ActionType, SUBSCRIBE, WRITE_PV } from "./actions";
-import { NType } from "../cs"
+import { NType } from "../cs";
 
 const initialState: CsState = {
   valueCache: {}

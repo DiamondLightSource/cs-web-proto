@@ -3,34 +3,28 @@ import { NType } from "../cs";
 import { ValueCache } from "../redux/csState";
 
 export class SimulatorPlugin implements Connection {
-  private url: string;
-  private value: number;
   private localPvs: ValueCache;
-  private onUpdate: ConnectionCallback | null;
+  private onUpdate: ConnectionCallback;
   private timeout: NodeJS.Timeout | null;
 
-  public constructor(
-    websocketUrl: string
-  ) {
-    this.url = websocketUrl;
-    this.value = 0;
+  public constructor() {
     this.localPvs = {};
-    this.onUpdate = null;
+    this.onUpdate = (_p, _v): void => {};
     this.subscribe = this.subscribe.bind(this);
     this.putPv = this.putPv.bind(this);
     /* Set up the sine PV. */
     this.timeout = null;
   }
 
-  public connect(callback:ConnectionCallback){
+  public connect(callback: ConnectionCallback): void {
     this.onUpdate = callback;
     this.timeout = setInterval(
-      (): void => this.onUpdate!("sim://sine", this.getValue("sim://sine")),
+      (): void => this.onUpdate("sim://sine", this.getValue("sim://sine")),
       2000
     );
   }
 
-  public isConnected(): boolean{
+  public isConnected(): boolean {
     return this.onUpdate != null;
   }
 
@@ -38,14 +32,14 @@ export class SimulatorPlugin implements Connection {
     console.log(`creating connection to ${pvName}`); //eslint-disable-line no-console
     if (pvName.startsWith("loc://")) {
       this.localPvs[pvName] = { type: "NTScalarDouble", value: 0 };
-      this.onUpdate!(pvName, { type: "NTScalarDouble", value: 0 });
+      this.onUpdate(pvName, { type: "NTScalarDouble", value: 0 });
     }
   }
 
   public putPv(pvName: string, value: NType): void {
     if (pvName.startsWith("loc://")) {
       this.localPvs[pvName] = value;
-      this.onUpdate!(pvName, value);
+      this.onUpdate(pvName, value);
     }
   }
 

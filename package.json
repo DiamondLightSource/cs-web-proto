@@ -32,7 +32,8 @@
     "test": "react-scripts test --coverage",
     "eject": "react-scripts eject",
     "coveralls": "cat ./coverage/lcov.info | node node_modules/.bin/coveralls",
-    "lint": "node_modules/.bin/eslint src/**/*.ts[x]"
+    "lint": "node_modules/.bin/eslint src/**/*.{ts,tsx}",
+    "prettier-check": "node_modules/.bin/prettier --check src/**/*.{ts,tsx}"
   },
   "eslintConfig": {
     "extends": [
