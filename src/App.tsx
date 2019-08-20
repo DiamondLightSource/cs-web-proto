@@ -23,7 +23,12 @@ const App: React.FC = (): JSX.Element => {
             width: "50%"
           }}
         >
-          <ConnectedProgressBar pvName={"TMC43-TS-IOC-01:AI"} />
+          <ConnectedProgressBar
+            pvName={"TMC43-TS-IOC-01:AI"}
+            min={0}
+            max={100}
+            precision={2}
+          />
         </div>
       </div>
     </Provider>

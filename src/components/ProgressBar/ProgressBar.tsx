@@ -21,6 +21,21 @@ interface ProgressBarProps {
   precision?: number;
 }
 
+// Same as ProgressBarProps but without value as this is collected from the store
+interface ConnectedProgressBarProps {
+  pvName: string;
+  min: number;
+  max: number;
+  vertical?: boolean;
+  color?: string;
+  top?: string;
+  left?: string;
+  height?: string;
+  width?: string;
+  fontStyle?: object;
+  precision?: number;
+}
+
 export const ProgressBar: React.FC<ProgressBarProps> = (
   props: ProgressBarProps
 ) => {
@@ -92,9 +107,9 @@ export const ProgressBar: React.FC<ProgressBarProps> = (
   );
 };
 
-export const ConnectedProgressBar = (props: {
-  pvName: string;
-}): JSX.Element => {
+export const ConnectedProgressBar = (
+  props: ConnectedProgressBarProps
+): JSX.Element => {
   useSubscription(props.pvName);
   const latestValue = useSelector((state: CsState): string => {
     let value = state.valueCache[props.pvName];
@@ -104,13 +119,5 @@ export const ConnectedProgressBar = (props: {
       return value.value.toString();
     }
   });
-  return (
-    <ProgressBar
-      pvName={props.pvName}
-      value={parseFloat(latestValue)}
-      min={0}
-      max={100}
-      precision={3}
-    />
-  );
+  return <ProgressBar {...props} value={parseFloat(latestValue)} />;
 };
