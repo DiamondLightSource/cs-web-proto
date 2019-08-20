@@ -2,10 +2,11 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { useSubscription } from "../../hooks/useCs";
 import { CsState } from "../../redux/store";
+import { Base } from "../Base/Base";
 
 import classes from "./ProgressBar.module.css";
 
-export const ProgressBar = (props: {
+interface ProgressBarProps {
   pvName: string;
   value: number;
   min: number;
@@ -17,8 +18,14 @@ export const ProgressBar = (props: {
   height?: string;
   width?: string;
   fontStyle?: object;
-}) => {
+  precision?: number;
+}
+
+export const ProgressBar: React.FC<ProgressBarProps> = (
+  props: ProgressBarProps
+) => {
   let {
+    pvName = "",
     value = 0,
     min = 0,
     max = 100,
@@ -28,7 +35,8 @@ export const ProgressBar = (props: {
     left = "0%",
     height = "100%",
     width = "100%",
-    fontStyle = {}
+    fontStyle = {},
+    precision = undefined
   } = props;
 
   let barStyle = {
@@ -37,11 +45,12 @@ export const ProgressBar = (props: {
     height: height,
     width: width
   };
-
   let onPercent = ((value - min) / (max - min)) * 100.0;
   // Store styles in these variables
+  // Change the direction of the gradient depending on wehether the bar is vertical
+  let direction = vertical === true ? "to left" : "to top";
   let barColor = {
-      "background-image": `linear-gradient(to top, ${color} 50%, #ffffff 130%)`
+      backgroundImage: `linear-gradient(${direction}, ${color} 50%, #ffffff 130%)`
     },
     onStyle = {},
     offStyle = {};
@@ -59,16 +68,27 @@ export const ProgressBar = (props: {
     };
   }
 
-  let valueText = min < max ? value : "Check min and max values";
+  // Show a warning if min is bigger than max and apply precision if provided
+  let valueText =
+    min > max
+      ? "Check min and max values"
+      : precision
+      ? value.toFixed(precision)
+      : value;
 
   return (
-    <div className={classes.block} style={barStyle}>
+    <Base
+      pvName={pvName}
+      value={value}
+      timestamp={new Date().toLocaleString()}
+      style={barStyle}
+    >
       <div className={classes.off} style={offStyle} />
       <div className={classes.on} style={onStyle} />
       <div className={classes.label} style={fontStyle}>
         {valueText}
       </div>
-    </div>
+    </Base>
   );
 };
 
@@ -90,6 +110,7 @@ export const ConnectedProgressBar = (props: {
       value={parseFloat(latestValue)}
       min={0}
       max={100}
+      precision={3}
     />
   );
 };

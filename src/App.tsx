@@ -5,7 +5,6 @@ import { store } from "./redux/store";
 import { ConnectedReadback } from "./components/readback";
 import { ConnectedInput } from "./components/input";
 import { ConnectedProgressBar } from "./components/ProgressBar/ProgressBar";
-
 const App: React.FC = (): JSX.Element => {
   return (
     <Provider store={store}>
@@ -19,9 +18,9 @@ const App: React.FC = (): JSX.Element => {
         <div
           style={{
             position: "absolute",
-            left: "300px",
-            height: "100px",
-            width: "500px"
+            left: "10%",
+            height: "20%",
+            width: "50%"
           }}
         >
           <ConnectedProgressBar pvName={"TMC43-TS-IOC-01:AI"} />
