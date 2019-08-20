@@ -30,7 +30,7 @@ export const Base = (props: {
     .join(", ");
 
   return (
-    <div className={classes.tooltip} style={style} onClick={copyPvToClipboard}>
+    <div className={classes.Base} style={style} onClick={copyPvToClipboard}>
       <span className={classes.tooltiptext}>
         {pvName}
         <br />[{toolTipText}]

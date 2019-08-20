@@ -9,12 +9,17 @@ const App: React.FC = (): JSX.Element => {
   return (
     <Provider store={store}>
       <div className="App">
-        <ConnectedReadback pvName={"TMC43-TS-IOC-01:AI"} />
-        <ConnectedReadback pvName={"TMC43-TS-IOC-01:CURRENT"} />
-        <ConnectedReadback pvName={"sim://sine"} />
-        <ConnectedInput pvName={"loc://pv1"} />
-        <ConnectedInput pvName={"sim://sine"} />
-        <ConnectedInput pvName={"sim://sine"} />
+        <h1>CS Web Proto</h1>
+        <div style={{ display: "block" }}>
+          <ConnectedReadback pvName={"TMC43-TS-IOC-01:AI"} />
+          <ConnectedReadback pvName={"TMC43-TS-IOC-01:CURRENT"} />
+          <ConnectedReadback pvName={"sim://sine"} />
+        </div>
+        <div style={{ display: "block" }}>
+          <ConnectedInput pvName={"loc://pv1"} />
+          <ConnectedInput pvName={"sim://sine"} />
+          <ConnectedInput pvName={"sim://sine"} />
+        </div>
         <div
           style={{
             position: "absolute",
