@@ -14,7 +14,7 @@ export function initialiseStore(): void{
 }
 
 function raiseStoreEmpty() : never {
-    throw new Error('store singleton is not initialised. (see initialiseStore())');
+    throw new Error("store singleton is not initialised. (see initialiseStore())");
 }
 
 export function getStore(): MyStore {
