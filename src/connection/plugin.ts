@@ -1,5 +1,4 @@
 import { NType } from "../cs";
-import { ConiqlPlugin } from "./coniql";
 
 export type ConnectionCallback = (pvName: string, value: NType) => void;
 
