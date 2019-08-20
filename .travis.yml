@@ -3,6 +3,6 @@ node_js:
   - 11
 script:
   - npm test
-  - npx prettier-check **/*.ts[x]
+  - npm run prettier-check
   - npm run coveralls
-  - npx eslint src/**/*.{ts,tsx}
+  - npm run lint
