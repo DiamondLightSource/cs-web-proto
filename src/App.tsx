@@ -5,10 +5,11 @@ import { getStore, initialiseStore } from "./redux/store";
 
 import { ConnectedReadback } from "./components/readback";
 import { ConnectedInput } from "./components/input";
-import { ConiqlPlugin } from "./connection/coniql";
+import { SimulatorPlugin } from "./connection/sim";
 
 const App: React.FC = (): JSX.Element => {
-  initialiseStore(new ConiqlPlugin("localhost:8000"));
+  const plugin = new SimulatorPlugin();
+  initialiseStore(plugin);
   let store = getStore();
   return (
     <Provider store={store}>

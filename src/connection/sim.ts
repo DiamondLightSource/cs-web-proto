@@ -2,6 +2,8 @@ import { Connection, ConnectionCallback } from "./plugin";
 import { NType } from "../cs";
 import { ValueCache } from "../redux/csState";
 
+const nullCallback: ConnectionCallback = (_p, _v): void => {};
+
 export class SimulatorPlugin implements Connection {
   private localPvs: ValueCache;
   private onUpdate: ConnectionCallback;
@@ -9,7 +11,7 @@ export class SimulatorPlugin implements Connection {
 
   public constructor() {
     this.localPvs = {};
-    this.onUpdate = (_p, _v): void => {};
+    this.onUpdate = nullCallback;
     this.subscribe = this.subscribe.bind(this);
     this.putPv = this.putPv.bind(this);
     /* Set up the sine PV. */
@@ -25,7 +27,7 @@ export class SimulatorPlugin implements Connection {
   }
 
   public isConnected(): boolean {
-    return this.onUpdate != null;
+    return this.onUpdate !== nullCallback;
   }
 
   public subscribe(pvName: string): void {
