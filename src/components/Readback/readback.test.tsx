@@ -13,5 +13,6 @@ test("snapshot matches", (): void => {
 
 it("renders a basic element", (): void => {
   const wrapper = shallow(<Readback pvName={"mypv"} value={"hello"} />);
-  expect(wrapper.text()).toEqual("mypv: hello");
+  expect(wrapper.contains(<div>mypv: hello</div>));
+  //expect(wrapper.text()).toEqual("mypv: hello");
 });

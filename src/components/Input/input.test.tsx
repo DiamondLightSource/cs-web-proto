@@ -15,7 +15,7 @@ beforeEach((): void => {
   };
   const input = (
     <Input
-      type="text"
+      pvName="pv"
       value="hello"
       onKeyDown={mock}
       onChange={mock}

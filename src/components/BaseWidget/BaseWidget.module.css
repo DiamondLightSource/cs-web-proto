@@ -1,0 +1,33 @@
+.BaseWidget {
+  border: 1px solid #aaaaaa;
+  display: inline-block;
+  text-align: center;
+  position: relative;
+}
+
+.BaseWidget .tooltiptext {
+  visibility: hidden;
+  background-color: black;
+  color: #fff;
+  text-align: left;
+  border-radius: 6px;
+  padding: 5px 5px;
+  position: absolute;
+  bottom: 115%;
+  left: 50%;
+}
+
+.BaseWidget .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: black transparent transparent transparent;
+}
+
+.BaseWidget:hover .tooltiptext {
+  visibility: visible;
+}

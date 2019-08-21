@@ -1,7 +1,8 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { useSubscription } from "../hooks/useCs";
-import { CsState } from "../redux/csState";
+import { useSubscription } from "../../hooks/useCs";
+import { CsState } from "../../redux/csState";
+import { BaseWidget } from "../BaseWidget/BaseWidget";
 
 export const Readback = (props: {
   pvName: string;
@@ -12,9 +13,15 @@ export const Readback = (props: {
     value = props.value;
   }
   return (
-    <div>
-      {props.pvName}: {value}
-    </div>
+    <BaseWidget
+      pvName={props.pvName}
+      value={props.value}
+      timestamp="2019-08-21 11:58:00"
+    >
+      <div>
+        {props.pvName}: {value}
+      </div>
+    </BaseWidget>
   );
 };
 
@@ -28,5 +35,5 @@ export const ConnectedReadback = (props: { pvName: string }): JSX.Element => {
       return value.value.toString();
     }
   });
-  return <Readback pvName={props.pvName} value={latestValue} />;
+  return <Readback {...props} value={latestValue} />;
 };
