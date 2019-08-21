@@ -4,15 +4,17 @@ import { shallow } from "enzyme";
 import renderer from "react-test-renderer";
 
 test("snapshot matches", (): void => {
-  const readback = renderer.create(
-    <Readback pvName={"mypv"} value={"hello"} />
-  );
+  const readback = renderer.create(<Readback value={"hello"} />);
   let json = readback.toJSON();
   expect(json).toMatchSnapshot();
 });
 
 it("renders a basic element", (): void => {
-  const wrapper = shallow(<Readback pvName={"mypv"} value={"hello"} />);
-  expect(wrapper.contains(<div>mypv: hello</div>));
-  //expect(wrapper.text()).toEqual("mypv: hello");
+  const wrapper = shallow(<Readback value={"hello"} />);
+  expect(wrapper.text()).toEqual("hello");
+});
+
+it("applies precision to numbers", (): void => {
+  const wrapper = shallow(<Readback value={"3.14159265359"} precision={2} />);
+  expect(wrapper.text()).toEqual("3.14");
 });

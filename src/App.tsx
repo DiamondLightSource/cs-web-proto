@@ -18,7 +18,7 @@ const App: React.FC = (): JSX.Element => {
         <div style={{ display: "block" }}>
           <ConnectedReadback pvName={"TMC43-TS-IOC-01:AI"} />
           <ConnectedReadback pvName={"TMC43-TS-IOC-01:CURRENT"} />
-          <ConnectedReadback pvName={"sim://sine"} />
+          <ConnectedReadback pvName={"sim://sine"} precision={3} />
         </div>
         <div style={{ display: "block" }}>
           <ConnectedInput pvName={"loc://pv1"} />
