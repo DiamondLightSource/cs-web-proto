@@ -2,7 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { useSubscription } from "../../hooks/useCs";
 import { CsState } from "../../redux/store";
-import { Base } from "../Base/Base";
+import { BaseWidget } from "../BaseWidget/BaseWidget";
 
 export const Readback = (props: {
   pvName: string;
@@ -13,7 +13,7 @@ export const Readback = (props: {
     value = props.value;
   }
   return (
-    <Base
+    <BaseWidget
       pvName={props.pvName}
       value={props.value}
       timestamp={new Date().toLocaleString()}
@@ -21,7 +21,7 @@ export const Readback = (props: {
       <div>
         {props.pvName}: {value}
       </div>
-    </Base>
+    </BaseWidget>
   );
 };
 

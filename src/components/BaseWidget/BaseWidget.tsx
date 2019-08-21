@@ -4,12 +4,11 @@
 // A middle mouse click will copy the PV name to the clipboard
 
 import React, { ReactNode } from "react";
+import copyToClipboard from "clipboard-copy";
 
-import classes from "./Base.module.css";
+import classes from "./BaseWidget.module.css";
 
-const copyToClipboard = require("clipboard-copy");
-
-export const Base = (props: {
+export const BaseWidget = (props: {
   pvName: string;
   value: any;
   timestamp: string;

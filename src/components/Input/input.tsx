@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { useSubscription, writePv } from "../../hooks/useCs";
 import { CsState } from "../../redux/store";
-import { Base } from "../Base/Base";
+import { BaseWidget } from "../BaseWidget/BaseWidget";
 import { PV_CHANGED } from "../../redux/actions";
 
 export interface InputProps {
@@ -15,7 +15,7 @@ export interface InputProps {
 }
 
 export const Input: React.FC<InputProps> = (props: InputProps): JSX.Element => (
-  <Base
+  <BaseWidget
     pvName={props.pvName}
     value={props.value}
     timestamp={new Date().toLocaleString()}
@@ -28,7 +28,7 @@ export const Input: React.FC<InputProps> = (props: InputProps): JSX.Element => (
       onBlur={props.onBlur}
       onClick={props.onClick}
     />
-  </Base>
+  </BaseWidget>
 );
 
 interface ConnectedInputProps {
