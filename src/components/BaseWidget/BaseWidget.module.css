@@ -1,11 +1,11 @@
-.Base {
+.BaseWidget {
   border: 1px solid #aaaaaa;
   display: inline-block;
   text-align: center;
   position: relative;
 }
 
-.Base .tooltiptext {
+.BaseWidget .tooltiptext {
   visibility: hidden;
   background-color: black;
   color: #fff;
@@ -17,7 +17,7 @@
   left: 50%;
 }
 
-.Base .tooltiptext::after {
+.BaseWidget .tooltiptext::after {
   content: "";
   position: absolute;
   top: 100%;
@@ -28,6 +28,6 @@
   border-color: black transparent transparent transparent;
 }
 
-.Base:hover .tooltiptext {
+.BaseWidget:hover .tooltiptext {
   visibility: visible;
 }

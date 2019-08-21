@@ -29,7 +29,11 @@ export const BaseWidget = (props: {
     .join(", ");
 
   return (
-    <div className={classes.Base} style={style} onClick={copyPvToClipboard}>
+    <div
+      className={classes.BaseWidget}
+      style={style}
+      onClick={copyPvToClipboard}
+    >
       <span className={classes.tooltiptext}>
         {pvName}
         <br />[{toolTipText}]
