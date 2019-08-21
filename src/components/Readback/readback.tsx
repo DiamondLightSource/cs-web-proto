@@ -2,30 +2,64 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { useSubscription } from "../../hooks/useCs";
 import { CsState } from "../../redux/csState";
-import { BaseWidget } from "../BaseWidget/BaseWidget";
+import { Scalar, Alarm } from "../../cs";
+
+import classes from "./readback.module.css";
 
 export const Readback = (props: {
-  pvName: string;
-  value: string;
+  value: Scalar;
+  precision?: number;
+  alarm?: Alarm;
+  style?: {};
 }): JSX.Element => {
-  let value = "";
-  if (props.value !== null) {
-    value = props.value;
+  let {
+    value,
+    precision = undefined,
+    alarm = { severity: 0, status: 0, message: "" },
+    style = { backgroundColor: "#383838", color: "#00bb00" }
+  } = props;
+  let displayedValue;
+  if (precision && precision >= 0) {
+    if (typeof value === "string") {
+      let numericalValue = parseFloat(value);
+      if (isNaN(numericalValue)) {
+        displayedValue = value;
+      } else {
+        displayedValue = numericalValue.toFixed(precision);
+      }
+    } else {
+      displayedValue = value.toFixed(precision);
+    }
+  } else {
+    displayedValue = value;
   }
+
+  // Change text depending on alarm color
+  if (alarm.severity === 1) {
+    // Minor alarm
+    style = {
+      ...style,
+      color: "#eeee00"
+    };
+  } else if (alarm.severity === 2) {
+    // Major alarm
+    style = {
+      ...style,
+      color: "#ee0000"
+    };
+  }
+
   return (
-    <BaseWidget
-      pvName={props.pvName}
-      value={props.value}
-      timestamp="2019-08-21 11:58:00"
-    >
-      <div>
-        {props.pvName}: {value}
-      </div>
-    </BaseWidget>
+    <div className={classes.Readback} style={style}>
+      {displayedValue}
+    </div>
   );
 };
 
-export const ConnectedReadback = (props: { pvName: string }): JSX.Element => {
+export const ConnectedReadback = (props: {
+  pvName: string;
+  precision?: number;
+}): JSX.Element => {
   useSubscription(props.pvName);
   const latestValue = useSelector((state: CsState): string => {
     let value = state.valueCache[props.pvName];

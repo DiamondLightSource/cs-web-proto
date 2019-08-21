@@ -34,9 +34,9 @@ const App: React.FC = (): JSX.Element => {
           }}
         >
           <ConnectedProgressBar
-            pvName={"TMC43-TS-IOC-01:AI"}
-            min={0}
-            max={100}
+            pvName={"sim://sine"}
+            min={-1}
+            max={1}
             precision={2}
           />
         </div>
