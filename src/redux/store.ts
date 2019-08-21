@@ -1,17 +1,26 @@
-import { createStore, applyMiddleware } from "redux";
+import { createStore, applyMiddleware, Store } from "redux";
 
-import { csReducer } from "./csReducer";
+import { csReducer, CsState } from "./csState";
 import { connectionMiddleware } from "./connectionMiddleware";
-import { NType } from "../cs";
+import { Connection } from "../connection/plugin";
 
-export interface ValueCache {
-  [key: string]: NType;
+// Setting this to Action or Action<Any> seems to trip up the type system
+type MyStore = Store<CsState, any>;
+let store: MyStore | null = null;
+
+export function initialiseStore(connection: Connection): void {
+  store = createStore(
+    csReducer,
+    applyMiddleware(connectionMiddleware(connection))
+  );
 }
 
-export interface CsState {
-  valueCache: ValueCache;
+function raiseStoreEmpty(): never {
+  throw new Error(
+    "store singleton is not initialised. (see initialiseStore())"
+  );
 }
 
-const middleware = applyMiddleware(connectionMiddleware);
-
-export const store = createStore(csReducer, middleware);
+export function getStore(): MyStore {
+  return store || raiseStoreEmpty();
+}

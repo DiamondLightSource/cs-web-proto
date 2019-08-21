@@ -1,11 +1,16 @@
 import React from "react";
 import "./App.css";
 import { Provider } from "react-redux";
-import { store } from "./redux/store";
 import { ConnectedReadback } from "./components/Readback/readback";
 import { ConnectedInput } from "./components/Input/input";
 import { ConnectedProgressBar } from "./components/ProgressBar/ProgressBar";
+import { getStore, initialiseStore } from "./redux/store";
+import { SimulatorPlugin } from "./connection/sim";
+
 const App: React.FC = (): JSX.Element => {
+  const plugin = new SimulatorPlugin();
+  initialiseStore(plugin);
+  let store = getStore();
   return (
     <Provider store={store}>
       <div className="App">

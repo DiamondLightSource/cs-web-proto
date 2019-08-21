@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { useSubscription, writePv } from "../../hooks/useCs";
-import { CsState } from "../../redux/store";
+import { CsState } from "../../redux/csState";
 import { BaseWidget } from "../BaseWidget/BaseWidget";
-import { PV_CHANGED } from "../../redux/actions";
 
 export interface InputProps {
   pvName: string;

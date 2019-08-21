@@ -1,28 +1,33 @@
-import { ConnectionPlugin } from "./plugin";
+import { Connection, ConnectionCallback } from "./plugin";
 import { NType } from "../cs";
-import { ValueCache } from "../redux/store";
+import { ValueCache } from "../redux/csState";
 
-export class SimulatorPlugin implements ConnectionPlugin {
-  private url: string;
-  private value: number;
+const nullCallback: ConnectionCallback = (_p, _v): void => {};
+
+export class SimulatorPlugin implements Connection {
   private localPvs: ValueCache;
-  private onUpdate: (pvName: string, value: any) => void;
+  private onUpdate: ConnectionCallback;
+  private timeout: NodeJS.Timeout | null;
 
-  public constructor(
-    websocketUrl: string,
-    onUpdate: (pvName: string, value: any) => void
-  ) {
-    this.url = websocketUrl;
-    this.value = 0;
+  public constructor() {
     this.localPvs = {};
-    this.onUpdate = onUpdate;
+    this.onUpdate = nullCallback;
     this.subscribe = this.subscribe.bind(this);
     this.putPv = this.putPv.bind(this);
     /* Set up the sine PV. */
-    setInterval(
+    this.timeout = null;
+  }
+
+  public connect(callback: ConnectionCallback): void {
+    this.onUpdate = callback;
+    this.timeout = setInterval(
       (): void => this.onUpdate("sim://sine", this.getValue("sim://sine")),
       2000
     );
+  }
+
+  public isConnected(): boolean {
+    return this.onUpdate !== nullCallback;
   }
 
   public subscribe(pvName: string): void {
