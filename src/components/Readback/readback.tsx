@@ -16,7 +16,7 @@ export const Readback = (props: {
     <BaseWidget
       pvName={props.pvName}
       value={props.value}
-      timestamp={new Date().toLocaleString()}
+      timestamp={new Date(1566377886000).toLocaleString()}
     >
       <div>
         {props.pvName}: {value}
