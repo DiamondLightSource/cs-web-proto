@@ -18,7 +18,7 @@ export const Input: React.FC<InputProps> = (props: InputProps): JSX.Element => (
   <BaseWidget
     pvName={props.pvName}
     value={props.value}
-    timestamp={new Date(1566377886000).toLocaleString()}
+    timestamp={new Date(1566377886000).toString()}
   >
     <input
       type="text"
