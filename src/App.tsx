@@ -4,6 +4,7 @@ import { Provider } from "react-redux";
 import { ConnectedReadback } from "./components/Readback/readback";
 import { ConnectedInput } from "./components/Input/input";
 import { ConnectedProgressBar } from "./components/ProgressBar/ProgressBar";
+import { SlideControl } from "./components/SlideControl/SlideControl";
 import { CopyWrapper } from "./components/CopyWrapper/CopyWrapper";
 import { getStore, initialiseStore } from "./redux/store";
 import { SimulatorPlugin } from "./connection/sim";
@@ -35,6 +36,17 @@ const App: React.FC = (): JSX.Element => {
           >
             Copy Wrapper Example
           </CopyWrapper>
+        </div>
+        <div
+          style={{
+            position: "absolute",
+            top: "500px",
+            left: "10%",
+            height: "20%",
+            width: "50%"
+          }}
+        >
+          <SlideControl pvName="loc://pv1" value={50} min={0} max={100} />
         </div>
         <div
           style={{

@@ -59,7 +59,8 @@ export const ProgressBar: React.FC<ProgressBarProps> = (
     height: height,
     width: width
   };
-  let onPercent = ((value - min) / (max - min)) * 100.0;
+  let onPercent =
+    value < min ? 0 : value > max ? 100 : ((value - min) / (max - min)) * 100.0;
   // Store styles in these variables
   // Change the direction of the gradient depending on wehether the bar is vertical
   let direction = vertical === true ? "to left" : "to top";
