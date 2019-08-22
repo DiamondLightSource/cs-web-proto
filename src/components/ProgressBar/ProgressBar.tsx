@@ -6,7 +6,6 @@ import { CsState } from "../../redux/csState";
 import classes from "./ProgressBar.module.css";
 
 interface ProgressBarProps {
-  pvName: string;
   value: number;
   min: number;
   max: number;
@@ -37,9 +36,8 @@ interface ConnectedProgressBarProps {
 
 export const ProgressBar: React.FC<ProgressBarProps> = (
   props: ProgressBarProps
-) => {
+): JSX.Element => {
   let {
-    pvName = "",
     value = 0,
     min = 0,
     max = 100,
@@ -59,7 +57,8 @@ export const ProgressBar: React.FC<ProgressBarProps> = (
     height: height,
     width: width
   };
-  let onPercent = ((value - min) / (max - min)) * 100.0;
+  let onPercent =
+    value < min ? 0 : value > max ? 100 : ((value - min) / (max - min)) * 100.0;
   // Store styles in these variables
   // Change the direction of the gradient depending on wehether the bar is vertical
   let direction = vertical === true ? "to left" : "to top";
@@ -91,7 +90,7 @@ export const ProgressBar: React.FC<ProgressBarProps> = (
       : value;
 
   return (
-    <div>
+    <div style={barStyle}>
       <div className={classes.off} style={offStyle} />
       <div className={classes.on} style={onStyle} />
       <div className={classes.label} style={fontStyle}>
