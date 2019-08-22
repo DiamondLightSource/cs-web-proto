@@ -1,5 +1,5 @@
 import { Connection, ConnectionCallback } from "./plugin";
-import { NType } from "../cs";
+import { NType } from "../ntypes";
 import { ValueCache } from "../redux/csState";
 
 const nullCallback: ConnectionCallback = (_p, _v): void => {};

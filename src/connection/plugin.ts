@@ -1,4 +1,4 @@
-import { NType } from "../cs";
+import { NType } from "../ntypes";
 
 export type ConnectionCallback = (pvName: string, value: NType) => void;
 

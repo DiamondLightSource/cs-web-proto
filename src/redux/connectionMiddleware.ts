@@ -1,7 +1,7 @@
 import { Connection } from "../connection/plugin";
 import { SUBSCRIBE, WRITE_PV, PV_CHANGED } from "./actions";
 import { getStore } from "./store";
-import { NType } from "../cs";
+import { NType } from "../ntypes";
 
 function pvChanged(pvName: string, value: NType): void {
   getStore().dispatch({

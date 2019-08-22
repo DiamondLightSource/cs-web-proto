@@ -5,7 +5,7 @@ import { WebSocketLink } from "apollo-link-ws";
 import { getMainDefinition } from "apollo-utilities";
 import gql from "graphql-tag";
 import { InMemoryCache, NormalizedCacheObject } from "apollo-cache-inmemory";
-import { NType } from "../cs";
+import { NType } from "../ntypes";
 import { Connection, ConnectionCallback } from "./plugin";
 
 function createLink(socket: string): ApolloLink {
