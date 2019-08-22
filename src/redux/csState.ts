@@ -1,4 +1,10 @@
-import { PV_CHANGED, ActionType, SUBSCRIBE, WRITE_PV } from "./actions";
+import {
+  VALUE_CHANGED,
+  ActionType,
+  SUBSCRIBE,
+  WRITE_PV,
+  CONNECTION_CHANGED
+} from "./actions";
 import { NType } from "../ntypes";
 
 const initialState: CsState = {
@@ -15,10 +21,14 @@ export interface CsState {
 
 export function csReducer(state = initialState, action: ActionType): CsState {
   switch (action.type) {
-    case PV_CHANGED: {
+    case VALUE_CHANGED: {
       const newValueCache: ValueCache = Object.assign({}, state.valueCache);
       newValueCache[action.payload.pvName] = action.payload.value;
       return Object.assign({}, state, { valueCache: newValueCache });
+    }
+    case CONNECTION_CHANGED: {
+      console.log("Connection changed"); //eslint-disable-line no-console
+      break;
     }
     case SUBSCRIBE: {
       // Handled by middleware.

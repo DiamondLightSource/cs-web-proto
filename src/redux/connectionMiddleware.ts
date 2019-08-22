@@ -1,11 +1,27 @@
 import { Connection } from "../connection/plugin";
-import { SUBSCRIBE, WRITE_PV, PV_CHANGED } from "./actions";
+import {
+  CONNECTION_CHANGED,
+  SUBSCRIBE,
+  WRITE_PV,
+  VALUE_CHANGED
+} from "./actions";
 import { getStore } from "./store";
 import { NType } from "../ntypes";
 
-function pvChanged(pvName: string, value: NType): void {
+export interface ConnectionState {
+  isConnected: boolean;
+}
+
+function connectionChanged(pvName: string, value: ConnectionState): void {
   getStore().dispatch({
-    type: PV_CHANGED,
+    type: CONNECTION_CHANGED,
+    payload: { pvName: pvName, value: value }
+  });
+}
+
+function valueChanged(pvName: string, value: NType): void {
+  getStore().dispatch({
+    type: VALUE_CHANGED,
     payload: { pvName: pvName, value: value }
   });
 }
@@ -18,7 +34,7 @@ export const connectionMiddleware = (connection: Connection) => (
   store: any
 ) => (next: any): any => (action: any): any => {
   if (!connection.isConnected()) {
-    connection.connect(pvChanged);
+    connection.connect(connectionChanged, valueChanged);
   }
 
   switch (action.type) {
