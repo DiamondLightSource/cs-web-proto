@@ -45,7 +45,7 @@ const App: React.FC = (): JSX.Element => {
             width: "50%"
           }}
         >
-          <SlideControl pvName="loc://pv1" value={50} min={0} max={100} />
+          <SlideControl pvName="loc://pv1" min={0} max={100} />
         </div>
         <div
           style={{

@@ -11,7 +11,6 @@ import classes from "./SlideControl.module.css";
 
 interface SlideControlProps {
   pvName: string;
-  value: number;
   min: number;
   max: number;
   vertical?: boolean;
@@ -26,19 +25,19 @@ interface SlideControlProps {
 
 export const SlideControl: React.FC<SlideControlProps> = (
   props: SlideControlProps
-) => {
+): JSX.Element => {
   let {
     pvName = "",
-    value = 0,
     min = 0,
     max = 100,
-    vertical = false,
-    color = "#00aa00",
-    top = "0%",
-    left = "0%",
-    height = "100%",
-    width = "100%",
-    fontStyle = {},
+    /* TODO: Implement vertical style and allow absolute positioning */
+    //vertical = false,
+    //color = "#00aa00",
+    //top = "0%",
+    //left = "0%",
+    //height = "100%",
+    //width = "100%",
+    //fontStyle = {},
     precision = undefined
   } = props;
 
@@ -88,7 +87,12 @@ export const SlideControl: React.FC<SlideControlProps> = (
           left: "0%"
         }}
       >
-        <ProgressBar pvName={pvName} value={inputValue} min={min} max={max} />
+        <ProgressBar
+          value={inputValue}
+          min={min}
+          max={max}
+          precision={precision}
+        />
       </div>
       <div
         style={{

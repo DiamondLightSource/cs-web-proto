@@ -6,7 +6,6 @@ import { CsState } from "../../redux/csState";
 import classes from "./ProgressBar.module.css";
 
 interface ProgressBarProps {
-  pvName: string;
   value: number;
   min: number;
   max: number;
@@ -37,9 +36,8 @@ interface ConnectedProgressBarProps {
 
 export const ProgressBar: React.FC<ProgressBarProps> = (
   props: ProgressBarProps
-) => {
+): JSX.Element => {
   let {
-    pvName = "",
     value = 0,
     min = 0,
     max = 100,
@@ -92,7 +90,7 @@ export const ProgressBar: React.FC<ProgressBarProps> = (
       : value;
 
   return (
-    <div>
+    <div style={barStyle}>
       <div className={classes.off} style={offStyle} />
       <div className={classes.on} style={onStyle} />
       <div className={classes.label} style={fontStyle}>
