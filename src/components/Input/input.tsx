@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { useSubscription, writePv } from "../../hooks/useCs";
 import { CsState } from "../../redux/csState";
-import { BaseWidget } from "../BaseWidget/BaseWidget";
 
 export interface InputProps {
   pvName: string;
@@ -14,20 +13,14 @@ export interface InputProps {
 }
 
 export const Input: React.FC<InputProps> = (props: InputProps): JSX.Element => (
-  <BaseWidget
-    pvName={props.pvName}
+  <input
+    type="text"
     value={props.value}
-    timestamp="2019-08-21 11:58:00"
-  >
-    <input
-      type="text"
-      value={props.value}
-      onKeyDown={props.onKeyDown}
-      onChange={props.onChange}
-      onBlur={props.onBlur}
-      onClick={props.onClick}
-    />
-  </BaseWidget>
+    onKeyDown={props.onKeyDown}
+    onChange={props.onChange}
+    onBlur={props.onBlur}
+    onClick={props.onClick}
+  />
 );
 
 interface ConnectedInputProps {

@@ -92,18 +92,13 @@ export const ProgressBar: React.FC<ProgressBarProps> = (
       : value;
 
   return (
-    <BaseWidget
-      pvName={pvName}
-      value={value}
-      timestamp={new Date().toLocaleString()}
-      style={barStyle}
-    >
+    <div>
       <div className={classes.off} style={offStyle} />
       <div className={classes.on} style={onStyle} />
       <div className={classes.label} style={fontStyle}>
         {valueText}
       </div>
-    </BaseWidget>
+    </div>
   );
 };
 
