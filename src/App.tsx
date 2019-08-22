@@ -4,6 +4,7 @@ import { Provider } from "react-redux";
 import { ConnectedReadback } from "./components/Readback/readback";
 import { ConnectedInput } from "./components/Input/input";
 import { ConnectedProgressBar } from "./components/ProgressBar/ProgressBar";
+import { CopyWrapper } from "./components/CopyWrapper/CopyWrapper";
 import { getStore, initialiseStore } from "./redux/store";
 import { SimulatorPlugin } from "./connection/sim";
 
@@ -24,6 +25,15 @@ const App: React.FC = (): JSX.Element => {
           <ConnectedInput pvName={"loc://pv1"} />
           <ConnectedInput pvName={"sim://sine"} />
           <ConnectedInput pvName={"sim://sine"} />
+        </div>
+        <div>
+          <CopyWrapper
+            pvName="PV-TS-TIM-01"
+            value={9.0}
+            timestamp={{ secondsPastEpoch: 0, nanoseconds: 0, userTag: 0 }}
+          >
+            Copy Wrapper Example
+          </CopyWrapper>{" "}
         </div>
         <div
           style={{

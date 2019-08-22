@@ -2,7 +2,6 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { useSubscription } from "../../hooks/useCs";
 import { CsState } from "../../redux/csState";
-import { BaseWidget } from "../BaseWidget/BaseWidget";
 
 import classes from "./ProgressBar.module.css";
 

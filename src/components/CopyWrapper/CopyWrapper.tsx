@@ -4,6 +4,7 @@
 // A middle mouse click will copy the PV name to the clipboard
 
 import React, { ReactNode } from "react";
+import { Time, Alarm } from "../../cs";
 import copyToClipboard from "clipboard-copy";
 
 import classes from "./CopyWrapper.module.css";
@@ -11,12 +12,18 @@ import classes from "./CopyWrapper.module.css";
 export const CopyWrapper = (props: {
   pvName: string;
   value: any;
-  timestamp: string;
-  alarm?: string;
+  timestamp: Time;
+  alarm?: Alarm;
   children: ReactNode;
   style?: object;
 }) => {
-  let { pvName, value, timestamp, alarm = "", style = {} } = props;
+  let {
+    pvName,
+    value,
+    timestamp,
+    alarm = { severity: 0, status: 0, message: "" },
+    style = {}
+  } = props;
 
   function copyPvToClipboard(e: React.MouseEvent) {
     if (e.button === 1) {
@@ -24,7 +31,11 @@ export const CopyWrapper = (props: {
     }
   }
   // Compose the text which should be shown on the tooltip
-  let toolTipText = [value.toString(), timestamp, alarm]
+  let toolTipText = [
+    value.toString(),
+    new Date(timestamp.secondsPastEpoch * 1000),
+    alarm.message
+  ]
     .filter(word => word !== "")
     .join(", ");
 
