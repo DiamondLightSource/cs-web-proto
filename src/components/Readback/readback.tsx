@@ -31,7 +31,11 @@ export const Readback = (props: {
       displayedValue = value.toFixed(precision);
     }
   } else {
-    displayedValue = value;
+    if (value === "") {
+      displayedValue = "Waiting for value";
+    } else {
+      displayedValue = value;
+    }
   }
 
   // Change text depending on alarm color
