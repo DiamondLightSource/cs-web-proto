@@ -1,13 +1,11 @@
 import React from "react";
-import { useSelector } from "react-redux";
-import { useSubscription } from "../../hooks/useCs";
-import { CsState } from "../../redux/csState";
 
 import classes from "./ProgressBar.module.css";
+import { connectionWrapper } from "../ConnectionWrapper/ConnectionWrapper";
 
 interface ProgressBarProps {
   pvName: string;
-  value: number;
+  value: string;
   min: number;
   max: number;
   vertical?: boolean;
@@ -37,10 +35,10 @@ interface ConnectedProgressBarProps {
 
 export const ProgressBar: React.FC<ProgressBarProps> = (
   props: ProgressBarProps
-) => {
+): JSX.Element => {
   let {
     pvName = "",
-    value = 0,
+    value = "0",
     min = 0,
     max = 100,
     vertical = false,
@@ -59,8 +57,13 @@ export const ProgressBar: React.FC<ProgressBarProps> = (
     height: height,
     width: width
   };
+  let numValue = parseFloat(value);
   let onPercent =
-    value < min ? 0 : value > max ? 100 : ((value - min) / (max - min)) * 100.0;
+    numValue < min
+      ? 0
+      : numValue > max
+      ? 100
+      : ((numValue - min) / (max - min)) * 100.0;
   // Store styles in these variables
   // Change the direction of the gradient depending on wehether the bar is vertical
   let direction = vertical === true ? "to left" : "to top";
@@ -88,8 +91,8 @@ export const ProgressBar: React.FC<ProgressBarProps> = (
     min > max
       ? "Check min and max values"
       : precision
-      ? value.toFixed(precision)
-      : value;
+      ? numValue.toFixed(precision)
+      : numValue;
 
   return (
     <div>
@@ -102,19 +105,6 @@ export const ProgressBar: React.FC<ProgressBarProps> = (
   );
 };
 
-export const ConnectedProgressBar = (
-  props: ConnectedProgressBarProps
-): JSX.Element => {
-  useSubscription(props.pvName);
-  const latestValue = useSelector((state: CsState): string => {
-    let pvState = state.valueCache[props.pvName];
-    if (pvState == null || pvState.value == null) {
-      return "";
-    } else if (!pvState.connected) {
-      return "Not connected";
-    } else {
-      return pvState.value.value.toString();
-    }
-  });
-  return <ProgressBar {...props} value={parseFloat(latestValue)} />;
-};
+export const ConnectedProgressBar: React.FC<
+  ConnectedProgressBarProps
+> = connectionWrapper(ProgressBar);

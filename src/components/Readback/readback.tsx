@@ -1,8 +1,6 @@
 import React from "react";
-import { useSelector } from "react-redux";
-import { useSubscription } from "../../hooks/useCs";
-import { CsState } from "../../redux/csState";
 import { Scalar, Alarm } from "../../ntypes";
+import { connectionWrapper } from "../ConnectionWrapper/ConnectionWrapper";
 
 import classes from "./readback.module.css";
 
@@ -60,20 +58,13 @@ export const Readback = (props: {
   );
 };
 
-export const ConnectedReadback = (props: {
+interface ConnectedReadbackProps {
   pvName: string;
   precision?: number;
-}): JSX.Element => {
-  useSubscription(props.pvName);
-  const latestValue = useSelector((state: CsState): string => {
-    let pvState = state.valueCache[props.pvName];
-    if (pvState == null || pvState.value == null) {
-      return "";
-    } else if (!pvState.connected) {
-      return "Not connected";
-    } else {
-      return pvState.value.value.toString();
-    }
-  });
-  return <Readback {...props} value={latestValue} />;
-};
+  alarm?: Alarm;
+  style?: {};
+}
+
+export const ConnectedReadback: React.FC<
+  ConnectedReadbackProps
+> = connectionWrapper(Readback);
