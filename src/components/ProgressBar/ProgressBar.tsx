@@ -1,8 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { useSubscription } from "../../hooks/useCs";
-import { CsState } from "../../redux/store";
-import { BaseWidget } from "../BaseWidget/BaseWidget";
+import { CsState } from "../../redux/csState";
 
 import classes from "./ProgressBar.module.css";
 
@@ -92,18 +91,13 @@ export const ProgressBar: React.FC<ProgressBarProps> = (
       : value;
 
   return (
-    <BaseWidget
-      pvName={pvName}
-      value={value}
-      timestamp={new Date().toLocaleString()}
-      style={barStyle}
-    >
+    <div>
       <div className={classes.off} style={offStyle} />
       <div className={classes.on} style={onStyle} />
       <div className={classes.label} style={fontStyle}>
         {valueText}
       </div>
-    </BaseWidget>
+    </div>
   );
 };
 

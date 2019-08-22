@@ -1,11 +1,11 @@
-.BaseWidget {
+.CopyWrapper {
   border: 1px solid #aaaaaa;
   display: inline-block;
   text-align: center;
   position: relative;
 }
 
-.BaseWidget .tooltiptext {
+.CopyWrapper .tooltiptext {
   visibility: hidden;
   background-color: black;
   color: #fff;
@@ -17,7 +17,7 @@
   left: 50%;
 }
 
-.BaseWidget .tooltiptext::after {
+.CopyWrapper .tooltiptext::after {
   content: "";
   position: absolute;
   top: 100%;
@@ -28,6 +28,6 @@
   border-color: black transparent transparent transparent;
 }
 
-.BaseWidget:hover .tooltiptext {
+.CopyWrapper:hover .tooltiptext {
   visibility: visible;
 }
