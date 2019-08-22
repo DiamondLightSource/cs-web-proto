@@ -6,9 +6,9 @@
 import React, { ReactNode } from "react";
 import copyToClipboard from "clipboard-copy";
 
-import classes from "./BaseWidget.module.css";
+import classes from "./CopyWrapper.module.css";
 
-export const BaseWidget = (props: {
+export const CopyWrapper = (props: {
   pvName: string;
   value: any;
   timestamp: string;
@@ -30,7 +30,7 @@ export const BaseWidget = (props: {
 
   return (
     <div
-      className={classes.BaseWidget}
+      className={classes.CopyWrapper}
       style={style}
       onClick={copyPvToClipboard}
     >
