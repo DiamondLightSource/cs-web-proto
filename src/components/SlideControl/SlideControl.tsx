@@ -62,11 +62,9 @@ export const SlideControl: React.FC<SlideControlProps> = (
   }
 
   function onMouseDown(event: React.MouseEvent<HTMLInputElement>): void {
-    console.log("Start editing");
     setEditing(true);
   }
   function onMouseUp(event: React.MouseEvent<HTMLInputElement>): void {
-    console.log("Stop editing");
     setEditing(false);
     writePv(pvName, {
       type: "NTScalar",
