@@ -4,6 +4,7 @@ import { Provider } from "react-redux";
 import { ConnectedReadback } from "./components/Readback/readback";
 import { ConnectedInput } from "./components/Input/input";
 import { ConnectedProgressBar } from "./components/ProgressBar/ProgressBar";
+import { CopyWrapper } from "./components/CopyWrapper/CopyWrapper";
 import { getStore, initialiseStore } from "./redux/store";
 import { SimulatorPlugin } from "./connection/sim";
 
@@ -18,12 +19,21 @@ const App: React.FC = (): JSX.Element => {
         <div style={{ display: "block" }}>
           <ConnectedReadback pvName={"TMC43-TS-IOC-01:AI"} />
           <ConnectedReadback pvName={"TMC43-TS-IOC-01:CURRENT"} />
-          <ConnectedReadback pvName={"sim://sine"} />
+          <ConnectedReadback pvName={"sim://sine"} precision={3} />
         </div>
         <div style={{ display: "block" }}>
           <ConnectedInput pvName={"loc://pv1"} />
           <ConnectedInput pvName={"sim://sine"} />
           <ConnectedInput pvName={"sim://sine"} />
+        </div>
+        <div>
+          <CopyWrapper
+            pvName="PV-TS-TIM-01"
+            value={9.0}
+            timestamp={{ secondsPastEpoch: 0, nanoseconds: 0, userTag: 0 }}
+          >
+            Copy Wrapper Example
+          </CopyWrapper>
         </div>
         <div
           style={{
@@ -34,9 +44,9 @@ const App: React.FC = (): JSX.Element => {
           }}
         >
           <ConnectedProgressBar
-            pvName={"TMC43-TS-IOC-01:AI"}
-            min={0}
-            max={100}
+            pvName={"sim://sine"}
+            min={-1}
+            max={1}
             precision={2}
           />
         </div>
