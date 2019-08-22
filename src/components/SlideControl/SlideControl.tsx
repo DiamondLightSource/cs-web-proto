@@ -73,8 +73,6 @@ export const SlideControl: React.FC<SlideControlProps> = (
   }
 
   if (!editing && inputValue !== parseFloat(latestValue)) {
-    console.log(inputValue);
-    console.log(latestValue);
     setInputValue(parseFloat(latestValue));
   }
 
