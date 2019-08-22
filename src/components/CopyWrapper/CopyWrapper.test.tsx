@@ -1,9 +1,8 @@
 import React from "react";
 import { CopyWrapper } from "./CopyWrapper";
-import { shallow } from "enzyme";
-import renderer from "react-test-renderer";
+import { shallow, ShallowWrapper } from "enzyme";
 
-let wrapper: ShallowWrapper<InputProps>;
+let wrapper: ShallowWrapper;
 beforeEach((): void => {
   const mock = (_: any): void => {
     // pass
