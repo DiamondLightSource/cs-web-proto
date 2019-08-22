@@ -1,4 +1,4 @@
-// Component to allow setting of vakues using a slider.
+// Component to allow setting of values using a slider.
 // Displays value via an embedded progressbar widget
 
 import React, { useState } from "react";
@@ -31,13 +31,14 @@ export const SlideControl: React.FC<SlideControlProps> = (
     value = "",
     min = 0,
     max = 100,
-    vertical = false,
-    color = "#00aa00",
-    top = "0%",
-    left = "0%",
-    height = "100%",
-    width = "100%",
-    fontStyle = {},
+    /* TODO: Implement vertical style and allow absolute positioning */
+    //vertical = false,
+    //color = "#00aa00",
+    //top = "0%",
+    //left = "0%",
+    //height = "100%",
+    //width = "100%",
+    //fontStyle = {},
     precision = undefined
   } = props;
 
@@ -76,10 +77,10 @@ export const SlideControl: React.FC<SlideControlProps> = (
         }}
       >
         <ProgressBar
-          pvName={pvName}
           value={value.toString()}
           min={min}
           max={max}
+          precision={precision}
         />
       </div>
       <div

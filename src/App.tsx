@@ -46,12 +46,7 @@ const App: React.FC = (): JSX.Element => {
             width: "50%"
           }}
         >
-          <ConnectedSlideControl
-            pvName="loc://pv1"
-            value={"50"}
-            min={0}
-            max={100}
-          />
+          <ConnectedSlideControl pvName="loc://pv1" min={0} max={100} />
         </div>
         <div
           style={{

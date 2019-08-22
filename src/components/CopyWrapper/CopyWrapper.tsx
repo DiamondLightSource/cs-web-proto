@@ -16,7 +16,7 @@ export const CopyWrapper = (props: {
   alarm?: Alarm;
   children: ReactNode;
   style?: object;
-}) => {
+}): JSX.Element => {
   let {
     pvName,
     value,
@@ -25,7 +25,7 @@ export const CopyWrapper = (props: {
     style = {}
   } = props;
 
-  function copyPvToClipboard(e: React.MouseEvent) {
+  function copyPvToClipboard(e: React.MouseEvent): void {
     if (e.button === 1) {
       copyToClipboard(pvName);
     }
@@ -36,7 +36,7 @@ export const CopyWrapper = (props: {
     new Date(timestamp.secondsPastEpoch * 1000),
     alarm.message
   ]
-    .filter(word => word !== "")
+    .filter((word): boolean => word !== "")
     .join(", ");
 
   return (
