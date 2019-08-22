@@ -44,4 +44,25 @@ export interface NTScalarArray {
   control?: Control;
 }
 
-export type NType = NTScalar | NTScalarArray;
+/*
+We could handle enums in a different way, by defining
+
+type Scalar: number | string | Enum;
+
+Then enums would be available in NTScalar and NTScalarArray. This would be
+less similar to normative types.
+*/
+export interface Enum {
+  index: number;
+  choices: string[];
+}
+
+export interface NTEnum {
+  type: string;
+  value: Enum;
+  descriptor?: string;
+  alarm?: Alarm;
+  time?: Time;
+}
+
+export type NType = NTScalar | NTScalarArray | NTEnum;
