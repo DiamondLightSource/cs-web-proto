@@ -33,7 +33,7 @@ const App: React.FC = (): JSX.Element => {
             timestamp={{ secondsPastEpoch: 0, nanoseconds: 0, userTag: 0 }}
           >
             Copy Wrapper Example
-          </CopyWrapper>{" "}
+          </CopyWrapper>
         </div>
         <div
           style={{
