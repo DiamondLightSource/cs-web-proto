@@ -106,11 +106,13 @@ export const ConnectedProgressBar = (
 ): JSX.Element => {
   useSubscription(props.pvName);
   const latestValue = useSelector((state: CsState): string => {
-    let value = state.valueCache[props.pvName];
-    if (value == null) {
+    let pvState = state.valueCache[props.pvName];
+    if (pvState == null || pvState.value == null) {
       return "";
+    } else if (!pvState.connected) {
+      return "Not connected";
     } else {
-      return value.value.toString();
+      return pvState.value.value.toString();
     }
   });
   return <ProgressBar {...props} value={parseFloat(latestValue)} />;

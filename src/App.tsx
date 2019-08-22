@@ -18,8 +18,9 @@ const App: React.FC = (): JSX.Element => {
         <h1>CS Web Proto</h1>
         <div style={{ display: "block" }}>
           <ConnectedReadback pvName={"TMC43-TS-IOC-01:AI"} />
-          <ConnectedReadback pvName={"TMC43-TS-IOC-01:CURRENT"} />
+          <ConnectedReadback pvName={"loc://pv1"} />
           <ConnectedReadback pvName={"sim://sine"} precision={3} />
+          <ConnectedReadback pvName={"sim://disconnector"} precision={3} />
         </div>
         <div style={{ display: "block" }}>
           <ConnectedInput pvName={"loc://pv1"} />

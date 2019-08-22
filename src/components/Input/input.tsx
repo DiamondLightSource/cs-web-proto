@@ -36,12 +36,14 @@ export const ConnectedInput: React.FC<ConnectedInputProps> = (
   /* It would be nice to be able to share a selector, but it's
      not immediately obvious how to make a selector that takes
      an argument other than state. */
-  const latestValue: string = useSelector((state: CsState): string => {
-    let value = state.valueCache[props.pvName];
-    if (value == null) {
+  const latestValue = useSelector((state: CsState): string => {
+    let pvState = state.valueCache[props.pvName];
+    if (pvState == null || pvState.value == null) {
       return "";
+    } else if (!pvState.connected) {
+      return "Not connected";
     } else {
-      return value.value.toString();
+      return pvState.value.value.toString();
     }
   });
   function onKeyDown(event: React.KeyboardEvent<HTMLInputElement>): void {

@@ -6,7 +6,6 @@ import {
   nullValueCallback
 } from "./plugin";
 import { NType } from "../ntypes";
-import { ValueCache } from "../redux/csState";
 import { ConnectionState } from "../redux/connectionMiddleware";
 
 abstract class SimPv {
@@ -25,6 +24,7 @@ abstract class SimPv {
     this.onConnectionUpdate = onConnectionUpdate;
     this.onValueUpdate = onValueUpdate;
     this.updateRate = updateRate;
+    this.onConnectionUpdate(pvName, { isConnected: true });
   }
   public getConnection(): ConnectionState {
     return { isConnected: true };
@@ -60,6 +60,7 @@ class Disconnector extends SimPv {
     updateRate: number
   ) {
     super(pvName, onConnectionUpdate, onValueUpdate, updateRate);
+    this.onValueUpdate(this.pvName, this.getValue());
     setInterval(
       (): void => this.onConnectionUpdate(this.pvName, this.getConnection()),
       this.updateRate
@@ -78,6 +79,10 @@ class Disconnector extends SimPv {
 
 interface SimCache {
   [pvName: string]: SimPv;
+}
+
+interface ValueCache {
+  [pvName: string]: NType;
 }
 
 export class SimulatorPlugin implements Connection {
@@ -111,6 +116,7 @@ export class SimulatorPlugin implements Connection {
     console.log(`creating connection to ${pvName}`); //eslint-disable-line no-console
     if (pvName.startsWith("loc://")) {
       this.localPvs[pvName] = { type: "NTScalarDouble", value: 0 };
+      this.onConnectionUpdate(pvName, { isConnected: true });
       this.onValueUpdate(pvName, { type: "NTScalarDouble", value: 0 });
     } else if (pvName === "sim://disconnector") {
       this.simPvs[pvName] = new Disconnector(
