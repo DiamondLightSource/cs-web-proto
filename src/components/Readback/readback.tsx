@@ -2,7 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { useSubscription } from "../../hooks/useCs";
 import { CsState } from "../../redux/csState";
-import { Scalar, Alarm } from "../../cs";
+import { Scalar, Alarm } from "../../ntypes";
 
 import classes from "./readback.module.css";
 

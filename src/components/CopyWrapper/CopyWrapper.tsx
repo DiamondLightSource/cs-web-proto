@@ -4,7 +4,7 @@
 // A middle mouse click will copy the PV name to the clipboard
 
 import React, { ReactNode } from "react";
-import { Time, Alarm } from "../../cs";
+import { Time, Alarm } from "../../ntypes";
 import copyToClipboard from "clipboard-copy";
 
 import classes from "./CopyWrapper.module.css";

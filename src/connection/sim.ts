@@ -1,14 +1,13 @@
 import {
   Connection,
   ConnectionChangedCallback,
-  ValueChangedCallback
+  ValueChangedCallback,
+  nullConnCallback,
+  nullValueCallback
 } from "./plugin";
 import { NType } from "../ntypes";
 import { ValueCache } from "../redux/csState";
 import { ConnectionState } from "../redux/connectionMiddleware";
-
-const nullConnCallback: ConnectionChangedCallback = (_p, _v): void => {};
-const nullValueCallback: ValueChangedCallback = (_p, _v): void => {};
 
 abstract class SimPv {
   protected onConnectionUpdate: ConnectionChangedCallback;
