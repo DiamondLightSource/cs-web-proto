@@ -93,7 +93,7 @@ export const ProgressBar: React.FC<ProgressBarProps> = (
       ? "Check min and max values"
       : precision
       ? numValue.toFixed(precision)
-      : numValue;
+      : numValue.toString();
 
   return (
     <div style={barStyle}>

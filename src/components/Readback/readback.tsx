@@ -27,7 +27,7 @@ export const Readback = (props: {
     alarm = value.alarm;
   }
   let displayedValue;
-  if (!connected || !value) {
+  if (!value) {
     displayedValue = "Waiting for value";
   } else if (precision && precision >= 0) {
     value = value as NType;
@@ -36,8 +36,13 @@ export const Readback = (props: {
     displayedValue = ntToString(value);
   }
 
-  // Change text depending on alarm color
-  if (alarm.severity === 1) {
+  // Change text color depending on connection state or alarm
+  if (!connected) {
+    style = {
+      ...style,
+      color: "#ffffff"
+    };
+  } else if (alarm.severity === 1) {
     // Minor alarm
     style = {
       ...style,
