@@ -66,3 +66,53 @@ export interface NTEnum {
 }
 
 export type NType = NTScalar | NTScalarArray | NTEnum;
+
+export const NO_ALARM: Alarm = {
+  severity: 0,
+  status: 0,
+  message: ""
+};
+
+export function ntToNumber(ntype: NType): number {
+  let value = ntype.value;
+  let numericValue;
+  if (typeof value === "number") {
+    numericValue = value;
+  } else if (typeof value === "string") {
+    numericValue = parseFloat(value);
+  } else {
+    numericValue = 0;
+  }
+  return numericValue;
+}
+
+export function ntOrNullToNumber(ntype?: NType): number {
+  if (ntype === undefined) {
+    return NaN;
+  } else {
+    return ntToNumber(ntype);
+  }
+}
+
+export function ntToNumericString(ntype: NType, precision = 3): string {
+  return ntToNumber(ntype).toFixed(precision);
+}
+
+export function ntToString(ntype: NType): string {
+  let value = ntype.value;
+  if (typeof value === "number") {
+    return value.toString();
+  }
+  if (typeof value === "string") {
+    return value;
+  }
+  return "";
+}
+
+export function ntOrNullToString(ntype?: NType): string {
+  if (ntype === undefined) {
+    return "null";
+  } else {
+    return ntToString(ntype);
+  }
+}

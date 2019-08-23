@@ -1,10 +1,12 @@
 import React from "react";
 
+import { NType, ntOrNullToNumber } from "../../ntypes";
 import classes from "./ProgressBar.module.css";
 import { connectionWrapper } from "../ConnectionWrapper/ConnectionWrapper";
 
 interface ProgressBarProps {
-  value: string;
+  connected: boolean;
+  value?: NType;
   min: number;
   max: number;
   vertical?: boolean;
@@ -17,7 +19,8 @@ interface ProgressBarProps {
   precision?: number;
 }
 
-// Same as ProgressBarProps but without value as this is collected from the store
+// Same as ProgressBarProps but without connected and value as these are
+// collected from the store
 interface ConnectedProgressBarProps {
   pvName: string;
   min: number;
@@ -36,7 +39,7 @@ export const ProgressBar: React.FC<ProgressBarProps> = (
   props: ProgressBarProps
 ): JSX.Element => {
   let {
-    value = "0",
+    value,
     min = 0,
     max = 100,
     vertical = false,
@@ -55,7 +58,7 @@ export const ProgressBar: React.FC<ProgressBarProps> = (
     height: height,
     width: width
   };
-  let numValue = parseFloat(value);
+  let numValue = ntOrNullToNumber(value);
   let onPercent =
     numValue < min
       ? 0

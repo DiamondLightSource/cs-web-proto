@@ -2,6 +2,7 @@ import React from "react";
 import { useSubscription } from "../../hooks/useCs";
 import { useSelector } from "react-redux";
 import { CsState } from "../../redux/csState";
+import { NType } from "../../ntypes";
 
 export interface PvProps extends React.PropsWithChildren<any> {
   pvName: string;
@@ -17,16 +18,25 @@ export const connectionWrapper = <P extends object>(
   // eslint-disable-next-line react/display-name
   return (props: PvProps): JSX.Element => {
     useSubscription(props.pvName);
-    const latestValue = useSelector((state: CsState): string => {
+    const [connected, latestValue] = useSelector((state: CsState): [
+      boolean,
+      NType?
+    ] => {
       let pvState = state.valueCache[props.pvName];
-      if (pvState == null || pvState.value == null) {
-        return "";
-      } else if (!pvState.connected) {
-        return "Not connected";
-      } else {
-        return pvState.value.value.toString();
+      let connected = false;
+      let value = undefined;
+      if (pvState != null) {
+        connected = pvState.connected || false;
+        value = pvState.value;
       }
+      return [connected, value];
     });
-    return <Component {...(props as P)} value={latestValue}></Component>;
+    return (
+      <Component
+        {...(props as P)}
+        connected={connected}
+        value={latestValue}
+      ></Component>
+    );
   };
 };

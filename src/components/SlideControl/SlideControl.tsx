@@ -4,13 +4,15 @@
 import React, { useState } from "react";
 import { ProgressBar } from "../ProgressBar/ProgressBar";
 import { writePv } from "../../hooks/useCs";
+import { NType, ntOrNullToString } from "../../ntypes";
 
 import classes from "./SlideControl.module.css";
 import { connectionWrapper } from "../ConnectionWrapper/ConnectionWrapper";
 
 interface SlideControlProps {
   pvName: string;
-  value: string;
+  connected: boolean;
+  value?: NType;
   min: number;
   max: number;
   vertical?: boolean;
@@ -27,8 +29,9 @@ export const SlideControl: React.FC<SlideControlProps> = (
   props: SlideControlProps
 ): JSX.Element => {
   let {
-    pvName = "",
-    value = "",
+    pvName,
+    connected,
+    value,
     min = 0,
     max = 100,
     /* TODO: Implement vertical style and allow absolute positioning */
@@ -60,8 +63,9 @@ export const SlideControl: React.FC<SlideControlProps> = (
     });
   }
 
-  if (!editing && inputValue !== value) {
-    setInputValue(value);
+  let stringValue = ntOrNullToString(value);
+  if (!editing && inputValue !== stringValue) {
+    setInputValue(stringValue);
   }
 
   return (
@@ -77,7 +81,8 @@ export const SlideControl: React.FC<SlideControlProps> = (
         }}
       >
         <ProgressBar
-          value={value.toString()}
+          connected={connected}
+          value={value}
           min={min}
           max={max}
           precision={precision}
