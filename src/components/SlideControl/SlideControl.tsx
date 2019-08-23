@@ -77,6 +77,7 @@ export const SlideControl: React.FC<SlideControlProps> = (
         }}
       >
         <ProgressBar
+          pvName={pvName}
           value={value.toString()}
           min={min}
           max={max}

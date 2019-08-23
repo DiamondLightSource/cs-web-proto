@@ -2,8 +2,10 @@ import React from "react";
 
 import classes from "./ProgressBar.module.css";
 import { connectionWrapper } from "../ConnectionWrapper/ConnectionWrapper";
+import { CopyWrapper } from "../CopyWrapper/CopyWrapper";
 
 interface ProgressBarProps {
+  pvName: string;
   value: string;
   min: number;
   max: number;
@@ -103,6 +105,18 @@ export const ProgressBar: React.FC<ProgressBarProps> = (
   );
 };
 
+export const CopyProgressBar: React.FC<ProgressBarProps> = (
+  props: ProgressBarProps
+): JSX.Element => (
+  <CopyWrapper
+    pvName={props.pvName}
+    value={props.value}
+    timestamp={{ secondsPastEpoch: 0, nanoseconds: 0, userTag: 0 }}
+  >
+    <ProgressBar {...props}></ProgressBar>
+  </CopyWrapper>
+);
+
 export const ConnectedProgressBar: React.FC<
   ConnectedProgressBarProps
-> = connectionWrapper(ProgressBar);
+> = connectionWrapper(CopyProgressBar);
