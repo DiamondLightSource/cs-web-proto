@@ -5,7 +5,7 @@ import {
   nullConnCallback,
   nullValueCallback
 } from "./plugin";
-import { NType, Alarm, Time, NTScalar } from "../ntypes";
+import { NType } from "../ntypes";
 import { ConnectionState } from "../redux/connectionMiddleware";
 
 abstract class SimPv {
@@ -124,8 +124,7 @@ class MetaData extends SimPv {
     let nanoseconds = Math.floor(currentTime % 1000);
 
     this.value = {
-      type: value.type,
-      value: value.value,
+      ...value,
       alarm: {
         severity: alarmSeverity,
         status: 0,
