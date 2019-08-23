@@ -78,7 +78,7 @@ class Disconnector extends SimPv {
 }
 
 class MetaData extends SimPv {
-  value: NType;
+  private value: NType;
   // Class to provide PV value along with Alarm and Timestamp data
   // Initial limits will be 10, 20, 80 and 90 - with expected range between 0 and 100
   public constructor(
@@ -219,10 +219,8 @@ export class SimulatorPlugin implements Connection {
       this.localPvs[pvName] = value;
       this.onValueUpdate(pvName, value);
     } else if (pvName.startsWith("meta://")) {
-      console.log("Updating meta PV...");
       let meta = this.metaPvs[pvName];
       meta.updateValue(value);
-      console.log(meta.value);
       this.onValueUpdate(pvName, value);
     }
   }
