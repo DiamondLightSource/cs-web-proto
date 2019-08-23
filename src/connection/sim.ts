@@ -221,7 +221,7 @@ export class SimulatorPlugin implements Connection {
     } else if (pvName.startsWith("meta://")) {
       let meta = this.metaPvs[pvName];
       meta.updateValue(value);
-      this.onValueUpdate(pvName, value);
+      this.onValueUpdate(pvName, meta.getValue());
     }
   }
 
@@ -232,6 +232,8 @@ export class SimulatorPlugin implements Connection {
       this.simPvs[pvName].getValue();
     } else if (pvName === "sim://random") {
       return { type: "NTScalarDouble", value: Math.random() };
+    } else if (pvName.startsWith("meta://")) {
+      return this.localPvs[pvName];
     }
     return { type: "NTScalarDouble", value: 0 };
   }
