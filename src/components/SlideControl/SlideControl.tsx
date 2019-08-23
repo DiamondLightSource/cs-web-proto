@@ -64,9 +64,6 @@ export const SlideControl: React.FC<SlideControlProps> = (
     setInputValue(value);
   }
 
-  console.log(editing);
-  console.log(inputValue);
-
   return (
     <div style={{ border: "solid 1px red" }}>
       <div
