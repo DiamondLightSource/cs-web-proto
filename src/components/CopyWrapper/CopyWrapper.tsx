@@ -49,7 +49,7 @@ export const CopyWrapper = (props: {
         {pvName}
         <br />[{toolTipText}]
       </span>
-      {props.children}
+      <div className={classes.Children}>{props.children}</div>
     </div>
   );
 };

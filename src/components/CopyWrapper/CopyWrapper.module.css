@@ -2,7 +2,11 @@
   border: 1px solid #aaaaaa;
   display: inline-block;
   text-align: center;
-  position: relative;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  height: 100%;
+  width: 100%;
 }
 
 .CopyWrapper .tooltiptext {
@@ -30,4 +34,12 @@
 
 .CopyWrapper:hover .tooltiptext {
   visibility: visible;
+}
+
+.Children {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  height: 100%;
+  width: 100%;
 }

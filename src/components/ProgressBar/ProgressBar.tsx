@@ -22,6 +22,7 @@ interface ProgressBarProps {
 // Same as ProgressBarProps but without connected and value as these are
 // collected from the store
 interface ConnectedProgressBarProps {
+  value?: NType;
   pvName: string;
   min: number;
   max: number;
@@ -100,11 +101,25 @@ export const ProgressBar: React.FC<ProgressBarProps> = (
       <div className={classes.off} style={offStyle} />
       <div className={classes.on} style={onStyle} />
       <div className={classes.label} style={fontStyle}>
-        {valueText}
+        {valueText.toString()}
       </div>
     </div>
   );
 };
+
+/*
+export const CopyProgressBar: React.FC<ConnectedProgressBarProps> = (
+  props: ConnectedProgressBarProps
+): JSX.Element => (
+  <CopyWrapper
+    pvName={props.pvName}
+    value={props.value}
+    timestamp={{ secondsPastEpoch: 0, nanoseconds: 0, userTag: 0 }}
+  >
+    <ProgressBar {...props}></ProgressBar>
+  </CopyWrapper>
+);
+*/
 
 export const ConnectedProgressBar: React.FC<
   ConnectedProgressBarProps
