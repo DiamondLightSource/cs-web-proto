@@ -3,7 +3,6 @@ import React from "react";
 import { NType, ntOrNullToNumber } from "../../ntypes";
 import classes from "./ProgressBar.module.css";
 import { connectionWrapper } from "../ConnectionWrapper/ConnectionWrapper";
-import { CopyWrapper } from "../CopyWrapper/CopyWrapper";
 
 interface ProgressBarProps {
   connected: boolean;
