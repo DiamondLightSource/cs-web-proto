@@ -1,0 +1,14 @@
+<html>
+  <script text="text/javascript">
+    count = 0;
+    function runClient(){
+    console.log("Starting client");
+    var connection = new WebSocket('ws://localhost:8765', ['soap', 'xmpp']);
+    connection.onmessage = function () { count += 1 };
+    connection.onclose = function() { console.log("Connection closed")};
+    }
+  </script>
+  <body onload="runClient()">
+  </body>
+
+</html>
