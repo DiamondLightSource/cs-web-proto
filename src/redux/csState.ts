@@ -33,7 +33,6 @@ export function csReducer(state = initialState, action: ActionType): CsState {
         value: action.payload.value
       });
       newValueCache[action.payload.pvName] = newPvState;
-      console.log("Value changed"); //eslint-disable-line no-console
       return Object.assign({}, state, { valueCache: newValueCache });
     }
     case CONNECTION_CHANGED: {
@@ -43,7 +42,6 @@ export function csReducer(state = initialState, action: ActionType): CsState {
         connected: action.payload.value.isConnected
       });
       newValueCache[action.payload.pvName] = newPvState;
-      console.log("Connection changed"); //eslint-disable-line no-console
       return Object.assign({}, state, { valueCache: newValueCache });
     }
     case SUBSCRIBE: {
