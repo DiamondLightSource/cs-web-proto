@@ -99,7 +99,7 @@ export const ProgressBar: React.FC<ProgressBarProps> = (
       <div className={classes.off} style={offStyle} />
       <div className={classes.on} style={onStyle} />
       <div className={classes.label} style={fontStyle}>
-        {valueText}
+        {valueText.toString()}
       </div>
     </div>
   );

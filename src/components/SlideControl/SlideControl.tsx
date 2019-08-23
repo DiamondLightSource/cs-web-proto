@@ -64,6 +64,9 @@ export const SlideControl: React.FC<SlideControlProps> = (
     setInputValue(value);
   }
 
+  console.log(editing);
+  console.log(inputValue);
+
   return (
     <div style={{ border: "solid 1px red" }}>
       <div
@@ -78,7 +81,7 @@ export const SlideControl: React.FC<SlideControlProps> = (
       >
         <ProgressBar
           pvName={pvName}
-          value={value.toString()}
+          value={inputValue}
           min={min}
           max={max}
           precision={precision}
