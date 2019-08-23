@@ -20,15 +20,21 @@ const App: React.FC = (): JSX.Element => {
         <div style={{ display: "block" }}>
           <ConnectedReadback pvName={"TMC43-TS-IOC-01:AI"} />
           <ConnectedReadback pvName={"loc://pv1"} />
+          <ConnectedReadback pvName={"loc://pv2"} />
           <ConnectedReadback pvName={"sim://sine"} precision={3} />
           <ConnectedReadback pvName={"sim://disconnector"} precision={3} />
         </div>
         <div style={{ display: "block" }}>
           <ConnectedInput pvName={"loc://pv1"} />
+          <ConnectedInput pvName={"loc://pv2"} />
           <ConnectedInput pvName={"sim://sine"} />
           <ConnectedInput pvName={"sim://sine"} />
         </div>
-
+        <div style={{ display: "block" }}>
+          <h3>PV with Metadata</h3>
+          <ConnectedInput pvName={"meta://metapv1"} />
+          <ConnectedReadback pvName={"meta://metapv1"} precision={3} />
+        </div>
         <div
           style={{
             position: "absolute",

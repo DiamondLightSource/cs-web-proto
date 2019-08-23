@@ -65,4 +65,5 @@ export interface NTEnum {
   time?: Time;
 }
 
-export type NType = NTScalar | NTScalarArray | NTEnum;
+// export type NType = NTScalar | NTScalarArray | NTEnum;
+export type NType = NTScalar;

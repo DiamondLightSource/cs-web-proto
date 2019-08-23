@@ -5,7 +5,7 @@ import {
   nullConnCallback,
   nullValueCallback
 } from "./plugin";
-import { NType } from "../ntypes";
+import { NType, Alarm, Time, NTScalar } from "../ntypes";
 import { ConnectionState } from "../redux/connectionMiddleware";
 
 abstract class SimPv {
@@ -77,6 +77,73 @@ class Disconnector extends SimPv {
   }
 }
 
+class MetaData extends SimPv {
+  value: NType;
+  // Class to provide PV value along with Alarm and Timestamp data
+  // Initial limits will be 10, 20, 80 and 90 - with expected range between 0 and 100
+  public constructor(
+    pvName: string,
+    onConnectionUpdate: ConnectionChangedCallback,
+    onValueUpdate: ValueChangedCallback,
+    updateRate: number
+  ) {
+    super(pvName, onConnectionUpdate, onValueUpdate, updateRate);
+    this.value = {
+      type: "NTScalar",
+      value: 0,
+      alarm: { severity: 0, status: 0, message: "" },
+      time: {
+        secondsPastEpoch: 0,
+        nanoseconds: 0,
+        userTag: 0
+      }
+    };
+    this.onValueUpdate(this.pvName, this.getValue());
+    setInterval(
+      (): void => this.onConnectionUpdate(this.pvName, this.getConnection()),
+      this.updateRate
+    );
+  }
+
+  public updateValue(value: NType): void {
+    // Set alarm status
+    let alarmSeverity =
+      value.value < 10
+        ? 2
+        : value.value > 90
+        ? 2
+        : value.value < 20
+        ? 1
+        : value.value > 80
+        ? 1
+        : 0;
+
+    // Produce timestamp info
+    let currentTime = new Date().getTime();
+    let seconds = Math.floor(currentTime / 1000);
+    let nanoseconds = Math.floor(currentTime % 1000);
+
+    this.value = {
+      type: value.type,
+      value: value.value,
+      alarm: {
+        severity: alarmSeverity,
+        status: 0,
+        message: ""
+      },
+      time: {
+        secondsPastEpoch: seconds,
+        nanoseconds: nanoseconds,
+        userTag: 0
+      }
+    };
+  }
+
+  public getValue(): NType {
+    return this.value;
+  }
+}
+
 interface SimCache {
   [pvName: string]: SimPv;
 }
@@ -85,15 +152,21 @@ interface ValueCache {
   [pvName: string]: NType;
 }
 
+interface MetaCache {
+  [pvName: string]: MetaData;
+}
+
 export class SimulatorPlugin implements Connection {
   private localPvs: ValueCache;
   private simPvs: SimCache;
+  private metaPvs: MetaCache;
   private onConnectionUpdate: ConnectionChangedCallback;
   private onValueUpdate: ValueChangedCallback;
 
   public constructor() {
     this.simPvs = {};
     this.localPvs = {};
+    this.metaPvs = {};
     this.onConnectionUpdate = nullConnCallback;
     this.onValueUpdate = nullValueCallback;
     this.subscribe = this.subscribe.bind(this);
@@ -132,12 +205,25 @@ export class SimulatorPlugin implements Connection {
         this.onValueUpdate,
         2000
       );
+    } else if (pvName.startsWith("meta://")) {
+      this.metaPvs[pvName] = new MetaData(
+        pvName,
+        this.onConnectionUpdate,
+        this.onValueUpdate,
+        2000
+      );
     }
   }
 
   public putPv(pvName: string, value: NType): void {
     if (pvName.startsWith("loc://")) {
       this.localPvs[pvName] = value;
+      this.onValueUpdate(pvName, value);
+    } else if (pvName.startsWith("meta://")) {
+      console.log("Updating meta PV...");
+      let meta = this.metaPvs[pvName];
+      meta.updateValue(value);
+      console.log(meta.value);
       this.onValueUpdate(pvName, value);
     }
   }
