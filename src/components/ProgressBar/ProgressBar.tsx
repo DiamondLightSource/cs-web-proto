@@ -1,12 +1,13 @@
 import React from "react";
 
+import { NType, ntOrNullToNumber } from "../../ntypes";
 import classes from "./ProgressBar.module.css";
 import { connectionWrapper } from "../ConnectionWrapper/ConnectionWrapper";
 import { CopyWrapper } from "../CopyWrapper/CopyWrapper";
 
 interface ProgressBarProps {
-  pvName: string;
-  value: string;
+  connected: boolean;
+  value?: NType;
   min: number;
   max: number;
   vertical?: boolean;
@@ -19,8 +20,10 @@ interface ProgressBarProps {
   precision?: number;
 }
 
-// Same as ProgressBarProps but without value as this is collected from the store
+// Same as ProgressBarProps but without connected and value as these are
+// collected from the store
 interface ConnectedProgressBarProps {
+  value?: NType;
   pvName: string;
   min: number;
   max: number;
@@ -38,7 +41,7 @@ export const ProgressBar: React.FC<ProgressBarProps> = (
   props: ProgressBarProps
 ): JSX.Element => {
   let {
-    value = "0",
+    value,
     min = 0,
     max = 100,
     vertical = false,
@@ -57,7 +60,7 @@ export const ProgressBar: React.FC<ProgressBarProps> = (
     height: height,
     width: width
   };
-  let numValue = parseFloat(value);
+  let numValue = ntOrNullToNumber(value);
   let onPercent =
     numValue < min
       ? 0
@@ -92,7 +95,7 @@ export const ProgressBar: React.FC<ProgressBarProps> = (
       ? "Check min and max values"
       : precision
       ? numValue.toFixed(precision)
-      : numValue;
+      : numValue.toString();
 
   return (
     <div style={barStyle}>
@@ -105,8 +108,9 @@ export const ProgressBar: React.FC<ProgressBarProps> = (
   );
 };
 
-export const CopyProgressBar: React.FC<ProgressBarProps> = (
-  props: ProgressBarProps
+/*
+export const CopyProgressBar: React.FC<ConnectedProgressBarProps> = (
+  props: ConnectedProgressBarProps
 ): JSX.Element => (
   <CopyWrapper
     pvName={props.pvName}
@@ -116,7 +120,8 @@ export const CopyProgressBar: React.FC<ProgressBarProps> = (
     <ProgressBar {...props}></ProgressBar>
   </CopyWrapper>
 );
+*/
 
 export const ConnectedProgressBar: React.FC<
   ConnectedProgressBarProps
-> = connectionWrapper(CopyProgressBar);
+> = connectionWrapper(ProgressBar);

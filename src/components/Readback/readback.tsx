@@ -1,43 +1,48 @@
 import React from "react";
-import { Scalar, Alarm } from "../../ntypes";
+import {
+  NType,
+  Alarm,
+  NO_ALARM,
+  ntToNumericString,
+  ntToString
+} from "../../ntypes";
 import { connectionWrapper } from "../ConnectionWrapper/ConnectionWrapper";
 
 import classes from "./readback.module.css";
 
 export const Readback = (props: {
-  value: Scalar;
+  connected: boolean;
+  value?: NType;
   precision?: number;
-  alarm?: Alarm;
   style?: {};
 }): JSX.Element => {
   let {
+    connected,
     value,
     precision = undefined,
-    alarm = { severity: 0, status: 0, message: "" },
     style = { backgroundColor: "#383838", color: "#00bb00" }
   } = props;
+  let alarm = NO_ALARM;
+  if (value && value.alarm != null) {
+    alarm = value.alarm;
+  }
   let displayedValue;
-  if (precision && precision >= 0) {
-    if (typeof value === "string") {
-      let numericalValue = parseFloat(value);
-      if (isNaN(numericalValue)) {
-        displayedValue = value;
-      } else {
-        displayedValue = numericalValue.toFixed(precision);
-      }
-    } else {
-      displayedValue = value.toFixed(precision);
-    }
+  if (!value) {
+    displayedValue = "Waiting for value";
+  } else if (precision && precision >= 0) {
+    value = value as NType;
+    displayedValue = ntToNumericString(value, precision);
   } else {
-    if (value === "") {
-      displayedValue = "Waiting for value";
-    } else {
-      displayedValue = value;
-    }
+    displayedValue = ntToString(value);
   }
 
-  // Change text depending on alarm color
-  if (alarm.severity === 1) {
+  // Change text color depending on connection state or alarm
+  if (!connected) {
+    style = {
+      ...style,
+      color: "#ffffff"
+    };
+  } else if (alarm.severity === 1) {
     // Minor alarm
     style = {
       ...style,

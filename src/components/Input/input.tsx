@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { connectionWrapper } from "../ConnectionWrapper/ConnectionWrapper";
 import { writePv } from "../../hooks/useCs";
+import { NType, ntOrNullToString } from "../../ntypes";
 
 export interface InputProps {
   pvName: string;
@@ -28,7 +29,7 @@ interface ConnectedInputProps {
 
 interface SmartInputProps {
   pvName: string;
-  value: string;
+  value?: NType;
 }
 
 export const SmartInput: React.FC<SmartInputProps> = (
@@ -58,11 +59,11 @@ export const SmartInput: React.FC<SmartInputProps> = (
   function onBlur(event: React.ChangeEvent<HTMLInputElement>): void {
     setEditing(false);
     /* When focus lost show PV value. */
-    setInputValue(props.value);
+    setInputValue(ntOrNullToString(props.value));
   }
 
-  if (!editing && inputValue !== props.value) {
-    setInputValue(props.value);
+  if (!editing && inputValue !== ntOrNullToString(props.value)) {
+    setInputValue(ntOrNullToString(props.value));
   }
 
   return (
