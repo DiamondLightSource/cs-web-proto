@@ -74,6 +74,24 @@ const App: React.FC = (): JSX.Element => {
             This is an alarm border
           </AlarmBorder>
         </div>
+        <div
+          style={{
+            position: "absolute",
+            top: "55%",
+            left: "70%",
+            height: "20%",
+            width: "20%"
+          }}
+        >
+          <AlarmBorder alarm={{ severity: 2, status: 0, message: "" }}>
+            <ConnectedProgressBar
+              pvName={"sim://sine"}
+              min={-1}
+              max={1}
+              precision={2}
+            />
+          </AlarmBorder>
+        </div>
       </div>
     </Provider>
   );
