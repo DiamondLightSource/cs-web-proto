@@ -6,6 +6,7 @@ import { ConnectedInput } from "./components/Input/input";
 import { ConnectedProgressBar } from "./components/ProgressBar/ProgressBar";
 import { ConnectedSlideControl } from "./components/SlideControl/SlideControl";
 import { CopyWrapper } from "./components/CopyWrapper/CopyWrapper";
+import { AlarmBorder } from "./components/AlarmBorder/AlarmBorder";
 import { getStore, initialiseStore } from "./redux/store";
 import { SimulatorPlugin } from "./connection/sim";
 
@@ -28,15 +29,7 @@ const App: React.FC = (): JSX.Element => {
           <ConnectedInput pvName={"sim://sine"} />
           <ConnectedInput pvName={"sim://sine"} />
         </div>
-        <div>
-          <CopyWrapper
-            pvName="PV-TS-TIM-01"
-            value={9.0}
-            timestamp={{ secondsPastEpoch: 0, nanoseconds: 0, userTag: 0 }}
-          >
-            Copy Wrapper Example
-          </CopyWrapper>
-        </div>
+
         <div
           style={{
             position: "absolute",
@@ -62,6 +55,19 @@ const App: React.FC = (): JSX.Element => {
             max={1}
             precision={2}
           />
+        </div>
+        <div
+          style={{
+            position: "absolute",
+            top: "30%",
+            left: "70%",
+            height: "20%",
+            width: "20%"
+          }}
+        >
+          <AlarmBorder alarm={{ severity: 0, status: 0, message: "" }}>
+            This is an alarm border
+          </AlarmBorder>
         </div>
       </div>
     </Provider>
