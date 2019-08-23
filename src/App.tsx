@@ -4,7 +4,7 @@ import { Provider } from "react-redux";
 import { ConnectedReadback } from "./components/Readback/readback";
 import { ConnectedInput } from "./components/Input/input";
 import { ConnectedProgressBar } from "./components/ProgressBar/ProgressBar";
-import { SlideControl } from "./components/SlideControl/SlideControl";
+import { ConnectedSlideControl } from "./components/SlideControl/SlideControl";
 import { CopyWrapper } from "./components/CopyWrapper/CopyWrapper";
 import { getStore, initialiseStore } from "./redux/store";
 import { SimulatorPlugin } from "./connection/sim";
@@ -19,8 +19,9 @@ const App: React.FC = (): JSX.Element => {
         <h1>CS Web Proto</h1>
         <div style={{ display: "block" }}>
           <ConnectedReadback pvName={"TMC43-TS-IOC-01:AI"} />
-          <ConnectedReadback pvName={"TMC43-TS-IOC-01:CURRENT"} />
+          <ConnectedReadback pvName={"loc://pv1"} />
           <ConnectedReadback pvName={"sim://sine"} precision={3} />
+          <ConnectedReadback pvName={"sim://disconnector"} precision={3} />
         </div>
         <div style={{ display: "block" }}>
           <ConnectedInput pvName={"loc://pv1"} />
@@ -45,7 +46,7 @@ const App: React.FC = (): JSX.Element => {
             width: "50%"
           }}
         >
-          <SlideControl pvName="loc://pv1" min={0} max={100} />
+          <ConnectedSlideControl pvName="loc://pv1" min={0} max={100} />
         </div>
         <div
           style={{

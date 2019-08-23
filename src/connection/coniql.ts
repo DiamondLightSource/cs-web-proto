@@ -5,8 +5,14 @@ import { WebSocketLink } from "apollo-link-ws";
 import { getMainDefinition } from "apollo-utilities";
 import gql from "graphql-tag";
 import { InMemoryCache, NormalizedCacheObject } from "apollo-cache-inmemory";
-import { NType } from "../cs";
-import { Connection, ConnectionCallback } from "./plugin";
+import { NType } from "../ntypes";
+import {
+  Connection,
+  ConnectionChangedCallback,
+  ValueChangedCallback,
+  nullConnCallback,
+  nullValueCallback
+} from "./plugin";
 
 function createLink(socket: string): ApolloLink {
   const link: ApolloLink = ApolloLink.split(
@@ -42,16 +48,22 @@ const PV_SUBSCRIPTION = gql`
 
 export class ConiqlPlugin implements Connection {
   private client: ApolloClient<NormalizedCacheObject>;
-  private callback: (pvName: string, data: NType) => void;
+  private onConnectionUpdate: ConnectionChangedCallback;
+  private onValueUpdate: ValueChangedCallback;
 
   public constructor(socket: string) {
     const link = createLink(socket);
     this.client = new ApolloClient({ link, cache });
-    this.callback = (_p, _v): void => {};
+    this.onConnectionUpdate = nullConnCallback;
+    this.onValueUpdate = nullValueCallback;
   }
 
-  public connect(callback: ConnectionCallback): void {
-    this.callback = callback;
+  public connect(
+    connectionCallback: ConnectionChangedCallback,
+    valueCallback: ValueChangedCallback
+  ): void {
+    this.onConnectionUpdate = connectionCallback;
+    this.onValueUpdate = valueCallback;
   }
 
   public isConnected(): boolean {
@@ -67,7 +79,7 @@ export class ConiqlPlugin implements Connection {
       .subscribe({
         next: (data): void => {
           console.log("data", data); //eslint-disable-line no-console
-          this.callback(pvName1, data.data.subscribeFloatScalar);
+          this.onValueUpdate(pvName1, data.data.subscribeFloatScalar);
         },
         error: (err): void => {
           console.error("err", err); //eslint-disable-line no-console

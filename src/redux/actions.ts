@@ -1,6 +1,7 @@
+export const CONNECTION_CHANGED = "connection_changed";
 export const SUBSCRIBE = "subscribe";
 export const UNSUBSCRIBE = "unsubscribe";
-export const PV_CHANGED = "pv_changed";
+export const VALUE_CHANGED = "value_changed";
 export const WRITE_PV = "write_pv";
 
 export interface Action {

@@ -1,12 +1,23 @@
-import { PV_CHANGED, ActionType, SUBSCRIBE, WRITE_PV } from "./actions";
-import { NType } from "../cs";
+import {
+  VALUE_CHANGED,
+  ActionType,
+  SUBSCRIBE,
+  WRITE_PV,
+  CONNECTION_CHANGED
+} from "./actions";
+import { NType } from "../ntypes";
 
 const initialState: CsState = {
   valueCache: {}
 };
 
+export interface PvState {
+  value: NType;
+  connected: boolean;
+}
+
 export interface ValueCache {
-  [key: string]: NType;
+  [key: string]: PvState;
 }
 
 export interface CsState {
@@ -15,9 +26,22 @@ export interface CsState {
 
 export function csReducer(state = initialState, action: ActionType): CsState {
   switch (action.type) {
-    case PV_CHANGED: {
+    case VALUE_CHANGED: {
       const newValueCache: ValueCache = Object.assign({}, state.valueCache);
-      newValueCache[action.payload.pvName] = action.payload.value;
+      const pvState = state.valueCache[action.payload.pvName];
+      const newPvState = Object.assign({}, pvState, {
+        value: action.payload.value
+      });
+      newValueCache[action.payload.pvName] = newPvState;
+      return Object.assign({}, state, { valueCache: newValueCache });
+    }
+    case CONNECTION_CHANGED: {
+      const newValueCache: ValueCache = Object.assign({}, state.valueCache);
+      const pvState = state.valueCache[action.payload.pvName];
+      const newPvState = Object.assign({}, pvState, {
+        connected: action.payload.value.isConnected
+      });
+      newValueCache[action.payload.pvName] = newPvState;
       return Object.assign({}, state, { valueCache: newValueCache });
     }
     case SUBSCRIBE: {

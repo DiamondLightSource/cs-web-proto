@@ -1,16 +1,18 @@
-// Component to allow setting of vakues using a slider.
+// Component to allow setting of values using a slider.
 // Displays value via an embedded progressbar widget
 
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
-import { useSubscription, writePv } from "../../hooks/useCs";
-import { CsState } from "../../redux/csState";
 import { ProgressBar } from "../ProgressBar/ProgressBar";
+import { writePv } from "../../hooks/useCs";
+import { NType, ntOrNullToString } from "../../ntypes";
 
 import classes from "./SlideControl.module.css";
+import { connectionWrapper } from "../ConnectionWrapper/ConnectionWrapper";
 
 interface SlideControlProps {
   pvName: string;
+  connected: boolean;
+  value?: NType;
   min: number;
   max: number;
   vertical?: boolean;
@@ -27,7 +29,9 @@ export const SlideControl: React.FC<SlideControlProps> = (
   props: SlideControlProps
 ): JSX.Element => {
   let {
-    pvName = "",
+    pvName,
+    connected,
+    value,
     min = 0,
     max = 100,
     /* TODO: Implement vertical style and allow absolute positioning */
@@ -41,23 +45,11 @@ export const SlideControl: React.FC<SlideControlProps> = (
     precision = undefined
   } = props;
 
-  const [inputValue, setInputValue] = useState(0);
+  const [inputValue, setInputValue] = useState("");
   const [editing, setEditing] = useState(false);
-  useSubscription(props.pvName);
-  /* It would be nice to be able to share a selector, but it's
-     not immediately obvious how to make a selector that takes
-     an argument other than state. */
-  const latestValue: string = useSelector((state: CsState): string => {
-    let value = state.valueCache[props.pvName];
-    if (value == null) {
-      return "0";
-    } else {
-      return value.value.toString();
-    }
-  });
 
   function onChange(event: React.ChangeEvent<HTMLInputElement>): void {
-    setInputValue(parseFloat(event.currentTarget.value));
+    setInputValue(event.currentTarget.value);
   }
 
   function onMouseDown(event: React.MouseEvent<HTMLInputElement>): void {
@@ -71,8 +63,9 @@ export const SlideControl: React.FC<SlideControlProps> = (
     });
   }
 
-  if (!editing && inputValue !== parseFloat(latestValue)) {
-    setInputValue(parseFloat(latestValue));
+  let stringValue = ntOrNullToString(value);
+  if (!editing && inputValue !== stringValue) {
+    setInputValue(stringValue);
   }
 
   return (
@@ -88,7 +81,8 @@ export const SlideControl: React.FC<SlideControlProps> = (
         }}
       >
         <ProgressBar
-          value={inputValue}
+          connected={connected}
+          value={value}
           min={min}
           max={max}
           precision={precision}
@@ -118,3 +112,5 @@ export const SlideControl: React.FC<SlideControlProps> = (
     </div>
   );
 };
+
+export const ConnectedSlideControl = connectionWrapper(SlideControl);

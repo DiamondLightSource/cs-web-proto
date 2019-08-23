@@ -1,62 +1,155 @@
-import { Connection, ConnectionCallback } from "./plugin";
-import { NType } from "../cs";
-import { ValueCache } from "../redux/csState";
+import {
+  Connection,
+  ConnectionChangedCallback,
+  ValueChangedCallback,
+  nullConnCallback,
+  nullValueCallback
+} from "./plugin";
+import { NType } from "../ntypes";
+import { ConnectionState } from "../redux/connectionMiddleware";
 
-const nullCallback: ConnectionCallback = (_p, _v): void => {};
+abstract class SimPv {
+  protected onConnectionUpdate: ConnectionChangedCallback;
+  protected onValueUpdate: ValueChangedCallback;
+  protected pvName: string;
+  protected updateRate: number;
+  abstract getValue(): NType;
+  public constructor(
+    pvName: string,
+    onConnectionUpdate: ConnectionChangedCallback,
+    onValueUpdate: ValueChangedCallback,
+    updateRate: number
+  ) {
+    this.pvName = pvName;
+    this.onConnectionUpdate = onConnectionUpdate;
+    this.onValueUpdate = onValueUpdate;
+    this.updateRate = updateRate;
+    this.onConnectionUpdate(pvName, { isConnected: true });
+  }
+  public getConnection(): ConnectionState {
+    return { isConnected: true };
+  }
+}
+
+class SinePv extends SimPv {
+  public constructor(
+    pvName: string,
+    onConnectionUpdate: ConnectionChangedCallback,
+    onValueUpdate: ValueChangedCallback,
+    updateRate: number
+  ) {
+    super(pvName, onConnectionUpdate, onValueUpdate, updateRate);
+    setInterval(
+      (): void => this.onValueUpdate(this.pvName, this.getValue()),
+      this.updateRate
+    );
+  }
+  public getValue(): NType {
+    const val = Math.sin(
+      new Date().getSeconds() + new Date().getMilliseconds() * 0.001
+    );
+    return { type: "NTScalarDouble", value: val };
+  }
+}
+
+class Disconnector extends SimPv {
+  public constructor(
+    pvName: string,
+    onConnectionUpdate: ConnectionChangedCallback,
+    onValueUpdate: ValueChangedCallback,
+    updateRate: number
+  ) {
+    super(pvName, onConnectionUpdate, onValueUpdate, updateRate);
+    this.onValueUpdate(this.pvName, this.getValue());
+    setInterval(
+      (): void => this.onConnectionUpdate(this.pvName, this.getConnection()),
+      this.updateRate
+    );
+  }
+  public getConnection(): ConnectionState {
+    const randomBool = Math.random() >= 0.5;
+    return { isConnected: randomBool };
+  }
+
+  public getValue(): NType {
+    const value = Math.random();
+    return { type: "NTScalarDouble", value: value };
+  }
+}
+
+interface SimCache {
+  [pvName: string]: SimPv;
+}
+
+interface ValueCache {
+  [pvName: string]: NType;
+}
 
 export class SimulatorPlugin implements Connection {
   private localPvs: ValueCache;
-  private onUpdate: ConnectionCallback;
-  private timeout: NodeJS.Timeout | null;
+  private simPvs: SimCache;
+  private onConnectionUpdate: ConnectionChangedCallback;
+  private onValueUpdate: ValueChangedCallback;
 
   public constructor() {
+    this.simPvs = {};
     this.localPvs = {};
-    this.onUpdate = nullCallback;
+    this.onConnectionUpdate = nullConnCallback;
+    this.onValueUpdate = nullValueCallback;
     this.subscribe = this.subscribe.bind(this);
     this.putPv = this.putPv.bind(this);
-    /* Set up the sine PV. */
-    this.timeout = null;
   }
 
-  public connect(callback: ConnectionCallback): void {
-    this.onUpdate = callback;
-    this.timeout = setInterval(
-      (): void => this.onUpdate("sim://sine", this.getValue("sim://sine")),
-      2000
-    );
+  public connect(
+    connectionCallback: ConnectionChangedCallback,
+    valueCallback: ValueChangedCallback
+  ): void {
+    this.onConnectionUpdate = connectionCallback;
+    this.onValueUpdate = valueCallback;
   }
 
   public isConnected(): boolean {
-    return this.onUpdate !== nullCallback;
+    return this.onConnectionUpdate !== nullConnCallback;
   }
 
   public subscribe(pvName: string): void {
     console.log(`creating connection to ${pvName}`); //eslint-disable-line no-console
     if (pvName.startsWith("loc://")) {
       this.localPvs[pvName] = { type: "NTScalarDouble", value: 0 };
-      this.onUpdate(pvName, { type: "NTScalarDouble", value: 0 });
+      this.onConnectionUpdate(pvName, { isConnected: true });
+      this.onValueUpdate(pvName, { type: "NTScalarDouble", value: 0 });
+    } else if (pvName === "sim://disconnector") {
+      this.simPvs[pvName] = new Disconnector(
+        "sim://disconnector",
+        this.onConnectionUpdate,
+        this.onValueUpdate,
+        2000
+      );
+    } else if (pvName === "sim://sine") {
+      this.simPvs[pvName] = new SinePv(
+        "sim://sine",
+        this.onConnectionUpdate,
+        this.onValueUpdate,
+        2000
+      );
     }
   }
 
   public putPv(pvName: string, value: NType): void {
     if (pvName.startsWith("loc://")) {
       this.localPvs[pvName] = value;
-      this.onUpdate(pvName, value);
+      this.onValueUpdate(pvName, value);
     }
   }
 
   public getValue(pvName: string): NType {
     if (pvName.startsWith("loc://")) {
       return this.localPvs[pvName];
-    } else if (pvName === "sim://sine") {
-      const val = Math.sin(
-        new Date().getSeconds() + new Date().getMilliseconds() * 0.001
-      );
-      return { type: "NTScalarDouble", value: val };
+    } else if (pvName.startsWith("sim://")) {
+      this.simPvs[pvName].getValue();
     } else if (pvName === "sim://random") {
       return { type: "NTScalarDouble", value: Math.random() };
-    } else {
-      return { type: "NTScalarDouble", value: 0 };
     }
+    return { type: "NTScalarDouble", value: 0 };
   }
 }

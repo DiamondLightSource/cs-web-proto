@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { getStore } from "../redux/store";
 import { SUBSCRIBE, UNSUBSCRIBE, WRITE_PV } from "../redux/actions";
 import { useDispatch } from "react-redux";
-import { NType } from "../cs";
+import { NType } from "../ntypes";
 
 export function useSubscription(pvName: string): void {
   const dispatch = useDispatch();

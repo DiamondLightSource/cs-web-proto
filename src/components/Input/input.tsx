@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
-import { useSubscription, writePv } from "../../hooks/useCs";
-import { CsState } from "../../redux/csState";
+import { connectionWrapper } from "../ConnectionWrapper/ConnectionWrapper";
+import { writePv } from "../../hooks/useCs";
+import { NType, ntOrNullToString } from "../../ntypes";
 
 export interface InputProps {
   pvName: string;
@@ -27,23 +27,16 @@ interface ConnectedInputProps {
   pvName: string;
 }
 
-export const ConnectedInput: React.FC<ConnectedInputProps> = (
-  props: ConnectedInputProps
+interface SmartInputProps {
+  pvName: string;
+  value?: NType;
+}
+
+export const SmartInput: React.FC<SmartInputProps> = (
+  props: SmartInputProps
 ): JSX.Element => {
   const [inputValue, setInputValue] = useState("");
   const [editing, setEditing] = useState(false);
-  useSubscription(props.pvName);
-  /* It would be nice to be able to share a selector, but it's
-     not immediately obvious how to make a selector that takes
-     an argument other than state. */
-  const latestValue: string = useSelector((state: CsState): string => {
-    let value = state.valueCache[props.pvName];
-    if (value == null) {
-      return "";
-    } else {
-      return value.value.toString();
-    }
-  });
   function onKeyDown(event: React.KeyboardEvent<HTMLInputElement>): void {
     if (event.key === "Enter") {
       writePv(props.pvName, {
@@ -66,11 +59,11 @@ export const ConnectedInput: React.FC<ConnectedInputProps> = (
   function onBlur(event: React.ChangeEvent<HTMLInputElement>): void {
     setEditing(false);
     /* When focus lost show PV value. */
-    setInputValue(latestValue);
+    setInputValue(ntOrNullToString(props.value));
   }
 
-  if (!editing && inputValue !== latestValue) {
-    setInputValue(latestValue);
+  if (!editing && inputValue !== ntOrNullToString(props.value)) {
+    setInputValue(ntOrNullToString(props.value));
   }
 
   return (
@@ -84,3 +77,7 @@ export const ConnectedInput: React.FC<ConnectedInputProps> = (
     />
   );
 };
+
+export const ConnectedInput: React.FC<ConnectedInputProps> = connectionWrapper(
+  SmartInput
+);
