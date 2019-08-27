@@ -10,9 +10,9 @@ import {
 } from "../../ntypes";
 import { connectionWrapper } from "../ConnectionWrapper/ConnectionWrapper";
 import { CopyWrapper } from "../CopyWrapper/CopyWrapper";
+import { AlarmBorder } from "../AlarmBorder/AlarmBorder";
 
 import classes from "./readback.module.css";
-import { tsPropertySignature } from "@babel/types";
 
 export const Readback = (props: {
   connected: boolean;
@@ -88,6 +88,7 @@ export const CopyReadback = (props: {
   pvName: string;
   value: NType;
   connected: boolean;
+  precision?: number;
   style?: object;
 }) => (
   <CopyWrapper
@@ -95,10 +96,46 @@ export const CopyReadback = (props: {
     connected={props.connected}
     value={props.value}
   >
-    <Readback connected={props.connected} value={props.value}></Readback>
+    <Readback
+      connected={props.connected}
+      value={props.value}
+      precision={props.precision}
+    ></Readback>
   </CopyWrapper>
 );
 
 export const ConnectedCopyReadback: React.FC<
   ConnectedCopyReadbackProps
 > = connectionWrapper(CopyReadback);
+
+interface ConnectedStandaloneReadbackProps {
+  pvName: string;
+  precision?: number;
+  style?: {};
+}
+
+export const StandaloneReadback = (props: {
+  pvName: string;
+  value: NType;
+  connected: boolean;
+  precision?: number;
+  style?: object;
+}) => (
+  <CopyWrapper
+    pvName={props.pvName}
+    connected={props.connected}
+    value={props.value}
+  >
+    <AlarmBorder connected={props.connected} value={props.value}>
+      <Readback
+        connected={props.connected}
+        value={props.value}
+        precision={props.precision}
+      ></Readback>
+    </AlarmBorder>
+  </CopyWrapper>
+);
+
+export const ConnectedStandaloneReadback: React.FC<
+  ConnectedStandaloneReadbackProps
+> = connectionWrapper(StandaloneReadback);

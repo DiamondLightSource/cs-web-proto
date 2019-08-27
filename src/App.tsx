@@ -3,7 +3,7 @@ import "./App.css";
 import { Provider } from "react-redux";
 import {
   ConnectedReadback,
-  ConnectedCopyReadback
+  ConnectedStandaloneReadback
 } from "./components/Readback/readback";
 import { ConnectedInput } from "./components/Input/input";
 import { ConnectedProgressBar } from "./components/ProgressBar/ProgressBar";
@@ -72,6 +72,18 @@ const App: React.FC = (): JSX.Element => {
                 <ConnectedReadback pvName={"meta://metapv1"} />
               </div>
             </div>
+            <div
+              style={{
+                position: "relative",
+                height: "2em",
+                margin: "15px auto"
+              }}
+            >
+              <ConnectedStandaloneReadback
+                pvName={"meta://metapv1"}
+                precision={2}
+              />
+            </div>
           </div>
           <div
             style={{
@@ -102,7 +114,7 @@ const App: React.FC = (): JSX.Element => {
               margin: "15px auto"
             }}
           >
-            <AlarmBorder alarm={{ severity: 2, status: 0, message: "" }}>
+            <AlarmBorder connected={false}>
               <ConnectedProgressBar
                 pvName={"sim://sine"}
                 min={-1}
