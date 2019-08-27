@@ -55,11 +55,11 @@ export const CopyWrapper = (props: {
       style={style}
       onClick={copyPvToClipboard}
     >
+      <div className={classes.Children}>{props.children}</div>
       <span className={classes.tooltiptext}>
         {pvName}
         <br />[{toolTipText}]
       </span>
-      <div className={classes.Children}>{props.children}</div>
     </div>
   );
 };

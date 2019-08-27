@@ -1,7 +1,10 @@
 import React from "react";
 import "./App.css";
 import { Provider } from "react-redux";
-import { ConnectedReadback } from "./components/Readback/readback";
+import {
+  ConnectedReadback,
+  ConnectedCopyReadback
+} from "./components/Readback/readback";
 import { ConnectedInput } from "./components/Input/input";
 import { ConnectedProgressBar } from "./components/ProgressBar/ProgressBar";
 import { ConnectedSlideControl } from "./components/SlideControl/SlideControl";
@@ -31,10 +34,16 @@ const App: React.FC = (): JSX.Element => {
           <ConnectedInput pvName={"sim://sine"} />
           <ConnectedInput pvName={"sim://sine"} />
         </div>
-        <div style={{ display: "block" }}>
+        <div>
           <h3>PV with Metadata</h3>
-          <ConnectedInput pvName={"meta://metapv1"} />
-          <ConnectedReadback pvName={"meta://metapv1"} precision={3} />
+          <div style={{ display: "flex" }}>
+            <div style={{ flexGrow: 1 }}>
+              <ConnectedInput pvName={"meta://metapv1"} />
+            </div>
+            <div style={{ flexGrow: 1 }}>
+              <ConnectedCopyReadback pvName={"meta://metapv1"} />
+            </div>
+          </div>
         </div>
         <div
           style={{

@@ -4,11 +4,15 @@ import {
   Alarm,
   NO_ALARM,
   ntToNumericString,
-  ntToString
+  ntToString,
+  NTScalar,
+  Time
 } from "../../ntypes";
 import { connectionWrapper } from "../ConnectionWrapper/ConnectionWrapper";
+import { CopyWrapper } from "../CopyWrapper/CopyWrapper";
 
 import classes from "./readback.module.css";
+import { tsPropertySignature } from "@babel/types";
 
 export const Readback = (props: {
   connected: boolean;
@@ -73,3 +77,28 @@ interface ConnectedReadbackProps {
 export const ConnectedReadback: React.FC<
   ConnectedReadbackProps
 > = connectionWrapper(Readback);
+
+interface ConnectedCopyReadbackProps {
+  pvName: string;
+  precision?: number;
+  style?: {};
+}
+
+export const CopyReadback = (props: {
+  pvName: string;
+  value: NType;
+  connected: boolean;
+  style?: object;
+}) => (
+  <CopyWrapper
+    pvName={props.pvName}
+    connected={props.connected}
+    value={props.value}
+  >
+    <Readback connected={props.connected} value={props.value}></Readback>
+  </CopyWrapper>
+);
+
+export const ConnectedCopyReadback: React.FC<
+  ConnectedCopyReadbackProps
+> = connectionWrapper(CopyReadback);
