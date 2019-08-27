@@ -88,13 +88,16 @@ class MetaData extends SimPv {
     updateRate: number
   ) {
     super(pvName, onConnectionUpdate, onValueUpdate, updateRate);
+    let currentTime = new Date();
+    let seconds = Math.round(currentTime.getTime() / 1000),
+      nanoseconds = Math.round(currentTime.getTime() % 1000);
     this.value = {
       type: "NTScalar",
       value: 0,
       alarm: { severity: 0, status: 0, message: "" },
       time: {
-        secondsPastEpoch: 0,
-        nanoseconds: 0,
+        secondsPastEpoch: seconds,
+        nanoseconds: nanoseconds,
         userTag: 0
       }
     };
