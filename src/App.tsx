@@ -84,6 +84,18 @@ const App: React.FC = (): JSX.Element => {
                 precision={2}
               />
             </div>
+            <div
+              style={{
+                position: "relative",
+                height: "2em",
+                margin: "15px auto"
+              }}
+            >
+              <ConnectedStandaloneReadback
+                pvName={"sim://disconnector"}
+                precision={2}
+              />
+            </div>
           </div>
           <div
             style={{
