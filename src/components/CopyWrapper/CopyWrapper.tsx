@@ -7,23 +7,29 @@ import React, { ReactNode } from "react";
 import { Time, Alarm } from "../../ntypes";
 import copyToClipboard from "clipboard-copy";
 
+import { connectionWrapper } from "../ConnectionWrapper/ConnectionWrapper";
+import { NType } from "../../ntypes";
 import classes from "./CopyWrapper.module.css";
 
 export const CopyWrapper = (props: {
   pvName: string;
-  value: any;
-  timestamp: Time;
-  alarm?: Alarm;
+  connected: boolean;
+  value?: NType;
   children: ReactNode;
   style?: object;
 }): JSX.Element => {
-  let {
-    pvName,
-    value,
-    timestamp,
-    alarm = { severity: 0, status: 0, message: "" },
-    style = {}
-  } = props;
+  let { connected, pvName, value = null, style = {} } = props;
+
+  let displayValue: string = "";
+  if (!connected) {
+    displayValue = "WARNING: Not Connected";
+  } else {
+    if (!value) {
+      displayValue = "Warning: Waiting for value";
+    } else {
+      displayValue = value.value.toString();
+    }
+  }
 
   function copyPvToClipboard(e: React.MouseEvent): void {
     if (e.button === 1) {
@@ -32,9 +38,13 @@ export const CopyWrapper = (props: {
   }
   // Compose the text which should be shown on the tooltip
   let toolTipText = [
-    value.toString(),
-    new Date(timestamp.secondsPastEpoch * 1000),
-    alarm.message
+    displayValue,
+    value
+      ? value.time
+        ? new Date(value.time.secondsPastEpoch * 1000)
+        : ""
+      : "",
+    value ? (value.alarm ? value.alarm.message : "") : ""
   ]
     .filter((word): boolean => word !== "")
     .join(", ");
@@ -53,3 +63,11 @@ export const CopyWrapper = (props: {
     </div>
   );
 };
+
+interface ConnectedCopyWrapperProps {
+  pvName: string;
+}
+
+export const ConnectedCopyWrapper: React.FC<
+  ConnectedCopyWrapperProps
+> = connectionWrapper(CopyWrapper);

@@ -5,6 +5,7 @@ import { ConnectedReadback } from "./components/Readback/readback";
 import { ConnectedInput } from "./components/Input/input";
 import { ConnectedProgressBar } from "./components/ProgressBar/ProgressBar";
 import { ConnectedSlideControl } from "./components/SlideControl/SlideControl";
+import { ConnectedCopyWrapper } from "./components/CopyWrapper/CopyWrapper";
 import { AlarmBorder } from "./components/AlarmBorder/AlarmBorder";
 import { getStore, initialiseStore } from "./redux/store";
 import { SimulatorPlugin } from "./connection/sim";
@@ -70,9 +71,9 @@ const App: React.FC = (): JSX.Element => {
             width: "20%"
           }}
         >
-          <AlarmBorder alarm={{ severity: 0, status: 0, message: "" }}>
-            This is an alarm border
-          </AlarmBorder>
+          <ConnectedCopyWrapper pvName="meta://metapv1">
+            This is a connected copy wrapper
+          </ConnectedCopyWrapper>
         </div>
         <div
           style={{
