@@ -4,9 +4,7 @@ import {
   Alarm,
   NO_ALARM,
   ntToNumericString,
-  ntToString,
-  NTScalar,
-  Time
+  ntToString
 } from "../../ntypes";
 import { connectionWrapper } from "../ConnectionWrapper/ConnectionWrapper";
 import { CopyWrapper } from "../CopyWrapper/CopyWrapper";
@@ -90,7 +88,7 @@ export const CopyReadback = (props: {
   connected: boolean;
   precision?: number;
   style?: object;
-}) => (
+}): JSX.Element => (
   <CopyWrapper
     pvName={props.pvName}
     connected={props.connected}
@@ -120,7 +118,7 @@ export const StandaloneReadback = (props: {
   connected: boolean;
   precision?: number;
   style?: object;
-}) => (
+}): JSX.Element => (
   <CopyWrapper
     pvName={props.pvName}
     connected={props.connected}

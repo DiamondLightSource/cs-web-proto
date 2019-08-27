@@ -4,7 +4,6 @@
 // A middle mouse click will copy the PV name to the clipboard
 
 import React, { ReactNode } from "react";
-import { Time, Alarm } from "../../ntypes";
 import copyToClipboard from "clipboard-copy";
 
 import { connectionWrapper } from "../ConnectionWrapper/ConnectionWrapper";
@@ -20,7 +19,7 @@ export const CopyWrapper = (props: {
 }): JSX.Element => {
   let { connected, pvName, value = null, style = {} } = props;
 
-  let displayValue: string = "";
+  let displayValue = "";
   if (!connected) {
     displayValue = "WARNING: Not Connected";
   } else {
