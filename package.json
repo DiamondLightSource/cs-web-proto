@@ -43,12 +43,16 @@
       "plugin:react/recommended",
       "plugin:@typescript-eslint/recommended",
       "prettier/@typescript-eslint",
-      "plugin:prettier/recommended"
+      "plugin:prettier/recommended",
+      "plugin:import/errors",
+      "plugin:import/warnings",
+      "plugin:import/typescript"
     ],
     "plugins": [
       "react",
       "@typescript-eslint",
-      "prettier"
+      "prettier",
+      "import"
     ],
     "env": {
       "browser": true,
@@ -96,6 +100,7 @@
     "enzyme": "^3.10.0",
     "eslint-config-prettier": "^6.0.0",
     "eslint-config-react": "^1.1.7",
+    "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-prettier": "^3.1.0",
     "prettier": "^1.18.2",
     "react-test-renderer": "^16.9.0"
