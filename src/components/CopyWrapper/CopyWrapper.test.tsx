@@ -1,7 +1,6 @@
 import React from "react";
 import { shallow, ShallowWrapper } from "enzyme";
 
-import { NType } from "../../ntypes";
 import { CopyWrapper } from "./CopyWrapper";
 
 let wrapper: ShallowWrapper;

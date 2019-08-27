@@ -6,7 +6,6 @@ import classes from "./ProgressBar.module.css";
 import { connectionWrapper } from "../ConnectionWrapper/ConnectionWrapper";
 import { CopyWrapper } from "../CopyWrapper/CopyWrapper";
 import { AlarmBorder } from "../AlarmBorder/AlarmBorder";
-import { tsPropertySignature } from "@babel/types";
 
 interface ProgressBarProps {
   connected: boolean;
