@@ -1,6 +1,8 @@
 import React from "react";
-import { CopyWrapper } from "./CopyWrapper";
 import { shallow, ShallowWrapper } from "enzyme";
+
+import { NType } from "../../ntypes";
+import { CopyWrapper } from "./CopyWrapper";
 
 let wrapper: ShallowWrapper;
 beforeEach((): void => {
@@ -12,11 +14,15 @@ beforeEach((): void => {
   const copywrapper = (
     <CopyWrapper
       pvName="pv"
-      value="hello"
-      timestamp={{
-        secondsPastEpoch: seconds,
-        nanoseconds: nanoseconds,
-        userTag: 0
+      connected={true}
+      value={{
+        type: "String",
+        value: "hello",
+        time: {
+          secondsPastEpoch: seconds,
+          nanoseconds: nanoseconds,
+          userTag: 0
+        }
       }}
     >
       Testing Copy Wrapper
