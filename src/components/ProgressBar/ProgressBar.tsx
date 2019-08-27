@@ -2,7 +2,11 @@ import React from "react";
 
 import { NType, ntOrNullToNumber } from "../../ntypes";
 import classes from "./ProgressBar.module.css";
+
 import { connectionWrapper } from "../ConnectionWrapper/ConnectionWrapper";
+import { CopyWrapper } from "../CopyWrapper/CopyWrapper";
+import { AlarmBorder } from "../AlarmBorder/AlarmBorder";
+import { tsPropertySignature } from "@babel/types";
 
 interface ProgressBarProps {
   connected: boolean;
@@ -107,20 +111,44 @@ export const ProgressBar: React.FC<ProgressBarProps> = (
   );
 };
 
-/*
-export const CopyProgressBar: React.FC<ConnectedProgressBarProps> = (
-  props: ConnectedProgressBarProps
-): JSX.Element => (
-  <CopyWrapper
-    pvName={props.pvName}
-    value={props.value}
-    timestamp={{ secondsPastEpoch: 0, nanoseconds: 0, userTag: 0 }}
-  >
-    <ProgressBar {...props}></ProgressBar>
-  </CopyWrapper>
-);
-*/
-
 export const ConnectedProgressBar: React.FC<
   ConnectedProgressBarProps
 > = connectionWrapper(ProgressBar);
+
+export const StandaloneProgressBar = (props: {
+  pvName: string;
+  value: NType;
+  connected: boolean;
+  min: number;
+  max: number;
+  precision?: number;
+  style?: object;
+}): JSX.Element => (
+  <CopyWrapper
+    pvName={props.pvName}
+    connected={props.connected}
+    value={props.value}
+  >
+    <AlarmBorder connected={props.connected} value={props.value}>
+      <ProgressBar
+        connected={props.connected}
+        value={props.value}
+        min={props.min}
+        max={props.max}
+        precision={props.precision}
+      ></ProgressBar>
+    </AlarmBorder>
+  </CopyWrapper>
+);
+
+interface ConnectedStandaloneProgressBarProps {
+  pvName: string;
+  min: number;
+  max: number;
+  precision?: number;
+  style?: {};
+}
+
+export const ConnectedStandaloneProgressBar: React.FC<
+  ConnectedStandaloneProgressBarProps
+> = connectionWrapper(StandaloneProgressBar);

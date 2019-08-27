@@ -6,7 +6,10 @@ import {
   ConnectedStandaloneReadback
 } from "./components/Readback/readback";
 import { ConnectedInput } from "./components/Input/input";
-import { ConnectedProgressBar } from "./components/ProgressBar/ProgressBar";
+import {
+  ConnectedProgressBar,
+  ConnectedStandaloneProgressBar
+} from "./components/ProgressBar/ProgressBar";
 import { ConnectedSlideControl } from "./components/SlideControl/SlideControl";
 import { AlarmBorder } from "./components/AlarmBorder/AlarmBorder";
 import { getStore, initialiseStore } from "./redux/store";
@@ -103,7 +106,11 @@ const App: React.FC = (): JSX.Element => {
               margin: "15px auto"
             }}
           >
-            <ConnectedProgressBar pvName={"meta://metapv1"} min={0} max={100} />
+            <ConnectedStandaloneProgressBar
+              pvName={"meta://metapv1"}
+              min={0}
+              max={100}
+            />
           </div>
           <div
             style={{
