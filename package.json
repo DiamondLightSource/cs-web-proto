@@ -36,46 +36,6 @@
     "lint": "node_modules/.bin/eslint src/**/*.{ts,tsx} --max-warnings=0",
     "prettier-check": "node_modules/.bin/prettier --check src/**/*.{ts,tsx}"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "eslint:recommended",
-      "plugin:react/recommended",
-      "plugin:@typescript-eslint/recommended",
-      "prettier/@typescript-eslint",
-      "plugin:prettier/recommended",
-      "plugin:import/errors",
-      "plugin:import/warnings",
-      "plugin:import/typescript"
-    ],
-    "plugins": [
-      "react",
-      "@typescript-eslint",
-      "prettier",
-      "import"
-    ],
-    "env": {
-      "browser": true,
-      "jasmine": true,
-      "jest": true
-    },
-    "rules": {
-      "@typescript-eslint/no-explicit-any": 0,
-      "prettier/prettier": [
-        "error",
-        {
-          "singleQuote": false
-        }
-      ]
-    },
-    "settings": {
-      "react": {
-        "pragma": "React",
-        "version": "detect"
-      }
-    },
-    "parser": "@typescript-eslint/parser"
-  },
   "browserslist": {
     "production": [
       ">0.2%",
