@@ -1,8 +1,11 @@
 import { NType } from "../ntypes";
-import { ConnectionState } from "../redux/connectionMiddleware";
 
 export const nullConnCallback: ConnectionChangedCallback = (_p, _v): void => {};
 export const nullValueCallback: ValueChangedCallback = (_p, _v): void => {};
+
+export interface ConnectionState {
+  isConnected: boolean;
+}
 
 export type ConnectionChangedCallback = (
   pvName: string,

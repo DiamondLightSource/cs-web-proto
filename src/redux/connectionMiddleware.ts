@@ -1,4 +1,4 @@
-import { Connection } from "../connection/plugin";
+import { Connection, ConnectionState } from "../connection/plugin";
 import {
   CONNECTION_CHANGED,
   SUBSCRIBE,
@@ -7,10 +7,6 @@ import {
 } from "./actions";
 import { getStore } from "./store";
 import { NType } from "../ntypes";
-
-export interface ConnectionState {
-  isConnected: boolean;
-}
 
 function connectionChanged(pvName: string, value: ConnectionState): void {
   getStore().dispatch({
