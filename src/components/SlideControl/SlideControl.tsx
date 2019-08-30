@@ -74,7 +74,7 @@ export const SlideControl: React.FC<SlideControlProps> = (
         style={{
           display: "block",
           position: "absolute",
-          height: "80%",
+          height: "90%",
           width: "100%",
           top: "0%",
           left: "0%"
@@ -92,7 +92,7 @@ export const SlideControl: React.FC<SlideControlProps> = (
         style={{
           display: "block",
           position: "absolute",
-          height: "20%",
+          height: "10%",
           width: "100%",
           bottom: "0%",
           left: "0%"

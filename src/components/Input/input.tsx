@@ -3,6 +3,8 @@ import { connectionWrapper } from "../ConnectionWrapper/ConnectionWrapper";
 import { writePv } from "../../hooks/useCs";
 import { NType, ntOrNullToString } from "../../ntypes";
 
+import classes from "./input.module.css";
+
 export interface InputProps {
   pvName: string;
   value: string;
@@ -20,6 +22,7 @@ export const Input: React.FC<InputProps> = (props: InputProps): JSX.Element => (
     onChange={props.onChange}
     onBlur={props.onBlur}
     onClick={props.onClick}
+    className={classes.Input}
   />
 );
 
