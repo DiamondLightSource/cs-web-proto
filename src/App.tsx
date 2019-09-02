@@ -12,6 +12,7 @@ import {
 } from "./components/ProgressBar/ProgressBar";
 import { ConnectedSlideControl } from "./components/SlideControl/SlideControl";
 import { AlarmBorder } from "./components/AlarmBorder/AlarmBorder";
+import { Label } from "./components/Label/Label";
 import { getStore, initialiseStore } from "./redux/store";
 import { SimulatorPlugin } from "./connection/sim";
 
@@ -25,6 +26,7 @@ const App: React.FC = (): JSX.Element => {
         <div id="Central Column" style={{ width: "80%", margin: "auto" }}>
           <h1>CS Web Proto</h1>
           <div style={{ display: "block" }}>
+            <Label text="This is a label"></Label>
             <ConnectedReadback pvName={"TMC43-TS-IOC-01:AI"} />
             <ConnectedReadback pvName={"loc://pv1"} />
             <ConnectedReadback pvName={"loc://pv2"} />
