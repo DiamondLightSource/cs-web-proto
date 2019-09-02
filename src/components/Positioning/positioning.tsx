@@ -18,7 +18,7 @@ export interface PositionDescription {
 
 export function objectToPosition(
   inputObjects: PositionDescription | null,
-  widgetDict: { [index: string]: React.FC }
+  componentDict: { [index: string]: React.FC }
 ): JSX.Element | null {
   console.log("objectToPosition");
   console.log(inputObjects);
@@ -41,13 +41,13 @@ export function objectToPosition(
     console.log(type);
 
     // Create the main component
-    let Widget: React.FC = widgetDict[type];
+    let Component: React.FC = componentDict[type];
 
     // Create all children components - recursive
     let PositionedChildren = null;
     if (children) {
       PositionedChildren = children.map(child =>
-        objectToPosition(child, widgetDict)
+        objectToPosition(child, componentDict)
       );
     } else {
       PositionedChildren = null;
@@ -64,7 +64,7 @@ export function objectToPosition(
           height: height
         }}
       >
-        <Widget {...otherProps}>{PositionedChildren}</Widget>
+        <Component {...otherProps}>{PositionedChildren}</Component>
       </div>
     );
   }
