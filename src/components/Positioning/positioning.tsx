@@ -1,16 +1,18 @@
 import React from "react";
 
-export type positionDescription = {
+export interface PositionDescription {
   type: string;
   x: number | string;
   y: number | string;
   width: number | string;
   height: number | string;
-  children?: positionDescription[] | null;
-};
+  // All other component properties
+  [x: string]: any;
+  children?: PositionDescription[] | null;
+}
 
 export function objectToPosition(
-  inputObjects: positionDescription | null,
+  inputObjects: PositionDescription | null,
   widgetDict: { [index: string]: React.FC }
 ): JSX.Element | null {
   console.log("objectToPosition");
@@ -51,7 +53,7 @@ export function objectToPosition(
           height: height
         }}
       >
-        <Widget>{WidgetChildren}</Widget>
+        <Widget {...otherProps}>{WidgetChildren}</Widget>
       </div>
     );
   }
