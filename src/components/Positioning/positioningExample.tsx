@@ -1,6 +1,7 @@
 import React from "react";
 
 import { PositionDescription, objectToPosition } from "./positioning";
+import { Readback } from "../Readback/readback";
 
 const Blank: React.FC = (props: any): JSX.Element => (
   <div
@@ -64,11 +65,12 @@ const GreenBlock: React.FC = (props: any): JSX.Element => (
   </div>
 );
 
-const exampleDict: { [index: string]: React.FC } = {
+const exampleDict: { [index: string]: any } = {
   "Red Block": RedBlock,
   "Blue Block": BlueBlock,
   "Green Block": GreenBlock,
-  Blank: Blank
+  Blank: Blank,
+  "Read Back": Readback
 };
 
 const PosOne: PositionDescription = {
@@ -148,6 +150,17 @@ const MapOne: PositionDescription = {
               y: 0,
               width: "34%",
               height: "100%"
+            },
+            {
+              type: "Read Back",
+              x: "25%",
+              y: "40%",
+              width: "50%",
+              height: "20%",
+              connected: true,
+              value: {
+                value: 101
+              }
             }
           ]
         },
