@@ -1,13 +1,18 @@
 import React from "react";
 
+// Interface to describe components by absolute position
 export interface PositionDescription {
+  // String which will be used as an index to a dictionary later
   type: string;
+  // Absolute positions - allow strings for "%" or "px" etc
   x: number | string;
   y: number | string;
   width: number | string;
   height: number | string;
   // All other component properties
   [x: string]: any;
+  // Array of any children nodes - children are all at same level
+  // with respect to positioning
   children?: PositionDescription[] | null;
 }
 
@@ -17,9 +22,12 @@ export function objectToPosition(
 ): JSX.Element | null {
   console.log("objectToPosition");
   console.log(inputObjects);
+
+  // If there is nothing here, return null
   if (inputObjects === null) {
     return null;
   } else {
+    // Extract properties
     let {
       x,
       y,
@@ -32,17 +40,20 @@ export function objectToPosition(
 
     console.log(type);
 
+    // Create the main component
     let Widget: React.FC = widgetDict[type];
 
-    let WidgetChildren = null;
+    // Create all children components - recursive
+    let PositionedChildren = null;
     if (children) {
-      WidgetChildren = children.map(child =>
+      PositionedChildren = children.map(child =>
         objectToPosition(child, widgetDict)
       );
     } else {
-      WidgetChildren = null;
+      PositionedChildren = null;
     }
 
+    // Return the node with children as children
     return (
       <div
         style={{
@@ -53,7 +64,7 @@ export function objectToPosition(
           height: height
         }}
       >
-        <Widget {...otherProps}>{WidgetChildren}</Widget>
+        <Widget {...otherProps}>{PositionedChildren}</Widget>
       </div>
     );
   }
