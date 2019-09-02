@@ -20,9 +20,6 @@ export function objectToPosition(
   inputObjects: PositionDescription | null,
   componentDict: { [index: string]: any }
 ): JSX.Element | null {
-  console.log("objectToPosition");
-  console.log(inputObjects);
-
   // If there is nothing here, return null
   if (inputObjects === null) {
     return null;
@@ -37,8 +34,6 @@ export function objectToPosition(
       children = null,
       ...otherProps
     } = inputObjects;
-
-    console.log(type);
 
     // Create the main component
     let Component: React.FC = componentDict[type];

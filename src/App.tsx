@@ -1,18 +1,5 @@
 import React from "react";
 import "./App.css";
-import { Provider } from "react-redux";
-import {
-  ConnectedReadback,
-  ConnectedStandaloneReadback
-} from "./components/Readback/readback";
-import { ConnectedInput } from "./components/Input/input";
-import {
-  ConnectedProgressBar,
-  ConnectedStandaloneProgressBar
-} from "./components/ProgressBar/ProgressBar";
-import { ConnectedSlideControl } from "./components/SlideControl/SlideControl";
-import { AlarmBorder } from "./components/AlarmBorder/AlarmBorder";
-import { Label } from "./components/Label/Label";
 import { getStore, initialiseStore } from "./redux/store";
 import { SimulatorPlugin } from "./connection/sim";
 

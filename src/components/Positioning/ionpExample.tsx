@@ -169,7 +169,5 @@ const IonpScreen: PositionDescription = {
 
 export const Mapping: React.FC = (): JSX.Element => {
   let Mapped = objectToPosition(IonpScreen, compDict);
-  console.log(Mapped);
-
   return <div>{Mapped}</div>;
 };
