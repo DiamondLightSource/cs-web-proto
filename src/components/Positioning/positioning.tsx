@@ -18,7 +18,7 @@ export interface PositionDescription {
 
 export function objectToPosition(
   inputObjects: PositionDescription | null,
-  componentDict: { [index: string]: React.FC }
+  componentDict: { [index: string]: any }
 ): JSX.Element | null {
   console.log("objectToPosition");
   console.log(inputObjects);

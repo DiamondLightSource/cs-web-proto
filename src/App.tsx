@@ -16,7 +16,7 @@ import { Label } from "./components/Label/Label";
 import { getStore, initialiseStore } from "./redux/store";
 import { SimulatorPlugin } from "./connection/sim";
 
-import { Mapping } from "./components/Positioning/positioningExample";
+import { Mapping } from "./components/Positioning/ionpExample";
 
 const App: React.FC = (): JSX.Element => {
   const plugin = new SimulatorPlugin();
