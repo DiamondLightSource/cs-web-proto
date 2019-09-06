@@ -5,6 +5,7 @@ import { BrowserRouter, Link, Route } from "react-router-dom";
 import { FrontPage } from "./pages/frontpage";
 import { InputsPage } from "./pages/inputsPage";
 import { ReadbacksPage } from "./pages/readbacksPage";
+import { ProgressPage } from "./pages/progressPage";
 import { getStore, initialiseStore } from "./redux/store";
 import { SimulatorPlugin } from "./connection/sim";
 
@@ -33,6 +34,9 @@ const App: React.FC = (): JSX.Element => {
             <Link style={styleLinkButton} to="/readbacks">
               Readbacks
             </Link>
+            <Link style={styleLinkButton} to="/progress">
+              Progress
+            </Link>
           </div>
           <div
             id="Central Column"
@@ -46,6 +50,7 @@ const App: React.FC = (): JSX.Element => {
             <Route path="/" exact component={FrontPage} />
             <Route path="/inputs" exact component={InputsPage} />
             <Route path="/readbacks" exact component={ReadbacksPage} />
+            <Route path="/progress" exact component={ProgressPage} />
           </div>
         </div>
       </BrowserRouter>

@@ -93,7 +93,7 @@ class MetaData extends SimPv {
       nanoseconds = Math.round(currentTime.getTime() % 1000);
     this.value = {
       type: "NTScalar",
-      value: 0,
+      value: 50,
       alarm: { severity: 0, status: 0, message: "" },
       time: {
         secondsPastEpoch: seconds,
