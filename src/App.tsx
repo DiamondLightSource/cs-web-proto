@@ -3,6 +3,8 @@ import "./App.css";
 import { Provider } from "react-redux";
 import { BrowserRouter, Link, Route } from "react-router-dom";
 import { FrontPage } from "./pages/frontpage";
+import { InputsPage } from "./pages/inputsPage";
+import { ReadbacksPage } from "./pages/readbacksPage";
 import { getStore, initialiseStore } from "./redux/store";
 import { SimulatorPlugin } from "./connection/sim";
 
@@ -42,6 +44,8 @@ const App: React.FC = (): JSX.Element => {
             }}
           >
             <Route path="/" exact component={FrontPage} />
+            <Route path="/inputs" exact component={InputsPage} />
+            <Route path="/readbacks" exact component={ReadbacksPage} />
           </div>
         </div>
       </BrowserRouter>
