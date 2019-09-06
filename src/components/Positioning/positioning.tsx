@@ -41,7 +41,7 @@ export function objectToPosition(
     // Create all children components - recursive
     let PositionedChildren = null;
     if (children) {
-      PositionedChildren = children.map(child =>
+      PositionedChildren = children.map((child): JSX.Element | null =>
         objectToPosition(child, componentDict)
       );
     } else {
