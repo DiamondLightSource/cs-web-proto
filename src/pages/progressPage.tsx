@@ -6,7 +6,7 @@ import { ConnectedStandaloneReadback } from "../components/Readback/readback";
 import { ConnectedStandaloneProgressBar } from "../components/ProgressBar/ProgressBar";
 import { ConnectedSlideControl } from "../components/SlideControl/SlideControl";
 
-export const ProgressPage = () => (
+export const ProgressPage = (): JSX.Element => (
   <div id="Central Column" style={{ width: "80%", margin: "auto" }}>
     <h3>Input: ProgressPV</h3>
     <ConnectedInput pvName={"meta://ProgressPV"} />

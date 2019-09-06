@@ -3,7 +3,7 @@ import React from "react";
 
 import { Mapping } from "../components/Positioning/ionpExample";
 
-export const PositioningExamplePage = () => (
+export const PositioningExamplePage = (): JSX.Element => (
   <div
     style={{
       position: "relative",

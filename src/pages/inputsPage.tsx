@@ -4,7 +4,7 @@ import React from "react";
 
 import { ConnectedInput } from "../components/Input/input";
 
-export const InputsPage = () => (
+export const InputsPage = (): JSX.Element => (
   <div id="Central Column" style={{ width: "80%", margin: "auto" }}>
     <h3>Input: PV1</h3>
     <ConnectedInput pvName={"meta://pv1"} />

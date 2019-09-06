@@ -8,7 +8,7 @@ import {
 } from "../components/Readback/readback";
 import { ConnectedInput } from "../components/Input/input";
 
-export const FrontPage = () => (
+export const FrontPage = (): JSX.Element => (
   <div id="Central Column" style={{ width: "80%", margin: "auto" }}>
     <div style={{ display: "block" }}>
       <ConnectedReadback pvName={"TMC43-TS-IOC-01:AI"} />
