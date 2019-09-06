@@ -6,10 +6,9 @@ import { FrontPage } from "./pages/frontpage";
 import { InputsPage } from "./pages/inputsPage";
 import { ReadbacksPage } from "./pages/readbacksPage";
 import { ProgressPage } from "./pages/progressPage";
+import { PositioningExamplePage } from "./pages/positioningExamplePage";
 import { getStore, initialiseStore } from "./redux/store";
 import { SimulatorPlugin } from "./connection/sim";
-
-import { Mapping } from "./components/Positioning/ionpExample";
 
 const App: React.FC = (): JSX.Element => {
   const plugin = new SimulatorPlugin();
@@ -39,6 +38,9 @@ const App: React.FC = (): JSX.Element => {
             <Link style={styleLinkButton} to="/progress">
               Progress
             </Link>
+            <Link style={styleLinkButton} to="/positioning">
+              Positioning
+            </Link>
           </div>
           <div
             id="Central Column"
@@ -53,6 +55,11 @@ const App: React.FC = (): JSX.Element => {
             <Route path="/inputs" exact component={InputsPage} />
             <Route path="/readbacks" exact component={ReadbacksPage} />
             <Route path="/progress" exact component={ProgressPage} />
+            <Route
+              path="/positioning"
+              exact
+              component={PositioningExamplePage}
+            />
           </div>
         </div>
       </BrowserRouter>
