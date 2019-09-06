@@ -208,12 +208,16 @@ export class SimulatorPlugin implements Connection {
         2000
       );
     } else if (pvName.startsWith("meta://")) {
-      this.metaPvs[pvName] = new MetaData(
-        pvName,
-        this.onConnectionUpdate,
-        this.onValueUpdate,
-        2000
-      );
+      console.log(this.metaPvs);
+      console.log(Array.from(Object.keys(this.metaPvs)).indexOf(pvName));
+      if (Array.from(Object.keys(this.metaPvs)).indexOf(pvName) < 0) {
+        this.metaPvs[pvName] = new MetaData(
+          pvName,
+          this.onConnectionUpdate,
+          this.onValueUpdate,
+          2000
+        );
+      }
     }
   }
 
