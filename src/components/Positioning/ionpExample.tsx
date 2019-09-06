@@ -30,8 +30,8 @@ const compDict = {
 
 const IonpScreen: PositionDescription = {
   type: "Blank",
-  x: "91px",
-  y: "239px",
+  x: "136px",
+  y: "100px",
   width: "328px",
   height: "468px",
   children: [
