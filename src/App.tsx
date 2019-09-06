@@ -2,17 +2,7 @@ import React from "react";
 import "./App.css";
 import { Provider } from "react-redux";
 import { BrowserRouter, Link, Route } from "react-router-dom";
-import {
-  ConnectedReadback,
-  ConnectedStandaloneReadback
-} from "./components/Readback/readback";
-import { ConnectedInput } from "./components/Input/input";
-import {
-  ConnectedProgressBar,
-  ConnectedStandaloneProgressBar
-} from "./components/ProgressBar/ProgressBar";
-import { ConnectedSlideControl } from "./components/SlideControl/SlideControl";
-import { AlarmBorder } from "./components/AlarmBorder/AlarmBorder";
+import { FrontPage } from "./pages/frontpage";
 import { getStore, initialiseStore } from "./redux/store";
 import { SimulatorPlugin } from "./connection/sim";
 
@@ -20,29 +10,28 @@ const App: React.FC = (): JSX.Element => {
   const plugin = new SimulatorPlugin();
   initialiseStore(plugin);
   let store = getStore();
-  const readbackPage = () => (
-    <div style={{ display: "block" }}>
-      <ConnectedReadback pvName={"TMC43-TS-IOC-01:AI"} />
-      <ConnectedReadback pvName={"loc://pv1"} />
-      <ConnectedReadback pvName={"loc://pv2"} />
-      <ConnectedReadback pvName={"sim://sine"} precision={3} />
-      <ConnectedReadback pvName={"sim://disconnector"} precision={3} />
-    </div>
-  );
-  const inputPage = () => (
-    <div style={{ display: "block" }}>
-      <ConnectedInput pvName={"loc://pv1"} />
-      <ConnectedInput pvName={"loc://pv2"} />
-      <ConnectedInput pvName={"sim://sine"} />
-      <ConnectedInput pvName={"sim://sine"} />
-    </div>
-  );
+
+  const styleLinkButton = {
+    backgroundColor: "#eeeeee",
+    margin: "10px 10px"
+  };
+
   return (
     <Provider store={store}>
       <BrowserRouter>
         <div className="App">
-          <Link to="/readbacks">Readback Page</Link>
-          <Link to="/inputs">Input Page</Link>
+          <h1>CS Web Proto</h1>
+          <div id="Links" style={{ margin: "5px" }}>
+            <Link style={styleLinkButton} to="/">
+              Home
+            </Link>
+            <Link style={styleLinkButton} to="/inputs">
+              Inputs
+            </Link>
+            <Link style={styleLinkButton} to="/readbacks">
+              Readbacks
+            </Link>
+          </div>
           <div
             id="Central Column"
             style={{
@@ -52,128 +41,7 @@ const App: React.FC = (): JSX.Element => {
               margin: "auto"
             }}
           >
-            <Route path="/readbacks" component={readbackPage} />
-            <Route path="/inputs" component={inputPage} />
-          </div>
-          <div id="Central Column" style={{ width: "80%", margin: "auto" }}>
-            <h1>CS Web Proto</h1>
-            <div style={{ display: "block" }}>
-              <ConnectedReadback pvName={"TMC43-TS-IOC-01:AI"} />
-              <ConnectedReadback pvName={"loc://pv1"} />
-              <ConnectedReadback pvName={"loc://pv2"} />
-              <ConnectedReadback pvName={"sim://sine"} precision={3} />
-              <ConnectedReadback pvName={"sim://disconnector"} precision={3} />
-            </div>
-            <div style={{ display: "block" }}>
-              <ConnectedInput pvName={"loc://pv1"} />
-              <ConnectedInput pvName={"loc://pv2"} />
-              <ConnectedInput pvName={"sim://sine"} />
-              <ConnectedInput pvName={"sim://sine"} />
-            </div>
-            <div>
-              <h3>PV with Metadata</h3>
-              <div
-                style={{
-                  position: "relative",
-                  display: "block",
-                  height: "30px",
-                  margin: "15px"
-                }}
-              >
-                <div
-                  style={{
-                    display: "inline-block",
-                    position: "absolute",
-                    top: "0%",
-                    right: "50%",
-                    height: "100%",
-                    width: "50%",
-                    margin: "auto"
-                  }}
-                >
-                  <ConnectedInput pvName={"meta://metapv1"} />
-                </div>
-                <div
-                  style={{
-                    display: "inline-block",
-                    position: "absolute",
-                    top: "0%",
-                    left: "50%",
-                    height: "100%",
-                    width: "50%",
-                    margin: "auto"
-                  }}
-                >
-                  <ConnectedReadback pvName={"meta://metapv1"} />
-                </div>
-              </div>
-              <div
-                style={{
-                  position: "relative",
-                  height: "2em",
-                  margin: "15px auto"
-                }}
-              >
-                <ConnectedStandaloneReadback
-                  pvName={"meta://metapv1"}
-                  precision={2}
-                />
-              </div>
-              <div
-                style={{
-                  position: "relative",
-                  height: "2em",
-                  margin: "15px auto"
-                }}
-              >
-                <ConnectedStandaloneReadback
-                  pvName={"sim://disconnector"}
-                  precision={2}
-                />
-              </div>
-            </div>
-            <div
-              style={{
-                position: "relative",
-                height: "200px",
-                margin: "15px auto"
-              }}
-            >
-              <ConnectedStandaloneProgressBar
-                pvName={"meta://metapv1"}
-                min={0}
-                max={100}
-              />
-            </div>
-            <div
-              style={{
-                position: "relative",
-                height: "200px",
-                margin: "15px auto"
-              }}
-            >
-              <ConnectedSlideControl
-                pvName={"meta://metapv1"}
-                min={0}
-                max={100}
-              />
-            </div>
-            <div
-              style={{
-                position: "relative",
-                height: "200px",
-                margin: "15px auto"
-              }}
-            >
-              <AlarmBorder connected={false}>
-                <ConnectedProgressBar
-                  pvName={"sim://sine"}
-                  min={-1}
-                  max={1}
-                  precision={2}
-                />
-              </AlarmBorder>
-            </div>
+            <Route path="/" exact component={FrontPage} />
           </div>
         </div>
       </BrowserRouter>
