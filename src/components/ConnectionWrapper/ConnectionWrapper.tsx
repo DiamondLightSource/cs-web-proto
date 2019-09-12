@@ -8,6 +8,26 @@ export interface PvProps extends React.PropsWithChildren<any> {
   pvName: string;
 }
 
+function pvStateSelector(
+  pvName: string,
+  state: CsState
+): [string, boolean, NType?] {
+  let resolvedPv;
+  if (state.resolvedPvs.hasOwnProperty(pvName)) {
+    resolvedPv = state.resolvedPvs[pvName];
+  } else {
+    resolvedPv = pvName;
+  }
+  let pvState = state.valueCache[resolvedPv];
+  let connected = false;
+  let value = undefined;
+  if (pvState != null) {
+    connected = pvState.connected || false;
+    value = pvState.value;
+  }
+  return [resolvedPv, connected, value];
+}
+
 /* See https://medium.com/@jrwebdev/react-higher-order-component-patterns-in-typescript-42278f7590fb
    for some notes on types.
    */
@@ -23,20 +43,7 @@ export const connectionWrapper = <P extends object>(
       boolean,
       NType?
     ] => {
-      let resolvedPv;
-      if (state.resolvedPvs.hasOwnProperty(props.pvName)) {
-        resolvedPv = state.resolvedPvs[props.pvName];
-      } else {
-        resolvedPv = props.pvName;
-      }
-      let pvState = state.valueCache[resolvedPv];
-      let connected = false;
-      let value = undefined;
-      if (pvState != null) {
-        connected = pvState.connected || false;
-        value = pvState.value;
-      }
-      return [resolvedPv, connected, value];
+      return pvStateSelector(props.pvName, state);
     });
     return (
       <Component
