@@ -93,7 +93,7 @@ class MetaData extends SimPv {
       nanoseconds = Math.round(currentTime.getTime() % 1000);
     this.value = {
       type: "NTScalar",
-      value: 0,
+      value: 50,
       alarm: { severity: 0, status: 0, message: "" },
       time: {
         secondsPastEpoch: seconds,
@@ -208,12 +208,14 @@ export class SimulatorPlugin implements Connection {
         2000
       );
     } else if (pvName.startsWith("meta://")) {
-      this.metaPvs[pvName] = new MetaData(
-        pvName,
-        this.onConnectionUpdate,
-        this.onValueUpdate,
-        2000
-      );
+      if (Array.from(Object.keys(this.metaPvs)).indexOf(pvName) < 0) {
+        this.metaPvs[pvName] = new MetaData(
+          pvName,
+          this.onConnectionUpdate,
+          this.onValueUpdate,
+          2000
+        );
+      }
     }
   }
 
