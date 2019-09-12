@@ -3,10 +3,12 @@ import {
   CONNECTION_CHANGED,
   SUBSCRIBE,
   WRITE_PV,
-  VALUE_CHANGED
+  VALUE_CHANGED,
+  PV_RESOLVED
 } from "./actions";
 import { getStore } from "./store";
 import { NType } from "../ntypes";
+import { resolveMacros } from "../macros";
 
 export interface ConnectionState {
   isConnected: boolean;
@@ -39,11 +41,45 @@ export const connectionMiddleware = (connection: Connection) => (
 
   switch (action.type) {
     case SUBSCRIBE: {
-      connection.subscribe(action.payload.pvName);
+      const { pvName } = action.payload;
+      const state = store.getState();
+      let resolvedPvName;
+      if (state.resolvedPvs.hasOwnProperty(pvName)) {
+        resolvedPvName = state.resolvedPvs[pvName];
+      } else {
+        resolvedPvName = resolveMacros(pvName, state.macroMap);
+        if (resolvedPvName !== pvName) {
+          store.dispatch({
+            type: PV_RESOLVED,
+            payload: {
+              unresolvedPvName: pvName,
+              resolvedPvName: resolvedPvName
+            }
+          });
+        }
+      }
+      connection.subscribe(resolvedPvName);
       break;
     }
     case WRITE_PV: {
-      connection.putPv(action.payload.pvName, action.payload.value);
+      const { pvName, value } = action.payload;
+      const state = store.getState();
+      let resolvedPvName;
+      if (state.resolvedPvs.hasOwnProperty(pvName)) {
+        resolvedPvName = state.resolvedPvs[pvName];
+      } else {
+        resolvedPvName = resolveMacros(pvName, state.macroMap);
+        if (resolvedPvName !== pvName) {
+          store.dispatch({
+            type: PV_RESOLVED,
+            payload: {
+              unresolvedPvName: pvName,
+              resolvedPvName: resolvedPvName
+            }
+          });
+        }
+      }
+      connection.putPv(pvName, value);
       break;
     }
   }

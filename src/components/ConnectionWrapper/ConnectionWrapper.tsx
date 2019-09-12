@@ -18,22 +18,30 @@ export const connectionWrapper = <P extends object>(
   // eslint-disable-next-line react/display-name
   return (props: PvProps): JSX.Element => {
     useSubscription(props.pvName);
-    const [connected, latestValue] = useSelector((state: CsState): [
+    const [resolvedPv, connected, latestValue] = useSelector((state: CsState): [
+      string,
       boolean,
       NType?
     ] => {
-      let pvState = state.valueCache[props.pvName];
+      let resolvedPv;
+      if (state.resolvedPvs.hasOwnProperty(props.pvName)) {
+        resolvedPv = state.resolvedPvs[props.pvName];
+      } else {
+        resolvedPv = props.pvName;
+      }
+      let pvState = state.valueCache[resolvedPv];
       let connected = false;
       let value = undefined;
       if (pvState != null) {
         connected = pvState.connected || false;
         value = pvState.value;
       }
-      return [connected, value];
+      return [resolvedPv, connected, value];
     });
     return (
       <Component
         {...(props as P)}
+        pvName={resolvedPv}
         connected={connected}
         value={latestValue}
       ></Component>

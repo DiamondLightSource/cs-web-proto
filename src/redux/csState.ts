@@ -3,12 +3,17 @@ import {
   ActionType,
   SUBSCRIBE,
   WRITE_PV,
-  CONNECTION_CHANGED
+  CONNECTION_CHANGED,
+  MACRO_UPDATED,
+  UNSUBSCRIBE,
+  PV_RESOLVED
 } from "./actions";
 import { NType } from "../ntypes";
 
 const initialState: CsState = {
-  valueCache: {}
+  valueCache: {},
+  macroMap: { SUFFIX: "1" },
+  resolvedPvs: {}
 };
 
 export interface PvState {
@@ -20,8 +25,23 @@ export interface ValueCache {
   [key: string]: PvState;
 }
 
+/* A simple dictionary from key to value. */
+export interface MacroMap {
+  [key: string]: string;
+}
+
+/* A simple dictionary from unresolved PV to resolved PV.
+   e.g. A${B} -> AC
+*/
+export interface ResolvedPvs {
+  [key: string]: string;
+}
+
+/* The shape of the store for the entire application. */
 export interface CsState {
   valueCache: ValueCache;
+  macroMap: MacroMap;
+  resolvedPvs: ResolvedPvs;
 }
 
 export function csReducer(state = initialState, action: ActionType): CsState {
@@ -44,7 +64,22 @@ export function csReducer(state = initialState, action: ActionType): CsState {
       newValueCache[action.payload.pvName] = newPvState;
       return Object.assign({}, state, { valueCache: newValueCache });
     }
+    case MACRO_UPDATED: {
+      const newMacroMap: MacroMap = Object.assign({}, state.macroMap);
+      newMacroMap[action.payload.key] = action.payload.value;
+      return Object.assign({}, state, { macroMap: newMacroMap });
+    }
+    case PV_RESOLVED: {
+      const newResolvedPvs: ResolvedPvs = Object.assign({}, state.resolvedPvs);
+      newResolvedPvs[action.payload.unresolvedPvName] =
+        action.payload.resolvedPvName;
+      return Object.assign({}, state, { resolvedPvs: newResolvedPvs });
+    }
     case SUBSCRIBE: {
+      // Handled by middleware.
+      break;
+    }
+    case UNSUBSCRIBE: {
       // Handled by middleware.
       break;
     }
