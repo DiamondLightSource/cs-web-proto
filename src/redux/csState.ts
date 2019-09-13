@@ -9,6 +9,7 @@ import {
   PV_RESOLVED
 } from "./actions";
 import { NType } from "../ntypes";
+import { resolveMacros } from "../macros";
 
 const initialState: CsState = {
   valueCache: {},
@@ -67,12 +68,20 @@ export function csReducer(state = initialState, action: ActionType): CsState {
     case MACRO_UPDATED: {
       const newMacroMap: MacroMap = Object.assign({}, state.macroMap);
       newMacroMap[action.payload.key] = action.payload.value;
-      return Object.assign({}, state, { macroMap: newMacroMap });
+      const newResolvedPvs: ResolvedPvs = Object.assign({}, state.resolvedPvs);
+      for (var pv of Object.keys(newResolvedPvs)) {
+        const resolvedPv = resolveMacros(pv, newMacroMap);
+        newResolvedPvs[pv] = resolvedPv;
+      }
+      return Object.assign({}, state, {
+        macroMap: newMacroMap,
+        resolvedPvs: newResolvedPvs
+      });
     }
     case PV_RESOLVED: {
+      const { unresolvedPvName, resolvedPvName } = action.payload;
       const newResolvedPvs: ResolvedPvs = Object.assign({}, state.resolvedPvs);
-      newResolvedPvs[action.payload.unresolvedPvName] =
-        action.payload.resolvedPvName;
+      newResolvedPvs[unresolvedPvName] = resolvedPvName;
       return Object.assign({}, state, { resolvedPvs: newResolvedPvs });
     }
     case SUBSCRIBE: {

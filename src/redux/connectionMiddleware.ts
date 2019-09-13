@@ -48,15 +48,13 @@ export const connectionMiddleware = (connection: Connection) => (
         resolvedPvName = state.resolvedPvs[pvName];
       } else {
         resolvedPvName = resolveMacros(pvName, state.macroMap);
-        if (resolvedPvName !== pvName) {
-          store.dispatch({
-            type: PV_RESOLVED,
-            payload: {
-              unresolvedPvName: pvName,
-              resolvedPvName: resolvedPvName
-            }
-          });
-        }
+        store.dispatch({
+          type: PV_RESOLVED,
+          payload: {
+            unresolvedPvName: pvName,
+            resolvedPvName: resolvedPvName
+          }
+        });
       }
       connection.subscribe(resolvedPvName);
       break;
@@ -69,15 +67,13 @@ export const connectionMiddleware = (connection: Connection) => (
         resolvedPvName = state.resolvedPvs[pvName];
       } else {
         resolvedPvName = resolveMacros(pvName, state.macroMap);
-        if (resolvedPvName !== pvName) {
-          store.dispatch({
-            type: PV_RESOLVED,
-            payload: {
-              unresolvedPvName: pvName,
-              resolvedPvName: resolvedPvName
-            }
-          });
-        }
+        store.dispatch({
+          type: PV_RESOLVED,
+          payload: {
+            unresolvedPvName: pvName,
+            resolvedPvName: resolvedPvName
+          }
+        });
       }
       connection.putPv(pvName, value);
       break;
