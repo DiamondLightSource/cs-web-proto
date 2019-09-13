@@ -50,20 +50,17 @@ export function csReducer(state = initialState, action: ActionType): CsState {
     case VALUE_CHANGED: {
       const newValueCache: ValueCache = Object.assign({}, state.valueCache);
       const pvState = state.valueCache[action.payload.pvName];
-      const newPvState = Object.assign({}, pvState, {
-        value: action.payload.value
-      });
+      const newPvState = { ...pvState, value: action.payload.value };
       newValueCache[action.payload.pvName] = newPvState;
-      return Object.assign({}, state, { valueCache: newValueCache });
+      return { ...state, valueCache: newValueCache };
     }
     case CONNECTION_CHANGED: {
       const newValueCache: ValueCache = Object.assign({}, state.valueCache);
-      const pvState = state.valueCache[action.payload.pvName];
-      const newPvState = Object.assign({}, pvState, {
-        connected: action.payload.value.isConnected
-      });
+      const { pvName, value } = action.payload;
+      const pvState = state.valueCache[pvName];
+      const newPvState = { ...pvState, connected: value.isConnected };
       newValueCache[action.payload.pvName] = newPvState;
-      return Object.assign({}, state, { valueCache: newValueCache });
+      return { ...state, valueCache: newValueCache };
     }
     case MACRO_UPDATED: {
       const newMacroMap: MacroMap = Object.assign({}, state.macroMap);
@@ -73,16 +70,13 @@ export function csReducer(state = initialState, action: ActionType): CsState {
         const resolvedPv = resolveMacros(pv, newMacroMap);
         newResolvedPvs[pv] = resolvedPv;
       }
-      return Object.assign({}, state, {
-        macroMap: newMacroMap,
-        resolvedPvs: newResolvedPvs
-      });
+      return { ...state, macroMap: newMacroMap, resolvedPvs: newResolvedPvs };
     }
     case PV_RESOLVED: {
       const { unresolvedPvName, resolvedPvName } = action.payload;
       const newResolvedPvs: ResolvedPvs = Object.assign({}, state.resolvedPvs);
       newResolvedPvs[unresolvedPvName] = resolvedPvName;
-      return Object.assign({}, state, { resolvedPvs: newResolvedPvs });
+      return { ...state, resolvedPvs: newResolvedPvs };
     }
     case SUBSCRIBE: {
       // Handled by middleware.
