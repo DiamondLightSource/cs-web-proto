@@ -48,14 +48,14 @@ export interface CsState {
 export function csReducer(state = initialState, action: ActionType): CsState {
   switch (action.type) {
     case VALUE_CHANGED: {
-      const newValueCache: ValueCache = Object.assign({}, state.valueCache);
+      const newValueCache: ValueCache = { ...state.valueCache };
       const pvState = state.valueCache[action.payload.pvName];
       const newPvState = { ...pvState, value: action.payload.value };
       newValueCache[action.payload.pvName] = newPvState;
       return { ...state, valueCache: newValueCache };
     }
     case CONNECTION_CHANGED: {
-      const newValueCache: ValueCache = Object.assign({}, state.valueCache);
+      const newValueCache: ValueCache = { ...state.valueCache };
       const { pvName, value } = action.payload;
       const pvState = state.valueCache[pvName];
       const newPvState = { ...pvState, connected: value.isConnected };
@@ -63,9 +63,10 @@ export function csReducer(state = initialState, action: ActionType): CsState {
       return { ...state, valueCache: newValueCache };
     }
     case MACRO_UPDATED: {
-      const newMacroMap: MacroMap = Object.assign({}, state.macroMap);
+      const newMacroMap: MacroMap = { ...state.macroMap };
       newMacroMap[action.payload.key] = action.payload.value;
-      const newResolvedPvs: ResolvedPvs = Object.assign({}, state.resolvedPvs);
+      const newResolvedPvs: ResolvedPvs = { ...state.resolvedPvs };
+      // If macros are updated we need to re-resolve PVs.
       for (var pv of Object.keys(newResolvedPvs)) {
         const resolvedPv = resolveMacros(pv, newMacroMap);
         newResolvedPvs[pv] = resolvedPv;
@@ -74,7 +75,7 @@ export function csReducer(state = initialState, action: ActionType): CsState {
     }
     case PV_RESOLVED: {
       const { unresolvedPvName, resolvedPvName } = action.payload;
-      const newResolvedPvs: ResolvedPvs = Object.assign({}, state.resolvedPvs);
+      const newResolvedPvs: ResolvedPvs = { ...state.resolvedPvs };
       newResolvedPvs[unresolvedPvName] = resolvedPvName;
       return { ...state, resolvedPvs: newResolvedPvs };
     }
