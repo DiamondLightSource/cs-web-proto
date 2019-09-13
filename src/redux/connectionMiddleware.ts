@@ -3,7 +3,8 @@ import {
   CONNECTION_CHANGED,
   SUBSCRIBE,
   WRITE_PV,
-  VALUE_CHANGED
+  VALUE_CHANGED,
+  UNSUBSCRIBE
 } from "./actions";
 import { getStore } from "./store";
 import { NType } from "../ntypes";
@@ -45,6 +46,15 @@ export const connectionMiddleware = (connection: Connection) => (
     case WRITE_PV: {
       connection.putPv(action.payload.pvName, action.payload.value);
       break;
+    }
+    case UNSUBSCRIBE: {
+      const { componentId, pvName } = action.payload;
+      const subs = store.getState().subscriptions;
+      // Is this the last subscriber?
+      // The reference will be removed in csReducer.
+      if (subs[pvName].length === 1 && subs[pvName][0] === componentId) {
+        connection.unsubscribe(pvName);
+      }
     }
   }
   return next(action);

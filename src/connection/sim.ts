@@ -242,4 +242,8 @@ export class SimulatorPlugin implements Connection {
     }
     return { type: "NTScalarDouble", value: 0 };
   }
+
+  public unsubscribe(pvName: string): void {
+    console.log(`unsubscribing from ${pvName}`);
+  }
 }
