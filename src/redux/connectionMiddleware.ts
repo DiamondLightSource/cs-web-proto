@@ -40,7 +40,12 @@ export const connectionMiddleware = (connection: Connection) => (
 
   switch (action.type) {
     case SUBSCRIBE: {
-      connection.subscribe(action.payload.pvName);
+      const { pvName } = action.payload;
+      const subs = store.getState().subscriptions;
+      // Are we already subscribed?
+      if (!subs[pvName] || subs[pvName].length === 0) {
+        connection.subscribe(action.payload.pvName);
+      }
       break;
     }
     case WRITE_PV: {

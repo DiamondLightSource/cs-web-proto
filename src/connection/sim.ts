@@ -188,7 +188,7 @@ export class SimulatorPlugin implements Connection {
   }
 
   public subscribe(pvName: string): void {
-    console.log(`creating connection to ${pvName}`); //eslint-disable-line no-console
+    console.log(`subscribing to ${pvName}`); //eslint-disable-line no-console
     if (pvName.startsWith("loc://")) {
       this.localPvs[pvName] = { type: "NTScalarDouble", value: 0 };
       this.onConnectionUpdate(pvName, { isConnected: true });
@@ -244,6 +244,6 @@ export class SimulatorPlugin implements Connection {
   }
 
   public unsubscribe(pvName: string): void {
-    console.log(`unsubscribing from ${pvName}`);
+    console.log(`unsubscribing from ${pvName}`); //eslint-disable-line no-console
   }
 }
