@@ -12,7 +12,8 @@ import { SimulatorPlugin } from "./connection/sim";
 const App: React.FC = (): JSX.Element => {
   const plugin = new SimulatorPlugin();
   initialiseStore(plugin);
-  let store = getStore();
+  const store = getStore();
+
   return (
     <Provider store={store}>
       <div className="App">
