@@ -1,4 +1,4 @@
-import { createStore, applyMiddleware, Store } from "redux";
+import { createStore, applyMiddleware, Store, compose } from "redux";
 
 import { csReducer, CsState } from "./csState";
 import { connectionMiddleware } from "./connectionMiddleware";
@@ -9,9 +9,13 @@ type MyStore = Store<CsState, any>;
 let store: MyStore | null = null;
 
 export function initialiseStore(connection: Connection): void {
+  const composeEnhancers =
+    (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
   store = createStore(
     csReducer,
-    applyMiddleware(connectionMiddleware(connection))
+    /* preloadedState, */ composeEnhancers(
+      applyMiddleware(connectionMiddleware(connection))
+    )
   );
 }
 

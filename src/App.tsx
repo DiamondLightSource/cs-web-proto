@@ -1,11 +1,12 @@
 import React from "react";
 import "./App.css";
 import { Provider } from "react-redux";
-import { ConnectedReadback } from "./components/Readback/readback";
-import { ConnectedInput } from "./components/Input/input";
-import { ConnectedProgressBar } from "./components/ProgressBar/ProgressBar";
-import { ConnectedSlideControl } from "./components/SlideControl/SlideControl";
-import { AlarmBorder } from "./components/AlarmBorder/AlarmBorder";
+import { BrowserRouter, Link, Route } from "react-router-dom";
+import { FrontPage } from "./pages/frontpage";
+import { InputsPage } from "./pages/inputsPage";
+import { ReadbacksPage } from "./pages/readbacksPage";
+import { ProgressPage } from "./pages/progressPage";
+import { PositioningExamplePage } from "./pages/positioningExamplePage";
 import { getStore, initialiseStore } from "./redux/store";
 import { SimulatorPlugin } from "./connection/sim";
 
@@ -14,86 +15,54 @@ const App: React.FC = (): JSX.Element => {
   initialiseStore(plugin);
   const store = getStore();
 
+  const styleLinkButton = {
+    backgroundColor: "#eeeeee",
+    margin: "10px 10px"
+  };
+
   return (
     <Provider store={store}>
-      <div className="App">
-        <h1>CS Web Proto</h1>
-        <div style={{ display: "block" }}>
-          <ConnectedReadback pvName={"TMC43-TS-IOC-01:AI"} />
-          <ConnectedReadback pvName={"loc://pv1"} />
-          <ConnectedReadback pvName={"loc://pv2"} />
-          <ConnectedReadback pvName={"sim://sine"} precision={3} />
-          <ConnectedReadback pvName={"sim://disconnector"} precision={3} />
-        </div>
-        <div style={{ display: "block" }}>
-          <ConnectedInput pvName={"loc://pv1"} />
-          <ConnectedInput pvName={"loc://pv2"} />
-          <ConnectedInput pvName={"sim://sine"} />
-          <ConnectedInput pvName={"sim://sine"} />
-        </div>
-        <div style={{ display: "block" }}>
-          <h3>PV with Metadata</h3>
-          <ConnectedInput pvName={"meta://metapv1"} />
-          <ConnectedReadback pvName={"meta://metapv1"} precision={3} />
-        </div>
-        <div
-          style={{
-            position: "absolute",
-            top: "500px",
-            left: "10%",
-            height: "20%",
-            width: "50%"
-          }}
-        >
-          <ConnectedSlideControl pvName="loc://pv1" min={0} max={100} />
-        </div>
-        <div
-          style={{
-            position: "absolute",
-            left: "10%",
-            height: "20%",
-            width: "50%"
-          }}
-        >
-          <ConnectedProgressBar
-            pvName={"sim://sine"}
-            min={-1}
-            max={1}
-            precision={2}
-          />
-        </div>
-        <div
-          style={{
-            position: "absolute",
-            top: "30%",
-            left: "70%",
-            height: "20%",
-            width: "20%"
-          }}
-        >
-          <AlarmBorder alarm={{ severity: 0, status: 0, message: "" }}>
-            This is an alarm border
-          </AlarmBorder>
-        </div>
-        <div
-          style={{
-            position: "absolute",
-            top: "55%",
-            left: "70%",
-            height: "20%",
-            width: "20%"
-          }}
-        >
-          <AlarmBorder alarm={{ severity: 2, status: 0, message: "" }}>
-            <ConnectedProgressBar
-              pvName={"sim://sine"}
-              min={-1}
-              max={1}
-              precision={2}
+      <BrowserRouter>
+        <div className="App">
+          <h1>CS Web Proto</h1>
+          <div id="Links" style={{ margin: "5px" }}>
+            <Link style={styleLinkButton} to="/">
+              Home
+            </Link>
+            <Link style={styleLinkButton} to="/inputs">
+              Inputs
+            </Link>
+            <Link style={styleLinkButton} to="/readbacks">
+              Readbacks
+            </Link>
+            <Link style={styleLinkButton} to="/progress">
+              Progress
+            </Link>
+            <Link style={styleLinkButton} to="/positioning">
+              Positioning
+            </Link>
+          </div>
+          <div
+            id="Central Column"
+            style={{
+              width: "600px",
+              height: "800px",
+              border: "solid 3px #dddddd",
+              margin: "auto"
+            }}
+          >
+            <Route path="/" exact component={FrontPage} />
+            <Route path="/inputs" exact component={InputsPage} />
+            <Route path="/readbacks" exact component={ReadbacksPage} />
+            <Route path="/progress" exact component={ProgressPage} />
+            <Route
+              path="/positioning"
+              exact
+              component={PositioningExamplePage}
             />
-          </AlarmBorder>
+          </div>
         </div>
-      </div>
+      </BrowserRouter>
     </Provider>
   );
 };

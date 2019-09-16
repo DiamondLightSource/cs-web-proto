@@ -7,6 +7,8 @@ import {
   ntToString
 } from "../../ntypes";
 import { connectionWrapper } from "../ConnectionWrapper/ConnectionWrapper";
+import { CopyWrapper } from "../CopyWrapper/CopyWrapper";
+import { AlarmBorder } from "../AlarmBorder/AlarmBorder";
 
 import classes from "./readback.module.css";
 
@@ -73,3 +75,65 @@ interface ConnectedReadbackProps {
 export const ConnectedReadback: React.FC<
   ConnectedReadbackProps
 > = connectionWrapper(Readback);
+
+interface ConnectedCopyReadbackProps {
+  pvName: string;
+  precision?: number;
+  style?: {};
+}
+
+export const CopyReadback = (props: {
+  pvName: string;
+  value: NType;
+  connected: boolean;
+  precision?: number;
+  style?: object;
+}): JSX.Element => (
+  <CopyWrapper
+    pvName={props.pvName}
+    connected={props.connected}
+    value={props.value}
+  >
+    <Readback
+      connected={props.connected}
+      value={props.value}
+      precision={props.precision}
+    ></Readback>
+  </CopyWrapper>
+);
+
+export const ConnectedCopyReadback: React.FC<
+  ConnectedCopyReadbackProps
+> = connectionWrapper(CopyReadback);
+
+interface ConnectedStandaloneReadbackProps {
+  pvName: string;
+  precision?: number;
+  style?: {};
+}
+
+export const StandaloneReadback = (props: {
+  pvName: string;
+  value: NType;
+  connected: boolean;
+  precision?: number;
+  style?: object;
+}): JSX.Element => (
+  <CopyWrapper
+    pvName={props.pvName}
+    connected={props.connected}
+    value={props.value}
+  >
+    <AlarmBorder connected={props.connected} value={props.value}>
+      <Readback
+        connected={props.connected}
+        value={props.value}
+        precision={props.precision}
+      ></Readback>
+    </AlarmBorder>
+  </CopyWrapper>
+);
+
+export const ConnectedStandaloneReadback: React.FC<
+  ConnectedStandaloneReadbackProps
+> = connectionWrapper(StandaloneReadback);
