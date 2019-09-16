@@ -4,7 +4,8 @@ import {
   CONNECTION_CHANGED,
   SUBSCRIBE,
   WRITE_PV,
-  VALUE_CHANGED
+  VALUE_CHANGED,
+  UNSUBSCRIBE
 } from "./actions";
 import { NType } from "../ntypes";
 
@@ -43,12 +44,26 @@ export const connectionMiddleware = (connection: Connection) => (
 
   switch (action.type) {
     case SUBSCRIBE: {
-      connection.subscribe(action.payload.pvName);
+      const { pvName } = action.payload;
+      const subs = store.getState().subscriptions;
+      // Are we already subscribed?
+      if (!subs[pvName] || subs[pvName].length === 0) {
+        connection.subscribe(action.payload.pvName);
+      }
       break;
     }
     case WRITE_PV: {
       connection.putPv(action.payload.pvName, action.payload.value);
       break;
+    }
+    case UNSUBSCRIBE: {
+      const { componentId, pvName } = action.payload;
+      const subs = store.getState().subscriptions;
+      // Is this the last subscriber?
+      // The reference will be removed in csReducer.
+      if (subs[pvName].length === 1 && subs[pvName][0] === componentId) {
+        connection.unsubscribe(pvName);
+      }
     }
   }
   return next(action);

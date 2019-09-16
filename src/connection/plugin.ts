@@ -22,4 +22,5 @@ export interface Connection {
     valueCallback: ValueChangedCallback
   ) => void;
   isConnected: () => boolean;
+  unsubscribe: (pvName: string) => void;
 }

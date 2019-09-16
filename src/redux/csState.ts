@@ -3,12 +3,14 @@ import {
   ActionType,
   SUBSCRIBE,
   WRITE_PV,
-  CONNECTION_CHANGED
+  CONNECTION_CHANGED,
+  UNSUBSCRIBE
 } from "./actions";
 import { NType } from "../ntypes";
 
 const initialState: CsState = {
-  valueCache: {}
+  valueCache: {},
+  subscriptions: {}
 };
 
 export interface PvState {
@@ -20,8 +22,13 @@ export interface ValueCache {
   [key: string]: PvState;
 }
 
+export interface Subscriptions {
+  [pv: string]: string[];
+}
+
 export interface CsState {
   valueCache: ValueCache;
+  subscriptions: Subscriptions;
 }
 
 export function csReducer(state = initialState, action: ActionType): CsState {
@@ -45,8 +52,23 @@ export function csReducer(state = initialState, action: ActionType): CsState {
       return Object.assign({}, state, { valueCache: newValueCache });
     }
     case SUBSCRIBE: {
-      // Handled by middleware.
-      break;
+      const { componentId, pvName } = action.payload;
+      const newSubscriptions = { ...state.subscriptions };
+      if (newSubscriptions.hasOwnProperty(pvName)) {
+        newSubscriptions[pvName].push(componentId);
+      } else {
+        newSubscriptions[pvName] = [componentId];
+      }
+      return { ...state, subscriptions: newSubscriptions };
+    }
+    case UNSUBSCRIBE: {
+      const { componentId, pvName } = action.payload;
+      const newSubscriptions = { ...state.subscriptions };
+      const newPvSubs = state.subscriptions[pvName].filter(
+        (id): boolean => id !== componentId
+      );
+      newSubscriptions[pvName] = newPvSubs;
+      return { ...state, subscriptions: newSubscriptions };
     }
     case WRITE_PV: {
       // Handled by middleware.
