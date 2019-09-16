@@ -1,6 +1,6 @@
 import React from "react";
 
-import classes from "./Label.module.css";
+import classes from "./label.module.css";
 
 export const Label = (props: {
   text: string | number;

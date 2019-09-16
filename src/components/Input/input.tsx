@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { connectionWrapper } from "../ConnectionWrapper/ConnectionWrapper";
+import { connectionWrapper } from "../ConnectionWrapper/connectionWrapper";
 import { writePv } from "../../hooks/useCs";
 import { NType, ntOrNullToString } from "../../ntypes";
 

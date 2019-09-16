@@ -1,28 +1,29 @@
-import { Connection } from "../connection/plugin";
+import { Store } from "redux";
+import { Connection, ConnectionState } from "../connection/plugin";
 import {
   CONNECTION_CHANGED,
   SUBSCRIBE,
   WRITE_PV,
   VALUE_CHANGED,
-  PV_RESOLVED
+  PV_RESOLVED,
+  UNSUBSCRIBE
 } from "./actions";
-import { getStore } from "./store";
 import { NType } from "../ntypes";
 import { resolveMacros } from "../macros";
 
-export interface ConnectionState {
-  isConnected: boolean;
-}
-
-function connectionChanged(pvName: string, value: ConnectionState): void {
-  getStore().dispatch({
+function connectionChanged(
+  store: Store,
+  pvName: string,
+  value: ConnectionState
+): void {
+  store.dispatch({
     type: CONNECTION_CHANGED,
     payload: { pvName: pvName, value: value }
   });
 }
 
-function valueChanged(pvName: string, value: NType): void {
-  getStore().dispatch({
+function valueChanged(store: Store, pvName: string, value: NType): void {
+  store.dispatch({
     type: VALUE_CHANGED,
     payload: { pvName: pvName, value: value }
   });
@@ -36,7 +37,11 @@ export const connectionMiddleware = (connection: Connection) => (
   store: any
 ) => (next: any): any => (action: any): any => {
   if (!connection.isConnected()) {
-    connection.connect(connectionChanged, valueChanged);
+    connection.connect(
+      // Partial function application.
+      connectionChanged.bind(null, store),
+      valueChanged.bind(null, store)
+    );
   }
 
   switch (action.type) {
@@ -56,7 +61,13 @@ export const connectionMiddleware = (connection: Connection) => (
           }
         });
       }
-      connection.subscribe(resolvedPvName);
+      // Are we already subscribed?
+      if (
+        !state.subscriptions[pvName] ||
+        state.subscriptions[pvName].length === 0
+      ) {
+        connection.subscribe(pvName);
+      }
       break;
     }
     case WRITE_PV: {
@@ -77,6 +88,15 @@ export const connectionMiddleware = (connection: Connection) => (
       }
       connection.putPv(pvName, value);
       break;
+    }
+    case UNSUBSCRIBE: {
+      const { componentId, pvName } = action.payload;
+      const subs = store.getState().subscriptions;
+      // Is this the last subscriber?
+      // The reference will be removed in csReducer.
+      if (subs[pvName].length === 1 && subs[pvName][0] === componentId) {
+        connection.unsubscribe(pvName);
+      }
     }
   }
   return next(action);

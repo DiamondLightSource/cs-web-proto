@@ -1,10 +1,10 @@
 import React from "react";
 
 import { PositionDescription, objectToPosition } from "./positioning";
-import { Label } from "../Label/Label";
+import { Label } from "../Label/label";
 import { Readback } from "../Readback/readback";
 import { Input } from "../Input/input";
-import { ProgressBar } from "../ProgressBar/ProgressBar";
+import { ProgressBar } from "../ProgressBar/progressBar";
 
 const Blank: React.FC = (props: any): JSX.Element => (
   <div

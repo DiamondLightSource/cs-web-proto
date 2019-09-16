@@ -14,7 +14,8 @@ import { resolveMacros } from "../macros";
 const initialState: CsState = {
   valueCache: {},
   macroMap: { SUFFIX: "1" },
-  resolvedPvs: {}
+  resolvedPvs: {},
+  subscriptions: {}
 };
 
 export interface PvState {
@@ -38,11 +39,16 @@ export interface ResolvedPvs {
   [key: string]: string;
 }
 
+export interface Subscriptions {
+  [pv: string]: string[];
+}
+
 /* The shape of the store for the entire application. */
 export interface CsState {
   valueCache: ValueCache;
   macroMap: MacroMap;
   resolvedPvs: ResolvedPvs;
+  subscriptions: Subscriptions;
 }
 
 export function csReducer(state = initialState, action: ActionType): CsState {
@@ -80,8 +86,23 @@ export function csReducer(state = initialState, action: ActionType): CsState {
       return { ...state, resolvedPvs: newResolvedPvs };
     }
     case SUBSCRIBE: {
-      // Handled by middleware.
-      break;
+      const { componentId, pvName } = action.payload;
+      const newSubscriptions = { ...state.subscriptions };
+      if (newSubscriptions.hasOwnProperty(pvName)) {
+        newSubscriptions[pvName].push(componentId);
+      } else {
+        newSubscriptions[pvName] = [componentId];
+      }
+      return { ...state, subscriptions: newSubscriptions };
+    }
+    case UNSUBSCRIBE: {
+      const { componentId, pvName } = action.payload;
+      const newSubscriptions = { ...state.subscriptions };
+      const newPvSubs = state.subscriptions[pvName].filter(
+        (id): boolean => id !== componentId
+      );
+      newSubscriptions[pvName] = newPvSubs;
+      return { ...state, subscriptions: newSubscriptions };
     }
     case UNSUBSCRIBE: {
       // Handled by middleware.

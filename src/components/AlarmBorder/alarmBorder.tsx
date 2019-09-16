@@ -1,7 +1,7 @@
 import React, { ReactNode } from "react";
 import { Alarm, NType } from "../../ntypes";
 
-import classes from "./AlarmBorder.module.css";
+import classes from "./alarmBorder.module.css";
 
 export const AlarmBorder = (props: {
   connected: boolean;

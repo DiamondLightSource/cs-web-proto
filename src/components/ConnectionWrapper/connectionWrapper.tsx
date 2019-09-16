@@ -1,4 +1,5 @@
 import React from "react";
+import { useId } from "react-id-generator";
 import { useSubscription } from "../../hooks/useCs";
 import { useSelector } from "react-redux";
 import { CsState } from "../../redux/csState";
@@ -37,7 +38,8 @@ export const connectionWrapper = <P extends object>(
 ): React.FC<any> => {
   // eslint-disable-next-line react/display-name
   return (props: PvProps): JSX.Element => {
-    useSubscription(props.pvName);
+    const [id] = useId();
+    useSubscription(id, props.pvName);
     const [resolvedPv, connected, latestValue] = useSelector((state: CsState): [
       string,
       boolean,

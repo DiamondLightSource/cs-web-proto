@@ -2,7 +2,7 @@
 
 import React from "react";
 
-import { Label } from "../components/Label/Label";
+import { Label } from "../components/Label/label";
 import { ConnectedStandaloneReadback } from "../components/Readback/readback";
 import { MacroUpdater } from "../components/MacroUpdater/MacroUpdater";
 import { MacroDisplayer } from "../components/MacroDisplayer/MacroDisplayer";
