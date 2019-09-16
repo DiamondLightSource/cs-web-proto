@@ -1,12 +1,12 @@
 import {
   Connection,
+  ConnectionState,
   ConnectionChangedCallback,
   ValueChangedCallback,
   nullConnCallback,
   nullValueCallback
 } from "./plugin";
 import { NType } from "../ntypes";
-import { ConnectionState } from "../redux/connectionMiddleware";
 
 abstract class SimPv {
   protected onConnectionUpdate: ConnectionChangedCallback;
