@@ -1,3 +1,6 @@
+// Specifically disable some eslint rules
+/* eslint unicorn/filename-case: 0 */ // --> OFF
+
 import React from "react";
 import "./App.css";
 import { Provider } from "react-redux";

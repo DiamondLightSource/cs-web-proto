@@ -35,8 +35,8 @@
     "test": "react-scripts test --coverage",
     "eject": "react-scripts eject",
     "coveralls": "cat ./coverage/lcov.info | node node_modules/.bin/coveralls",
-    "lint": "node_modules/.bin/eslint src/**/*.{ts,tsx} --max-warnings=0",
-    "prettier-check": "node_modules/.bin/prettier --check src/**/*.{ts,tsx}"
+    "lint": "node_modules/.bin/eslint 'src/**/*.{ts,tsx}' --max-warnings=0",
+    "prettier-check": "node_modules/.bin/prettier --check 'src/**/*.{ts,tsx}'"
   },
   "eslintConfig": {
     "extends": [
@@ -50,7 +50,8 @@
     "plugins": [
       "react",
       "@typescript-eslint",
-      "prettier"
+      "prettier",
+      "unicorn"
     ],
     "env": {
       "browser": true,
@@ -63,6 +64,14 @@
         "error",
         {
           "singleQuote": false
+        }
+      ],
+      "unicorn/filename-case": [
+        "error",
+        {
+          "cases": {
+            "camelCase": true
+          }
         }
       ]
     },
@@ -99,6 +108,7 @@
     "eslint-config-prettier": "^6.0.0",
     "eslint-config-react": "^1.1.7",
     "eslint-plugin-prettier": "^3.1.0",
+    "eslint-plugin-unicorn": "^10.0.0",
     "prettier": "^1.18.2",
     "react-test-renderer": "^16.9.0"
   }
