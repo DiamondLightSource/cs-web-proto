@@ -3,8 +3,8 @@ import React from "react";
 
 import { ConnectedInput } from "../components/Input/input";
 import { ConnectedStandaloneReadback } from "../components/Readback/readback";
-import { ConnectedStandaloneProgressBar } from "../components/ProgressBar/ProgressBar";
-import { ConnectedSlideControl } from "../components/SlideControl/SlideControl";
+import { ConnectedStandaloneProgressBar } from "../components/ProgressBar/progressBar";
+import { ConnectedSlideControl } from "../components/SlideControl/slideControl";
 
 export const ProgressPage = (): JSX.Element => (
   <div id="Central Column" style={{ width: "80%", margin: "auto" }}>

@@ -1,7 +1,7 @@
 import React from "react";
 import { shallow, ShallowWrapper } from "enzyme";
 
-import { CopyWrapper } from "./CopyWrapper";
+import { CopyWrapper } from "./copyWrapper";
 
 let wrapper: ShallowWrapper;
 beforeEach((): void => {

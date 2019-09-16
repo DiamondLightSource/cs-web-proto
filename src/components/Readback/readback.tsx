@@ -6,9 +6,9 @@ import {
   ntToNumericString,
   ntToString
 } from "../../ntypes";
-import { connectionWrapper } from "../ConnectionWrapper/ConnectionWrapper";
-import { CopyWrapper } from "../CopyWrapper/CopyWrapper";
-import { AlarmBorder } from "../AlarmBorder/AlarmBorder";
+import { connectionWrapper } from "../ConnectionWrapper/connectionWrapper";
+import { CopyWrapper } from "../CopyWrapper/copyWrapper";
+import { AlarmBorder } from "../AlarmBorder/alarmBorder";
 
 import classes from "./readback.module.css";
 

@@ -2,12 +2,12 @@
 // Displays value via an embedded progressbar widget
 
 import React, { useState } from "react";
-import { ProgressBar } from "../ProgressBar/ProgressBar";
+import { ProgressBar } from "../ProgressBar/progressBar";
 import { writePv } from "../../hooks/useCs";
 import { NType, ntOrNullToString } from "../../ntypes";
 
-import classes from "./SlideControl.module.css";
-import { connectionWrapper } from "../ConnectionWrapper/ConnectionWrapper";
+import classes from "./slideControl.module.css";
+import { connectionWrapper } from "../ConnectionWrapper/connectionWrapper";
 
 interface SlideControlProps {
   pvName: string;

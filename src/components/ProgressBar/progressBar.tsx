@@ -1,11 +1,11 @@
 import React from "react";
 
 import { NType, ntOrNullToNumber } from "../../ntypes";
-import classes from "./ProgressBar.module.css";
+import classes from "./progressBar.module.css";
 
-import { connectionWrapper } from "../ConnectionWrapper/ConnectionWrapper";
-import { CopyWrapper } from "../CopyWrapper/CopyWrapper";
-import { AlarmBorder } from "../AlarmBorder/AlarmBorder";
+import { connectionWrapper } from "../ConnectionWrapper/connectionWrapper";
+import { CopyWrapper } from "../CopyWrapper/copyWrapper";
+import { AlarmBorder } from "../AlarmBorder/alarmBorder";
 
 interface ProgressBarProps {
   connected: boolean;
