@@ -6,9 +6,9 @@
 import React, { ReactNode } from "react";
 import copyToClipboard from "clipboard-copy";
 
-import { connectionWrapper } from "../ConnectionWrapper/ConnectionWrapper";
+import { connectionWrapper } from "../ConnectionWrapper/connectionWrapper";
 import { NType } from "../../ntypes";
-import classes from "./CopyWrapper.module.css";
+import classes from "./copyWrapper.module.css";
 
 export const CopyWrapper = (props: {
   pvName: string;

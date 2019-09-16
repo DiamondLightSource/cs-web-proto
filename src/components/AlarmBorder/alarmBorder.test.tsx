@@ -1,16 +1,21 @@
 import React from "react";
 import { shallow, ShallowWrapper } from "enzyme";
 
-import { AlarmBorder } from "./AlarmBorder";
+import { AlarmBorder } from "./alarmBorder";
 
 let wrapper: ShallowWrapper;
 beforeEach((): void => {
   const alarmborder = (
     <AlarmBorder
-      alarm={{
-        severity: 0,
-        status: 0,
-        message: ""
+      connected={true}
+      value={{
+        type: "NTScalar",
+        value: 0,
+        alarm: {
+          severity: 0,
+          status: 0,
+          message: ""
+        }
       }}
     >
       Children
