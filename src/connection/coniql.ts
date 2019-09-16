@@ -94,4 +94,8 @@ export class ConiqlPlugin implements Connection {
   public getValue(pvName: string): NType {
     return { type: "NTScalarDouble", value: "" };
   }
+
+  public unsubscribe(pvName: string): void {
+    // noop
+  }
 }
