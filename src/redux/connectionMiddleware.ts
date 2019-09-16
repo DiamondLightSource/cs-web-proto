@@ -1,4 +1,5 @@
-import { Connection } from "../connection/plugin";
+import { Store } from "redux";
+import { Connection, ConnectionState } from "../connection/plugin";
 import {
   CONNECTION_CHANGED,
   SUBSCRIBE,
@@ -6,22 +7,21 @@ import {
   VALUE_CHANGED,
   UNSUBSCRIBE
 } from "./actions";
-import { getStore } from "./store";
 import { NType } from "../ntypes";
 
-export interface ConnectionState {
-  isConnected: boolean;
-}
-
-function connectionChanged(pvName: string, value: ConnectionState): void {
-  getStore().dispatch({
+function connectionChanged(
+  store: Store,
+  pvName: string,
+  value: ConnectionState
+): void {
+  store.dispatch({
     type: CONNECTION_CHANGED,
     payload: { pvName: pvName, value: value }
   });
 }
 
-function valueChanged(pvName: string, value: NType): void {
-  getStore().dispatch({
+function valueChanged(store: Store, pvName: string, value: NType): void {
+  store.dispatch({
     type: VALUE_CHANGED,
     payload: { pvName: pvName, value: value }
   });
@@ -35,7 +35,11 @@ export const connectionMiddleware = (connection: Connection) => (
   store: any
 ) => (next: any): any => (action: any): any => {
   if (!connection.isConnected()) {
-    connection.connect(connectionChanged, valueChanged);
+    connection.connect(
+      // Partial function application.
+      connectionChanged.bind(null, store),
+      valueChanged.bind(null, store)
+    );
   }
 
   switch (action.type) {
