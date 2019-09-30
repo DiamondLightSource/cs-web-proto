@@ -30,7 +30,6 @@ const DumbMacroUpdater: React.FC<DumbMacroUpdaterProps> = (
 );
 
 function updateMacro(key: string, value: string): void {
-  console.log(`updating ${key} to ${value}`);
   getStore().dispatch({
     type: MACRO_UPDATED,
     payload: { key: key, value: value }

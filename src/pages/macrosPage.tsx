@@ -1,4 +1,4 @@
-// Front page of application
+/* eslint no-template-curly-in-string: 0 */
 
 import React from "react";
 

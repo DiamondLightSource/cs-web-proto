@@ -47,7 +47,5 @@ export const MacroDisplayer: React.FC<{}> = (props: {}): JSX.Element => {
       return state.macroMap;
     }
   );
-  console.log(macroMap);
-
   return <DumbMacroDisplayer macroMap={macroMap} />;
 };
