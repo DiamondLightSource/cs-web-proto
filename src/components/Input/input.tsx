@@ -4,6 +4,7 @@ import { writePv } from "../../hooks/useCs";
 import { NType, ntOrNullToString } from "../../ntypes";
 
 import classes from "./input.module.css";
+import { macroWrapper } from "../MacroWrapper/macroWrapper";
 
 export interface InputProps {
   pvName: string;
@@ -81,6 +82,6 @@ export const SmartInput: React.FC<SmartInputProps> = (
   );
 };
 
-export const ConnectedInput: React.FC<ConnectedInputProps> = connectionWrapper(
-  SmartInput
+export const ConnectedInput: React.FC<ConnectedInputProps> = macroWrapper(
+  connectionWrapper(SmartInput)
 );

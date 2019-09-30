@@ -5,11 +5,9 @@ import {
   SUBSCRIBE,
   WRITE_PV,
   VALUE_CHANGED,
-  PV_RESOLVED,
   UNSUBSCRIBE
 } from "./actions";
 import { NType } from "../ntypes";
-import { resolveMacros } from "../macros";
 
 function connectionChanged(
   store: Store,
@@ -48,19 +46,6 @@ export const connectionMiddleware = (connection: Connection) => (
     case SUBSCRIBE: {
       const { pvName } = action.payload;
       const state = store.getState();
-      let resolvedPvName;
-      if (state.resolvedPvs.hasOwnProperty(pvName)) {
-        resolvedPvName = state.resolvedPvs[pvName];
-      } else {
-        resolvedPvName = resolveMacros(pvName, state.macroMap);
-        store.dispatch({
-          type: PV_RESOLVED,
-          payload: {
-            unresolvedPvName: pvName,
-            resolvedPvName: resolvedPvName
-          }
-        });
-      }
       // Are we already subscribed?
       if (
         !state.subscriptions[pvName] ||
@@ -72,20 +57,6 @@ export const connectionMiddleware = (connection: Connection) => (
     }
     case WRITE_PV: {
       const { pvName, value } = action.payload;
-      const state = store.getState();
-      let resolvedPvName;
-      if (state.resolvedPvs.hasOwnProperty(pvName)) {
-        resolvedPvName = state.resolvedPvs[pvName];
-      } else {
-        resolvedPvName = resolveMacros(pvName, state.macroMap);
-        store.dispatch({
-          type: PV_RESOLVED,
-          payload: {
-            unresolvedPvName: pvName,
-            resolvedPvName: resolvedPvName
-          }
-        });
-      }
       connection.putPv(pvName, value);
       break;
     }

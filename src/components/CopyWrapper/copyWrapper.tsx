@@ -12,12 +12,13 @@ import classes from "./copyWrapper.module.css";
 
 export const CopyWrapper = (props: {
   pvName: string;
+  rawPvName?: string;
   connected: boolean;
   value?: NType;
   children: ReactNode;
   style?: object;
 }): JSX.Element => {
-  let { connected, pvName, value = null, style = {} } = props;
+  let { connected, pvName, rawPvName = "", value = null, style = {} } = props;
 
   let displayValue = "";
   if (!connected) {
@@ -56,7 +57,8 @@ export const CopyWrapper = (props: {
     >
       <div className={classes.Children}>{props.children}</div>
       <span className={classes.tooltiptext}>
-        {pvName}
+        {pvName} <br />
+        {rawPvName}
         <br />[{toolTipText}]
       </span>
     </div>

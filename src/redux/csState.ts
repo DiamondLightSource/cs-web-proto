@@ -5,16 +5,13 @@ import {
   WRITE_PV,
   CONNECTION_CHANGED,
   MACRO_UPDATED,
-  UNSUBSCRIBE,
-  PV_RESOLVED
+  UNSUBSCRIBE
 } from "./actions";
 import { NType } from "../ntypes";
-import { resolveMacros } from "../macros";
 
 const initialState: CsState = {
   valueCache: {},
   macroMap: { SUFFIX: "1" },
-  resolvedPvs: {},
   subscriptions: {}
 };
 
@@ -32,13 +29,6 @@ export interface MacroMap {
   [key: string]: string;
 }
 
-/* A simple dictionary from unresolved PV to resolved PV.
-   e.g. A${B} -> AC
-*/
-export interface ResolvedPvs {
-  [key: string]: string;
-}
-
 export interface Subscriptions {
   [pv: string]: string[];
 }
@@ -47,7 +37,6 @@ export interface Subscriptions {
 export interface CsState {
   valueCache: ValueCache;
   macroMap: MacroMap;
-  resolvedPvs: ResolvedPvs;
   subscriptions: Subscriptions;
 }
 
@@ -71,19 +60,7 @@ export function csReducer(state = initialState, action: ActionType): CsState {
     case MACRO_UPDATED: {
       const newMacroMap: MacroMap = { ...state.macroMap };
       newMacroMap[action.payload.key] = action.payload.value;
-      const newResolvedPvs: ResolvedPvs = { ...state.resolvedPvs };
-      // If macros are updated we need to re-resolve PVs.
-      for (var pv of Object.keys(newResolvedPvs)) {
-        const resolvedPv = resolveMacros(pv, newMacroMap);
-        newResolvedPvs[pv] = resolvedPv;
-      }
-      return { ...state, macroMap: newMacroMap, resolvedPvs: newResolvedPvs };
-    }
-    case PV_RESOLVED: {
-      const { unresolvedPvName, resolvedPvName } = action.payload;
-      const newResolvedPvs: ResolvedPvs = { ...state.resolvedPvs };
-      newResolvedPvs[unresolvedPvName] = resolvedPvName;
-      return { ...state, resolvedPvs: newResolvedPvs };
+      return { ...state, macroMap: newMacroMap };
     }
     case SUBSCRIBE: {
       const { componentId, pvName } = action.payload;
@@ -103,10 +80,6 @@ export function csReducer(state = initialState, action: ActionType): CsState {
       );
       newSubscriptions[pvName] = newPvSubs;
       return { ...state, subscriptions: newSubscriptions };
-    }
-    case UNSUBSCRIBE: {
-      // Handled by middleware.
-      break;
     }
     case WRITE_PV: {
       // Handled by middleware.

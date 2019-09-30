@@ -9,24 +9,15 @@ export interface PvProps extends React.PropsWithChildren<any> {
   pvName: string;
 }
 
-function pvStateSelector(
-  pvName: string,
-  state: CsState
-): [string, boolean, NType?] {
-  let resolvedPv;
-  if (state.resolvedPvs.hasOwnProperty(pvName)) {
-    resolvedPv = state.resolvedPvs[pvName];
-  } else {
-    resolvedPv = pvName;
-  }
-  let pvState = state.valueCache[resolvedPv];
+function pvStateSelector(pvName: string, state: CsState): [boolean, NType?] {
+  const pvState = state.valueCache[pvName];
   let connected = false;
   let value = undefined;
   if (pvState != null) {
     connected = pvState.connected || false;
     value = pvState.value;
   }
-  return [resolvedPv, connected, value];
+  return [connected, value];
 }
 
 /* See https://medium.com/@jrwebdev/react-higher-order-component-patterns-in-typescript-42278f7590fb
@@ -40,9 +31,9 @@ export const connectionWrapper = <P extends object>(
   return (props: PvProps): JSX.Element => {
     const [id] = useId();
     useSubscription(id, props.pvName);
-    const [resolvedPv, connected, latestValue] = useSelector((state: CsState): [
-      string,
+    const [connected, latestValue] = useSelector((state: CsState): [
       boolean,
+
       NType?
     ] => {
       return pvStateSelector(props.pvName, state);
@@ -50,7 +41,6 @@ export const connectionWrapper = <P extends object>(
     return (
       <Component
         {...(props as P)}
-        pvName={resolvedPv}
         connected={connected}
         value={latestValue}
       ></Component>

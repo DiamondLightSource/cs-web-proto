@@ -11,6 +11,7 @@ import { CopyWrapper } from "../CopyWrapper/copyWrapper";
 import { AlarmBorder } from "../AlarmBorder/alarmBorder";
 
 import classes from "./readback.module.css";
+import { macroWrapper } from "../MacroWrapper/macroWrapper";
 
 export const Readback = (props: {
   connected: boolean;
@@ -67,6 +68,7 @@ export const Readback = (props: {
 
 interface ConnectedReadbackProps {
   pvName: string;
+  rawPvName?: string;
   precision?: number;
   alarm?: Alarm;
   style?: {};
@@ -78,12 +80,14 @@ export const ConnectedReadback: React.FC<
 
 interface ConnectedCopyReadbackProps {
   pvName: string;
+  rawPvName?: string;
   precision?: number;
   style?: {};
 }
 
 export const CopyReadback = (props: {
   pvName: string;
+  rawPvName?: string;
   value: NType;
   connected: boolean;
   precision?: number;
@@ -91,6 +95,7 @@ export const CopyReadback = (props: {
 }): JSX.Element => (
   <CopyWrapper
     pvName={props.pvName}
+    rawPvName={props.rawPvName}
     connected={props.connected}
     value={props.value}
   >
@@ -114,6 +119,7 @@ interface ConnectedStandaloneReadbackProps {
 
 export const StandaloneReadback = (props: {
   pvName: string;
+  rawPvName?: string;
   value: NType;
   connected: boolean;
   precision?: number;
@@ -121,6 +127,7 @@ export const StandaloneReadback = (props: {
 }): JSX.Element => (
   <CopyWrapper
     pvName={props.pvName}
+    rawPvName={props.rawPvName}
     connected={props.connected}
     value={props.value}
   >
@@ -136,4 +143,4 @@ export const StandaloneReadback = (props: {
 
 export const ConnectedStandaloneReadback: React.FC<
   ConnectedStandaloneReadbackProps
-> = connectionWrapper(StandaloneReadback);
+> = macroWrapper(connectionWrapper(StandaloneReadback));

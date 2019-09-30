@@ -2,7 +2,7 @@
 
 import React from "react";
 
-import { Label } from "../components/Label/label";
+import { Label, MacroLabel } from "../components/Label/label";
 import { ConnectedStandaloneReadback } from "../components/Readback/readback";
 import { MacroUpdater } from "../components/MacroUpdater/macroUpdater";
 import { MacroDisplayer } from "../components/MacroDisplayer/macroDisplayer";
@@ -16,6 +16,10 @@ export const MacrosPage = (): JSX.Element => (
     </div>
     <div style={{ display: "block" }}>
       <Label text="loc://pv1"></Label>
+      <MacroLabel
+        text="loc://pv${SUFFIX}"
+        macroMap={{ SUFFIX: "bbba" }}
+      ></MacroLabel>
       <ConnectedInput pvName={"loc://pv1"} />
       <Label text="loc://pv2"></Label>
       <ConnectedInput pvName={"loc://pv2"} />
