@@ -29,8 +29,6 @@ const DumbMacroUpdater: React.FC<DumbMacroUpdaterProps> = (
   </>
 );
 
-export interface MacroUpdaterProps {}
-
 function updateMacro(key: string, value: string): void {
   console.log(`updating ${key} to ${value}`);
   getStore().dispatch({
@@ -39,9 +37,7 @@ function updateMacro(key: string, value: string): void {
   });
 }
 
-export const MacroUpdater: React.FC<MacroUpdaterProps> = (
-  props: MacroUpdaterProps
-): JSX.Element => {
+export const MacroUpdater: React.FC<{}> = (props: {}): JSX.Element => {
   const [keyValue, setKeyValue] = useState("");
   const [valueValue, setValueValue] = useState("");
   function onKeyKeyDown(event: React.KeyboardEvent<HTMLInputElement>): void {

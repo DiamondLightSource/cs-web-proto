@@ -41,11 +41,7 @@ const DumbMacroDisplayer: React.FC<DumbMacroDisplayerProps> = (
   </table>
 );
 
-export interface MacroDisplayerProps {}
-
-export const MacroDisplayer: React.FC<MacroDisplayerProps> = (
-  props: MacroDisplayerProps
-): JSX.Element => {
+export const MacroDisplayer: React.FC<{}> = (props: {}): JSX.Element => {
   const macroMap = useSelector(
     (state: CsState): MacroMap => {
       return state.macroMap;
