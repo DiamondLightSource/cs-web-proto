@@ -13,7 +13,8 @@ const Blank: React.FC = (props: any): JSX.Element => (
       height: "100%",
       width: "100%",
       border: "solid 5px black",
-      backgroundColor: "#dddddd"
+      backgroundColor: "#dddddd",
+      fontSize: "0.7vw"
     }}
   >
     {props.children}
