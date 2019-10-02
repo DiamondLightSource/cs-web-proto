@@ -14,7 +14,7 @@ export const AlarmBorder = (props: {
     alarm = value.alarm;
   }
   // Sort out alarm border classes
-  let alarmClasses = [classes.Border];
+  let alarmClasses = [classes.Border, classes.Children];
   if (connected === false) {
     alarmClasses.push(classes.NotConnected);
   } else if (alarm.severity === 1) {
@@ -23,9 +23,5 @@ export const AlarmBorder = (props: {
     alarmClasses.push(classes.MajorAlarm);
   }
 
-  return (
-    <div className={alarmClasses.join(" ")}>
-      <div className={classes.Children}>{props.children}</div>
-    </div>
-  );
+  return <div className={alarmClasses.join(" ")}>{props.children}</div>;
 };
