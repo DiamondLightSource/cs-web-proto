@@ -1,48 +1,17 @@
-.CopyWrapper {
-  border: 1px solid #aaaaaa;
-  display: flex;
-  text-align: center;
-  position: relative;
-  /*top: 0px;
-  left: 0px;*/
-  height: 100%;
-  width: 100%;
-}
-
-.CopyWrapper .tooltiptext {
-  visibility: hidden;
+.ToolTip {
   background-color: black;
   white-space: pre-line;
   color: #fff;
   text-align: center;
   border-radius: 6px;
   padding: 5px 0;
-  position: absolute;
   z-index: 1;
   bottom: 110%;
   left: 50%;
-  margin-left: -60px;
-}
-
-.CopyWrapper .tooltiptext::after {
-  content: "";
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  margin-left: -5px;
-  border-width: 5px;
-  border-style: solid;
-  border-color: black transparent transparent transparent;
-}
-
-.CopyWrapper:hover .tooltiptext {
-  visibility: visible;
 }
 
 .Children {
-  /*position: absolute;
-  top: 0px;
-  left: 0px;*/
+  cursor: context-menu;
   height: 100%;
   width: 100%;
 }
