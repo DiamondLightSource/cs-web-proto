@@ -47,6 +47,7 @@ export const CopyWrapper = (props: {
   ]
     .filter((word): boolean => word !== "")
     .join(", ");
+  toolTipText = `${pvName}\n[${toolTipText}]`;
 
   return (
     <div
@@ -55,10 +56,7 @@ export const CopyWrapper = (props: {
       onClick={copyPvToClipboard}
     >
       <div className={classes.Children}>{props.children}</div>
-      <span className={classes.tooltiptext}>
-        {pvName}
-        <br />[{toolTipText}]
-      </span>
+      <span className={classes.tooltiptext}>{toolTipText}</span>
     </div>
   );
 };
