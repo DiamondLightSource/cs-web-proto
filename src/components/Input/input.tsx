@@ -47,6 +47,7 @@ export const SmartInput: React.FC<SmartInputProps> = (
         value: event.currentTarget.value
       });
       setInputValue("");
+      setEditing(false);
     }
   }
   function onChange(event: React.ChangeEvent<HTMLInputElement>): void {
