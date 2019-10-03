@@ -5,7 +5,7 @@ import { WebSocketLink } from "apollo-link-ws";
 import { getMainDefinition } from "apollo-utilities";
 import gql from "graphql-tag";
 import { InMemoryCache, NormalizedCacheObject } from "apollo-cache-inmemory";
-import { NType } from "../ntypes";
+import { NType, PartialNType } from "../ntypes";
 import {
   Connection,
   ConnectionChangedCallback,
@@ -13,6 +13,32 @@ import {
   nullConnCallback,
   nullValueCallback
 } from "./plugin";
+
+interface Status {
+  quality: "ALARM" | "WARNING" | "VALID";
+  message: string;
+  mutable: boolean;
+}
+const ALARMS = {
+  ALARM: 2,
+  WARNING: 1,
+  VALID: 0
+};
+
+function coniqlToNType(value: any, meta: any, status: Status): PartialNType {
+  let result: PartialNType = {
+    value: value
+  };
+  if (meta) {
+    const bit = meta.array ? "Array" : "Scalar";
+    const type = `NT${bit}`;
+    result.type = type;
+  }
+  if (status) {
+    result.alarm = { severity: ALARMS[status.quality] };
+  }
+  return result;
+}
 
 function createLink(socket: string): ApolloLink {
   const link: ApolloLink = ApolloLink.split(
@@ -40,8 +66,17 @@ const cache = new InMemoryCache();
 
 const PV_SUBSCRIPTION = gql`
   subscription sub1($pvName: String!) {
-    subscribeFloatScalar(channel: $pvName) {
+    subscribeChannel(id: $pvName) {
       value
+      meta {
+        __typename
+        array
+      }
+      status {
+        quality
+        message
+        mutable
+      }
     }
   }
 `;
@@ -50,12 +85,14 @@ export class ConiqlPlugin implements Connection {
   private client: ApolloClient<NormalizedCacheObject>;
   private onConnectionUpdate: ConnectionChangedCallback;
   private onValueUpdate: ValueChangedCallback;
+  private connected: boolean;
 
   public constructor(socket: string) {
     const link = createLink(socket);
     this.client = new ApolloClient({ link, cache });
     this.onConnectionUpdate = nullConnCallback;
     this.onValueUpdate = nullValueCallback;
+    this.connected = false;
   }
 
   public connect(
@@ -64,10 +101,11 @@ export class ConiqlPlugin implements Connection {
   ): void {
     this.onConnectionUpdate = connectionCallback;
     this.onValueUpdate = valueCallback;
+    this.connected = true;
   }
 
   public isConnected(): boolean {
-    return this.client != null;
+    return this.connected;
   }
 
   public subscribe(pvName1: string): void {
@@ -78,8 +116,11 @@ export class ConiqlPlugin implements Connection {
       })
       .subscribe({
         next: (data): void => {
-          console.log("data", data); //eslint-disable-line no-console
-          this.onValueUpdate(pvName1, data.data.subscribeFloatScalar);
+          //console.log("data", data); //eslint-disable-line no-console
+          this.onConnectionUpdate(pvName1, { isConnected: true });
+          const { value, meta, status } = data.data.subscribeChannel;
+          let ntValue = coniqlToNType(value, meta, status);
+          this.onValueUpdate(pvName1, ntValue);
         },
         error: (err): void => {
           console.error("err", err); //eslint-disable-line no-console

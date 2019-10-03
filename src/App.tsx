@@ -10,11 +10,14 @@ import { InputsPage } from "./pages/inputsPage";
 import { ReadbacksPage } from "./pages/readbacksPage";
 import { ProgressPage } from "./pages/progressPage";
 import { PositioningExamplePage } from "./pages/positioningExamplePage";
+import { ConiqlPage } from "./pages/coniqlPage";
 import { getStore, initialiseStore } from "./redux/store";
-import { SimulatorPlugin } from "./connection/sim";
+import { ConiqlPlugin } from "./connection/coniql";
+
+const SOCKET = "localhost:8000";
 
 const App: React.FC = (): JSX.Element => {
-  const plugin = new SimulatorPlugin();
+  const plugin = new ConiqlPlugin(SOCKET);
   initialiseStore(plugin);
   const store = getStore();
 
@@ -44,6 +47,9 @@ const App: React.FC = (): JSX.Element => {
             <Link style={styleLinkButton} to="/positioning">
               Positioning
             </Link>
+            <Link style={styleLinkButton} to="/coniql">
+              Coniql
+            </Link>
           </div>
           <div
             id="Central Column"
@@ -63,6 +69,7 @@ const App: React.FC = (): JSX.Element => {
               exact
               component={PositioningExamplePage}
             />
+            <Route path="/coniql" exact component={ConiqlPage} />
           </div>
         </div>
       </BrowserRouter>

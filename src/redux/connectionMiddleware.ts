@@ -7,7 +7,7 @@ import {
   VALUE_CHANGED,
   UNSUBSCRIBE
 } from "./actions";
-import { NType } from "../ntypes";
+import { PartialNType } from "../ntypes";
 
 function connectionChanged(
   store: Store,
@@ -20,7 +20,7 @@ function connectionChanged(
   });
 }
 
-function valueChanged(store: Store, pvName: string, value: NType): void {
+function valueChanged(store: Store, pvName: string, value: PartialNType): void {
   store.dispatch({
     type: VALUE_CHANGED,
     payload: { pvName: pvName, value: value }

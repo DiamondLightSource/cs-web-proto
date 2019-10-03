@@ -36,8 +36,14 @@ export function csReducer(state = initialState, action: ActionType): CsState {
     case VALUE_CHANGED: {
       const newValueCache: ValueCache = Object.assign({}, state.valueCache);
       const pvState = state.valueCache[action.payload.pvName];
+      const oldValue = pvState.value;
+      //console.log("update");
+      //console.log(action.payload.value);
+      const newValue = { ...oldValue, ...action.payload.value };
+      //console.log("new value");
+      //console.log(newValue);
       const newPvState = Object.assign({}, pvState, {
-        value: action.payload.value
+        value: newValue
       });
       newValueCache[action.payload.pvName] = newPvState;
       return Object.assign({}, state, { valueCache: newValueCache });

@@ -2,8 +2,8 @@ export type Scalar = number | string;
 
 export interface Alarm {
   severity: number;
-  status: number;
-  message: string;
+  status?: number;
+  message?: string;
 }
 
 export interface Time {
@@ -60,6 +60,14 @@ export interface Enum {
 export interface NTEnum {
   type: string;
   value: Enum;
+  descriptor?: string;
+  alarm?: Alarm;
+  time?: Time;
+}
+
+export interface PartialNType {
+  type?: string;
+  value?: any;
   descriptor?: string;
   alarm?: Alarm;
   time?: Time;
