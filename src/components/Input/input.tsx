@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { connectionWrapper } from "../ConnectionWrapper/connectionWrapper";
 import { writePv } from "../../hooks/useCs";
 import { NType, ntOrNullToString } from "../../ntypes";
+import styled from 'styled-components';
 
 import classes from "./input.module.css";
 
@@ -14,8 +15,16 @@ export interface InputProps {
   onClick: (event: React.MouseEvent<HTMLInputElement>) => void;
 }
 
+const StyledInput = styled.input`
+  background: white;
+  color: purple;
+  &:hover {
+    background: grey;
+  }
+`;
+
 export const Input: React.FC<InputProps> = (props: InputProps): JSX.Element => (
-  <input
+  <StyledInput
     type="text"
     value={props.value}
     onKeyDown={props.onKeyDown}
@@ -25,6 +34,7 @@ export const Input: React.FC<InputProps> = (props: InputProps): JSX.Element => (
     className={classes.Input}
   />
 );
+
 
 interface ConnectedInputProps {
   pvName: string;
