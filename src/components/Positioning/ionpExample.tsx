@@ -6,7 +6,7 @@ import { Readback } from "../Readback/readback";
 import { Input } from "../Input/input";
 import { ProgressBar } from "../ProgressBar/progressBar";
 
-const Blank: React.FC = (props: any): JSX.Element => (
+export const Blank: React.FC = (props: any): JSX.Element => (
   <div
     style={{
       position: "absolute",

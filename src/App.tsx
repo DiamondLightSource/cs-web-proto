@@ -12,6 +12,7 @@ import { ProgressPage } from "./pages/progressPage";
 import { PositioningExamplePage } from "./pages/positioningExamplePage";
 import { getStore, initialiseStore } from "./redux/store";
 import { SimulatorPlugin } from "./connection/sim";
+import { JsonPage } from "./pages/fromJson";
 
 const App: React.FC = (): JSX.Element => {
   const plugin = new SimulatorPlugin();
@@ -44,6 +45,9 @@ const App: React.FC = (): JSX.Element => {
             <Link style={styleLinkButton} to="/positioning">
               Positioning
             </Link>
+            <Link style={styleLinkButton} to="/fromJson">
+              JSON Loading
+            </Link>
           </div>
           <div
             id="Central Column"
@@ -63,6 +67,7 @@ const App: React.FC = (): JSX.Element => {
               exact
               component={PositioningExamplePage}
             />
+            <Route path="/fromJson" exact component={JsonPage} />
           </div>
         </div>
       </BrowserRouter>

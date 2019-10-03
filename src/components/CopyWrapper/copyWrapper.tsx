@@ -62,7 +62,7 @@ export const CopyWrapper = (props: {
   toolTipText = `${pvName}\n[${toolTipText}]`;
 
   return (
-    <div style={{ height: "100%", width: "100%" }}>
+    <div style={{ position: "relative", height: "100%", width: "100%" }}>
       <Popover
         isOpen={popoverOpen}
         position={["top"]}
