@@ -2,8 +2,11 @@ import React from "react";
 import { shallow, ShallowWrapper } from "enzyme";
 
 import { CopyWrapper } from "./copyWrapper";
+import Popover from "react-tiny-popover";
 
 let wrapper: ShallowWrapper;
+let wrappedElement: ShallowWrapper;
+
 beforeEach((): void => {
   // Get current time, separate into seconds and nanoseconds
   let currentTime = new Date(0);
@@ -28,21 +31,23 @@ beforeEach((): void => {
     </CopyWrapper>
   );
   wrapper = shallow(copywrapper);
+  wrappedElement = wrapper.find(".Children").childAt(0);
 });
 
 describe("<CopyWrapper>", (): void => {
-  test("it renders a basic element", (): void => {
-    expect(wrapper.text()).toContain("Testing Copy Wrapper");
+  test("it contains a Popover", (): void => {
+    const popover = wrapper.find(Popover);
+    expect(popover.name()).toEqual("Popover");
+  });
+  test("it contains one child element", (): void => {
+    const children = wrapper.find(".Children");
+    expect(children).toHaveLength(1);
   });
 
-  test("it contains the date", (): void => {
-    expect(wrapper.text()).toContain(new Date(0));
+  test("it renders text", (): void => {
+    expect(wrappedElement.text()).toEqual("Testing Copy Wrapper");
   });
 
-  test("it contains the pv name", (): void => {
-    expect(wrapper.text()).toContain("pv");
-  });
-  test("it contains the value", (): void => {
-    expect(wrapper.text()).toContain("hello");
-  });
+  // How do we test the popover content? It renders on the
+  // <body> element not the Popover element.
 });
