@@ -1,0 +1,43 @@
+{
+  "type": "blank",
+  "x": "0",
+  "y": "0",
+  "width": "400px",
+  "height": "300px",
+  "children": [
+    {
+      "type": "label",
+      "x": "10px",
+      "y": "10px",
+      "width": "100px",
+      "height": "100px",
+      "text": "hello"
+    },
+    {
+      "type": "label",
+      "x": "210px",
+      "y": "10px",
+      "width": "100px",
+      "height": "100px",
+      "text": "hello"
+    },
+    {
+      "type": "input",
+      "pvName": "meta://metapv1",
+      "x": "10px",
+      "y": "120px",
+      "width": "100px",
+      "height": "100px",
+      "precision": 3
+    },
+    {
+      "type": "readback",
+      "pvName": "meta://metapv1",
+      "x": "210px",
+      "y": "120px",
+      "width": "100px",
+      "height": "100px",
+      "precision": 3
+    }
+  ]
+}
