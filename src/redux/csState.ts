@@ -6,7 +6,10 @@ import {
   CONNECTION_CHANGED,
   UNSUBSCRIBE
 } from "./actions";
-import { NType } from "../ntypes";
+import { VType } from "../vtypes/vtypes";
+import { Time } from "../vtypes/time";
+import { Display } from "../vtypes/display";
+import { Alarm } from "../vtypes/alarm";
 
 const initialState: CsState = {
   valueCache: {},
@@ -14,7 +17,7 @@ const initialState: CsState = {
 };
 
 export interface PvState {
-  value: NType;
+  value: VType;
   connected: boolean;
 }
 
@@ -29,6 +32,14 @@ export interface Subscriptions {
 export interface CsState {
   valueCache: ValueCache;
   subscriptions: Subscriptions;
+}
+
+export interface PartialVType {
+  type?: string;
+  value?: any;
+  alarm?: Alarm;
+  time?: Time;
+  display?: Display;
 }
 
 export function csReducer(state = initialState, action: ActionType): CsState {

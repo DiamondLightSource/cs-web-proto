@@ -5,7 +5,7 @@ import { WebSocketLink } from "apollo-link-ws";
 import { getMainDefinition } from "apollo-utilities";
 import gql from "graphql-tag";
 import { InMemoryCache, NormalizedCacheObject } from "apollo-cache-inmemory";
-import { NType, PartialNType } from "../ntypes";
+import { VType, vdoubleOf } from "../vtypes/vtypes";
 import {
   Connection,
   ConnectionChangedCallback,
@@ -13,6 +13,8 @@ import {
   nullConnCallback,
   nullValueCallback
 } from "./plugin";
+import { PartialVType } from "../redux/csState";
+import { AlarmStatus, alarm } from "../vtypes/alarm";
 
 interface Status {
   quality: "ALARM" | "WARNING" | "VALID";
@@ -25,17 +27,15 @@ const ALARMS = {
   VALID: 0
 };
 
-function coniqlToNType(value: any, meta: any, status: Status): PartialNType {
-  let result: PartialNType = {
+function coniqlToNType(value: any, meta: any, status: Status): PartialVType {
+  let result: PartialVType = {
     value: value
   };
   if (meta) {
-    const bit = meta.array ? "Array" : "Scalar";
-    const type = `NT${bit}`;
-    result.type = type;
+    result.type = meta.type;
   }
   if (status) {
-    result.alarm = { severity: ALARMS[status.quality] };
+    result.alarm = alarm(ALARMS[status.quality], AlarmStatus.NONE, "");
   }
   return result;
 }
@@ -128,12 +128,12 @@ export class ConiqlPlugin implements Connection {
       });
   }
 
-  public putPv(pvName: string, value: NType): void {
+  public putPv(pvName: string, value: VType): void {
     // noop
   }
 
-  public getValue(pvName: string): NType {
-    return { type: "NTScalarDouble", value: "" };
+  public getValue(pvName: string): VType {
+    return vdoubleOf(0);
   }
 
   public unsubscribe(pvName: string): void {

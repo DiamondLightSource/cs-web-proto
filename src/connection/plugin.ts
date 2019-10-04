@@ -1,4 +1,5 @@
-import { NType, PartialNType } from "../ntypes";
+import { VType } from "../vtypes/vtypes";
+import { PartialVType } from "../redux/csState";
 
 export const nullConnCallback: ConnectionChangedCallback = (_p, _v): void => {};
 export const nullValueCallback: ValueChangedCallback = (_p, _v): void => {};
@@ -13,13 +14,13 @@ export type ConnectionChangedCallback = (
 ) => void;
 export type ValueChangedCallback = (
   pvName: string,
-  value: PartialNType
+  value: PartialVType
 ) => void;
 
 export interface Connection {
   subscribe: (pvName: string) => void;
-  putPv: (pvName: string, value: NType) => void;
-  getValue: (pvName: string) => NType;
+  putPv: (pvName: string, value: VType) => void;
+  getValue: (pvName: string) => VType;
   connect: (
     connectionCallback: ConnectionChangedCallback,
     valueCallback: ValueChangedCallback

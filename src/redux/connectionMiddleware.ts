@@ -7,7 +7,6 @@ import {
   VALUE_CHANGED,
   UNSUBSCRIBE
 } from "./actions";
-import { PartialNType } from "../ntypes";
 
 function connectionChanged(
   store: Store,
@@ -20,7 +19,7 @@ function connectionChanged(
   });
 }
 
-function valueChanged(store: Store, pvName: string, value: PartialNType): void {
+function valueChanged(store: Store, pvName: string, value: object): void {
   store.dispatch({
     type: VALUE_CHANGED,
     payload: { pvName: pvName, value: value }

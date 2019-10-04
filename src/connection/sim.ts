@@ -6,14 +6,16 @@ import {
   nullConnCallback,
   nullValueCallback
 } from "./plugin";
-import { NType } from "../ntypes";
+import { VType, vdoubleOf, VNumber } from "../vtypes/vtypes";
+import { alarm } from "../vtypes/alarm";
+import { timeNow } from "../vtypes/time";
 
 abstract class SimPv {
   protected onConnectionUpdate: ConnectionChangedCallback;
   protected onValueUpdate: ValueChangedCallback;
   protected pvName: string;
   protected updateRate: number;
-  abstract getValue(): NType;
+  abstract getValue(): VType;
   public constructor(
     pvName: string,
     onConnectionUpdate: ConnectionChangedCallback,
@@ -40,15 +42,16 @@ class SinePv extends SimPv {
   ) {
     super(pvName, onConnectionUpdate, onValueUpdate, updateRate);
     setInterval(
-      (): void => this.onValueUpdate(this.pvName, this.getValue()),
+      (): void =>
+        this.onValueUpdate(this.pvName, { value: this.getValue().getValue() }),
       this.updateRate
     );
   }
-  public getValue(): NType {
+  public getValue(): VType {
     const val = Math.sin(
       new Date().getSeconds() + new Date().getMilliseconds() * 0.001
     );
-    return { type: "NTScalarDouble", value: val };
+    return vdoubleOf(val);
   }
 }
 
@@ -60,7 +63,7 @@ class Disconnector extends SimPv {
     updateRate: number
   ) {
     super(pvName, onConnectionUpdate, onValueUpdate, updateRate);
-    this.onValueUpdate(this.pvName, this.getValue());
+    this.onValueUpdate(this.pvName, { value: this.getValue().getValue() });
     setInterval(
       (): void => this.onConnectionUpdate(this.pvName, this.getConnection()),
       this.updateRate
@@ -71,14 +74,14 @@ class Disconnector extends SimPv {
     return { isConnected: randomBool };
   }
 
-  public getValue(): NType {
+  public getValue(): VType {
     const value = Math.random();
-    return { type: "NTScalarDouble", value: value };
+    return vdoubleOf(value);
   }
 }
 
 class MetaData extends SimPv {
-  private value: NType;
+  private value: VType;
   // Class to provide PV value along with Alarm and Timestamp data
   // Initial limits will be 10, 20, 80 and 90 - with expected range between 0 and 100
   public constructor(
@@ -88,60 +91,29 @@ class MetaData extends SimPv {
     updateRate: number
   ) {
     super(pvName, onConnectionUpdate, onValueUpdate, updateRate);
-    let currentTime = new Date();
-    let seconds = Math.round(currentTime.getTime() / 1000),
-      nanoseconds = Math.round(currentTime.getTime() % 1000);
-    this.value = {
-      type: "NTScalar",
-      value: 50,
-      alarm: { severity: 0, status: 0, message: "" },
-      time: {
-        secondsPastEpoch: seconds,
-        nanoseconds: nanoseconds,
-        userTag: 0
-      }
-    };
-    this.onValueUpdate(this.pvName, this.getValue());
+    this.value = vdoubleOf(50);
+    this.onValueUpdate(this.pvName, { value: this.getValue().getValue() });
     setInterval(
       (): void => this.onConnectionUpdate(this.pvName, this.getConnection()),
       this.updateRate
     );
   }
 
-  public updateValue(value: NType): void {
+  public updateValue(value: VType): void {
     // Set alarm status
-    let alarmSeverity =
-      value.value < 10
-        ? 2
-        : value.value > 90
-        ? 2
-        : value.value < 20
-        ? 1
-        : value.value > 80
-        ? 1
-        : 0;
-
-    // Produce timestamp info
-    let currentTime = new Date().getTime();
-    let seconds = Math.floor(currentTime / 1000);
-    let nanoseconds = Math.floor(currentTime % 1000);
-
-    this.value = {
-      ...value,
-      alarm: {
-        severity: alarmSeverity,
-        status: 0,
-        message: ""
-      },
-      time: {
-        secondsPastEpoch: seconds,
-        nanoseconds: nanoseconds,
-        userTag: 0
-      }
-    };
+    let alarmSeverity = 0;
+    if (value instanceof VNumber) {
+      let v = value.getValue();
+      alarmSeverity = v < 10 ? 2 : v > 90 ? 2 : v < 20 ? 1 : v > 80 ? 1 : 0;
+      this.value = vdoubleOf(
+        value.getValue(),
+        alarm(alarmSeverity, 0, ""),
+        timeNow()
+      );
+    }
   }
 
-  public getValue(): NType {
+  public getValue(): VType {
     return this.value;
   }
 }
@@ -151,7 +123,7 @@ interface SimCache {
 }
 
 interface ValueCache {
-  [pvName: string]: NType;
+  [pvName: string]: VType;
 }
 
 interface MetaCache {
@@ -190,9 +162,9 @@ export class SimulatorPlugin implements Connection {
   public subscribe(pvName: string): void {
     console.log(`subscribing to ${pvName}`); //eslint-disable-line no-console
     if (pvName.startsWith("loc://")) {
-      this.localPvs[pvName] = { type: "NTScalarDouble", value: 0 };
+      this.localPvs[pvName] = vdoubleOf(0);
       this.onConnectionUpdate(pvName, { isConnected: true });
-      this.onValueUpdate(pvName, { type: "NTScalarDouble", value: 0 });
+      this.onValueUpdate(pvName, { value: 0 });
     } else if (pvName === "sim://disconnector") {
       this.simPvs[pvName] = new Disconnector(
         "sim://disconnector",
@@ -219,28 +191,28 @@ export class SimulatorPlugin implements Connection {
     }
   }
 
-  public putPv(pvName: string, value: NType): void {
+  public putPv(pvName: string, value: VType): void {
     if (pvName.startsWith("loc://")) {
       this.localPvs[pvName] = value;
-      this.onValueUpdate(pvName, value);
+      this.onValueUpdate(pvName, { value: value.getValue() });
     } else if (pvName.startsWith("meta://")) {
       let meta = this.metaPvs[pvName];
       meta.updateValue(value);
-      this.onValueUpdate(pvName, meta.getValue());
+      this.onValueUpdate(pvName, { value: meta.getValue().getValue() });
     }
   }
 
-  public getValue(pvName: string): NType {
+  public getValue(pvName: string): VType {
     if (pvName.startsWith("loc://")) {
       return this.localPvs[pvName];
     } else if (pvName.startsWith("sim://")) {
       this.simPvs[pvName].getValue();
     } else if (pvName === "sim://random") {
-      return { type: "NTScalarDouble", value: Math.random() };
+      return vdoubleOf(Math.random());
     } else if (pvName.startsWith("meta://")) {
       return this.localPvs[pvName];
     }
-    return { type: "NTScalarDouble", value: 0 };
+    return vdoubleOf(0);
   }
 
   public unsubscribe(pvName: string): void {
