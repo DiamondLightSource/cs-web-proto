@@ -10,6 +10,7 @@ import { InputsPage } from "./pages/inputsPage";
 import { ReadbacksPage } from "./pages/readbacksPage";
 import { ProgressPage } from "./pages/progressPage";
 import { PositioningExamplePage } from "./pages/positioningExamplePage";
+import { JsonPage } from "./pages/fromJson";
 import { ConiqlPage } from "./pages/coniqlPage";
 import { getStore, initialiseStore } from "./redux/store";
 import { ConiqlPlugin } from "./connection/coniql";
@@ -47,6 +48,9 @@ const App: React.FC = (): JSX.Element => {
             <Link style={styleLinkButton} to="/positioning">
               Positioning
             </Link>
+            <Link style={styleLinkButton} to="/fromJson">
+              JSON Loading
+            </Link>
             <Link style={styleLinkButton} to="/coniql">
               Coniql
             </Link>
@@ -69,6 +73,7 @@ const App: React.FC = (): JSX.Element => {
               exact
               component={PositioningExamplePage}
             />
+            <Route path="/fromJson" exact component={JsonPage} />
             <Route path="/coniql" exact component={ConiqlPage} />
           </div>
         </div>

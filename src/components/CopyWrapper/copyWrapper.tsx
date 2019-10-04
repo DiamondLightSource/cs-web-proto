@@ -3,8 +3,9 @@
 // These values will be displayed in a tooltip when highlighted
 // A middle mouse click will copy the PV name to the clipboard
 
-import React, { ReactNode } from "react";
+import React, { ReactNode, useState } from "react";
 import copyToClipboard from "clipboard-copy";
+import Popover from "react-tiny-popover";
 
 import { connectionWrapper } from "../ConnectionWrapper/connectionWrapper";
 import { NType } from "../../ntypes";
@@ -17,7 +18,8 @@ export const CopyWrapper = (props: {
   children: ReactNode;
   style?: object;
 }): JSX.Element => {
-  let { connected, pvName, value = null, style = {} } = props;
+  const [popoverOpen, setPopoverOpen] = useState(false);
+  let { connected, pvName, value = null } = props;
 
   let displayValue = "";
   if (!connected) {
@@ -30,11 +32,21 @@ export const CopyWrapper = (props: {
     }
   }
 
-  function copyPvToClipboard(e: React.MouseEvent): void {
+  const copyPvToClipboard = (e: React.MouseEvent): void => {
     if (e.button === 1) {
       copyToClipboard(pvName);
     }
-  }
+  };
+  const showPopover = (e: React.MouseEvent): void => {
+    if (e.button === 1) {
+      setPopoverOpen(true);
+    }
+  };
+  const hidePopover = (e: React.MouseEvent): void => {
+    if (e.button === 1) {
+      setPopoverOpen(false);
+    }
+  };
   // Compose the text which should be shown on the tooltip
   let toolTipText = [
     displayValue,
@@ -47,18 +59,27 @@ export const CopyWrapper = (props: {
   ]
     .filter((word): boolean => word !== "")
     .join(", ");
+  toolTipText = `${pvName}\n[${toolTipText}]`;
 
   return (
-    <div
-      className={classes.CopyWrapper}
-      style={style}
-      onClick={copyPvToClipboard}
-    >
-      <div className={classes.Children}>{props.children}</div>
-      <span className={classes.tooltiptext}>
-        {pvName}
-        <br />[{toolTipText}]
-      </span>
+    <div style={{ position: "relative", height: "100%", width: "100%" }}>
+      <Popover
+        isOpen={popoverOpen}
+        position={["top"]}
+        onClickOutside={(): void => setPopoverOpen(false)}
+        content={(): JSX.Element => {
+          return <div className={classes.ToolTip}>{toolTipText}</div>;
+        }}
+      >
+        <div
+          onClick={copyPvToClipboard}
+          onMouseDown={showPopover}
+          onMouseUp={hidePopover}
+          className={classes.Children}
+        >
+          {props.children}
+        </div>
+      </Popover>
     </div>
   );
 };

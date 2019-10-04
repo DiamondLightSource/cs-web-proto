@@ -10,14 +10,14 @@ import { ConnectedInput } from "../components/Input/input";
 
 export const FrontPage = (): JSX.Element => (
   <div id="Central Column" style={{ width: "80%", margin: "auto" }}>
-    <div style={{ display: "block" }}>
+    <div>
       <ConnectedReadback pvName={"TMC43-TS-IOC-01:AI"} />
       <ConnectedReadback pvName={"loc://pv1"} />
       <ConnectedReadback pvName={"loc://pv2"} />
       <ConnectedReadback pvName={"sim://sine"} precision={3} />
       <ConnectedReadback pvName={"sim://disconnector"} precision={3} />
     </div>
-    <div style={{ display: "block" }}>
+    <div>
       <ConnectedInput pvName={"loc://pv1"} />
       <ConnectedInput pvName={"loc://pv2"} />
       <ConnectedInput pvName={"sim://sine"} />
