@@ -17,6 +17,10 @@ export enum AlarmStatus {
   CLIENT
 }
 
+export interface AlarmProvider {
+  getAlarm(): Alarm;
+}
+
 export abstract class Alarm {
   public abstract getSeverity(): AlarmSeverity;
   public abstract getStatus(): AlarmStatus;
@@ -48,7 +52,7 @@ class IAlarm extends Alarm {
   }
 }
 
-export const alarmOf = (
+export const alarm = (
   severity: AlarmSeverity,
   status: AlarmStatus,
   name: string
@@ -56,4 +60,15 @@ export const alarmOf = (
   return new IAlarm(severity, status, name);
 };
 
-export const ALARM_NONE = alarmOf(AlarmSeverity.NONE, AlarmStatus.NONE, "");
+export const isAlarmProvider = (object: any): object is AlarmProvider => {
+  return "getAlarm" in object;
+};
+
+export const ALARM_NONE = alarm(AlarmSeverity.NONE, AlarmStatus.NONE, "");
+
+export const alarmOf = (object: any): Alarm => {
+  if (object && isAlarmProvider(object)) {
+    return object.getAlarm();
+  }
+  return ALARM_NONE;
+};

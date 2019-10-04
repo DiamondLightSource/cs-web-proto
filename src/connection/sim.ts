@@ -6,7 +6,9 @@ import {
   nullConnCallback,
   nullValueCallback
 } from "./plugin";
-import { VType, doubleOf, VNumber } from "../vtypes/vtypes";
+import { VType, vdoubleOf, VNumber } from "../vtypes/vtypes";
+import { alarm } from "../vtypes/alarm";
+import { timeNow } from "../vtypes/time";
 
 abstract class SimPv {
   protected onConnectionUpdate: ConnectionChangedCallback;
@@ -48,7 +50,7 @@ class SinePv extends SimPv {
     const val = Math.sin(
       new Date().getSeconds() + new Date().getMilliseconds() * 0.001
     );
-    return { type: "NTScalarDouble", value: val };
+    return vdoubleOf(val);
   }
 }
 
@@ -73,7 +75,7 @@ class Disconnector extends SimPv {
 
   public getValue(): VType {
     const value = Math.random();
-    return { type: "NTScalarDouble", value: value };
+    return vdoubleOf(value);
   }
 }
 
@@ -88,7 +90,7 @@ class MetaData extends SimPv {
     updateRate: number
   ) {
     super(pvName, onConnectionUpdate, onValueUpdate, updateRate);
-    this.value = doubleOf(50);
+    this.value = vdoubleOf(50);
     this.onValueUpdate(this.pvName, this.getValue());
     setInterval(
       (): void => this.onConnectionUpdate(this.pvName, this.getConnection()),
@@ -102,26 +104,12 @@ class MetaData extends SimPv {
     if (value instanceof VNumber) {
       let v = value.getValue();
       alarmSeverity = v < 10 ? 2 : v > 90 ? 2 : v < 20 ? 1 : v > 80 ? 1 : 0;
+      this.value = vdoubleOf(
+        value.getValue(),
+        alarm(alarmSeverity, 0, ""),
+        timeNow()
+      );
     }
-
-    // Produce timestamp info
-    let currentTime = new Date().getTime();
-    let seconds = Math.floor(currentTime / 1000);
-    let nanoseconds = Math.floor(currentTime % 1000);
-
-    this.value = {
-      ...value,
-      alarm: {
-        severity: alarmSeverity,
-        status: 0,
-        message: ""
-      },
-      time: {
-        secondsPastEpoch: seconds,
-        nanoseconds: nanoseconds,
-        userTag: 0
-      }
-    };
   }
 
   public getValue(): VType {
@@ -173,9 +161,9 @@ export class SimulatorPlugin implements Connection {
   public subscribe(pvName: string): void {
     console.log(`subscribing to ${pvName}`); //eslint-disable-line no-console
     if (pvName.startsWith("loc://")) {
-      this.localPvs[pvName] = { type: "NTScalarDouble", value: 0 };
+      this.localPvs[pvName] = vdoubleOf(0);
       this.onConnectionUpdate(pvName, { isConnected: true });
-      this.onValueUpdate(pvName, { type: "NTScalarDouble", value: 0 });
+      this.onValueUpdate(pvName, vdoubleOf(0));
     } else if (pvName === "sim://disconnector") {
       this.simPvs[pvName] = new Disconnector(
         "sim://disconnector",
@@ -219,11 +207,11 @@ export class SimulatorPlugin implements Connection {
     } else if (pvName.startsWith("sim://")) {
       this.simPvs[pvName].getValue();
     } else if (pvName === "sim://random") {
-      return { type: "NTScalarDouble", value: Math.random() };
+      return vdoubleOf(Math.random());
     } else if (pvName.startsWith("meta://")) {
       return this.localPvs[pvName];
     }
-    return { type: "NTScalarDouble", value: 0 };
+    return vdoubleOf(0);
   }
 
   public unsubscribe(pvName: string): void {
