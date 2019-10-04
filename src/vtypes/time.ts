@@ -35,3 +35,16 @@ export const timeOf = (
   userTag: number,
   valid: boolean
 ): Time => new ITime(instant, userTag, valid);
+
+export const instantNow = (): Instant => {
+  const nowMillis = new Date().getTime();
+  const secs = nowMillis / 1000;
+  const nanos = (nowMillis % 1000) * 1e6;
+  return {
+    secondsPastEpoch: secs,
+    nanoseconds: nanos
+  };
+};
+export const timeNow = (): Time => {
+  return timeOf(instantNow(), 0, true);
+};

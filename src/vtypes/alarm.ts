@@ -55,3 +55,5 @@ export const alarmOf = (
 ): Alarm => {
   return new IAlarm(severity, status, name);
 };
+
+export const ALARM_NONE = alarmOf(AlarmSeverity.NONE, AlarmStatus.NONE, "");

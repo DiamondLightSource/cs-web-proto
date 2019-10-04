@@ -1,10 +1,14 @@
-import { Alarm } from "./alarm";
-import { Display } from "./display";
-import { Time } from "./time";
+import { Alarm, ALARM_NONE } from "./alarm";
+import { Display, DISPLAY_NONE } from "./display";
+import { Time, timeNow } from "./time";
 
-class VType {}
+export class VType {}
 
-export abstract class VDouble extends VType {
+export abstract class VNumber extends VType {
+  public abstract getValue(): number;
+}
+
+export abstract class VDouble extends VNumber {
   public abstract getValue(): number;
   public abstract getAlarm(): Alarm;
   public abstract getTime(): Time;
@@ -44,7 +48,7 @@ class IVDouble extends VDouble {
 
 export const doubleOf = (
   double: number,
-  alarm: Alarm,
-  time: Time,
-  display: Display
+  alarm = ALARM_NONE,
+  time = timeNow(),
+  display = DISPLAY_NONE
 ): VDouble => new IVDouble(double, alarm, time, display);

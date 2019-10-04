@@ -4,6 +4,11 @@ export interface Range {
   max: number;
 }
 
+export const RANGE_NONE: Range = {
+  min: 0,
+  max: 0
+};
+
 export abstract class Display {
   public abstract getDisplayRange(): Range;
   public abstract getWarningRange(): Range;
@@ -57,3 +62,11 @@ export const displayOf = (
   unit: string
 ): Display =>
   new IDisplay(displayRange, alarmRange, warningRange, controlRange, unit);
+
+export const DISPLAY_NONE = displayOf(
+  RANGE_NONE,
+  RANGE_NONE,
+  RANGE_NONE,
+  RANGE_NONE,
+  ""
+);

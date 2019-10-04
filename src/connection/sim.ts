@@ -6,14 +6,14 @@ import {
   nullConnCallback,
   nullValueCallback
 } from "./plugin";
-import { NType } from "../ntypes";
+import { VType, doubleOf, VNumber } from "../vtypes/vtypes";
 
 abstract class SimPv {
   protected onConnectionUpdate: ConnectionChangedCallback;
   protected onValueUpdate: ValueChangedCallback;
   protected pvName: string;
   protected updateRate: number;
-  abstract getValue(): NType;
+  abstract getValue(): VType;
   public constructor(
     pvName: string,
     onConnectionUpdate: ConnectionChangedCallback,
@@ -44,7 +44,7 @@ class SinePv extends SimPv {
       this.updateRate
     );
   }
-  public getValue(): NType {
+  public getValue(): VType {
     const val = Math.sin(
       new Date().getSeconds() + new Date().getMilliseconds() * 0.001
     );
@@ -71,14 +71,14 @@ class Disconnector extends SimPv {
     return { isConnected: randomBool };
   }
 
-  public getValue(): NType {
+  public getValue(): VType {
     const value = Math.random();
     return { type: "NTScalarDouble", value: value };
   }
 }
 
 class MetaData extends SimPv {
-  private value: NType;
+  private value: VType;
   // Class to provide PV value along with Alarm and Timestamp data
   // Initial limits will be 10, 20, 80 and 90 - with expected range between 0 and 100
   public constructor(
@@ -88,19 +88,7 @@ class MetaData extends SimPv {
     updateRate: number
   ) {
     super(pvName, onConnectionUpdate, onValueUpdate, updateRate);
-    let currentTime = new Date();
-    let seconds = Math.round(currentTime.getTime() / 1000),
-      nanoseconds = Math.round(currentTime.getTime() % 1000);
-    this.value = {
-      type: "NTScalar",
-      value: 50,
-      alarm: { severity: 0, status: 0, message: "" },
-      time: {
-        secondsPastEpoch: seconds,
-        nanoseconds: nanoseconds,
-        userTag: 0
-      }
-    };
+    this.value = doubleOf(50);
     this.onValueUpdate(this.pvName, this.getValue());
     setInterval(
       (): void => this.onConnectionUpdate(this.pvName, this.getConnection()),
@@ -108,18 +96,13 @@ class MetaData extends SimPv {
     );
   }
 
-  public updateValue(value: NType): void {
+  public updateValue(value: VType): void {
     // Set alarm status
-    let alarmSeverity =
-      value.value < 10
-        ? 2
-        : value.value > 90
-        ? 2
-        : value.value < 20
-        ? 1
-        : value.value > 80
-        ? 1
-        : 0;
+    let alarmSeverity = 0;
+    if (value instanceof VNumber) {
+      let v = value.getValue();
+      alarmSeverity = v < 10 ? 2 : v > 90 ? 2 : v < 20 ? 1 : v > 80 ? 1 : 0;
+    }
 
     // Produce timestamp info
     let currentTime = new Date().getTime();
@@ -141,7 +124,7 @@ class MetaData extends SimPv {
     };
   }
 
-  public getValue(): NType {
+  public getValue(): VType {
     return this.value;
   }
 }
@@ -151,7 +134,7 @@ interface SimCache {
 }
 
 interface ValueCache {
-  [pvName: string]: NType;
+  [pvName: string]: VType;
 }
 
 interface MetaCache {
@@ -219,7 +202,7 @@ export class SimulatorPlugin implements Connection {
     }
   }
 
-  public putPv(pvName: string, value: NType): void {
+  public putPv(pvName: string, value: VType): void {
     if (pvName.startsWith("loc://")) {
       this.localPvs[pvName] = value;
       this.onValueUpdate(pvName, value);
@@ -230,7 +213,7 @@ export class SimulatorPlugin implements Connection {
     }
   }
 
-  public getValue(pvName: string): NType {
+  public getValue(pvName: string): VType {
     if (pvName.startsWith("loc://")) {
       return this.localPvs[pvName];
     } else if (pvName.startsWith("sim://")) {
