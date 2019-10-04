@@ -7,9 +7,10 @@ import {
   UNSUBSCRIBE
 } from "./actions";
 import { VType } from "../vtypes/vtypes";
-import { Time } from "../vtypes/time";
-import { Display } from "../vtypes/display";
-import { Alarm } from "../vtypes/alarm";
+import { Time, timeOf } from "../vtypes/time";
+import { Display, displayOf } from "../vtypes/display";
+import { Alarm, alarmOf } from "../vtypes/alarm";
+import { valueToVtype } from "../vtypes/utils";
 
 const initialState: CsState = {
   valueCache: {},
@@ -42,17 +43,21 @@ export interface PartialVType {
   display?: Display;
 }
 
+const mergeVtype = (original: VType, update: PartialVType): VType => {
+  // what about type?
+  const value = update.value ? update.value : original.getValue();
+  const alarm = update.alarm ? update.alarm : alarmOf(original);
+  const time = update.time ? update.time : timeOf(original);
+  const display = update.display ? update.display : displayOf(original);
+  return valueToVtype(value, alarm, time, display);
+};
+
 export function csReducer(state = initialState, action: ActionType): CsState {
   switch (action.type) {
     case VALUE_CHANGED: {
       const newValueCache: ValueCache = Object.assign({}, state.valueCache);
       const pvState = state.valueCache[action.payload.pvName];
-      const oldValue = pvState.value;
-      //console.log("update");
-      //console.log(action.payload.value);
-      const newValue = { ...oldValue, ...action.payload.value };
-      //console.log("new value");
-      //console.log(newValue);
+      const newValue = mergeVtype(pvState.value, action.payload.value);
       const newPvState = Object.assign({}, pvState, {
         value: newValue
       });

@@ -51,3 +51,17 @@ export const stringToVtype = (
     return vstringOf(value, alarm, time);
   }
 };
+
+export const valueToVtype = (
+  value: object,
+  alarm = ALARM_NONE,
+  time = timeNow(),
+  display = DISPLAY_NONE
+): VType => {
+  if (typeof value === "string") {
+    return vstringOf(value, alarm, time);
+  } else if (typeof value === "number") {
+    return vdoubleOf(value, alarm, time, display);
+  }
+  return vdoubleOf(0, alarm, time, display);
+};
