@@ -30,11 +30,13 @@ export const Input: React.FC<InputProps> = (props: InputProps): JSX.Element => (
 
 interface ConnectedInputProps {
   pvName: string;
+  style?: object;
 }
 
 interface SmartInputProps {
   pvName: string;
   value?: NType;
+  style?: object;
 }
 
 export const SmartInput: React.FC<SmartInputProps> = (
@@ -80,6 +82,7 @@ export const SmartInput: React.FC<SmartInputProps> = (
       onChange={onChange}
       onBlur={onBlur}
       onClick={onClick}
+      style={props.style}
     />
   );
 };
