@@ -54,18 +54,15 @@ export const CopyWrapper = (props: {
   // Compose the text which should be shown on the tooltip
   let time = timeOf(value);
   let alarm = alarmOf(value);
-  let toolTipText = [
+  let toolTipText = pvName === rawPvName ? pvName : `${pvName}\n(${rawPvName})`;
+  let dateAndAlarm = [
     displayValue,
-    value
-      ? time
-        ? new Date(time.getInstant().secondsPastEpoch * 1000)
-        : ""
-      : "",
+    value ? (time ? time.asDate() : "") : "",
     value ? (alarm ? alarm.getName() : "") : ""
   ]
     .filter((word): boolean => word !== "")
     .join(", ");
-  toolTipText = `${pvName}\n${rawPvName}\n[${toolTipText}]`;
+  toolTipText += `\n[${dateAndAlarm}]`;
 
   return (
     <div style={{ position: "relative", height: "100%", width: "100%" }}>
