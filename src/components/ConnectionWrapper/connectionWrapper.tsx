@@ -3,13 +3,13 @@ import { useId } from "react-id-generator";
 import { useSubscription } from "../../hooks/useCs";
 import { useSelector } from "react-redux";
 import { CsState } from "../../redux/csState";
-import { NType } from "../../ntypes";
+import { VType } from "../../vtypes/vtypes";
 
 export interface PvProps extends React.PropsWithChildren<any> {
   pvName: string;
 }
 
-function pvStateSelector(pvName: string, state: CsState): [boolean, NType?] {
+function pvStateSelector(pvName: string, state: CsState): [boolean, VType?] {
   const pvState = state.valueCache[pvName];
   let connected = false;
   let value = undefined;
@@ -33,8 +33,7 @@ export const connectionWrapper = <P extends object>(
     useSubscription(id, props.pvName);
     const [connected, latestValue] = useSelector((state: CsState): [
       boolean,
-
-      NType?
+      VType?
     ] => {
       return pvStateSelector(props.pvName, state);
     });

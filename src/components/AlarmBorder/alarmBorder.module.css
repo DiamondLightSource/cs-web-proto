@@ -1,13 +1,14 @@
 .Children {
   position: absolute;
-  top: 5%;
-  left: 5%;
-  height: 90%;
-  width: 90%;
+  top: 0%;
+  left: 0%;
+  height: 100%;
+  width: 100%;
 }
 
 .Border {
-  border: solid 5px #000000;
+  border: solid 3px #000000;
+  box-sizing: border-box;
   position: absolute;
   top: 0px;
   left: 0px;
@@ -16,13 +17,13 @@
 }
 
 .MinorAlarm {
-  border: solid 5px #ffff18;
+  border: solid 3px #ffff18;
 }
 
 .MajorAlarm {
-  border: solid 5px #ff0000;
+  border: solid 3px #ff0000;
 }
 
 .NotConnected {
-  border: solid 5px #ffffff;
+  border: solid 3px #ffffff;
 }

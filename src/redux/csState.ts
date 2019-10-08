@@ -7,7 +7,7 @@ import {
   MACRO_UPDATED,
   UNSUBSCRIBE
 } from "./actions";
-import { NType } from "../ntypes";
+import { VType } from "../vtypes/vtypes";
 
 const initialState: CsState = {
   valueCache: {},
@@ -16,7 +16,7 @@ const initialState: CsState = {
 };
 
 export interface PvState {
-  value: NType;
+  value: VType;
   connected: boolean;
 }
 

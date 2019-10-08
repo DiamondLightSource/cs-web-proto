@@ -6,14 +6,15 @@ import { Readback } from "../Readback/readback";
 import { Input } from "../Input/input";
 import { ProgressBar } from "../ProgressBar/progressBar";
 
-const Blank: React.FC = (props: any): JSX.Element => (
+export const Blank: React.FC = (props: any): JSX.Element => (
   <div
     style={{
       position: "absolute",
       height: "100%",
       width: "100%",
       border: "solid 5px black",
-      backgroundColor: "#dddddd"
+      backgroundColor: "#dddddd",
+      fontSize: "0.7vw"
     }}
   >
     {props.children}

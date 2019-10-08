@@ -3,21 +3,26 @@
 // These values will be displayed in a tooltip when highlighted
 // A middle mouse click will copy the PV name to the clipboard
 
-import React, { ReactNode } from "react";
+import React, { ReactNode, useState } from "react";
 import copyToClipboard from "clipboard-copy";
+import Popover from "react-tiny-popover";
 
 import { connectionWrapper } from "../ConnectionWrapper/connectionWrapper";
-import { NType } from "../../ntypes";
+import { VType } from "../../vtypes/vtypes";
 import classes from "./copyWrapper.module.css";
+import { vtypeToString } from "../../vtypes/utils";
+import { timeOf } from "../../vtypes/time";
+import { alarmOf } from "../../vtypes/alarm";
 
 export const CopyWrapper = (props: {
   pvName: string;
   rawPvName?: string;
   connected: boolean;
-  value?: NType;
+  value?: VType;
   children: ReactNode;
   style?: object;
 }): JSX.Element => {
+  const [popoverOpen, setPopoverOpen] = useState(false);
   let { connected, pvName, rawPvName = "", value = null, style = {} } = props;
 
   let displayValue = "";
@@ -27,40 +32,60 @@ export const CopyWrapper = (props: {
     if (!value) {
       displayValue = "Warning: Waiting for value";
     } else {
-      displayValue = value.value.toString();
+      displayValue = vtypeToString(value);
     }
   }
 
-  function copyPvToClipboard(e: React.MouseEvent): void {
+  const copyPvToClipboard = (e: React.MouseEvent): void => {
     if (e.button === 1) {
       copyToClipboard(pvName);
     }
-  }
+  };
+  const showPopover = (e: React.MouseEvent): void => {
+    if (e.button === 1) {
+      setPopoverOpen(true);
+    }
+  };
+  const hidePopover = (e: React.MouseEvent): void => {
+    if (e.button === 1) {
+      setPopoverOpen(false);
+    }
+  };
   // Compose the text which should be shown on the tooltip
+  let time = timeOf(value);
+  let alarm = alarmOf(value);
   let toolTipText = [
     displayValue,
     value
-      ? value.time
-        ? new Date(value.time.secondsPastEpoch * 1000)
+      ? time
+        ? new Date(time.getInstant().secondsPastEpoch * 1000)
         : ""
       : "",
-    value ? (value.alarm ? value.alarm.message : "") : ""
+    value ? (alarm ? alarm.getName() : "") : ""
   ]
     .filter((word): boolean => word !== "")
     .join(", ");
+  toolTipText = `${pvName}\n${rawPvName}\n[${toolTipText}]`;
 
   return (
-    <div
-      className={classes.CopyWrapper}
-      style={style}
-      onClick={copyPvToClipboard}
-    >
-      <div className={classes.Children}>{props.children}</div>
-      <span className={classes.tooltiptext}>
-        {pvName} <br />
-        {rawPvName}
-        <br />[{toolTipText}]
-      </span>
+    <div style={{ position: "relative", height: "100%", width: "100%" }}>
+      <Popover
+        isOpen={popoverOpen}
+        position={["top"]}
+        onClickOutside={(): void => setPopoverOpen(false)}
+        content={(): JSX.Element => {
+          return <div className={classes.ToolTip}>{toolTipText}</div>;
+        }}
+      >
+        <div
+          onClick={copyPvToClipboard}
+          onMouseDown={showPopover}
+          onMouseUp={hidePopover}
+          className={classes.Children}
+        >
+          {props.children}
+        </div>
+      </Popover>
     </div>
   );
 };

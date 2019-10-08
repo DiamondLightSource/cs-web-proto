@@ -7,7 +7,7 @@ import {
   VALUE_CHANGED,
   UNSUBSCRIBE
 } from "./actions";
-import { NType } from "../ntypes";
+import { VType } from "../vtypes/vtypes";
 
 function connectionChanged(
   store: Store,
@@ -20,7 +20,7 @@ function connectionChanged(
   });
 }
 
-function valueChanged(store: Store, pvName: string, value: NType): void {
+function valueChanged(store: Store, pvName: string, value: VType): void {
   store.dispatch({
     type: VALUE_CHANGED,
     payload: { pvName: pvName, value: value }

@@ -1,31 +1,25 @@
 import React, { ReactNode } from "react";
-import { Alarm, NType } from "../../ntypes";
+import { VType } from "../../vtypes/vtypes";
+import { Alarm, alarmOf, AlarmSeverity } from "../../vtypes/alarm";
 
 import classes from "./alarmBorder.module.css";
 
 export const AlarmBorder = (props: {
   connected: boolean;
-  value?: NType;
+  value?: VType;
   children: ReactNode;
 }): JSX.Element => {
   let { connected, value = null } = props;
-  let alarm: Alarm = { severity: 0, status: 0, message: "" };
-  if (value && value.alarm) {
-    alarm = value.alarm;
-  }
+  let alarm: Alarm = alarmOf(value);
   // Sort out alarm border classes
-  let alarmClasses = [classes.Border];
+  let alarmClasses = [classes.Border, classes.Children];
   if (connected === false) {
     alarmClasses.push(classes.NotConnected);
-  } else if (alarm.severity === 1) {
+  } else if (alarm.getSeverity() === AlarmSeverity.MINOR) {
     alarmClasses.push(classes.MinorAlarm);
-  } else if (alarm.severity === 2) {
+  } else if (alarm.getSeverity() === AlarmSeverity.MAJOR) {
     alarmClasses.push(classes.MajorAlarm);
   }
 
-  return (
-    <div className={alarmClasses.join(" ")}>
-      <div className={classes.Children}>{props.children}</div>
-    </div>
-  );
+  return <div className={alarmClasses.join(" ")}>{props.children}</div>;
 };
