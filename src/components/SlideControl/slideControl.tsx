@@ -23,6 +23,7 @@ interface SlideControlProps {
   width?: string;
   fontStyle?: object;
   precision?: number;
+  style?: object;
 }
 
 export const SlideControl: React.FC<SlideControlProps> = (
@@ -99,7 +100,7 @@ export const SlideControl: React.FC<SlideControlProps> = (
         }}
       >
         <input
-          className={classes.Slider}
+          className={`Slider ${classes.Slider}`}
           type="range"
           min={min}
           max={max}
@@ -107,6 +108,7 @@ export const SlideControl: React.FC<SlideControlProps> = (
           onChange={onChange}
           onMouseDown={onMouseDown}
           onMouseUp={onMouseUp}
+          style = {props.style}
         ></input>
       </div>
     </div>

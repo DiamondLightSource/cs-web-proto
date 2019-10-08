@@ -12,6 +12,7 @@ export interface InputProps {
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onBlur: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onClick: (event: React.MouseEvent<HTMLInputElement>) => void;
+  style?: object;
 }
 
 export const Input: React.FC<InputProps> = (props: InputProps): JSX.Element => (
@@ -22,7 +23,8 @@ export const Input: React.FC<InputProps> = (props: InputProps): JSX.Element => (
     onChange={props.onChange}
     onBlur={props.onBlur}
     onClick={props.onClick}
-    className={classes.Input}
+    className={`Input ${classes.Input}`}
+    style={props.style}
   />
 );
 

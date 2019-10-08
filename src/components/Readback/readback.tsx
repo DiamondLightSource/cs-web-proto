@@ -59,7 +59,7 @@ export const Readback = (props: {
   }
 
   return (
-    <div className={classes.Readback} style={style}>
+    <div className={`Readback ${classes.Readback}`} style={style}>
       {displayedValue}
     </div>
   );
