@@ -5,7 +5,7 @@ import { WebSocketLink } from "apollo-link-ws";
 import { getMainDefinition } from "apollo-utilities";
 import gql from "graphql-tag";
 import { InMemoryCache, NormalizedCacheObject } from "apollo-cache-inmemory";
-import { NType } from "../ntypes";
+import { VType, vdoubleOf } from "../vtypes/vtypes";
 import {
   Connection,
   ConnectionChangedCallback,
@@ -87,12 +87,12 @@ export class ConiqlPlugin implements Connection {
       });
   }
 
-  public putPv(pvName: string, value: NType): void {
+  public putPv(pvName: string, value: VType): void {
     // noop
   }
 
-  public getValue(pvName: string): NType {
-    return { type: "NTScalarDouble", value: "" };
+  public getValue(pvName: string): VType {
+    return vdoubleOf(0);
   }
 
   public unsubscribe(pvName: string): void {
