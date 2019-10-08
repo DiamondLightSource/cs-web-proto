@@ -10,7 +10,13 @@ import { VType, vdoubleOf, vdoubleArrayOf } from "../vtypes/vtypes";
 import { vstringOf } from "../vtypes/string";
 import { Time, timeOf } from "../vtypes/time";
 import { Display, displayOf } from "../vtypes/display";
-import { Alarm, alarmOf } from "../vtypes/alarm";
+import {
+  Alarm,
+  alarmOf,
+  AlarmSeverity,
+  AlarmStatus,
+  alarm
+} from "../vtypes/alarm";
 
 const initialState: CsState = {
   valueCache: {},
@@ -59,35 +65,40 @@ const VNumberArrays = {
 };
 
 const mergeVtype = (original: VType, update: PartialVType): VType => {
-  console.log("original and update");
-  console.log(original);
-  console.log(update);
-  let className = update.type ? update.type : original.constructor.name;
-  const array = update.array ? update.array : className.includes("Array");
-  const value = update.value ? update.value : original.getValue();
-  const alarm = update.alarm ? update.alarm : alarmOf(original);
-  // should we require that the update has a time?
-  const time = update.time ? update.time : timeOf(original);
-  const display = update.display ? update.display : displayOf(original);
-  if (className === "VString") {
-    // what happened to VStringArray in VTypes?
-    return vstringOf(value, alarm, time);
-  } else {
-    console.log(`className ${className}`);
-    console.log(`about to create ${VNumberArrays[className as VNumberArray]}`);
-    if (array) {
-      if (!className.endsWith("Array")) {
-        className = `${className}Array`;
-      }
-      return VNumberArrays[className as VNumberArray](
-        value,
-        alarm,
-        time,
-        display
-      );
+  try {
+    let className = update.type ? update.type : original.constructor.name;
+    const array = update.array ? update.array : className.includes("Array");
+    const value = update.value ? update.value : original.getValue();
+    const alarm = update.alarm ? update.alarm : alarmOf(original);
+    // should we require that the update has a time?
+    const time = update.time ? update.time : timeOf(original);
+    const display = update.display ? update.display : displayOf(original);
+    if (className === "VString") {
+      // what happened to VStringArray in VTypes?
+      return vstringOf(value, alarm, time);
     } else {
-      return VNumbers[className as VNumber](value, alarm, time, display);
+      if (array) {
+        if (!className.endsWith("Array")) {
+          className = `${className}Array`;
+        }
+        return VNumberArrays[className as VNumberArray](
+          value,
+          alarm,
+          time,
+          display
+        );
+      } else {
+        return VNumbers[className as VNumber](value, alarm, time, display);
+      }
     }
+  } catch (error) {
+    // This happens occasionally, and has serious consequences, but I
+    // don't know why!
+    console.error("failed to merge vtypes", original, update, error);
+    return vstringOf(
+      "error",
+      alarm(AlarmSeverity.MAJOR, AlarmStatus.NONE, "error")
+    );
   }
 };
 
@@ -96,8 +107,6 @@ export function csReducer(state = initialState, action: ActionType): CsState {
     case VALUE_CHANGED: {
       const newValueCache: ValueCache = Object.assign({}, state.valueCache);
       const pvState = state.valueCache[action.payload.pvName];
-      console.log(`apv for ${action.payload.pvName}`);
-      console.log(action.payload.value);
       const newValue = mergeVtype(pvState.value, action.payload.value);
       const newPvState = Object.assign({}, pvState, {
         value: newValue

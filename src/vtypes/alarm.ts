@@ -27,7 +27,7 @@ export abstract class Alarm {
   public abstract getName(): string;
 }
 
-class IAlarm extends Alarm {
+export class IAlarm extends Alarm {
   private severity: AlarmSeverity;
   private status: AlarmStatus;
   private name: string;

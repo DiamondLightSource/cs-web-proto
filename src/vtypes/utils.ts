@@ -5,8 +5,6 @@ import { timeNow } from "./time";
 import { DISPLAY_NONE } from "./display";
 
 export const vtypeToString = (vtype?: VType, precision?: number): string => {
-  console.log("vtype");
-  console.log(vtype);
   if (vtype instanceof VNumber) {
     if (precision) {
       return vtype.getValue().toFixed(precision);
