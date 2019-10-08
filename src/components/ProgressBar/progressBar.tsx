@@ -20,6 +20,7 @@ interface ProgressBarProps {
   width?: string;
   fontStyle?: object;
   precision?: number;
+  style?: object;
 }
 
 // Same as ProgressBarProps but without connected and value as these are
@@ -37,6 +38,7 @@ interface ConnectedProgressBarProps {
   width?: string;
   fontStyle?: object;
   precision?: number;
+  style?: object;
 }
 
 export const ProgressBar: React.FC<ProgressBarProps> = (
@@ -53,9 +55,8 @@ export const ProgressBar: React.FC<ProgressBarProps> = (
     height = "100%",
     width = "100%",
     fontStyle = {},
-    precision = undefined
+    precision = undefined,
   } = props;
-
   let barStyle = {
     top: top,
     left: left,
@@ -81,13 +82,15 @@ export const ProgressBar: React.FC<ProgressBarProps> = (
     onStyle = {
       ...barColor,
       width: "100%",
-      height: `${onPercent}%`
+      height: `${onPercent}%`,
+      ...props.style
     };
   } else {
     onStyle = {
       ...barColor,
       height: "100%",
-      width: `${onPercent}%`
+      width: `${onPercent}%`,
+      ...props.style
     };
   }
 
@@ -135,6 +138,7 @@ export const StandaloneProgressBar = (props: {
         min={props.min}
         max={props.max}
         precision={props.precision}
+        style={props.style}
       ></ProgressBar>
     </AlarmBorder>
   </CopyWrapper>
@@ -145,7 +149,7 @@ interface ConnectedStandaloneProgressBarProps {
   min: number;
   max: number;
   precision?: number;
-  style?: {};
+  style?: object;
 }
 
 export const ConnectedStandaloneProgressBar: React.FC<
