@@ -11,18 +11,19 @@ import { CopyWrapper } from "../CopyWrapper/copyWrapper";
 import { AlarmBorder } from "../AlarmBorder/alarmBorder";
 
 import classes from "./readback.module.css";
+import StackUtils from "stack-utils";
 
 export const Readback = (props: {
   connected: boolean;
   value?: NType;
   precision?: number;
-  style?: {};
+  style?: object;
 }): JSX.Element => {
   let {
     connected,
     value,
     precision = undefined,
-    style = { backgroundColor: "#383838", color: "#00bb00" }
+    style
   } = props;
   let alarm = NO_ALARM;
   if (value && value.alarm != null) {
@@ -37,7 +38,7 @@ export const Readback = (props: {
   } else {
     displayedValue = ntToString(value);
   }
-
+  style = {backgroundColor: "#383838", color: "#00bb00", ...props.style }
   // Change text color depending on connection state or alarm
   if (!connected) {
     style = {
@@ -69,7 +70,7 @@ interface ConnectedReadbackProps {
   pvName: string;
   precision?: number;
   alarm?: Alarm;
-  style?: {};
+  style?: object;
 }
 
 export const ConnectedReadback: React.FC<
@@ -79,7 +80,7 @@ export const ConnectedReadback: React.FC<
 interface ConnectedCopyReadbackProps {
   pvName: string;
   precision?: number;
-  style?: {};
+  style?: object;
 }
 
 export const CopyReadback = (props: {
@@ -93,11 +94,13 @@ export const CopyReadback = (props: {
     pvName={props.pvName}
     connected={props.connected}
     value={props.value}
+    style={props.style}
   >
     <Readback
       connected={props.connected}
       value={props.value}
       precision={props.precision}
+      style={props.style}
     ></Readback>
   </CopyWrapper>
 );
@@ -109,7 +112,7 @@ export const ConnectedCopyReadback: React.FC<
 interface ConnectedStandaloneReadbackProps {
   pvName: string;
   precision?: number;
-  style?: {};
+  style?: object;
 }
 
 export const StandaloneReadback = (props: {
@@ -129,6 +132,7 @@ export const StandaloneReadback = (props: {
         connected={props.connected}
         value={props.value}
         precision={props.precision}
+        style={props.style}
       ></Readback>
     </AlarmBorder>
   </CopyWrapper>
