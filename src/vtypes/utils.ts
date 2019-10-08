@@ -1,9 +1,12 @@
-import { VNumber, VType, VString, vdoubleOf, vstringOf } from "./vtypes";
+import { VNumber, VType, vdoubleOf } from "./vtypes";
+import { vstringOf } from "./string";
 import { ALARM_NONE } from "./alarm";
 import { timeNow } from "./time";
 import { DISPLAY_NONE } from "./display";
 
 export const vtypeToString = (vtype?: VType, precision?: number): string => {
+  console.log("vtype");
+  console.log(vtype);
   if (vtype instanceof VNumber) {
     if (precision) {
       return vtype.getValue().toFixed(precision);
@@ -11,8 +14,8 @@ export const vtypeToString = (vtype?: VType, precision?: number): string => {
       return vtype.getValue().toString();
     }
   }
-  if (vtype instanceof VString) {
-    return vtype.getValue();
+  if (vtype) {
+    return vtype.toString();
   }
   return "";
 };

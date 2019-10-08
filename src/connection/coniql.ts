@@ -4,7 +4,12 @@ import { HttpLink } from "apollo-link-http";
 import { WebSocketLink } from "apollo-link-ws";
 import { getMainDefinition } from "apollo-utilities";
 import gql from "graphql-tag";
-import { InMemoryCache, NormalizedCacheObject } from "apollo-cache-inmemory";
+import {
+  InMemoryCache,
+  NormalizedCacheObject,
+  IntrospectionFragmentMatcher
+} from "apollo-cache-inmemory";
+import introspectionQueryResultData from "./fragmentTypes.json";
 import { VType, vdoubleOf } from "../vtypes/vtypes";
 import {
   Connection,
@@ -15,6 +20,7 @@ import {
 } from "./plugin";
 import { PartialVType } from "../redux/csState";
 import { AlarmStatus, alarm } from "../vtypes/alarm";
+import base64js from "base64-js";
 
 interface Status {
   quality: "ALARM" | "WARNING" | "VALID";
@@ -27,12 +33,37 @@ const ALARMS = {
   VALID: 0
 };
 
-function coniqlToNType(value: any, meta: any, status: Status): PartialVType {
+type CONIQL_TYPE = "FLOAT64" | "INT32" | "INT64";
+
+const VTYPE_CLASSES = {
+  FLOAT64: "VDouble",
+  INT32: "VInt",
+  INT64: "VLong"
+};
+
+const ARRAY_TYPES = {
+  FLOAT64: Float64Array,
+  INT32: Int32Array,
+  // I don't know why I can't use BigInt64Array.
+  INT64: Int32Array
+};
+
+function coniqlToVType(value: any, meta: any, status: Status): PartialVType {
   let result: PartialVType = {
     value: value
   };
+  if (value && value.numberType) {
+    const bd = base64js.toByteArray(value.base64);
+    const array = new ARRAY_TYPES[value.numberType as CONIQL_TYPE](bd.buffer);
+    result.value = array;
+  }
   if (meta) {
-    result.type = meta.type;
+    result.array = meta.array;
+    if (meta.__typename === "NumberMeta") {
+      result.type = VTYPE_CLASSES[meta.numberType as CONIQL_TYPE];
+    } else {
+      result.type = VTYPE_CLASSES[meta.type as CONIQL_TYPE];
+    }
   }
   if (status) {
     result.alarm = alarm(ALARMS[status.quality], AlarmStatus.NONE, "");
@@ -62,7 +93,10 @@ function createLink(socket: string): ApolloLink {
   return link;
 }
 
-const cache = new InMemoryCache();
+const fragmentMatcher = new IntrospectionFragmentMatcher({
+  introspectionQueryResultData
+});
+const cache = new InMemoryCache({ fragmentMatcher });
 
 const PV_SUBSCRIPTION = gql`
   subscription sub1($pvName: String!) {
@@ -71,6 +105,14 @@ const PV_SUBSCRIPTION = gql`
       meta {
         __typename
         array
+        ... on ObjectMeta {
+          array
+          type
+        }
+        ... on NumberMeta {
+          array
+          numberType
+        }
       }
       status {
         quality
@@ -119,7 +161,7 @@ export class ConiqlPlugin implements Connection {
           //console.log("data", data); //eslint-disable-line no-console
           this.onConnectionUpdate(pvName1, { isConnected: true });
           const { value, meta, status } = data.data.subscribeChannel;
-          let ntValue = coniqlToNType(value, meta, status);
+          let ntValue = coniqlToVType(value, meta, status);
           this.onValueUpdate(pvName1, ntValue);
         },
         error: (err): void => {

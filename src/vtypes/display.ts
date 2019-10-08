@@ -1,13 +1,6 @@
-/* Currently missing NumberFormat. */
-export interface Range {
-  min: number;
-  max: number;
-}
+import { Range, RANGE_NONE } from "./defs";
 
-export const RANGE_NONE: Range = {
-  min: 0,
-  max: 0
-};
+/* Currently missing NumberFormat. */
 
 export interface DisplayProvider {
   getAlarm(): Display;

@@ -22,5 +22,6 @@ export const ConiqlPage = (): JSX.Element => (
         precision={3}
       />
     </div>
+    <ConnectedStandaloneReadback pvName={"sim://sinewave"} precision={3} />
   </div>
 );

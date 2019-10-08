@@ -7,9 +7,12 @@ export abstract class VType {
 }
 
 export abstract class Scalar implements AlarmProvider, TimeProvider {
-  public abstract getValue(): any;
   public abstract getAlarm(): Alarm;
   public abstract getTime(): Time;
+}
+
+export abstract class Array extends VType {
+  public abstract getSizes(): number[];
 }
 
 export abstract class VNumber extends Scalar {
@@ -18,8 +21,6 @@ export abstract class VNumber extends Scalar {
 
 export abstract class VDouble extends VNumber {
   public abstract getValue(): number;
-  public abstract getAlarm(): Alarm;
-  public abstract getTime(): Time;
   public abstract getDisplay(): Display;
 }
 
@@ -61,36 +62,51 @@ export const vdoubleOf = (
   display = DISPLAY_NONE
 ): VDouble => new IVDouble(double, alarm, time, display);
 
-export abstract class VString extends Scalar {
-  public abstract getValue(): string;
+export abstract class VNumberArray {
+  public abstract getValue(): number[];
 }
 
-class IVString extends VString {
-  private value: string;
+export abstract class VDoubleArray {
+  public abstract getValue(): number[];
+}
+
+class IVDoubleArray extends VDoubleArray {
+  private value: number[];
   private alarm: Alarm;
   private time: Time;
-
-  public constructor(value: string, alarm: Alarm, time: Time) {
+  private display: Display;
+  public constructor(
+    value: number[],
+    alarm: Alarm,
+    time: Time,
+    display: Display
+  ) {
     super();
     this.value = value;
     this.alarm = alarm;
     this.time = time;
+    this.display = display;
   }
-
-  public getValue(): string {
+  public getValue(): number[] {
     return this.value;
   }
-
   public getAlarm(): Alarm {
     return this.alarm;
   }
   public getTime(): Time {
     return this.time;
   }
+  public getDisplay(): Display {
+    return this.display;
+  }
+  public toString(): string {
+    return this.value.toString();
+  }
 }
 
-export const vstringOf = (
-  value: string,
+export const vdoubleArrayOf = (
+  double: number[],
   alarm = ALARM_NONE,
-  time = timeNow()
-): VString => new IVString(value, alarm, time);
+  time = timeNow(),
+  display = DISPLAY_NONE
+): VDoubleArray => new IVDoubleArray(double, alarm, time, display);
