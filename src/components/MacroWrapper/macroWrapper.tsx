@@ -29,20 +29,14 @@ export const macroWrapper = <P extends object>(
     if (props.macroMap != null) {
       allMacros = { ...allMacros, ...props.macroMap };
     }
+    let resolvedProps: any = {};
     const rawPvName = props.pvName;
-    const resolvedProps = Object.entries(props).map(([key, value]): [
-      string,
-      string
-    ] => {
-      return [key, resolveStrings(value, allMacros)];
+    Object.entries(props).map(([key, value]): void => {
+      resolvedProps[key] = resolveStrings(value, allMacros);
     });
-    const obj: MacroProps = Array.from(resolvedProps).reduce(
-      (main, [key, value]): object => ({ ...main, [key]: value }),
-      {}
-    );
     if (rawPvName != null) {
-      obj.rawPvName = rawPvName;
+      resolvedProps.rawPvName = rawPvName;
     }
-    return <Component {...(obj as P)}></Component>;
+    return <Component {...(resolvedProps as P)}></Component>;
   };
 };
