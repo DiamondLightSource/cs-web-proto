@@ -48,7 +48,8 @@ export const FromJson = (props: FromJsonProps): JSX.Element => {
     connectedCopyReadback: ConnectedCopyReadback,
     input: ConnectedInput,
     connectedStandaloneInput: ConnectedStandaloneInput,
-    flexContainer: FlexContainer
+    flexContainer: FlexContainer,
+    fromJSON: FromJson
   };
 
   return (
