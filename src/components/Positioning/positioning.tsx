@@ -1,6 +1,5 @@
 import React from "react";
 import { MacroMap } from "../../redux/csState";
-import { ProgressPage } from "../../pages/progressPage";
 
 // Interface to describe components by absolute position
 export interface PositionDescription {

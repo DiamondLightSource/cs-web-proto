@@ -23,7 +23,7 @@ export const CopyWrapper = (props: {
   style?: object;
 }): JSX.Element => {
   const [popoverOpen, setPopoverOpen] = useState(false);
-  let { connected, pvName, rawPvName = "", value = null, style = {} } = props;
+  let { connected, pvName, rawPvName = "", value = null } = props;
 
   let displayValue = "";
   if (!connected) {
