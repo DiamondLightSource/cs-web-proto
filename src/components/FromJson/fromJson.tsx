@@ -7,9 +7,11 @@ import { Label } from "../Label/label";
 import { Blank } from "../Positioning/ionpExample";
 import { ConnectedStandaloneReadback } from "../Readback/readback";
 import { ConnectedInput } from "../Input/input";
+import { MacroMap } from "../../redux/csState";
 
 interface FromJsonProps {
   file: string;
+  macroMap: MacroMap;
 }
 
 const EMPTY_DESC = {
@@ -49,7 +51,7 @@ export const FromJson = (props: FromJsonProps): JSX.Element => {
         height: json["height"]
       }}
     >
-      {objectToPosition(json, compDict)}
+      {objectToPosition(json, compDict, props.macroMap)}
     </div>
   );
 };

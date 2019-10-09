@@ -18,7 +18,7 @@ export const MacrosPage = (): JSX.Element => (
       <Label text="loc://pv1"></Label>
       <MacroLabel
         text="loc://pv${SUFFIX}"
-        macroMap={{ SUFFIX: "bbba" }}
+        macroMap={{ SUFFIX1: "bba" }}
       ></MacroLabel>
       <ConnectedInput pvName={"loc://pv1"} />
       <Label text="loc://pv2"></Label>

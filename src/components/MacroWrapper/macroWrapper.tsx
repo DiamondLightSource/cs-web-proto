@@ -40,7 +40,9 @@ export const macroWrapper = <P extends object>(
       (main, [key, value]): object => ({ ...main, [key]: value }),
       {}
     );
-    obj.rawPvName = rawPvName;
+    if (rawPvName != null) {
+      obj.rawPvName = rawPvName;
+    }
     return <Component {...(obj as P)}></Component>;
   };
 };

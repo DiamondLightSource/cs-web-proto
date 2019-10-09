@@ -178,7 +178,7 @@ const MapOne: PositionDescription = {
 };
 
 export const Mapping: React.FC = (): JSX.Element => {
-  let Mapped = objectToPosition(MapOne, exampleDict);
+  let Mapped = objectToPosition(MapOne, exampleDict, {});
 
   return <div>{Mapped}</div>;
 };

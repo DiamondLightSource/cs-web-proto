@@ -1,4 +1,6 @@
 import React from "react";
+import { MacroMap } from "../../redux/csState";
+import { ProgressPage } from "../../pages/progressPage";
 
 // Interface to describe components by absolute position
 export interface PositionDescription {
@@ -18,7 +20,8 @@ export interface PositionDescription {
 
 export function objectToPosition(
   inputObjects: PositionDescription | null,
-  componentDict: { [index: string]: any }
+  componentDict: { [index: string]: any },
+  macroMap: MacroMap
 ): JSX.Element | null {
   // If there is nothing here, return null
   if (inputObjects === null) {
@@ -35,6 +38,8 @@ export function objectToPosition(
       ...otherProps
     } = inputObjects;
 
+    otherProps.macroMap = macroMap;
+
     // Create the main component
     let Component: React.FC = componentDict[type];
 
@@ -42,7 +47,7 @@ export function objectToPosition(
     let PositionedChildren = null;
     if (children) {
       PositionedChildren = children.map((child): JSX.Element | null =>
-        objectToPosition(child, componentDict)
+        objectToPosition(child, componentDict, macroMap)
       );
     } else {
       PositionedChildren = null;

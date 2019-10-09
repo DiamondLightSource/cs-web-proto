@@ -1,7 +1,7 @@
 import React from "react";
 
 import { PositionDescription, objectToPosition } from "./positioning";
-import { Label } from "../Label/label";
+import { MacroLabel } from "../Label/label";
 import { Readback } from "../Readback/readback";
 import { Input } from "../Input/input";
 import { ProgressBar } from "../ProgressBar/progressBar";
@@ -23,7 +23,7 @@ export const Blank: React.FC = (props: any): JSX.Element => (
 );
 
 const compDict = {
-  activeXTextClass: Label,
+  activeXTextClass: MacroLabel,
   TextupdateClass: Readback,
   activeXTextDspClass: Input,
   activeBarClass: ProgressBar,
@@ -43,7 +43,7 @@ const IonpScreen: PositionDescription = {
       y: 0,
       width: "328px",
       height: "32px",
-      text: "BL12I-VA-IONP-01",
+      text: "${device}",
       style: {
         textAlign: "center",
         fontSize: "1.2vw",
@@ -169,6 +169,8 @@ const IonpScreen: PositionDescription = {
 };
 
 export const Mapping: React.FC = (): JSX.Element => {
-  let Mapped = objectToPosition(IonpScreen, compDict);
+  let Mapped = objectToPosition(IonpScreen, compDict, {
+    device: "SR03A-VA-IONP-01"
+  });
   return <div>{Mapped}</div>;
 };
