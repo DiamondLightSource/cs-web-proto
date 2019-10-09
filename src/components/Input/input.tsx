@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { connectionWrapper } from "../ConnectionWrapper/connectionWrapper";
 import { writePv } from "../../hooks/useCs";
-import { NType, ntOrNullToString } from "../../ntypes";
+import { VType } from "../../vtypes/vtypes";
 
 import classes from "./input.module.css";
+import { vtypeToString, stringToVtype } from "../../vtypes/utils";
 
 export interface InputProps {
   pvName: string;
@@ -35,7 +36,7 @@ interface ConnectedInputProps {
 
 interface SmartInputProps {
   pvName: string;
-  value?: NType;
+  value?: VType;
   style?: object;
 }
 
@@ -46,10 +47,7 @@ export const SmartInput: React.FC<SmartInputProps> = (
   const [editing, setEditing] = useState(false);
   function onKeyDown(event: React.KeyboardEvent<HTMLInputElement>): void {
     if (event.key === "Enter") {
-      writePv(props.pvName, {
-        type: "NTScalar",
-        value: event.currentTarget.value
-      });
+      writePv(props.pvName, stringToVtype(event.currentTarget.value));
       setInputValue("");
       setEditing(false);
     }
@@ -67,11 +65,11 @@ export const SmartInput: React.FC<SmartInputProps> = (
   function onBlur(event: React.ChangeEvent<HTMLInputElement>): void {
     setEditing(false);
     /* When focus lost show PV value. */
-    setInputValue(ntOrNullToString(props.value));
+    setInputValue(vtypeToString(props.value));
   }
 
-  if (!editing && inputValue !== ntOrNullToString(props.value)) {
-    setInputValue(ntOrNullToString(props.value));
+  if (!editing && inputValue !== vtypeToString(props.value)) {
+    setInputValue(vtypeToString(props.value));
   }
 
   return (

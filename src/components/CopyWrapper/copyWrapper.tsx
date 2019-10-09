@@ -8,18 +8,21 @@ import copyToClipboard from "clipboard-copy";
 import Popover from "react-tiny-popover";
 
 import { connectionWrapper } from "../ConnectionWrapper/connectionWrapper";
-import { NType } from "../../ntypes";
+import { VType } from "../../vtypes/vtypes";
 import classes from "./copyWrapper.module.css";
+import { vtypeToString } from "../../vtypes/utils";
+import { timeOf } from "../../vtypes/time";
+import { alarmOf } from "../../vtypes/alarm";
 
 export const CopyWrapper = (props: {
   pvName: string;
   connected: boolean;
-  value?: NType;
+  value?: VType;
   children: ReactNode;
   style?: object;
 }): JSX.Element => {
   const [popoverOpen, setPopoverOpen] = useState(false);
-  let { connected, pvName, value = null } = props;
+  let { connected, pvName, value } = props;
 
   let displayValue = "";
   if (!connected) {
@@ -28,7 +31,7 @@ export const CopyWrapper = (props: {
     if (!value) {
       displayValue = "Warning: Waiting for value";
     } else {
-      displayValue = value.value.toString();
+      displayValue = vtypeToString(value);
     }
   }
 
@@ -48,14 +51,16 @@ export const CopyWrapper = (props: {
     }
   };
   // Compose the text which should be shown on the tooltip
+  let time = timeOf(value);
+  let alarm = alarmOf(value);
   let toolTipText = [
     displayValue,
     value
-      ? value.time
-        ? new Date(value.time.secondsPastEpoch * 1000)
+      ? time
+        ? new Date(time.getInstant().secondsPastEpoch * 1000)
         : ""
       : "",
-    value ? (value.alarm ? value.alarm.message : "") : ""
+    value ? (alarm ? alarm.getName() : "") : ""
   ]
     .filter((word): boolean => word !== "")
     .join(", ");

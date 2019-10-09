@@ -4,15 +4,16 @@
 import React, { useState } from "react";
 import { ProgressBar } from "../ProgressBar/progressBar";
 import { writePv } from "../../hooks/useCs";
-import { NType, ntOrNullToString } from "../../ntypes";
+import { VType } from "../../vtypes/vtypes";
 
 import classes from "./slideControl.module.css";
 import { connectionWrapper } from "../ConnectionWrapper/connectionWrapper";
+import { vtypeToString, stringToVtype } from "../../vtypes/utils";
 
 interface SlideControlProps {
   pvName: string;
   connected: boolean;
-  value?: NType;
+  value?: VType;
   min: number;
   max: number;
   vertical?: boolean;
@@ -58,13 +59,10 @@ export const SlideControl: React.FC<SlideControlProps> = (
   }
   function onMouseUp(event: React.MouseEvent<HTMLInputElement>): void {
     setEditing(false);
-    writePv(pvName, {
-      type: "NTScalar",
-      value: event.currentTarget.value
-    });
+    writePv(pvName, stringToVtype(event.currentTarget.value));
   }
 
-  let stringValue = ntOrNullToString(value);
+  let stringValue = vtypeToString(value);
   if (!editing && inputValue !== stringValue) {
     setInputValue(stringValue);
   }

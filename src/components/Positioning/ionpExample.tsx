@@ -5,6 +5,7 @@ import { Label } from "../Label/label";
 import { Readback } from "../Readback/readback";
 import { Input } from "../Input/input";
 import { ProgressBar } from "../ProgressBar/progressBar";
+import { vdoubleOf, vstringOf } from "../../vtypes/vtypes";
 
 export const Blank: React.FC = (props: any): JSX.Element => (
   <div
@@ -64,7 +65,7 @@ const IonpScreen: PositionDescription = {
       width: "72px",
       height: "22px",
       connected: true,
-      value: { value: "1.2e-10" }
+      value: vdoubleOf(1.2e-10)
     },
     {
       type: "activeBarClass",
@@ -74,7 +75,7 @@ const IonpScreen: PositionDescription = {
       height: "22px",
       min: -12,
       max: 3,
-      value: { value: -9 },
+      value: vdoubleOf(-9),
       fontStyle: {
         fontSize: "0.8vw"
       }
@@ -93,9 +94,8 @@ const IonpScreen: PositionDescription = {
       y: "92px",
       width: "216px",
       height: "22px",
-
       connected: true,
-      value: { value: "Running" }
+      value: vstringOf("Running")
     },
     {
       type: "activeXTextClass",
@@ -112,7 +112,7 @@ const IonpScreen: PositionDescription = {
       width: "216px",
       height: "22px",
       connected: true,
-      value: { value: "OK" }
+      value: vstringOf("OK")
     },
     {
       type: "activeXTextClass",
@@ -129,7 +129,7 @@ const IonpScreen: PositionDescription = {
       width: "72px",
       height: "22px",
       connected: true,
-      value: { value: "6637 V" }
+      value: vstringOf("6637 V")
     },
     {
       type: "activeXTextClass",
@@ -154,7 +154,7 @@ const IonpScreen: PositionDescription = {
       width: "72px",
       height: "22px",
       connected: true,
-      value: { value: "610.0e-9" }
+      value: vstringOf("610.0e-9")
     },
     {
       type: "TextupdateClass",
@@ -163,7 +163,7 @@ const IonpScreen: PositionDescription = {
       width: "72px",
       height: "22px",
       connected: true,
-      value: { value: "7000V" }
+      value: vstringOf("7000V")
     }
   ]
 };

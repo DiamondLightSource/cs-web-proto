@@ -1,15 +1,16 @@
 import React from "react";
 
-import { NType, ntOrNullToNumber } from "../../ntypes";
+import { VType } from "../../vtypes/vtypes";
 import classes from "./progressBar.module.css";
 
 import { connectionWrapper } from "../ConnectionWrapper/connectionWrapper";
 import { CopyWrapper } from "../CopyWrapper/copyWrapper";
 import { AlarmBorder } from "../AlarmBorder/alarmBorder";
+import { vtypeOrUndefinedToNumber } from "../../vtypes/utils";
 
 interface ProgressBarProps {
   connected: boolean;
-  value?: NType;
+  value?: VType;
   min: number;
   max: number;
   vertical?: boolean;
@@ -26,7 +27,7 @@ interface ProgressBarProps {
 // Same as ProgressBarProps but without connected and value as these are
 // collected from the store
 interface ConnectedProgressBarProps {
-  value?: NType;
+  value?: VType;
   pvName: string;
   min: number;
   max: number;
@@ -63,7 +64,8 @@ export const ProgressBar: React.FC<ProgressBarProps> = (
     height: height,
     width: width
   };
-  let numValue = ntOrNullToNumber(value);
+  // eslint-disable-next-line no-undef
+  let numValue = vtypeOrUndefinedToNumber(value);
   let onPercent =
     numValue < min
       ? 0
@@ -119,7 +121,7 @@ export const ConnectedProgressBar: React.FC<
 
 export const StandaloneProgressBar = (props: {
   pvName: string;
-  value: NType;
+  value: VType;
   connected: boolean;
   min: number;
   max: number;

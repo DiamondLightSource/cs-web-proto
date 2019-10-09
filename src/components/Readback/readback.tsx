@@ -1,21 +1,16 @@
 import React from "react";
-import {
-  NType,
-  Alarm,
-  NO_ALARM,
-  ntToNumericString,
-  ntToString
-} from "../../ntypes";
 import { connectionWrapper } from "../ConnectionWrapper/connectionWrapper";
 import { CopyWrapper } from "../CopyWrapper/copyWrapper";
 import { AlarmBorder } from "../AlarmBorder/alarmBorder";
 
 import classes from "./readback.module.css";
-import StackUtils from "stack-utils";
+import { VType } from "../../vtypes/vtypes";
+import { Alarm, alarmOf, AlarmSeverity } from "../../vtypes/alarm";
+import { vtypeToString } from "../../vtypes/utils";
 
 export const Readback = (props: {
   connected: boolean;
-  value?: NType;
+  value?: VType;
   precision?: number;
   style?: object;
 }): JSX.Element => {
@@ -25,18 +20,12 @@ export const Readback = (props: {
     precision = undefined,
     style
   } = props;
-  let alarm = NO_ALARM;
-  if (value && value.alarm != null) {
-    alarm = value.alarm;
-  }
+  const alarm = alarmOf(value);
   let displayedValue;
   if (!value) {
     displayedValue = "Waiting for value";
-  } else if (precision && precision >= 0) {
-    value = value as NType;
-    displayedValue = ntToNumericString(value, precision);
   } else {
-    displayedValue = ntToString(value);
+    displayedValue = vtypeToString(value, precision);
   }
   style = {backgroundColor: "#383838", color: "#00bb00", ...props.style }
   // Change text color depending on connection state or alarm
@@ -45,13 +34,13 @@ export const Readback = (props: {
       ...style,
       color: "#ffffff"
     };
-  } else if (alarm.severity === 1) {
+  } else if (alarm.getSeverity() === AlarmSeverity.MINOR) {
     // Minor alarm
     style = {
       ...style,
       color: "#eeee00"
     };
-  } else if (alarm.severity === 2) {
+  } else if (alarm.getSeverity() === AlarmSeverity.MAJOR) {
     // Major alarm
     style = {
       ...style,
@@ -85,7 +74,7 @@ interface ConnectedCopyReadbackProps {
 
 export const CopyReadback = (props: {
   pvName: string;
-  value: NType;
+  value: VType;
   connected: boolean;
   precision?: number;
   style?: object;
@@ -117,7 +106,7 @@ interface ConnectedStandaloneReadbackProps {
 
 export const StandaloneReadback = (props: {
   pvName: string;
-  value: NType;
+  value: VType;
   connected: boolean;
   precision?: number;
   style?: object;
