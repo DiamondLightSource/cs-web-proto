@@ -5,7 +5,11 @@ import {
 } from "../Positioning/positioning";
 import { Label } from "../Label/label";
 import { Blank } from "../Positioning/ionpExample";
-import { ConnectedStandaloneReadback } from "../Readback/readback";
+import {
+  ConnectedReadback,
+  ConnectedCopyReadback,
+  ConnectedStandaloneReadback
+} from "../Readback/readback";
 import { ConnectedInput } from "../Input/input";
 
 interface FromJsonProps {
@@ -39,6 +43,8 @@ export const FromJson = (props: FromJsonProps): JSX.Element => {
     empty: Blank,
     label: Label,
     readback: ConnectedStandaloneReadback,
+    connectedReadback: ConnectedReadback,
+    connectedCopyReadback: ConnectedCopyReadback,
     input: ConnectedInput
   };
 
