@@ -21,8 +21,10 @@ export interface FlexiblePositionDescription {
   type: string;
   // Flexible positions - should go inside a flex container
   flexible: boolean;
-  width: number | string;
-  height: number | string;
+  // Width and height not always necessary in this case as some components
+  // such as embedded screens will define their own dimensions
+  width?: number | string;
+  height?: number | string;
   // All other component properties
   [x: string]: any;
   // Array of any children nodes - children are all at same level
@@ -40,8 +42,8 @@ export function objectToPosition(
   } else {
     // Extract properties
     let {
-      x = "",
-      y = "",
+      x = null,
+      y = null,
       flexible = false,
       height,
       width,
