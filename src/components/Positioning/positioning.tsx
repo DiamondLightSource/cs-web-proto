@@ -13,11 +13,25 @@ export interface PositionDescription {
   [x: string]: any;
   // Array of any children nodes - children are all at same level
   // with respect to positioning
-  children?: PositionDescription[] | null;
+  children?: (PositionDescription | FlexiblePositionDescription)[] | null;
+}
+
+export interface FlexiblePositionDescription {
+  // String which will be used as an index to a dictionary later
+  type: string;
+  // Flexible positions - should go inside a flex container
+  flexible: boolean;
+  width: number | string;
+  height: number | string;
+  // All other component properties
+  [x: string]: any;
+  // Array of any children nodes - children are all at same level
+  // with respect to positioning
+  children?: (PositionDescription | FlexiblePositionDescription)[] | null;
 }
 
 export function objectToPosition(
-  inputObjects: PositionDescription | null,
+  inputObjects: PositionDescription | FlexiblePositionDescription | null,
   componentDict: { [index: string]: any }
 ): JSX.Element | null {
   // If there is nothing here, return null
@@ -26,8 +40,9 @@ export function objectToPosition(
   } else {
     // Extract properties
     let {
-      x,
-      y,
+      x = "",
+      y = "",
+      flexible = false,
       height,
       width,
       type,
@@ -49,18 +64,32 @@ export function objectToPosition(
     }
 
     // Return the node with children as children
-    return (
-      <div
-        style={{
-          position: "absolute",
-          left: x,
-          top: y,
-          width: width,
-          height: height
-        }}
-      >
-        <Component {...otherProps}>{PositionedChildren}</Component>
-      </div>
-    );
+    if (flexible === false) {
+      return (
+        <div
+          style={{
+            position: "absolute",
+            left: x,
+            top: y,
+            width: width,
+            height: height
+          }}
+        >
+          <Component {...otherProps}>{PositionedChildren}</Component>
+        </div>
+      );
+    } else {
+      return (
+        <div
+          style={{
+            position: "static",
+            width: width,
+            height: height
+          }}
+        >
+          <Component {...otherProps}>{PositionedChildren}</Component>
+        </div>
+      );
+    }
   }
 }
