@@ -7,17 +7,11 @@ import { ConnectedStandaloneReadback } from "../components/Readback/readback";
 export const ReadbacksPage = (): JSX.Element => (
   <div id="Central Column" style={{ width: "80%", margin: "auto" }}>
     <h3>Readback: PV1</h3>
-    <div style={{ height: "20px" }}>
-      <ConnectedStandaloneReadback pvName={"meta://pv1"} />
-    </div>
+    <ConnectedStandaloneReadback pvName={"meta://pv1"} />
     <h3>Readback: PV2</h3>
-    <div style={{ height: "20px" }}>
-      <ConnectedStandaloneReadback pvName={"meta://pv2"} />
-    </div>
+    <ConnectedStandaloneReadback pvName={"meta://pv2"} />
     <h3>Readback: PV3</h3>
-    <div style={{ height: "20px" }}>
-      <ConnectedStandaloneReadback pvName={"meta://pv3"} />
-    </div>
+    <ConnectedStandaloneReadback pvName={"meta://pv3"} />
     <h3>Readback: PV4</h3>
     <ConnectedStandaloneReadback pvName={"meta://pv4"} />
   </div>
