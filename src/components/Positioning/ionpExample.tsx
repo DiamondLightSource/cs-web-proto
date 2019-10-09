@@ -15,7 +15,8 @@ export const Blank: React.FC = (props: any): JSX.Element => (
       width: "100%",
       border: "solid 5px black",
       backgroundColor: "#dddddd",
-      fontSize: "0.7vw"
+      fontSize: "0.7vw",
+      boxSizing: "border-box"
     }}
   >
     {props.children}
