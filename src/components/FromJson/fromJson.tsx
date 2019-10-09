@@ -10,7 +10,7 @@ import {
   ConnectedCopyReadback,
   ConnectedStandaloneReadback
 } from "../Readback/readback";
-import { ConnectedInput } from "../Input/input";
+import { ConnectedInput, ConnectedStandaloneInput } from "../Input/input";
 import { FlexContainer } from "../FlexContainer/flexContainer";
 
 interface FromJsonProps {
@@ -47,6 +47,7 @@ export const FromJson = (props: FromJsonProps): JSX.Element => {
     connectedReadback: ConnectedReadback,
     connectedCopyReadback: ConnectedCopyReadback,
     input: ConnectedInput,
+    connectedStandaloneInput: ConnectedStandaloneInput,
     flexContainer: FlexContainer
   };
 
