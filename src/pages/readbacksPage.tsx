@@ -19,8 +19,6 @@ export const ReadbacksPage = (): JSX.Element => (
       <ConnectedStandaloneReadback pvName={"meta://pv3"} />
     </div>
     <h3>Readback: PV4</h3>
-    <div style={{ height: "20px" }}>
-      <ConnectedStandaloneReadback pvName={"meta://pv4"} />
-    </div>
+    <ConnectedStandaloneReadback pvName={"meta://pv4"} />
   </div>
 );
