@@ -11,6 +11,8 @@ export interface PositionDescription {
   height: number | string;
   // All other component properties
   [x: string]: any;
+  // Object for styling the container which contains the children
+  containerStyling?: object;
   // Array of any children nodes - children are all at same level
   // with respect to positioning
   children?: (PositionDescription | FlexiblePositionDescription)[] | null;
@@ -27,6 +29,8 @@ export interface FlexiblePositionDescription {
   height?: number | string;
   // All other component properties
   [x: string]: any;
+  // Object for styling the container which contains the children
+  containerStyling?: object;
   // Array of any children nodes - children are all at same level
   // with respect to positioning
   children?: (PositionDescription | FlexiblePositionDescription)[] | null;
@@ -48,6 +52,7 @@ export function objectToPosition(
       height,
       width,
       type,
+      containerStyling = {},
       children = null,
       ...otherProps
     } = inputObjects;
@@ -74,7 +79,8 @@ export function objectToPosition(
             left: x,
             top: y,
             width: width,
-            height: height
+            height: height,
+            ...containerStyling
           }}
         >
           <Component {...otherProps}>{PositionedChildren}</Component>
@@ -84,9 +90,10 @@ export function objectToPosition(
       return (
         <div
           style={{
-            position: "static",
+            position: "relative",
             width: width,
-            height: height
+            height: height,
+            ...containerStyling
           }}
         >
           <Component {...otherProps}>{PositionedChildren}</Component>
