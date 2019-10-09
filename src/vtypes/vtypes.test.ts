@@ -1,5 +1,6 @@
 import { DISPLAY_NONE, RANGE_NONE } from "./display";
 import { ALARM_NONE, AlarmSeverity, AlarmStatus } from "./alarm";
+import { timeNow } from "./time";
 
 describe("Display", (): void => {
   test("DISPLAY_NONE has zero alarm range", (): void => {
@@ -28,5 +29,14 @@ describe("Alarm", (): void => {
   });
   test("ALARM_NONE has no message", (): void => {
     expect(ALARM_NONE.getName()).toEqual("");
+  });
+});
+
+describe("Time", (): void => {
+  test("timeNow() is valid", (): void => {
+    expect(timeNow().isValid()).toEqual(true);
+  });
+  test("timeNow() has user tag 0", (): void => {
+    expect(timeNow().getUserTag()).toEqual(0);
   });
 });
