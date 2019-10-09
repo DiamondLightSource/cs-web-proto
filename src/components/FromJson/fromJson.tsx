@@ -11,6 +11,7 @@ import {
   ConnectedStandaloneReadback
 } from "../Readback/readback";
 import { ConnectedInput } from "../Input/input";
+import { FlexContainer } from "../FlexContainer/flexContainer";
 
 interface FromJsonProps {
   file: string;
@@ -45,7 +46,8 @@ export const FromJson = (props: FromJsonProps): JSX.Element => {
     readback: ConnectedStandaloneReadback,
     connectedReadback: ConnectedReadback,
     connectedCopyReadback: ConnectedCopyReadback,
-    input: ConnectedInput
+    input: ConnectedInput,
+    flexContainer: FlexContainer
   };
 
   return (
