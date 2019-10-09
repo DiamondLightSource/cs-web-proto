@@ -14,6 +14,7 @@ import { getStore, initialiseStore } from "./redux/store";
 import { SimulatorPlugin } from "./connection/sim";
 import { JsonPage } from "./pages/fromJson";
 import { FlexExamplePage } from "./pages/flexExamplePage";
+import { EmbeddedPage } from "./pages/embeddedPage";
 
 const App: React.FC = (): JSX.Element => {
   const plugin = new SimulatorPlugin();
@@ -52,6 +53,9 @@ const App: React.FC = (): JSX.Element => {
             <Link style={styleLinkButton} to="/flex">
               Flex
             </Link>
+            <Link style={styleLinkButton} to="/embed">
+              Embed
+            </Link>
           </div>
           <div
             id="Central Column"
@@ -73,6 +77,7 @@ const App: React.FC = (): JSX.Element => {
             />
             <Route path="/fromJson" exact component={JsonPage} />
             <Route path="/flex" exact component={FlexExamplePage} />
+            <Route path="/embed" exact component={EmbeddedPage} />
           </div>
         </div>
       </BrowserRouter>
