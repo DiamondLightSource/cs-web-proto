@@ -15,7 +15,7 @@ export const JsonPage = (): JSX.Element => (
     }}
   >
     <h2>Loading from JSON</h2>
-    <div style={{ height: "100%", width: "100%" }}>
+    <div style={{ height: "100%", width: "100%", position: "relative" }}>
       <FromJson file="http://localhost:3000/simple.json" />
     </div>
   </div>

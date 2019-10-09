@@ -25,7 +25,7 @@ const EMPTY_DESC = {
   height: 0
 };
 
-export const FromJson = (props: FromJsonProps): JSX.Element => {
+export const FromJson = (props: FromJsonProps): JSX.Element | null => {
   const [json, setJson] = useState<PositionDescription>(EMPTY_DESC);
 
   if (json["type"] === "empty") {
@@ -52,14 +52,5 @@ export const FromJson = (props: FromJsonProps): JSX.Element => {
     fromJSON: FromJson
   };
 
-  return (
-    <div
-      style={{
-        position: "relative",
-        height: json["height"]
-      }}
-    >
-      {objectToPosition(json, compDict)}
-    </div>
-  );
+  return objectToPosition(json, compDict);
 };

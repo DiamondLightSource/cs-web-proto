@@ -63,7 +63,8 @@ const App: React.FC = (): JSX.Element => {
               width: "50%",
               height: "800px",
               border: "solid 3px #dddddd",
-              margin: "auto"
+              margin: "auto",
+              position: "relative"
             }}
           >
             <Route path="/" exact component={FrontPage} />
