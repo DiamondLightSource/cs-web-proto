@@ -13,11 +13,14 @@ import { PositioningExamplePage } from "./pages/positioningExamplePage";
 import { getStore, initialiseStore } from "./redux/store";
 import { SimulatorPlugin } from "./connection/sim";
 import { JsonPage } from "./pages/fromJson";
+import { ThemeContext } from "./theme-context";
 
 const App: React.FC = (): JSX.Element => {
   const plugin = new SimulatorPlugin();
   initialiseStore(plugin);
   const store = getStore();
+
+  const { toggle } = React.useContext(ThemeContext);
 
   const styleLinkButton = {
     backgroundColor: "#eeeeee",
@@ -28,6 +31,9 @@ const App: React.FC = (): JSX.Element => {
     <Provider store={store}>
       <BrowserRouter>
         <div className="App">
+          <button type="button" onClick={toggle}>
+            Toggle Theme
+          </button>
           <h1>CS Web Proto</h1>
           <div id="Links" style={{ margin: "5px" }}>
             <Link style={styleLinkButton} to="/">
