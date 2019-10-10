@@ -10,6 +10,7 @@ import { InputsPage } from "./pages/inputsPage";
 import { ReadbacksPage } from "./pages/readbacksPage";
 import { ProgressPage } from "./pages/progressPage";
 import { PositioningExamplePage } from "./pages/positioningExamplePage";
+import { MacrosPage } from "./pages/macrosPage";
 import { getStore, initialiseStore } from "./redux/store";
 import log from "loglevel";
 import { SimulatorPlugin } from "./connection/sim";
@@ -50,6 +51,9 @@ const App: React.FC = (): JSX.Element => {
             <Link style={styleLinkButton} to="/positioning">
               Positioning
             </Link>
+            <Link style={styleLinkButton} to="/macros">
+              Macros
+            </Link>
             <Link style={styleLinkButton} to="/fromJson">
               JSON Loading
             </Link>
@@ -79,6 +83,7 @@ const App: React.FC = (): JSX.Element => {
               exact
               component={PositioningExamplePage}
             />
+            <Route path="/macros" exact component={MacrosPage} />
             <Route path="/fromJson" exact component={JsonPage} />
             <Route path="/flex" exact component={FlexExamplePage} />
             <Route path="/embed" exact component={EmbeddedPage} />

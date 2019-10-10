@@ -1,6 +1,6 @@
 import React from "react";
 
-import { AbsolutePositionDescription, objectToPosition } from "./positioning";
+import { AbsolutePositionDescription, objectToComponent } from "./positioning";
 import { Readback } from "../Readback/readback";
 
 const Blank: React.FC = (props: any): JSX.Element => (
@@ -178,7 +178,7 @@ const MapOne: AbsolutePositionDescription = {
 };
 
 export const Mapping: React.FC = (): JSX.Element => {
-  let Mapped = objectToPosition(MapOne, exampleDict);
+  let Mapped = objectToComponent(MapOne, exampleDict, {});
 
   return <div>{Mapped}</div>;
 };

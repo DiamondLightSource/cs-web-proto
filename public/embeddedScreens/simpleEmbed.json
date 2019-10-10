@@ -11,7 +11,7 @@
       "type": "label",
       "flexible": true,
       "width": "100px",
-      "text": "Embedded Screen",
+      "text": "Screen: ${EMBEDSUFFIX}",
       "style": {
         "fontSize": "20px"
       }
@@ -20,13 +20,13 @@
       "type": "connectedStandaloneInput",
       "flexible": true,
       "width": "100px",
-      "pvName": "meta://embedpv1"
+      "pvName": "meta://pv${EMBEDSUFFIX}"
     },
     {
       "type": "readback",
       "flexible": true,
       "width": "100px",
-      "pvName": "meta://embedpv1",
+      "pvName": "meta://pv${EMBEDSUFFIX}",
       "precision": 3
     }
   ]

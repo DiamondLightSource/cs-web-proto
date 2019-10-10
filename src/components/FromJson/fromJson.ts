@@ -1,9 +1,9 @@
 import { useState } from "react";
 import {
-  objectToPosition,
+  objectToComponent,
   AbsolutePositionDescription
 } from "../Positioning/positioning";
-import { Label } from "../Label/label";
+import { MacroLabel } from "../Label/label";
 import { Blank } from "../Positioning/ionpExample";
 import {
   ConnectedReadback,
@@ -12,9 +12,11 @@ import {
 } from "../Readback/readback";
 import { ConnectedInput, ConnectedStandaloneInput } from "../Input/input";
 import { FlexContainer } from "../FlexContainer/flexContainer";
+import { MacroMap } from "../../redux/csState";
 
 interface FromJsonProps {
   file: string;
+  macroMap: MacroMap;
 }
 
 const EMPTY_DESC = {
@@ -42,7 +44,7 @@ export const FromJson = (props: FromJsonProps): JSX.Element | null => {
   const compDict = {
     blank: Blank,
     empty: Blank,
-    label: Label,
+    label: MacroLabel,
     readback: ConnectedStandaloneReadback,
     connectedReadback: ConnectedReadback,
     connectedCopyReadback: ConnectedCopyReadback,
@@ -52,5 +54,5 @@ export const FromJson = (props: FromJsonProps): JSX.Element | null => {
     fromJSON: FromJson
   };
 
-  return objectToPosition(json, compDict);
+  return objectToComponent(json, compDict, props.macroMap);
 };

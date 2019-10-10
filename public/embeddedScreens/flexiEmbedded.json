@@ -4,6 +4,9 @@
   "y": "0px",
   "width": "100%",
   "height": "100%",
+  "macroMap": {
+    "EMBEDSUFFIX": "embed0"
+  },
   "children": [
     {
       "type": "flexContainer",
@@ -13,9 +16,14 @@
       "height": "100%",
       "children": [
         {
-          "type": "fromJSON",
+          "type": "label",
           "flexible": true,
-          "file": "http://localhost:3000/embeddedScreens/simpleEmbed.json",
+          "height": "150px",
+          "width": "110px",
+          "text": "Parent: ${EMBEDSUFFIX}",
+          "style": {
+            "fontSize": "20px"
+          },
           "containerStyling": {
             "margin": "5px"
           }
@@ -26,6 +34,20 @@
           "file": "http://localhost:3000/embeddedScreens/simpleEmbed.json",
           "containerStyling": {
             "margin": "5px"
+          },
+          "macroMap": {
+            "EMBEDSUFFIX": "embed1"
+          }
+        },
+        {
+          "type": "fromJSON",
+          "flexible": true,
+          "file": "http://localhost:3000/embeddedScreens/simpleEmbed.json",
+          "containerStyling": {
+            "margin": "5px"
+          },
+          "macroMap": {
+            "EMBEDSUFFIX": "embed2"
           }
         },
         {
@@ -35,6 +57,9 @@
           "containerStyling": {
             "margin": "5px",
             "border": "solid 2px red"
+          },
+          "macroMap": {
+            "EMBEDSUFFIX": "embed3"
           }
         },
         {
@@ -43,6 +68,9 @@
           "file": "http://localhost:3000/embeddedScreens/simpleEmbed.json",
           "containerStyling": {
             "margin": "5px"
+          },
+          "macroMap": {
+            "EMBEDSUFFIX": "embed4"
           }
         },
         {
@@ -51,6 +79,9 @@
           "file": "http://localhost:3000/embeddedScreens/simpleEmbed.json",
           "containerStyling": {
             "margin": "5px"
+          },
+          "macroMap": {
+            "EMBEDSUFFIX": "embed5"
           }
         }
       ]

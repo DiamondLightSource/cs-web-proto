@@ -6,6 +6,7 @@ import { CopyWrapper } from "../CopyWrapper/copyWrapper";
 import { AlarmBorder } from "../AlarmBorder/alarmBorder";
 
 import classes from "./input.module.css";
+import { macroWrapper } from "../MacroWrapper/macroWrapper";
 import { vtypeToString, stringToVtype } from "../../vtypes/utils";
 
 export interface InputProps {
@@ -82,8 +83,8 @@ export const SmartInput: React.FC<SmartInputProps> = (
   );
 };
 
-export const ConnectedInput: React.FC<ConnectedInputProps> = connectionWrapper(
-  SmartInput
+export const ConnectedInput: React.FC<ConnectedInputProps> = macroWrapper(
+  connectionWrapper(SmartInput)
 );
 
 interface ConnectedStandaloneInputProps {
@@ -94,6 +95,7 @@ interface ConnectedStandaloneInputProps {
 
 export const StandaloneInput = (props: {
   pvName: string;
+  rawPvName?: string;
   value: VType;
   connected: boolean;
   precision?: number;
@@ -101,6 +103,7 @@ export const StandaloneInput = (props: {
 }): JSX.Element => (
   <CopyWrapper
     pvName={props.pvName}
+    rawPvName={props.rawPvName}
     connected={props.connected}
     value={props.value}
   >
@@ -112,4 +115,4 @@ export const StandaloneInput = (props: {
 
 export const ConnectedStandaloneInput: React.FC<
   ConnectedStandaloneInputProps
-> = connectionWrapper(StandaloneInput);
+> = macroWrapper(connectionWrapper(StandaloneInput));
