@@ -113,4 +113,4 @@ export const StandaloneInput = (props: {
 
 export const ConnectedStandaloneInput: React.FC<
   ConnectedStandaloneInputProps
-> = connectionWrapper(StandaloneInput);
+> = macroWrapper(connectionWrapper(StandaloneInput));
