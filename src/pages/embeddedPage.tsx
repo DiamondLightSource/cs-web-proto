@@ -15,7 +15,10 @@ export const EmbeddedPage = (): JSX.Element => (
     }}
   >
     <div style={{ height: "100%", width: "100%" }}>
-      <FromJson file="http://localhost:3000/embeddedScreens/flexiEmbedded.json" />
+      <FromJson
+        file="http://localhost:3000/embeddedScreens/flexiEmbedded.json"
+        macroMap={{}}
+      />
     </div>
   </div>
 );
