@@ -95,6 +95,7 @@ interface ConnectedStandaloneInputProps {
 
 export const StandaloneInput = (props: {
   pvName: string;
+  rawPvName?: string;
   value: VType;
   connected: boolean;
   precision?: number;
@@ -102,6 +103,7 @@ export const StandaloneInput = (props: {
 }): JSX.Element => (
   <CopyWrapper
     pvName={props.pvName}
+    rawPvName={props.rawPvName}
     connected={props.connected}
     value={props.value}
   >
