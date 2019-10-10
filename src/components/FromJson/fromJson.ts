@@ -1,7 +1,7 @@
 import { useState } from "react";
 import {
   objectToPosition,
-  PositionDescription
+  AbsolutePositionDescription
 } from "../Positioning/positioning";
 import { Label } from "../Label/label";
 import { Blank } from "../Positioning/ionpExample";
@@ -26,7 +26,7 @@ const EMPTY_DESC = {
 };
 
 export const FromJson = (props: FromJsonProps): JSX.Element | null => {
-  const [json, setJson] = useState<PositionDescription>(EMPTY_DESC);
+  const [json, setJson] = useState<AbsolutePositionDescription>(EMPTY_DESC);
 
   if (json["type"] === "empty") {
     fetch(props.file)
