@@ -66,12 +66,15 @@ export function objectToPosition(
       ...otherProps
     } = inputObjects;
 
+    // Collect macroMap passed into function and overwrite/add any
+    // new values from the object macroMap
     otherProps.macroMap = { ...macroMap, ...otherProps.macroMap };
 
     // Create the main component
     let Component: React.FC = componentDict[type];
 
     // Create all children components - recursive
+    // Pass the latest macroMap down
     let PositionedChildren = null;
     if (children) {
       PositionedChildren = children.map((child): JSX.Element | null =>
@@ -102,6 +105,7 @@ export function objectToPosition(
     }
 
     // Return the node with children as children
+    // Pass any extra props in as otherprops including macromap
     return (
       <div style={parentStyling}>
         <Component {...otherProps}>{PositionedChildren}</Component>
