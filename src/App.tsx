@@ -14,6 +14,8 @@ import { MacrosPage } from "./pages/macrosPage";
 import { getStore, initialiseStore } from "./redux/store";
 import { SimulatorPlugin } from "./connection/sim";
 import { JsonPage } from "./pages/fromJson";
+import { FlexExamplePage } from "./pages/flexExamplePage";
+import { EmbeddedPage } from "./pages/embeddedPage";
 
 const App: React.FC = (): JSX.Element => {
   const plugin = new SimulatorPlugin();
@@ -52,14 +54,21 @@ const App: React.FC = (): JSX.Element => {
             <Link style={styleLinkButton} to="/fromJson">
               JSON Loading
             </Link>
+            <Link style={styleLinkButton} to="/flex">
+              Flex
+            </Link>
+            <Link style={styleLinkButton} to="/embed">
+              Embed
+            </Link>
           </div>
           <div
             id="Central Column"
             style={{
-              width: "600px",
+              width: "50%",
               height: "800px",
               border: "solid 3px #dddddd",
-              margin: "auto"
+              margin: "auto",
+              position: "relative"
             }}
           >
             <Route path="/" exact component={FrontPage} />
@@ -73,6 +82,8 @@ const App: React.FC = (): JSX.Element => {
             />
             <Route path="/macros" exact component={MacrosPage} />
             <Route path="/fromJson" exact component={JsonPage} />
+            <Route path="/flex" exact component={FlexExamplePage} />
+            <Route path="/embed" exact component={EmbeddedPage} />
           </div>
         </div>
       </BrowserRouter>

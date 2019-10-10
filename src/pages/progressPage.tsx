@@ -11,9 +11,7 @@ export const ProgressPage = (): JSX.Element => (
     <h3>Input: ProgressPV</h3>
     <ConnectedInput pvName={"meta://ProgressPV"} />
     <h3>Readback: ProgressPV</h3>
-    <div style={{ height: "20px" }}>
-      <ConnectedStandaloneReadback pvName={"meta://ProgressPV"} />
-    </div>
+    <ConnectedStandaloneReadback pvName={"meta://ProgressPV"} />
     <h3>Progress Bar: ProgressPV</h3>
     <div
       style={{

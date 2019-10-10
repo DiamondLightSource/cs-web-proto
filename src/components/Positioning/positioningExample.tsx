@@ -1,6 +1,6 @@
 import React from "react";
 
-import { PositionDescription, objectToPosition } from "./positioning";
+import { AbsolutePositionDescription, objectToPosition } from "./positioning";
 import { Readback } from "../Readback/readback";
 
 const Blank: React.FC = (props: any): JSX.Element => (
@@ -73,7 +73,7 @@ const exampleDict: { [index: string]: any } = {
   "Read Back": Readback
 };
 
-const PosOne: PositionDescription = {
+const PosOne: AbsolutePositionDescription = {
   type: "Red Block",
   x: "25%",
   y: "25%",
@@ -82,7 +82,7 @@ const PosOne: PositionDescription = {
   withBorder: true
 };
 
-const PosTwo: PositionDescription = {
+const PosTwo: AbsolutePositionDescription = {
   type: "Green Block",
   x: "25%",
   y: "25%",
@@ -91,7 +91,7 @@ const PosTwo: PositionDescription = {
   children: [PosOne]
 };
 
-const PosThree: PositionDescription = {
+const PosThree: AbsolutePositionDescription = {
   type: "Blue Block",
   x: 0,
   y: 0,
@@ -100,7 +100,7 @@ const PosThree: PositionDescription = {
   children: [PosTwo]
 };
 
-const MapOne: PositionDescription = {
+const MapOne: AbsolutePositionDescription = {
   type: "Blank",
   x: 0,
   y: 0,
