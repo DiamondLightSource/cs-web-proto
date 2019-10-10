@@ -1,6 +1,6 @@
 import React from "react";
 
-import { AbsolutePositionDescription, objectToPosition } from "./positioning";
+import { AbsolutePositionDescription, objectToComponent } from "./positioning";
 import { MacroLabel } from "../Label/label";
 import { Readback } from "../Readback/readback";
 import { Input } from "../Input/input";
@@ -170,7 +170,7 @@ const IonpScreen: AbsolutePositionDescription = {
 };
 
 export const Mapping: React.FC = (): JSX.Element => {
-  let Mapped = objectToPosition(IonpScreen, compDict, {
+  let Mapped = objectToComponent(IonpScreen, compDict, {
     device: "SR03A-VA-IONP-01"
   });
   return <div>{Mapped}</div>;

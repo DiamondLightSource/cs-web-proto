@@ -1,6 +1,6 @@
 import { useState } from "react";
 import {
-  objectToPosition,
+  objectToComponent,
   AbsolutePositionDescription
 } from "../Positioning/positioning";
 import { MacroLabel } from "../Label/label";
@@ -54,5 +54,5 @@ export const FromJson = (props: FromJsonProps): JSX.Element | null => {
     fromJSON: FromJson
   };
 
-  return objectToPosition(json, compDict, props.macroMap);
+  return objectToComponent(json, compDict, props.macroMap);
 };
