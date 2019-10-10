@@ -1,10 +1,11 @@
 :root {
   --colour-text: #ffffff;
+  --colour-background: #bbbbbb;
 }
 
 .App {
   text-align: center;
-  background-color: #bbbbbb;
+  background-color: var(--colour-background);
   position: absolute;
   height: 100%;
   width: 100%;

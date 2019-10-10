@@ -13,19 +13,25 @@ import { PositioningExamplePage } from "./pages/positioningExamplePage";
 import { getStore, initialiseStore } from "./redux/store";
 import { SimulatorPlugin } from "./connection/sim";
 import { JsonPage } from "./pages/fromJson";
-import { ThemeContext } from "./theme-context";
+import { lightTheme, darkTheme, ThemeContext } from "./theme-context";
 
 const App: React.FC = (): JSX.Element => {
   const plugin = new SimulatorPlugin();
   initialiseStore(plugin);
   const store = getStore();
 
-  const { toggle } = React.useContext(ThemeContext);
+  const { toggle, dark } = React.useContext(ThemeContext);
 
   const styleLinkButton = {
     backgroundColor: "#eeeeee",
     margin: "10px 10px"
   };
+
+  const theme: any = dark ? darkTheme : lightTheme;
+  Object.keys(theme).forEach(key => {
+    const value = theme[key];
+    document.documentElement.style.setProperty(key, value);
+  });
 
   return (
     <Provider store={store}>
