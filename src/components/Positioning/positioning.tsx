@@ -66,7 +66,7 @@ export function objectToPosition(
       ...otherProps
     } = inputObjects;
 
-    otherProps.macroMap = macroMap;
+    otherProps.macroMap = { ...macroMap, ...otherProps.macroMap };
 
     // Create the main component
     let Component: React.FC = componentDict[type];
