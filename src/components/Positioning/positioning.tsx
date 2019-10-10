@@ -75,7 +75,7 @@ export function objectToPosition(
     let PositionedChildren = null;
     if (children) {
       PositionedChildren = children.map((child): JSX.Element | null =>
-        objectToPosition(child, componentDict, macroMap)
+        objectToPosition(child, componentDict, otherProps.macroMap)
       );
     } else {
       PositionedChildren = null;
