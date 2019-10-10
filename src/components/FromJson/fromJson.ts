@@ -3,7 +3,7 @@ import {
   objectToPosition,
   AbsolutePositionDescription
 } from "../Positioning/positioning";
-import { Label } from "../Label/label";
+import { MacroLabel } from "../Label/label";
 import { Blank } from "../Positioning/ionpExample";
 import {
   ConnectedReadback,
@@ -44,7 +44,7 @@ export const FromJson = (props: FromJsonProps): JSX.Element | null => {
   const compDict = {
     blank: Blank,
     empty: Blank,
-    label: Label,
+    label: MacroLabel,
     readback: ConnectedStandaloneReadback,
     connectedReadback: ConnectedReadback,
     connectedCopyReadback: ConnectedCopyReadback,
