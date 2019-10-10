@@ -1,5 +1,6 @@
 import React from "react";
 import { MacroMap } from "../../redux/csState";
+import { MacroProps } from "../MacroWrapper/macroWrapper";
 
 // Interface to describe components by absolute position
 export interface AbsolutePositionDescription {
@@ -14,8 +15,10 @@ export interface AbsolutePositionDescription {
   [x: string]: any;
   // Object for styling the container which contains the children
   containerStyling?: object;
+  // Macro map if it is provided
+  macroMap?: MacroMap;
   // Array of any children nodes - children are all at same level
-  // with respect to positioning
+  // with respect to positioning#
   children?:
     | (AbsolutePositionDescription | FlexiblePositionDescription)[]
     | null;
@@ -34,6 +37,8 @@ export interface FlexiblePositionDescription {
   [x: string]: any;
   // Object for styling the container which contains the children
   containerStyling?: object;
+  // Macro map if it is provided
+  macroMap?: MacroMap;
   // Array of any children nodes - children are all at same level
   // with respect to positioning
   children?:
@@ -47,7 +52,7 @@ export function objectToPosition(
     | FlexiblePositionDescription
     | null,
   componentDict: { [index: string]: any },
-  macroMap: MacroMap
+  existingMacroMap: MacroMap
 ): JSX.Element | null {
   // If there is nothing here, return null
   if (inputObjects === null) {
@@ -55,30 +60,31 @@ export function objectToPosition(
   } else {
     // Extract properties
     let {
+      type,
       x = null,
       y = null,
       flexible = false,
-      height,
-      width,
-      type,
+      height = null,
+      width = null,
       containerStyling = {},
       children = null,
+      macroMap = {},
       ...otherProps
     } = inputObjects;
 
     // Collect macroMap passed into function and overwrite/add any
     // new values from the object macroMap
-    otherProps.macroMap = { ...macroMap, ...otherProps.macroMap };
+    const latestMacroMap = { ...existingMacroMap, ...macroMap };
 
     // Create the main component
-    let Component: React.FC = componentDict[type];
+    let Component: React.FC<MacroProps> = componentDict[type];
 
     // Create all children components - recursive
     // Pass the latest macroMap down
     let PositionedChildren = null;
     if (children) {
       PositionedChildren = children.map((child): JSX.Element | null =>
-        objectToPosition(child, componentDict, otherProps.macroMap)
+        objectToPosition(child, componentDict, latestMacroMap)
       );
     } else {
       PositionedChildren = null;
@@ -105,10 +111,12 @@ export function objectToPosition(
     }
 
     // Return the node with children as children
-    // Pass any extra props in as otherprops including macromap
+    // Pass any extra props including macromap
     return (
       <div style={parentStyling}>
-        <Component {...otherProps}>{PositionedChildren}</Component>
+        <Component {...otherProps} macroMap={latestMacroMap}>
+          {PositionedChildren}
+        </Component>
       </div>
     );
   }
