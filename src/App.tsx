@@ -12,10 +12,13 @@ import { ProgressPage } from "./pages/progressPage";
 import { PositioningExamplePage } from "./pages/positioningExamplePage";
 import { MacrosPage } from "./pages/macrosPage";
 import { getStore, initialiseStore } from "./redux/store";
+import log from "loglevel";
 import { SimulatorPlugin } from "./connection/sim";
 import { JsonPage } from "./pages/fromJson";
 import { FlexExamplePage } from "./pages/flexExamplePage";
 import { EmbeddedPage } from "./pages/embeddedPage";
+
+log.setLevel("INFO");
 
 const App: React.FC = (): JSX.Element => {
   const plugin = new SimulatorPlugin();
