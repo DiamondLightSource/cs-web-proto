@@ -1,6 +1,6 @@
 import React from "react";
 
-import { PositionDescription, objectToPosition } from "./positioning";
+import { AbsolutePositionDescription, objectToPosition } from "./positioning";
 import { Label } from "../Label/label";
 import { Readback } from "../Readback/readback";
 import { Input } from "../Input/input";
@@ -31,7 +31,7 @@ const compDict = {
   Blank: Blank
 };
 
-const IonpScreen: PositionDescription = {
+const IonpScreen: AbsolutePositionDescription = {
   type: "Blank",
   x: "136px",
   y: "100px",

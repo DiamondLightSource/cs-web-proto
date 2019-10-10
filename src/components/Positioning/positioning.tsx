@@ -1,7 +1,7 @@
 import React from "react";
 
 // Interface to describe components by absolute position
-export interface PositionDescription {
+export interface AbsolutePositionDescription {
   // String which will be used as an index to a dictionary later
   type: string;
   // Absolute positions - allow strings for "%" or "px" etc
@@ -15,7 +15,9 @@ export interface PositionDescription {
   containerStyling?: object;
   // Array of any children nodes - children are all at same level
   // with respect to positioning
-  children?: (PositionDescription | FlexiblePositionDescription)[] | null;
+  children?:
+    | (AbsolutePositionDescription | FlexiblePositionDescription)[]
+    | null;
 }
 
 export interface FlexiblePositionDescription {
@@ -33,11 +35,16 @@ export interface FlexiblePositionDescription {
   containerStyling?: object;
   // Array of any children nodes - children are all at same level
   // with respect to positioning
-  children?: (PositionDescription | FlexiblePositionDescription)[] | null;
+  children?:
+    | (AbsolutePositionDescription | FlexiblePositionDescription)[]
+    | null;
 }
 
 export function objectToPosition(
-  inputObjects: PositionDescription | FlexiblePositionDescription | null,
+  inputObjects:
+    | AbsolutePositionDescription
+    | FlexiblePositionDescription
+    | null,
   componentDict: { [index: string]: any }
 ): JSX.Element | null {
   // If there is nothing here, return null
@@ -70,35 +77,31 @@ export function objectToPosition(
       PositionedChildren = null;
     }
 
-    // Return the node with children as children
+    // Create the style with absolute or flexible positioning as required
+    let parentStyling = {};
     if (flexible === false) {
-      return (
-        <div
-          style={{
-            position: "absolute",
-            left: x,
-            top: y,
-            width: width,
-            height: height,
-            ...containerStyling
-          }}
-        >
-          <Component {...otherProps}>{PositionedChildren}</Component>
-        </div>
-      );
+      parentStyling = {
+        position: "absolute",
+        left: x,
+        top: y,
+        width: width,
+        height: height,
+        ...containerStyling
+      };
     } else {
-      return (
-        <div
-          style={{
-            position: "relative",
-            width: width,
-            height: height,
-            ...containerStyling
-          }}
-        >
-          <Component {...otherProps}>{PositionedChildren}</Component>
-        </div>
-      );
+      parentStyling = {
+        position: "relative",
+        width: width,
+        height: height,
+        ...containerStyling
+      };
     }
+
+    // Return the node with children as children
+    return (
+      <div style={parentStyling}>
+        <Component {...otherProps}>{PositionedChildren}</Component>
+      </div>
+    );
   }
 }
