@@ -20,13 +20,13 @@
       "type": "connectedStandaloneInput",
       "flexible": true,
       "width": "100px",
-      "pvName": "loc://embed${P}"
+      "pvName": "loc://pv${EMBEDSUFFIX}"
     },
     {
       "type": "readback",
       "flexible": true,
       "width": "100px",
-      "pvName": "loc://embed${P}",
+      "pvName": "loc://pv${EMBEDSUFFIX}",
       "precision": 3
     }
   ]
