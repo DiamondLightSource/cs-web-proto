@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { connectionWrapper } from "../ConnectionWrapper/connectionWrapper";
 import { writePv } from "../../hooks/useCs";
 import { VType } from "../../vtypes/vtypes";
+import { CopyWrapper } from "../CopyWrapper/copyWrapper";
+import { AlarmBorder } from "../AlarmBorder/alarmBorder";
 
 import classes from "./input.module.css";
 import { vtypeToString, stringToVtype } from "../../vtypes/utils";
@@ -83,3 +85,31 @@ export const SmartInput: React.FC<SmartInputProps> = (
 export const ConnectedInput: React.FC<ConnectedInputProps> = connectionWrapper(
   SmartInput
 );
+
+interface ConnectedStandaloneInputProps {
+  pvName: string;
+  precision?: number;
+  style?: {};
+}
+
+export const StandaloneInput = (props: {
+  pvName: string;
+  value: VType;
+  connected: boolean;
+  precision?: number;
+  style?: object;
+}): JSX.Element => (
+  <CopyWrapper
+    pvName={props.pvName}
+    connected={props.connected}
+    value={props.value}
+  >
+    <AlarmBorder connected={props.connected} value={props.value}>
+      <SmartInput pvName={props.pvName} value={props.value}></SmartInput>
+    </AlarmBorder>
+  </CopyWrapper>
+);
+
+export const ConnectedStandaloneInput: React.FC<
+  ConnectedStandaloneInputProps
+> = connectionWrapper(StandaloneInput);

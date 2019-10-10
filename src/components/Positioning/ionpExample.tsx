@@ -1,6 +1,6 @@
 import React from "react";
 
-import { PositionDescription, objectToPosition } from "./positioning";
+import { AbsolutePositionDescription, objectToPosition } from "./positioning";
 import { Label } from "../Label/label";
 import { Readback } from "../Readback/readback";
 import { Input } from "../Input/input";
@@ -15,7 +15,8 @@ export const Blank: React.FC = (props: any): JSX.Element => (
       width: "100%",
       border: "solid 5px black",
       backgroundColor: "#dddddd",
-      fontSize: "0.7vw"
+      fontSize: "0.7vw",
+      boxSizing: "border-box"
     }}
   >
     {props.children}
@@ -30,7 +31,7 @@ const compDict = {
   Blank: Blank
 };
 
-const IonpScreen: PositionDescription = {
+const IonpScreen: AbsolutePositionDescription = {
   type: "Blank",
   x: "136px",
   y: "100px",

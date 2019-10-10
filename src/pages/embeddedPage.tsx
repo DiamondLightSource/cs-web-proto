@@ -4,7 +4,7 @@ import React from "react";
 
 import { FromJson } from "../components/FromJson/fromJson";
 
-export const JsonPage = (): JSX.Element => (
+export const EmbeddedPage = (): JSX.Element => (
   <div
     id="Central Column"
     style={{
@@ -14,9 +14,8 @@ export const JsonPage = (): JSX.Element => (
       margin: "auto"
     }}
   >
-    <h2>Loading from JSON</h2>
-    <div style={{ height: "100%", width: "100%", position: "relative" }}>
-      <FromJson file="http://localhost:3000/simple.json" />
+    <div style={{ height: "100%", width: "100%" }}>
+      <FromJson file="http://localhost:3000/embeddedScreens/flexiEmbedded.json" />
     </div>
   </div>
 );

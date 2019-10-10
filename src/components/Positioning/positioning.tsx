@@ -1,7 +1,7 @@
 import React from "react";
 
 // Interface to describe components by absolute position
-export interface PositionDescription {
+export interface AbsolutePositionDescription {
   // String which will be used as an index to a dictionary later
   type: string;
   // Absolute positions - allow strings for "%" or "px" etc
@@ -11,13 +11,40 @@ export interface PositionDescription {
   height: number | string;
   // All other component properties
   [x: string]: any;
+  // Object for styling the container which contains the children
+  containerStyling?: object;
   // Array of any children nodes - children are all at same level
   // with respect to positioning
-  children?: PositionDescription[] | null;
+  children?:
+    | (AbsolutePositionDescription | FlexiblePositionDescription)[]
+    | null;
+}
+
+export interface FlexiblePositionDescription {
+  // String which will be used as an index to a dictionary later
+  type: string;
+  // Flexible positions - should go inside a flex container
+  flexible: boolean;
+  // Width and height not always necessary in this case as some components
+  // such as embedded screens will define their own dimensions
+  width?: number | string;
+  height?: number | string;
+  // All other component properties
+  [x: string]: any;
+  // Object for styling the container which contains the children
+  containerStyling?: object;
+  // Array of any children nodes - children are all at same level
+  // with respect to positioning
+  children?:
+    | (AbsolutePositionDescription | FlexiblePositionDescription)[]
+    | null;
 }
 
 export function objectToPosition(
-  inputObjects: PositionDescription | null,
+  inputObjects:
+    | AbsolutePositionDescription
+    | FlexiblePositionDescription
+    | null,
   componentDict: { [index: string]: any }
 ): JSX.Element | null {
   // If there is nothing here, return null
@@ -26,11 +53,13 @@ export function objectToPosition(
   } else {
     // Extract properties
     let {
-      x,
-      y,
+      x = null,
+      y = null,
+      flexible = false,
       height,
       width,
       type,
+      containerStyling = {},
       children = null,
       ...otherProps
     } = inputObjects;
@@ -48,17 +77,29 @@ export function objectToPosition(
       PositionedChildren = null;
     }
 
+    // Create the style with absolute or flexible positioning as required
+    let parentStyling = {};
+    if (flexible === false) {
+      parentStyling = {
+        position: "absolute",
+        left: x,
+        top: y,
+        width: width,
+        height: height,
+        ...containerStyling
+      };
+    } else {
+      parentStyling = {
+        position: "relative",
+        width: width,
+        height: height,
+        ...containerStyling
+      };
+    }
+
     // Return the node with children as children
     return (
-      <div
-        style={{
-          position: "absolute",
-          left: x,
-          top: y,
-          width: width,
-          height: height
-        }}
-      >
+      <div style={parentStyling}>
         <Component {...otherProps}>{PositionedChildren}</Component>
       </div>
     );
