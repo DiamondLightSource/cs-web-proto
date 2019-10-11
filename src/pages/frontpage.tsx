@@ -76,6 +76,7 @@ export const FrontPage = (): JSX.Element => (
           margin: "15px auto"
         }}
       >
+        <ConnectedInput pvName={"sim://enum"} />
         <ConnectedStandaloneReadback pvName={"sim://enum"} precision={2} />
       </div>
     </div>
