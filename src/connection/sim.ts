@@ -7,7 +7,7 @@ import {
   nullConnCallback,
   nullValueCallback
 } from "./plugin";
-import { VType, vdoubleOf, VNumber, venumOf } from "../vtypes/vtypes";
+import { VType, vdoubleOf, VNumber, venumOf, VEnum } from "../vtypes/vtypes";
 import { alarm, ALARM_NONE } from "../vtypes/alarm";
 import { timeNow } from "../vtypes/time";
 
@@ -81,6 +81,12 @@ class Disconnector extends SimPv {
 }
 
 class EnumPv extends SimPv {
+  private value: VEnum = venumOf(
+    0,
+    ["one", "two", "three", "four"],
+    ALARM_NONE,
+    timeNow()
+  );
   private choices: string[] = ["one", "two", "three", "four"];
   public constructor(
     pvName: string,
@@ -97,8 +103,9 @@ class EnumPv extends SimPv {
     );
   }
   public getValue(): VType {
-    const value = Math.floor(Math.random() * this.choices.length);
-    return venumOf(value, this.choices, ALARM_NONE, timeNow());
+    const newIndex = Math.floor(Math.random() * this.choices.length);
+    this.value = venumOf(newIndex, this.choices, ALARM_NONE, timeNow());
+    return this.value;
   }
 }
 
