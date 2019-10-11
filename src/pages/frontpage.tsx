@@ -76,10 +76,7 @@ export const FrontPage = (): JSX.Element => (
           margin: "15px auto"
         }}
       >
-        <ConnectedStandaloneReadback
-          pvName={"sim://disconnector"}
-          precision={2}
-        />
+        <ConnectedStandaloneReadback pvName={"sim://enum"} precision={2} />
       </div>
     </div>
   </div>

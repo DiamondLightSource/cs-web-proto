@@ -7,8 +7,8 @@ import {
   nullConnCallback,
   nullValueCallback
 } from "./plugin";
-import { VType, vdoubleOf, VNumber } from "../vtypes/vtypes";
-import { alarm } from "../vtypes/alarm";
+import { VType, vdoubleOf, VNumber, venumOf } from "../vtypes/vtypes";
+import { alarm, ALARM_NONE } from "../vtypes/alarm";
 import { timeNow } from "../vtypes/time";
 
 abstract class SimPv {
@@ -77,6 +77,28 @@ class Disconnector extends SimPv {
   public getValue(): VType {
     const value = Math.random();
     return vdoubleOf(value);
+  }
+}
+
+class EnumPv extends SimPv {
+  private choices: string[] = ["one", "two", "three", "four"];
+  public constructor(
+    pvName: string,
+    onConnectionUpdate: ConnectionChangedCallback,
+    onValueUpdate: ValueChangedCallback,
+    updateRate: number
+  ) {
+    super(pvName, onConnectionUpdate, onValueUpdate, updateRate);
+    this.onConnectionUpdate(this.pvName, { isConnected: true });
+    this.onValueUpdate(this.pvName, this.getValue());
+    setInterval(
+      (): void => this.onValueUpdate(this.pvName, this.getValue()),
+      this.updateRate
+    );
+  }
+  public getValue(): VType {
+    const value = Math.floor(Math.random() * this.choices.length);
+    return venumOf(value, this.choices, ALARM_NONE, timeNow());
   }
 }
 
@@ -175,6 +197,13 @@ export class SimulatorPlugin implements Connection {
     } else if (pvName === "sim://sine") {
       this.simPvs[pvName] = new SinePv(
         "sim://sine",
+        this.onConnectionUpdate,
+        this.onValueUpdate,
+        2000
+      );
+    } else if (pvName === "sim://enum") {
+      this.simPvs[pvName] = new EnumPv(
+        "sim://enum",
         this.onConnectionUpdate,
         this.onValueUpdate,
         2000

@@ -94,3 +94,69 @@ export const vstringOf = (
   alarm = ALARM_NONE,
   time = timeNow()
 ): VString => new IVString(value, alarm, time);
+
+abstract class EnumDisplay {
+  public abstract getChoices(): string[];
+}
+
+class IEnumDisplay extends EnumDisplay {
+  private choices: string[];
+
+  public constructor(choices: string[]) {
+    super();
+    this.choices = choices;
+  }
+
+  public getChoices(): string[] {
+    return this.choices;
+  }
+}
+
+export abstract class VEnum extends Scalar {
+  public abstract getValue(): string;
+  public abstract getIndex(): number;
+  public abstract getDisplay(): EnumDisplay;
+}
+
+class IVEnum extends VEnum {
+  private index: number;
+  private alarm: Alarm;
+  private time: Time;
+  private display: EnumDisplay;
+
+  public constructor(
+    index: number,
+    display: EnumDisplay,
+    alarm: Alarm,
+    time: Time
+  ) {
+    super();
+    this.index = index;
+    this.alarm = alarm;
+    this.time = time;
+    this.display = display;
+  }
+
+  public getValue(): string {
+    return this.display.getChoices()[this.index];
+  }
+  public getIndex(): number {
+    return this.index;
+  }
+  public getDisplay(): EnumDisplay {
+    return this.display;
+  }
+  public getAlarm(): Alarm {
+    return this.alarm;
+  }
+  public getTime(): Time {
+    return this.time;
+  }
+}
+
+export const venumOf = (
+  index: number,
+  choices: string[],
+  alarm: Alarm,
+  time: Time
+): VEnum => new IVEnum(index, new IEnumDisplay(choices), alarm, time);
