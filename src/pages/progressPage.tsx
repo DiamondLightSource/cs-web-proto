@@ -27,7 +27,7 @@ export const ProgressPage = (): JSX.Element => (
         pvName={"meta://ProgressPV"}
         min={0}
         max={100}
-        style={{backgroundImage: `linear-gradient(red, #f06d06)`}}
+        style={{ backgroundImage: `linear-gradient(red, #f06d06)` }}
       />
     </div>
     <h3>Slide Control: ProgressPV</h3>

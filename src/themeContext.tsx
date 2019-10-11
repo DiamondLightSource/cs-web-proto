@@ -2,12 +2,14 @@ import React, { useState, useEffect } from "react";
 
 export const lightTheme = {
   "--colour-text": "#000000",
+  "--colour-secondary-text": "#000000",
   "--colour-background": "#FFFFFF"
 };
 
 export const darkTheme = {
-  "--colour-text": "#f0f0f0",
-  "--colour-background": "#000000"
+  "--colour-text": "#FFFFFF",
+  "--colour-secondary-text": "#FFFF00",
+  "--colour-background": "#212121"
 };
 
 const initialState = {

@@ -12,7 +12,7 @@ export const PositioningExamplePage = (): JSX.Element => (
       textAlign: "center"
     }}
   >
-    <h2>Abolute Positioning Example</h2>
+    <h2 colour-secondary-text>Abolute Positioning Example</h2>
     <Mapping />
   </div>
 );

@@ -14,12 +14,7 @@ export const Readback = (props: {
   precision?: number;
   style?: object;
 }): JSX.Element => {
-  let {
-    connected,
-    value,
-    precision = undefined,
-    style
-  } = props;
+  let { connected, value, precision = undefined, style } = props;
   const alarm = alarmOf(value);
   let displayedValue;
   if (!value) {
@@ -27,7 +22,7 @@ export const Readback = (props: {
   } else {
     displayedValue = vtypeToString(value, precision);
   }
-  style = {backgroundColor: "#383838", color: "#00bb00", ...props.style }
+  style = { backgroundColor: "#383838", color: "#00bb00", ...props.style };
   // Change text color depending on connection state or alarm
   if (!connected) {
     style = {

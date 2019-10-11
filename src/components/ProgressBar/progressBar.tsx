@@ -56,7 +56,7 @@ export const ProgressBar: React.FC<ProgressBarProps> = (
     height = "100%",
     width = "100%",
     fontStyle = {},
-    precision = undefined,
+    precision = undefined
   } = props;
   let barStyle = {
     top: top,

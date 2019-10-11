@@ -13,7 +13,7 @@ import { PositioningExamplePage } from "./pages/positioningExamplePage";
 import { getStore, initialiseStore } from "./redux/store";
 import { SimulatorPlugin } from "./connection/sim";
 import { JsonPage } from "./pages/fromJson";
-import { lightTheme, darkTheme, ThemeContext } from "./theme-context";
+import { lightTheme, darkTheme, ThemeContext } from "./themeContext";
 
 const App: React.FC = (): JSX.Element => {
   const plugin = new SimulatorPlugin();

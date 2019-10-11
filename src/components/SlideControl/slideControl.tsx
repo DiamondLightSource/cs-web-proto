@@ -106,7 +106,7 @@ export const SlideControl: React.FC<SlideControlProps> = (
           onChange={onChange}
           onMouseDown={onMouseDown}
           onMouseUp={onMouseUp}
-          style = {props.style}
+          style={props.style}
         ></input>
       </div>
     </div>
