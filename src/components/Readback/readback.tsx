@@ -8,12 +8,14 @@ import { VType } from "../../vtypes/vtypes";
 import { Alarm, alarmOf, AlarmSeverity } from "../../vtypes/alarm";
 import { vtypeToString } from "../../vtypes/utils";
 
-export const Readback = (props: {
+export interface ReadbackProps {
   connected: boolean;
   value?: VType;
   precision?: number;
   style?: object;
-}): JSX.Element => {
+}
+
+export const Readback = (props: ReadbackProps): JSX.Element => {
   let { connected, value, precision = undefined, style } = props;
   const alarm = alarmOf(value);
   let displayedValue;
