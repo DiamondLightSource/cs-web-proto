@@ -1,6 +1,6 @@
-import React, { Props } from "react";
+import React from "react";
 import { Readback, ReadbackProps } from "./readback";
-import { configure, shallow, ShallowWrapper, EnzymeAdapter } from "enzyme";
+import { configure, shallow, ShallowWrapper } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import { stringToVtype } from "../../vtypes/utils";
 import { create, ReactTestRenderer } from "react-test-renderer";
@@ -11,9 +11,6 @@ let snapshot: ReactTestRenderer;
 let wrapper: ShallowWrapper<ReadbackProps>;
 
 beforeEach((): void => {
-  const mock = (_: any): void => {
-    // pass
-  };
   const readback = (
     <Readback
       connected={true}
@@ -36,7 +33,6 @@ describe("<Readback />", (): void => {
   });
 
   test("it applies precision to numbers", (): void => {
-    const readback = wrapper.find("readback");
     expect(wrapper.text()).toEqual("3.14");
   });
 });

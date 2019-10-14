@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { render } from "enzyme";
 
 export const lightTheme = {
   "--colour-text": "#000000",
@@ -15,7 +16,7 @@ export const darkTheme = {
 const initialState = {
   dark: false,
   theme: lightTheme,
-  toggle: () => {}
+  toggle: (): void => {}
 };
 
 export const ThemeContext = React.createContext(initialState);
@@ -23,12 +24,12 @@ export const ThemeContext = React.createContext(initialState);
 export function ThemeProvider({ children }: any) {
   const [dark, setIsDark] = useState(false);
 
-  useEffect(() => {
+  useEffect((): void => {
     const dark = localStorage.getItem("dark") === "true";
     setIsDark(dark);
   }, [dark]);
 
-  const toggle = () => {
+  const toggle = (): void => {
     const isDark = !dark;
     localStorage.setItem("dark", JSON.stringify(isDark));
     setIsDark(isDark);
