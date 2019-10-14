@@ -45,15 +45,19 @@ export const connectionMiddleware = (connection: Connection) => (
   switch (action.type) {
     case SUBSCRIBE: {
       const { pvName } = action.payload;
-      const subs = store.getState().subscriptions;
+      const state = store.getState();
       // Are we already subscribed?
-      if (!subs[pvName] || subs[pvName].length === 0) {
-        connection.subscribe(action.payload.pvName);
+      if (
+        !state.subscriptions[pvName] ||
+        state.subscriptions[pvName].length === 0
+      ) {
+        connection.subscribe(pvName);
       }
       break;
     }
     case WRITE_PV: {
-      connection.putPv(action.payload.pvName, action.payload.value);
+      const { pvName, value } = action.payload;
+      connection.putPv(pvName, value);
       break;
     }
     case UNSUBSCRIBE: {

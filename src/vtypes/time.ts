@@ -11,6 +11,7 @@ export abstract class Time {
   public abstract getInstant(): Instant;
   public abstract getUserTag(): number;
   public abstract isValid(): boolean;
+  public abstract asDate(): Date;
 }
 
 class ITime extends Time {
@@ -31,6 +32,9 @@ class ITime extends Time {
   }
   public isValid(): boolean {
     return this.valid;
+  }
+  public asDate(): Date {
+    return new Date(this.getInstant().secondsPastEpoch * 1000);
   }
 }
 

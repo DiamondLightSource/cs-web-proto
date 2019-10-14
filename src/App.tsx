@@ -10,10 +10,16 @@ import { InputsPage } from "./pages/inputsPage";
 import { ReadbacksPage } from "./pages/readbacksPage";
 import { ProgressPage } from "./pages/progressPage";
 import { PositioningExamplePage } from "./pages/positioningExamplePage";
+import { MacrosPage } from "./pages/macrosPage";
 import { getStore, initialiseStore } from "./redux/store";
+import log from "loglevel";
 import { SimulatorPlugin } from "./connection/sim";
 import { JsonPage } from "./pages/fromJson";
 import { lightTheme, darkTheme, ThemeContext } from "./themeContext";
+import { FlexExamplePage } from "./pages/flexExamplePage";
+import { EmbeddedPage } from "./pages/embeddedPage";
+
+log.setLevel("INFO");
 
 const App: React.FC = (): JSX.Element => {
   const plugin = new SimulatorPlugin();
@@ -57,17 +63,27 @@ const App: React.FC = (): JSX.Element => {
             <Link style={styleLinkButton} to="/positioning">
               Positioning
             </Link>
+            <Link style={styleLinkButton} to="/macros">
+              Macros
+            </Link>
             <Link style={styleLinkButton} to="/fromJson">
               JSON Loading
+            </Link>
+            <Link style={styleLinkButton} to="/flex">
+              Flex
+            </Link>
+            <Link style={styleLinkButton} to="/embed">
+              Embed
             </Link>
           </div>
           <div
             id="Central Column"
             style={{
-              width: "600px",
+              width: "50%",
               height: "800px",
               border: "solid 3px #dddddd",
-              margin: "auto"
+              margin: "auto",
+              position: "relative"
             }}
           >
             <Route path="/" exact component={FrontPage} />
@@ -79,7 +95,10 @@ const App: React.FC = (): JSX.Element => {
               exact
               component={PositioningExamplePage}
             />
+            <Route path="/macros" exact component={MacrosPage} />
             <Route path="/fromJson" exact component={JsonPage} />
+            <Route path="/flex" exact component={FlexExamplePage} />
+            <Route path="/embed" exact component={EmbeddedPage} />
           </div>
         </div>
       </BrowserRouter>

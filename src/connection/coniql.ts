@@ -5,6 +5,7 @@ import { WebSocketLink } from "apollo-link-ws";
 import { getMainDefinition } from "apollo-utilities";
 import gql from "graphql-tag";
 import { InMemoryCache, NormalizedCacheObject } from "apollo-cache-inmemory";
+import log from "loglevel";
 import { VType, vdoubleOf } from "../vtypes/vtypes";
 import {
   Connection,
@@ -78,11 +79,11 @@ export class ConiqlPlugin implements Connection {
       })
       .subscribe({
         next: (data): void => {
-          console.log("data", data); //eslint-disable-line no-console
+          log.debug("data", data);
           this.onValueUpdate(pvName1, data.data.subscribeFloatScalar);
         },
         error: (err): void => {
-          console.error("err", err); //eslint-disable-line no-console
+          log.error("err", err);
         }
       });
   }

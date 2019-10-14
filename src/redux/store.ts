@@ -5,8 +5,8 @@ import { connectionMiddleware } from "./connectionMiddleware";
 import { Connection } from "../connection/plugin";
 
 // Setting this to Action or Action<Any> seems to trip up the type system
-type MyStore = Store<CsState, any>;
-let store: MyStore | null = null;
+type CsStore = Store<CsState, any>;
+let store: CsStore | null = null;
 
 export function initialiseStore(connection: Connection): void {
   const composeEnhancers =
@@ -25,6 +25,6 @@ function raiseStoreEmpty(): never {
   );
 }
 
-export function getStore(): MyStore {
+export function getStore(): CsStore {
   return store || raiseStoreEmpty();
 }

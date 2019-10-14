@@ -1,0 +1,90 @@
+{
+  "type": "blank",
+  "x": "0px",
+  "y": "0px",
+  "width": "100%",
+  "height": "100%",
+  "macroMap": {
+    "EMBEDSUFFIX": "embed0"
+  },
+  "children": [
+    {
+      "type": "flexContainer",
+      "x": "0px",
+      "y": "0px",
+      "width": "100%",
+      "height": "100%",
+      "children": [
+        {
+          "type": "label",
+          "flexible": true,
+          "height": "150px",
+          "width": "110px",
+          "text": "Parent: ${EMBEDSUFFIX}",
+          "style": {
+            "fontSize": "20px"
+          },
+          "containerStyling": {
+            "margin": "5px"
+          }
+        },
+        {
+          "type": "fromJSON",
+          "flexible": true,
+          "file": "http://localhost:3000/embeddedScreens/simpleEmbed.json",
+          "containerStyling": {
+            "margin": "5px"
+          },
+          "macroMap": {
+            "EMBEDSUFFIX": "embed1"
+          }
+        },
+        {
+          "type": "fromJSON",
+          "flexible": true,
+          "file": "http://localhost:3000/embeddedScreens/simpleEmbed.json",
+          "containerStyling": {
+            "margin": "5px"
+          },
+          "macroMap": {
+            "EMBEDSUFFIX": "embed2"
+          }
+        },
+        {
+          "type": "fromJSON",
+          "flexible": true,
+          "file": "http://localhost:3000/embeddedScreens/simpleEmbed.json",
+          "containerStyling": {
+            "margin": "5px",
+            "border": "solid 2px red"
+          },
+          "macroMap": {
+            "EMBEDSUFFIX": "embed3"
+          }
+        },
+        {
+          "type": "fromJSON",
+          "flexible": true,
+          "file": "http://localhost:3000/embeddedScreens/simpleEmbed.json",
+          "containerStyling": {
+            "margin": "5px"
+          },
+          "macroMap": {
+            "EMBEDSUFFIX": "embed4"
+          }
+        },
+        {
+          "type": "fromJSON",
+          "flexible": true,
+          "file": "http://localhost:3000/embeddedScreens/simpleEmbed.json",
+          "containerStyling": {
+            "margin": "5px"
+          },
+          "macroMap": {
+            "EMBEDSUFFIX": "embed5"
+          }
+        }
+      ]
+    }
+  ]
+}
