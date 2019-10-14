@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { render } from "enzyme";
 
 export const lightTheme = {
   "--colour-text": "#000000",
@@ -21,7 +20,7 @@ const initialState = {
 
 export const ThemeContext = React.createContext(initialState);
 
-export function ThemeProvider({ children }: any) {
+export const ThemeProvider: React.FC<{}> = ({ children }: any): JSX.Element => {
   const [dark, setIsDark] = useState(false);
 
   useEffect((): void => {
@@ -34,7 +33,7 @@ export function ThemeProvider({ children }: any) {
     localStorage.setItem("dark", JSON.stringify(isDark));
     setIsDark(isDark);
     const theme: any = dark ? lightTheme : darkTheme;
-    Object.keys(theme).forEach(key => {
+    Object.keys(theme).forEach(function(key): void {
       const value = theme[key];
       document.documentElement.style.setProperty(key, value);
     });
@@ -47,4 +46,4 @@ export function ThemeProvider({ children }: any) {
       {children}
     </ThemeContext.Provider>
   );
-}
+};
