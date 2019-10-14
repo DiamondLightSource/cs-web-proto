@@ -45,6 +45,9 @@ export const stringToVtype = (
   display = DISPLAY_NONE
 ): VType => {
   try {
+    if (isNaN(Number(value))) {
+      throw "Not a number";
+    }
     let numberValue = parseFloat(value);
     return vdoubleOf(numberValue, alarm, time, display);
   } catch (error) {
