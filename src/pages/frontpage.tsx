@@ -46,7 +46,7 @@ export const FrontPage = (): JSX.Element => (
             margin: "auto"
           }}
         >
-          <ConnectedInput pvName={"meta://metapv1"} />
+          <ConnectedInput pvName={"sim://limit#metapv1"} />
         </div>
         <div
           style={{
@@ -59,7 +59,7 @@ export const FrontPage = (): JSX.Element => (
             margin: "auto"
           }}
         >
-          <ConnectedReadback pvName={"meta://metapv1"} />
+          <ConnectedReadback pvName={"sim://limit#metapv1"} />
         </div>
       </div>
       <div
@@ -69,7 +69,10 @@ export const FrontPage = (): JSX.Element => (
           margin: "15px auto"
         }}
       >
-        <ConnectedStandaloneReadback pvName={"meta://metapv1"} precision={2} />
+        <ConnectedStandaloneReadback
+          pvName={"sim://limit#metapv1"}
+          precision={2}
+        />
       </div>
       <div
         style={{

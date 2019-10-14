@@ -138,10 +138,10 @@ export const vdoubleArray = (
 ): VDoubleArray => new IVDoubleArray(value, sizes, alarm, time, display);
 
 abstract class EnumDisplay {
-  public abstract getChoices(): string[];
+  public abstract getChoices(index): string[];
 }
 
-class IEnumDisplay extends EnumDisplay {
+export class IEnumDisplay extends EnumDisplay {
   private choices: string[];
 
   public constructor(choices: string[]) {
@@ -160,7 +160,7 @@ export abstract class VEnum extends Scalar {
   public abstract getDisplay(): EnumDisplay;
 }
 
-class IVEnum extends VEnum {
+export class IVEnum extends VEnum {
   private index: number;
   private alarm: Alarm;
   private time: Time;
@@ -202,3 +202,16 @@ export const venum = (
   alarm: Alarm = ALARM_NONE,
   time: Time = timeNow()
 ): VEnum => new IVEnum(index, new IEnumDisplay(choices), alarm, time);
+
+
+const isEnumProvider = (object: any): object is AlarmProvider => {
+  return "getIndex" in object;
+};
+
+export const enumOf = (object: any): VEnum | undefined => {
+  if (object && isEnumProvider(object)) {
+    return <VEnum>object;
+  } else {
+    return undefined
+  };
+}

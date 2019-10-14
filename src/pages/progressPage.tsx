@@ -9,9 +9,9 @@ import { ConnectedSlideControl } from "../components/SlideControl/slideControl";
 export const ProgressPage = (): JSX.Element => (
   <div id="Central Column" style={{ width: "80%", margin: "auto" }}>
     <h3>Input: ProgressPV</h3>
-    <ConnectedInput pvName={"meta://ProgressPV"} />
+    <ConnectedInput pvName={"sim://limit#ProgressPV"} />
     <h3>Readback: ProgressPV</h3>
-    <ConnectedStandaloneReadback pvName={"meta://ProgressPV"} />
+    <ConnectedStandaloneReadback pvName={"sim://limit#ProgressPV"} />
     <h3>Progress Bar: ProgressPV</h3>
     <div
       style={{
@@ -22,7 +22,7 @@ export const ProgressPage = (): JSX.Element => (
       }}
     >
       <ConnectedStandaloneProgressBar
-        pvName={"meta://ProgressPV"}
+        pvName={"sim://limit#ProgressPV"}
         min={0}
         max={100}
         style={{ backgroundImage: `linear-gradient(red, #f06d06)` }}
@@ -37,7 +37,11 @@ export const ProgressPage = (): JSX.Element => (
         width: "100%"
       }}
     >
-      <ConnectedSlideControl pvName={"meta://ProgressPV"} min={0} max={100} />
+      <ConnectedSlideControl
+        pvName={"sim://limit#ProgressPV"}
+        min={0}
+        max={100}
+      />
     </div>
   </div>
 );
