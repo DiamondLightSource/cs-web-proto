@@ -45,7 +45,7 @@ export const stringToVtype = (
   display = DISPLAY_NONE
 ): VType => {
   try {
-    if (isNaN(Number(value))) {
+    if (isNaN(parseFloat(value))) {
       throw "Not a number";
     }
     let numberValue = parseFloat(value);

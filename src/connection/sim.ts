@@ -109,10 +109,12 @@ class SimEnumPv extends SimPv {
     );
   }
   public getValue(): VType {
-    const newIndex = Math.floor(Math.random() * this.value.getChoices().length);
+    const newIndex = Math.floor(
+      Math.random() * this.value.getDisplay().getChoices().length
+    );
     this.value = venumOf(
       newIndex,
-      this.value.getChoices(),
+      this.value.getDisplay().getChoices(),
       ALARM_NONE,
       timeNow()
     );
@@ -148,11 +150,11 @@ class EnumPv extends SimPv {
       // Indexes outside the range to be ignored
       if (
         value.getValue() >= 0 &&
-        value.getValue() < this.value.getChoices().length
+        value.getValue() < this.value.getDisplay().getChoices().length
       ) {
         this.value = venumOf(
           value.getValue(),
-          this.value.getChoices(),
+          this.value.getDisplay().getChoices(),
           ALARM_NONE,
           timeNow()
         );
@@ -161,11 +163,14 @@ class EnumPv extends SimPv {
       // If a string, see if that string is stored as a value in the enum
       // If it is, change index to index of the string
       // Otherwise ignore
-      let valueIndex = this.value.getChoices().indexOf(value.getValue());
+      let valueIndex = this.value
+        .getDisplay()
+        .getChoices()
+        .indexOf(value.getValue());
       if (valueIndex !== -1) {
         this.value = venumOf(
           valueIndex,
-          this.value.getChoices(),
+          this.value.getDisplay().getChoices(),
           ALARM_NONE,
           timeNow()
         );

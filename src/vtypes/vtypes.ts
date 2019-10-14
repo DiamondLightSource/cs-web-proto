@@ -116,7 +116,6 @@ export abstract class VEnum extends Scalar {
   public abstract getValue(): string;
   public abstract getIndex(): number;
   public abstract getDisplay(): EnumDisplay;
-  public abstract getChoices(): string[];
 }
 
 class IVEnum extends VEnum {
@@ -146,9 +145,6 @@ class IVEnum extends VEnum {
   }
   public getDisplay(): EnumDisplay {
     return this.display;
-  }
-  public getChoices(): string[] {
-    return this.getDisplay().getChoices();
   }
   public getAlarm(): Alarm {
     return this.alarm;
