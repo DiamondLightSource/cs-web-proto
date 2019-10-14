@@ -1,5 +1,5 @@
-import { VNumber, VType, vdoubleOf } from "./vtypes";
-import { vstringOf } from "./string";
+import { VNumber, VType, vdoubleOf, VEnum } from "./vtypes";
+import { VString, vstringOf } from "./string";
 import { ALARM_NONE } from "./alarm";
 import { timeNow } from "./time";
 import { DISPLAY_NONE } from "./display";
@@ -13,7 +13,11 @@ export const vtypeToString = (vtype?: VType, precision?: number): string => {
     }
   }
   if (vtype) {
-    return vtype.toString();
+    if (vtype instanceof VString || vtype instanceof VEnum) {
+      return vtype.getValue();
+    } else {
+      return vtype.toString();
+    }
   }
   return "";
 };
@@ -46,6 +50,9 @@ export const stringToVtype = (
   display = DISPLAY_NONE
 ): VType => {
   try {
+    if (isNaN(parseFloat(value))) {
+      throw new Error("Not a number");
+    }
     let numberValue = parseFloat(value);
     return vdoubleOf(numberValue, alarm, time, display);
   } catch (error) {

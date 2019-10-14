@@ -7,6 +7,7 @@ import {
   ConnectedStandaloneReadback
 } from "../components/Readback/readback";
 import { ConnectedInput } from "../components/Input/input";
+import { Label } from "../components/Label/label";
 
 export const FrontPage = (): JSX.Element => (
   <div id="Central Column" style={{ width: "80%", margin: "auto" }}>
@@ -72,14 +73,24 @@ export const FrontPage = (): JSX.Element => (
       <div
         style={{
           position: "relative",
-          height: "2em",
+          display: "block",
           margin: "15px auto"
         }}
       >
-        <ConnectedStandaloneReadback
-          pvName={"sim://disconnector"}
-          precision={2}
-        />
+        <Label text="Sim Enum" />
+        <ConnectedInput pvName={"sim://enum"} />
+        <ConnectedStandaloneReadback pvName={"sim://enum"} precision={2} />
+      </div>
+      <div
+        style={{
+          position: "relative",
+          display: "block",
+          margin: "15px auto"
+        }}
+      >
+        <Label text="Local Enum - [0, 1, 2, 3, 4, 5]" />
+        <ConnectedInput pvName={"enum://enum1"} />
+        <ConnectedStandaloneReadback pvName={"enum://enum1"} />
       </div>
     </div>
   </div>

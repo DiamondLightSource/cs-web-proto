@@ -1,4 +1,4 @@
-// Specifically disable some eslint rules
+// Special-case filename App.tsx is permitted.
 /* eslint unicorn/filename-case: 0 */ // --> OFF
 
 import React from "react";
