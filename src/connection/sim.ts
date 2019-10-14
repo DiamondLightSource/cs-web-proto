@@ -87,7 +87,6 @@ class EnumPv extends SimPv {
     ALARM_NONE,
     timeNow()
   );
-  private choices: string[] = ["one", "two", "three", "four"];
   public constructor(
     pvName: string,
     onConnectionUpdate: ConnectionChangedCallback,
@@ -103,8 +102,15 @@ class EnumPv extends SimPv {
     );
   }
   public getValue(): VType {
-    const newIndex = Math.floor(Math.random() * this.choices.length);
-    this.value = venumOf(newIndex, this.choices, ALARM_NONE, timeNow());
+    const newIndex = Math.floor(
+      Math.random() * this.value.getDisplay().getChoices().length
+    );
+    this.value = venumOf(
+      newIndex,
+      this.value.getDisplay().getChoices(),
+      ALARM_NONE,
+      timeNow()
+    );
     return this.value;
   }
 }
