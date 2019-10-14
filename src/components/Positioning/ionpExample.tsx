@@ -1,7 +1,7 @@
 import React from "react";
 
-import { PositionDescription, objectToPosition } from "./positioning";
-import { Label } from "../Label/label";
+import { AbsolutePositionDescription, objectToComponent } from "./positioning";
+import { MacroLabel } from "../Label/label";
 import { Readback } from "../Readback/readback";
 import { Input } from "../Input/input";
 import { ProgressBar } from "../ProgressBar/progressBar";
@@ -16,7 +16,8 @@ export const Blank: React.FC = (props: any): JSX.Element => (
       width: "100%",
       border: "solid 5px black",
       backgroundColor: "#dddddd",
-      fontSize: "0.7vw"
+      fontSize: "0.7vw",
+      boxSizing: "border-box"
     }}
   >
     {props.children}
@@ -24,14 +25,14 @@ export const Blank: React.FC = (props: any): JSX.Element => (
 );
 
 const compDict = {
-  activeXTextClass: Label,
+  activeXTextClass: MacroLabel,
   TextupdateClass: Readback,
   activeXTextDspClass: Input,
   activeBarClass: ProgressBar,
   Blank: Blank
 };
 
-const IonpScreen: PositionDescription = {
+const IonpScreen: AbsolutePositionDescription = {
   type: "Blank",
   x: "136px",
   y: "100px",
@@ -44,7 +45,7 @@ const IonpScreen: PositionDescription = {
       y: 0,
       width: "328px",
       height: "32px",
-      text: "BL12I-VA-IONP-01",
+      text: "${device}",
       style: {
         textAlign: "center",
         fontSize: "1.2vw",
@@ -170,6 +171,8 @@ const IonpScreen: PositionDescription = {
 };
 
 export const Mapping: React.FC = (): JSX.Element => {
-  let Mapped = objectToPosition(IonpScreen, compDict);
+  let Mapped = objectToComponent(IonpScreen, compDict, {
+    device: "SR03A-VA-IONP-01"
+  });
   return <div>{Mapped}</div>;
 };

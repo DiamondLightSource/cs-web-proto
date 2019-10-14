@@ -1,9 +1,11 @@
+import log from "loglevel";
 import {
   VALUE_CHANGED,
   ActionType,
   SUBSCRIBE,
   WRITE_PV,
   CONNECTION_CHANGED,
+  MACRO_UPDATED,
   UNSUBSCRIBE
 } from "./actions";
 import { VType, vdoubleOf, vdoubleArrayOf } from "../vtypes/vtypes";
@@ -20,6 +22,7 @@ import {
 
 const initialState: CsState = {
   valueCache: {},
+  macroMap: { SUFFIX: "1" },
   subscriptions: {}
 };
 
@@ -32,12 +35,19 @@ export interface ValueCache {
   [key: string]: PvState;
 }
 
+/* A simple dictionary from key to value. */
+export interface MacroMap {
+  [key: string]: string;
+}
+
 export interface Subscriptions {
   [pv: string]: string[];
 }
 
+/* The shape of the store for the entire application. */
 export interface CsState {
   valueCache: ValueCache;
+  macroMap: MacroMap;
   subscriptions: Subscriptions;
 }
 
@@ -69,13 +79,13 @@ const mergeVtype = (original: VType, update: PartialVType): VType => {
     let className = update.type ? update.type : original.constructor.name;
     const array = update.array ? update.array : className.includes("Array");
     const value = update.value ? update.value : original.getValue();
-    const alarm = update.alarm ? update.alarm : alarmOf(original);
+    const alarmVal = update.alarm ? update.alarm : alarmOf(original);
     // should we require that the update has a time?
     const time = update.time ? update.time : timeOf(original);
     const display = update.display ? update.display : displayOf(original);
     if (className === "VString") {
       // what happened to VStringArray in VTypes?
-      return vstringOf(value, alarm, time);
+      return vstringOf(value, alarmVal, time);
     } else {
       if (array) {
         if (!className.endsWith("Array")) {
@@ -83,18 +93,18 @@ const mergeVtype = (original: VType, update: PartialVType): VType => {
         }
         return VNumberArrays[className as VNumberArray](
           value,
-          alarm,
+          alarmVal,
           time,
           display
         );
       } else {
-        return VNumbers[className as VNumber](value, alarm, time, display);
+        return VNumbers[className as VNumber](value, alarmVal, time, display);
       }
     }
   } catch (error) {
     // This happens occasionally, and has serious consequences, but I
     // don't know why!
-    console.error("failed to merge vtypes", original, update, error);
+    log.error("failed to merge vtypes", original, update, error);
     return vstringOf(
       "error",
       alarm(AlarmSeverity.MAJOR, AlarmStatus.NONE, "error")
@@ -105,23 +115,27 @@ const mergeVtype = (original: VType, update: PartialVType): VType => {
 export function csReducer(state = initialState, action: ActionType): CsState {
   switch (action.type) {
     case VALUE_CHANGED: {
-      const newValueCache: ValueCache = Object.assign({}, state.valueCache);
+      const newValueCache: ValueCache = { ...state.valueCache };
       const pvState = state.valueCache[action.payload.pvName];
       const newValue = mergeVtype(pvState.value, action.payload.value);
       const newPvState = Object.assign({}, pvState, {
         value: newValue
       });
       newValueCache[action.payload.pvName] = newPvState;
-      return Object.assign({}, state, { valueCache: newValueCache });
+      return { ...state, valueCache: newValueCache };
     }
     case CONNECTION_CHANGED: {
-      const newValueCache: ValueCache = Object.assign({}, state.valueCache);
-      const pvState = state.valueCache[action.payload.pvName];
-      const newPvState = Object.assign({}, pvState, {
-        connected: action.payload.value.isConnected
-      });
+      const newValueCache: ValueCache = { ...state.valueCache };
+      const { pvName, value } = action.payload;
+      const pvState = state.valueCache[pvName];
+      const newPvState = { ...pvState, connected: value.isConnected };
       newValueCache[action.payload.pvName] = newPvState;
-      return Object.assign({}, state, { valueCache: newValueCache });
+      return { ...state, valueCache: newValueCache };
+    }
+    case MACRO_UPDATED: {
+      const newMacroMap: MacroMap = { ...state.macroMap };
+      newMacroMap[action.payload.key] = action.payload.value;
+      return { ...state, macroMap: newMacroMap };
     }
     case SUBSCRIBE: {
       const { componentId, pvName } = action.payload;

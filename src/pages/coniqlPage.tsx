@@ -7,7 +7,7 @@ import { ConnectedStandaloneReadback } from "../components/Readback/readback";
 export const ConiqlPage = (): JSX.Element => (
   <div id="Central Column" style={{ width: "80%", margin: "auto" }}>
     <h4>This page works only if the Coniql plugin is configured.</h4>
-    <div style={{ height: "20px" }}>
+    <div>
       <ConnectedStandaloneReadback pvName={"sim://sine"} precision={3} />
       <ConnectedStandaloneReadback
         pvName={"sim://sine(-10, 10, 5, 1, 50, 80)"}

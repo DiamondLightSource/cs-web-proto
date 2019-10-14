@@ -1,0 +1,33 @@
+{
+  "type": "blank",
+  "flexible": true,
+  "height": "150px",
+  "width": "110px",
+  "style": {
+    "margin": "5px 5px"
+  },
+  "children": [
+    {
+      "type": "label",
+      "flexible": true,
+      "width": "100px",
+      "text": "Screen: ${EMBEDSUFFIX}",
+      "style": {
+        "fontSize": "20px"
+      }
+    },
+    {
+      "type": "connectedStandaloneInput",
+      "flexible": true,
+      "width": "100px",
+      "pvName": "meta://pv${EMBEDSUFFIX}"
+    },
+    {
+      "type": "readback",
+      "flexible": true,
+      "width": "100px",
+      "pvName": "meta://pv${EMBEDSUFFIX}",
+      "precision": 3
+    }
+  ]
+}

@@ -1,3 +1,4 @@
+import log from "loglevel";
 import {
   Connection,
   ConnectionState,
@@ -160,7 +161,7 @@ export class SimulatorPlugin implements Connection {
   }
 
   public subscribe(pvName: string): void {
-    console.log(`subscribing to ${pvName}`); //eslint-disable-line no-console
+    log.debug(`Subscribing to ${pvName}.`);
     if (pvName.startsWith("loc://")) {
       this.localPvs[pvName] = vdoubleOf(0);
       this.onConnectionUpdate(pvName, { isConnected: true });
@@ -216,6 +217,6 @@ export class SimulatorPlugin implements Connection {
   }
 
   public unsubscribe(pvName: string): void {
-    console.log(`unsubscribing from ${pvName}`); //eslint-disable-line no-console
+    log.debug(`Unsubscribing from ${pvName}.`);
   }
 }
