@@ -21,17 +21,19 @@ import { EmbeddedPage } from "./pages/embeddedPage";
 
 log.setLevel("INFO");
 
+function applyTheme(theme: any): void {
+  Object.keys(theme).forEach(function(key): void {
+    const value = theme[key];
+    document.documentElement.style.setProperty(key, value);
+  });
+}
+
 const App: React.FC = (): JSX.Element => {
   const plugin = new SimulatorPlugin();
   initialiseStore(plugin);
   const store = getStore();
-
   const { toggle, dark } = React.useContext(ThemeContext);
-  const theme: any = dark ? darkTheme : lightTheme;
-  Object.keys(theme).forEach(key => {
-    const value = theme[key];
-    document.documentElement.style.setProperty(key, value);
-  });
+  applyTheme(dark ? darkTheme : lightTheme);
 
   const styleLinkButton = {
     backgroundColor: "#eeeeee",
