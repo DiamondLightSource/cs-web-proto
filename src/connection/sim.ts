@@ -80,7 +80,7 @@ class Disconnector extends SimPv {
   }
 }
 
-class EnumPv extends SimPv {
+class SimEnumPv extends SimPv {
   private value: VEnum = venumOf(
     0,
     ["one", "two", "three", "four"],
@@ -102,12 +102,10 @@ class EnumPv extends SimPv {
     );
   }
   public getValue(): VType {
-    const newIndex = Math.floor(
-      Math.random() * this.value.getDisplay().getChoices().length
-    );
+    const newIndex = Math.floor(Math.random() * this.value.getChoices().length);
     this.value = venumOf(
       newIndex,
-      this.value.getDisplay().getChoices(),
+      this.value.getChoices(),
       ALARM_NONE,
       timeNow()
     );
@@ -215,7 +213,7 @@ export class SimulatorPlugin implements Connection {
         2000
       );
     } else if (pvName === "sim://enum") {
-      this.simPvs[pvName] = new EnumPv(
+      this.simPvs[pvName] = new SimEnumPv(
         "sim://enum",
         this.onConnectionUpdate,
         this.onValueUpdate,
