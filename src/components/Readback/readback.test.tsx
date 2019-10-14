@@ -2,12 +2,12 @@ import React from "react";
 import { Readback } from "./readback";
 import { shallow } from "enzyme";
 import renderer from "react-test-renderer";
-import { vstringOf } from "../../vtypes/vtypes";
+import { vstring } from "../../vtypes/string";
 import { stringToVtype } from "../../vtypes/utils";
 
 test("snapshot matches", (): void => {
   const readback = renderer.create(
-    <Readback connected={true} value={vstringOf("hello")} />
+    <Readback connected={true} value={vstring("hello")} />
   );
   let json = readback.toJSON();
   expect(json).toMatchSnapshot();
@@ -15,7 +15,7 @@ test("snapshot matches", (): void => {
 
 it("renders a basic element", (): void => {
   const wrapper = shallow(
-    <Readback connected={true} value={vstringOf("hello")} />
+    <Readback connected={true} value={vstring("hello")} />
   );
   expect(wrapper.text()).toEqual("hello");
 });
