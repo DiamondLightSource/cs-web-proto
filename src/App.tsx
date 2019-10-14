@@ -15,7 +15,7 @@ import { getStore, initialiseStore } from "./redux/store";
 import log from "loglevel";
 import { SimulatorPlugin } from "./connection/sim";
 import { JsonPage } from "./pages/fromJson";
-import { ThemeContext } from "./themeContext";
+import { lightTheme, darkTheme, ThemeContext } from "./themeContext";
 import { FlexExamplePage } from "./pages/flexExamplePage";
 import { EmbeddedPage } from "./pages/embeddedPage";
 
@@ -26,7 +26,12 @@ const App: React.FC = (): JSX.Element => {
   initialiseStore(plugin);
   const store = getStore();
 
-  const { toggle } = React.useContext(ThemeContext);
+  const { toggle, dark } = React.useContext(ThemeContext);
+  const theme: any = dark ? darkTheme : lightTheme;
+  Object.keys(theme).forEach(key => {
+    const value = theme[key];
+    document.documentElement.style.setProperty(key, value);
+  });
 
   const styleLinkButton = {
     backgroundColor: "#eeeeee",

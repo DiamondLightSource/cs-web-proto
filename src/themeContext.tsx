@@ -3,13 +3,13 @@ import React, { useState, useEffect } from "react";
 export const lightTheme = {
   "--colour-text": "#000000",
   "--colour-secondary-text": "#000000",
-  "--colour-background": "#FFFFFF"
+  "--colour-background": "#DDDDDD"
 };
 
 export const darkTheme = {
   "--colour-text": "#FFFFFF",
   "--colour-secondary-text": "#FFFF00",
-  "--colour-background": "#212121"
+  "--colour-background": "#535353"
 };
 
 const initialState = {
