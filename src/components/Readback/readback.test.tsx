@@ -2,7 +2,7 @@ import React from "react";
 import { Readback } from "./readback";
 import { shallow } from "enzyme";
 import renderer from "react-test-renderer";
-import { vstringOf } from "../../vtypes/vtypes";
+import { vstringOf } from "../../vtypes/string";
 import { stringToVtype } from "../../vtypes/utils";
 
 test("snapshot matches", (): void => {

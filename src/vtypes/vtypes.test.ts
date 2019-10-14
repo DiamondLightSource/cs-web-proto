@@ -1,4 +1,5 @@
-import { DISPLAY_NONE, RANGE_NONE } from "./display";
+import { DISPLAY_NONE } from "./display";
+import { RANGE_NONE } from "./defs";
 import { ALARM_NONE, AlarmSeverity, AlarmStatus } from "./alarm";
 import { timeNow } from "./time";
 
