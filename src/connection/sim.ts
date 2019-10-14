@@ -7,8 +7,15 @@ import {
   nullConnCallback,
   nullValueCallback
 } from "./plugin";
-import { VType, vdoubleOf, VNumber } from "../vtypes/vtypes";
-import { alarm } from "../vtypes/alarm";
+import {
+  VType,
+  vdoubleOf,
+  VNumber,
+  venumOf,
+  VEnum,
+  VString
+} from "../vtypes/vtypes";
+import { alarm, ALARM_NONE } from "../vtypes/alarm";
 import { timeNow } from "../vtypes/time";
 
 abstract class SimPv {
@@ -80,6 +87,102 @@ class Disconnector extends SimPv {
   }
 }
 
+class SimEnumPv extends SimPv {
+  private value: VEnum = venumOf(
+    0,
+    ["one", "two", "three", "four"],
+    ALARM_NONE,
+    timeNow()
+  );
+  public constructor(
+    pvName: string,
+    onConnectionUpdate: ConnectionChangedCallback,
+    onValueUpdate: ValueChangedCallback,
+    updateRate: number
+  ) {
+    super(pvName, onConnectionUpdate, onValueUpdate, updateRate);
+    this.onConnectionUpdate(this.pvName, { isConnected: true });
+    this.onValueUpdate(this.pvName, this.getValue());
+    setInterval(
+      (): void => this.onValueUpdate(this.pvName, this.getValue()),
+      this.updateRate
+    );
+  }
+  public getValue(): VType {
+    const newIndex = Math.floor(
+      Math.random() * this.value.getDisplay().getChoices().length
+    );
+    this.value = venumOf(
+      newIndex,
+      this.value.getDisplay().getChoices(),
+      ALARM_NONE,
+      timeNow()
+    );
+    return this.value;
+  }
+}
+
+class EnumPv extends SimPv {
+  private value: VEnum = venumOf(
+    0,
+    ["zero", "one", "two", "three", "four", "five"],
+    ALARM_NONE,
+    timeNow()
+  );
+  public constructor(
+    pvName: string,
+    onConnectionUpdate: ConnectionChangedCallback,
+    onValueUpdate: ValueChangedCallback,
+    updateRate: number
+  ) {
+    super(pvName, onConnectionUpdate, onValueUpdate, updateRate);
+    this.onConnectionUpdate(this.pvName, { isConnected: true });
+    this.onValueUpdate(this.pvName, this.getValue());
+    setInterval(
+      (): void => this.onValueUpdate(this.pvName, this.getValue()),
+      this.updateRate
+    );
+  }
+
+  public updateValue(value: VType): void {
+    if (value instanceof VNumber) {
+      // If it is a number, treat as index
+      // Indexes outside the range to be ignored
+      if (
+        value.getValue() >= 0 &&
+        value.getValue() < this.value.getDisplay().getChoices().length
+      ) {
+        this.value = venumOf(
+          value.getValue(),
+          this.value.getDisplay().getChoices(),
+          ALARM_NONE,
+          timeNow()
+        );
+      }
+    } else if (value instanceof VString) {
+      // If a string, see if that string is stored as a value in the enum
+      // If it is, change index to index of the string
+      // Otherwise ignore
+      let valueIndex = this.value
+        .getDisplay()
+        .getChoices()
+        .indexOf(value.getValue());
+      if (valueIndex !== -1) {
+        this.value = venumOf(
+          valueIndex,
+          this.value.getDisplay().getChoices(),
+          ALARM_NONE,
+          timeNow()
+        );
+      }
+    }
+  }
+
+  public getValue(): VType {
+    return this.value;
+  }
+}
+
 class MetaData extends SimPv {
   private value: VType;
   // Class to provide PV value along with Alarm and Timestamp data
@@ -130,10 +233,15 @@ interface MetaCache {
   [pvName: string]: MetaData;
 }
 
+interface EnumCache {
+  [pvName: string]: EnumPv;
+}
+
 export class SimulatorPlugin implements Connection {
   private localPvs: ValueCache;
   private simPvs: SimCache;
   private metaPvs: MetaCache;
+  private enumPvs: EnumCache;
   private onConnectionUpdate: ConnectionChangedCallback;
   private onValueUpdate: ValueChangedCallback;
 
@@ -141,6 +249,7 @@ export class SimulatorPlugin implements Connection {
     this.simPvs = {};
     this.localPvs = {};
     this.metaPvs = {};
+    this.enumPvs = {};
     this.onConnectionUpdate = nullConnCallback;
     this.onValueUpdate = nullValueCallback;
     this.subscribe = this.subscribe.bind(this);
@@ -179,9 +288,25 @@ export class SimulatorPlugin implements Connection {
         this.onValueUpdate,
         2000
       );
+    } else if (pvName === "sim://enum") {
+      this.simPvs[pvName] = new SimEnumPv(
+        "sim://enum",
+        this.onConnectionUpdate,
+        this.onValueUpdate,
+        2000
+      );
     } else if (pvName.startsWith("meta://")) {
       if (Array.from(Object.keys(this.metaPvs)).indexOf(pvName) < 0) {
         this.metaPvs[pvName] = new MetaData(
+          pvName,
+          this.onConnectionUpdate,
+          this.onValueUpdate,
+          2000
+        );
+      }
+    } else if (pvName.startsWith("enum://")) {
+      if (Array.from(Object.keys(this.enumPvs)).indexOf(pvName) < 0) {
+        this.enumPvs[pvName] = new EnumPv(
           pvName,
           this.onConnectionUpdate,
           this.onValueUpdate,
@@ -199,6 +324,10 @@ export class SimulatorPlugin implements Connection {
       let meta = this.metaPvs[pvName];
       meta.updateValue(value);
       this.onValueUpdate(pvName, meta.getValue());
+    } else if (pvName.startsWith("enum://")) {
+      let enumData = this.enumPvs[pvName];
+      enumData.updateValue(value);
+      this.onValueUpdate(pvName, enumData.getValue());
     }
   }
 
@@ -210,6 +339,8 @@ export class SimulatorPlugin implements Connection {
     } else if (pvName === "sim://random") {
       return vdoubleOf(Math.random());
     } else if (pvName.startsWith("meta://")) {
+      return this.localPvs[pvName];
+    } else if (pvName.startsWith("enum://")) {
       return this.localPvs[pvName];
     }
     return vdoubleOf(0);
