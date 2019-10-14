@@ -6,7 +6,7 @@ import { getMainDefinition } from "apollo-utilities";
 import gql from "graphql-tag";
 import { InMemoryCache, NormalizedCacheObject } from "apollo-cache-inmemory";
 import log from "loglevel";
-import { VType, vdoubleOf } from "../vtypes/vtypes";
+import { VType, vdouble } from "../vtypes/vtypes";
 import {
   Connection,
   ConnectionChangedCallback,
@@ -93,7 +93,7 @@ export class ConiqlPlugin implements Connection {
   }
 
   public getValue(pvName: string): VType {
-    return vdoubleOf(0);
+    return vdouble(0);
   }
 
   public unsubscribe(pvName: string): void {
