@@ -42,7 +42,7 @@ const recursiveWrapping = (
   widgetProps: object
 ): JSX.Element => {
   let [Component, ...remainingComponents] = components;
-  if (components.length === 0) {
+  if (components.length === 1) {
     // Return the base widget
     return (
       <Component
@@ -87,6 +87,13 @@ export const Widget = (
 
   const containerProps = { pvName: pvName, connected: connected, value: value };
 
+  // Add some essential props for the base widget
+  const baseWidgetProps = {
+    connected: connected,
+    value: value,
+    ...widgetProps
+  };
+
   let components = [];
 
   if (wrappers.alarmborder === true) {
@@ -103,6 +110,6 @@ export const Widget = (
     containerStyling,
     widgetStyling,
     containerProps,
-    widgetProps
+    baseWidgetProps
   );
 };

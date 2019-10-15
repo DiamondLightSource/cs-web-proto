@@ -120,9 +120,10 @@ export const FrontPage = (): JSX.Element => (
           wrappers={{ alarmborder: true, copywrapper: false }}
         />
         <ConnectedReadbackWidget
-          pvName="sim://enum"
+          pvName="sim://sine"
           containerStyling={{ positioning: { flexible: true }, margin: "5px" }}
           wrappers={{ alarmborder: true, copywrapper: true }}
+          precision={3}
         />
       </div>
     </div>

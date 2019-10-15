@@ -146,10 +146,16 @@ export const ConnectedStandaloneReadback: React.FC<
   ConnectedStandaloneReadbackProps
 > = macroWrapper(connectionWrapper(StandaloneReadback));
 
-export const ReadbackWidget = (props: WidgetInterface): JSX.Element => {
+interface ReadbackWidgetProps {
+  precision?: number;
+}
+
+export const ReadbackWidget = (
+  props: ReadbackWidgetProps & WidgetInterface
+): JSX.Element => {
   return <Widget {...props} widget={Readback} />;
 };
 
 export const ConnectedReadbackWidget: React.FC<
-  ConnectedWidgetInterface
+  ReadbackWidgetProps & ConnectedWidgetInterface
 > = macroWrapper(connectionWrapper(ReadbackWidget));
