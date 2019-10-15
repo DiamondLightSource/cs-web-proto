@@ -1,32 +1,38 @@
 import React from "react";
-import { Readback } from "./readback";
-import { shallow } from "enzyme";
-import renderer from "react-test-renderer";
-import { vstring } from "../../vtypes/string";
+import { Readback, ReadbackProps } from "./readback";
+import { configure, shallow, ShallowWrapper } from "enzyme";
+import Adapter from "enzyme-adapter-react-16";
 import { stringToVtype } from "../../vtypes/utils";
+import { create, ReactTestRenderer } from "react-test-renderer";
 
-test("snapshot matches", (): void => {
-  const readback = renderer.create(
-    <Readback connected={true} value={vstring("hello")} />
-  );
-  let json = readback.toJSON();
-  expect(json).toMatchSnapshot();
-});
+configure({ adapter: new Adapter() });
 
-it("renders a basic element", (): void => {
-  const wrapper = shallow(
-    <Readback connected={true} value={vstring("hello")} />
-  );
-  expect(wrapper.text()).toEqual("hello");
-});
+let snapshot: ReactTestRenderer;
+let wrapper: ShallowWrapper<ReadbackProps>;
 
-it("applies precision to numbers", (): void => {
-  const wrapper = shallow(
+beforeEach((): void => {
+  const readback = (
     <Readback
       connected={true}
       value={stringToVtype("3.14159265359")}
       precision={2}
     />
   );
-  expect(wrapper.text()).toEqual("3.14");
+  wrapper = shallow(readback);
+  snapshot = create(readback);
+});
+
+describe("<Readback />", (): void => {
+  test("it matches the snapshot", (): void => {
+    expect(snapshot.toJSON()).toMatchSnapshot();
+  });
+
+  test("it renders a basic element", (): void => {
+    const readback = wrapper.find("div");
+    expect(readback.get(0).type).toEqual("div");
+  });
+
+  test("it applies precision to numbers", (): void => {
+    expect(wrapper.text()).toEqual("3.14");
+  });
 });
