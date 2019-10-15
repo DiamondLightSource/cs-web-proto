@@ -22,6 +22,7 @@ import {
 import { PartialVType } from "../redux/csState";
 import { AlarmStatus, alarm } from "../vtypes/alarm";
 import base64js from "base64-js";
+import { time } from "../vtypes/time";
 
 interface Status {
   quality: "ALARM" | "WARNING" | "VALID";
@@ -49,7 +50,12 @@ const ARRAY_TYPES = {
   INT64: Int32Array
 };
 
-function coniqlToVType(value: any, meta: any, status: Status): PartialVType {
+function coniqlToVType(
+  value: any,
+  timeVal: any,
+  meta: any,
+  status: Status
+): PartialVType {
   let result: PartialVType = {
     value: value
   };
@@ -57,6 +63,13 @@ function coniqlToVType(value: any, meta: any, status: Status): PartialVType {
     const bd = base64js.toByteArray(value.base64);
     const array = new ARRAY_TYPES[value.numberType as CONIQL_TYPE](bd.buffer);
     result.value = array;
+  }
+  if (timeVal) {
+    result.time = time(
+      { secondsPastEpoch: timeVal.seconds, nanoseconds: timeVal.nanoseconds },
+      timeVal.userTag,
+      false
+    );
   }
   if (meta) {
     result.array = meta.array;
@@ -103,6 +116,11 @@ const PV_SUBSCRIPTION = gql`
   subscription sub1($pvName: String!) {
     subscribeChannel(id: $pvName) {
       value
+      time {
+        seconds
+        nanoseconds
+        userTag
+      }
       meta {
         __typename
         array
@@ -161,8 +179,8 @@ export class ConiqlPlugin implements Connection {
         next: (data): void => {
           log.debug("data", data);
           this.onConnectionUpdate(pvName1, { isConnected: true });
-          const { value, meta, status } = data.data.subscribeChannel;
-          let vtype = coniqlToVType(value, meta, status);
+          const { value, time, meta, status } = data.data.subscribeChannel;
+          let vtype = coniqlToVType(value, time, meta, status);
           this.onValueUpdate(pvName1, vtype);
         },
         error: (err): void => {
