@@ -19,8 +19,8 @@ interface BasicPositionDescription {
     | null;
 }
 
-// Interface to describe components by absolute position
-export interface AbsolutePositionDescription extends BasicPositionDescription {
+// Interface to for absolute position
+export interface AbsolutePosition {
   // Absolute positions - allow strings for "%" or "px" etc
   x: number | string;
   y: number | string;
@@ -28,8 +28,8 @@ export interface AbsolutePositionDescription extends BasicPositionDescription {
   height: number | string;
 }
 
-// Interface to describe components by relative position
-export interface FlexiblePositionDescription extends BasicPositionDescription {
+// Interface to for relative position
+export interface FlexiblePosition {
   // Flexible positions - should go inside a flex container
   flexible: boolean;
   // Width and height not always necessary in this case as some components
@@ -38,13 +38,22 @@ export interface FlexiblePositionDescription extends BasicPositionDescription {
   height?: number | string;
 }
 
+//Interfaces for describing postitions
+export interface AbsolutePositionDescription
+  extends BasicPositionDescription,
+    AbsolutePosition {}
+
+export interface FlexiblePositionDescription
+  extends BasicPositionDescription,
+    FlexiblePosition {}
+
 export function objectToComponent(
   // Converts a JS object matching a position description into React component
   // from the component dictionary provided. Also passes down a macro map which
   // can be overwritten. Uses recursion to generate children.
   objectDescription:
-    | AbsolutePositionDescription
-    | FlexiblePositionDescription
+    | AbsolutePositionDescription & BasicPositionDescription
+    | FlexiblePositionDescription & BasicPositionDescription
     | null,
   componentDict: { [index: string]: any },
   existingMacroMap: MacroMap
