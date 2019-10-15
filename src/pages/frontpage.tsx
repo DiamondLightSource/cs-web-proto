@@ -79,6 +79,7 @@ export const FrontPage = (): JSX.Element => (
         }}
       >
         <Label text="Sim Enum" />
+        <ConnectedMenuButton pvName={"sim://enum"} />
         <ConnectedInput pvName={"sim://enum"} />
         <ConnectedStandaloneReadback pvName={"sim://enum"} precision={2} />
       </div>
