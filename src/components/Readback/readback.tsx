@@ -9,18 +9,27 @@ import { VType } from "../../vtypes/vtypes";
 import { Alarm, alarmOf, AlarmSeverity } from "../../vtypes/alarm";
 import { vtypeToString } from "../../vtypes/utils";
 
-export const Readback = (props: {
+export interface ReadbackProps {
   connected: boolean;
   value?: VType;
   precision?: number;
-  style?: {};
-}): JSX.Element => {
-  let {
-    connected,
-    value,
-    precision = undefined,
-    style = { backgroundColor: "#383838", color: "#00bb00" }
-  } = props;
+  style?: object;
+}
+
+function getClass(alarmSeverity: any): string {
+  switch (alarmSeverity) {
+    case AlarmSeverity.MINOR: {
+      return classes.Minor;
+    }
+    case AlarmSeverity.MAJOR: {
+      return classes.Major;
+    }
+  }
+  return classes.Readback;
+}
+
+export const Readback = (props: ReadbackProps): JSX.Element => {
+  let { connected, value, precision = undefined, style } = props;
   const alarm = alarmOf(value);
   let displayedValue;
   if (!value) {
@@ -28,29 +37,23 @@ export const Readback = (props: {
   } else {
     displayedValue = vtypeToString(value, precision);
   }
+  style = { backgroundColor: "#383838", ...props.style };
 
-  // Change text color depending on connection state or alarm
+  // Change text color depending on connection state
   if (!connected) {
     style = {
       ...style,
       color: "#ffffff"
     };
-  } else if (alarm.getSeverity() === AlarmSeverity.MINOR) {
-    // Minor alarm
-    style = {
-      ...style,
-      color: "#eeee00"
-    };
-  } else if (alarm.getSeverity() === AlarmSeverity.MAJOR) {
-    // Major alarm
-    style = {
-      ...style,
-      color: "#ee0000"
-    };
   }
 
   return (
-    <div className={classes.Readback} style={style}>
+    <div
+      className={`Readback ${classes.Readback} ${getClass(
+        alarm.getSeverity()
+      )}`}
+      style={style}
+    >
       {displayedValue}
     </div>
   );
@@ -61,7 +64,7 @@ interface ConnectedReadbackProps {
   rawPvName?: string;
   precision?: number;
   alarm?: Alarm;
-  style?: {};
+  style?: object;
 }
 
 export const ConnectedReadback: React.FC<
@@ -72,7 +75,7 @@ interface ConnectedCopyReadbackProps {
   pvName: string;
   rawPvName?: string;
   precision?: number;
-  style?: {};
+  style?: object;
 }
 
 export const CopyReadback = (props: {
@@ -88,11 +91,13 @@ export const CopyReadback = (props: {
     rawPvName={props.rawPvName}
     connected={props.connected}
     value={props.value}
+    style={props.style}
   >
     <Readback
       connected={props.connected}
       value={props.value}
       precision={props.precision}
+      style={props.style}
     ></Readback>
   </CopyWrapper>
 );
@@ -104,7 +109,7 @@ export const ConnectedCopyReadback: React.FC<
 interface ConnectedStandaloneReadbackProps {
   pvName: string;
   precision?: number;
-  style?: {};
+  style?: object;
 }
 
 export const StandaloneReadback = (props: {
@@ -126,6 +131,7 @@ export const StandaloneReadback = (props: {
         connected={props.connected}
         value={props.value}
         precision={props.precision}
+        style={props.style}
       ></Readback>
     </AlarmBorder>
   </CopyWrapper>

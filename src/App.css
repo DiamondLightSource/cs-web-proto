@@ -1,6 +1,6 @@
 .App {
   text-align: center;
-  background-color: #bbbbbb;
+  background-color: var(--colour-background);
   position: absolute;
   height: 100%;
   width: 100%;
@@ -25,6 +25,22 @@
 
 .App-link {
   color: #61dafb;
+}
+
+.Input {
+  color: blue;
+}
+
+.Label {
+  color: var(--colour-text);
+}
+
+.Readback {
+  font-weight: bold;
+}
+
+.Slider {
+  cursor: grab;
 }
 
 @keyframes App-logo-spin {
