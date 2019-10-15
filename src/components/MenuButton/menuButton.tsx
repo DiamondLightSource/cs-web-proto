@@ -6,12 +6,14 @@ import { VType, VEnum } from "../../vtypes/vtypes";
 import { vtypeToString, stringToVtype } from "../../vtypes/utils";
 import { Alarm } from "../../vtypes/alarm";
 
-export const MenuButton = (props: {
+export interface MenuButtonProps {
   connected: boolean;
   onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
   value?: VType;
   style?: {};
-}): JSX.Element => {
+}
+
+export const MenuButton = (props: MenuButtonProps): JSX.Element => {
   let { connected, value = null, style = { color: "#000000" } } = props;
 
   // Store whether component is disabled or not
