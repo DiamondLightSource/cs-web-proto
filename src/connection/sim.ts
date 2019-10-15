@@ -14,6 +14,7 @@ import { timeNow } from "../vtypes/time";
 import { mergeVtype, vtypeInfo } from "../vtypes/merge";
 
 abstract class SimPv {
+  abstract simulatorName(): string;
   protected onConnectionUpdate: ConnectionChangedCallback;
   protected onValueUpdate: ValueChangedCallback;
   protected pvName: string;
@@ -37,7 +38,7 @@ abstract class SimPv {
   }
 
   public updateValue(value: VType): void {
-    throw new Error(`Cannot set value on ${this}.`);
+    throw new Error(`Cannot set value on ${this.simulatorName()}`);
   }
 
   protected maybeSetInterval(callback: () => void): void {
@@ -51,6 +52,10 @@ abstract class SimPv {
 }
 
 class SinePv extends SimPv {
+  simulatorName() {
+    return "sine";
+  }
+
   public constructor(
     pvName: string,
     onConnectionUpdate: ConnectionChangedCallback,
@@ -76,6 +81,10 @@ class SinePv extends SimPv {
 }
 
 class RandomPv extends SimPv {
+  simulatorName() {
+    return "random";
+  }
+
   public constructor(
     pvName: string,
     onConnectionUpdate: ConnectionChangedCallback,
@@ -97,6 +106,11 @@ class RandomPv extends SimPv {
 }
 
 class Disconnector extends SimPv {
+  simulatorName() {
+    return "disconnect";
+  }
+
+
   public constructor(
     pvName: string,
     onConnectionUpdate: ConnectionChangedCallback,
@@ -220,6 +234,10 @@ class EnumPv extends SimPv {
 }
 
 class LocalPv extends SimPv {
+  simulatorName() {
+    return "sine";
+  }
+
   private value: VType | undefined;
   public constructor(
     pvName: string,
@@ -242,6 +260,10 @@ class LocalPv extends SimPv {
 }
 
 class LimitData extends SimPv {
+  simulatorName() {
+    return "limit";
+  }
+
   private value: VType;
   // Class to provide PV value along with Alarm and Timestamp data
   // Initial limits will be 10, 20, 80 and 90 - with expected range between 0 and 100
