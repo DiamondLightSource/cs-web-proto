@@ -1,12 +1,14 @@
 import React from "react";
 import { connectionWrapper } from "../ConnectionWrapper/connectionWrapper";
+import { writePv } from "../../hooks/useCs";
 
 import { VType, VEnum } from "../../vtypes/vtypes";
-import { vtypeToString } from "../../vtypes/utils";
+import { vtypeToString, stringToVtype } from "../../vtypes/utils";
 import { Alarm } from "../../vtypes/alarm";
 
 export const MenuButton = (props: {
   connected: boolean;
+  onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
   value?: VType;
   style?: {};
 }): JSX.Element => {
@@ -43,9 +45,31 @@ export const MenuButton = (props: {
   );
 
   return (
-    <select disabled={disabled} style={style}>
+    <select disabled={disabled} style={style} onChange={props.onChange}>
       {mappedOptions}
     </select>
+  );
+};
+
+// Menu button which also knows how to write to a PV
+export const SmartMenuButton = (props: {
+  connected: boolean;
+  pvName: string;
+  value?: VType;
+  style?: {};
+}): JSX.Element => {
+  // Function to send the value on to the PV
+  function onChange(event: React.ChangeEvent<HTMLSelectElement>): void {
+    writePv(props.pvName, stringToVtype(event.currentTarget.value));
+  }
+
+  return (
+    <MenuButton
+      connected={props.connected}
+      value={props.value}
+      style={props.style}
+      onChange={onChange}
+    />
   );
 };
 
@@ -59,4 +83,4 @@ interface ConnectedMenuButtonProps {
 
 export const ConnectedMenuButton: React.FC<
   ConnectedMenuButtonProps
-> = connectionWrapper(MenuButton);
+> = connectionWrapper(SmartMenuButton);
