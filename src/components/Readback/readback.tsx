@@ -16,6 +16,18 @@ export interface ReadbackProps {
   style?: object;
 }
 
+function getClass(alarmSeverity: any): string {
+  switch (alarmSeverity) {
+    case AlarmSeverity.MINOR: {
+      return classes.Minor;
+    }
+    case AlarmSeverity.MAJOR: {
+      return classes.Major;
+    }
+  }
+  return classes.Readback;
+}
+
 export const Readback = (props: ReadbackProps): JSX.Element => {
   let { connected, value, precision = undefined, style } = props;
   const alarm = alarmOf(value);
@@ -25,29 +37,23 @@ export const Readback = (props: ReadbackProps): JSX.Element => {
   } else {
     displayedValue = vtypeToString(value, precision);
   }
-  style = { backgroundColor: "#383838", color: "#00bb00", ...props.style };
-  // Change text color depending on connection state or alarm
+  style = { backgroundColor: "#383838", ...props.style };
+
+  // Change text color depending on connection state
   if (!connected) {
     style = {
       ...style,
       color: "#ffffff"
     };
-  } else if (alarm.getSeverity() === AlarmSeverity.MINOR) {
-    // Minor alarm
-    style = {
-      ...style,
-      color: "#eeee00"
-    };
-  } else if (alarm.getSeverity() === AlarmSeverity.MAJOR) {
-    // Major alarm
-    style = {
-      ...style,
-      color: "#ee0000"
-    };
   }
 
   return (
-    <div className={`Readback ${classes.Readback}`} style={style}>
+    <div
+      className={`Readback ${classes.Readback} ${getClass(
+        alarm.getSeverity()
+      )}`}
+      style={style}
+    >
       {displayedValue}
     </div>
   );
