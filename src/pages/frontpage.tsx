@@ -8,6 +8,7 @@ import {
 } from "../components/Readback/readback";
 import { ConnectedInput } from "../components/Input/input";
 import { Label } from "../components/Label/label";
+import { ConnectedMenuButton } from "../components/MenuButton/menuButton";
 
 export const FrontPage = (): JSX.Element => (
   <div id="Central Column" style={{ width: "80%", margin: "auto" }}>
@@ -89,6 +90,7 @@ export const FrontPage = (): JSX.Element => (
         }}
       >
         <Label text="Local Enum - [0, 1, 2, 3, 4, 5]" />
+        <ConnectedMenuButton pvName={"enum://enum1"} />
         <ConnectedInput pvName={"enum://enum1"} />
         <ConnectedStandaloneReadback pvName={"enum://enum1"} />
       </div>
