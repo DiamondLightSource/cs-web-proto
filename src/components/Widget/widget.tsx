@@ -5,10 +5,7 @@ import { CopyWrapper } from "../CopyWrapper/copyWrapper";
 import { AlarmBorder } from "../AlarmBorder/alarmBorder";
 import { VType } from "../../vtypes/vtypes";
 
-export interface WidgetInterface {
-  pvName: string;
-  connected: boolean;
-  value?: VType | undefined;
+interface ShapingInterface {
   containerStyling: {
     positioning: AbsolutePosition | FlexiblePosition;
     margin: string;
@@ -24,6 +21,16 @@ export interface WidgetInterface {
     alarmborder: boolean;
     // ...any other borders that come up in the future
   };
+}
+
+export interface WidgetInterface extends ShapingInterface {
+  pvName: string;
+  connected: boolean;
+  value?: VType | undefined;
+}
+
+export interface ConnectedWidgetInterface extends ShapingInterface {
+  pvName: string;
 }
 
 // Function to recursively wrap a given set of widgets

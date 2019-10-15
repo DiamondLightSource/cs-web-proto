@@ -5,7 +5,8 @@ import React from "react";
 import {
   ConnectedReadback,
   ConnectedStandaloneReadback,
-  ReadbackWidget
+  ReadbackWidget,
+  ConnectedReadbackWidget
 } from "../components/Readback/readback";
 import { ConnectedInput } from "../components/Input/input";
 import { Label } from "../components/Label/label";
@@ -95,10 +96,31 @@ export const FrontPage = (): JSX.Element => (
         <ConnectedStandaloneReadback pvName={"enum://enum1"} />
       </div>
       <div>
+        <Label text="Created with Widget" />
         <ReadbackWidget
           pvName="test://tim"
           connected={true}
           value={vstring("Testing")}
+          containerStyling={{ positioning: { flexible: true }, margin: "5px" }}
+          wrappers={{ alarmborder: true, copywrapper: true }}
+        />
+        <ConnectedReadbackWidget
+          pvName="sim://enum"
+          containerStyling={{ positioning: { flexible: true }, margin: "5px" }}
+          wrappers={{ alarmborder: false, copywrapper: false }}
+        />
+        <ConnectedReadbackWidget
+          pvName="sim://enum"
+          containerStyling={{ positioning: { flexible: true }, margin: "5px" }}
+          wrappers={{ alarmborder: false, copywrapper: true }}
+        />
+        <ConnectedReadbackWidget
+          pvName="sim://enum"
+          containerStyling={{ positioning: { flexible: true }, margin: "5px" }}
+          wrappers={{ alarmborder: true, copywrapper: false }}
+        />
+        <ConnectedReadbackWidget
+          pvName="sim://enum"
           containerStyling={{ positioning: { flexible: true }, margin: "5px" }}
           wrappers={{ alarmborder: true, copywrapper: true }}
         />
