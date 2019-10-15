@@ -2,7 +2,7 @@ language: node_js
 node_js:
   - 11
 script:
-  - npm test
+  - npm test -- --coverage
   - npm run prettier-check
   - npm run coveralls
   - npm run lint
