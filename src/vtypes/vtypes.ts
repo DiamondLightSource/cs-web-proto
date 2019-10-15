@@ -55,7 +55,7 @@ class IVDouble extends VDouble {
   }
 }
 
-export const vdoubleOf = (
+export const vdouble = (
   double: number,
   alarm = ALARM_NONE,
   time = timeNow(),
@@ -104,7 +104,7 @@ class IVDoubleArray extends VDoubleArray {
   }
 }
 
-export const vdoubleArrayOf = (
+export const vdoubleArray = (
   double: number[],
   alarm = ALARM_NONE,
   time = timeNow(),
@@ -170,7 +170,7 @@ class IVEnum extends VEnum {
   }
 }
 
-export const venumOf = (
+export const venum = (
   index: number,
   choices: string[],
   alarm: Alarm,

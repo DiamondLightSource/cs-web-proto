@@ -8,8 +8,8 @@ import {
   MACRO_UPDATED,
   UNSUBSCRIBE
 } from "./actions";
-import { VType, vdoubleOf, vdoubleArrayOf } from "../vtypes/vtypes";
-import { vstringOf } from "../vtypes/string";
+import { VType, vdouble, vdoubleArray } from "../vtypes/vtypes";
+import { vstring } from "../vtypes/string";
 import { Time, timeOf } from "../vtypes/time";
 import { Display, displayOf } from "../vtypes/display";
 import {
@@ -65,13 +65,13 @@ type VNumber = "VDouble";
 type VNumberArray = "IVDoubleArray";
 
 const VNumbers = {
-  IVDouble: vdoubleOf,
-  VDouble: vdoubleOf
+  IVDouble: vdouble,
+  VDouble: vdouble
 };
 
 const VNumberArrays = {
-  IVDoubleArray: vdoubleArrayOf,
-  VDoubleArray: vdoubleArrayOf
+  IVDoubleArray: vdoubleArray,
+  VDoubleArray: vdoubleArray
 };
 
 const mergeVtype = (original: VType, update: PartialVType): VType => {
@@ -85,7 +85,7 @@ const mergeVtype = (original: VType, update: PartialVType): VType => {
     const display = update.display ? update.display : displayOf(original);
     if (className === "VString") {
       // what happened to VStringArray in VTypes?
-      return vstringOf(value, alarmVal, time);
+      return vstring(value, alarmVal, time);
     } else {
       if (array) {
         if (!className.endsWith("Array")) {
@@ -105,7 +105,7 @@ const mergeVtype = (original: VType, update: PartialVType): VType => {
     // This happens occasionally, and has serious consequences, but I
     // don't know why!
     log.error("failed to merge vtypes", original, update, error);
-    return vstringOf(
+    return vstring(
       "error",
       alarm(AlarmSeverity.MAJOR, AlarmStatus.NONE, "error")
     );

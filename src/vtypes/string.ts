@@ -31,7 +31,7 @@ class IVString extends VString {
   }
 }
 
-export const vstringOf = (
+export const vstring = (
   value: string,
   alarm = ALARM_NONE,
   time = timeNow()
