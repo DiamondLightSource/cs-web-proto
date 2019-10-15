@@ -57,7 +57,7 @@ export const stringToVtype = (
 };
 
 export const valueToVtype = (
-  value: object,
+  value: any,
   alarm = ALARM_NONE,
   time = timeNow(),
   display = DISPLAY_NONE
