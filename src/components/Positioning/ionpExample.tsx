@@ -5,7 +5,8 @@ import { MacroLabel } from "../Label/label";
 import { Readback } from "../Readback/readback";
 import { Input } from "../Input/input";
 import { ProgressBar } from "../ProgressBar/progressBar";
-import { vdoubleOf, vstringOf } from "../../vtypes/vtypes";
+import { vdouble } from "../../vtypes/vtypes";
+import { vstring } from "../../vtypes/string";
 
 export const Blank: React.FC = (props: any): JSX.Element => (
   <div
@@ -66,7 +67,7 @@ const IonpScreen: AbsolutePositionDescription = {
       width: "72px",
       height: "22px",
       connected: true,
-      value: vdoubleOf(1.2e-10)
+      value: vdouble(1.2e-10)
     },
     {
       type: "activeBarClass",
@@ -76,7 +77,7 @@ const IonpScreen: AbsolutePositionDescription = {
       height: "22px",
       min: -12,
       max: 3,
-      value: vdoubleOf(-9),
+      value: vdouble(-9),
       fontStyle: {
         fontSize: "0.8vw"
       }
@@ -96,7 +97,7 @@ const IonpScreen: AbsolutePositionDescription = {
       width: "216px",
       height: "22px",
       connected: true,
-      value: vstringOf("Running")
+      value: vstring("Running")
     },
     {
       type: "activeXTextClass",
@@ -113,7 +114,7 @@ const IonpScreen: AbsolutePositionDescription = {
       width: "216px",
       height: "22px",
       connected: true,
-      value: vstringOf("OK")
+      value: vstring("OK")
     },
     {
       type: "activeXTextClass",
@@ -130,7 +131,7 @@ const IonpScreen: AbsolutePositionDescription = {
       width: "72px",
       height: "22px",
       connected: true,
-      value: vstringOf("6637 V")
+      value: vstring("6637 V")
     },
     {
       type: "activeXTextClass",
@@ -155,7 +156,7 @@ const IonpScreen: AbsolutePositionDescription = {
       width: "72px",
       height: "22px",
       connected: true,
-      value: vstringOf("610.0e-9")
+      value: vstring("610.0e-9")
     },
     {
       type: "TextupdateClass",
@@ -164,7 +165,7 @@ const IonpScreen: AbsolutePositionDescription = {
       width: "72px",
       height: "22px",
       connected: true,
-      value: vstringOf("7000V")
+      value: vstring("7000V")
     }
   ]
 };
