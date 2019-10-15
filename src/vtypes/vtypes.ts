@@ -123,6 +123,6 @@ class IVEnum extends VEnum {
 export const venum = (
   index: number,
   choices: string[],
-  alarm: Alarm,
-  time: Time
+  alarm: Alarm = ALARM_NONE,
+  time: Time = timeNow()
 ): VEnum => new IVEnum(index, new IEnumDisplay(choices), alarm, time);
