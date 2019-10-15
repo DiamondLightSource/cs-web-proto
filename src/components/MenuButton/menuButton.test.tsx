@@ -3,7 +3,8 @@ import { MenuButton, MenuButtonProps } from "./menuButton";
 import { configure, shallow, ShallowWrapper } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import { create, ReactTestRenderer } from "react-test-renderer";
-import { venumOf, vstringOf, vdoubleOf } from "../../vtypes/vtypes";
+import { venum, vdouble } from "../../vtypes/vtypes";
+import { vstring } from "../../vtypes/string";
 import { ALARM_NONE } from "../../vtypes/alarm";
 import { timeNow } from "../../vtypes/time";
 
@@ -21,7 +22,7 @@ beforeEach((): void => {
   const menubutton = (
     <MenuButton
       connected={true}
-      value={venumOf(
+      value={venum(
         0,
         ["zero", "one", "two", "three", "four", "five"],
         ALARM_NONE,
@@ -33,12 +34,12 @@ beforeEach((): void => {
   const menuButtonString = (
     <MenuButton
       connected={true}
-      value={vstringOf("testing enum")}
+      value={vstring("testing enum")}
       onChange={mock}
     />
   );
   const menuButtonNumber = (
-    <MenuButton connected={true} value={vdoubleOf(3.14159)} onChange={mock} />
+    <MenuButton connected={true} value={vdouble(3.14159)} onChange={mock} />
   );
   enumwrapper = shallow(menubutton);
   stringwrapper = shallow(menuButtonString);
@@ -68,7 +69,7 @@ describe("<MenuButton />", (): void => {
     const menubuttonwrap = shallow(
       <MenuButton
         connected={true}
-        value={venumOf(
+        value={venum(
           5,
           ["zero", "one", "two", "three", "four", "five"],
           ALARM_NONE,
