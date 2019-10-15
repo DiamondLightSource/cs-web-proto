@@ -9,7 +9,7 @@ export const Label = (props: {
   style?: object;
 }): JSX.Element => (
   // Simple component to display text - defaults to black text and dark grey background
-  <div className={classes.Label} style={props.style}>
+  <div className={`Label ${classes.Label}`} style={props.style}>
     {props.text}
   </div>
 );

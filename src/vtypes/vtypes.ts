@@ -54,46 +54,12 @@ class IVDouble extends VDouble {
   }
 }
 
-export const vdoubleOf = (
+export const vdouble = (
   double: number,
   alarm = ALARM_NONE,
   time = timeNow(),
   display = DISPLAY_NONE
 ): VDouble => new IVDouble(double, alarm, time, display);
-
-export abstract class VString extends Scalar {
-  public abstract getValue(): string;
-}
-
-class IVString extends VString {
-  private value: string;
-  private alarm: Alarm;
-  private time: Time;
-
-  public constructor(value: string, alarm: Alarm, time: Time) {
-    super();
-    this.value = value;
-    this.alarm = alarm;
-    this.time = time;
-  }
-
-  public getValue(): string {
-    return this.value;
-  }
-
-  public getAlarm(): Alarm {
-    return this.alarm;
-  }
-  public getTime(): Time {
-    return this.time;
-  }
-}
-
-export const vstringOf = (
-  value: string,
-  alarm = ALARM_NONE,
-  time = timeNow()
-): VString => new IVString(value, alarm, time);
 
 abstract class EnumDisplay {
   public abstract getChoices(): string[];
@@ -154,9 +120,9 @@ class IVEnum extends VEnum {
   }
 }
 
-export const venumOf = (
+export const venum = (
   index: number,
   choices: string[],
-  alarm: Alarm,
-  time: Time
+  alarm: Alarm = ALARM_NONE,
+  time: Time = timeNow()
 ): VEnum => new IVEnum(index, new IEnumDisplay(choices), alarm, time);

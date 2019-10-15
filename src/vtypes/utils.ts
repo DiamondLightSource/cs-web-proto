@@ -1,4 +1,5 @@
-import { VNumber, VType, VString, vdoubleOf, vstringOf, VEnum } from "./vtypes";
+import { VNumber, VType, vdouble, VEnum } from "./vtypes";
+import { VString, vstring } from "./string";
 import { ALARM_NONE } from "./alarm";
 import { timeNow } from "./time";
 import { DISPLAY_NONE } from "./display";
@@ -49,8 +50,22 @@ export const stringToVtype = (
       throw "Not a number";
     }
     let numberValue = parseFloat(value);
-    return vdoubleOf(numberValue, alarm, time, display);
+    return vdouble(numberValue, alarm, time, display);
   } catch (error) {
-    return vstringOf(value, alarm, time);
+    return vstring(value, alarm, time);
   }
+};
+
+export const valueToVtype = (
+  value: any,
+  alarm = ALARM_NONE,
+  time = timeNow(),
+  display = DISPLAY_NONE
+): VType => {
+  if (typeof value === "string") {
+    return vstring(value, alarm, time);
+  } else if (typeof value === "number") {
+    return vdouble(value, alarm, time, display);
+  }
+  return vdouble(0, alarm, time, display);
 };

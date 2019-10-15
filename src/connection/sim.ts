@@ -7,14 +7,8 @@ import {
   nullConnCallback,
   nullValueCallback
 } from "./plugin";
-import {
-  VType,
-  vdoubleOf,
-  VNumber,
-  venumOf,
-  VEnum,
-  VString
-} from "../vtypes/vtypes";
+import { VType, vdouble, VNumber, venum, VEnum } from "../vtypes/vtypes";
+import { VString } from "../vtypes/string";
 import { alarm, ALARM_NONE } from "../vtypes/alarm";
 import { timeNow } from "../vtypes/time";
 
@@ -58,7 +52,7 @@ class SinePv extends SimPv {
     const val = Math.sin(
       new Date().getSeconds() + new Date().getMilliseconds() * 0.001
     );
-    return vdoubleOf(val);
+    return vdouble(val);
   }
 }
 
@@ -83,12 +77,12 @@ class Disconnector extends SimPv {
 
   public getValue(): VType {
     const value = Math.random();
-    return vdoubleOf(value);
+    return vdouble(value);
   }
 }
 
 class SimEnumPv extends SimPv {
-  private value: VEnum = venumOf(
+  private value: VEnum = venum(
     0,
     ["one", "two", "three", "four"],
     ALARM_NONE,
@@ -112,7 +106,7 @@ class SimEnumPv extends SimPv {
     const newIndex = Math.floor(
       Math.random() * this.value.getDisplay().getChoices().length
     );
-    this.value = venumOf(
+    this.value = venum(
       newIndex,
       this.value.getDisplay().getChoices(),
       ALARM_NONE,
@@ -123,7 +117,7 @@ class SimEnumPv extends SimPv {
 }
 
 class EnumPv extends SimPv {
-  private value: VEnum = venumOf(
+  private value: VEnum = venum(
     0,
     ["zero", "one", "two", "three", "four", "five"],
     ALARM_NONE,
@@ -152,7 +146,7 @@ class EnumPv extends SimPv {
         value.getValue() >= 0 &&
         value.getValue() < this.value.getDisplay().getChoices().length
       ) {
-        this.value = venumOf(
+        this.value = venum(
           value.getValue(),
           this.value.getDisplay().getChoices(),
           ALARM_NONE,
@@ -168,7 +162,7 @@ class EnumPv extends SimPv {
         .getChoices()
         .indexOf(value.getValue());
       if (valueIndex !== -1) {
-        this.value = venumOf(
+        this.value = venum(
           valueIndex,
           this.value.getDisplay().getChoices(),
           ALARM_NONE,
@@ -194,7 +188,7 @@ class MetaData extends SimPv {
     updateRate: number
   ) {
     super(pvName, onConnectionUpdate, onValueUpdate, updateRate);
-    this.value = vdoubleOf(50);
+    this.value = vdouble(50);
     this.onValueUpdate(this.pvName, this.getValue());
     setInterval(
       (): void => this.onConnectionUpdate(this.pvName, this.getConnection()),
@@ -208,7 +202,7 @@ class MetaData extends SimPv {
     if (value instanceof VNumber) {
       let v = value.getValue();
       alarmSeverity = v < 10 ? 2 : v > 90 ? 2 : v < 20 ? 1 : v > 80 ? 1 : 0;
-      this.value = vdoubleOf(
+      this.value = vdouble(
         value.getValue(),
         alarm(alarmSeverity, 0, ""),
         timeNow()
@@ -271,9 +265,9 @@ export class SimulatorPlugin implements Connection {
   public subscribe(pvName: string): void {
     log.debug(`Subscribing to ${pvName}.`);
     if (pvName.startsWith("loc://")) {
-      this.localPvs[pvName] = vdoubleOf(0);
+      this.localPvs[pvName] = vdouble(0);
       this.onConnectionUpdate(pvName, { isConnected: true });
-      this.onValueUpdate(pvName, vdoubleOf(0));
+      this.onValueUpdate(pvName, vdouble(0));
     } else if (pvName === "sim://disconnector") {
       this.simPvs[pvName] = new Disconnector(
         "sim://disconnector",
@@ -337,13 +331,13 @@ export class SimulatorPlugin implements Connection {
     } else if (pvName.startsWith("sim://")) {
       this.simPvs[pvName].getValue();
     } else if (pvName === "sim://random") {
-      return vdoubleOf(Math.random());
+      return vdouble(Math.random());
     } else if (pvName.startsWith("meta://")) {
       return this.localPvs[pvName];
     } else if (pvName.startsWith("enum://")) {
       return this.localPvs[pvName];
     }
-    return vdoubleOf(0);
+    return vdouble(0);
   }
 
   public unsubscribe(pvName: string): void {
