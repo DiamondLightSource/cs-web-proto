@@ -16,16 +16,26 @@ import { JsonPage } from "./pages/fromJson";
 import { ConiqlPage } from "./pages/coniqlPage";
 import { ConiqlPlugin } from "./connection/coniql";
 import { MacrosPage } from "./pages/macrosPage";
+import { lightTheme, darkTheme, ThemeContext } from "./themeContext";
 import { FlexExamplePage } from "./pages/flexExamplePage";
 import { EmbeddedPage } from "./pages/embeddedPage";
 
 log.setLevel("INFO");
 const SOCKET = "localhost:8000";
 
+function applyTheme(theme: any): void {
+  Object.keys(theme).forEach(function(key): void {
+    const value = theme[key];
+    document.documentElement.style.setProperty(key, value);
+  });
+}
+
 const App: React.FC = (): JSX.Element => {
   const plugin = new ConiqlPlugin(SOCKET);
   initialiseStore(plugin);
   const store = getStore();
+  const { toggle, dark } = React.useContext(ThemeContext);
+  applyTheme(dark ? darkTheme : lightTheme);
 
   const styleLinkButton = {
     backgroundColor: "#eeeeee",
@@ -36,6 +46,9 @@ const App: React.FC = (): JSX.Element => {
     <Provider store={store}>
       <BrowserRouter>
         <div className="App">
+          <button type="button" onClick={toggle}>
+            Toggle Theme
+          </button>
           <h1>CS Web Proto</h1>
           <div id="Links" style={{ margin: "5px" }}>
             <Link style={styleLinkButton} to="/">

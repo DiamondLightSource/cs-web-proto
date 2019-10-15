@@ -27,7 +27,7 @@ beforeEach((): void => {
   snapshot = create(input);
 });
 
-describe("<Input />", (): void => {
+describe("<Input Input />", (): void => {
   test("it matches the snapshot", (): void => {
     expect(snapshot.toJSON()).toMatchSnapshot();
   });
