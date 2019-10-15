@@ -2,6 +2,7 @@ import { DISPLAY_NONE } from "./display";
 import { RANGE_NONE } from "./defs";
 import { ALARM_NONE, AlarmSeverity, AlarmStatus } from "./alarm";
 import { timeNow } from "./time";
+import { venum } from "./vtypes";
 
 describe("Display", (): void => {
   test("DISPLAY_NONE has zero alarm range", (): void => {
@@ -39,5 +40,13 @@ describe("Time", (): void => {
   });
   test("timeNow() has user tag 0", (): void => {
     expect(timeNow().getUserTag()).toEqual(0);
+  });
+});
+
+describe("VEnum", (): void => {
+  test("venum function", (): void => {
+    const ve = venum(0, ["zero", "one"]);
+    expect(ve.getValue()).toEqual("zero");
+    expect(ve.getIndex()).toEqual(0);
   });
 });
