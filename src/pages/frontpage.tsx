@@ -4,10 +4,12 @@ import React from "react";
 
 import {
   ConnectedReadback,
-  ConnectedStandaloneReadback
+  ConnectedStandaloneReadback,
+  ReadbackWidget
 } from "../components/Readback/readback";
 import { ConnectedInput } from "../components/Input/input";
 import { Label } from "../components/Label/label";
+import { vstring } from "../vtypes/string";
 
 export const FrontPage = (): JSX.Element => (
   <div id="Central Column" style={{ width: "80%", margin: "auto" }}>
@@ -91,6 +93,15 @@ export const FrontPage = (): JSX.Element => (
         <Label text="Local Enum - [0, 1, 2, 3, 4, 5]" />
         <ConnectedInput pvName={"enum://enum1"} />
         <ConnectedStandaloneReadback pvName={"enum://enum1"} />
+      </div>
+      <div>
+        <ReadbackWidget
+          pvName="test://tim"
+          connected={true}
+          value={vstring("Testing")}
+          containerStyling={{ positioning: { flexible: true }, margin: "5px" }}
+          wrappers={{ alarmborder: true, copywrapper: true }}
+        />
       </div>
     </div>
   </div>

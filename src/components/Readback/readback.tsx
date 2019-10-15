@@ -8,6 +8,7 @@ import { macroWrapper } from "../MacroWrapper/macroWrapper";
 import { VType } from "../../vtypes/vtypes";
 import { Alarm, alarmOf, AlarmSeverity } from "../../vtypes/alarm";
 import { vtypeToString } from "../../vtypes/utils";
+import { Widget, WidgetInterface } from "../Widget/widget";
 
 export interface ReadbackProps {
   connected: boolean;
@@ -140,3 +141,7 @@ export const StandaloneReadback = (props: {
 export const ConnectedStandaloneReadback: React.FC<
   ConnectedStandaloneReadbackProps
 > = macroWrapper(connectionWrapper(StandaloneReadback));
+
+export const ReadbackWidget = (props: WidgetInterface): JSX.Element => {
+  return <Widget {...props} widget={Readback} />;
+};
