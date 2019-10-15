@@ -20,13 +20,15 @@ export const MenuButton = (props: {
   const defaultText = "Waiting for value";
 
   let options = [defaultText];
-  let selectedIndex = 0;
+  // Using value to dictate displayed value as described here: https://reactjs.org/docs/forms.html#the-select-tag
+  // Show 0 by default where there is only one option
+  let displayIndex = 0;
 
   if (!connected || value === null) {
     disabled = true;
   } else if (value instanceof VEnum) {
     options = value.getDisplay().getChoices();
-    selectedIndex = value.getIndex();
+    displayIndex = value.getIndex();
   } else {
     options = [vtypeToString(value)];
     disabled = true;
@@ -34,10 +36,8 @@ export const MenuButton = (props: {
 
   const mappedOptions = options.map(
     (text, index): JSX.Element => {
-      // Add selected attribute to option if index matches
-      let selected = index === selectedIndex;
       return (
-        <option key={index} value={index} selected={selected}>
+        <option key={index} value={index}>
           {text}
         </option>
       );
@@ -45,7 +45,12 @@ export const MenuButton = (props: {
   );
 
   return (
-    <select disabled={disabled} style={style} onChange={props.onChange}>
+    <select
+      value={displayIndex}
+      disabled={disabled}
+      style={style}
+      onChange={props.onChange}
+    >
       {mappedOptions}
     </select>
   );
