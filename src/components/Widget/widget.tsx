@@ -11,22 +11,24 @@ interface ContainerFeatures {
   padding?: string;
 }
 
-interface AbsoluteContainer extends AbsolutePosition, ContainerFeatures {}
-interface FlexibleContainer extends FlexiblePosition, ContainerFeatures {}
+interface AbsoluteContainer extends AbsolutePosition, ContainerFeatures {
+  position: "absolute";
+}
+interface FlexibleContainer extends FlexiblePosition, ContainerFeatures {
+  position: "relative";
+}
 
 export interface ShapingInterface {
   containerStyling: AbsoluteContainer | FlexibleContainer;
-
   // ... other ways to customise the container itself could be added to this interface
-
   widgetStyling?: {
     font: string;
     fontSize: string | number;
     // ... all the styling things we want to allow
   };
-  wrappers: {
-    copywrapper: boolean;
-    alarmborder: boolean;
+  wrappers?: {
+    copywrapper?: boolean;
+    alarmborder?: boolean;
     // ...any other borders that come up in the future
   };
   macroMap?: MacroMap;
@@ -95,17 +97,22 @@ export const Widget = (props: WidgetInterface): JSX.Element => {
   let {
     baseWidget,
     widgetStyling = {},
-    wrappers,
+    wrappers = { alarmborder: false, copywrapper: false },
     ...baseWidgetProps
   } = containerProps;
 
   // Put appropriate components on the list of components to be wrapped
   let components = [];
 
-  if (wrappers.alarmborder === true) {
+  const requestedWrappers = {
+    ...{ alarmborder: false, copywrapper: false },
+    ...wrappers
+  };
+
+  if (requestedWrappers.alarmborder === true) {
     components.push(AlarmBorder);
   }
-  if (wrappers.copywrapper === true) {
+  if (requestedWrappers.copywrapper === true) {
     components.push(CopyWrapper);
   }
 

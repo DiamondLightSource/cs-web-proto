@@ -13,6 +13,7 @@ import { Label } from "../components/Label/label";
 import { vstring } from "../vtypes/string";
 import { Widget } from "../components/Widget/widget";
 import { FlexContainer } from "../components/FlexContainer/flexContainer";
+import { widgetDescriptionToComponent } from "../components/Positioning/positioning";
 
 export const FrontPage = (): JSX.Element => (
   <div id="Central Column" style={{ width: "80%", margin: "auto" }}>
@@ -103,27 +104,44 @@ export const FrontPage = (): JSX.Element => (
           pvName="test://tim"
           connected={true}
           value={vstring("Testing")}
-          containerStyling={{ flexible: true, margin: "5px" }}
+          containerStyling={{
+            position: "relative",
+            flexible: true,
+            margin: "5px"
+          }}
           wrappers={{ alarmborder: true, copywrapper: true }}
         />
         <ConnectedReadbackWidget
           pvName="sim://enum"
-          containerStyling={{ flexible: true, margin: "5px" }}
+          containerStyling={{
+            position: "relative",
+            flexible: true,
+            margin: "5px"
+          }}
           wrappers={{ alarmborder: false, copywrapper: false }}
         />
         <ConnectedReadbackWidget
           pvName="sim://enum"
-          containerStyling={{ flexible: true, margin: "5px" }}
+          containerStyling={{
+            position: "relative",
+            flexible: true,
+            margin: "5px"
+          }}
           wrappers={{ alarmborder: false, copywrapper: true }}
         />
         <ConnectedReadbackWidget
           pvName="sim://enum"
-          containerStyling={{ flexible: true, margin: "5px" }}
+          containerStyling={{
+            position: "relative",
+            flexible: true,
+            margin: "5px"
+          }}
           wrappers={{ alarmborder: true, copywrapper: false }}
         />
         <ConnectedReadbackWidget
           pvName="${thisPV}"
           containerStyling={{
+            position: "relative",
             flexible: true,
             margin: "5px"
           }}
@@ -135,7 +153,11 @@ export const FrontPage = (): JSX.Element => (
       <div>
         <Widget
           baseWidget={FlexContainer}
-          containerStyling={{ flexible: true, margin: "5px" }}
+          containerStyling={{
+            position: "relative",
+            flexible: true,
+            margin: "5px"
+          }}
           wrappers={{ alarmborder: false, copywrapper: false }}
         >
           <Label
@@ -145,6 +167,7 @@ export const FrontPage = (): JSX.Element => (
           <ConnectedReadbackWidget
             pvName="${thisPV}"
             containerStyling={{
+              position: "relative",
               flexible: true,
               width: "300px"
             }}
@@ -153,6 +176,23 @@ export const FrontPage = (): JSX.Element => (
             macroMap={{ thisPV: "sim://sine" }}
           />
         </Widget>
+      </div>
+      <div>
+        {widgetDescriptionToComponent(
+          {
+            type: "readback",
+            containerStyling: {
+              position: "relative",
+              flexible: true,
+              margin: "5px"
+            },
+            pvName: "sim://sine",
+            precision: 2,
+            wrappers: { copywrapper: true }
+          },
+          { readback: ConnectedReadbackWidget },
+          {}
+        )}
       </div>
     </div>
   </div>
