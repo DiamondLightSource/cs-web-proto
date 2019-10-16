@@ -16,7 +16,6 @@ export type ValueChangedCallback = (pvName: string, value: VType) => void;
 export interface Connection {
   subscribe: (pvName: string) => void;
   putPv: (pvName: string, value: VType) => void;
-  getValue: (pvName: string) => VType;
   connect: (
     connectionCallback: ConnectionChangedCallback,
     valueCallback: ValueChangedCallback
