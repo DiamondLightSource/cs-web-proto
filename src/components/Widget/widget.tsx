@@ -73,19 +73,19 @@ export const Widget = (
 ): JSX.Element => {
   // Function to recursively apply wrappers with containerStyling going at the top level
 
-  // Extract parameters
+  // Give containers access to everything apart from the containerStyling
+  const { containerStyling, ...containerProps } = props;
+
+  // Extract remaining parameters
   let {
     widget,
     pvName,
     connected,
     value = null,
-    containerStyling,
     widgetStyling = {},
     wrappers,
     ...widgetProps
-  } = props;
-
-  const containerProps = { pvName: pvName, connected: connected, value: value };
+  } = containerProps;
 
   // Add some essential props for the base widget
   const baseWidgetProps = {
@@ -94,6 +94,7 @@ export const Widget = (
     ...widgetProps
   };
 
+  // Put appropriate components on the list of components to be wrapped
   let components = [];
 
   if (wrappers.alarmborder === true) {
