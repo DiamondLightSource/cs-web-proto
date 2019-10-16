@@ -1,3 +1,5 @@
+import log from "loglevel";
+import base64js from "base64-js";
 import { ApolloClient } from "apollo-client";
 import { ApolloLink } from "apollo-link";
 import { HttpLink } from "apollo-link-http";
@@ -10,8 +12,6 @@ import {
   IntrospectionFragmentMatcher
 } from "apollo-cache-inmemory";
 import introspectionQueryResultData from "./fragmentTypes.json";
-import log from "loglevel";
-import { VType } from "../vtypes/vtypes";
 import {
   Connection,
   ConnectionChangedCallback,
@@ -20,8 +20,8 @@ import {
   nullValueCallback
 } from "./plugin";
 import { PartialVType } from "../redux/csState";
+import { VType } from "../vtypes/vtypes";
 import { AlarmStatus, alarm } from "../vtypes/alarm";
-import base64js from "base64-js";
 import { time } from "../vtypes/time";
 
 export interface ConiqlStatus {
