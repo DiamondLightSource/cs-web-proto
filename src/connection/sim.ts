@@ -14,7 +14,7 @@ import { timeNow } from "../vtypes/time";
 import { mergeVtype, vtypeInfo } from "../vtypes/merge";
 
 abstract class SimPv {
-  abstract simulatorName(): string;
+  private abstract simulatorName(): string;
   protected onConnectionUpdate: ConnectionChangedCallback;
   protected onValueUpdate: ValueChangedCallback;
   protected pvName: string;
@@ -37,22 +37,25 @@ abstract class SimPv {
     return { isConnected: true };
   }
 
+  public publish(): void {
+    this.onValueUpdate(this.pvName, this.getValue());
+  }
+
   public updateValue(value: VType): void {
     throw new Error(`Cannot set value on ${this.simulatorName()}`);
   }
 
   protected maybeSetInterval(callback: () => void): void {
     if (this.updateRate !== undefined) {
-      setInterval(
-        (): void => this.onConnectionUpdate(this.pvName, this.getConnection()),
-        this.updateRate
-      );
+      setInterval((): void => {
+        callback();
+      }, this.updateRate);
     }
   }
 }
 
 class SinePv extends SimPv {
-  simulatorName() {
+  private simulatorName(): string {
     return "sine";
   }
 
@@ -81,7 +84,7 @@ class SinePv extends SimPv {
 }
 
 class RandomPv extends SimPv {
-  simulatorName() {
+  private simulatorName(): string {
     return "random";
   }
 
@@ -106,10 +109,9 @@ class RandomPv extends SimPv {
 }
 
 class Disconnector extends SimPv {
-  simulatorName() {
+  private simulatorName(): string {
     return "disconnect";
   }
-
 
   public constructor(
     pvName: string,
@@ -234,8 +236,8 @@ class EnumPv extends SimPv {
 }
 
 class LocalPv extends SimPv {
-  simulatorName() {
-    return "sine";
+  private simulatorName(): string {
+    return "loc";
   }
 
   private value: VType | undefined;
@@ -256,11 +258,12 @@ class LocalPv extends SimPv {
 
   public updateValue(value: VType): void {
     this.value = value;
+    this.publish();
   }
 }
 
 class LimitData extends SimPv {
-  simulatorName() {
+  private simulatorName(): string {
     return "limit";
   }
 
@@ -275,7 +278,6 @@ class LimitData extends SimPv {
   ) {
     super(pvName, onConnectionUpdate, onValueUpdate, updateRate);
     this.value = vdouble(50);
-    this.onValueUpdate(this.pvName, vtypeInfo(this.getValue()));
     this.maybeSetInterval((): void =>
       this.onConnectionUpdate(this.pvName, this.getConnection())
     );
@@ -304,7 +306,6 @@ interface SimCache {
   [pvName: string]: SimPv;
 }
 
-
 interface EnumCache {
   [pvName: string]: EnumPv;
 }
@@ -315,19 +316,24 @@ export class SimulatorPlugin implements Connection {
   private onConnectionUpdate: ConnectionChangedCallback;
   private onValueUpdate: ValueChangedCallback;
 
-  public constructor() {
+  public constructor(updateRate?: number) {
     this.simPvs = {};
     this.enumPvs = {};
     this.onConnectionUpdate = nullConnCallback;
     this.onValueUpdate = nullValueCallback;
     this.subscribe = this.subscribe.bind(this);
     this.putPv = this.putPv.bind(this);
+    this.updateRate = updateRate || 2000;
   }
 
   public connect(
     connectionCallback: ConnectionChangedCallback,
     valueCallback: ValueChangedCallback
   ): void {
+    if (this.connected) {
+      throw new Error("Can only connect once");
+    }
+
     this.onConnectionUpdate = connectionCallback;
     this.onValueUpdate = valueCallback;
   }
@@ -336,19 +342,11 @@ export class SimulatorPlugin implements Connection {
     return this.onConnectionUpdate !== nullConnCallback;
   }
 
-  protected addPv(): boolean {
-    throw new Error("Not implemented");
-  }
-
-  protected subscribePv(): boolean {
-    throw new Error("Not implemented");
-  }
-
   protected makeSimulator(
     pvName: string,
     onConnectionUpdate: ConnectionChangedCallback,
     onValueUpdate: ValueChangedCallback,
-    updateRate?: number
+    updateRate: number
   ): SimPv | undefined {
     let cls;
     if (pvName.startsWith("loc://")) {
@@ -358,9 +356,9 @@ export class SimulatorPlugin implements Connection {
     } else if (pvName === "sim://sine") {
       cls = SinePv;
     } else if (pvName === "sim://enum") {
-      cls = SimEnumPv
+      cls = SimEnumPv;
     } else if (pvName.startsWith("enum://")) {
-      cls = EnumPv
+      cls = EnumPv;
     } else if (pvName === "sim://random") {
       cls = RandomPv;
     } else if (pvName === "sim://limit" || pvName.startsWith("sim://limit#")) {
@@ -379,33 +377,41 @@ export class SimulatorPlugin implements Connection {
 
   public subscribe(pvName: string): void {
     log.debug(`Subscribing to ${pvName}.`);
-    this.simPvs[pvName] = this.makeSimulator(
-      pvName,
-      this.onConnectionUpdate,
-      this.onValueUpdate,
-      -1
-    );
+    const pvSimulator = (this.simPvs[pvName] =
+      this.simPvs[pvName] ||
+      this.makeSimulator(
+        pvName,
+        this.onConnectionUpdate,
+        this.onValueUpdate,
+        this.updateRate
+      ));
+
+    if (pvSimulator !== undefined) {
+      pvSimulator.publish();
+    }
   }
 
   public putPv(pvName: string, value: VType): void {
     const pvSimulator = (this.simPvs[pvName] ||
       this.makeSimulator(
         pvName,
-        nullConnCallback,
-        nullValueCallback,
-        undefined
+        this.onConnectionUpdate,
+        this.onValueUpdate,
+        this.updateRate
       )) as SimPv;
     this.simPvs[pvName] = pvSimulator;
-    pvSimulator && pvSimulator.updateValue(value);
+    if (pvSimulator !== undefined) {
+      pvSimulator.updateValue(value);
+    }
   }
 
   public getValue(pvName: string): VType | undefined {
     let pvData = (this.simPvs[pvName] ||
       this.makeSimulator(
         pvName,
-        nullConnCallback,
-        nullValueCallback,
-        undefined
+        this.onConnectionUpdate,
+        this.onValueUpdate,
+        this.updateRate
       )) as SimPv;
     return pvData && pvData.getValue();
   }
