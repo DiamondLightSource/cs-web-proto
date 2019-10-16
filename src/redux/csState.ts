@@ -8,7 +8,7 @@ import {
   MACRO_UPDATED,
   UNSUBSCRIBE
 } from "./actions";
-import { VType, vdouble, vdoubleArray } from "../vtypes/vtypes";
+import { VType, vdouble, vdoubleArray, VNumberBuilder } from "../vtypes/vtypes";
 import { vstring } from "../vtypes/string";
 import { Time, timeOf } from "../vtypes/time";
 import { Display, displayOf } from "../vtypes/display";
@@ -61,15 +61,12 @@ export interface PartialVType {
   display?: Display;
 }
 
-type VNumber = "VDouble";
-type VNumberArray = "IVDoubleArray";
-
-const VNumbers = {
+const VNumbers: { [index: string]: VNumberBuilder } = {
   IVDouble: vdouble,
   VDouble: vdouble
 };
 
-const VNumberArrays = {
+const VNumberArrays: { [index: string]: VNumberBuilder } = {
   IVDoubleArray: vdoubleArray,
   VDoubleArray: vdoubleArray
 };
@@ -91,14 +88,9 @@ const mergeVtype = (original: VType, update: PartialVType): VType => {
         if (!className.endsWith("Array")) {
           className = `${className}Array`;
         }
-        return VNumberArrays[className as VNumberArray](
-          value,
-          alarmVal,
-          time,
-          display
-        );
+        return VNumberArrays[className](value, alarmVal, time, display);
       } else {
-        return VNumbers[className as VNumber](value, alarmVal, time, display);
+        return VNumbers[className](value, alarmVal, time, display);
       }
     }
   } catch (error) {

@@ -19,6 +19,13 @@ export abstract class VNumber extends Scalar {
   public abstract getValue(): number;
 }
 
+export type VNumberBuilder = (
+  value: any,
+  alarm?: Alarm,
+  time?: Time,
+  display?: Display
+) => VType;
+
 export abstract class VDouble extends VNumber {
   public abstract getValue(): number;
   public abstract getDisplay(): Display;
@@ -55,7 +62,7 @@ class IVDouble extends VDouble {
   }
 }
 
-export const vdouble = (
+export const vdouble: VNumberBuilder = (
   double: number,
   alarm = ALARM_NONE,
   time = timeNow(),
@@ -104,7 +111,7 @@ class IVDoubleArray extends VDoubleArray {
   }
 }
 
-export const vdoubleArray = (
+export const vdoubleArray: VNumberBuilder = (
   double: number[],
   alarm = ALARM_NONE,
   time = timeNow(),
