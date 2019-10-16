@@ -9,7 +9,7 @@ import {
   ConnectedReadbackWidget
 } from "../components/Readback/readback";
 import { ConnectedInput } from "../components/Input/input";
-import { Label } from "../components/Label/label";
+import { Label, LabelWidget } from "../components/Label/label";
 import { vstring } from "../vtypes/string";
 import { Widget } from "../components/Widget/widget";
 import { FlexContainer } from "../components/FlexContainer/flexContainer";
@@ -188,15 +188,18 @@ export const FrontPage = (): JSX.Element => (
               margin: "5px"
             },
             style: { height: "250px", width: "600px" },
+            macroMap: { stringMacro: "Macro Test" },
             children: [
               {
                 type: "label",
                 containerStyling: {
                   position: "relative",
-                  flexible: true
+                  flexible: true,
+                  height: "100px",
+                  width: "500px",
+                  margin: "5px"
                 },
-                text: "Testing",
-                style: { height: "100px", width: "500px", margin: "5px" }
+                text: "Testing - ${stringMacro}"
               },
               {
                 type: "readback",
@@ -213,7 +216,11 @@ export const FrontPage = (): JSX.Element => (
             ]
           },
 
-          { readback: ConnectedReadbackWidget, label: Label, blank: Blank },
+          {
+            readback: ConnectedReadbackWidget,
+            label: LabelWidget,
+            blank: Blank
+          },
           {}
         )}
       </div>

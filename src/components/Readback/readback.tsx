@@ -153,7 +153,7 @@ interface ReadbackWidgetProps {
 export const ReadbackWidget = (
   props: ReadbackWidgetProps & PVWidgetInterface
 ): JSX.Element => {
-  return <Widget {...props} baseWidget={Readback} />;
+  return <Widget baseWidget={Readback} {...props} />;
 };
 
 export const ConnectedReadbackWidget: React.FC<

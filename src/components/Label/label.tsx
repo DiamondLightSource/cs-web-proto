@@ -4,6 +4,8 @@ import classes from "./label.module.css";
 import { macroWrapper } from "../MacroWrapper/macroWrapper";
 import { MacroMap } from "../../redux/csState";
 
+import { Widget, WidgetInterface } from "../Widget/widget";
+
 export const Label = (props: {
   text: string | number;
   style?: object;
@@ -21,3 +23,11 @@ interface MacroLabelProps {
 }
 
 export const MacroLabel: React.FC<MacroLabelProps> = macroWrapper(Label);
+
+interface LabelWidgetProps {
+  text: string | number;
+}
+
+export const LabelWidget = (
+  props: LabelWidgetProps & WidgetInterface
+): JSX.Element => <Widget baseWidget={MacroLabel} {...props} />;
