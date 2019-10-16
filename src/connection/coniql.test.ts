@@ -29,26 +29,29 @@ class MockObservable {
 }
 
 describe("ConiqlPlugin", (): void => {
+  let cp: ConiqlPlugin;
+  let mockConnUpdate: jest.Mock;
+  let mockValUpdate: jest.Mock;
+  beforeEach((): void => {
+    cp = new ConiqlPlugin("a.b.c:100");
+    mockConnUpdate = jest.fn();
+    mockValUpdate = jest.fn();
+    cp.connect(mockConnUpdate, mockValUpdate);
+  });
+
   it("handles update to value", (): void => {
     ApolloClient.prototype.subscribe = jest.fn(
       (_): MockObservable => new MockObservable(42)
     ) as jest.Mock;
-    const cp = new ConiqlPlugin("a.b.c:100");
-    const mockConnUpdate = jest.fn();
-    const mockValUpdate = jest.fn();
-    cp.connect(mockConnUpdate, mockValUpdate);
     cp.subscribe("hello");
     expect(ApolloClient.prototype.subscribe).toHaveBeenCalled();
     expect(mockValUpdate).toHaveBeenCalledWith("hello", { value: 42 });
   });
+
   it("handles update to time", (): void => {
     ApolloClient.prototype.subscribe = jest.fn(
       (_): MockObservable => new MockObservable(undefined, EPOCH_2017)
     ) as jest.Mock;
-    const cp = new ConiqlPlugin("a.b.c:100");
-    const mockConnUpdate = jest.fn();
-    const mockValUpdate = jest.fn();
-    cp.connect(mockConnUpdate, mockValUpdate);
     cp.subscribe("hello");
     expect(ApolloClient.prototype.subscribe).toHaveBeenCalled();
     const calls = mockValUpdate.mock.calls;
