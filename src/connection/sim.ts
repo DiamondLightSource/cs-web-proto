@@ -326,21 +326,6 @@ export class SimulatorPlugin implements Connection {
     }
   }
 
-  public getValue(pvName: string): VType {
-    if (pvName.startsWith("loc://")) {
-      return this.localPvs[pvName];
-    } else if (pvName.startsWith("sim://")) {
-      this.simPvs[pvName].getValue();
-    } else if (pvName === "sim://random") {
-      return vdouble(Math.random());
-    } else if (pvName.startsWith("meta://")) {
-      return this.localPvs[pvName];
-    } else if (pvName.startsWith("enum://")) {
-      return this.localPvs[pvName];
-    }
-    return vdouble(0);
-  }
-
   public unsubscribe(pvName: string): void {
     log.debug(`Unsubscribing from ${pvName}.`);
   }

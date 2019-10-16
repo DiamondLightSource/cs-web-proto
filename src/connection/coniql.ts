@@ -11,7 +11,7 @@ import {
 } from "apollo-cache-inmemory";
 import introspectionQueryResultData from "./fragmentTypes.json";
 import log from "loglevel";
-import { VType, vdouble } from "../vtypes/vtypes";
+import { VType } from "../vtypes/vtypes";
 import {
   Connection,
   ConnectionChangedCallback,
@@ -191,10 +191,6 @@ export class ConiqlPlugin implements Connection {
 
   public putPv(pvName: string, value: VType): void {
     // noop
-  }
-
-  public getValue(pvName: string): VType {
-    return vdouble(0);
   }
 
   public unsubscribe(pvName: string): void {
