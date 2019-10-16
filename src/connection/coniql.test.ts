@@ -1,6 +1,8 @@
 import { ApolloClient } from "apollo-client";
 import { ConiqlPlugin, ConiqlTime, ConiqlStatus } from "./coniql";
 
+const EPOCH_2017 = { seconds: 1511111111, nanoseconds: 0, userTag: 0 };
+
 class MockObservable {
   private value?: any;
   private time?: ConiqlTime;
@@ -38,5 +40,21 @@ describe("ConiqlPlugin", (): void => {
     cp.subscribe("hello");
     expect(ApolloClient.prototype.subscribe).toHaveBeenCalled();
     expect(mockValUpdate).toHaveBeenCalledWith("hello", { value: 42 });
+  });
+  it("handles update to time", (): void => {
+    ApolloClient.prototype.subscribe = jest.fn(
+      (_): MockObservable => new MockObservable(undefined, EPOCH_2017)
+    ) as jest.Mock;
+    const cp = new ConiqlPlugin("a.b.c:100");
+    const mockConnUpdate = jest.fn();
+    const mockValUpdate = jest.fn();
+    cp.connect(mockConnUpdate, mockValUpdate);
+    cp.subscribe("hello");
+    expect(ApolloClient.prototype.subscribe).toHaveBeenCalled();
+    const calls = mockValUpdate.mock.calls;
+    expect(calls.length).toBe(1);
+    const [pv, value] = mockValUpdate.mock.calls[0];
+    expect(pv).toBe("hello");
+    expect(value.time.asDate().getFullYear()).toBe(2017);
   });
 });
