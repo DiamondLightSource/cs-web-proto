@@ -29,6 +29,13 @@ interface Status {
   message: string;
   mutable: boolean;
 }
+
+interface Time {
+  seconds: number;
+  nanoseconds: number;
+  userTag: number;
+}
+
 const ALARMS = {
   ALARM: 2,
   WARNING: 1,
@@ -52,7 +59,7 @@ const ARRAY_TYPES = {
 
 function coniqlToPartialVtype(
   value: any,
-  timeVal: any,
+  timeVal: Time,
   meta: any,
   status: Status
 ): PartialVType {
