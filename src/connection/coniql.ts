@@ -11,7 +11,7 @@ import {
 } from "apollo-cache-inmemory";
 import introspectionQueryResultData from "./fragmentTypes.json";
 import log from "loglevel";
-import { VType } from "../vtypes/vtypes";
+import { VType, vdoubleArray } from "../vtypes/vtypes";
 import {
   Connection,
   ConnectionChangedCallback,
@@ -50,7 +50,7 @@ const ARRAY_TYPES = {
   INT64: Int32Array
 };
 
-function coniqlToVType(
+function coniqlToPartialVtype(
   value: any,
   timeVal: any,
   meta: any,
@@ -169,19 +169,19 @@ export class ConiqlPlugin implements Connection {
     return this.connected;
   }
 
-  public subscribe(pvName1: string): void {
+  public subscribe(pvName: string): void {
     this.client
       .subscribe({
         query: PV_SUBSCRIPTION,
-        variables: { pvName: pvName1 }
+        variables: { pvName: pvName }
       })
       .subscribe({
         next: (data): void => {
           log.debug("data", data);
-          this.onConnectionUpdate(pvName1, { isConnected: true });
+          this.onConnectionUpdate(pvName, { isConnected: true });
           const { value, time, meta, status } = data.data.subscribeChannel;
-          let vtype = coniqlToVType(value, time, meta, status);
-          this.onValueUpdate(pvName1, vtype);
+          let pvtype = coniqlToPartialVtype(value, time, meta, status);
+          this.onValueUpdate(pvName, pvtype);
         },
         error: (err): void => {
           log.error("err", err);
