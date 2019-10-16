@@ -1,15 +1,5 @@
-//jest.mock("apollo-client");
 import { ApolloClient } from "apollo-client";
-import {
-  coniqlToPartialVtype,
-  ConiqlPlugin,
-  ConiqlTime,
-  ConiqlStatus
-} from "./coniql";
-import { Time } from "../vtypes/time";
-
-const EPOCH = { seconds: 0, nanoseconds: 0, userTag: 0 };
-const STATUS: ConiqlStatus = { quality: "ALARM", message: "", mutable: false };
+import { ConiqlPlugin, ConiqlTime, ConiqlStatus } from "./coniql";
 
 class MockObservable {
   private value?: any;
@@ -38,7 +28,9 @@ class MockObservable {
 
 describe("ConiqlPlugin", (): void => {
   it("handles update to value", (): void => {
-    ApolloClient.prototype.subscribe = jest.fn(x => new MockObservable(42));
+    ApolloClient.prototype.subscribe = jest.fn(
+      (_): MockObservable => new MockObservable(42)
+    ) as jest.Mock;
     const cp = new ConiqlPlugin("a.b.c:100");
     const mockConnUpdate = jest.fn();
     const mockValUpdate = jest.fn();
