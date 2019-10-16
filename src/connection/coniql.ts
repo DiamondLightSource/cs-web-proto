@@ -24,13 +24,13 @@ import { AlarmStatus, alarm } from "../vtypes/alarm";
 import base64js from "base64-js";
 import { time } from "../vtypes/time";
 
-interface Status {
+export interface ConiqlStatus {
   quality: "ALARM" | "WARNING" | "VALID";
   message: string;
   mutable: boolean;
 }
 
-interface Time {
+export interface ConiqlTime {
   seconds: number;
   nanoseconds: number;
   userTag: number;
@@ -59,9 +59,9 @@ const ARRAY_TYPES = {
 
 function coniqlToPartialVtype(
   value: any,
-  timeVal: Time,
+  timeVal: ConiqlTime,
   meta: any,
-  status: Status
+  status: ConiqlStatus
 ): PartialVType {
   let result: PartialVType = {
     value: value
