@@ -1,16 +1,24 @@
-import React from "react";
+import React, { Children } from "react";
 
 import { AbsolutePosition, FlexiblePosition } from "../Positioning/positioning";
 import { CopyWrapper } from "../CopyWrapper/copyWrapper";
 import { AlarmBorder } from "../AlarmBorder/alarmBorder";
 import { VType } from "../../vtypes/vtypes";
+import { MacroMap } from "../../redux/csState";
+
+interface ContainerFeatures {
+  margin?: string;
+  padding?: string;
+}
+
+interface AbsoluteContainer extends AbsolutePosition, ContainerFeatures {}
+interface FlexibleContainer extends FlexiblePosition, ContainerFeatures {}
 
 interface ShapingInterface {
-  containerStyling: {
-    positioning: AbsolutePosition | FlexiblePosition;
-    margin: string;
-    // ... other ways to customise the container itself
-  };
+  containerStyling: AbsoluteContainer | FlexibleContainer;
+
+  // ... other ways to customise the container itself could be added to this interface
+
   widgetStyling?: {
     font: string;
     fontSize: string | number;
@@ -21,10 +29,12 @@ interface ShapingInterface {
     alarmborder: boolean;
     // ...any other borders that come up in the future
   };
+  macroMap?: MacroMap;
 }
 
-export interface WidgetInterface extends ShapingInterface {
+export interface PVWidgetInterface extends ShapingInterface {
   pvName: string;
+  rawPvName?: string;
   connected: boolean;
   value?: VType | undefined;
 }
@@ -68,31 +78,26 @@ const recursiveWrapping = (
   }
 };
 
-export const Widget = (
-  props: { widget: React.FC<any> } & WidgetInterface
-): JSX.Element => {
-  // Function to recursively apply wrappers with containerStyling going at the top level
+// Interface requires a base widget and allows child components
+export interface WidgetInterface extends ShapingInterface {
+  baseWidget: React.FC<any>;
+  children?: React.ReactNode;
+}
+
+export const Widget = (props: WidgetInterface): JSX.Element => {
+  // Generic widget component
 
   // Give containers access to everything apart from the containerStyling
+  // Assume flexible position if not provided with anything
   const { containerStyling, ...containerProps } = props;
 
   // Extract remaining parameters
   let {
-    widget,
-    pvName,
-    connected,
-    value = null,
+    baseWidget,
     widgetStyling = {},
     wrappers,
-    ...widgetProps
+    ...baseWidgetProps
   } = containerProps;
-
-  // Add some essential props for the base widget
-  const baseWidgetProps = {
-    connected: connected,
-    value: value,
-    ...widgetProps
-  };
 
   // Put appropriate components on the list of components to be wrapped
   let components = [];
@@ -104,7 +109,7 @@ export const Widget = (
     components.push(CopyWrapper);
   }
 
-  components.push(widget);
+  components.push(baseWidget);
 
   return recursiveWrapping(
     components,

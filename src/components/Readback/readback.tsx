@@ -10,7 +10,7 @@ import { Alarm, alarmOf, AlarmSeverity } from "../../vtypes/alarm";
 import { vtypeToString } from "../../vtypes/utils";
 import {
   Widget,
-  WidgetInterface,
+  PVWidgetInterface,
   ConnectedWidgetInterface
 } from "../Widget/widget";
 
@@ -151,9 +151,9 @@ interface ReadbackWidgetProps {
 }
 
 export const ReadbackWidget = (
-  props: ReadbackWidgetProps & WidgetInterface
+  props: ReadbackWidgetProps & PVWidgetInterface
 ): JSX.Element => {
-  return <Widget {...props} widget={Readback} />;
+  return <Widget {...props} baseWidget={Readback} />;
 };
 
 export const ConnectedReadbackWidget: React.FC<

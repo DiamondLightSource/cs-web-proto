@@ -55,7 +55,7 @@ export function objectToComponent(
     | AbsolutePositionDescription & BasicPositionDescription
     | FlexiblePositionDescription & BasicPositionDescription
     | null,
-  componentDict: { [index: string]: any },
+  componentDict: { [index: string]: React.FC<any> },
   existingMacroMap: MacroMap
 ): JSX.Element | null {
   // If there is nothing here, return null

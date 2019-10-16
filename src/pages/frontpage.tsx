@@ -11,6 +11,8 @@ import {
 import { ConnectedInput } from "../components/Input/input";
 import { Label } from "../components/Label/label";
 import { vstring } from "../vtypes/string";
+import { Widget } from "../components/Widget/widget";
+import { FlexContainer } from "../components/FlexContainer/flexContainer";
 
 export const FrontPage = (): JSX.Element => (
   <div id="Central Column" style={{ width: "80%", margin: "auto" }}>
@@ -101,30 +103,56 @@ export const FrontPage = (): JSX.Element => (
           pvName="test://tim"
           connected={true}
           value={vstring("Testing")}
-          containerStyling={{ positioning: { flexible: true }, margin: "5px" }}
+          containerStyling={{ flexible: true, margin: "5px" }}
           wrappers={{ alarmborder: true, copywrapper: true }}
         />
         <ConnectedReadbackWidget
           pvName="sim://enum"
-          containerStyling={{ positioning: { flexible: true }, margin: "5px" }}
+          containerStyling={{ flexible: true, margin: "5px" }}
           wrappers={{ alarmborder: false, copywrapper: false }}
         />
         <ConnectedReadbackWidget
           pvName="sim://enum"
-          containerStyling={{ positioning: { flexible: true }, margin: "5px" }}
+          containerStyling={{ flexible: true, margin: "5px" }}
           wrappers={{ alarmborder: false, copywrapper: true }}
         />
         <ConnectedReadbackWidget
           pvName="sim://enum"
-          containerStyling={{ positioning: { flexible: true }, margin: "5px" }}
+          containerStyling={{ flexible: true, margin: "5px" }}
           wrappers={{ alarmborder: true, copywrapper: false }}
         />
         <ConnectedReadbackWidget
-          pvName="sim://sine"
-          containerStyling={{ positioning: { flexible: true }, margin: "5px" }}
+          pvName="${thisPV}"
+          containerStyling={{
+            flexible: true,
+            margin: "5px"
+          }}
           wrappers={{ alarmborder: true, copywrapper: true }}
           precision={3}
+          macroMap={{ thisPV: "sim://sine" }}
         />
+      </div>
+      <div>
+        <Widget
+          baseWidget={FlexContainer}
+          containerStyling={{ flexible: true, margin: "5px" }}
+          wrappers={{ alarmborder: false, copywrapper: false }}
+        >
+          <Label
+            text="Wrapped in a widget FlexContainer"
+            style={{ width: "300px" }}
+          />
+          <ConnectedReadbackWidget
+            pvName="${thisPV}"
+            containerStyling={{
+              flexible: true,
+              width: "300px"
+            }}
+            wrappers={{ alarmborder: false, copywrapper: false }}
+            precision={3}
+            macroMap={{ thisPV: "sim://sine" }}
+          />
+        </Widget>
       </div>
     </div>
   </div>
