@@ -14,6 +14,7 @@ import { vstring } from "../vtypes/string";
 import { Widget } from "../components/Widget/widget";
 import { FlexContainer } from "../components/FlexContainer/flexContainer";
 import { widgetDescriptionToComponent } from "../components/Positioning/positioning";
+import { Blank } from "../components/Positioning/ionpExample";
 
 export const FrontPage = (): JSX.Element => (
   <div id="Central Column" style={{ width: "80%", margin: "auto" }}>
@@ -180,17 +181,39 @@ export const FrontPage = (): JSX.Element => (
       <div>
         {widgetDescriptionToComponent(
           {
-            type: "readback",
+            type: "blank",
             containerStyling: {
               position: "relative",
               flexible: true,
               margin: "5px"
             },
-            pvName: "sim://sine",
-            precision: 2,
-            wrappers: { copywrapper: true }
+            style: { height: "250px", width: "600px" },
+            children: [
+              {
+                type: "label",
+                containerStyling: {
+                  position: "relative",
+                  flexible: true
+                },
+                text: "Testing",
+                style: { height: "100px", width: "500px", margin: "5px" }
+              },
+              {
+                type: "readback",
+                containerStyling: {
+                  position: "relative",
+                  flexible: true,
+                  height: "100px",
+                  width: "500px",
+                  margin: "5px"
+                },
+                pvName: "sim://sine",
+                precision: 2
+              }
+            ]
           },
-          { readback: ConnectedReadbackWidget },
+
+          { readback: ConnectedReadbackWidget, label: Label, blank: Blank },
           {}
         )}
       </div>
