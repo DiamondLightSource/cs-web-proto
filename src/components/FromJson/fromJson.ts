@@ -8,7 +8,8 @@ import { Blank } from "../Positioning/ionpExample";
 import {
   ConnectedReadback,
   ConnectedCopyReadback,
-  ConnectedStandaloneReadback
+  ConnectedStandaloneReadback,
+  ConnectedReadbackWidget
 } from "../Readback/readback";
 import { ConnectedInput, ConnectedStandaloneInput } from "../Input/input";
 import { FlexContainer } from "../FlexContainer/flexContainer";
@@ -47,6 +48,7 @@ export const FromJson = (props: FromJsonProps): JSX.Element | null => {
     label: MacroLabel,
     readback: ConnectedStandaloneReadback,
     connectedReadback: ConnectedReadback,
+    connectedReadbackWidget: ConnectedReadbackWidget,
     connectedCopyReadback: ConnectedCopyReadback,
     input: ConnectedInput,
     connectedStandaloneInput: ConnectedStandaloneInput,
