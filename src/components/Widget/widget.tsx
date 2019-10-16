@@ -1,4 +1,4 @@
-import React, { Children } from "react";
+import React from "react";
 
 import { AbsolutePosition, FlexiblePosition } from "../Positioning/positioning";
 import { CopyWrapper } from "../CopyWrapper/copyWrapper";
@@ -14,7 +14,7 @@ interface ContainerFeatures {
 interface AbsoluteContainer extends AbsolutePosition, ContainerFeatures {}
 interface FlexibleContainer extends FlexiblePosition, ContainerFeatures {}
 
-interface ShapingInterface {
+export interface ShapingInterface {
   containerStyling: AbsoluteContainer | FlexibleContainer;
 
   // ... other ways to customise the container itself could be added to this interface
