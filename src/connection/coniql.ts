@@ -11,7 +11,7 @@ import {
 } from "apollo-cache-inmemory";
 import introspectionQueryResultData from "./fragmentTypes.json";
 import log from "loglevel";
-import { VType, vdoubleArray } from "../vtypes/vtypes";
+import { VType } from "../vtypes/vtypes";
 import {
   Connection,
   ConnectionChangedCallback,
