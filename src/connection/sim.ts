@@ -96,10 +96,7 @@ class RandomPv extends SimPv {
     super(pvName, onConnectionUpdate, onValueUpdate, updateRate);
 
     this.maybeSetInterval((): void => {
-      const value = this.getValue();
-      if (value != undefined) {
-        this.onValueUpdate(this.pvName, value);
-      }
+      this.onValueUpdate(this.pvName, this.getValue());
     });
   }
   public getValue(): VType | undefined {
@@ -119,10 +116,9 @@ class Disconnector extends SimPv {
     updateRate?: number
   ) {
     super(pvName, onConnectionUpdate, onValueUpdate, updateRate);
-    let value = this.getValue();
-    if (value !== undefined) {
-        this.onValueUpdate(this.pvName, vtypeInfo(value, {}));
-    }
+  let value = this.getValue();
+  this.onValueUpdate(this.pvName, vtypeInfo(value, {}));
+    this.onValueUpdate(this.pvName, this.getValue());
     this.maybeSetInterval((): void =>
       this.onConnectionUpdate(this.pvName, this.getConnection())
     );
@@ -133,9 +129,8 @@ class Disconnector extends SimPv {
 }
 
   public getValue(): VType | undefined {
-  const value = Math.random();
-  return vdouble(value);
-}
+    return vdouble(Math.random());
+  }
 }
 
 class SimEnumPv extends SimPv {
