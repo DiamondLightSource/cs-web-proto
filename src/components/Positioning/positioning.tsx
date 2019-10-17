@@ -48,7 +48,7 @@ export interface FlexiblePositionDescription
   extends BasicPositionDescription,
     FlexiblePosition {}
 
-interface WidgetDescription extends ShapingInterface {
+export interface WidgetDescription extends ShapingInterface {
   type: string;
   // All other component properties
   [x: string]: any;
@@ -139,7 +139,7 @@ export function widgetDescriptionToComponent(
   // from the component dictionary provided. Also passes down a macro map which
   // can be overwritten. Uses recursion to generate children.
   widgetDescription: WidgetDescription | null,
-  componentDict: { [index: string]: React.FC<any> },
+  widgetDict: { [index: string]: React.FC<any> },
   existingMacroMap: MacroMap
 ): JSX.Element | null {
   // If there is nothing here, return null
@@ -160,14 +160,14 @@ export function widgetDescriptionToComponent(
     const latestMacroMap = { ...existingMacroMap, ...macroMap };
 
     // Create the main component
-    let Component = componentDict[type];
+    let Component = widgetDict[type];
 
     // Create all children components - recursive
     // Pass the latest macroMap down
     let ChildComponents = null;
     if (children) {
       ChildComponents = children.map((child): JSX.Element | null =>
-        widgetDescriptionToComponent(child, componentDict, latestMacroMap)
+        widgetDescriptionToComponent(child, widgetDict, latestMacroMap)
       );
     } else {
       ChildComponents = null;
