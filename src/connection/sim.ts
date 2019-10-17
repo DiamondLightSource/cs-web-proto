@@ -309,19 +309,13 @@ interface SimCache {
   [pvName: string]: SimPv;
 }
 
-interface EnumCache {
-  [pvName: string]: EnumPv;
-}
-
 export class SimulatorPlugin implements Connection {
   private simPvs: SimCache;
-  private enumPvs: EnumCache;
   private onConnectionUpdate: ConnectionChangedCallback;
   private onValueUpdate: ValueChangedCallback;
 
   public constructor(updateRate?: number) {
     this.simPvs = {};
-    this.enumPvs = {};
     this.onConnectionUpdate = nullConnCallback;
     this.onValueUpdate = nullValueCallback;
     this.subscribe = this.subscribe.bind(this);
