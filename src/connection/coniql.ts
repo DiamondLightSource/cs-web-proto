@@ -24,6 +24,7 @@ import { VType } from "../vtypes/vtypes";
 import { AlarmStatus, alarm } from "../vtypes/alarm";
 import { time } from "../vtypes/time";
 import { SubscriptionClient } from "subscriptions-transport-ws";
+import { display } from "../vtypes/display";
 
 export interface ConiqlStatus {
   quality: "ALARM" | "WARNING" | "VALID";
@@ -83,6 +84,22 @@ function coniqlToPartialVtype(
     result.array = meta.array;
     if (meta.__typename === "NumberMeta") {
       result.type = VTYPE_CLASSES[meta.numberType as CONIQL_TYPE];
+      if (meta.display) {
+        const {
+          controlRange,
+          displayRange,
+          alarmRange,
+          warningRange,
+          units
+        } = meta.display;
+        result.display = display(
+          displayRange,
+          alarmRange,
+          warningRange,
+          controlRange,
+          units
+        );
+      }
     } else {
       result.type = VTYPE_CLASSES[meta.type as CONIQL_TYPE];
     }
@@ -112,6 +129,27 @@ const PV_SUBSCRIPTION = gql`
         ... on NumberMeta {
           array
           numberType
+          display {
+            controlRange {
+              min
+              max
+            }
+            displayRange {
+              min
+              max
+            }
+            alarmRange {
+              min
+              max
+            }
+            warningRange {
+              min
+              max
+            }
+            units
+            precision
+            form
+          }
         }
       }
       status {
