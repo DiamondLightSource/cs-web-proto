@@ -68,15 +68,18 @@ it("test receive updates", (done): void => {
   simulator.subscribe("sim://sine");
 });
 
-it("initial limit values", (): void => {
-  expect(simulator.getValue("sim://limit").value).toBe(50);
+it("initial limit values", (done): void => {
+  getValue("sim://limit", (value): void => {
+    expect(value.getValue()).toBe(50);
+    done();
+  });
+  simulator.subscribe("sim://limit");
 });
 
 it("modifying limit values", (done): void => {
   function* repeatedCallback(): void {
     const value1 = yield;
     expect(value1.getValue()).toEqual(50);
-    simulator.putPv("sim://limit", vdouble(17));
     const value2 = yield;
     expect(value2.getValue()).toEqual(17);
     done();
@@ -87,24 +90,24 @@ it("modifying limit values", (done): void => {
     iter.next(value);
   });
   simulator.subscribe("sim://limit");
+  simulator.putPv("sim://limit", vdouble(17));
 });
 
 it("distinguish limit values", (done): void => {
-  let testCount = 0;
+  function* repeatedCallback(): void {
+    const update1 = yield;
+    expect(update1.name).toEqual("sim://limit#one");
+    expect(update1.value.getValue()).toEqual(1);
+    const update2 = yield;
+    expect(update2.name).toEqual("sim://limit#two");
+    expect(update2.value.getValue()).toEqual(2);
+    done();
+  }
+  const iter = repeatedCallback();
+  iter.next();
 
-  getValue("sim://limit#one", (value: VType | undefined): void => {
-    testCount++;
-    expect(value.getValue()).toEqual(1);
-    if (testCount == 2) {
-      done();
-    }
-  });
-  getValue("sim://limit#two", (value: Vtype): void => {
-    testCount++;
-    expect(value.getValue()).toEqual(2);
-    if (testCount == 2) {
-      done();
-    }
+  simulator.connect(nullConnCallback, function(name, value): void {
+    iter.next({ name: name, value: value });
   });
 
   simulator.putPv("sim://limit#one", vdouble(1));

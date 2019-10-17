@@ -273,9 +273,6 @@ class LimitData extends SimPv {
     super(pvName, onConnectionUpdate, onValueUpdate, updateRate);
     this.value = vdouble(50);
     this.onConnectionUpdate(this.pvName, this.getConnection());
-    this.maybeSetInterval((): void => {
-      this.onValueUpdate(this.pvName, this.getValue());
-    });
   }
 
   public updateValue(value: VType): void {
