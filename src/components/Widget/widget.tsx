@@ -93,6 +93,11 @@ export const Widget = (props: WidgetInterface): JSX.Element => {
   // Assume flexible position if not provided with anything
   const { containerStyling, ...containerProps } = props;
 
+  // Manipulate for absolute styling
+  // Put x and y back in as left and top respectively
+  const { x = null, y = null } = { ...containerStyling };
+  const mappedContainerStyling = { top: y, left: x, ...containerStyling };
+
   // Extract remaining parameters
   let {
     baseWidget,
@@ -120,7 +125,7 @@ export const Widget = (props: WidgetInterface): JSX.Element => {
 
   return recursiveWrapping(
     components,
-    containerStyling,
+    mappedContainerStyling,
     widgetStyling,
     containerProps,
     baseWidgetProps

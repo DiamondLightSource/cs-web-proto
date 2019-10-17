@@ -2,9 +2,10 @@ import { useState } from "react";
 import {
   objectToComponent,
   AbsolutePositionDescription,
-  widgetDescriptionToComponent
+  widgetDescriptionToComponent,
+  WidgetDescription
 } from "../Positioning/positioning";
-import { MacroLabel } from "../Label/label";
+import { MacroLabel, LabelWidget } from "../Label/label";
 import { Blank } from "../Positioning/ionpExample";
 import {
   ConnectedReadback,
@@ -15,7 +16,7 @@ import {
 import { ConnectedInput, ConnectedStandaloneInput } from "../Input/input";
 import { FlexContainer } from "../FlexContainer/flexContainer";
 import { MacroMap } from "../../redux/csState";
-import { WidgetDescription } from "../Positioning/positioning";
+import { Display } from "../Display/display";
 
 interface FromJsonProps {
   file: string;
@@ -80,8 +81,12 @@ export const WidgetFromJson = (props: FromJsonProps): JSX.Element | null => {
         setJson(json);
       });
   }
+  console.log(json);
   const widgetDict = {
     readback: ConnectedReadbackWidget,
+    label: LabelWidget,
+    display: Display,
+    empty: Display,
     widgetFromJSON: WidgetFromJson
   };
 
