@@ -2,7 +2,7 @@ import { DISPLAY_NONE } from "./display";
 import { RANGE_NONE } from "./defs";
 import { ALARM_NONE, AlarmSeverity, AlarmStatus } from "./alarm";
 import { timeNow, Time } from "./time";
-import { venum } from "./vtypes";
+import { venum, vdoubleArray } from "./vtypes";
 
 describe("Display", (): void => {
   test("DISPLAY_NONE has zero alarm range", (): void => {
@@ -40,6 +40,17 @@ describe("Time", (): void => {
   });
   test("timeNow() has user tag 0", (): void => {
     expect(timeNow().getUserTag()).toEqual(0);
+  });
+});
+
+describe("VDoubleArray", (): void => {
+  test("vdoubleArray function", (): void => {
+    const vda = vdoubleArray([1, 2, 3], [3]);
+    expect(vda.getValue()).toEqual([1, 2, 3]);
+    expect(vda.getSizes()).toEqual([3]);
+    expect(vda.getAlarm()).toEqual(ALARM_NONE);
+    expect(vda.getAlarm().getSeverity()).toBe(0);
+    expect(vda.getTime()).toBeInstanceOf(Time);
   });
 });
 
