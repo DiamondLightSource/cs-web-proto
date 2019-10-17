@@ -1,6 +1,7 @@
 import React from "react";
 import { connectionWrapper } from "../ConnectionWrapper/connectionWrapper";
 import { CopyWrapper } from "../CopyWrapper/copyWrapper";
+import { RuleWrapper } from "../RuleWrapper/ruleWrapper";
 import { AlarmBorder } from "../AlarmBorder/alarmBorder";
 
 import classes from "./readback.module.css";
@@ -48,14 +49,21 @@ export const Readback = (props: ReadbackProps): JSX.Element => {
   }
 
   return (
-    <div
-      className={`Readback ${classes.Readback} ${getClass(
-        alarm.getSeverity()
-      )}`}
-      style={style}
+    <RuleWrapper
+      prop="color"
+      state="yellow"
+      value={props.value}
+      style={props.style}
     >
-      {displayedValue}
-    </div>
+      <div
+        className={`Readback ${classes.Readback} ${getClass(
+          alarm.getSeverity()
+        )}`}
+        style={style}
+      >
+        {displayedValue}
+      </div>
+    </RuleWrapper>
   );
 };
 

@@ -18,6 +18,7 @@ import { JsonPage } from "./pages/fromJson";
 import { lightTheme, darkTheme, ThemeContext } from "./themeContext";
 import { FlexExamplePage } from "./pages/flexExamplePage";
 import { EmbeddedPage } from "./pages/embeddedPage";
+import { RulesPage } from "./pages/rulesPage";
 
 log.setLevel("INFO");
 
@@ -76,6 +77,9 @@ const App: React.FC = (): JSX.Element => {
             <Link style={styleLinkButton} to="/embed">
               Embed
             </Link>
+            <Link style={styleLinkButton} to="/rules">
+              Rules
+            </Link>
           </div>
           <div
             id="Central Column"
@@ -100,6 +104,7 @@ const App: React.FC = (): JSX.Element => {
             <Route path="/fromJson" exact component={JsonPage} />
             <Route path="/flex" exact component={FlexExamplePage} />
             <Route path="/embed" exact component={EmbeddedPage} />
+            <Route path="/rules" exact component={RulesPage} />
           </div>
         </div>
       </BrowserRouter>
