@@ -5,21 +5,23 @@ import React from "react";
 import "./App.css";
 import { Provider } from "react-redux";
 import { BrowserRouter, Link, Route } from "react-router-dom";
+import { getStore, initialiseStore } from "./redux/store";
+import log from "loglevel";
 import { FrontPage } from "./pages/frontpage";
 import { InputsPage } from "./pages/inputsPage";
 import { ReadbacksPage } from "./pages/readbacksPage";
 import { ProgressPage } from "./pages/progressPage";
 import { PositioningExamplePage } from "./pages/positioningExamplePage";
-import { MacrosPage } from "./pages/macrosPage";
-import { getStore, initialiseStore } from "./redux/store";
-import log from "loglevel";
-import { SimulatorPlugin } from "./connection/sim";
 import { JsonPage } from "./pages/fromJson";
+import { ConiqlPage } from "./pages/coniqlPage";
+import { ConiqlPlugin } from "./connection/coniql";
+import { MacrosPage } from "./pages/macrosPage";
 import { lightTheme, darkTheme, ThemeContext } from "./themeContext";
 import { FlexExamplePage } from "./pages/flexExamplePage";
 import { EmbeddedPage } from "./pages/embeddedPage";
 
 log.setLevel("INFO");
+const SOCKET = "localhost:8000";
 
 function applyTheme(theme: any): void {
   Object.keys(theme).forEach(function(key): void {
@@ -29,7 +31,7 @@ function applyTheme(theme: any): void {
 }
 
 const App: React.FC = (): JSX.Element => {
-  const plugin = new SimulatorPlugin();
+  const plugin = new ConiqlPlugin(SOCKET);
   initialiseStore(plugin);
   const store = getStore();
   const { toggle, dark } = React.useContext(ThemeContext);
@@ -70,6 +72,9 @@ const App: React.FC = (): JSX.Element => {
             <Link style={styleLinkButton} to="/fromJson">
               JSON Loading
             </Link>
+            <Link style={styleLinkButton} to="/coniql">
+              Coniql
+            </Link>
             <Link style={styleLinkButton} to="/flex">
               Flex
             </Link>
@@ -98,6 +103,7 @@ const App: React.FC = (): JSX.Element => {
             />
             <Route path="/macros" exact component={MacrosPage} />
             <Route path="/fromJson" exact component={JsonPage} />
+            <Route path="/coniql" exact component={ConiqlPage} />
             <Route path="/flex" exact component={FlexExamplePage} />
             <Route path="/embed" exact component={EmbeddedPage} />
           </div>

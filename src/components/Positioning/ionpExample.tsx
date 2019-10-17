@@ -45,6 +45,7 @@ const IonpScreen: AbsolutePositionDescription = {
       y: 0,
       width: "328px",
       height: "32px",
+      // eslint-disable-next-line no-template-curly-in-string
       text: "${device}",
       style: {
         textAlign: "center",
