@@ -23,6 +23,7 @@ import { PartialVType } from "../redux/csState";
 import { VType } from "../vtypes/vtypes";
 import { AlarmStatus, alarm } from "../vtypes/alarm";
 import { time } from "../vtypes/time";
+import { SubscriptionClient } from "subscriptions-transport-ws";
 
 export interface ConiqlStatus {
   quality: "ALARM" | "WARNING" | "VALID";
@@ -92,33 +93,6 @@ function coniqlToPartialVtype(
   return result;
 }
 
-function createLink(socket: string): ApolloLink {
-  const link: ApolloLink = ApolloLink.split(
-    ({ query }): boolean => {
-      // https://github.com/apollographql/apollo-client/issues/3090
-      const definition = getMainDefinition(query);
-      return (
-        definition.kind === "OperationDefinition" &&
-        definition.operation === "subscription"
-      );
-    },
-    new WebSocketLink({
-      uri: `ws://${socket}/subscriptions`,
-      options: {
-        reconnect: true
-      }
-    }),
-    new HttpLink({ uri: `http://${socket}/graphql` })
-  );
-
-  return link;
-}
-
-const fragmentMatcher = new IntrospectionFragmentMatcher({
-  introspectionQueryResultData
-});
-const cache = new InMemoryCache({ fragmentMatcher });
-
 const PV_SUBSCRIPTION = gql`
   subscription sub1($pvName: String!) {
     subscribeChannel(id: $pvName) {
@@ -154,13 +128,46 @@ export class ConiqlPlugin implements Connection {
   private onConnectionUpdate: ConnectionChangedCallback;
   private onValueUpdate: ValueChangedCallback;
   private connected: boolean;
+  private wsClient: SubscriptionClient;
+  private disconnected: string[] = [];
 
   public constructor(socket: string) {
-    const link = createLink(socket);
+    const fragmentMatcher = new IntrospectionFragmentMatcher({
+      introspectionQueryResultData
+    });
+
+    const cache = new InMemoryCache({ fragmentMatcher });
+    this.wsClient = new SubscriptionClient(`ws://${socket}/subscriptions`, {
+      reconnect: true
+    });
+    this.wsClient.onReconnecting((): void => {
+      for (const pvName of this.disconnected) {
+        this.subscribe(pvName);
+      }
+      this.disconnected = [];
+    });
+    const link = this.createLink(socket);
     this.client = new ApolloClient({ link, cache });
     this.onConnectionUpdate = nullConnCallback;
     this.onValueUpdate = nullValueCallback;
     this.connected = false;
+  }
+
+  public createLink(socket: string): ApolloLink {
+    const link: ApolloLink = ApolloLink.split(
+      ({ query }): boolean => {
+        // https://github.com/apollographql/apollo-client/issues/3090
+        const definition = getMainDefinition(query);
+        return (
+          definition.kind === "OperationDefinition" &&
+          definition.operation === "subscription"
+        );
+      },
+      new WebSocketLink(this.wsClient),
+      new HttpLink({ uri: `http://${socket}/graphql` })
+    );
+
+    return link;
   }
 
   public connect(
@@ -192,6 +199,11 @@ export class ConiqlPlugin implements Connection {
         },
         error: (err): void => {
           log.error("err", err);
+        },
+        complete: (): void => {
+          // complete is called when the websocket is disconnected.
+          this.onConnectionUpdate(pvName, { isConnected: false });
+          this.disconnected.push(pvName);
         }
       });
   }
