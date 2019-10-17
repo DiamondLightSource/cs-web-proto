@@ -48,6 +48,22 @@ describe("ConiqlPlugin", (): void => {
     expect(mockValUpdate).toHaveBeenCalledWith("hello", { value: 42 });
   });
 
+  it("handles update to array value", (): void => {
+    ApolloClient.prototype.subscribe = jest.fn(
+      (_): MockObservable =>
+        new MockObservable({
+          // Corresponds to Int32Array with values [0, 1, 2]
+          numberType: "INT32",
+          base64: "AAAAAAEAAAACAAAA"
+        })
+    ) as jest.Mock;
+    cp.subscribe("hello");
+    expect(ApolloClient.prototype.subscribe).toHaveBeenCalled();
+    expect(mockValUpdate).toHaveBeenCalledWith("hello", {
+      value: Int32Array.from([0, 1, 2])
+    });
+  });
+
   it("handles update to time", (): void => {
     ApolloClient.prototype.subscribe = jest.fn(
       (_): MockObservable => new MockObservable(undefined, EPOCH_2017)

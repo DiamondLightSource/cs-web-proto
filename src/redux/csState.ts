@@ -80,7 +80,7 @@ const mergeVtype = (original: VType, update: PartialVType): VType => {
     // should we require that the update has a time?
     const time = update.time ? update.time : timeOf(original);
     const display = update.display ? update.display : displayOf(original);
-    if (className === "VString") {
+    if (className === "VString" || className === "IVString") {
       // what happened to VStringArray in VTypes?
       return vstring(value, alarmVal, time);
     } else {
