@@ -13,7 +13,11 @@ import {
   ConnectedStandaloneReadback,
   ConnectedReadbackWidget
 } from "../Readback/readback";
-import { ConnectedInput, ConnectedStandaloneInput } from "../Input/input";
+import {
+  ConnectedInput,
+  ConnectedStandaloneInput,
+  ConnectedInputWidget
+} from "../Input/input";
 import { FlexContainer } from "../FlexContainer/flexContainer";
 import { MacroMap } from "../../redux/csState";
 import { Display } from "../Display/display";
@@ -84,6 +88,7 @@ export const WidgetFromJson = (props: FromJsonProps): JSX.Element | null => {
   console.log(json);
   const widgetDict = {
     readback: ConnectedReadbackWidget,
+    input: ConnectedInputWidget,
     label: LabelWidget,
     display: Display,
     empty: Display,

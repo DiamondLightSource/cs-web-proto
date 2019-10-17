@@ -7,6 +7,9 @@
     "width": "400px",
     "height": "600px"
   },
+  "macroMap": {
+    "metapv": "metapv1"
+  },
   "children": [
     {
       "type": "label",
@@ -31,7 +34,7 @@
       "text": "hello"
     },
     {
-      "type": "readback",
+      "type": "input",
       "pvName": "meta://metapv1",
       "containerStyling": {
         "position": "absolute",
@@ -44,7 +47,7 @@
     },
     {
       "type": "readback",
-      "pvName": "meta://metapv1",
+      "pvName": "meta://${metapv}",
       "containerStyling": {
         "position": "absolute",
         "x": "210px",
