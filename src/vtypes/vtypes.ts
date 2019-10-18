@@ -6,7 +6,8 @@ export abstract class VType {
   public abstract getValue(): any;
 }
 
-export abstract class Scalar implements AlarmProvider, TimeProvider {
+export abstract class Scalar extends VType
+  implements AlarmProvider, TimeProvider {
   public abstract getAlarm(): Alarm;
   public abstract getTime(): Time;
 }

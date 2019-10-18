@@ -44,8 +44,7 @@ class SinePv extends SimPv {
   ) {
     super(pvName, onConnectionUpdate, onValueUpdate, updateRate);
     setInterval(
-      (): void =>
-        this.onValueUpdate(this.pvName, { value: this.getValue().getValue() }),
+      (): void => this.onValueUpdate(this.pvName, this.getValue()),
       this.updateRate
     );
   }
@@ -65,7 +64,7 @@ class Disconnector extends SimPv {
     updateRate: number
   ) {
     super(pvName, onConnectionUpdate, onValueUpdate, updateRate);
-    this.onValueUpdate(this.pvName, { value: this.getValue().getValue() });
+    this.onValueUpdate(this.pvName, this.getValue());
     setInterval(
       (): void => this.onConnectionUpdate(this.pvName, this.getConnection()),
       this.updateRate
@@ -97,9 +96,9 @@ class SimEnumPv extends SimPv {
   ) {
     super(pvName, onConnectionUpdate, onValueUpdate, updateRate);
     this.onConnectionUpdate(this.pvName, { isConnected: true });
-    this.onValueUpdate(this.pvName, { value: this.getValue() });
+    this.onValueUpdate(this.pvName, this.getValue());
     setInterval(
-      (): void => this.onValueUpdate(this.pvName, { value: this.getValue() }),
+      (): void => this.onValueUpdate(this.pvName, this.getValue()),
       this.updateRate
     );
   }
@@ -132,9 +131,9 @@ class EnumPv extends SimPv {
   ) {
     super(pvName, onConnectionUpdate, onValueUpdate, updateRate);
     this.onConnectionUpdate(this.pvName, { isConnected: true });
-    this.onValueUpdate(this.pvName, { value: this.getValue() });
+    this.onValueUpdate(this.pvName, this.getValue());
     setInterval(
-      (): void => this.onValueUpdate(this.pvName, { value: this.getValue() }),
+      (): void => this.onValueUpdate(this.pvName, this.getValue()),
       this.updateRate
     );
   }
@@ -190,7 +189,7 @@ class MetaData extends SimPv {
   ) {
     super(pvName, onConnectionUpdate, onValueUpdate, updateRate);
     this.value = vdouble(50);
-    this.onValueUpdate(this.pvName, { value: this.getValue().getValue() });
+    this.onValueUpdate(this.pvName, this.getValue());
     setInterval(
       (): void => this.onConnectionUpdate(this.pvName, this.getConnection()),
       this.updateRate
@@ -266,9 +265,10 @@ export class SimulatorPlugin implements Connection {
   public subscribe(pvName: string): void {
     log.debug(`Subscribing to ${pvName}.`);
     if (pvName.startsWith("loc://")) {
-      this.localPvs[pvName] = vdouble(0);
+      const val = vdouble(0);
+      this.localPvs[pvName] = val;
       this.onConnectionUpdate(pvName, { isConnected: true });
-      this.onValueUpdate(pvName, { value: vdouble(0) });
+      this.onValueUpdate(pvName, val);
     } else if (pvName === "sim://disconnector") {
       this.simPvs[pvName] = new Disconnector(
         "sim://disconnector",
@@ -314,15 +314,15 @@ export class SimulatorPlugin implements Connection {
   public putPv(pvName: string, value: VType): void {
     if (pvName.startsWith("loc://")) {
       this.localPvs[pvName] = value;
-      this.onValueUpdate(pvName, { value: value.getValue() });
+      this.onValueUpdate(pvName, value);
     } else if (pvName.startsWith("meta://")) {
       let meta = this.metaPvs[pvName];
       meta.updateValue(value);
-      this.onValueUpdate(pvName, { value: meta.getValue().getValue() });
+      this.onValueUpdate(pvName, meta.getValue());
     } else if (pvName.startsWith("enum://")) {
       let enumData = this.enumPvs[pvName];
       enumData.updateValue(value);
-      this.onValueUpdate(pvName, { value: enumData.getValue() });
+      this.onValueUpdate(pvName, enumData.getValue());
     }
   }
 
