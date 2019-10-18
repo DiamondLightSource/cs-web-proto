@@ -1,4 +1,3 @@
-import log from "loglevel";
 import {
   VALUE_CHANGED,
   ActionType,
@@ -8,7 +7,7 @@ import {
   MACRO_UPDATED,
   UNSUBSCRIBE
 } from "./actions";
-import {VType} from "../vtypes/vtypes";
+import { VType } from "../vtypes/vtypes";
 import { mergeVtype } from "../vtypes/merge";
 
 const initialState: CsState = {
@@ -42,7 +41,6 @@ export interface CsState {
   macroMap: MacroMap;
   subscriptions: Subscriptions;
 }
-
 
 export function csReducer(state = initialState, action: ActionType): CsState {
   switch (action.type) {

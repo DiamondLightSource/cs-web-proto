@@ -20,7 +20,7 @@ import {
 
 import { vstring } from "../vtypes/string";
 import { Time, timeOf } from "../vtypes/time";
-import { Display, displayOf, } from "../vtypes/display";
+import { Display, displayOf } from "../vtypes/display";
 
 const VNumbers: { [index: string]: VNumberBuilder } = {
   IVDouble: vdouble,
@@ -41,10 +41,13 @@ export interface PartialVType {
   time?: Time;
   display?: Display;
   index?: number; // venum
-  choices?: string[]
+  choices?: string[];
 }
 
-export function vtypeInfo(original: VType, update: PartialVType): PartialVType {
+export function vtypeInfo(
+  original: VType | undefined,
+  update: PartialVType
+): PartialVType | undefined {
   let className = update.type ? update.type : original.constructor.name;
   const array = update.array ? update.array : className.includes("Array");
   const value = update.value ? update.value : original.getValue();
@@ -53,8 +56,19 @@ export function vtypeInfo(original: VType, update: PartialVType): PartialVType {
   const time = update.time ? update.time : timeOf(original);
   const display = update.display ? update.display : displayOf(original);
 
-  const index = update.index ? update.index : (enumOf(original) ? enumOf(original).getIndex() : undefined);
-  const choices = update.choices ? update.choices : (enumOf(original) ? enumOf(original).getDisplay().getChoices() : undefined);
+  const index =
+    update.index !== undefined
+      ? update.index
+      : enumOf(original)
+      ? enumOf(original).getIndex()
+      : undefined;
+  const choices = update.choices
+    ? update.choices
+    : enumOf(original)
+    ? enumOf(original)
+        .getDisplay()
+        .getChoices()
+    : undefined;
   return {
     type: className,
     array: array,
@@ -64,17 +78,23 @@ export function vtypeInfo(original: VType, update: PartialVType): PartialVType {
     display: display,
     index: index,
     choices: choices
-  }
-
+  };
 }
 
-export function mergeVtype(original: VType, update: PartialVType, showErrors: boolean = true): VType {
+export function mergeVtype(
+  original: VType,
+  update: PartialVType,
+  showErrors: boolean = true
+): VType | undefined {
   try {
+    if (update === undefined) {
+      return undefined;
+    }
     let info = vtypeInfo(original, update);
     if (info.type === "VString" || info.type === "IVString") {
       // what happened to VStringArray in VTypes?
       return vstring(info.value, info.alarm, info.time);
-    } else if (info.type === "VEnum") {
+    } else if (info.type === "VEnum" || info.type === "IVEnum") {
       if (info.index === undefined) {
         throw new Error("index unknown");
       }
@@ -83,8 +103,7 @@ export function mergeVtype(original: VType, update: PartialVType, showErrors: bo
         throw new Error("Choices unknown");
       }
       return venum(info.index, info.choices, info.alarm, info.time);
-    }
-    else {
+    } else {
       if (info.array) {
         let className = info.type;
         if (className === undefined) {
@@ -102,11 +121,15 @@ export function mergeVtype(original: VType, update: PartialVType, showErrors: bo
           );
         }
       } else {
-        return VNumbers[info.type](info.value, info.alarm, info.time, info.display);
+        return VNumbers[info.type](
+          info.value,
+          info.alarm,
+          info.time,
+          info.display
+        );
       }
     }
-  }
-  catch (error) {
+  } catch (error) {
     // This happens occasionally, and has serious consequences, but I
     // don't know why!
     if (showErrors) {
@@ -115,8 +138,7 @@ export function mergeVtype(original: VType, update: PartialVType, showErrors: bo
     return vstring(
       "error",
 
-      alarm(
-        AlarmSeverity.MAJOR, AlarmStatus.NONE, "error")
+      alarm(AlarmSeverity.MAJOR, AlarmStatus.NONE, "error")
     );
   }
-};
+}

@@ -19,12 +19,12 @@ import {
   nullConnCallback,
   nullValueCallback
 } from "./plugin";
-import { PartialVType } from "../redux/csState";
 import { VType } from "../vtypes/vtypes";
 import { AlarmStatus, alarm } from "../vtypes/alarm";
 import { time } from "../vtypes/time";
 import { SubscriptionClient } from "subscriptions-transport-ws";
 import { display } from "../vtypes/display";
+import { PartialVType } from "../vtypes/merge";
 
 export interface ConiqlStatus {
   quality: "ALARM" | "WARNING" | "VALID";

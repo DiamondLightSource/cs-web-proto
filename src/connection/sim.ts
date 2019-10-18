@@ -11,7 +11,15 @@ import { VType, vdouble, VNumber, venum, VEnum } from "../vtypes/vtypes";
 import { VString } from "../vtypes/string";
 import { alarm, ALARM_NONE } from "../vtypes/alarm";
 import { timeNow } from "../vtypes/time";
-import { mergeVtype, vtypeInfo } from "../vtypes/merge";
+import { vtypeInfo, PartialVType } from "../vtypes/merge";
+
+function partialise(value: VType | undefined): PartialVType {
+  if (value === undefined) {
+    return undefined;
+  } else {
+    return vtypeInfo(value, {});
+  }
+}
 
 abstract class SimPv {
   private abstract simulatorName(): string;
@@ -38,7 +46,7 @@ abstract class SimPv {
   }
 
   public publish(): void {
-    this.onValueUpdate(this.pvName, this.getValue());
+    this.onValueUpdate(this.pvName, partialise(this.getValue()));
   }
 
   public updateValue(value: VType): void {
@@ -66,13 +74,10 @@ class SinePv extends SimPv {
     updateRate?: number
   ) {
     super(pvName, onConnectionUpdate, onValueUpdate, updateRate);
-    setInterval(
-      (): void => {
-        const value = this.getValue();
-        this.onValueUpdate(this.pvName, vtypeInfo(value, {}));
-      },
-      this.updateRate
-    );
+    setInterval((): void => {
+      const value = this.getValue();
+      this.onValueUpdate(this.pvName, partialise(value));
+    }, this.updateRate);
   }
 
   public getValue(): VType | undefined {
@@ -96,7 +101,7 @@ class RandomPv extends SimPv {
     super(pvName, onConnectionUpdate, onValueUpdate, updateRate);
 
     this.maybeSetInterval((): void => {
-      this.onValueUpdate(this.pvName, this.getValue());
+      this.onValueUpdate(this.pvName, partialise(this.getValue()));
     });
   }
   public getValue(): VType | undefined {
@@ -116,17 +121,16 @@ class Disconnector extends SimPv {
     updateRate?: number
   ) {
     super(pvName, onConnectionUpdate, onValueUpdate, updateRate);
-  let value = this.getValue();
-  this.onValueUpdate(this.pvName, vtypeInfo(value, {}));
-    this.onValueUpdate(this.pvName, this.getValue());
+    let value = this.getValue();
+    this.onValueUpdate(this.pvName, partialise(value));
     this.maybeSetInterval((): void =>
       this.onConnectionUpdate(this.pvName, this.getConnection())
     );
   }
   public getConnection(): ConnectionState {
-  const randomBool = Math.random() >= 0.5;
-  return { isConnected: randomBool };
-}
+    const randomBool = Math.random() >= 0.5;
+    return { isConnected: randomBool };
+  }
 
   public getValue(): VType | undefined {
     return vdouble(Math.random());
@@ -148,9 +152,9 @@ class SimEnumPv extends SimPv {
   ) {
     super(pvName, onConnectionUpdate, onValueUpdate, updateRate);
     this.onConnectionUpdate(this.pvName, { isConnected: true });
-    this.onValueUpdate(this.pvName, vtypeInfo(value, {}));
+    this.onValueUpdate(this.pvName, partialise(this.getValue()));
     setInterval(
-      (): void => this.onValueUpdate(this.pvName, vtypeInfo(value, {})),
+      (): void => this.onValueUpdate(this.pvName, partialise(this.getValue())),
       this.updateRate
     );
   }
@@ -183,9 +187,9 @@ class EnumPv extends SimPv {
   ) {
     super(pvName, onConnectionUpdate, onValueUpdate, updateRate);
     this.onConnectionUpdate(this.pvName, { isConnected: true });
-    this.onValueUpdate(this.pvName, vtypeInfo(this.getValue(), {}));
+    this.onValueUpdate(this.pvName, partialise(this.getValue()));
     setInterval(
-      (): void => this.onValueUpdate(this.pvName, vtypeInfo(value, {})),
+      (): void => this.onValueUpdate(this.pvName, partialise(this.getValue())),
       this.updateRate
     );
   }

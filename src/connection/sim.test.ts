@@ -1,5 +1,6 @@
 import { SimulatorPlugin } from "./sim.ts";
 import { VType, vdouble } from "../vtypes/vtypes";
+import { mergeVtype, PartialVType } from "../vtypes/merge";
 import { nullConnCallback } from "./plugin";
 
 let simulator: SimulatorPlugin;
@@ -7,10 +8,14 @@ beforeEach((): void => {
   simulator = new SimulatorPlugin();
 });
 
+function diffToValue(x: PartialVType): VType {
+  return x && mergeVtype(vdouble(0), x);
+}
+
 function getValue(pvName: string, callback: Function): void {
   simulator.connect(nullConnCallback, function(updatePvName, value): void {
     if (pvName === updatePvName) {
-      callback(value);
+      callback(diffToValue(value));
     }
   });
 }
@@ -107,7 +112,7 @@ it("distinguish limit values", (done): void => {
   iter.next();
 
   simulator.connect(nullConnCallback, function(name, value): void {
-    iter.next({ name: name, value: value });
+    iter.next({ name: name, value: diffToValue(value) });
   });
 
   simulator.putPv("sim://limit#one", vdouble(1));
