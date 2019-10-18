@@ -4,7 +4,6 @@ import { writePv } from "../../hooks/useCs";
 
 import { VType, VEnum } from "../../vtypes/vtypes";
 import { vtypeToString, stringToVtype } from "../../vtypes/utils";
-import { Alarm } from "../../vtypes/alarm";
 import { macroWrapper } from "../MacroWrapper/macroWrapper";
 import {
   Widget,
