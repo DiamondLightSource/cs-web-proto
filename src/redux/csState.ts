@@ -13,7 +13,8 @@ import {
   vdouble,
   vdoubleArray,
   VNumberBuilder,
-  VNumberArrayBuilder
+  VNumberArrayBuilder,
+  venum
 } from "../vtypes/vtypes";
 import { vstring } from "../vtypes/string";
 import { Time, timeOf } from "../vtypes/time";
@@ -35,6 +36,7 @@ const initialState: CsState = {
 export interface PvState {
   value: VType;
   connected: boolean;
+  readonly: boolean;
 }
 
 export interface ValueCache {
@@ -80,8 +82,12 @@ const VNumberArrays: { [index: string]: VNumberArrayBuilder } = {
 const mergeVtype = (original: VType, update: PartialVType): VType => {
   try {
     let className = update.type ? update.type : original.constructor.name;
-    const array = update.array ? update.array : className.includes("Array");
-    const value = update.value ? update.value : original.getValue();
+    const array = update.hasOwnProperty("array")
+      ? update.array
+      : className.includes("Array");
+    const value = update.hasOwnProperty("value")
+      ? update.value
+      : original.getValue();
     const alarmVal = update.alarm ? update.alarm : alarmOf(original);
     // should we require that the update has a time?
     const time = update.time ? update.time : timeOf(original);
@@ -89,6 +95,13 @@ const mergeVtype = (original: VType, update: PartialVType): VType => {
     if (className === "VString" || className === "IVString") {
       // what happened to VStringArray in VTypes?
       return vstring(value, alarmVal, time);
+    } else if (className === "VEnum" || className === "IVEnum") {
+      return venum(
+        value.getIndex(),
+        value.getDisplay().getChoices(),
+        value.getAlarm(),
+        value.getTime()
+      );
     } else {
       if (array) {
         if (!className.endsWith("Array")) {
@@ -120,8 +133,14 @@ export function csReducer(state = initialState, action: ActionType): CsState {
   switch (action.type) {
     case VALUE_CHANGED: {
       const newValueCache: ValueCache = { ...state.valueCache };
-      const pvState = state.valueCache[action.payload.pvName];
-      const newValue = mergeVtype(pvState.value, action.payload.value);
+      const { pvName, value } = action.payload;
+      const pvState = state.valueCache[pvName];
+      let newValue: VType;
+      if (value instanceof VType) {
+        newValue = value;
+      } else {
+        newValue = mergeVtype(pvState.value, value);
+      }
       const newPvState = Object.assign({}, pvState, {
         value: newValue
       });
