@@ -1,0 +1,84 @@
+{
+  "type": "display",
+  "containerStyling": {
+    "position": "relative",
+    "flexible": true,
+    "width": "80%",
+    "margin": "auto"
+  },
+  "macroMap": {
+    "PROG": "meta://ProgressPV"
+  },
+  "children": [
+    {
+      "type": "label",
+      "containerStyling": {
+        "position": "relative",
+        "flexible": true,
+        "margin": "5px"
+      },
+      "text": "Input: ${PROG}"
+    },
+    {
+      "type": "input",
+      "pvName": "${PROG}",
+      "containerStyling": {
+        "position": "relative",
+        "flexible": true,
+        "margin": "5px"
+      },
+      "wrappers": {
+        "alarmborder": true,
+        "copywrapper": true
+      },
+      "precision": 3
+    },
+    {
+      "type": "label",
+      "containerStyling": {
+        "position": "relative",
+        "flexible": true,
+        "margin": "5px"
+      },
+      "text": "Readback: ${PROG}"
+    },
+    {
+      "type": "readback",
+      "pvName": "${PROG}",
+      "containerStyling": {
+        "position": "relative",
+        "flexible": true,
+        "margin": "5px"
+      },
+      "wrappers": {
+        "alarmborder": true,
+        "copywrapper": true
+      },
+      "precision": 3
+    },
+    {
+      "type": "label",
+      "containerStyling": {
+        "position": "relative",
+        "flexible": true,
+        "margin": "5px"
+      },
+      "text": "Readback: ${PROG}"
+    },
+    {
+      "type": "progressbar",
+      "pvName": "${PROG}",
+      "containerStyling": {
+        "position": "relative",
+        "flexible": true,
+        "margin": "5px"
+      },
+      "wrappers": {
+        "alarmborder": true,
+        "copywrapper": true
+      },
+      "min": 0,
+      "max": 100
+    }
+  ]
+}

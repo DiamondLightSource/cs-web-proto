@@ -7,6 +7,12 @@ import { connectionWrapper } from "../ConnectionWrapper/connectionWrapper";
 import { CopyWrapper } from "../CopyWrapper/copyWrapper";
 import { AlarmBorder } from "../AlarmBorder/alarmBorder";
 import { vtypeOrUndefinedToNumber } from "../../vtypes/utils";
+import {
+  Widget,
+  PVWidgetInterface,
+  ConnectedWidgetInterface
+} from "../Widget/widget";
+import { macroWrapper } from "../MacroWrapper/macroWrapper";
 
 interface ProgressBarProps {
   connected: boolean;
@@ -51,19 +57,10 @@ export const ProgressBar: React.FC<ProgressBarProps> = (
     max = 100,
     vertical = false,
     color = "#00aa00",
-    top = "0%",
-    left = "0%",
-    height = "100%",
-    width = "100%",
     fontStyle = {},
     precision = undefined
   } = props;
-  let barStyle = {
-    top: top,
-    left: left,
-    height: height,
-    width: width
-  };
+
   // eslint-disable-next-line no-undef
   let numValue = vtypeOrUndefinedToNumber(value);
   let onPercent =
@@ -105,7 +102,7 @@ export const ProgressBar: React.FC<ProgressBarProps> = (
       : numValue.toString();
 
   return (
-    <div style={barStyle}>
+    <div style={{ ...props.style }}>
       <div className={classes.off} style={offStyle} />
       <div className={classes.on} style={onStyle} />
       <div className={classes.label} style={fontStyle}>
@@ -157,3 +154,20 @@ interface ConnectedStandaloneProgressBarProps {
 export const ConnectedStandaloneProgressBar: React.FC<
   ConnectedStandaloneProgressBarProps
 > = connectionWrapper(StandaloneProgressBar);
+
+interface ProgressBarWidgetProps {
+  min: number;
+  max: number;
+  vertical?: boolean;
+  color?: string;
+  precision?: number;
+  style?: object;
+}
+
+export const ProgressBarWidget = (
+  props: ProgressBarWidgetProps & PVWidgetInterface
+): JSX.Element => <Widget baseWidget={ProgressBar} {...props} />;
+
+export const ConnectedProgressBarWidget: React.FC<
+  ProgressBarWidgetProps & ConnectedWidgetInterface
+> = macroWrapper(connectionWrapper(ProgressBarWidget));

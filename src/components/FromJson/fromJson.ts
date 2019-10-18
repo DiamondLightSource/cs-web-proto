@@ -19,6 +19,7 @@ import {
   ConnectedInputWidget
 } from "../Input/input";
 import { FlexContainer } from "../FlexContainer/flexContainer";
+import { ConnectedProgressBarWidget } from "../ProgressBar/progressBar";
 import { MacroMap } from "../../redux/csState";
 import { Display } from "../Display/display";
 
@@ -90,6 +91,7 @@ export const WidgetFromJson = (props: FromJsonProps): JSX.Element | null => {
     readback: ConnectedReadbackWidget,
     input: ConnectedInputWidget,
     label: LabelWidget,
+    progressbar: ConnectedProgressBarWidget,
     display: Display,
     empty: Display,
     widgetFromJSON: WidgetFromJson
