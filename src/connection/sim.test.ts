@@ -1,7 +1,7 @@
 import { SimulatorPlugin } from "./sim.ts";
 import { VType, vdouble } from "../vtypes/vtypes";
 import { mergeVtype, PartialVType } from "../vtypes/merge";
-import { nullConnCallback } from "./plugin";
+import { nullConnCallback, nullValueCallback } from "./plugin";
 
 let simulator: SimulatorPlugin;
 beforeEach((): void => {
@@ -117,6 +117,27 @@ it("distinguish limit values", (done): void => {
 
   simulator.putPv("sim://limit#one", vdouble(1));
   simulator.putPv("sim://limit#two", vdouble(2));
+});
+
+it("test disconnector", (done): void => {
+  let wasConnected = false;
+  let wasDisconnected = false;
+  simulator = new SimulatorPlugin(50);
+  function callback(pvName: string, state: any): void {
+    expect(pvName).toBe("sim://disconnector");
+    if (state.isConnected) {
+      wasConnected = true;
+    } else {
+      wasDisconnected = true;
+    }
+
+    if (wasConnected && wasDisconnected) {
+      done();
+    }
+  }
+
+  simulator.connect(callback, nullValueCallback);
+  simulator.subscribe("sim://disconnector");
 });
 
 it("distinguish sine values", (done): void => {
