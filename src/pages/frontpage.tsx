@@ -15,6 +15,7 @@ import { Widget } from "../components/Widget/widget";
 import { FlexContainer } from "../components/FlexContainer/flexContainer";
 import { widgetDescriptionToComponent } from "../components/Positioning/positioning";
 import { Blank } from "../components/Positioning/ionpExample";
+import { ConnectedMenuButton } from "../components/MenuButton/menuButton";
 
 export const FrontPage = (): JSX.Element => (
   <div id="Central Column" style={{ width: "80%", margin: "auto" }}>
@@ -85,6 +86,7 @@ export const FrontPage = (): JSX.Element => (
         }}
       >
         <Label text="Sim Enum" />
+        <ConnectedMenuButton pvName={"sim://enum"} />
         <ConnectedInput pvName={"sim://enum"} />
         <ConnectedStandaloneReadback pvName={"sim://enum"} precision={2} />
       </div>
@@ -96,6 +98,7 @@ export const FrontPage = (): JSX.Element => (
         }}
       >
         <Label text="Local Enum - [0, 1, 2, 3, 4, 5]" />
+        <ConnectedMenuButton pvName={"enum://enum1"} />
         <ConnectedInput pvName={"enum://enum1"} />
         <ConnectedStandaloneReadback pvName={"enum://enum1"} />
       </div>
