@@ -87,7 +87,6 @@ export const WidgetFromJson = (props: FromJsonProps): JSX.Element | null => {
         setJson(json);
       });
   }
-  console.log(json);
   const widgetDict = {
     readback: ConnectedReadbackWidget,
     input: ConnectedInputWidget,
