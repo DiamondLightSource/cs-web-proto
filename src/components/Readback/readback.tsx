@@ -9,12 +9,16 @@ import { macroWrapper } from "../MacroWrapper/macroWrapper";
 import { VType } from "../../vtypes/vtypes";
 import { Alarm, alarmOf, AlarmSeverity } from "../../vtypes/alarm";
 import { vtypeToString } from "../../vtypes/utils";
+import { MacroMap } from "../../redux/csState";
 
 export interface ReadbackProps {
   connected: boolean;
   value?: VType;
   precision?: number;
   style?: object;
+  expression?: string;
+  substitutionMap?: MacroMap;
+  prop?: string;
 }
 
 function getClass(alarmSeverity: any): string {
@@ -50,8 +54,9 @@ export const Readback = (props: ReadbackProps): JSX.Element => {
 
   return (
     <RuleWrapper
-      prop="color"
-      state="yellow"
+      expression={props.expression}
+      substitutionMap={props.substitutionMap}
+      prop={props.prop}
       value={props.value}
       style={props.style}
     >
@@ -93,6 +98,9 @@ export const CopyReadback = (props: {
   connected: boolean;
   precision?: number;
   style?: object;
+  expression?: string;
+  substitutionMap?: MacroMap;
+  prop?: string;
 }): JSX.Element => (
   <CopyWrapper
     pvName={props.pvName}
@@ -106,6 +114,9 @@ export const CopyReadback = (props: {
       value={props.value}
       precision={props.precision}
       style={props.style}
+      prop={props.prop}
+      expression={props.expression}
+      substitutionMap={props.substitutionMap}
     ></Readback>
   </CopyWrapper>
 );
@@ -117,6 +128,9 @@ export const ConnectedCopyReadback: React.FC<
 interface ConnectedStandaloneReadbackProps {
   pvName: string;
   precision?: number;
+  expression?: string;
+  substitutionMap?: MacroMap;
+  prop?: string;
   style?: object;
 }
 
@@ -127,6 +141,9 @@ export const StandaloneReadback = (props: {
   connected: boolean;
   precision?: number;
   style?: object;
+  prop?: string;
+  expression?: string;
+  substitutionMap?: MacroMap;
 }): JSX.Element => (
   <CopyWrapper
     pvName={props.pvName}
@@ -140,6 +157,9 @@ export const StandaloneReadback = (props: {
         value={props.value}
         precision={props.precision}
         style={props.style}
+        prop={props.prop}
+        expression={props.expression}
+        substitutionMap={props.substitutionMap}
       ></Readback>
     </AlarmBorder>
   </CopyWrapper>

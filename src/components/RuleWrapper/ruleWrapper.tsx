@@ -1,11 +1,17 @@
-import React, { ReactNode, useState, ReactPropTypes } from "react";
+import React, { ReactNode } from "react";
 
 import { VType } from "../../vtypes/vtypes";
-import { __InputValue } from "graphql";
 import { useId } from "react-id-generator";
 import { useSubscription } from "../../hooks/useCs";
 import { useSelector } from "react-redux";
-import { CsState } from "../../redux/csState";
+import { MacroMap, CsState } from "../../redux/csState";
+
+export interface RuleProps extends React.PropsWithChildren<any> {
+  expression?: string;
+  substitutionMap?: MacroMap;
+  prop?: string;
+  children: ReactNode;
+}
 
 function pvStateSelector(pvName: string, state: CsState): [boolean, VType?] {
   const pvState = state.valueCache[pvName];
@@ -18,26 +24,33 @@ function pvStateSelector(pvName: string, state: CsState): [boolean, VType?] {
   return [connected, value];
 }
 
-export const RuleWrapper = (props: {
-  state?: any;
-  prop: string;
-  value?: VType;
-  children: ReactNode;
-  style?: object;
-}): JSX.Element => {
-  let comp: string = props.prop;
-  const [id] = useId();
-  let pv1 = "meta://pv1";
-  useSubscription(id, pv1);
-  const [connected, latestValue] = useSelector((state: CsState): [
-    boolean,
-    VType?
-  ] => {
-    return pvStateSelector(pv1, state);
-  });
-  if (props.value != undefined && latestValue != undefined) {
-    let evaluatedValue = latestValue.getValue() - props.value.getValue();
-    let styleValue = evaluatedValue < 50 ? "blue" : "red";
+export const RuleWrapper = (props: RuleProps): JSX.Element => {
+  let expression = props.expression;
+  let valid = true;
+  let styleValue;
+  if (expression === undefined || props.substitutionMap === undefined)
+    valid = false;
+  else {
+    for (let [name, pv] of Object.entries(props.substitutionMap)) {
+      // eslint-disable-next-line react-hooks/rules-of-hooks
+      const [id] = useId();
+      // eslint-disable-next-line react-hooks/rules-of-hooks
+      useSubscription(id, pv);
+      // eslint-disable-next-line react-hooks/rules-of-hooks
+      const [connected, latestValue] = useSelector((state: CsState): [
+        boolean,
+        VType?
+      ] => {
+        return pvStateSelector(pv, state);
+      });
+      if (latestValue !== undefined && connected) {
+        expression = expression.replace(name, latestValue.getValue());
+      } else valid = false;
+      console.log(expression);
+    }
+  }
+  if (valid && expression !== undefined) {
+    styleValue = eval(expression);
     let styleObj = { color: styleValue };
     return <div style={styleObj}>{props.children}</div>;
   } else {
