@@ -14,7 +14,9 @@ export const RulesPage = (): JSX.Element => (
     <h3>Readback: PV1</h3>
     <ConnectedStandaloneReadback
       pvName={"meta://pv1"}
-      expression='pv2+pv1<50?"blue":"red"'
+      condition="pv2+pv1<50"
+      trueState="blue"
+      falseState="red"
       substitutionMap={substitutionMap}
     />
     <h3>Readback: PV2</h3>

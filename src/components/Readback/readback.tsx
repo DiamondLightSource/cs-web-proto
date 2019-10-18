@@ -16,7 +16,9 @@ export interface ReadbackProps {
   value?: VType;
   precision?: number;
   style?: object;
-  expression?: string;
+  condition?: string;
+  trueState?: string;
+  falseState?: string;
   substitutionMap?: MacroMap;
   prop?: string;
 }
@@ -54,7 +56,9 @@ export const Readback = (props: ReadbackProps): JSX.Element => {
 
   return (
     <RuleWrapper
-      expression={props.expression}
+      condition={props.condition}
+      trueState={props.trueState}
+      falseState={props.falseState}
       substitutionMap={props.substitutionMap}
       prop={props.prop}
       value={props.value}
@@ -98,7 +102,9 @@ export const CopyReadback = (props: {
   connected: boolean;
   precision?: number;
   style?: object;
-  expression?: string;
+  condition?: string;
+  trueState?: string;
+  falseState?: string;
   substitutionMap?: MacroMap;
   prop?: string;
 }): JSX.Element => (
@@ -115,7 +121,9 @@ export const CopyReadback = (props: {
       precision={props.precision}
       style={props.style}
       prop={props.prop}
-      expression={props.expression}
+      condition={props.condition}
+      trueState={props.trueState}
+      falseState={props.falseState}
       substitutionMap={props.substitutionMap}
     ></Readback>
   </CopyWrapper>
@@ -128,7 +136,9 @@ export const ConnectedCopyReadback: React.FC<
 interface ConnectedStandaloneReadbackProps {
   pvName: string;
   precision?: number;
-  expression?: string;
+  condition?: string;
+  trueState?: string;
+  falseState?: string;
   substitutionMap?: MacroMap;
   prop?: string;
   style?: object;
@@ -142,7 +152,9 @@ export const StandaloneReadback = (props: {
   precision?: number;
   style?: object;
   prop?: string;
-  expression?: string;
+  condition?: string;
+  trueState?: string;
+  falseState?: string;
   substitutionMap?: MacroMap;
 }): JSX.Element => (
   <CopyWrapper
@@ -158,7 +170,9 @@ export const StandaloneReadback = (props: {
         precision={props.precision}
         style={props.style}
         prop={props.prop}
-        expression={props.expression}
+        condition={props.condition}
+        trueState={props.trueState}
+        falseState={props.falseState}
         substitutionMap={props.substitutionMap}
       ></Readback>
     </AlarmBorder>

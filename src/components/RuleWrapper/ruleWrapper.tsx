@@ -6,8 +6,12 @@ import { useSubscription } from "../../hooks/useCs";
 import { useSelector } from "react-redux";
 import { MacroMap, CsState } from "../../redux/csState";
 
+import { evaluate } from "mathjs";
+
 export interface RuleProps extends React.PropsWithChildren<any> {
-  expression?: string;
+  condition?: string;
+  trueState?: string;
+  falseState?: string;
   substitutionMap?: MacroMap;
   prop?: string;
   children: ReactNode;
@@ -25,10 +29,9 @@ function pvStateSelector(pvName: string, state: CsState): [boolean, VType?] {
 }
 
 export const RuleWrapper = (props: RuleProps): JSX.Element => {
-  let expression = props.expression;
+  let condition = props.condition;
   let valid = true;
-  let styleValue;
-  if (expression === undefined || props.substitutionMap === undefined)
+  if (condition === undefined || props.substitutionMap === undefined)
     valid = false;
   else {
     for (let [name, pv] of Object.entries(props.substitutionMap)) {
@@ -44,13 +47,14 @@ export const RuleWrapper = (props: RuleProps): JSX.Element => {
         return pvStateSelector(pv, state);
       });
       if (latestValue !== undefined && connected) {
-        expression = expression.replace(name, latestValue.getValue());
+        condition = condition.replace(name, latestValue.getValue());
       } else valid = false;
-      console.log(expression);
+      console.log(condition);
     }
   }
-  if (valid && expression !== undefined) {
-    styleValue = eval(expression);
+  if (valid && condition !== undefined) {
+    let state = evaluate(condition);
+    let styleValue = state ? props.trueState : props.falseState;
     let styleObj = { color: styleValue };
     return <div style={styleObj}>{props.children}</div>;
   } else {
