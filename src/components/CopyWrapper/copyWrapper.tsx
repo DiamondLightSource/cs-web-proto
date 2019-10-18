@@ -32,7 +32,7 @@ export const CopyWrapper = (props: {
     if (!value) {
       displayValue = "Warning: Waiting for value";
     } else {
-      displayValue = vtypeToString(value);
+      displayValue = vtypeToString(value, 3);
     }
   }
 
