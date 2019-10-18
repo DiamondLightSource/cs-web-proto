@@ -45,6 +45,13 @@ export interface ShapingInterface {
   macroMap?: MacroMap;
 }
 
+// Interface requires a base widget and allows child components
+export interface WidgetInterface extends ShapingInterface {
+  baseWidget: React.FC<any>;
+  children?: React.ReactNode;
+}
+
+// Interface for a widget which needs PV information
 export interface PVWidgetInterface extends ShapingInterface {
   pvName: string;
   rawPvName?: string;
@@ -52,6 +59,7 @@ export interface PVWidgetInterface extends ShapingInterface {
   value?: VType | undefined;
 }
 
+// Interface for a PV which allows some information
 export interface ConnectedWidgetInterface extends ShapingInterface {
   pvName: string;
 }
@@ -90,12 +98,6 @@ const recursiveWrapping = (
     );
   }
 };
-
-// Interface requires a base widget and allows child components
-export interface WidgetInterface extends ShapingInterface {
-  baseWidget: React.FC<any>;
-  children?: React.ReactNode;
-}
 
 export const Widget = (props: WidgetInterface): JSX.Element => {
   // Generic widget component

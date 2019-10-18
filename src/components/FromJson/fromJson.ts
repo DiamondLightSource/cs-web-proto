@@ -18,11 +18,15 @@ import {
   ConnectedStandaloneInput,
   ConnectedInputWidget
 } from "../Input/input";
-import { FlexContainer } from "../FlexContainer/flexContainer";
+import {
+  FlexContainer,
+  FlexContainerWidget
+} from "../FlexContainer/flexContainer";
 import { ConnectedProgressBarWidget } from "../ProgressBar/progressBar";
 import { ConnectedSlideControlWidget } from "../SlideControl/slideControl";
 import { MacroMap } from "../../redux/csState";
 import { Display } from "../Display/display";
+import { ShapingInterface } from "../Widget/widget";
 
 interface FromJsonProps {
   file: string;
@@ -73,7 +77,14 @@ const EMPTY_WIDGET: WidgetDescription = {
   containerStyling: { position: "absolute", x: 0, y: 0, width: 0, height: 0 }
 };
 
-export const WidgetFromJson = (props: FromJsonProps): JSX.Element | null => {
+interface WidgetFromJsonProps extends ShapingInterface {
+  file: string;
+  macroMap: MacroMap;
+}
+
+export const WidgetFromJson = (
+  props: WidgetFromJsonProps
+): JSX.Element | null => {
   const [json, setJson] = useState<WidgetDescription>(EMPTY_WIDGET);
 
   if (json["type"] === "empty") {
@@ -93,6 +104,7 @@ export const WidgetFromJson = (props: FromJsonProps): JSX.Element | null => {
     label: LabelWidget,
     progressbar: ConnectedProgressBarWidget,
     slidecontrol: ConnectedSlideControlWidget,
+    flexcontainer: FlexContainerWidget,
     display: Display,
     empty: Display,
     widgetFromJSON: WidgetFromJson
