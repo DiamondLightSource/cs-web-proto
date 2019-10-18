@@ -24,6 +24,7 @@ import {
 } from "../FlexContainer/flexContainer";
 import { ConnectedProgressBarWidget } from "../ProgressBar/progressBar";
 import { ConnectedSlideControlWidget } from "../SlideControl/slideControl";
+import { MenuButton } from "../MenuButton/menuButton";
 import { MacroMap } from "../../redux/csState";
 import { Display } from "../Display/display";
 import { ShapingInterface } from "../Widget/widget";
@@ -104,6 +105,7 @@ export const WidgetFromJson = (
     label: LabelWidget,
     progressbar: ConnectedProgressBarWidget,
     slidecontrol: ConnectedSlideControlWidget,
+    menubutton: MenuButton,
     flexcontainer: FlexContainerWidget,
     display: Display,
     empty: Display,
