@@ -2,7 +2,6 @@
   "type": "display",
   "containerStyling": {
     "position": "relative",
-    "flexible": true,
     "width": "80%",
     "margin": "auto"
   },
@@ -14,7 +13,6 @@
       "type": "label",
       "containerStyling": {
         "position": "relative",
-        "flexible": true,
         "margin": "20px 5px 5px 5px"
       },
       "text": "Input: ${PROG}"
@@ -24,7 +22,6 @@
       "pvName": "${PROG}",
       "containerStyling": {
         "position": "relative",
-        "flexible": true,
         "margin": "5px"
       },
       "wrappers": {
@@ -37,7 +34,6 @@
       "type": "label",
       "containerStyling": {
         "position": "relative",
-        "flexible": true,
         "margin": "20px 5px 5px 5px"
       },
       "text": "Readback: ${PROG}"
@@ -47,7 +43,6 @@
       "pvName": "${PROG}",
       "containerStyling": {
         "position": "relative",
-        "flexible": true,
         "margin": "5px"
       },
       "wrappers": {
@@ -60,7 +55,6 @@
       "type": "label",
       "containerStyling": {
         "position": "relative",
-        "flexible": true,
         "margin": "20px 5px 5px 5px"
       },
       "text": "Progress Bar: ${PROG}"
@@ -70,7 +64,6 @@
       "pvName": "${PROG}",
       "containerStyling": {
         "position": "relative",
-        "flexible": true,
         "margin": "5px"
       },
       "wrappers": {
@@ -84,7 +77,6 @@
       "type": "label",
       "containerStyling": {
         "position": "relative",
-        "flexible": true,
         "margin": "20px 5px 5px 5px"
       },
       "text": "Slide Control: ${PROG}"
@@ -94,15 +86,14 @@
       "pvName": "${PROG}",
       "containerStyling": {
         "position": "relative",
-        "flexible": true,
         "margin": "5px"
       },
       "wrappers": {
         "alarmborder": true,
         "copywrapper": true
       },
-      "min": 0,
-      "max": 100
+      "min": -25,
+      "max": 125
     }
   ]
 }

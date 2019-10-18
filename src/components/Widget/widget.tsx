@@ -1,6 +1,5 @@
 import React from "react";
 
-import { AbsolutePosition, FlexiblePosition } from "../Positioning/positioning";
 import { CopyWrapper } from "../CopyWrapper/copyWrapper";
 import { AlarmBorder } from "../AlarmBorder/alarmBorder";
 import { VType } from "../../vtypes/vtypes";
@@ -11,11 +10,23 @@ interface ContainerFeatures {
   padding?: string;
 }
 
-interface AbsoluteContainer extends AbsolutePosition, ContainerFeatures {
+// Absolute requires x, y, height, width
+interface AbsoluteContainer extends ContainerFeatures {
   position: "absolute";
+  x: number | string;
+  y: number | string;
+  width: number | string;
+  height: number | string;
 }
-interface FlexibleContainer extends FlexiblePosition, ContainerFeatures {
+
+// Flexible places relatively and doesn't require any information but can
+// include height and width information, otherwise will pop to default size
+interface FlexibleContainer extends ContainerFeatures {
   position: "relative";
+  // Width and height not always necessary in this case as some components
+  // such as embedded screens will define their own dimensions
+  width?: number | string;
+  height?: number | string;
 }
 
 export interface ShapingInterface {

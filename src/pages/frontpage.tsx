@@ -107,7 +107,6 @@ export const FrontPage = (): JSX.Element => (
           value={vstring("Testing")}
           containerStyling={{
             position: "relative",
-            flexible: true,
             margin: "5px"
           }}
           wrappers={{ alarmborder: true, copywrapper: true }}
@@ -116,7 +115,6 @@ export const FrontPage = (): JSX.Element => (
           pvName="sim://enum"
           containerStyling={{
             position: "relative",
-            flexible: true,
             margin: "5px"
           }}
           wrappers={{ alarmborder: false, copywrapper: false }}
@@ -125,7 +123,6 @@ export const FrontPage = (): JSX.Element => (
           pvName="sim://enum"
           containerStyling={{
             position: "relative",
-            flexible: true,
             margin: "5px"
           }}
           wrappers={{ alarmborder: false, copywrapper: true }}
@@ -134,7 +131,6 @@ export const FrontPage = (): JSX.Element => (
           pvName="sim://enum"
           containerStyling={{
             position: "relative",
-            flexible: true,
             margin: "5px"
           }}
           wrappers={{ alarmborder: true, copywrapper: false }}
@@ -143,7 +139,6 @@ export const FrontPage = (): JSX.Element => (
           pvName="${thisPV}"
           containerStyling={{
             position: "relative",
-            flexible: true,
             margin: "5px"
           }}
           wrappers={{ alarmborder: true, copywrapper: true }}
@@ -156,7 +151,6 @@ export const FrontPage = (): JSX.Element => (
           baseWidget={FlexContainer}
           containerStyling={{
             position: "relative",
-            flexible: true,
             margin: "5px"
           }}
           wrappers={{ alarmborder: false, copywrapper: false }}
@@ -169,7 +163,6 @@ export const FrontPage = (): JSX.Element => (
             pvName="${thisPV}"
             containerStyling={{
               position: "relative",
-              flexible: true,
               width: "300px"
             }}
             wrappers={{ alarmborder: false, copywrapper: false }}
@@ -184,7 +177,6 @@ export const FrontPage = (): JSX.Element => (
             type: "blank",
             containerStyling: {
               position: "relative",
-              flexible: true,
               margin: "5px"
             },
             style: { height: "250px", width: "600px" },
@@ -194,7 +186,6 @@ export const FrontPage = (): JSX.Element => (
                 type: "label",
                 containerStyling: {
                   position: "relative",
-                  flexible: true,
                   height: "100px",
                   width: "500px",
                   margin: "5px"
@@ -205,7 +196,6 @@ export const FrontPage = (): JSX.Element => (
                 type: "readback",
                 containerStyling: {
                   position: "relative",
-                  flexible: true,
                   height: "100px",
                   width: "500px",
                   margin: "5px"
