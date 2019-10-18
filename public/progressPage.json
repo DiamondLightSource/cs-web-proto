@@ -15,7 +15,7 @@
       "containerStyling": {
         "position": "relative",
         "flexible": true,
-        "margin": "5px"
+        "margin": "20px 5px 5px 5px"
       },
       "text": "Input: ${PROG}"
     },
@@ -38,7 +38,7 @@
       "containerStyling": {
         "position": "relative",
         "flexible": true,
-        "margin": "5px"
+        "margin": "20px 5px 5px 5px"
       },
       "text": "Readback: ${PROG}"
     },
@@ -61,12 +61,36 @@
       "containerStyling": {
         "position": "relative",
         "flexible": true,
-        "margin": "5px"
+        "margin": "20px 5px 5px 5px"
       },
-      "text": "Readback: ${PROG}"
+      "text": "Progress Bar: ${PROG}"
     },
     {
       "type": "progressbar",
+      "pvName": "${PROG}",
+      "containerStyling": {
+        "position": "relative",
+        "flexible": true,
+        "margin": "5px"
+      },
+      "wrappers": {
+        "alarmborder": true,
+        "copywrapper": true
+      },
+      "min": 0,
+      "max": 100
+    },
+    {
+      "type": "label",
+      "containerStyling": {
+        "position": "relative",
+        "flexible": true,
+        "margin": "20px 5px 5px 5px"
+      },
+      "text": "Slide Control: ${PROG}"
+    },
+    {
+      "type": "slidecontrol",
       "pvName": "${PROG}",
       "containerStyling": {
         "position": "relative",

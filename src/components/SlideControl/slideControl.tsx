@@ -8,7 +8,14 @@ import { VType } from "../../vtypes/vtypes";
 
 import classes from "./slideControl.module.css";
 import { connectionWrapper } from "../ConnectionWrapper/connectionWrapper";
+import { macroWrapper } from "../MacroWrapper/macroWrapper";
 import { vtypeToString, stringToVtype } from "../../vtypes/utils";
+
+import {
+  Widget,
+  PVWidgetInterface,
+  ConnectedWidgetInterface
+} from "../Widget/widget";
 
 interface SlideControlProps {
   pvName: string;
@@ -38,12 +45,7 @@ export const SlideControl: React.FC<SlideControlProps> = (
     max = 100,
     /* TODO: Implement vertical style and allow absolute positioning */
     //vertical = false,
-    //color = "#00aa00",
-    //top = "0%",
-    //left = "0%",
-    //height = "100%",
-    //width = "100%",
-    //fontStyle = {},
+    style = {},
     precision = undefined
   } = props;
 
@@ -68,11 +70,11 @@ export const SlideControl: React.FC<SlideControlProps> = (
   }
 
   return (
-    <div style={{ border: "solid 1px red" }}>
+    <div style={style}>
       <div
         style={{
           display: "block",
-          position: "absolute",
+          position: "relative",
           height: "90%",
           width: "100%",
           top: "0%",
@@ -90,7 +92,7 @@ export const SlideControl: React.FC<SlideControlProps> = (
       <div
         style={{
           display: "block",
-          position: "absolute",
+          position: "relative",
           height: "10%",
           width: "100%",
           bottom: "0%",
@@ -114,3 +116,17 @@ export const SlideControl: React.FC<SlideControlProps> = (
 };
 
 export const ConnectedSlideControl = connectionWrapper(SlideControl);
+
+interface SlideControlWidgetProps {
+  min: number;
+  max: number;
+  vertical?: boolean;
+}
+
+export const SlideControlWidget = (
+  props: SlideControlWidgetProps & PVWidgetInterface
+): JSX.Element => <Widget baseWidget={SlideControl} {...props} />;
+
+export const ConnectedSlideControlWidget: React.FC<
+  SlideControlWidgetProps & ConnectedWidgetInterface
+> = macroWrapper(connectionWrapper(SlideControlWidget));
