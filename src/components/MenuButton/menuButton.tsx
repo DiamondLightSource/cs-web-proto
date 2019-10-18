@@ -5,6 +5,12 @@ import { writePv } from "../../hooks/useCs";
 import { VType, VEnum } from "../../vtypes/vtypes";
 import { vtypeToString, stringToVtype } from "../../vtypes/utils";
 import { Alarm } from "../../vtypes/alarm";
+import { macroWrapper } from "../MacroWrapper/macroWrapper";
+import {
+  Widget,
+  PVWidgetInterface,
+  ConnectedWidgetInterface
+} from "../Widget/widget";
 
 export interface MenuButtonProps {
   connected: boolean;
@@ -13,7 +19,7 @@ export interface MenuButtonProps {
   style?: {};
 }
 
-export const MenuButton = (props: MenuButtonProps): JSX.Element => {
+export const MenuButtonComponent = (props: MenuButtonProps): JSX.Element => {
   let { connected, value = null, style = { color: "#000000" } } = props;
 
   // Store whether component is disabled or not
@@ -50,7 +56,7 @@ export const MenuButton = (props: MenuButtonProps): JSX.Element => {
     <select
       value={displayIndex}
       disabled={disabled}
-      style={style}
+      style={{ width: "100%", ...style }}
       onChange={props.onChange}
     >
       {mappedOptions}
@@ -71,7 +77,7 @@ export const SmartMenuButton = (props: {
   }
 
   return (
-    <MenuButton
+    <MenuButtonComponent
       connected={props.connected}
       value={props.value}
       style={props.style}
@@ -80,14 +86,10 @@ export const SmartMenuButton = (props: {
   );
 };
 
-interface ConnectedMenuButtonProps {
-  pvName: string;
-  rawPvName?: string;
-  precision?: number;
-  alarm?: Alarm;
-  style?: {};
-}
+export const MenuButtonWidget = (props: PVWidgetInterface): JSX.Element => {
+  return <Widget baseWidget={SmartMenuButton} {...props} />;
+};
 
-export const ConnectedMenuButton: React.FC<
-  ConnectedMenuButtonProps
-> = connectionWrapper(SmartMenuButton);
+export const MenuButton: React.FC<ConnectedWidgetInterface> = macroWrapper(
+  connectionWrapper(MenuButtonWidget)
+);

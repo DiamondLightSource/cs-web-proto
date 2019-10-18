@@ -1,5 +1,5 @@
 import React from "react";
-import { MenuButton, MenuButtonProps } from "./menuButton";
+import { MenuButtonComponent, MenuButtonProps } from "./menuButton";
 import { configure, shallow, ShallowWrapper } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import { create, ReactTestRenderer } from "react-test-renderer";
@@ -20,7 +20,7 @@ beforeEach((): void => {
     // pass
   };
   const menubutton = (
-    <MenuButton
+    <MenuButtonComponent
       connected={true}
       value={venum(
         0,
@@ -32,14 +32,18 @@ beforeEach((): void => {
     />
   );
   const menuButtonString = (
-    <MenuButton
+    <MenuButtonComponent
       connected={true}
       value={vstring("testing enum")}
       onChange={mock}
     />
   );
   const menuButtonNumber = (
-    <MenuButton connected={true} value={vdouble(3.14159)} onChange={mock} />
+    <MenuButtonComponent
+      connected={true}
+      value={vdouble(3.14159)}
+      onChange={mock}
+    />
   );
   enumwrapper = shallow(menubutton);
   stringwrapper = shallow(menuButtonString);
@@ -67,7 +71,7 @@ describe("<MenuButton />", (): void => {
       // pass
     };
     const menubuttonwrap = shallow(
-      <MenuButton
+      <MenuButtonComponent
         connected={true}
         value={venum(
           5,
