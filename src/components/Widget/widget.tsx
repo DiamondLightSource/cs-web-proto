@@ -35,6 +35,9 @@ export interface ShapingInterface {
   widgetStyling?: {
     font: string;
     fontSize: string | number;
+    fontWeight: string | number;
+    textAlign: "center" | "left" | "right" | "justify";
+    backgroundColor: string;
     // ... all the styling things we want to allow
   };
   wrappers?: {
