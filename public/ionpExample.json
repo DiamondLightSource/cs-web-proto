@@ -1,0 +1,165 @@
+{
+  "type": "display",
+  "containerStyling": {
+    "position": "absolute",
+    "x": "136px",
+    "y": "100px",
+    "width": "328px",
+    "height": "468px"
+  },
+  "children": [
+    {
+      "type": "label",
+      "containerStyling": {
+        "position": "absolute",
+        "x": 0,
+        "y": 0,
+        "width": "328px",
+        "height": "32px"
+      },
+      "text": "${device}"
+    },
+    {
+      "type": "label",
+      "containerStyling": {
+        "position": "absolute",
+        "x": "16px",
+        "y": "68px",
+        "width": "60px",
+        "height": "16px"
+      },
+      "text": "Pressure"
+    },
+    {
+      "type": "readback",
+      "containerStyling": {
+        "position": "absolute",
+        "x": "96px",
+        "y": "64px",
+        "width": "72px",
+        "height": "22px"
+      },
+      "pvName": "loc://ionp:pressure"
+    },
+    {
+      "type": "progressbar",
+      "containerStyling": {
+        "position": "absolute",
+        "x": "172px",
+        "y": "64px",
+        "width": "140px",
+        "height": "22px"
+      },
+      "min": -12,
+      "max": 3,
+      "pvName": "loc://${device}:pressure"
+    },
+    {
+      "type": "label",
+      "containerStyling": {
+        "position": "absolute",
+        "x": "16px",
+        "y": "96px",
+        "width": "42px",
+        "height": "16px"
+      },
+      "text": "Status"
+    },
+    {
+      "type": "readback",
+      "containerStyling": {
+        "position": "absolute",
+        "x": "96px",
+        "y": "92px",
+        "width": "216px",
+        "height": "22px"
+      },
+      "pvName": "loc://${device}:status"
+    },
+    {
+      "type": "label",
+      "containerStyling": {
+        "position": "absolute",
+        "x": "16px",
+        "y": "124px",
+        "width": "72px",
+        "height": "16px"
+      },
+      "text": "Error Code"
+    },
+    {
+      "type": "readback",
+      "x": "96px",
+      "y": "120px",
+      "width": "216px",
+      "height": "22px",
+      "pvName": "loc://${device}:error"
+    },
+    {
+      "type": "label",
+      "containerStyling": {
+        "position": "absolute",
+        "x": "16px",
+        "y": "152px",
+        "width": "50px",
+        "height": "16px"
+      },
+      "text": "Voltage"
+    },
+    {
+      "type": "readback",
+      "containerStyling": {
+        "position": "absolute",
+        "x": "96px",
+        "y": "148px",
+        "width": "72px",
+        "height": "22px"
+      },
+      "pvName": "loc://${device}:error"
+    },
+    {
+      "type": "label",
+      "containerStyling": {
+        "position": "absolute",
+        "x": "16px",
+        "y": "179px",
+        "width": "50px",
+        "height": "16px"
+      },
+      "text": "Current"
+    },
+    {
+      "type": "readback",
+      "containerStyling": {
+        "position": "absolute",
+        "x": "96px",
+        "y": "176px",
+        "width": "72px",
+        "height": "22px"
+      },
+      "pvName": "loc://${device}:current"
+    },
+    {
+      "type": "label",
+      "containerStyling": {
+        "position": "absolute",
+        "x": "16px",
+        "y": "208px",
+        "width": "62px",
+        "height": "16px"
+      },
+      "text": "Strapping"
+    },
+    {
+      "type": "readback",
+      "containerStyling": {
+        "position": "absolute",
+        "x": "96px",
+        "y": "204px",
+        "width": "72px",
+        "height": "22px"
+      },
+      "pvName": "loc://${device}:strapping"
+    }
+  ]
+}

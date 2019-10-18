@@ -57,7 +57,6 @@ export const ProgressBar: React.FC<ProgressBarProps> = (
     max = 100,
     vertical = false,
     color = "#00aa00",
-    fontStyle = {},
     precision = undefined
   } = props;
 
@@ -88,8 +87,7 @@ export const ProgressBar: React.FC<ProgressBarProps> = (
     onStyle = {
       ...barColor,
       height: "100%",
-      width: `${onPercent}%`,
-      ...props.style
+      width: `${onPercent}%`
     };
   }
 
@@ -102,12 +100,10 @@ export const ProgressBar: React.FC<ProgressBarProps> = (
       : numValue.toString();
 
   return (
-    <div style={{ ...props.style }}>
+    <div className={classes.bar} style={{ ...props.style }}>
       <div className={classes.off} style={offStyle} />
       <div className={classes.on} style={onStyle} />
-      <div className={classes.label} style={fontStyle}>
-        {valueText.toString()}
-      </div>
+      <div className={classes.label}>{valueText.toString()}</div>
     </div>
   );
 };

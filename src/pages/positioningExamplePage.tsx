@@ -1,18 +1,12 @@
 // Page to show off the absolute positiong example
 import React from "react";
 
-import { Mapping } from "../components/Positioning/ionpExample";
+import { WidgetFromJson } from "../components/FromJson/fromJson";
 
 export const PositioningExamplePage = (): JSX.Element => (
-  <div
-    style={{
-      position: "relative",
-      height: "100%",
-      width: "100%",
-      textAlign: "center"
-    }}
-  >
-    <h2 colour-secondary-text>Abolute Positioning Example</h2>
-    <Mapping />
-  </div>
+  <WidgetFromJson
+    file="http://localhost:3000/ionpExample.json"
+    macroMap={{ device: "SR03A-VA-IONP-01" }}
+    containerStyling={{ position: "relative" }}
+  />
 );
