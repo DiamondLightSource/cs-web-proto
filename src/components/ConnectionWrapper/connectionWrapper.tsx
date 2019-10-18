@@ -9,15 +9,20 @@ export interface PvProps extends React.PropsWithChildren<any> {
   pvName: string;
 }
 
-function pvStateSelector(pvName: string, state: CsState): [boolean, VType?] {
+function pvStateSelector(
+  pvName: string,
+  state: CsState
+): [boolean, boolean, VType?] {
   const pvState = state.valueCache[pvName];
   let connected = false;
+  let readonly = false;
   let value = undefined;
   if (pvState != null) {
     connected = pvState.connected || false;
+    readonly = pvState.readonly || false;
     value = pvState.value;
   }
-  return [connected, value];
+  return [connected, readonly, value];
 }
 
 /* See https://medium.com/@jrwebdev/react-higher-order-component-patterns-in-typescript-42278f7590fb
@@ -31,7 +36,8 @@ export const connectionWrapper = <P extends object>(
   return (props: PvProps): JSX.Element => {
     const [id] = useId();
     useSubscription(id, props.pvName);
-    const [connected, latestValue] = useSelector((state: CsState): [
+    const [connected, readonly, latestValue] = useSelector((state: CsState): [
+      boolean,
       boolean,
       VType?
     ] => {
@@ -41,6 +47,7 @@ export const connectionWrapper = <P extends object>(
       <Component
         {...(props as P)}
         connected={connected}
+        readonly={readonly}
         value={latestValue}
       ></Component>
     );

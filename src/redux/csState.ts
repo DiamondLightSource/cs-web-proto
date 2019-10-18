@@ -151,7 +151,11 @@ export function csReducer(state = initialState, action: ActionType): CsState {
       const newValueCache: ValueCache = { ...state.valueCache };
       const { pvName, value } = action.payload;
       const pvState = state.valueCache[pvName];
-      const newPvState = { ...pvState, connected: value.isConnected };
+      const newPvState = {
+        ...pvState,
+        connected: value.isConnected,
+        readonly: value.isReadonly
+      };
       newValueCache[action.payload.pvName] = newPvState;
       return { ...state, valueCache: newValueCache };
     }

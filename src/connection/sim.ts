@@ -28,10 +28,10 @@ abstract class SimPv {
     this.onConnectionUpdate = onConnectionUpdate;
     this.onValueUpdate = onValueUpdate;
     this.updateRate = updateRate;
-    this.onConnectionUpdate(pvName, { isConnected: true });
+    this.onConnectionUpdate(pvName, { isConnected: true, isReadonly: true });
   }
   public getConnection(): ConnectionState {
-    return { isConnected: true };
+    return { isConnected: true, isReadonly: true };
   }
 }
 
@@ -72,7 +72,7 @@ class Disconnector extends SimPv {
   }
   public getConnection(): ConnectionState {
     const randomBool = Math.random() >= 0.5;
-    return { isConnected: randomBool };
+    return { isConnected: randomBool, isReadonly: true };
   }
 
   public getValue(): VType {
@@ -95,7 +95,10 @@ class SimEnumPv extends SimPv {
     updateRate: number
   ) {
     super(pvName, onConnectionUpdate, onValueUpdate, updateRate);
-    this.onConnectionUpdate(this.pvName, { isConnected: true });
+    this.onConnectionUpdate(this.pvName, {
+      isConnected: true,
+      isReadonly: true
+    });
     this.onValueUpdate(this.pvName, this.getValue());
     setInterval(
       (): void => this.onValueUpdate(this.pvName, this.getValue()),
@@ -130,7 +133,10 @@ class EnumPv extends SimPv {
     updateRate: number
   ) {
     super(pvName, onConnectionUpdate, onValueUpdate, updateRate);
-    this.onConnectionUpdate(this.pvName, { isConnected: true });
+    this.onConnectionUpdate(this.pvName, {
+      isConnected: true,
+      isReadonly: false
+    });
     this.onValueUpdate(this.pvName, this.getValue());
     setInterval(
       (): void => this.onValueUpdate(this.pvName, this.getValue()),
@@ -267,7 +273,7 @@ export class SimulatorPlugin implements Connection {
     if (pvName.startsWith("loc://")) {
       const val = vdouble(0);
       this.localPvs[pvName] = val;
-      this.onConnectionUpdate(pvName, { isConnected: true });
+      this.onConnectionUpdate(pvName, { isConnected: true, isReadonly: false });
       this.onValueUpdate(pvName, val);
     } else if (pvName === "sim://disconnector") {
       this.simPvs[pvName] = new Disconnector(

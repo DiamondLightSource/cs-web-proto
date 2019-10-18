@@ -230,8 +230,13 @@ export class ConiqlPlugin implements Connection {
       .subscribe({
         next: (data): void => {
           log.debug("data", data);
-          this.onConnectionUpdate(pvName, { isConnected: true });
           const { value, time, meta, status } = data.data.subscribeChannel;
+          if (meta) {
+            this.onConnectionUpdate(pvName, {
+              isConnected: true,
+              isReadonly: !meta.mutable
+            });
+          }
           let pvtype = coniqlToPartialVtype(value, time, meta, status);
           this.onValueUpdate(pvName, pvtype);
         },
@@ -240,7 +245,10 @@ export class ConiqlPlugin implements Connection {
         },
         complete: (): void => {
           // complete is called when the websocket is disconnected.
-          this.onConnectionUpdate(pvName, { isConnected: false });
+          this.onConnectionUpdate(pvName, {
+            isConnected: false,
+            isReadonly: true
+          });
           this.disconnected.push(pvName);
         }
       });

@@ -6,6 +6,7 @@ export const nullValueCallback: ValueChangedCallback = (_p, _v): void => {};
 
 export interface ConnectionState {
   isConnected: boolean;
+  isReadonly: boolean;
 }
 
 export type ConnectionChangedCallback = (

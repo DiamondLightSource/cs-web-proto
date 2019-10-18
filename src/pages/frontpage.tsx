@@ -6,7 +6,10 @@ import {
   ConnectedReadback,
   ConnectedStandaloneReadback
 } from "../components/Readback/readback";
-import { ConnectedInput } from "../components/Input/input";
+import {
+  ConnectedInput,
+  ConnectedStandaloneInput
+} from "../components/Input/input";
 import { Label } from "../components/Label/label";
 import { ConnectedMenuButton } from "../components/MenuButton/menuButton";
 
@@ -20,10 +23,10 @@ export const FrontPage = (): JSX.Element => (
       <ConnectedReadback pvName={"sim://disconnector"} precision={3} />
     </div>
     <div>
-      <ConnectedInput pvName={"loc://pv1"} />
-      <ConnectedInput pvName={"loc://pv2"} />
-      <ConnectedInput pvName={"sim://sine"} />
-      <ConnectedInput pvName={"sim://sine"} />
+      <ConnectedStandaloneInput pvName={"loc://pv1"} />
+      <ConnectedStandaloneInput pvName={"loc://pv2"} />
+      <ConnectedStandaloneInput pvName={"sim://sine"} />
+      <ConnectedStandaloneInput pvName={"sim://sine"} />
     </div>
     <div>
       <h3>PV with Metadata</h3>
