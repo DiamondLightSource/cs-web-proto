@@ -1,31 +1,32 @@
 {
-  "type": "blank",
-  "flexible": true,
-  "height": "150px",
-  "width": "110px",
-  "style": {
-    "margin": "5px 5px"
+  "type": "flexcontainer",
+  "containerStyling": {
+    "position": "relative",
+    "height": "150px",
+    "width": "110px",
+    "margin": "5px"
   },
+  "flexFlow": "column",
   "children": [
     {
       "type": "label",
-      "flexible": true,
-      "width": "100px",
-      "text": "Screen: ${EMBEDSUFFIX}",
-      "style": {
-        "fontSize": "20px"
-      }
+      "containerStyling": {
+        "position": "relative"
+      },
+      "text": "Screen: ${EMBEDSUFFIX}"
     },
     {
-      "type": "connectedStandaloneInput",
-      "flexible": true,
-      "width": "100px",
+      "type": "input",
+      "containerStyling": {
+        "position": "relative"
+      },
       "pvName": "meta://pv${EMBEDSUFFIX}"
     },
     {
       "type": "readback",
-      "flexible": true,
-      "width": "100px",
+      "containerStyling": {
+        "position": "relative"
+      },
       "pvName": "meta://pv${EMBEDSUFFIX}",
       "precision": 3
     }
