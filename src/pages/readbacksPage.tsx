@@ -2,20 +2,12 @@
 
 import React from "react";
 
-import { ConnectedStandaloneReadback } from "../components/Readback/readback";
+import { WidgetFromJson } from "../components/FromJson/fromJson";
 
 export const ReadbacksPage = (): JSX.Element => (
-  <div id="Central Column" style={{ width: "80%", margin: "auto" }}>
-    <h3>Readback: PV1</h3>
-    <ConnectedStandaloneReadback
-      pvName={"meta://pv1"}
-      style={{ color: "pink" }}
-    />
-    <h3>Readback: PV2</h3>
-    <ConnectedStandaloneReadback pvName={"meta://pv2"} />
-    <h3>Readback: PV3</h3>
-    <ConnectedStandaloneReadback pvName={"meta://pv3"} />
-    <h3>Readback: PV4</h3>
-    <ConnectedStandaloneReadback pvName={"meta://pv4"} />
-  </div>
+  <WidgetFromJson
+    file="http://localhost:3000/readbacksPage.json"
+    macroMap={{}}
+    containerStyling={{ position: "relative" }}
+  />
 );
