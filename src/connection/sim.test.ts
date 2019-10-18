@@ -119,6 +119,34 @@ it("distinguish limit values", (done): void => {
   simulator.putPv("sim://limit#two", vdouble(2));
 });
 
+it("distinguish sine values", (done): void => {
+  let oneUpdated = false;
+  let twoUpdated = false;
+  function callback(update): void {
+    if (update.name == "sim://sine#one") {
+      oneUpdated = true;
+    }
+
+    if (update.name == "sim://sine#two") {
+      twoUpdated = true;
+    }
+
+    expect(update.value.getValue()).toBeLessThan(1.1);
+    expect(update.value.getValue()).toBeGreaterThan(-1.1);
+
+    if (oneUpdated && twoUpdated) {
+      done();
+    }
+  }
+
+  simulator.connect(nullConnCallback, function(name, value): void {
+    callback({ name: name, value: diffToValue(value) });
+  });
+
+  simulator.subscribe("sim://sine#one", vdouble(1));
+  simulator.subscribe("sim://sine#two", vdouble(2));
+});
+
 it("return undefined for bad pvs", (): void => {
   getValue("bad pv", (value: VType | undefined): void => {
     expect(value).toBe(undefined);

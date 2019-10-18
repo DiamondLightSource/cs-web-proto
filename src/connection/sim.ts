@@ -342,19 +342,22 @@ export class SimulatorPlugin implements Connection {
     updateRate: number
   ): SimPv | undefined {
     let cls;
+
+    let parts = pvName.split("#");
+
     if (pvName.startsWith("loc://")) {
       cls = LocalPv;
-    } else if (pvName === "sim://disconnector") {
+    } else if (parts[0] === "sim://disconnector") {
       cls = Disconnector;
-    } else if (pvName === "sim://sine") {
+    } else if (parts[0] === "sim://sine") {
       cls = SinePv;
-    } else if (pvName === "sim://enum") {
+    } else if (parts[0] === "sim://enum") {
       cls = SimEnumPv;
     } else if (pvName.startsWith("enum://")) {
       cls = EnumPv;
-    } else if (pvName === "sim://random") {
+    } else if (parts[0] === "sim://random") {
       cls = RandomPv;
-    } else if (pvName === "sim://limit" || pvName.startsWith("sim://limit#")) {
+    } else if (parts[0] === "sim://limit") {
       cls = LimitData;
     } else {
       return undefined;
