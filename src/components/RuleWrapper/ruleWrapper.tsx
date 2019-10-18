@@ -55,7 +55,7 @@ export const RuleWrapper = (props: RuleProps): JSX.Element => {
   if (valid && condition !== undefined) {
     let state = evaluate(condition);
     let styleValue = state ? props.trueState : props.falseState;
-    let styleObj = { color: styleValue };
+    let styleObj = { color: styleValue }; //should use 'prop' not hard-coded color
     return <div style={styleObj}>{props.children}</div>;
   } else {
     return <div>{props.children}</div>;
