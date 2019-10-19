@@ -14,7 +14,7 @@ export type ConnectionChangedCallback = (
 ) => void;
 export type ValueChangedCallback = (
   pvName: string,
-  value: VType | PartialVType
+  value: VType | PartialVType | undefined
 ) => void;
 
 export interface Connection {

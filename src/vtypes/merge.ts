@@ -48,26 +48,37 @@ export function vtypeInfo(
   original: VType | undefined,
   update: PartialVType
 ): PartialVType | undefined {
-  let className = update.type ? update.type : original.constructor.name;
-  const array = update.array ? update.array : className.includes("Array");
-  const value = update.value ? update.value : original.getValue();
+  let className = update.type
+    ? update.type
+    : original
+    ? original.constructor.name
+    : undefined;
+  const array = update.array
+    ? update.array
+    : className !== undefined
+    ? className.includes("Array")
+    : undefined;
+  const value = update.value
+    ? update.value
+    : original
+    ? original.getValue()
+    : undefined;
   const alarmVal = update.alarm ? update.alarm : alarmOf(original);
   // should we require that the update has a time?
   const time = update.time ? update.time : timeOf(original);
   const display = update.display ? update.display : displayOf(original);
 
+  const originalEnum = enumOf(original);
   const index =
     update.index !== undefined
       ? update.index
-      : enumOf(original)
-      ? enumOf(original).getIndex()
+      : originalEnum
+      ? originalEnum.getIndex()
       : undefined;
   const choices = update.choices
     ? update.choices
-    : enumOf(original)
-    ? enumOf(original)
-        .getDisplay()
-        .getChoices()
+    : originalEnum
+    ? originalEnum.getDisplay().getChoices()
     : undefined;
   return {
     type: className,
@@ -90,7 +101,7 @@ export function mergeVtype(
     if (update === undefined) {
       return undefined;
     }
-    let info = vtypeInfo(original, update);
+    let info = vtypeInfo(original, update) || {};
     if (info.type === "VString" || info.type === "IVString") {
       // what happened to VStringArray in VTypes?
       return vstring(info.value, info.alarm, info.time);
@@ -121,12 +132,16 @@ export function mergeVtype(
           );
         }
       } else {
-        return VNumbers[info.type](
-          info.value,
-          info.alarm,
-          info.time,
-          info.display
-        );
+        if (info.type === undefined) {
+          return undefined;
+        } else {
+          return VNumbers[info.type](
+            info.value,
+            info.alarm,
+            info.time,
+            info.display
+          );
+        }
       }
     }
   } catch (error) {

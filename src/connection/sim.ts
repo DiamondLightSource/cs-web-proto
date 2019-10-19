@@ -13,7 +13,7 @@ import { alarm, ALARM_NONE } from "../vtypes/alarm";
 import { timeNow } from "../vtypes/time";
 import { vtypeInfo, PartialVType } from "../vtypes/merge";
 
-function partialise(value: VType | undefined): PartialVType {
+function partialise(value: VType | undefined): PartialVType | undefined {
   if (value === undefined) {
     return undefined;
   } else {
@@ -22,7 +22,7 @@ function partialise(value: VType | undefined): PartialVType {
 }
 
 abstract class SimPv {
-  private abstract simulatorName(): string;
+  abstract simulatorName(): string;
   protected onConnectionUpdate: ConnectionChangedCallback;
   protected onValueUpdate: ValueChangedCallback;
   protected pvName: string;
@@ -63,7 +63,7 @@ abstract class SimPv {
 }
 
 class SinePv extends SimPv {
-  private simulatorName(): string {
+  public simulatorName(): string {
     return "sine";
   }
 
@@ -89,7 +89,7 @@ class SinePv extends SimPv {
 }
 
 class RandomPv extends SimPv {
-  private simulatorName(): string {
+  public simulatorName(): string {
     return "random";
   }
   public constructor(
@@ -110,7 +110,7 @@ class RandomPv extends SimPv {
 }
 
 class Disconnector extends SimPv {
-  private simulatorName(): string {
+  public simulatorName(): string {
     return "disconnect";
   }
 
@@ -138,6 +138,9 @@ class Disconnector extends SimPv {
 }
 
 class SimEnumPv extends SimPv {
+  public simulatorName(): string {
+    return "simulated enum";
+  }
   private value: VEnum = venum(
     0,
     ["one", "two", "three", "four"],
@@ -173,6 +176,9 @@ class SimEnumPv extends SimPv {
 }
 
 class EnumPv extends SimPv {
+  public simulatorName(): string {
+    return "enumpv";
+  }
   private value: VEnum = venum(
     0,
     ["zero", "one", "two", "three", "four", "five"],
@@ -234,7 +240,7 @@ class EnumPv extends SimPv {
 }
 
 class LocalPv extends SimPv {
-  private simulatorName(): string {
+  public simulatorName(): string {
     return "loc";
   }
 
@@ -261,7 +267,7 @@ class LocalPv extends SimPv {
 }
 
 class LimitData extends SimPv {
-  private simulatorName(): string {
+  public simulatorName(): string {
     return "limit";
   }
 
@@ -309,6 +315,8 @@ export class SimulatorPlugin implements Connection {
   private simPvs: SimCache;
   private onConnectionUpdate: ConnectionChangedCallback;
   private onValueUpdate: ValueChangedCallback;
+  private updateRate: number;
+  private connected: boolean;
 
   public constructor(updateRate?: number) {
     this.simPvs = {};
@@ -317,6 +325,7 @@ export class SimulatorPlugin implements Connection {
     this.subscribe = this.subscribe.bind(this);
     this.putPv = this.putPv.bind(this);
     this.updateRate = updateRate || 2000;
+    this.connected = false;
   }
 
   public connect(
@@ -329,6 +338,7 @@ export class SimulatorPlugin implements Connection {
 
     this.onConnectionUpdate = connectionCallback;
     this.onValueUpdate = valueCallback;
+    this.connected = true;
   }
 
   public isConnected(): boolean {

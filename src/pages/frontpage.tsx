@@ -17,6 +17,8 @@ export const FrontPage = (): JSX.Element => (
       <ConnectedReadback pvName={"loc://pv1"} />
       <ConnectedReadback pvName={"loc://pv2"} />
       <ConnectedReadback pvName={"sim://sine"} precision={3} />
+      <ConnectedReadback pvName={"sim://sine#other"} precision={3} />
+      <ConnectedReadback pvName={"loc://pv1(1)"} precision={3} />
       <ConnectedReadback pvName={"sim://disconnector"} precision={3} />
     </div>
     <div>

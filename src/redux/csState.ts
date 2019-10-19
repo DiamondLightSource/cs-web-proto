@@ -48,7 +48,7 @@ export function csReducer(state = initialState, action: ActionType): CsState {
       const newValueCache: ValueCache = { ...state.valueCache };
       const { pvName, value } = action.payload;
       const pvState = state.valueCache[pvName];
-      let newValue: VType;
+      let newValue: VType | undefined;
       if (value instanceof VType) {
         newValue = value;
       } else {

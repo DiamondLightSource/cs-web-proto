@@ -19,7 +19,11 @@ function connectionChanged(
   });
 }
 
-function valueChanged(store: Store, pvName: string, value: object): void {
+function valueChanged(
+  store: Store,
+  pvName: string,
+  value: object | undefined
+): void {
   store.dispatch({
     type: VALUE_CHANGED,
     payload: { pvName: pvName, value: value }
