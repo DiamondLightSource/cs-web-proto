@@ -138,7 +138,7 @@ export const vdoubleArray = (
 ): VDoubleArray => new IVDoubleArray(value, sizes, alarm, time, display);
 
 abstract class EnumDisplay {
-  public abstract getChoices(index): string[];
+  public abstract getChoices(): string[];
 }
 
 export class IEnumDisplay extends EnumDisplay {
