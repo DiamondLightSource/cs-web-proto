@@ -203,12 +203,8 @@ export const venum = (
   time: Time = timeNow()
 ): VEnum => new IVEnum(index, new IEnumDisplay(choices), alarm, time);
 
-const isEnumProvider = (object: any): object is AlarmProvider => {
-  return "getIndex" in object;
-};
-
 export const enumOf = (object: any): VEnum | undefined => {
-  if (object && isEnumProvider(object)) {
+  if (object && object instanceof VEnum) {
     return object as VEnum;
   } else {
     return undefined;
