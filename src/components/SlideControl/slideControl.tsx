@@ -56,10 +56,10 @@ export const SlideControl: React.FC<SlideControlProps> = (
     setInputValue(event.currentTarget.value);
   }
 
-  function onMouseDown(event: React.MouseEvent<HTMLInputElement>): void {
+  function onPointerDown(event: React.MouseEvent<HTMLInputElement>): void {
     setEditing(true);
   }
-  function onMouseUp(event: React.MouseEvent<HTMLInputElement>): void {
+  function onPointerUp(event: React.MouseEvent<HTMLInputElement>): void {
     setEditing(false);
     writePv(pvName, stringToVtype(event.currentTarget.value));
   }
@@ -106,8 +106,8 @@ export const SlideControl: React.FC<SlideControlProps> = (
           max={max}
           value={inputValue}
           onChange={onChange}
-          onMouseDown={onMouseDown}
-          onMouseUp={onMouseUp}
+          onPointerDown={onPointerDown}
+          onPointerUp={onPointerUp}
           style={props.style}
         ></input>
       </div>

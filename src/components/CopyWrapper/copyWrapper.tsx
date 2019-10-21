@@ -36,10 +36,13 @@ export const CopyWrapper = (props: {
     }
   }
 
-  const copyPvToClipboard = (e: React.MouseEvent): void => {
+  const copyPvToClipboardOnMouse = (e: React.MouseEvent): void => {
     if (e.button === 1) {
       copyToClipboard(pvName);
     }
+  };
+  const copyPvToClipboardOnCopy = (e: React.ClipboardEvent): void => {
+    copyToClipboard(pvName);
   };
   const showPopover = (e: React.MouseEvent): void => {
     if (e.button === 1) {
@@ -67,6 +70,7 @@ export const CopyWrapper = (props: {
   return (
     <div
       style={{ position: "relative", height: "100%", width: "100%", ...style }}
+      onCopy={copyPvToClipboardOnCopy}
     >
       <Popover
         isOpen={popoverOpen}
@@ -77,7 +81,7 @@ export const CopyWrapper = (props: {
         }}
       >
         <div
-          onClick={copyPvToClipboard}
+          onClick={copyPvToClipboardOnMouse}
           onMouseDown={showPopover}
           onMouseUp={hidePopover}
           className={classes.Children}
