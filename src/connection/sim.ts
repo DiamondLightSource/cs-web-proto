@@ -38,11 +38,11 @@ abstract class SimPv {
     this.onConnectionUpdate = onConnectionUpdate;
     this.onValueUpdate = onValueUpdate;
     this.updateRate = updateRate;
-    this.onConnectionUpdate(pvName, { isConnected: true });
+    this.onConnectionUpdate(pvName, { isConnected: true, isReadonly: true });
   }
 
   public getConnection(): ConnectionState {
-    return { isConnected: true };
+    return { isConnected: true, isReadonly: true };
   }
 
   public publish(): void {
@@ -129,7 +129,7 @@ class Disconnector extends SimPv {
   }
   public getConnection(): ConnectionState {
     const randomBool = Math.random() >= 0.5;
-    return { isConnected: randomBool };
+    return { isConnected: randomBool, isReadonly: true };
   }
 
   public getValue(): VType | undefined {
@@ -154,7 +154,10 @@ class SimEnumPv extends SimPv {
     updateRate: number
   ) {
     super(pvName, onConnectionUpdate, onValueUpdate, updateRate);
-    this.onConnectionUpdate(this.pvName, { isConnected: true });
+    this.onConnectionUpdate(this.pvName, {
+      isConnected: true,
+      isReadonly: true
+    });
     this.onValueUpdate(this.pvName, partialise(this.getValue()));
     setInterval(
       (): void => this.onValueUpdate(this.pvName, partialise(this.getValue())),
@@ -192,7 +195,10 @@ class EnumPv extends SimPv {
     updateRate: number
   ) {
     super(pvName, onConnectionUpdate, onValueUpdate, updateRate);
-    this.onConnectionUpdate(this.pvName, { isConnected: true });
+    this.onConnectionUpdate(this.pvName, {
+      isConnected: true,
+      isReadonly: false
+    });
     this.onValueUpdate(this.pvName, partialise(this.getValue()));
     setInterval(
       (): void => this.onValueUpdate(this.pvName, partialise(this.getValue())),
@@ -252,8 +258,9 @@ class LocalPv extends SimPv {
     updateRate?: number
   ) {
     super(pvName, onConnectionUpdate, onValueUpdate, updateRate);
+    this.onConnectionUpdate(pvName, { isConnected: true, isReadonly: false });
     this.value = undefined;
-    this.updateRate = undefined;
+    this.updateRate = updateRate;
   }
 
   public getValue(): VType | undefined {
@@ -283,6 +290,10 @@ class LimitData extends SimPv {
     super(pvName, onConnectionUpdate, onValueUpdate, updateRate);
     this.value = vdouble(50);
     this.onConnectionUpdate(this.pvName, this.getConnection());
+  }
+
+  public getConnection(): ConnectionState {
+    return { isConnected: true, isReadonly: false };
   }
 
   public updateValue(value: VType): void {

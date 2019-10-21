@@ -12,6 +12,7 @@ import { vtypeToString, stringToVtype } from "../../vtypes/utils";
 export interface InputProps {
   pvName: string;
   value: string;
+  readonly: boolean;
   onKeyDown: (event: React.KeyboardEvent<HTMLInputElement>) => void;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onBlur: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -19,18 +20,25 @@ export interface InputProps {
   style?: object;
 }
 
-export const Input: React.FC<InputProps> = (props: InputProps): JSX.Element => (
-  <input
-    type="text"
-    value={props.value}
-    onKeyDown={props.onKeyDown}
-    onChange={props.onChange}
-    onBlur={props.onBlur}
-    onClick={props.onClick}
-    className={`Input ${classes.Input}`}
-    style={props.style}
-  />
-);
+export const Input: React.FC<InputProps> = (props: InputProps): JSX.Element => {
+  let allClasses = `Input ${classes.Input}`;
+  if (props.readonly) {
+    allClasses += ` ${classes.Readonly}`;
+  }
+  return (
+    <input
+      type="text"
+      value={props.value}
+      onKeyDown={props.onKeyDown}
+      onChange={props.onChange}
+      onBlur={props.onBlur}
+      onClick={props.onClick}
+      className={allClasses}
+      style={props.style}
+      readOnly={props.readonly}
+    />
+  );
+};
 
 interface ConnectedInputProps {
   pvName: string;
@@ -39,6 +47,7 @@ interface ConnectedInputProps {
 
 interface SmartInputProps {
   pvName: string;
+  readonly: boolean;
   value?: VType;
   style?: object;
 }
@@ -60,7 +69,7 @@ export const SmartInput: React.FC<SmartInputProps> = (
   }
   function onClick(event: React.MouseEvent<HTMLInputElement>): void {
     /* When focus gained allow editing. */
-    if (!editing) {
+    if (!props.readonly && !editing) {
       setInputValue("");
       setEditing(true);
     }
@@ -79,6 +88,7 @@ export const SmartInput: React.FC<SmartInputProps> = (
     <Input
       pvName={props.pvName}
       value={inputValue}
+      readonly={props.readonly}
       onKeyDown={onKeyDown}
       onChange={onChange}
       onBlur={onBlur}
@@ -103,6 +113,7 @@ export const StandaloneInput = (props: {
   rawPvName?: string;
   value: VType;
   connected: boolean;
+  readonly: boolean;
   precision?: number;
   style?: object;
 }): JSX.Element => (
@@ -113,7 +124,11 @@ export const StandaloneInput = (props: {
     value={props.value}
   >
     <AlarmBorder connected={props.connected} value={props.value}>
-      <SmartInput pvName={props.pvName} value={props.value}></SmartInput>
+      <SmartInput
+        pvName={props.pvName}
+        readonly={props.readonly}
+        value={props.value}
+      ></SmartInput>
     </AlarmBorder>
   </CopyWrapper>
 );
