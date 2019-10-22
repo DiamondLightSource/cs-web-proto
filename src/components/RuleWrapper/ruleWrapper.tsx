@@ -28,36 +28,41 @@ function pvStateSelector(pvName: string, state: CsState): [boolean, VType?] {
   return [connected, value];
 }
 
-export const RuleWrapper = (props: RuleProps): JSX.Element => {
-  let condition = props.condition;
-  let valid = true;
-  if (condition === undefined || props.substitutionMap === undefined)
-    valid = false;
-  else {
-    for (let [name, pv] of Object.entries(props.substitutionMap)) {
-      // eslint-disable-next-line react-hooks/rules-of-hooks
-      const [id] = useId();
-      // eslint-disable-next-line react-hooks/rules-of-hooks
-      useSubscription(id, pv);
-      // eslint-disable-next-line react-hooks/rules-of-hooks
-      const [connected, latestValue] = useSelector((state: CsState): [
-        boolean,
-        VType?
-      ] => {
-        return pvStateSelector(pv, state);
-      });
-      if (latestValue !== undefined && connected) {
-        condition = condition.replace(name, latestValue.getValue());
-      } else valid = false;
-      console.log(condition);
+export const RuleWrapper = <P extends object>(
+  Component: React.FC<P>
+): React.FC<any> => {
+  // eslint-disable-next-line react/display-name
+  return (props: RuleProps): JSX.Element => {
+    let condition = props.condition;
+    let valid = true;
+    if (condition === undefined || props.substitutionMap === undefined)
+      valid = false;
+    else {
+      for (let [name, pv] of Object.entries(props.substitutionMap)) {
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        const [id] = useId();
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        useSubscription(id, pv);
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        const [connected, latestValue] = useSelector((state: CsState): [
+          boolean,
+          VType?
+        ] => {
+          return pvStateSelector(pv, state);
+        });
+        if (latestValue !== undefined && connected) {
+          condition = condition.replace(name, latestValue.getValue());
+        } else valid = false;
+        console.log(condition);
+      }
     }
-  }
-  if (valid && condition !== undefined) {
-    let state = evaluate(condition);
-    let styleValue = state ? props.trueState : props.falseState;
-    let styleObj = { color: styleValue }; //should use 'prop' not hard-coded color
-    return <div style={styleObj}>{props.children}</div>;
-  } else {
-    return <div>{props.children}</div>;
-  }
+    if (valid && condition !== undefined) {
+      let state = evaluate(condition);
+      let styleValue = state ? props.trueState : props.falseState;
+      console.log(styleValue);
+      // use props.prop not hard coded colour
+      return <Component {...(props as P)} colour={styleValue}></Component>;
+    }
+    return <Component {...(props as P)}></Component>;
+  };
 };

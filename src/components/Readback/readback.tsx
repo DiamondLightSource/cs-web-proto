@@ -14,6 +14,7 @@ import { MacroMap } from "../../redux/csState";
 export interface ReadbackProps {
   connected: boolean;
   value?: VType;
+  colour?: string;
   precision?: number;
   style?: object;
   condition?: string;
@@ -53,28 +54,20 @@ export const Readback = (props: ReadbackProps): JSX.Element => {
       color: "#ffffff"
     };
   }
-
+  style = { ...style, color: props.colour };
   return (
-    <RuleWrapper
-      condition={props.condition}
-      trueState={props.trueState}
-      falseState={props.falseState}
-      substitutionMap={props.substitutionMap}
-      prop={props.prop}
-      value={props.value}
-      style={props.style}
+    <div
+      className={`Readback ${classes.Readback} ${getClass(
+        alarm.getSeverity()
+      )}`}
+      style={style}
     >
-      <div
-        className={`Readback ${classes.Readback} ${getClass(
-          alarm.getSeverity()
-        )}`}
-        style={style}
-      >
-        {displayedValue}
-      </div>
-    </RuleWrapper>
+      {displayedValue}
+    </div>
   );
 };
+
+export const RuleReadback: React.FC<ReadbackProps> = RuleWrapper(Readback);
 
 interface ConnectedReadbackProps {
   pvName: string;
@@ -86,7 +79,7 @@ interface ConnectedReadbackProps {
 
 export const ConnectedReadback: React.FC<
   ConnectedReadbackProps
-> = connectionWrapper(Readback);
+> = connectionWrapper(RuleReadback);
 
 interface ConnectedCopyReadbackProps {
   pvName: string;
@@ -115,7 +108,7 @@ export const CopyReadback = (props: {
     value={props.value}
     style={props.style}
   >
-    <Readback
+    <RuleReadback
       connected={props.connected}
       value={props.value}
       precision={props.precision}
@@ -125,7 +118,7 @@ export const CopyReadback = (props: {
       trueState={props.trueState}
       falseState={props.falseState}
       substitutionMap={props.substitutionMap}
-    ></Readback>
+    ></RuleReadback>
   </CopyWrapper>
 );
 
@@ -156,6 +149,7 @@ export const StandaloneReadback = (props: {
   trueState?: string;
   falseState?: string;
   substitutionMap?: MacroMap;
+  colour?: string;
 }): JSX.Element => (
   <CopyWrapper
     pvName={props.pvName}
@@ -164,7 +158,7 @@ export const StandaloneReadback = (props: {
     value={props.value}
   >
     <AlarmBorder connected={props.connected} value={props.value}>
-      <Readback
+      <RuleReadback
         connected={props.connected}
         value={props.value}
         precision={props.precision}
@@ -174,7 +168,7 @@ export const StandaloneReadback = (props: {
         trueState={props.trueState}
         falseState={props.falseState}
         substitutionMap={props.substitutionMap}
-      ></Readback>
+      ></RuleReadback>
     </AlarmBorder>
   </CopyWrapper>
 );
