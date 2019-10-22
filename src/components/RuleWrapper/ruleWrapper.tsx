@@ -53,13 +53,11 @@ export const RuleWrapper = <P extends object>(
         if (latestValue !== undefined && connected) {
           condition = condition.replace(name, latestValue.getValue());
         } else valid = false;
-        console.log(condition);
       }
     }
     if (valid && condition !== undefined) {
       let state = evaluate(condition);
       let styleValue = state ? props.trueState : props.falseState;
-      console.log(styleValue);
       // use props.prop not hard coded colour
       return <Component {...(props as P)} colour={styleValue}></Component>;
     }
