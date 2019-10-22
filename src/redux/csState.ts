@@ -1,4 +1,3 @@
-import log from "loglevel";
 import {
   VALUE_CHANGED,
   ActionType,
@@ -8,23 +7,8 @@ import {
   MACRO_UPDATED,
   UNSUBSCRIBE
 } from "./actions";
-import {
-  VType,
-  vdouble,
-  vdoubleArray,
-  VNumberBuilder,
-  VNumberArrayBuilder
-} from "../vtypes/vtypes";
-import { vstring } from "../vtypes/string";
-import { Time, timeOf } from "../vtypes/time";
-import { Display, displayOf } from "../vtypes/display";
-import {
-  Alarm,
-  alarmOf,
-  AlarmSeverity,
-  AlarmStatus,
-  alarm
-} from "../vtypes/alarm";
+import { VType } from "../vtypes/vtypes";
+import { mergeVtype } from "../vtypes/merge";
 
 const initialState: CsState = {
   valueCache: {},
@@ -35,6 +19,7 @@ const initialState: CsState = {
 export interface PvState {
   value: VType;
   connected: boolean;
+  readonly: boolean;
 }
 
 export interface ValueCache {
@@ -57,71 +42,18 @@ export interface CsState {
   subscriptions: Subscriptions;
 }
 
-export interface PartialVType {
-  type?: string;
-  value?: any;
-  array?: boolean;
-  base64?: string;
-  alarm?: Alarm;
-  time?: Time;
-  display?: Display;
-}
-
-const VNumbers: { [index: string]: VNumberBuilder } = {
-  IVDouble: vdouble,
-  VDouble: vdouble
-};
-
-const VNumberArrays: { [index: string]: VNumberArrayBuilder } = {
-  IVDoubleArray: vdoubleArray,
-  VDoubleArray: vdoubleArray
-};
-
-const mergeVtype = (original: VType, update: PartialVType): VType => {
-  try {
-    let className = update.type ? update.type : original.constructor.name;
-    const array = update.array ? update.array : className.includes("Array");
-    const value = update.value ? update.value : original.getValue();
-    const alarmVal = update.alarm ? update.alarm : alarmOf(original);
-    // should we require that the update has a time?
-    const time = update.time ? update.time : timeOf(original);
-    const display = update.display ? update.display : displayOf(original);
-    if (className === "VString" || className === "IVString") {
-      // what happened to VStringArray in VTypes?
-      return vstring(value, alarmVal, time);
-    } else {
-      if (array) {
-        if (!className.endsWith("Array")) {
-          className = `${className}Array`;
-        }
-        return VNumberArrays[className](
-          value,
-          value.length,
-          alarmVal,
-          time,
-          display
-        );
-      } else {
-        return VNumbers[className](value, alarmVal, time, display);
-      }
-    }
-  } catch (error) {
-    // This happens occasionally, and has serious consequences, but I
-    // don't know why!
-    log.error("failed to merge vtypes", original, update, error);
-    return vstring(
-      "error",
-      alarm(AlarmSeverity.MAJOR, AlarmStatus.NONE, "error")
-    );
-  }
-};
-
 export function csReducer(state = initialState, action: ActionType): CsState {
   switch (action.type) {
     case VALUE_CHANGED: {
       const newValueCache: ValueCache = { ...state.valueCache };
-      const pvState = state.valueCache[action.payload.pvName];
-      const newValue = mergeVtype(pvState.value, action.payload.value);
+      const { pvName, value } = action.payload;
+      const pvState = state.valueCache[pvName];
+      let newValue: VType | undefined;
+      if (value instanceof VType) {
+        newValue = value;
+      } else {
+        newValue = mergeVtype(pvState.value, value);
+      }
       const newPvState = Object.assign({}, pvState, {
         value: newValue
       });
@@ -132,7 +64,11 @@ export function csReducer(state = initialState, action: ActionType): CsState {
       const newValueCache: ValueCache = { ...state.valueCache };
       const { pvName, value } = action.payload;
       const pvState = state.valueCache[pvName];
-      const newPvState = { ...pvState, connected: value.isConnected };
+      const newPvState = {
+        ...pvState,
+        connected: value.isConnected,
+        readonly: value.isReadonly
+      };
       newValueCache[action.payload.pvName] = newPvState;
       return { ...state, valueCache: newValueCache };
     }

@@ -6,7 +6,10 @@ import {
   ConnectedReadback,
   ConnectedStandaloneReadback
 } from "../components/Readback/readback";
-import { ConnectedInput } from "../components/Input/input";
+import {
+  ConnectedInput,
+  ConnectedStandaloneInput
+} from "../components/Input/input";
 import { Label } from "../components/Label/label";
 import { ConnectedMenuButton } from "../components/MenuButton/menuButton";
 
@@ -17,13 +20,15 @@ export const FrontPage = (): JSX.Element => (
       <ConnectedReadback pvName={"loc://pv1"} />
       <ConnectedReadback pvName={"loc://pv2"} />
       <ConnectedReadback pvName={"sim://sine"} precision={3} />
+      <ConnectedReadback pvName={"sim://sine#other"} precision={3} />
+      <ConnectedReadback pvName={"loc://pv1(1)"} precision={3} />
       <ConnectedReadback pvName={"sim://disconnector"} precision={3} />
     </div>
     <div>
-      <ConnectedInput pvName={"loc://pv1"} />
-      <ConnectedInput pvName={"loc://pv2"} />
-      <ConnectedInput pvName={"sim://sine"} />
-      <ConnectedInput pvName={"sim://sine"} />
+      <ConnectedStandaloneInput pvName={"loc://pv1"} />
+      <ConnectedStandaloneInput pvName={"loc://pv2"} />
+      <ConnectedStandaloneInput pvName={"sim://sine"} />
+      <ConnectedStandaloneInput pvName={"sim://sine"} />
     </div>
     <div>
       <h3>PV with Metadata</h3>
@@ -46,7 +51,7 @@ export const FrontPage = (): JSX.Element => (
             margin: "auto"
           }}
         >
-          <ConnectedInput pvName={"meta://metapv1"} />
+          <ConnectedInput pvName={"sim://limit#metapv1"} />
         </div>
         <div
           style={{
@@ -59,7 +64,7 @@ export const FrontPage = (): JSX.Element => (
             margin: "auto"
           }}
         >
-          <ConnectedReadback pvName={"meta://metapv1"} />
+          <ConnectedReadback pvName={"sim://limit#metapv1"} />
         </div>
       </div>
       <div
@@ -69,7 +74,10 @@ export const FrontPage = (): JSX.Element => (
           margin: "15px auto"
         }}
       >
-        <ConnectedStandaloneReadback pvName={"meta://metapv1"} precision={2} />
+        <ConnectedStandaloneReadback
+          pvName={"sim://limit#metapv1"}
+          precision={2}
+        />
       </div>
       <div
         style={{

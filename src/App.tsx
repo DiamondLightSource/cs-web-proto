@@ -14,15 +14,14 @@ import { ProgressPage } from "./pages/progressPage";
 import { PositioningExamplePage } from "./pages/positioningExamplePage";
 import { JsonPage } from "./pages/fromJson";
 import { ConiqlPage } from "./pages/coniqlPage";
-import { ConiqlPlugin } from "./connection/coniql";
 import { MacrosPage } from "./pages/macrosPage";
 import { lightTheme, darkTheme, ThemeContext } from "./themeContext";
 import { FlexExamplePage } from "./pages/flexExamplePage";
 import { EmbeddedPage } from "./pages/embeddedPage";
 import { RulesPage } from "./pages/rulesPage";
+import { SimulatorPlugin } from "./connection/sim";
 
 log.setLevel("INFO");
-const SOCKET = "localhost:8000";
 
 function applyTheme(theme: any): void {
   Object.keys(theme).forEach(function(key): void {
@@ -32,7 +31,7 @@ function applyTheme(theme: any): void {
 }
 
 const App: React.FC = (): JSX.Element => {
-  const plugin = new ConiqlPlugin(SOCKET);
+  const plugin = new SimulatorPlugin();
   initialiseStore(plugin);
   const store = getStore();
   const { toggle, dark } = React.useContext(ThemeContext);

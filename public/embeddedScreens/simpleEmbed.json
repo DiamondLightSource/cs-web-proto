@@ -20,13 +20,13 @@
       "type": "connectedStandaloneInput",
       "flexible": true,
       "width": "100px",
-      "pvName": "meta://pv${EMBEDSUFFIX}"
+      "pvName": "sim://limit#pv${EMBEDSUFFIX}"
     },
     {
       "type": "readback",
       "flexible": true,
       "width": "100px",
-      "pvName": "meta://pv${EMBEDSUFFIX}",
+      "pvName": "sim://limit#pv${EMBEDSUFFIX}",
       "precision": 3
     }
   ]

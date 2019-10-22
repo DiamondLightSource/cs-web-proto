@@ -1,11 +1,12 @@
 import { VType } from "../vtypes/vtypes";
-import { PartialVType } from "../redux/csState";
+import { PartialVType } from "../vtypes/merge";
 
 export const nullConnCallback: ConnectionChangedCallback = (_p, _v): void => {};
 export const nullValueCallback: ValueChangedCallback = (_p, _v): void => {};
 
 export interface ConnectionState {
   isConnected: boolean;
+  isReadonly: boolean;
 }
 
 export type ConnectionChangedCallback = (
@@ -14,7 +15,7 @@ export type ConnectionChangedCallback = (
 ) => void;
 export type ValueChangedCallback = (
   pvName: string,
-  value: PartialVType
+  value: VType | PartialVType | undefined
 ) => void;
 
 export interface Connection {

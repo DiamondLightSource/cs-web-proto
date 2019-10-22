@@ -6,7 +6,8 @@ export abstract class VType {
   public abstract getValue(): any;
 }
 
-export abstract class Scalar implements AlarmProvider, TimeProvider {
+export abstract class Scalar extends VType
+  implements AlarmProvider, TimeProvider {
   public abstract getAlarm(): Alarm;
   public abstract getTime(): Time;
 }
@@ -140,7 +141,7 @@ abstract class EnumDisplay {
   public abstract getChoices(): string[];
 }
 
-class IEnumDisplay extends EnumDisplay {
+export class IEnumDisplay extends EnumDisplay {
   private choices: string[];
 
   public constructor(choices: string[]) {
@@ -159,7 +160,7 @@ export abstract class VEnum extends Scalar {
   public abstract getDisplay(): EnumDisplay;
 }
 
-class IVEnum extends VEnum {
+export class IVEnum extends VEnum {
   private index: number;
   private alarm: Alarm;
   private time: Time;
@@ -201,3 +202,15 @@ export const venum = (
   alarm: Alarm = ALARM_NONE,
   time: Time = timeNow()
 ): VEnum => new IVEnum(index, new IEnumDisplay(choices), alarm, time);
+
+const isEnumProvider = (object: any): object is AlarmProvider => {
+  return "getIndex" in object;
+};
+
+export const enumOf = (object: any): VEnum | undefined => {
+  if (object && isEnumProvider(object)) {
+    return object as VEnum;
+  } else {
+    return undefined;
+  }
+};
