@@ -35,7 +35,7 @@ export const connectionWrapper = <P extends object>(
   // eslint-disable-next-line react/display-name
   return (props: PvProps): JSX.Element => {
     const [id] = useId();
-    useSubscription(id, props.pvName);
+    useSubscription(id, [props.pvName]);
     const [connected, readonly, latestValue] = useSelector((state: CsState): [
       boolean,
       boolean,
