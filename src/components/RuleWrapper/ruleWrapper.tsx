@@ -41,7 +41,7 @@ export const RuleWrapper = <P extends object>(
       valid = false;
     else {
       let pvs = [];
-      for (let [name, pv] of Object.entries(props.substitutionMap)) {
+      for (let [pv] of Object.entries(props.substitutionMap)) {
         pvs.push(pv);
       }
       // eslint-disable-next-line react-hooks/rules-of-hooks
