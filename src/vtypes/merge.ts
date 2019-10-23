@@ -53,16 +53,18 @@ export function vtypeInfo(
     : original
     ? original.constructor.name
     : undefined;
-  const array = update.array
-    ? update.array
-    : className !== undefined
-    ? className.includes("Array")
-    : undefined;
-  const value = update.value
-    ? update.value
-    : original
-    ? original.getValue()
-    : undefined;
+  const array =
+    update.array !== undefined
+      ? update.array
+      : className !== undefined
+      ? className.includes("Array")
+      : undefined;
+  const value =
+    update.value !== undefined
+      ? update.value
+      : original
+      ? original.getValue()
+      : undefined;
   const alarmVal = update.alarm ? update.alarm : alarmOf(original);
   // should we require that the update has a time?
   const time = update.time ? update.time : timeOf(original);
