@@ -33,16 +33,20 @@ export const RuleWrapper = <P extends object>(
 ): React.FC<any> => {
   // eslint-disable-next-line react/display-name
   return (props: RuleProps): JSX.Element => {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const [id] = useId();
     let condition = props.condition;
     let valid = true;
     if (condition === undefined || props.substitutionMap === undefined)
       valid = false;
     else {
+      let pvs = [];
       for (let [name, pv] of Object.entries(props.substitutionMap)) {
-        // eslint-disable-next-line react-hooks/rules-of-hooks
-        const [id] = useId();
-        // eslint-disable-next-line react-hooks/rules-of-hooks
-        useSubscription(id, pv);
+        pvs.push(pv);
+      }
+      // eslint-disable-next-line react-hooks/rules-of-hooks
+      useSubscription(id, pvs);
+      for (let [name, pv] of Object.entries(props.substitutionMap)) {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [connected, latestValue] = useSelector((state: CsState): [
           boolean,
