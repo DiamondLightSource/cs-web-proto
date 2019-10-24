@@ -9,7 +9,7 @@ interface FlexProps {
   style?: object;
 }
 
-export const FlexContainer = (props: FlexProps): JSX.Element => {
+export const FlexContainerComponent = (props: FlexProps): JSX.Element => {
   let classNames = [classes.FlexContainer];
   let { flexFlow = null } = props;
   if (flexFlow !== null) {
@@ -22,6 +22,6 @@ export const FlexContainer = (props: FlexProps): JSX.Element => {
   );
 };
 
-export const FlexContainerWidget = (
+export const FlexContainer = (
   props: FlexProps & WidgetInterface
-): JSX.Element => <Widget baseWidget={FlexContainer} {...props} />;
+): JSX.Element => <Widget baseWidget={FlexContainerComponent} {...props} />;

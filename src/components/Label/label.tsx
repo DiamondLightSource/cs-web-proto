@@ -3,7 +3,7 @@ import React from "react";
 import classes from "./label.module.css";
 import { Widget, WidgetInterface } from "../Widget/widget";
 
-export const Label = (props: {
+export const LabelComponent = (props: {
   text: string | number;
   style?: object;
 }): JSX.Element => (
@@ -17,6 +17,6 @@ interface LabelWidgetProps {
   text: string | number;
 }
 
-export const LabelWidget = (
+export const Label = (
   props: LabelWidgetProps & WidgetInterface
-): JSX.Element => <Widget baseWidget={Label} {...props} />;
+): JSX.Element => <Widget baseWidget={LabelComponent} {...props} />;

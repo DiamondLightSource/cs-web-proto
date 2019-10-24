@@ -16,7 +16,9 @@ export interface InputProps {
   style?: object;
 }
 
-export const Input: React.FC<InputProps> = (props: InputProps): JSX.Element => (
+export const InputComponent: React.FC<InputProps> = (
+  props: InputProps
+): JSX.Element => (
   <input
     type="text"
     value={props.value}
@@ -35,7 +37,7 @@ interface SmartInputProps {
   style?: object;
 }
 
-export const SmartInput: React.FC<SmartInputProps> = (
+export const SmartInputComponent: React.FC<SmartInputProps> = (
   props: SmartInputProps
 ): JSX.Element => {
   const [inputValue, setInputValue] = useState("");
@@ -68,7 +70,7 @@ export const SmartInput: React.FC<SmartInputProps> = (
   }
 
   return (
-    <Input
+    <InputComponent
       pvName={props.pvName}
       value={inputValue}
       onKeyDown={onKeyDown}
@@ -84,6 +86,6 @@ interface InputWidgetProps {
   precision?: number;
 }
 
-export const ConnectedInputWidget = (
+export const Input = (
   props: InputWidgetProps & PVWidgetInterface
-): JSX.Element => <PVWidget baseWidget={SmartInput} {...props} />;
+): JSX.Element => <PVWidget baseWidget={SmartInputComponent} {...props} />;

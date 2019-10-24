@@ -6,7 +6,7 @@ import React, { useState } from "react";
 import classes from "./slideControl.module.css";
 import { vtypeToString, stringToVtype } from "../../vtypes/utils";
 
-import { ProgressBar } from "../ProgressBar/progressBar";
+import { ProgressBarComponent } from "../ProgressBar/progressBar";
 import { writePv } from "../../hooks/useCs";
 import { VType } from "../../vtypes/vtypes";
 import { PVWidget, PVWidgetInterface } from "../Widget/widget";
@@ -28,7 +28,7 @@ interface SlideControlProps {
   style?: object;
 }
 
-export const SlideControl: React.FC<SlideControlProps> = (
+export const SlideControlComponent: React.FC<SlideControlProps> = (
   props: SlideControlProps
 ): JSX.Element => {
   let {
@@ -75,7 +75,7 @@ export const SlideControl: React.FC<SlideControlProps> = (
           left: "0%"
         }}
       >
-        <ProgressBar
+        <ProgressBarComponent
           connected={connected}
           value={value}
           min={min}
@@ -115,6 +115,6 @@ interface SlideControlWidgetProps {
   vertical?: boolean;
 }
 
-export const ConnectedSlideControlWidget = (
+export const SlideControl = (
   props: SlideControlWidgetProps & PVWidgetInterface
-): JSX.Element => <PVWidget baseWidget={SlideControl} {...props} />;
+): JSX.Element => <PVWidget baseWidget={SlideControlComponent} {...props} />;

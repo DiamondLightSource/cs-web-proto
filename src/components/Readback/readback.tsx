@@ -25,7 +25,7 @@ function getClass(alarmSeverity: any): string {
   return classes.Readback;
 }
 
-export const Readback = (props: ReadbackProps): JSX.Element => {
+export const ReadbackComponent = (props: ReadbackProps): JSX.Element => {
   let { connected, value, precision = undefined, style } = props;
   const alarm = alarmOf(value);
   let displayedValue;
@@ -60,6 +60,6 @@ interface ReadbackWidgetProps {
   precision?: number;
 }
 
-export const ConnectedReadbackWidget = (
+export const Readback = (
   props: ReadbackWidgetProps & PVWidgetInterface
-): JSX.Element => <PVWidget baseWidget={Readback} {...props} />;
+): JSX.Element => <PVWidget baseWidget={ReadbackComponent} {...props} />;

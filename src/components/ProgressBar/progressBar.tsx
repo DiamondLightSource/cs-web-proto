@@ -22,7 +22,7 @@ interface ProgressBarProps {
   style?: object;
 }
 
-export const ProgressBar: React.FC<ProgressBarProps> = (
+export const ProgressBarComponent: React.FC<ProgressBarProps> = (
   props: ProgressBarProps
 ): JSX.Element => {
   let {
@@ -91,6 +91,6 @@ interface ProgressBarWidgetProps {
   style?: object;
 }
 
-export const ConnectedProgressBarWidget = (
+export const ProgressBar = (
   props: ProgressBarWidgetProps & PVWidgetInterface
-): JSX.Element => <PVWidget baseWidget={ProgressBar} {...props} />;
+): JSX.Element => <PVWidget baseWidget={ProgressBarComponent} {...props} />;

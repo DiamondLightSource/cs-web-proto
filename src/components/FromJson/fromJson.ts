@@ -3,12 +3,12 @@ import {
   widgetDescriptionToComponent,
   WidgetDescription
 } from "../Positioning/positioning";
-import { LabelWidget } from "../Label/label";
-import { ConnectedReadbackWidget } from "../Readback/readback";
-import { ConnectedInputWidget } from "../Input/input";
-import { FlexContainerWidget } from "../FlexContainer/flexContainer";
-import { ConnectedProgressBarWidget } from "../ProgressBar/progressBar";
-import { ConnectedSlideControlWidget } from "../SlideControl/slideControl";
+import { Label } from "../Label/label";
+import { Readback } from "../Readback/readback";
+import { Input } from "../Input/input";
+import { FlexContainer } from "../FlexContainer/flexContainer";
+import { ProgressBar } from "../ProgressBar/progressBar";
+import { SlideControl } from "../SlideControl/slideControl";
 import { MenuButton } from "../MenuButton/menuButton";
 import { MacroMap } from "../../redux/csState";
 import { Display } from "../Display/display";
@@ -41,13 +41,13 @@ export const WidgetFromJson = (
       });
   }
   const widgetDict = {
-    readback: ConnectedReadbackWidget,
-    input: ConnectedInputWidget,
-    label: LabelWidget,
-    progressbar: ConnectedProgressBarWidget,
-    slidecontrol: ConnectedSlideControlWidget,
+    readback: Readback,
+    input: Input,
+    label: Label,
+    progressbar: ProgressBar,
+    slidecontrol: SlideControl,
     menubutton: MenuButton,
-    flexcontainer: FlexContainerWidget,
+    flexcontainer: FlexContainer,
     display: Display,
     empty: Display,
     widgetFromJSON: WidgetFromJson
