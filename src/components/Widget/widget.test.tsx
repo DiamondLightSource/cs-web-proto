@@ -1,12 +1,10 @@
 import React from "react";
-import { configure, shallow, ShallowWrapper, mount } from "enzyme";
+import { mount } from "enzyme";
 
-import { WidgetComponent, WidgetComponentInterface } from "./widget";
+import { WidgetComponent } from "./widget";
 import { LabelComponent } from "../Label/label";
 
-let wrapper: ShallowWrapper<WidgetComponentInterface>;
-
-let TestLabel: React.FC = () => {
+let TestLabel = (): JSX.Element => {
   return <LabelComponent text="Test" />;
 };
 
@@ -19,7 +17,6 @@ describe("<Widget />", (): void => {
   );
   test("it retains label text", (): void => {
     expect(component.text()).toEqual("Test");
-    console.log(component.debug());
   });
   test("it has one child all the way down", (): void => {
     // Widget
