@@ -32,5 +32,5 @@ const MacroFlexComponent: React.FC<MacroFlexProps> = macroWrapper(
 );
 
 export const FlexContainerWidget = (props: WidgetInterface): JSX.Element => (
-  <Widget baseWidget={MacroFlexComponent} {...props} />
+  <Widget baseWidget={FlexContainer} {...props} />
 );

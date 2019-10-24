@@ -5,11 +5,7 @@ import { writePv } from "../../hooks/useCs";
 import { VType, VEnum } from "../../vtypes/vtypes";
 import { vtypeToString, stringToVtype } from "../../vtypes/utils";
 import { macroWrapper } from "../MacroWrapper/macroWrapper";
-import {
-  Widget,
-  PVWidgetInterface,
-  ConnectedWidgetInterface
-} from "../Widget/widget";
+import { PVWidget, PVWidgetInterface } from "../Widget/widget";
 
 export interface MenuButtonProps {
   connected: boolean;
@@ -85,10 +81,14 @@ export const SmartMenuButton = (props: {
   );
 };
 
-export const MenuButtonWidget = (props: PVWidgetInterface): JSX.Element => {
-  return <Widget baseWidget={SmartMenuButton} {...props} />;
-};
+// export const MenuButtonWidget = (props: PVWidgetInterface): JSX.Element => {
+//   return <Widget baseWidget={SmartMenuButton} {...props} />;
+// };
 
-export const MenuButton: React.FC<ConnectedWidgetInterface> = macroWrapper(
-  connectionWrapper(MenuButtonWidget)
-);
+// export const MenuButton: React.FC<ConnectedWidgetInterface> = macroWrapper(
+//   connectionWrapper(MenuButtonWidget)
+// );
+
+export const MenuButton = (props: PVWidgetInterface) => {
+  return <PVWidget baseWidget={SmartMenuButton} {...props} />;
+};

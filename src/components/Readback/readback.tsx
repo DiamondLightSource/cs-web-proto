@@ -8,11 +8,7 @@ import { macroWrapper } from "../MacroWrapper/macroWrapper";
 import { VType } from "../../vtypes/vtypes";
 import { Alarm, alarmOf, AlarmSeverity } from "../../vtypes/alarm";
 import { vtypeToString } from "../../vtypes/utils";
-import {
-  Widget,
-  PVWidgetInterface,
-  ConnectedWidgetInterface
-} from "../Widget/widget";
+import { PVWidget, PVWidgetInterface } from "../Widget/widget";
 
 export interface ReadbackProps {
   connected: boolean;
@@ -150,12 +146,17 @@ interface ReadbackWidgetProps {
   precision?: number;
 }
 
-export const ReadbackWidget = (
-  props: ReadbackWidgetProps & PVWidgetInterface
-): JSX.Element => {
-  return <Widget baseWidget={Readback} {...props} />;
-};
+// export const ReadbackWidget = (
+//   props: ReadbackWidgetProps & PVWidgetInterface
+// ): JSX.Element => {
+//   return <Widget baseWidget={Readback} {...props} />;
+// };
 
-export const ConnectedReadbackWidget: React.FC<
-  ReadbackWidgetProps & ConnectedWidgetInterface
-> = macroWrapper(connectionWrapper(ReadbackWidget));
+// export const ConnectedReadbackWidget: React.FC<
+//   ReadbackWidgetProps & ConnectedWidgetInterface
+// > = macroWrapper(connectionWrapper(ReadbackWidget));
+export const ConnectedReadbackWidget = (
+  props: ReadbackWidgetProps & PVWidgetInterface
+) => {
+  return <PVWidget baseWidget={Readback} {...props} />;
+};

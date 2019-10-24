@@ -27,7 +27,7 @@ import { ConnectedSlideControlWidget } from "../SlideControl/slideControl";
 import { MenuButton } from "../MenuButton/menuButton";
 import { MacroMap } from "../../redux/csState";
 import { Display } from "../Display/display";
-import { ShapingInterface } from "../Widget/widget";
+import { BaseWidgetInterface } from "../Widget/widget";
 
 interface FromJsonProps {
   file: string;
@@ -78,7 +78,7 @@ const EMPTY_WIDGET: WidgetDescription = {
   containerStyling: { position: "absolute", x: 0, y: 0, width: 0, height: 0 }
 };
 
-interface WidgetFromJsonProps extends ShapingInterface {
+interface WidgetFromJsonProps extends BaseWidgetInterface {
   file: string;
   macroMap: MacroMap;
 }

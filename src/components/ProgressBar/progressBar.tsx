@@ -7,11 +7,7 @@ import { connectionWrapper } from "../ConnectionWrapper/connectionWrapper";
 import { CopyWrapper } from "../CopyWrapper/copyWrapper";
 import { AlarmBorder } from "../AlarmBorder/alarmBorder";
 import { vtypeOrUndefinedToNumber } from "../../vtypes/utils";
-import {
-  Widget,
-  PVWidgetInterface,
-  ConnectedWidgetInterface
-} from "../Widget/widget";
+import { PVWidget, PVWidgetInterface } from "../Widget/widget";
 import { macroWrapper } from "../MacroWrapper/macroWrapper";
 
 interface ProgressBarProps {
@@ -160,10 +156,16 @@ interface ProgressBarWidgetProps {
   style?: object;
 }
 
-export const ProgressBarWidget = (
-  props: ProgressBarWidgetProps & PVWidgetInterface
-): JSX.Element => <Widget baseWidget={ProgressBar} {...props} />;
+// export const ProgressBarWidget = (
+//   props: ProgressBarWidgetProps & PVWidgetInterface
+// ): JSX.Element => <Widget baseWidget={ProgressBar} {...props} />;
 
-export const ConnectedProgressBarWidget: React.FC<
-  ProgressBarWidgetProps & ConnectedWidgetInterface
-> = macroWrapper(connectionWrapper(ProgressBarWidget));
+// export const ConnectedProgressBarWidget: React.FC<
+//   ProgressBarWidgetProps & ConnectedWidgetInterface
+// > = macroWrapper(connectionWrapper(ProgressBarWidget));
+
+export const ConnectedProgressBarWidget = (
+  props: ProgressBarWidgetProps & PVWidgetInterface
+) => {
+  return <PVWidget baseWidget={ProgressBar} {...props} />;
+};

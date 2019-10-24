@@ -27,5 +27,5 @@ const MacroDisplayComponent: React.FC<MacroDisplayProps> = macroWrapper(
 );
 
 export const Display = (props: WidgetInterface): JSX.Element => (
-  <Widget baseWidget={MacroDisplayComponent} {...props} />
+  <Widget baseWidget={DisplayComponent} {...props} />
 );

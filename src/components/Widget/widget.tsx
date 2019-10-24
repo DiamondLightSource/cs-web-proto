@@ -4,6 +4,8 @@ import { CopyWrapper } from "../CopyWrapper/copyWrapper";
 import { AlarmBorder } from "../AlarmBorder/alarmBorder";
 import { VType } from "../../vtypes/vtypes";
 import { MacroMap } from "../../redux/csState";
+import { macroWrapper } from "../MacroWrapper/macroWrapper";
+import { connectionWrapper } from "../ConnectionWrapper/connectionWrapper";
 
 interface ContainerFeatures {
   margin?: string;
@@ -29,7 +31,7 @@ interface FlexibleContainer extends ContainerFeatures {
   height?: number | string;
 }
 
-export interface ShapingInterface {
+export interface BaseWidgetInterface {
   containerStyling: AbsoluteContainer | FlexibleContainer;
   // ... other ways to customise the container itself could be added to this interface
   widgetStyling?: {
@@ -40,31 +42,7 @@ export interface ShapingInterface {
     backgroundColor: string;
     // ... all the styling things we want to allow
   };
-  wrappers?: {
-    copywrapper?: boolean;
-    alarmborder?: boolean;
-    // ...any other borders that come up in the future
-  };
   macroMap?: MacroMap;
-}
-
-// Interface requires a base widget and allows child components
-export interface WidgetInterface extends ShapingInterface {
-  baseWidget: React.FC<any>;
-  children?: React.ReactNode;
-}
-
-// Interface for a widget which needs PV information
-export interface PVWidgetInterface extends ShapingInterface {
-  pvName: string;
-  rawPvName?: string;
-  connected: boolean;
-  value?: VType | undefined;
-}
-
-// Interface for a PV which allows some information
-export interface ConnectedWidgetInterface extends ShapingInterface {
-  pvName: string;
 }
 
 // Function to recursively wrap a given set of widgets
@@ -102,7 +80,17 @@ const recursiveWrapping = (
   }
 };
 
-export const Widget = (props: WidgetInterface): JSX.Element => {
+// Interface for the general functional component which creates a widget
+// May have wrappers
+interface WidgetComponentInterface extends BaseWidgetInterface {
+  baseWidget: React.FC<any>;
+  wrappers?: {
+    copywrapper?: boolean;
+    alarmborder?: boolean;
+  };
+}
+
+const WidgetComponent = (props: WidgetComponentInterface): JSX.Element => {
   // Generic widget component
 
   // Give containers access to everything apart from the containerStyling
@@ -118,13 +106,14 @@ export const Widget = (props: WidgetInterface): JSX.Element => {
   let {
     baseWidget,
     widgetStyling = {},
-    wrappers = { alarmborder: false, copywrapper: false },
+    wrappers = {},
     ...baseWidgetProps
   } = containerProps;
 
   // Put appropriate components on the list of components to be wrapped
   let components = [];
 
+  // Done like this in case only one of the values is passed through
   const requestedWrappers = {
     ...{ alarmborder: false, copywrapper: false },
     ...wrappers
@@ -147,3 +136,29 @@ export const Widget = (props: WidgetInterface): JSX.Element => {
     baseWidgetProps
   );
 };
+
+// Interface for a widget which does not handle PVs
+// Label, display, containers
+// No support for wrapping as this would not make sense
+// when they have no PV
+export interface WidgetInterface extends BaseWidgetInterface {
+  children?: React.ReactNode;
+}
+
+export const Widget: React.FC<
+  WidgetComponentInterface & WidgetInterface
+> = macroWrapper(WidgetComponent);
+
+// Interface for widgets which handle PVs
+// May be wrapped to display PV metadata
+export interface PVWidgetInterface extends WidgetInterface {
+  pvName: string;
+  wrappers?: {
+    copywrapper?: boolean;
+    alarmborder?: boolean;
+    // ...any other borders that come up in the future
+  };
+}
+export const PVWidget: React.FC<
+  WidgetComponentInterface & PVWidgetInterface
+> = macroWrapper(connectionWrapper(WidgetComponent));

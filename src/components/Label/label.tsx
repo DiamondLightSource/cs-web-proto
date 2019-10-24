@@ -30,4 +30,4 @@ interface LabelWidgetProps {
 
 export const LabelWidget = (
   props: LabelWidgetProps & WidgetInterface
-): JSX.Element => <Widget baseWidget={MacroLabel} {...props} />;
+): JSX.Element => <Widget baseWidget={Label} {...props} />;

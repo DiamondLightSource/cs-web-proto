@@ -1,7 +1,7 @@
 import React from "react";
 import { MacroMap } from "../../redux/csState";
 import { MacroProps } from "../MacroWrapper/macroWrapper";
-import { ShapingInterface } from "../Widget/widget";
+import { BaseWidgetInterface } from "../Widget/widget";
 
 // BasicPositionDescription contains elements required by all position descriptions
 interface BasicPositionDescription {
@@ -48,7 +48,7 @@ export interface FlexiblePositionDescription
   extends BasicPositionDescription,
     FlexiblePosition {}
 
-export interface WidgetDescription extends ShapingInterface {
+export interface WidgetDescription extends BaseWidgetInterface {
   type: string;
   // All other component properties
   [x: string]: any;

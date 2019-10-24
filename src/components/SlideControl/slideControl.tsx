@@ -11,11 +11,7 @@ import { connectionWrapper } from "../ConnectionWrapper/connectionWrapper";
 import { macroWrapper } from "../MacroWrapper/macroWrapper";
 import { vtypeToString, stringToVtype } from "../../vtypes/utils";
 
-import {
-  Widget,
-  PVWidgetInterface,
-  ConnectedWidgetInterface
-} from "../Widget/widget";
+import { PVWidget, PVWidgetInterface } from "../Widget/widget";
 
 interface SlideControlProps {
   pvName: string;
@@ -123,10 +119,16 @@ interface SlideControlWidgetProps {
   vertical?: boolean;
 }
 
-export const SlideControlWidget = (
-  props: SlideControlWidgetProps & PVWidgetInterface
-): JSX.Element => <Widget baseWidget={SlideControl} {...props} />;
+// export const SlideControlWidget = (
+//   props: SlideControlWidgetProps & PVWidgetInterface
+// ): JSX.Element => <Widget baseWidget={SlideControl} {...props} />;
 
-export const ConnectedSlideControlWidget: React.FC<
-  SlideControlWidgetProps & ConnectedWidgetInterface
-> = macroWrapper(connectionWrapper(SlideControlWidget));
+// export const ConnectedSlideControlWidget: React.FC<
+//   SlideControlWidgetProps & ConnectedWidgetInterface
+// > = macroWrapper(connectionWrapper(SlideControlWidget));
+
+export const ConnectedSlideControlWidget = (
+  props: SlideControlWidgetProps & PVWidgetInterface
+) => {
+  return <PVWidget baseWidget={SlideControl} {...props} />;
+};

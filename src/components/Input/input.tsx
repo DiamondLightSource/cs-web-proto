@@ -8,11 +8,7 @@ import { AlarmBorder } from "../AlarmBorder/alarmBorder";
 import classes from "./input.module.css";
 import { macroWrapper } from "../MacroWrapper/macroWrapper";
 import { vtypeToString, stringToVtype } from "../../vtypes/utils";
-import {
-  Widget,
-  PVWidgetInterface,
-  ConnectedWidgetInterface
-} from "../Widget/widget";
+import { PVWidget, PVWidgetInterface } from "../Widget/widget";
 
 export interface InputProps {
   pvName: string;
@@ -131,12 +127,18 @@ interface InputWidgetProps {
   precision?: number;
 }
 
-export const InputWidget = (
-  props: InputWidgetProps & PVWidgetInterface
-): JSX.Element => {
-  return <Widget baseWidget={SmartInput} {...props} />;
-};
+// export const InputWidget = (
+//   props: InputWidgetProps & PVWidgetInterface
+// ): JSX.Element => {
+//   return <Widget baseWidget={SmartInput} {...props} />;
+// };
 
-export const ConnectedInputWidget: React.FC<
-  InputWidgetProps & ConnectedWidgetInterface
-> = macroWrapper(connectionWrapper(InputWidget));
+// export const ConnectedInputWidget: React.FC<
+//   InputWidgetProps & ConnectedWidgetInterface
+// > = macroWrapper(connectionWrapper(InputWidget));
+
+export const ConnectedInputWidget = (
+  props: InputWidgetProps & PVWidgetInterface
+) => {
+  return <PVWidget baseWidget={SmartInput} {...props} />;
+};
