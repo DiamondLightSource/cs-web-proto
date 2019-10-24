@@ -81,7 +81,7 @@ const recursiveWrapping = (
 
 // Interface for the general functional component which creates a widget
 // May have wrappers
-interface WidgetComponentInterface extends BaseWidgetInterface {
+export interface WidgetComponentInterface extends BaseWidgetInterface {
   baseWidget: React.FC<any>;
   wrappers?: {
     copywrapper?: boolean;
@@ -89,7 +89,9 @@ interface WidgetComponentInterface extends BaseWidgetInterface {
   };
 }
 
-const WidgetComponent = (props: WidgetComponentInterface): JSX.Element => {
+export const WidgetComponent = (
+  props: WidgetComponentInterface
+): JSX.Element => {
   // Generic widget component
 
   // Give containers access to everything apart from the containerStyling
