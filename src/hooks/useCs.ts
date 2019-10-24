@@ -6,6 +6,10 @@ import { VType } from "../vtypes/vtypes";
 
 export function useSubscription(componentId: string, pvNames: string[]): void {
   const dispatch = useDispatch();
+  // Get a repeatable value for React to decide whether to re-render.
+  // If you put pvNames into the useEffect dependency array it will
+  // not compare as equal to the last array, even with the same contents.
+  const arrayStr = JSON.stringify(pvNames);
   // useEffect takes a function that
   // - takes no arguments and
   // - returns a function that takes no arguments and returns nothing
@@ -24,7 +28,8 @@ export function useSubscription(componentId: string, pvNames: string[]): void {
         });
       });
     };
-  }, [dispatch, componentId, pvNames]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch, componentId, arrayStr]);
 }
 
 export function writePv(pvName: string, value: VType): void {
