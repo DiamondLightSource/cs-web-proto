@@ -59,11 +59,12 @@ export const RuleWrapper = <P extends object>(
         } else valid = false;
       }
     }
-    if (valid && condition !== undefined) {
+    if (valid && condition !== undefined && props.prop !== undefined) {
       let state = evaluate(condition);
       let styleValue = state ? props.trueState : props.falseState;
-      // use props.prop not hard coded colour
-      return <Component {...(props as P)} colour={styleValue}></Component>;
+      const newProps = { ...props };
+      newProps[props.prop] = styleValue;
+      return <Component {...(newProps as P)}></Component>;
     }
     return <Component {...(props as P)}></Component>;
   };
