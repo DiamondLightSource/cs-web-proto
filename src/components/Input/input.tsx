@@ -29,11 +29,6 @@ export const Input: React.FC<InputProps> = (props: InputProps): JSX.Element => (
   />
 );
 
-interface ConnectedInputProps {
-  pvName: string;
-  style?: object;
-}
-
 interface SmartInputProps {
   pvName: string;
   value?: VType;
@@ -91,6 +86,4 @@ interface InputWidgetProps {
 
 export const ConnectedInputWidget = (
   props: InputWidgetProps & PVWidgetInterface
-) => {
-  return <PVWidget baseWidget={SmartInput} {...props} />;
-};
+): JSX.Element => <PVWidget baseWidget={SmartInput} {...props} />;

@@ -2,7 +2,6 @@ import React from "react";
 
 import { CopyWrapper } from "../CopyWrapper/copyWrapper";
 import { AlarmBorder } from "../AlarmBorder/alarmBorder";
-import { VType } from "../../vtypes/vtypes";
 import { MacroMap } from "../../redux/csState";
 import { macroWrapper } from "../MacroWrapper/macroWrapper";
 import { connectionWrapper } from "../ConnectionWrapper/connectionWrapper";

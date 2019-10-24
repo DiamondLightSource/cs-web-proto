@@ -1,10 +1,8 @@
 import React from "react";
-import { connectionWrapper } from "../ConnectionWrapper/connectionWrapper";
 import { writePv } from "../../hooks/useCs";
 
 import { VType, VEnum } from "../../vtypes/vtypes";
 import { vtypeToString, stringToVtype } from "../../vtypes/utils";
-import { macroWrapper } from "../MacroWrapper/macroWrapper";
 import { PVWidget, PVWidgetInterface } from "../Widget/widget";
 
 export interface MenuButtonProps {
@@ -81,6 +79,6 @@ export const SmartMenuButton = (props: {
   );
 };
 
-export const MenuButton = (props: PVWidgetInterface) => {
-  return <PVWidget baseWidget={SmartMenuButton} {...props} />;
-};
+export const MenuButton = (props: PVWidgetInterface): JSX.Element => (
+  <PVWidget baseWidget={SmartMenuButton} {...props} />
+);

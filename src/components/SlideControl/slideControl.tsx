@@ -2,15 +2,13 @@
 // Displays value via an embedded progressbar widget
 
 import React, { useState } from "react";
+
+import classes from "./slideControl.module.css";
+import { vtypeToString, stringToVtype } from "../../vtypes/utils";
+
 import { ProgressBar } from "../ProgressBar/progressBar";
 import { writePv } from "../../hooks/useCs";
 import { VType } from "../../vtypes/vtypes";
-
-import classes from "./slideControl.module.css";
-import { connectionWrapper } from "../ConnectionWrapper/connectionWrapper";
-import { macroWrapper } from "../MacroWrapper/macroWrapper";
-import { vtypeToString, stringToVtype } from "../../vtypes/utils";
-
 import { PVWidget, PVWidgetInterface } from "../Widget/widget";
 
 interface SlideControlProps {
@@ -119,6 +117,4 @@ interface SlideControlWidgetProps {
 
 export const ConnectedSlideControlWidget = (
   props: SlideControlWidgetProps & PVWidgetInterface
-) => {
-  return <PVWidget baseWidget={SlideControl} {...props} />;
-};
+): JSX.Element => <PVWidget baseWidget={SlideControl} {...props} />;

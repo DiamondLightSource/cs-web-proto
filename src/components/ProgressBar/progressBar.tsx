@@ -93,6 +93,4 @@ interface ProgressBarWidgetProps {
 
 export const ConnectedProgressBarWidget = (
   props: ProgressBarWidgetProps & PVWidgetInterface
-) => {
-  return <PVWidget baseWidget={ProgressBar} {...props} />;
-};
+): JSX.Element => <PVWidget baseWidget={ProgressBar} {...props} />;
