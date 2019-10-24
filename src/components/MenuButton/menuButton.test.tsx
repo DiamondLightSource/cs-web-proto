@@ -28,6 +28,7 @@ beforeEach((): void => {
         ALARM_NONE,
         timeNow()
       )}
+      readonly={false}
       onChange={mock}
     />
   );
@@ -35,6 +36,7 @@ beforeEach((): void => {
     <MenuButtonComponent
       connected={true}
       value={vstring("testing enum")}
+      readonly={false}
       onChange={mock}
     />
   );
@@ -42,6 +44,7 @@ beforeEach((): void => {
     <MenuButtonComponent
       connected={true}
       value={vdouble(3.14159)}
+      readonly={false}
       onChange={mock}
     />
   );
@@ -79,6 +82,7 @@ describe("<MenuButton />", (): void => {
           ALARM_NONE,
           timeNow()
         )}
+        readonly={false}
         onChange={mock}
       />
     );

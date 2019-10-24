@@ -9,6 +9,7 @@ export interface MenuButtonProps {
   connected: boolean;
   onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
   value?: VType;
+  readonly: boolean;
   style?: {};
 }
 
@@ -24,6 +25,12 @@ export const MenuButtonComponent = (props: MenuButtonProps): JSX.Element => {
   // Using value to dictate displayed value as described here: https://reactjs.org/docs/forms.html#the-select-tag
   // Show 0 by default where there is only one option
   let displayIndex = 0;
+
+  let readOnlyStyle = {};
+  if (props.readonly === true) {
+    disabled = true;
+    readOnlyStyle = { cursor: "not-allowed" };
+  }
 
   if (!connected || value === null) {
     disabled = true;
@@ -49,7 +56,7 @@ export const MenuButtonComponent = (props: MenuButtonProps): JSX.Element => {
     <select
       value={displayIndex}
       disabled={disabled}
-      style={{ width: "100%", ...style }}
+      style={{ width: "100%", ...readOnlyStyle, ...style }}
       onChange={props.onChange}
     >
       {mappedOptions}
@@ -62,6 +69,7 @@ export const SmartMenuButton = (props: {
   connected: boolean;
   pvName: string;
   value?: VType;
+  readonly: boolean;
   style?: {};
 }): JSX.Element => {
   // Function to send the value on to the PV
@@ -74,6 +82,7 @@ export const SmartMenuButton = (props: {
       connected={props.connected}
       value={props.value}
       style={props.style}
+      readonly={props.readonly}
       onChange={onChange}
     />
   );
