@@ -8,6 +8,7 @@ import {
   UNSUBSCRIBE
 } from "./actions";
 import { VType } from "../vtypes/vtypes";
+import { mergeVtype } from "../vtypes/merge";
 
 const initialState: CsState = {
   valueCache: {},
@@ -18,6 +19,7 @@ const initialState: CsState = {
 export interface PvState {
   value: VType;
   connected: boolean;
+  readonly: boolean;
 }
 
 export interface ValueCache {
@@ -44,8 +46,17 @@ export function csReducer(state = initialState, action: ActionType): CsState {
   switch (action.type) {
     case VALUE_CHANGED: {
       const newValueCache: ValueCache = { ...state.valueCache };
-      const pvState = state.valueCache[action.payload.pvName];
-      const newPvState = { ...pvState, value: action.payload.value };
+      const { pvName, value } = action.payload;
+      const pvState = state.valueCache[pvName];
+      let newValue: VType | undefined;
+      if (value instanceof VType) {
+        newValue = value;
+      } else {
+        newValue = mergeVtype(pvState.value, value);
+      }
+      const newPvState = Object.assign({}, pvState, {
+        value: newValue
+      });
       newValueCache[action.payload.pvName] = newPvState;
       return { ...state, valueCache: newValueCache };
     }
@@ -53,7 +64,11 @@ export function csReducer(state = initialState, action: ActionType): CsState {
       const newValueCache: ValueCache = { ...state.valueCache };
       const { pvName, value } = action.payload;
       const pvState = state.valueCache[pvName];
-      const newPvState = { ...pvState, connected: value.isConnected };
+      const newPvState = {
+        ...pvState,
+        connected: value.isConnected,
+        readonly: value.isReadonly
+      };
       newValueCache[action.payload.pvName] = newPvState;
       return { ...state, valueCache: newValueCache };
     }

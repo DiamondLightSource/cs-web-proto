@@ -20,14 +20,14 @@
       "containerStyling": {
         "position": "relative"
       },
-      "pvName": "meta://pv${EMBEDSUFFIX}"
+      "pvName": "sim://limit#pv${EMBEDSUFFIX}"
     },
     {
       "type": "readback",
       "containerStyling": {
         "position": "relative"
       },
-      "pvName": "meta://pv${EMBEDSUFFIX}",
+      "pvName": "sim://limit#pv${EMBEDSUFFIX}",
       "precision": 3
     }
   ]

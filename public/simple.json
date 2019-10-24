@@ -35,7 +35,7 @@
     },
     {
       "type": "input",
-      "pvName": "meta://metapv1",
+      "pvName": "sim://limit#metapv1",
       "containerStyling": {
         "position": "absolute",
         "x": "10px",
@@ -47,7 +47,7 @@
     },
     {
       "type": "readback",
-      "pvName": "meta://${metapv}",
+      "pvName": "sim://limit#${metapv}",
       "containerStyling": {
         "position": "absolute",
         "x": "210px",
@@ -62,7 +62,7 @@
     },
     {
       "type": "readback",
-      "pvName": "meta://metapv1",
+      "pvName": "sim://limit#metapv1",
       "containerStyling": {
         "position": "absolute",
         "x": "210px",
@@ -77,7 +77,7 @@
     },
     {
       "type": "readback",
-      "pvName": "meta://metapv1",
+      "pvName": "sim://limit#metapv1",
       "containerStyling": {
         "position": "absolute",
         "x": "0%",

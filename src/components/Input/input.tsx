@@ -9,6 +9,7 @@ import { PVWidget, PVWidgetInterface } from "../Widget/widget";
 export interface InputProps {
   pvName: string;
   value: string;
+  readonly: boolean;
   onKeyDown: (event: React.KeyboardEvent<HTMLInputElement>) => void;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onBlur: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -18,21 +19,29 @@ export interface InputProps {
 
 export const InputComponent: React.FC<InputProps> = (
   props: InputProps
-): JSX.Element => (
-  <input
-    type="text"
-    value={props.value}
-    onKeyDown={props.onKeyDown}
-    onChange={props.onChange}
-    onBlur={props.onBlur}
-    onClick={props.onClick}
-    className={`Input ${classes.Input}`}
-    style={props.style}
-  />
-);
+): JSX.Element => {
+  let allClasses = `Input ${classes.Input}`;
+  if (props.readonly) {
+    allClasses += ` ${classes.Readonly}`;
+  }
+  return (
+    <input
+      type="text"
+      value={props.value}
+      onKeyDown={props.onKeyDown}
+      onChange={props.onChange}
+      onBlur={props.onBlur}
+      onClick={props.onClick}
+      className={allClasses}
+      style={props.style}
+      readOnly={props.readonly}
+    />
+  );
+};
 
 interface SmartInputProps {
   pvName: string;
+  readonly: boolean;
   value?: VType;
   style?: object;
 }
@@ -54,7 +63,7 @@ export const SmartInputComponent: React.FC<SmartInputProps> = (
   }
   function onClick(event: React.MouseEvent<HTMLInputElement>): void {
     /* When focus gained allow editing. */
-    if (!editing) {
+    if (!props.readonly && !editing) {
       setInputValue("");
       setEditing(true);
     }
@@ -73,6 +82,7 @@ export const SmartInputComponent: React.FC<SmartInputProps> = (
     <InputComponent
       pvName={props.pvName}
       value={inputValue}
+      readonly={props.readonly}
       onKeyDown={onKeyDown}
       onChange={onChange}
       onBlur={onBlur}

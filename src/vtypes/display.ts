@@ -1,13 +1,10 @@
-/* Currently missing NumberFormat. */
-export interface Range {
-  min: number;
-  max: number;
-}
+import { Range, RANGE_NONE } from "./defs";
 
-export const RANGE_NONE: Range = {
-  min: 0,
-  max: 0
-};
+/* Currently missing NumberFormat. */
+
+export interface DisplayProvider {
+  getAlarm(): Display;
+}
 
 export abstract class Display {
   public abstract getDisplayRange(): Range;
@@ -54,7 +51,7 @@ class IDisplay {
   }
 }
 
-export const displayOf = (
+export const display = (
   displayRange: Range,
   alarmRange: Range,
   warningRange: Range,
@@ -63,10 +60,21 @@ export const displayOf = (
 ): Display =>
   new IDisplay(displayRange, alarmRange, warningRange, controlRange, unit);
 
-export const DISPLAY_NONE = displayOf(
+export const DISPLAY_NONE = display(
   RANGE_NONE,
   RANGE_NONE,
   RANGE_NONE,
   RANGE_NONE,
   ""
 );
+
+export const isDisplayProvider = (object: any): object is DisplayProvider => {
+  return "getDisplay" in object;
+};
+
+export const displayOf = (object: any): Display => {
+  if (object && isDisplayProvider(object)) {
+    return object.getAlarm();
+  }
+  return DISPLAY_NONE;
+};

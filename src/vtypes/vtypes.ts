@@ -6,20 +6,37 @@ export abstract class VType {
   public abstract getValue(): any;
 }
 
-export abstract class Scalar implements AlarmProvider, TimeProvider {
-  public abstract getValue(): any;
+export abstract class Scalar extends VType
+  implements AlarmProvider, TimeProvider {
   public abstract getAlarm(): Alarm;
   public abstract getTime(): Time;
+}
+
+export abstract class Array extends VType {
+  public abstract getSizes(): number[];
 }
 
 export abstract class VNumber extends Scalar {
   public abstract getValue(): number;
 }
 
+export type VNumberBuilder = (
+  value: any,
+  alarm?: Alarm,
+  time?: Time,
+  display?: Display
+) => VType;
+
+export type VNumberArrayBuilder = (
+  value: any,
+  sizes: number[],
+  alarm?: Alarm,
+  time?: Time,
+  display?: Display
+) => VType;
+
 export abstract class VDouble extends VNumber {
   public abstract getValue(): number;
-  public abstract getAlarm(): Alarm;
-  public abstract getTime(): Time;
   public abstract getDisplay(): Display;
 }
 
@@ -61,11 +78,70 @@ export const vdouble = (
   display = DISPLAY_NONE
 ): VDouble => new IVDouble(double, alarm, time, display);
 
+export abstract class VNumberArray extends Array implements AlarmProvider {
+  public abstract getValue(): number[];
+  public abstract getTime(): Time;
+  public abstract getAlarm(): Alarm;
+  public abstract getDisplay(): Display;
+}
+
+export abstract class VDoubleArray extends VNumberArray {
+  public abstract getValue(): number[];
+}
+
+class IVDoubleArray extends VDoubleArray {
+  private value: number[];
+  private sizes: number[];
+  private alarm: Alarm;
+  private time: Time;
+  private display: Display;
+  public constructor(
+    value: number[],
+    sizes: number[],
+    alarm: Alarm,
+    time: Time,
+    display: Display
+  ) {
+    super();
+    this.value = value;
+    this.sizes = sizes;
+    this.alarm = alarm;
+    this.time = time;
+    this.display = display;
+  }
+  public getValue(): number[] {
+    return this.value;
+  }
+  public getSizes(): number[] {
+    return this.sizes;
+  }
+  public getAlarm(): Alarm {
+    return this.alarm;
+  }
+  public getTime(): Time {
+    return this.time;
+  }
+  public getDisplay(): Display {
+    return this.display;
+  }
+  public toString(): string {
+    return this.value.toString();
+  }
+}
+
+export const vdoubleArray = (
+  value: number[],
+  sizes: number[],
+  alarm = ALARM_NONE,
+  time = timeNow(),
+  display = DISPLAY_NONE
+): VDoubleArray => new IVDoubleArray(value, sizes, alarm, time, display);
+
 abstract class EnumDisplay {
   public abstract getChoices(): string[];
 }
 
-class IEnumDisplay extends EnumDisplay {
+export class IEnumDisplay extends EnumDisplay {
   private choices: string[];
 
   public constructor(choices: string[]) {
@@ -84,7 +160,7 @@ export abstract class VEnum extends Scalar {
   public abstract getDisplay(): EnumDisplay;
 }
 
-class IVEnum extends VEnum {
+export class IVEnum extends VEnum {
   private index: number;
   private alarm: Alarm;
   private time: Time;
@@ -126,3 +202,15 @@ export const venum = (
   alarm: Alarm = ALARM_NONE,
   time: Time = timeNow()
 ): VEnum => new IVEnum(index, new IEnumDisplay(choices), alarm, time);
+
+const isEnumProvider = (object: any): object is AlarmProvider => {
+  return "getIndex" in object;
+};
+
+export const enumOf = (object: any): VEnum | undefined => {
+  if (object && isEnumProvider(object)) {
+    return object as VEnum;
+  } else {
+    return undefined;
+  }
+};

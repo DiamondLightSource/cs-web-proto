@@ -12,8 +12,12 @@ export const vtypeToString = (vtype?: VType, precision?: number): string => {
       return vtype.getValue().toString();
     }
   }
-  if (vtype instanceof VString || vtype instanceof VEnum) {
-    return vtype.getValue();
+  if (vtype) {
+    if (vtype instanceof VString || vtype instanceof VEnum) {
+      return vtype.getValue();
+    } else {
+      return vtype.toString();
+    }
   }
   return "";
 };
@@ -47,7 +51,7 @@ export const stringToVtype = (
 ): VType => {
   try {
     if (isNaN(parseFloat(value))) {
-      throw "Not a number";
+      throw new Error("Not a number");
     }
     let numberValue = parseFloat(value);
     return vdouble(numberValue, alarm, time, display);

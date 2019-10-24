@@ -21,6 +21,7 @@ beforeEach((): void => {
       onChange={mock}
       onBlur={mock}
       onClick={mock}
+      readonly={false}
     />
   );
   wrapper = shallow(input);
