@@ -15,6 +15,7 @@ export interface ReadbackProps {
   connected: boolean;
   value?: VType;
   colour?: string;
+  align?: string;
   precision?: number;
   style?: object;
   condition?: string;
@@ -54,7 +55,7 @@ export const Readback = (props: ReadbackProps): JSX.Element => {
       color: "#ffffff"
     };
   }
-  style = { ...style, color: props.colour };
+  style = { ...style, color: props.colour, textAlign: props.align };
   return (
     <div
       className={`Readback ${classes.Readback} ${getClass(

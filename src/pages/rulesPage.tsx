@@ -23,6 +23,13 @@ export const RulesPage = (): JSX.Element => (
     <h3>Readback: PV2</h3>
     <ConnectedStandaloneReadback pvName={"sim://sine"} />
     <h3>Readback: PV3</h3>
-    <ConnectedStandaloneReadback pvName={"sim://limit#metapv3"} />
+    <ConnectedStandaloneReadback
+      pvName={"sim://limit#metapv3"}
+      condition="pv2+pv1<50"
+      trueState="left"
+      falseState="right"
+      prop="align"
+      substitutionMap={substitutionMap}
+    />
   </div>
 );
