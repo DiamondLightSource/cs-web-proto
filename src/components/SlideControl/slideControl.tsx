@@ -111,21 +111,11 @@ export const SlideControl: React.FC<SlideControlProps> = (
   );
 };
 
-export const ConnectedSlideControl = connectionWrapper(SlideControl);
-
 interface SlideControlWidgetProps {
   min: number;
   max: number;
   vertical?: boolean;
 }
-
-// export const SlideControlWidget = (
-//   props: SlideControlWidgetProps & PVWidgetInterface
-// ): JSX.Element => <Widget baseWidget={SlideControl} {...props} />;
-
-// export const ConnectedSlideControlWidget: React.FC<
-//   SlideControlWidgetProps & ConnectedWidgetInterface
-// > = macroWrapper(connectionWrapper(SlideControlWidget));
 
 export const ConnectedSlideControlWidget = (
   props: SlideControlWidgetProps & PVWidgetInterface

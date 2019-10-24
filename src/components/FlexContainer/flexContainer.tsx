@@ -1,8 +1,6 @@
 import React, { ReactNode } from "react";
 
 import classes from "./flexContainer.module.css";
-import { macroWrapper } from "../MacroWrapper/macroWrapper";
-import { MacroMap } from "../../redux/csState";
 import { Widget, WidgetInterface } from "../Widget/widget";
 
 interface FlexProps {
@@ -24,13 +22,6 @@ export const FlexContainer = (props: FlexProps): JSX.Element => {
   );
 };
 
-interface MacroFlexProps extends FlexProps {
-  macroMap: MacroMap;
-}
-const MacroFlexComponent: React.FC<MacroFlexProps> = macroWrapper(
-  FlexContainer
-);
-
-export const FlexContainerWidget = (props: WidgetInterface): JSX.Element => (
-  <Widget baseWidget={FlexContainer} {...props} />
-);
+export const FlexContainerWidget = (
+  props: FlexProps & WidgetInterface
+): JSX.Element => <Widget baseWidget={FlexContainer} {...props} />;

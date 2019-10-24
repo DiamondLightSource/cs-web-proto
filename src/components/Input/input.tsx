@@ -1,12 +1,8 @@
 import React, { useState } from "react";
-import { connectionWrapper } from "../ConnectionWrapper/connectionWrapper";
-import { writePv } from "../../hooks/useCs";
-import { VType } from "../../vtypes/vtypes";
-import { CopyWrapper } from "../CopyWrapper/copyWrapper";
-import { AlarmBorder } from "../AlarmBorder/alarmBorder";
 
 import classes from "./input.module.css";
-import { macroWrapper } from "../MacroWrapper/macroWrapper";
+import { writePv } from "../../hooks/useCs";
+import { VType } from "../../vtypes/vtypes";
 import { vtypeToString, stringToVtype } from "../../vtypes/utils";
 import { PVWidget, PVWidgetInterface } from "../Widget/widget";
 
@@ -89,53 +85,9 @@ export const SmartInput: React.FC<SmartInputProps> = (
   );
 };
 
-export const ConnectedInput: React.FC<ConnectedInputProps> = macroWrapper(
-  connectionWrapper(SmartInput)
-);
-
-interface ConnectedStandaloneInputProps {
-  pvName: string;
-  precision?: number;
-  style?: {};
-}
-
-export const StandaloneInput = (props: {
-  pvName: string;
-  rawPvName?: string;
-  value: VType;
-  connected: boolean;
-  precision?: number;
-  style?: object;
-}): JSX.Element => (
-  <CopyWrapper
-    pvName={props.pvName}
-    rawPvName={props.rawPvName}
-    connected={props.connected}
-    value={props.value}
-  >
-    <AlarmBorder connected={props.connected} value={props.value}>
-      <SmartInput pvName={props.pvName} value={props.value}></SmartInput>
-    </AlarmBorder>
-  </CopyWrapper>
-);
-
-export const ConnectedStandaloneInput: React.FC<
-  ConnectedStandaloneInputProps
-> = macroWrapper(connectionWrapper(StandaloneInput));
-
 interface InputWidgetProps {
   precision?: number;
 }
-
-// export const InputWidget = (
-//   props: InputWidgetProps & PVWidgetInterface
-// ): JSX.Element => {
-//   return <Widget baseWidget={SmartInput} {...props} />;
-// };
-
-// export const ConnectedInputWidget: React.FC<
-//   InputWidgetProps & ConnectedWidgetInterface
-// > = macroWrapper(connectionWrapper(InputWidget));
 
 export const ConnectedInputWidget = (
   props: InputWidgetProps & PVWidgetInterface

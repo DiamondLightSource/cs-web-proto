@@ -1,7 +1,7 @@
 import React from "react";
 
 import { AbsolutePositionDescription, objectToComponent } from "./positioning";
-import { MacroLabel } from "../Label/label";
+import { Label } from "../Label/label";
 import { Readback } from "../Readback/readback";
 import { Input } from "../Input/input";
 import { ProgressBar } from "../ProgressBar/progressBar";
@@ -26,7 +26,7 @@ export const Blank: React.FC = (props: any): JSX.Element => (
 );
 
 const compDict = {
-  activeXTextClass: MacroLabel,
+  activeXTextClass: Label,
   TextupdateClass: Readback,
   activeXTextDspClass: Input,
   activeBarClass: ProgressBar,

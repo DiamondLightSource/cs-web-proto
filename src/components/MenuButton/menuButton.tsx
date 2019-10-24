@@ -81,14 +81,6 @@ export const SmartMenuButton = (props: {
   );
 };
 
-// export const MenuButtonWidget = (props: PVWidgetInterface): JSX.Element => {
-//   return <Widget baseWidget={SmartMenuButton} {...props} />;
-// };
-
-// export const MenuButton: React.FC<ConnectedWidgetInterface> = macroWrapper(
-//   connectionWrapper(MenuButtonWidget)
-// );
-
 export const MenuButton = (props: PVWidgetInterface) => {
   return <PVWidget baseWidget={SmartMenuButton} {...props} />;
 };

@@ -3,34 +3,12 @@ import React from "react";
 import { VType } from "../../vtypes/vtypes";
 import classes from "./progressBar.module.css";
 
-import { connectionWrapper } from "../ConnectionWrapper/connectionWrapper";
-import { CopyWrapper } from "../CopyWrapper/copyWrapper";
-import { AlarmBorder } from "../AlarmBorder/alarmBorder";
 import { vtypeOrUndefinedToNumber } from "../../vtypes/utils";
 import { PVWidget, PVWidgetInterface } from "../Widget/widget";
-import { macroWrapper } from "../MacroWrapper/macroWrapper";
 
 interface ProgressBarProps {
   connected: boolean;
   value?: VType;
-  min: number;
-  max: number;
-  vertical?: boolean;
-  color?: string;
-  top?: string;
-  left?: string;
-  height?: string;
-  width?: string;
-  fontStyle?: object;
-  precision?: number;
-  style?: object;
-}
-
-// Same as ProgressBarProps but without connected and value as these are
-// collected from the store
-interface ConnectedProgressBarProps {
-  value?: VType;
-  pvName: string;
   min: number;
   max: number;
   vertical?: boolean;
@@ -104,49 +82,6 @@ export const ProgressBar: React.FC<ProgressBarProps> = (
   );
 };
 
-export const ConnectedProgressBar: React.FC<
-  ConnectedProgressBarProps
-> = connectionWrapper(ProgressBar);
-
-export const StandaloneProgressBar = (props: {
-  pvName: string;
-  value: VType;
-  connected: boolean;
-  min: number;
-  max: number;
-  precision?: number;
-  style?: object;
-}): JSX.Element => (
-  <CopyWrapper
-    pvName={props.pvName}
-    connected={props.connected}
-    value={props.value}
-  >
-    <AlarmBorder connected={props.connected} value={props.value}>
-      <ProgressBar
-        connected={props.connected}
-        value={props.value}
-        min={props.min}
-        max={props.max}
-        precision={props.precision}
-        style={props.style}
-      ></ProgressBar>
-    </AlarmBorder>
-  </CopyWrapper>
-);
-
-interface ConnectedStandaloneProgressBarProps {
-  pvName: string;
-  min: number;
-  max: number;
-  precision?: number;
-  style?: object;
-}
-
-export const ConnectedStandaloneProgressBar: React.FC<
-  ConnectedStandaloneProgressBarProps
-> = connectionWrapper(StandaloneProgressBar);
-
 interface ProgressBarWidgetProps {
   min: number;
   max: number;
@@ -155,14 +90,6 @@ interface ProgressBarWidgetProps {
   precision?: number;
   style?: object;
 }
-
-// export const ProgressBarWidget = (
-//   props: ProgressBarWidgetProps & PVWidgetInterface
-// ): JSX.Element => <Widget baseWidget={ProgressBar} {...props} />;
-
-// export const ConnectedProgressBarWidget: React.FC<
-//   ProgressBarWidgetProps & ConnectedWidgetInterface
-// > = macroWrapper(connectionWrapper(ProgressBarWidget));
 
 export const ConnectedProgressBarWidget = (
   props: ProgressBarWidgetProps & PVWidgetInterface
