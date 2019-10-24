@@ -53,3 +53,16 @@ export const connectionWrapper = <P extends object>(
     );
   };
 };
+
+export function useConnection(pvName: string): [boolean, boolean, VType?] {
+  const [id] = useId();
+  useSubscription(id, pvName);
+  const [connected, readonly, latestValue] = useSelector((state: CsState): [
+    boolean,
+    boolean,
+    VType?
+  ] => {
+    return pvStateSelector(pvName, state);
+  });
+  return [connected, readonly, latestValue];
+}

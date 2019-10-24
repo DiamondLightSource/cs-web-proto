@@ -1,5 +1,8 @@
 import React from "react";
-import { connectionWrapper } from "../ConnectionWrapper/connectionWrapper";
+import {
+  connectionWrapper,
+  useConnection
+} from "../ConnectionWrapper/connectionWrapper";
 import { CopyWrapper } from "../CopyWrapper/copyWrapper";
 import { AlarmBorder } from "../AlarmBorder/alarmBorder";
 
@@ -112,14 +115,18 @@ interface ConnectedStandaloneReadbackProps {
   style?: object;
 }
 
-export const StandaloneReadback = (props: {
+interface StandaloneReadbackProps {
   pvName: string;
   rawPvName?: string;
-  value: VType;
+  value?: VType;
   connected: boolean;
   precision?: number;
   style?: object;
-}): JSX.Element => (
+}
+
+export const StandaloneReadback = (
+  props: StandaloneReadbackProps
+): JSX.Element => (
   <CopyWrapper
     pvName={props.pvName}
     rawPvName={props.rawPvName}
@@ -139,4 +146,9 @@ export const StandaloneReadback = (props: {
 
 export const ConnectedStandaloneReadback: React.FC<
   ConnectedStandaloneReadbackProps
-> = macroWrapper(connectionWrapper(StandaloneReadback));
+> = (props: ConnectedStandaloneReadbackProps): JSX.Element => {
+  const [connected, , latestValue] = useConnection(props.pvName);
+  return (
+    <StandaloneReadback {...props} connected={connected} value={latestValue} />
+  );
+};
