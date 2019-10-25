@@ -1,5 +1,6 @@
 import { writePv } from "./hooks/useCs";
 import { valueToVtype } from "./vtypes/utils";
+import log from "loglevel";
 
 export const OPEN_WEBPAGE = "OPEN_WEBPAGE";
 export const WRITE_PV = "WRITE_PV";
@@ -24,6 +25,7 @@ export interface Actions {
 }
 
 export const executeActions = (actions: Actions): void => {
+  log.debug(`executing an action ${actions.actions[0].type}`);
   let toExecute: ACTION_TYPE[] = [];
   if (actions.executeAsOne) {
     toExecute = actions.actions;
@@ -39,7 +41,7 @@ export const executeActions = (actions: Actions): void => {
         writePv(action.pvName, valueToVtype(action.value));
         break;
       default:
-        console.log("unexpected action type");
+        log.warn(`unexpected action type`);
     }
   }
 };

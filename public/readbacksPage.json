@@ -65,6 +65,21 @@
         "position": "relative"
       },
       "pvName": "sim://limit#4"
+    },
+    {
+      "type": "actionbutton",
+      "pvName": "sim://limit#1",
+      "text": "set sim://limit#1 to 10",
+      "actions": {
+        "actions": [
+          {
+            "type": "WRITE_PV",
+            "pvName": "sim://limit#1",
+            "value": 10
+          }
+        ]
+      },
+      "executeAsOne": false
     }
   ]
 }

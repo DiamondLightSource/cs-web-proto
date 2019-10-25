@@ -13,6 +13,7 @@ import { MenuButton } from "../MenuButton/menuButton";
 import { MacroMap } from "../../redux/csState";
 import { Display } from "../Display/display";
 import { BaseWidgetInterface } from "../Widget/widget";
+import { ActionButton } from "../ActionButton/actionButton";
 
 const EMPTY_WIDGET: WidgetDescription = {
   type: "empty",
@@ -48,6 +49,7 @@ export const WidgetFromJson = (
     slidecontrol: SlideControl,
     menubutton: MenuButton,
     flexcontainer: FlexContainer,
+    actionbutton: ActionButton,
     display: Display,
     empty: Display,
     widgetFromJSON: WidgetFromJson
