@@ -48,19 +48,22 @@ export const connectionMiddleware = (connection: Connection) => (
   switch (action.type) {
     case SUBSCRIBE: {
       const { pvName } = action.payload;
-      const state = store.getState();
       // Are we already subscribed?
-      if (
-        !state.subscriptions[pvName] ||
-        state.subscriptions[pvName].length === 0
-      ) {
-        connection.subscribe(pvName);
-      }
+      const newPvName = connection.subscribe(pvName);
+      action = {
+        ...action,
+        payload: {
+          ...action.payload,
+          shortPvName: newPvName,
+          pvName: pvName
+        }
+      };
       break;
     }
     case WRITE_PV: {
       const { pvName, value } = action.payload;
-      connection.putPv(pvName, value);
+      const shortPvName = store.getState().shortPvNameMap[pvName] || pvName;
+      connection.putPv(shortPvName, value);
       break;
     }
     case UNSUBSCRIBE: {
@@ -68,7 +71,12 @@ export const connectionMiddleware = (connection: Connection) => (
       const subs = store.getState().subscriptions;
       // Is this the last subscriber?
       // The reference will be removed in csReducer.
-      if (subs[pvName].length === 1 && subs[pvName][0] === componentId) {
+      const shortPvName = store.getState().shortPvNameMap[pvName] || pvName;
+
+      if (
+        subs[shortPvName].length === 1 &&
+        subs[shortPvName][0] === componentId
+      ) {
         connection.unsubscribe(pvName);
       }
     }

@@ -1,5 +1,10 @@
 import { csReducer, CsState } from "./csState";
-import { VALUE_CHANGED, CONNECTION_CHANGED } from "./actions";
+import {
+  UNSUBSCRIBE,
+  SUBSCRIBE,
+  VALUE_CHANGED,
+  CONNECTION_CHANGED
+} from "./actions";
 import { vdouble, VDoubleArray } from "../vtypes/vtypes";
 import { AlarmSeverity, AlarmStatus, alarm } from "../vtypes/alarm";
 import { VString } from "../vtypes/string";
@@ -84,4 +89,33 @@ describe("CONNECTION_CHANGED", (): void => {
     const newState = csReducer(initialState, action);
     expect(newState.valueCache["PV"].connected).toEqual(false);
   });
+});
+
+test("handles initializers", (): void => {
+  const action = {
+    type: SUBSCRIBE,
+    payload: { pvName: "PV(1)", shortPvName: "PV", componentId: "0" }
+  };
+  const action2 = {
+    type: SUBSCRIBE,
+    payload: { pvName: "PV(1)", shortPvName: "PV", componentId: "1" }
+  };
+  const state2 = csReducer(initialState, action);
+  const state3 = csReducer(state2, action2);
+  expect(state3.shortPvNameMap["PV(1)"]).toEqual("PV");
+
+  const unsubAction = {
+    type: UNSUBSCRIBE,
+    payload: { pvName: "PV(1)", componentId: "0" }
+  };
+
+  const unsubAction2 = {
+    type: UNSUBSCRIBE,
+    payload: { pvName: "PV(1)", componentId: "1" }
+  };
+
+  const state4 = csReducer(state3, unsubAction);
+  expect(state4.shortPvNameMap["PV(1)"]).toEqual("PV");
+  const state5 = csReducer(state4, unsubAction2);
+  expect(state5.shortPvNameMap["PV(1)"]).toEqual(undefined);
 });

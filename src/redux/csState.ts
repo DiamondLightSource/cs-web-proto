@@ -13,6 +13,7 @@ import { mergeVtype } from "../vtypes/merge";
 const initialState: CsState = {
   valueCache: {},
   macroMap: { SUFFIX: "1" },
+  shortPvNameMap: {},
   subscriptions: {}
 };
 
@@ -20,6 +21,7 @@ export interface PvState {
   value: VType;
   connected: boolean;
   readonly: boolean;
+  initializingPvName: string;
 }
 
 export interface ValueCache {
@@ -38,6 +40,7 @@ export interface Subscriptions {
 /* The shape of the store for the entire application. */
 export interface CsState {
   valueCache: ValueCache;
+  shortPvNameMap: { [pvName: string]: string };
   macroMap: MacroMap;
   subscriptions: Subscriptions;
 }
@@ -78,23 +81,52 @@ export function csReducer(state = initialState, action: ActionType): CsState {
       return { ...state, macroMap: newMacroMap };
     }
     case SUBSCRIBE: {
-      const { componentId, pvName } = action.payload;
+      const { componentId, shortPvName } = action.payload;
+      const newShortPvMap = { ...state.shortPvNameMap };
       const newSubscriptions = { ...state.subscriptions };
-      if (newSubscriptions.hasOwnProperty(pvName)) {
-        newSubscriptions[pvName].push(componentId);
+      if (newSubscriptions.hasOwnProperty(shortPvName)) {
+        newSubscriptions[shortPvName].push(componentId);
       } else {
-        newSubscriptions[pvName] = [componentId];
+        newSubscriptions[shortPvName] = [componentId];
       }
-      return { ...state, subscriptions: newSubscriptions };
+
+      if (action.payload.pvName !== action.payload.shortPvName) {
+        newShortPvMap[action.payload.pvName] = action.payload.shortPvName;
+      }
+      return {
+        ...state,
+        subscriptions: newSubscriptions,
+        shortPvNameMap: newShortPvMap
+      };
     }
     case UNSUBSCRIBE: {
-      const { componentId, pvName } = action.payload;
+      const newShortPvMap = { ...state.shortPvNameMap };
+      let { componentId, pvName } = action.payload;
+      const shortPvName = state.shortPvNameMap[pvName] || pvName;
+
+      if (
+        state.subscriptions[shortPvName].length === 1 &&
+        state.subscriptions[shortPvName][0] === componentId
+      ) {
+        // O(n)
+        Object.keys(newShortPvMap).forEach((key): void => {
+          if (newShortPvMap[key] === shortPvName) {
+            delete newShortPvMap[key];
+          }
+        });
+      }
+
       const newSubscriptions = { ...state.subscriptions };
-      const newPvSubs = state.subscriptions[pvName].filter(
+      const newPvSubs = state.subscriptions[shortPvName].filter(
         (id): boolean => id !== componentId
       );
-      newSubscriptions[pvName] = newPvSubs;
-      return { ...state, subscriptions: newSubscriptions };
+      newSubscriptions[shortPvName] = newPvSubs;
+
+      return {
+        ...state,
+        subscriptions: newSubscriptions,
+        shortPvNameMap: newShortPvMap
+      };
     }
     case WRITE_PV: {
       // Handled by middleware.
