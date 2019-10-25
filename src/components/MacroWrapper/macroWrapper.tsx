@@ -40,3 +40,22 @@ export const macroWrapper = <P extends object>(
     return <Component {...(resolvedProps as P)}></Component>;
   };
 };
+
+export function useMacros<P extends MacroProps>(props: MacroProps): P {
+  const globalMacros = useSelector(
+    (state: CsState): MacroMap => state.macroMap
+  );
+  let allMacros = { ...globalMacros };
+  if (props.macroMap != null) {
+    allMacros = { ...allMacros, ...props.macroMap };
+  }
+  let resolvedProps: any = {};
+  const rawPvName = props.pvName;
+  Object.entries(props).map(([key, value]): void => {
+    resolvedProps[key] = resolveStrings(value, allMacros);
+  });
+  if (rawPvName != null) {
+    resolvedProps.rawPvName = rawPvName;
+  }
+  return resolvedProps;
+}

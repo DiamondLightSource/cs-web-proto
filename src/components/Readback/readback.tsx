@@ -7,7 +7,7 @@ import { CopyWrapper } from "../CopyWrapper/copyWrapper";
 import { AlarmBorder } from "../AlarmBorder/alarmBorder";
 
 import classes from "./readback.module.css";
-import { macroWrapper } from "../MacroWrapper/macroWrapper";
+import { useMacros } from "../MacroWrapper/macroWrapper";
 import { VType } from "../../vtypes/vtypes";
 import { Alarm, alarmOf, AlarmSeverity } from "../../vtypes/alarm";
 import { vtypeToString } from "../../vtypes/utils";
@@ -148,7 +148,13 @@ export const ConnectedStandaloneReadback: React.FC<
   ConnectedStandaloneReadbackProps
 > = (props: ConnectedStandaloneReadbackProps): JSX.Element => {
   const [connected, , latestValue] = useConnection(props.pvName);
+  const macroProps = useMacros(props);
   return (
-    <StandaloneReadback {...props} connected={connected} value={latestValue} />
+    <StandaloneReadback
+      {...macroProps}
+      pvName={macroProps.pvName || ""}
+      connected={connected}
+      value={latestValue}
+    />
   );
 };
