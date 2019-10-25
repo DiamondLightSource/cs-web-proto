@@ -25,7 +25,7 @@ function pvStateSelector(
   return [connected, readonly, value];
 }
 
-export function useConnection(pvName: string): [boolean, boolean, VType?] {
+export function useConnection(pvName?: string): [boolean, boolean, VType?] {
   const [id] = useId();
   useSubscription(id, pvName);
   const [connected, readonly, latestValue] = useSelector((state: CsState): [
@@ -33,7 +33,11 @@ export function useConnection(pvName: string): [boolean, boolean, VType?] {
     boolean,
     VType?
   ] => {
-    return pvStateSelector(pvName, state);
+    if (pvName) {
+      return pvStateSelector(pvName, state);
+    } else {
+      return [false, false, undefined];
+    }
   });
   return [connected, readonly, latestValue];
 }

@@ -44,16 +44,6 @@ export interface WidgetInterface {
   macroMap?: MacroMap;
 }
 
-// Interface for the general functional component which creates a widget
-// May have wrappers
-export interface WidgetComponentInterface extends WidgetInterface {
-  baseWidget: React.FC<any>;
-  wrappers?: {
-    copywrapper?: boolean;
-    alarmborder?: boolean;
-  };
-}
-
 // Interface for widgets which handle PVs
 // May be wrapped to display PV metadata
 export interface PVWidgetInterface extends WidgetInterface {
@@ -65,8 +55,15 @@ export interface PVWidgetInterface extends WidgetInterface {
   };
 }
 
-export interface PVWidgetComponentInterface extends PVWidgetInterface {
+// Interface for the general functional component which creates a widget
+// May have wrappers
+export interface WidgetComponentInterface extends WidgetInterface {
+  pvName?: string;
   baseWidget: React.FC<any>;
+  wrappers?: {
+    copywrapper?: boolean;
+    alarmborder?: boolean;
+  };
 }
 
 // Function to recursively wrap a given set of widgets
@@ -106,9 +103,16 @@ const recursiveWrapping = (
 
 export const Widget = (props: WidgetComponentInterface): JSX.Element => {
   // Generic widget component
+  const [connected, readonly, latestValue] = useConnection(props.pvName);
+  let newProps: WidgetComponentInterface & PvState = {
+    ...props,
+    connected: connected,
+    readonly: readonly,
+    value: latestValue
+  };
 
   // Apply macros.
-  const macroProps = useMacros(props);
+  const macroProps = useMacros(newProps);
 
   // Give containers access to everything apart from the containerStyling
   // Assume flexible position if not provided with anything
@@ -152,15 +156,4 @@ export const Widget = (props: WidgetComponentInterface): JSX.Element => {
     containerProps,
     baseWidgetProps
   );
-};
-
-export const PVWidget = (props: PVWidgetComponentInterface): JSX.Element => {
-  const [connected, readonly, latestValue] = useConnection(props.pvName);
-  let newProps: PVWidgetComponentInterface & PvState = {
-    ...props,
-    connected: connected,
-    readonly: readonly,
-    value: latestValue
-  };
-  return <Widget {...newProps} />;
 };
