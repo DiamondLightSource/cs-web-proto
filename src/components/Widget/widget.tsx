@@ -2,9 +2,9 @@ import React from "react";
 
 import { CopyWrapper } from "../CopyWrapper/copyWrapper";
 import { AlarmBorder } from "../AlarmBorder/alarmBorder";
-import { MacroMap } from "../../redux/csState";
-import { macroWrapper } from "../MacroWrapper/macroWrapper";
-import { connectionWrapper } from "../ConnectionWrapper/connectionWrapper";
+import { MacroMap, PvState } from "../../redux/csState";
+import { useMacros } from "../MacroWrapper/macroWrapper";
+import { useConnection } from "../ConnectionWrapper/connectionWrapper";
 
 interface ContainerFeatures {
   margin?: string;
@@ -87,16 +87,18 @@ export interface WidgetComponentInterface extends BaseWidgetInterface {
     copywrapper?: boolean;
     alarmborder?: boolean;
   };
+  macroMap?: MacroMap;
 }
 
-export const WidgetComponent = (
-  props: WidgetComponentInterface
-): JSX.Element => {
+export const Widget = (props: WidgetComponentInterface): JSX.Element => {
   // Generic widget component
+
+  // Apply macros.
+  const macroProps = useMacros(props);
 
   // Give containers access to everything apart from the containerStyling
   // Assume flexible position if not provided with anything
-  const { containerStyling, ...containerProps } = props;
+  const { containerStyling, ...containerProps } = macroProps;
 
   // Manipulate for absolute styling
   // Put x and y back in as left and top respectively
@@ -146,10 +148,6 @@ export interface WidgetInterface extends BaseWidgetInterface {
   children?: React.ReactNode;
 }
 
-export const Widget: React.FC<
-  WidgetComponentInterface & WidgetInterface
-> = macroWrapper(WidgetComponent);
-
 // Interface for widgets which handle PVs
 // May be wrapped to display PV metadata
 export interface PVWidgetInterface extends WidgetInterface {
@@ -159,7 +157,20 @@ export interface PVWidgetInterface extends WidgetInterface {
     alarmborder?: boolean;
     // ...any other borders that come up in the future
   };
+  macroMap?: MacroMap;
 }
-export const PVWidget: React.FC<
-  WidgetComponentInterface & PVWidgetInterface
-> = macroWrapper(connectionWrapper(WidgetComponent));
+
+export interface PVWidgetComponentInterface extends PVWidgetInterface {
+  baseWidget: React.FC<any>;
+}
+
+export const PVWidget = (props: PVWidgetComponentInterface): JSX.Element => {
+  const [connected, readonly, latestValue] = useConnection(props.pvName);
+  let newProps: PVWidgetComponentInterface & PvState = {
+    ...props,
+    connected: connected,
+    readonly: readonly,
+    value: latestValue
+  };
+  return <Widget {...newProps} />;
+};

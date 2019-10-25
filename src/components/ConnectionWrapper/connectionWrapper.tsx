@@ -25,35 +25,6 @@ function pvStateSelector(
   return [connected, readonly, value];
 }
 
-/* See https://medium.com/@jrwebdev/react-higher-order-component-patterns-in-typescript-42278f7590fb
-   for some notes on types.
-   */
-export const connectionWrapper = <P extends object>(
-  Component: React.FC<P>
-  // This next line should be React.FC<P & PvProps> but I can't pass TypeScript.
-): React.FC<any> => {
-  // eslint-disable-next-line react/display-name
-  return (props: PvProps): JSX.Element => {
-    const [id] = useId();
-    useSubscription(id, props.pvName);
-    const [connected, readonly, latestValue] = useSelector((state: CsState): [
-      boolean,
-      boolean,
-      VType?
-    ] => {
-      return pvStateSelector(props.pvName, state);
-    });
-    return (
-      <Component
-        {...(props as P)}
-        connected={connected}
-        readonly={readonly}
-        value={latestValue}
-      ></Component>
-    );
-  };
-};
-
 export function useConnection(pvName: string): [boolean, boolean, VType?] {
   const [id] = useId();
   useSubscription(id, pvName);

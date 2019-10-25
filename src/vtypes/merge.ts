@@ -93,8 +93,8 @@ export function vtypeInfo(
 }
 
 export function mergeVtype(
-  original: VType,
-  update: PartialVType,
+  original?: VType,
+  update?: PartialVType,
   showErrors: boolean = true
 ): VType | undefined {
   try {
