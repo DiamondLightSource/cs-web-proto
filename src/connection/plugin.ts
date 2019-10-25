@@ -19,7 +19,7 @@ export type ValueChangedCallback = (
 ) => void;
 
 export interface Connection {
-  subscribe: (pvName: string) => void;
+  subscribe: (pvName: string) => string; // must be idempotent
   putPv: (pvName: string, value: VType) => void;
   connect: (
     connectionCallback: ConnectionChangedCallback,

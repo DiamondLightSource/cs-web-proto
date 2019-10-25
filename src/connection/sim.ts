@@ -56,7 +56,7 @@ abstract class SimPv {
     this.onValueUpdate(this.pvName, partialise(this.getValue()));
   }
 
-  public updateValue(value: VType): void {
+  public updateValue(_: VType): void {
     throw new Error(`Cannot set value on ${this.simulatorName()}`);
   }
 
@@ -351,10 +351,14 @@ export class SimulatorPlugin implements Connection {
     this.simPvs = new SimCache();
     this.onConnectionUpdate = nullConnCallback;
     this.onValueUpdate = nullValueCallback;
-    this.subscribe = this.subscribe.bind(this);
     this.putPv = this.putPv.bind(this);
     this.updateRate = updateRate || 2000;
     this.connected = false;
+  }
+
+  public subscribe(pvName: string): string {
+    let simulator = this._subscribe(pvName);
+    return (simulator && simulator.pvName) || pvName;
   }
 
   public connect(
@@ -395,14 +399,14 @@ export class SimulatorPlugin implements Connection {
         initial = JSON.parse("[" + groups[3] + "]");
         keyName = "loc://" + groups[1];
 
-        if (typeName == "VEnum") {
+        if (typeName === "VEnum") {
           initial = venum(
             initial[0] - 1,
             initial.slice(1),
             ALARM_NONE,
             timeNow()
           );
-        } else if (initial.length == 1) {
+        } else if (initial.length === 1) {
           initial = vdouble(initial[0]);
         } else {
           initial = vdoubleArray(initial, initial.length);
@@ -479,7 +483,10 @@ export class SimulatorPlugin implements Connection {
     return { simulator: result, initialValue: initial };
   }
 
-  public subscribe(pvName: string, publish: boolean = true): SimPv {
+  public _subscribe(
+    pvName: string,
+    publish: boolean = true
+  ): SimPv | undefined {
     let nameInfo = this.parseName(pvName);
 
     if (this.simPvs.get(nameInfo.keyName) === undefined) {
@@ -506,14 +513,14 @@ export class SimulatorPlugin implements Connection {
   }
 
   public putPv(pvName: string, value: VType): void {
-    let pvSimulator = this.subscribe(pvName, false);
+    let pvSimulator = this._subscribe(pvName, false);
     if (pvSimulator !== undefined) {
       pvSimulator.updateValue(value);
     }
   }
 
   public getValue(pvName: string): VType | undefined {
-    let pvSimulator = this.subscribe(pvName, false);
+    let pvSimulator = this._subscribe(pvName, false);
     return pvSimulator && pvSimulator.getValue();
   }
 

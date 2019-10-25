@@ -168,6 +168,7 @@ export class ConiqlPlugin implements Connection {
   private connected: boolean;
   private wsClient: SubscriptionClient;
   private disconnected: string[] = [];
+  private subscriptions: { [pvName: string]: boolean };
 
   public constructor(socket: string) {
     const fragmentMatcher = new IntrospectionFragmentMatcher({
@@ -180,7 +181,7 @@ export class ConiqlPlugin implements Connection {
     });
     this.wsClient.onReconnecting((): void => {
       for (const pvName of this.disconnected) {
-        this.subscribe(pvName);
+        this._subscribe(pvName);
       }
       this.disconnected = [];
     });
@@ -189,6 +190,7 @@ export class ConiqlPlugin implements Connection {
     this.onConnectionUpdate = nullConnCallback;
     this.onValueUpdate = nullValueCallback;
     this.connected = false;
+    this.subscriptions = {};
   }
 
   public createLink(socket: string): ApolloLink {
@@ -221,7 +223,7 @@ export class ConiqlPlugin implements Connection {
     return this.connected;
   }
 
-  public subscribe(pvName: string): void {
+  private _subscribe(pvName: string): void {
     this.client
       .subscribe({
         query: PV_SUBSCRIPTION,
@@ -252,6 +254,14 @@ export class ConiqlPlugin implements Connection {
           this.disconnected.push(pvName);
         }
       });
+  }
+
+  public subscribe(pvName: string): string {
+    if (this.subscriptions[pvName] === undefined) {
+      this._subscribe(pvName);
+    }
+    this.subscriptions[pvName] = true;
+    return pvName;
   }
 
   public putPv(pvName: string, value: VType): void {
