@@ -30,7 +30,7 @@ interface FlexibleContainer extends ContainerFeatures {
   height?: number | string;
 }
 
-export interface BaseWidgetInterface {
+export interface WidgetInterface {
   containerStyling: AbsoluteContainer | FlexibleContainer;
   // ... other ways to customise the container itself could be added to this interface
   widgetStyling?: {
@@ -42,6 +42,31 @@ export interface BaseWidgetInterface {
     // ... all the styling things we want to allow
   };
   macroMap?: MacroMap;
+}
+
+// Interface for the general functional component which creates a widget
+// May have wrappers
+export interface WidgetComponentInterface extends WidgetInterface {
+  baseWidget: React.FC<any>;
+  wrappers?: {
+    copywrapper?: boolean;
+    alarmborder?: boolean;
+  };
+}
+
+// Interface for widgets which handle PVs
+// May be wrapped to display PV metadata
+export interface PVWidgetInterface extends WidgetInterface {
+  pvName: string;
+  wrappers?: {
+    copywrapper?: boolean;
+    alarmborder?: boolean;
+    // ...any other borders that come up in the future
+  };
+}
+
+export interface PVWidgetComponentInterface extends PVWidgetInterface {
+  baseWidget: React.FC<any>;
 }
 
 // Function to recursively wrap a given set of widgets
@@ -78,17 +103,6 @@ const recursiveWrapping = (
     );
   }
 };
-
-// Interface for the general functional component which creates a widget
-// May have wrappers
-export interface WidgetComponentInterface extends BaseWidgetInterface {
-  baseWidget: React.FC<any>;
-  wrappers?: {
-    copywrapper?: boolean;
-    alarmborder?: boolean;
-  };
-  macroMap?: MacroMap;
-}
 
 export const Widget = (props: WidgetComponentInterface): JSX.Element => {
   // Generic widget component
@@ -139,30 +153,6 @@ export const Widget = (props: WidgetComponentInterface): JSX.Element => {
     baseWidgetProps
   );
 };
-
-// Interface for a widget which does not handle PVs
-// Label, display, containers
-// No support for wrapping as this would not make sense
-// when they have no PV
-export interface WidgetInterface extends BaseWidgetInterface {
-  children?: React.ReactNode;
-}
-
-// Interface for widgets which handle PVs
-// May be wrapped to display PV metadata
-export interface PVWidgetInterface extends WidgetInterface {
-  pvName: string;
-  wrappers?: {
-    copywrapper?: boolean;
-    alarmborder?: boolean;
-    // ...any other borders that come up in the future
-  };
-  macroMap?: MacroMap;
-}
-
-export interface PVWidgetComponentInterface extends PVWidgetInterface {
-  baseWidget: React.FC<any>;
-}
 
 export const PVWidget = (props: PVWidgetComponentInterface): JSX.Element => {
   const [connected, readonly, latestValue] = useConnection(props.pvName);
