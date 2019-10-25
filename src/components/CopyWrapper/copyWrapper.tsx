@@ -23,7 +23,7 @@ export const CopyWrapper = (props: {
   style?: object;
 }): JSX.Element => {
   const [popoverOpen, setPopoverOpen] = useState(false);
-  let { connected, pvName, rawPvName = "", value = null } = props;
+  let { connected, pvName, rawPvName = "", value = null, style = {} } = props;
 
   let displayValue = "";
   if (!connected) {
@@ -65,7 +65,9 @@ export const CopyWrapper = (props: {
   toolTipText += `\n[${dateAndAlarm}]`;
 
   return (
-    <div style={{ position: "relative", height: "100%", width: "100%" }}>
+    <div
+      style={{ position: "relative", height: "100%", width: "100%", ...style }}
+    >
       <Popover
         isOpen={popoverOpen}
         position={["top"]}

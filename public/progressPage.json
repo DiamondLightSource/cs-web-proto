@@ -1,0 +1,99 @@
+{
+  "type": "display",
+  "containerStyling": {
+    "position": "relative",
+    "width": "80%",
+    "margin": "auto"
+  },
+  "macroMap": {
+    "PROG": "sim://limit#progresspv"
+  },
+  "children": [
+    {
+      "type": "label",
+      "containerStyling": {
+        "position": "relative",
+        "margin": "20px 5px 5px 5px"
+      },
+      "text": "Input: ${PROG}"
+    },
+    {
+      "type": "input",
+      "pvName": "${PROG}",
+      "containerStyling": {
+        "position": "relative",
+        "margin": "5px"
+      },
+      "wrappers": {
+        "alarmborder": true,
+        "copywrapper": true
+      },
+      "precision": 3
+    },
+    {
+      "type": "label",
+      "containerStyling": {
+        "position": "relative",
+        "margin": "20px 5px 5px 5px"
+      },
+      "text": "Readback: ${PROG}"
+    },
+    {
+      "type": "readback",
+      "pvName": "${PROG}",
+      "containerStyling": {
+        "position": "relative",
+        "margin": "5px"
+      },
+      "wrappers": {
+        "alarmborder": true,
+        "copywrapper": true
+      },
+      "precision": 3
+    },
+    {
+      "type": "label",
+      "containerStyling": {
+        "position": "relative",
+        "margin": "20px 5px 5px 5px"
+      },
+      "text": "Progress Bar: ${PROG}"
+    },
+    {
+      "type": "progressbar",
+      "pvName": "${PROG}",
+      "containerStyling": {
+        "position": "relative",
+        "margin": "5px"
+      },
+      "wrappers": {
+        "alarmborder": true,
+        "copywrapper": true
+      },
+      "min": 0,
+      "max": 100
+    },
+    {
+      "type": "label",
+      "containerStyling": {
+        "position": "relative",
+        "margin": "20px 5px 5px 5px"
+      },
+      "text": "Slide Control: ${PROG}"
+    },
+    {
+      "type": "slidecontrol",
+      "pvName": "${PROG}",
+      "containerStyling": {
+        "position": "relative",
+        "margin": "5px"
+      },
+      "wrappers": {
+        "alarmborder": true,
+        "copywrapper": true
+      },
+      "min": -25,
+      "max": 125
+    }
+  ]
+}

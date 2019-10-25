@@ -1,8 +1,12 @@
 // Page to show off the absolute positiong example
 import React from "react";
 
-import { FromJson } from "../components/FromJson/fromJson";
+import { WidgetFromJson } from "../components/FromJson/fromJson";
 
 export const FlexExamplePage = (): JSX.Element => (
-  <FromJson file="http://localhost:3000/flexiblePage.json" macroMap={{}} />
+  <WidgetFromJson
+    file="http://localhost:3000/flexiblePage.json"
+    macroMap={{}}
+    containerStyling={{ position: "relative" }}
+  />
 );

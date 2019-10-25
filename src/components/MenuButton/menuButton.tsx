@@ -1,19 +1,19 @@
 import React from "react";
-import { connectionWrapper } from "../ConnectionWrapper/connectionWrapper";
 import { writePv } from "../../hooks/useCs";
 
 import { VType, VEnum } from "../../vtypes/vtypes";
 import { vtypeToString, stringToVtype } from "../../vtypes/utils";
-import { Alarm } from "../../vtypes/alarm";
+import { PVWidget, PVWidgetInterface } from "../Widget/widget";
 
 export interface MenuButtonProps {
   connected: boolean;
   onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
   value?: VType;
+  readonly: boolean;
   style?: {};
 }
 
-export const MenuButton = (props: MenuButtonProps): JSX.Element => {
+export const MenuButtonComponent = (props: MenuButtonProps): JSX.Element => {
   let { connected, value = null, style = { color: "#000000" } } = props;
 
   // Store whether component is disabled or not
@@ -25,6 +25,12 @@ export const MenuButton = (props: MenuButtonProps): JSX.Element => {
   // Using value to dictate displayed value as described here: https://reactjs.org/docs/forms.html#the-select-tag
   // Show 0 by default where there is only one option
   let displayIndex = 0;
+
+  let readOnlyStyle = {};
+  if (props.readonly === true) {
+    disabled = true;
+    readOnlyStyle = { cursor: "not-allowed" };
+  }
 
   if (!connected || value === null) {
     disabled = true;
@@ -50,7 +56,7 @@ export const MenuButton = (props: MenuButtonProps): JSX.Element => {
     <select
       value={displayIndex}
       disabled={disabled}
-      style={style}
+      style={{ width: "100%", ...readOnlyStyle, ...style }}
       onChange={props.onChange}
     >
       {mappedOptions}
@@ -63,6 +69,7 @@ export const SmartMenuButton = (props: {
   connected: boolean;
   pvName: string;
   value?: VType;
+  readonly: boolean;
   style?: {};
 }): JSX.Element => {
   // Function to send the value on to the PV
@@ -71,23 +78,16 @@ export const SmartMenuButton = (props: {
   }
 
   return (
-    <MenuButton
+    <MenuButtonComponent
       connected={props.connected}
       value={props.value}
       style={props.style}
+      readonly={props.readonly}
       onChange={onChange}
     />
   );
 };
 
-interface ConnectedMenuButtonProps {
-  pvName: string;
-  rawPvName?: string;
-  precision?: number;
-  alarm?: Alarm;
-  style?: {};
-}
-
-export const ConnectedMenuButton: React.FC<
-  ConnectedMenuButtonProps
-> = connectionWrapper(SmartMenuButton);
+export const MenuButton = (props: PVWidgetInterface): JSX.Element => (
+  <PVWidget baseWidget={SmartMenuButton} {...props} />
+);
