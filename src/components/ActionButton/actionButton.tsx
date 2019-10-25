@@ -2,7 +2,6 @@ import React from "react";
 import { Actions, executeActions } from "../../actions";
 import { PVWidget, PVWidgetInterface } from "../Widget/widget";
 
-// For now not a PV widget.
 export interface ActionButtonProps {
   text: string;
   onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;

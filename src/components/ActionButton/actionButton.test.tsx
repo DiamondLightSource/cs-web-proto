@@ -1,5 +1,5 @@
 import React from "react";
-import { BasicActionButton, BasicActionButtonProps } from "./actionButton";
+import { ActionButtonComponent, ActionButtonProps } from "./actionButton";
 import { configure, shallow, ShallowWrapper } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import { create, ReactTestRenderer } from "react-test-renderer";
@@ -7,12 +7,12 @@ import { create, ReactTestRenderer } from "react-test-renderer";
 configure({ adapter: new Adapter() });
 
 let snapshot: ReactTestRenderer;
-let actionButtonWrapper: ShallowWrapper<BasicActionButtonProps>;
+let actionButtonWrapper: ShallowWrapper<ActionButtonProps>;
 beforeEach((): void => {
   const mock = (_: any): void => {
     // pass
   };
-  const actionButton = <BasicActionButton text={"hello"} onClick={mock} />;
+  const actionButton = <ActionButtonComponent text={"hello"} onClick={mock} />;
   snapshot = create(actionButton);
   actionButtonWrapper = shallow(actionButton);
 });
