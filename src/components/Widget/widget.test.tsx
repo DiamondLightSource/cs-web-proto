@@ -1,16 +1,25 @@
 import React from "react";
 import { mount } from "enzyme";
 
-import { WidgetComponent } from "./widget";
+import { Widget } from "./widget";
 import { LabelComponent } from "../Label/label";
+import { MacroProps } from "../MacroWrapper/macroWrapper";
 
 let TestLabel = (): JSX.Element => {
   return <LabelComponent text="Test" />;
 };
 
+// Mock the useMacros hook as otherwise we'd have to provide
+// a store for it to use.
+jest.mock("../MacroWrapper/macroWrapper", (): object => {
+  return {
+    useMacros: (props: MacroProps): MacroProps => props
+  };
+});
+
 describe("<Widget />", (): void => {
   let component = mount(
-    <WidgetComponent
+    <Widget
       baseWidget={TestLabel}
       containerStyling={{ position: "relative" }}
     />
@@ -36,7 +45,7 @@ describe("<Widget />", (): void => {
   });
   test("it has copywrapper", (): void => {
     let component = mount(
-      <WidgetComponent
+      <Widget
         baseWidget={TestLabel}
         containerStyling={{ position: "relative" }}
         wrappers={{ copywrapper: true }}
@@ -47,7 +56,7 @@ describe("<Widget />", (): void => {
 
   test("it has alarmborder", (): void => {
     let component = mount(
-      <WidgetComponent
+      <Widget
         baseWidget={TestLabel}
         containerStyling={{ position: "relative" }}
         wrappers={{ alarmborder: true }}
@@ -58,7 +67,7 @@ describe("<Widget />", (): void => {
 
   test("it has alarmborder and copywrapper", (): void => {
     let component = mount(
-      <WidgetComponent
+      <Widget
         baseWidget={TestLabel}
         containerStyling={{ position: "relative" }}
         wrappers={{ alarmborder: true, copywrapper: true }}
