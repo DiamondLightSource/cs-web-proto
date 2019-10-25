@@ -32,7 +32,7 @@ abstract class SimPv {
   abstract simulatorName(): string;
   protected onConnectionUpdate: ConnectionChangedCallback;
   protected onValueUpdate: ValueChangedCallback;
-  protected pvName: string;
+  public pvName: string;
   protected updateRate?: number;
   abstract getValue(): VType | undefined;
   public constructor(
@@ -327,8 +327,17 @@ class LimitData extends SimPv {
   }
 }
 
-interface SimCache {
-  [pvName: string]: SimPv;
+class SimCache {
+  private store: { [pvName: string]: SimPv | undefined };
+  public constructor() {
+    this.store = {};
+  }
+  public put(simPv: SimPv): void {
+    this.store[simPv.pvName] = simPv;
+  }
+  public get(pvName: string): SimPv | undefined {
+    return this.store[pvName];
+  }
 }
 
 export class SimulatorPlugin implements Connection {
@@ -339,7 +348,7 @@ export class SimulatorPlugin implements Connection {
   private connected: boolean;
 
   public constructor(updateRate?: number) {
-    this.simPvs = {};
+    this.simPvs = new SimCache();
     this.onConnectionUpdate = nullConnCallback;
     this.onValueUpdate = nullValueCallback;
     this.subscribe = this.subscribe.bind(this);
@@ -473,7 +482,7 @@ export class SimulatorPlugin implements Connection {
   public subscribe(pvName: string, publish: boolean = true): SimPv {
     let nameInfo = this.parseName(pvName);
 
-    if (this.simPvs[nameInfo.keyName] === undefined) {
+    if (this.simPvs.get(nameInfo.keyName) === undefined) {
       let simulatorInfo = this.makeSimulator(
         pvName,
         this.onConnectionUpdate,
@@ -482,7 +491,7 @@ export class SimulatorPlugin implements Connection {
       );
 
       if (simulatorInfo.simulator) {
-        this.simPvs[nameInfo.keyName] = simulatorInfo.simulator;
+        this.simPvs.put(simulatorInfo.simulator);
       }
 
       if (publish && simulatorInfo.simulator !== undefined) {
@@ -493,7 +502,7 @@ export class SimulatorPlugin implements Connection {
         }
       }
     }
-    return this.simPvs[nameInfo.keyName];
+    return this.simPvs.get(nameInfo.keyName);
   }
 
   public putPv(pvName: string, value: VType): void {
