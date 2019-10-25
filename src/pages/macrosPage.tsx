@@ -2,11 +2,11 @@
 
 import React from "react";
 
-import { Label, MacroLabel } from "../components/Label/label";
-import { ConnectedStandaloneReadback } from "../components/Readback/readback";
+import { Label } from "../components/Label/label";
+import { Readback } from "../components/Readback/readback";
 import { MacroUpdater } from "../components/MacroUpdater/macroUpdater";
 import { MacroDisplayer } from "../components/MacroDisplayer/macroDisplayer";
-import { ConnectedInput } from "../components/Input/input";
+import { Input } from "../components/Input/input";
 
 export const MacrosPage = (): JSX.Element => (
   <div id="Central Column" style={{ width: "80%", margin: "auto" }}>
@@ -15,19 +15,27 @@ export const MacrosPage = (): JSX.Element => (
       <MacroDisplayer />
     </div>
     <div style={{ display: "block" }}>
-      <Label text="loc://pv1"></Label>
-      <MacroLabel
+      <Label
         text="loc://pv${SUFFIX}"
         macroMap={{ SUFFIX1: "bba" }}
-      ></MacroLabel>
-      <ConnectedInput pvName={"loc://pv1"} />
-      <Label text="loc://pv2"></Label>
-      <ConnectedInput pvName={"loc://pv2"} />
+        containerStyling={{ position: "relative" }}
+      />
+      <Input pvName={"loc://pv1"} containerStyling={{ position: "relative" }} />
+      <Label text="loc://pv2" containerStyling={{ position: "relative" }} />
+      <Input pvName={"loc://pv2"} containerStyling={{ position: "relative" }} />
       <div style={{ height: "30px" }}>
-        <ConnectedStandaloneReadback pvName={"loc://pv${SUFFIX1}"} />
+        <Readback
+          pvName={"loc://pv${SUFFIX1}"}
+          containerStyling={{ position: "relative" }}
+          wrappers={{ copywrapper: true }}
+        />
       </div>
       <div style={{ height: "30px" }}>
-        <ConnectedStandaloneReadback pvName={"loc://pv${SUFFIX2}"} />
+        <Readback
+          pvName={"loc://pv${SUFFIX2}"}
+          containerStyling={{ position: "relative" }}
+          wrappers={{ copywrapper: true }}
+        />
       </div>
     </div>
   </div>

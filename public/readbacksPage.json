@@ -1,0 +1,70 @@
+{
+  "type": "display",
+  "containerStyling": {
+    "position": "relative",
+    "width": "80%",
+    "margin": "auto"
+  },
+  "children": [
+    {
+      "type": "label",
+      "containerStyling": {
+        "position": "relative",
+        "margin": "20px 0px 5px 0px"
+      },
+      "text": "Readback - PV1"
+    },
+    {
+      "type": "readback",
+      "containerStyling": {
+        "position": "relative"
+      },
+      "pvName": "sim://limit#1"
+    },
+    {
+      "type": "label",
+      "containerStyling": {
+        "position": "relative",
+        "margin": "20px 0px 5px 0px"
+      },
+      "text": "Readback - PV2"
+    },
+    {
+      "type": "readback",
+      "containerStyling": {
+        "position": "relative"
+      },
+      "pvName": "sim://limit#2"
+    },
+    {
+      "type": "label",
+      "containerStyling": {
+        "position": "relative",
+        "margin": "20px 0px 5px 0px"
+      },
+      "text": "Readback - PV3"
+    },
+    {
+      "type": "readback",
+      "containerStyling": {
+        "position": "relative"
+      },
+      "pvName": "sim://limit#3"
+    },
+    {
+      "type": "label",
+      "containerStyling": {
+        "position": "relative",
+        "margin": "20px 0px 5px 0px"
+      },
+      "text": "Readback - PV4"
+    },
+    {
+      "type": "readback",
+      "containerStyling": {
+        "position": "relative"
+      },
+      "pvName": "sim://limit#4"
+    }
+  ]
+}

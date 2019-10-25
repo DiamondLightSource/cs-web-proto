@@ -8,6 +8,7 @@ export const AlarmBorder = (props: {
   connected: boolean;
   value?: VType;
   children: ReactNode;
+  style?: object;
 }): JSX.Element => {
   let { connected, value = null } = props;
   let alarm: Alarm = alarmOf(value);
@@ -21,5 +22,9 @@ export const AlarmBorder = (props: {
     alarmClasses.push(classes.MajorAlarm);
   }
 
-  return <div className={alarmClasses.join(" ")}>{props.children}</div>;
+  return (
+    <div className={alarmClasses.join(" ")} style={props.style}>
+      {props.children}
+    </div>
+  );
 };

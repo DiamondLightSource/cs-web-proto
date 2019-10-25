@@ -1,60 +1,94 @@
 {
-  "type": "blank",
-  "x": "0",
-  "y": "0",
-  "width": "400px",
-  "height": "600px",
+  "type": "display",
+  "containerStyling": {
+    "position": "absolute",
+    "x": "0",
+    "y": "0",
+    "width": "400px",
+    "height": "600px"
+  },
+  "macroMap": {
+    "metapv": "metapv1"
+  },
   "children": [
     {
       "type": "label",
-      "x": "10px",
-      "y": "10px",
-      "width": "100px",
-      "height": "100px",
+      "containerStyling": {
+        "position": "absolute",
+        "x": "10px",
+        "y": "10px",
+        "width": "100px",
+        "height": "100px"
+      },
       "text": "hello"
     },
     {
       "type": "label",
-      "x": "210px",
-      "y": "10px",
-      "width": "100px",
-      "height": "100px",
+      "containerStyling": {
+        "position": "absolute",
+        "x": "210px",
+        "y": "10px",
+        "width": "100px",
+        "height": "100px"
+      },
       "text": "hello"
     },
     {
       "type": "input",
       "pvName": "sim://limit#metapv1",
-      "x": "10px",
-      "y": "120px",
-      "width": "100px",
-      "height": "100px",
+      "containerStyling": {
+        "position": "absolute",
+        "x": "10px",
+        "y": "120px",
+        "width": "100px",
+        "height": "100px"
+      },
+      "precision": 3
+    },
+    {
+      "type": "readback",
+      "pvName": "sim://limit#${metapv}",
+      "containerStyling": {
+        "position": "absolute",
+        "x": "210px",
+        "y": "120px",
+        "width": "150px",
+        "height": "150px"
+      },
+      "wrappers": {
+        "copywrapper": true
+      },
       "precision": 3
     },
     {
       "type": "readback",
       "pvName": "sim://limit#metapv1",
-      "x": "210px",
-      "y": "120px",
-      "width": "150px",
-      "height": "150px",
+      "containerStyling": {
+        "position": "absolute",
+        "x": "210px",
+        "y": "280px",
+        "width": "150px",
+        "height": "150px"
+      },
+      "wrappers": {
+        "alarmborder": true
+      },
       "precision": 3
     },
     {
-      "type": "connectedReadback",
+      "type": "readback",
       "pvName": "sim://limit#metapv1",
-      "x": "210px",
-      "y": "280px",
-      "width": "150px",
-      "height": "150px",
-      "precision": 3
-    },
-    {
-      "type": "connectedCopyReadback",
-      "pvName": "sim://limit#metapv1",
-      "x": "0%",
-      "y": "440px",
-      "width": "100%",
-      "height": "20%",
+      "containerStyling": {
+        "position": "absolute",
+        "x": "0%",
+        "y": "440px",
+        "width": "100%",
+        "height": "20%"
+      },
+      "wrappers": {
+        "copywrapper": true,
+        "alarmborder": true
+      },
       "precision": 3
     }
   ]
