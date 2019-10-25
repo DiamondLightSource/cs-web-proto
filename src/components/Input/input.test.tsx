@@ -1,5 +1,5 @@
 import React from "react";
-import { Input, InputProps } from "./input";
+import { InputComponent, InputProps } from "./input";
 import { configure, shallow, ShallowWrapper } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import { create, ReactTestRenderer } from "react-test-renderer";
@@ -14,13 +14,14 @@ beforeEach((): void => {
     // pass
   };
   const input = (
-    <Input
+    <InputComponent
       pvName="pv"
       value="hello"
       onKeyDown={mock}
       onChange={mock}
       onBlur={mock}
       onClick={mock}
+      readonly={false}
     />
   );
   wrapper = shallow(input);

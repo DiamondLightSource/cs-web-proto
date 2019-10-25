@@ -2,7 +2,7 @@
 
 import React from "react";
 
-import { FromJson } from "../components/FromJson/fromJson";
+import { WidgetFromJson } from "../components/FromJson/fromJson";
 
 export const EmbeddedPage = (): JSX.Element => (
   <div
@@ -15,9 +15,10 @@ export const EmbeddedPage = (): JSX.Element => (
     }}
   >
     <div style={{ height: "100%", width: "100%" }}>
-      <FromJson
+      <WidgetFromJson
         file="http://localhost:3000/embeddedScreens/flexiEmbedded.json"
         macroMap={{}}
+        containerStyling={{ position: "relative" }}
       />
     </div>
   </div>

@@ -1,5 +1,5 @@
 import React from "react";
-import { Readback, ReadbackProps } from "./readback";
+import { ReadbackComponent, ReadbackProps } from "./readback";
 import { configure, shallow, ShallowWrapper } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import { stringToVtype } from "../../vtypes/utils";
@@ -12,7 +12,7 @@ let wrapper: ShallowWrapper<ReadbackProps>;
 
 beforeEach((): void => {
   const readback = (
-    <Readback
+    <ReadbackComponent
       connected={true}
       value={stringToVtype("3.14159265359")}
       precision={2}

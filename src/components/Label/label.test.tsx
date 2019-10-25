@@ -1,5 +1,5 @@
 import React from "react";
-import { Label } from "./label";
+import { LabelComponent } from "./label";
 import { shallow, ShallowWrapper } from "enzyme";
 import { create, ReactTestRenderer } from "react-test-renderer";
 
@@ -7,7 +7,7 @@ let snapshot: ReactTestRenderer;
 let wrapper: ShallowWrapper;
 
 beforeEach((): void => {
-  const label = <Label text="hello" />;
+  const label = <LabelComponent text="hello" />;
   wrapper = shallow(label);
   snapshot = create(label);
 });

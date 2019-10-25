@@ -1,13 +1,10 @@
 import React, { useState } from "react";
-import { connectionWrapper } from "../ConnectionWrapper/connectionWrapper";
-import { writePv } from "../../hooks/useCs";
-import { VType } from "../../vtypes/vtypes";
-import { CopyWrapper } from "../CopyWrapper/copyWrapper";
-import { AlarmBorder } from "../AlarmBorder/alarmBorder";
 
 import classes from "./input.module.css";
-import { macroWrapper } from "../MacroWrapper/macroWrapper";
+import { writePv } from "../../hooks/useCs";
+import { VType } from "../../vtypes/vtypes";
 import { vtypeToString, stringToVtype } from "../../vtypes/utils";
+import { PVWidget, PVWidgetInterface } from "../Widget/widget";
 
 export interface InputProps {
   pvName: string;
@@ -20,7 +17,9 @@ export interface InputProps {
   style?: object;
 }
 
-export const Input: React.FC<InputProps> = (props: InputProps): JSX.Element => {
+export const InputComponent: React.FC<InputProps> = (
+  props: InputProps
+): JSX.Element => {
   let allClasses = `Input ${classes.Input}`;
   if (props.readonly) {
     allClasses += ` ${classes.Readonly}`;
@@ -40,11 +39,6 @@ export const Input: React.FC<InputProps> = (props: InputProps): JSX.Element => {
   );
 };
 
-interface ConnectedInputProps {
-  pvName: string;
-  style?: object;
-}
-
 interface SmartInputProps {
   pvName: string;
   readonly: boolean;
@@ -52,7 +46,7 @@ interface SmartInputProps {
   style?: object;
 }
 
-export const SmartInput: React.FC<SmartInputProps> = (
+export const SmartInputComponent: React.FC<SmartInputProps> = (
   props: SmartInputProps
 ): JSX.Element => {
   const [inputValue, setInputValue] = useState("");
@@ -85,7 +79,7 @@ export const SmartInput: React.FC<SmartInputProps> = (
   }
 
   return (
-    <Input
+    <InputComponent
       pvName={props.pvName}
       value={inputValue}
       readonly={props.readonly}
@@ -98,41 +92,10 @@ export const SmartInput: React.FC<SmartInputProps> = (
   );
 };
 
-export const ConnectedInput: React.FC<ConnectedInputProps> = macroWrapper(
-  connectionWrapper(SmartInput)
-);
-
-interface ConnectedStandaloneInputProps {
-  pvName: string;
+interface InputWidgetProps {
   precision?: number;
-  style?: {};
 }
 
-export const StandaloneInput = (props: {
-  pvName: string;
-  rawPvName?: string;
-  value: VType;
-  connected: boolean;
-  readonly: boolean;
-  precision?: number;
-  style?: object;
-}): JSX.Element => (
-  <CopyWrapper
-    pvName={props.pvName}
-    rawPvName={props.rawPvName}
-    connected={props.connected}
-    value={props.value}
-  >
-    <AlarmBorder connected={props.connected} value={props.value}>
-      <SmartInput
-        pvName={props.pvName}
-        readonly={props.readonly}
-        value={props.value}
-      ></SmartInput>
-    </AlarmBorder>
-  </CopyWrapper>
-);
-
-export const ConnectedStandaloneInput: React.FC<
-  ConnectedStandaloneInputProps
-> = macroWrapper(connectionWrapper(StandaloneInput));
+export const Input = (
+  props: InputWidgetProps & PVWidgetInterface
+): JSX.Element => <PVWidget baseWidget={SmartInputComponent} {...props} />;
