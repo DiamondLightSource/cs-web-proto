@@ -1,3 +1,4 @@
+import log from "loglevel";
 import {
   VALUE_CHANGED,
   ActionType,
@@ -46,6 +47,7 @@ export interface CsState {
 }
 
 export function csReducer(state = initialState, action: ActionType): CsState {
+  log.debug(action);
   switch (action.type) {
     case VALUE_CHANGED: {
       const newValueCache: ValueCache = { ...state.valueCache };

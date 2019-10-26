@@ -499,7 +499,7 @@ export class SimulatorPlugin implements Connection {
   }
 
   public unsubscribe(pvName: string): void {
-    log.debug(`Unsubscribing from ${pvName}.`);
+    log.info(`Unsubscribing from ${pvName}.`);
     if (this.simPvs.get(pvName)) {
       this.simPvs.remove(pvName);
     }

@@ -231,7 +231,7 @@ export class ConiqlPlugin implements Connection {
       })
       .subscribe({
         next: (data): void => {
-          log.debug("data", data);
+          log.trace("data", data);
           const { value, time, meta, status } = data.data.subscribeChannel;
           if (meta) {
             this.onConnectionUpdate(pvName, {
