@@ -312,6 +312,9 @@ class SimCache {
   public get(pvName: string): SimPv | undefined {
     return this.store[pvName];
   }
+  public remove(pvName: string): void {
+    delete this.store[pvName];
+  }
 }
 
 export class SimulatorPlugin implements Connection {
@@ -497,5 +500,8 @@ export class SimulatorPlugin implements Connection {
 
   public unsubscribe(pvName: string): void {
     log.debug(`Unsubscribing from ${pvName}.`);
+    if (this.simPvs.get(pvName)) {
+      this.simPvs.remove(pvName);
+    }
   }
 }

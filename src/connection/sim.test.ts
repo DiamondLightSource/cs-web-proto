@@ -56,6 +56,14 @@ it("local values zero initially", (done): void => {
   simulator.subscribe("loc://location");
 });
 
+it("deletes pv on unsubscribe", (): void => {
+  // "Unless a type selector and initial value are provided, a local value will be of type ‘double’ with initial value of 0." [https://buildmedia.readthedocs.org/media/pdf/phoebus-doc/latest/phoebus-doc.pdf]
+  simulator.subscribe("loc://location");
+  expect(simulator["simPvs"].get("loc://location") === undefined).toBe(false);
+  simulator.unsubscribe("loc://location");
+  expect(simulator["simPvs"].get("loc://location")).toBe(undefined);
+});
+
 it("test random values ", (): void => {
   getValue("sim://random", (value: VType): void => {
     expect(value.getValue());
