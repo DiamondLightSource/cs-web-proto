@@ -224,6 +224,6 @@ it("return undefined for bad pvs", (): void => {
 
 it("test sine values ", (): void => {
   expect((): void => simulator.putPv("sim://sine", 17)).toThrow(
-    new Error("Cannot set value on sine")
+    new Error("Cannot set value on SinePv")
   );
 });

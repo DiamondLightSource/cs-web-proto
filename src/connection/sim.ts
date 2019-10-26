@@ -29,7 +29,6 @@ function partialise(value: VType | undefined): PartialVType | undefined {
 }
 
 abstract class SimPv {
-  abstract simulatorName(): string;
   protected onConnectionUpdate: ConnectionChangedCallback;
   protected onValueUpdate: ValueChangedCallback;
   public pvName: string;
@@ -57,7 +56,7 @@ abstract class SimPv {
   }
 
   public updateValue(_: VType): void {
-    throw new Error(`Cannot set value on ${this.simulatorName()}`);
+    throw new Error(`Cannot set value on ${this.constructor.name}`);
   }
 
   protected maybeSetInterval(callback: () => void): void {
@@ -70,10 +69,6 @@ abstract class SimPv {
 }
 
 class SinePv extends SimPv {
-  public simulatorName(): string {
-    return "sine";
-  }
-
   public constructor(
     pvName: string,
     onConnectionUpdate: ConnectionChangedCallback,
@@ -96,9 +91,6 @@ class SinePv extends SimPv {
 }
 
 class RandomPv extends SimPv {
-  public simulatorName(): string {
-    return "random";
-  }
   public constructor(
     pvName: string,
     onConnectionUpdate: ConnectionChangedCallback,
@@ -117,10 +109,6 @@ class RandomPv extends SimPv {
 }
 
 class Disconnector extends SimPv {
-  public simulatorName(): string {
-    return "disconnect";
-  }
-
   public constructor(
     pvName: string,
     onConnectionUpdate: ConnectionChangedCallback,
@@ -145,9 +133,6 @@ class Disconnector extends SimPv {
 }
 
 class SimEnumPv extends SimPv {
-  public simulatorName(): string {
-    return "simulated enum";
-  }
   private value: VEnum = venum(
     0,
     ["one", "two", "three", "four"],
@@ -186,9 +171,6 @@ class SimEnumPv extends SimPv {
 }
 
 class EnumPv extends SimPv {
-  public simulatorName(): string {
-    return "enumpv";
-  }
   private value: VEnum = venum(
     0,
     ["zero", "one", "two", "three", "four", "five"],
@@ -255,10 +237,6 @@ class EnumPv extends SimPv {
 }
 
 class LocalPv extends SimPv {
-  public simulatorName(): string {
-    return "loc";
-  }
-
   private value: VType | undefined;
   public constructor(
     pvName: string,
@@ -283,10 +261,6 @@ class LocalPv extends SimPv {
 }
 
 class LimitData extends SimPv {
-  public simulatorName(): string {
-    return "limit";
-  }
-
   private value: VType;
   // Class to provide PV value along with Alarm and Timestamp data
   // Initial limits will be 10, 20, 80 and 90 - with expected range between 0 and 100
