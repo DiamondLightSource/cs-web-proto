@@ -391,10 +391,6 @@ export class SimulatorPlugin implements Connection {
       }
 
       protocol = "loc://";
-    } else if (parts[0].startsWith("enum://")) {
-      initial = undefined;
-      keyName = pvName;
-      protocol = "enum://";
     } else {
       initial = undefined;
       keyName = pvName;
@@ -436,8 +432,6 @@ export class SimulatorPlugin implements Connection {
     } else if (nameInfo.protocol === "sim://enum") {
       cls = SimEnumPv;
       initial = undefined;
-    } else if (nameInfo.protocol === "enum://") {
-      return { simulator: undefined, initialValue: undefined };
     } else if (nameInfo.protocol === "sim://random") {
       initial = undefined;
       cls = RandomPv;
