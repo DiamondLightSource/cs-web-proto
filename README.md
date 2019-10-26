@@ -46,3 +46,18 @@ For more details on the development environment see
 - [Jest](https://github.com/facebook/jest) is a widely-used testing framework
   developed by Facebook
 - [Prettier](https://github.com/prettier/prettier) is used for code formatting
+
+
+## Debugging
+
+The [loglevel](https://github.com/pimterry/loglevel) library is used for logging. To enable this, change the argument to `log.setLevel` in `App.tsx` and open the javascript console.
+
+The following log levels are meaningful:
+
+* `error`: Show errors
+* `info`: Log whenever a component changes state (e.g. new subscriptions, new connections.)
+* `debug`: Log every message to the react reducer
+* `trace`: Display data related to network connections.
+
+The `debug` loglevel is particularly useful since a lot of actions are initiated by a message sent to the reducer.
+For example, a message is sent to create new subscriptions to process variables, as well as every time a process variable changes value or conneciton status.

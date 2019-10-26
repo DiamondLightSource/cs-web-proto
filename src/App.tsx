@@ -20,7 +20,7 @@ import { FlexExamplePage } from "./pages/flexExamplePage";
 import { EmbeddedPage } from "./pages/embeddedPage";
 import { SimulatorPlugin } from "./connection/sim";
 
-log.setLevel("INFO");
+log.setLevel("trace");
 
 function applyTheme(theme: any): void {
   Object.keys(theme).forEach(function(key): void {
