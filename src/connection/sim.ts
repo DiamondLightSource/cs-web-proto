@@ -463,8 +463,7 @@ export class SimulatorPlugin implements Connection {
       cls = SimEnumPv;
       initial = undefined;
     } else if (nameInfo.protocol === "enum://") {
-      cls = EnumPv;
-      initial = undefined;
+      return { simulator: undefined, initialValue: undefined };
     } else if (nameInfo.protocol === "sim://random") {
       initial = undefined;
       cls = RandomPv;
@@ -516,6 +515,10 @@ export class SimulatorPlugin implements Connection {
     let pvSimulator = this._subscribe(pvName, false);
     if (pvSimulator !== undefined) {
       pvSimulator.updateValue(value);
+    } else {
+      throw new Error(
+        `Could not create a simulated process variable for ${pvName}`
+      );
     }
   }
 

@@ -41,6 +41,12 @@ it("test local values", (done): void => {
   simulator.putPv("loc://location", vdouble(17));
 });
 
+it("test enum values blocked", (): void => {
+  expect((): void => {
+    simulator.putPv("enum://name", 1);
+  }).toThrow();
+});
+
 it("local values zero initially", (done): void => {
   // "Unless a type selector and initial value are provided, a local value will be of type ‘double’ with initial value of 0." [https://buildmedia.readthedocs.org/media/pdf/phoebus-doc/latest/phoebus-doc.pdf]
   getValue("loc://location", (value: any): void => {
