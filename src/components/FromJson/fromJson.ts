@@ -1,4 +1,6 @@
 import { useState } from "react";
+import log from "loglevel";
+
 import {
   widgetDescriptionToComponent,
   WidgetDescription
@@ -17,6 +19,16 @@ import { BaseWidgetInterface } from "../Widget/widget";
 const EMPTY_WIDGET: WidgetDescription = {
   type: "empty",
   containerStyling: { position: "absolute", x: 0, y: 0, width: 0, height: 0 }
+};
+
+const ERROR_WIDGET: WidgetDescription = {
+  type: "label",
+  containerStyling: { position: "relative" },
+  widgetStyling: {
+    fontWeight: "bold",
+    backgroundColor: "red"
+  },
+  text: "Error"
 };
 
 interface WidgetFromJsonProps extends BaseWidgetInterface {
@@ -53,5 +65,19 @@ export const WidgetFromJson = (
     widgetFromJSON: WidgetFromJson
   };
 
-  return widgetDescriptionToComponent(json, widgetDict, props.macroMap);
+  let component: JSX.Element | null;
+  try {
+    component = widgetDescriptionToComponent(json, widgetDict, props.macroMap);
+  } catch (e) {
+    log.error(`Error converting JSON into components in ${props.file}`);
+    log.error(e.msg);
+    log.error(e.object);
+    component = widgetDescriptionToComponent(
+      ERROR_WIDGET,
+      widgetDict,
+      props.macroMap
+    );
+  }
+
+  return component;
 };

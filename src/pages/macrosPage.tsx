@@ -14,7 +14,7 @@ export const MacrosPage = (): JSX.Element => (
       <MacroUpdater />
       <MacroDisplayer />
     </div>
-    <div style={{ display: "block" }}>
+    {/* <div style={{ display: "block" }}>
       <Label
         text="loc://pv${SUFFIX}"
         macroMap={{ SUFFIX1: "bba" }}
@@ -37,6 +37,6 @@ export const MacrosPage = (): JSX.Element => (
           wrappers={{ copywrapper: true }}
         />
       </div>
-    </div>
+    </div> */}
   </div>
 );

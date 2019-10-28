@@ -1,4 +1,8 @@
 import React from "react";
+import log from "loglevel";
+// @ts-ignore
+import checkPropTypes from "check-prop-types";
+
 import { MacroMap } from "../../redux/csState";
 import { BaseWidgetInterface } from "../Widget/widget";
 
@@ -29,6 +33,38 @@ export function widgetDescriptionToComponent(
       containerStyling,
       ...otherProps
     } = widgetDescription;
+
+    // const LabelProps = {
+    //   text: propTypes.oneOfType([propTypes.string, propTypes.number])
+    //     .isRequired,
+    //   widgetStyling: propTypes.object
+    // };
+
+    if (type === "label" || type === "readback") {
+      // console.log("Got a label component");
+      // console.log(otherProps);
+      // console.log(widgetDict[type].propTypes);
+      let widgetInfo = { containerStyling: containerStyling, ...otherProps };
+      let error: string | undefined = checkPropTypes(
+        widgetDict[type].propTypes,
+        widgetInfo,
+        "widget description",
+        type,
+        (): void => {
+          log.debug("Got an error");
+        }
+      );
+      if (error !== undefined) {
+        throw {
+          msg: error,
+          object: {
+            type: type,
+            containerStyling: containerStyling,
+            ...otherProps
+          }
+        };
+      }
+    }
 
     // Collect macroMap passed into function and overwrite/add any
     // new values from the object macroMap

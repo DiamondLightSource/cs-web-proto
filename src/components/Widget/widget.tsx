@@ -34,11 +34,11 @@ export interface BaseWidgetInterface {
   containerStyling: AbsoluteContainer | FlexibleContainer;
   // ... other ways to customise the container itself could be added to this interface
   widgetStyling?: {
-    font: string;
-    fontSize: string | number;
-    fontWeight: string | number;
-    textAlign: "center" | "left" | "right" | "justify";
-    backgroundColor: string;
+    font?: string;
+    fontSize?: string | number;
+    fontWeight?: string | number;
+    textAlign?: "center" | "left" | "right" | "justify";
+    backgroundColor?: string;
     // ... all the styling things we want to allow
   };
   macroMap?: MacroMap;
