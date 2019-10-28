@@ -1,0 +1,180 @@
+{
+  "type": "display",
+  "containerStyling": {
+    "position": "relative",
+    "width": "80%",
+    "margin": "auto"
+  },
+  "macroMap": {
+    "pv1": "sim://limit#1",
+    "pv2": "sim://limit#2",
+    "pv3": "sim://limit#3",
+    "pv4": "sim://limit#4"
+  },
+  "children": [
+    {
+      "type": "flexcontainer",
+      "containerStyling": {
+        "position": "relative"
+      },
+      "children": [
+        {
+          "type": "label",
+          "containerStyling": {
+            "position": "relative",
+            "width": "30%"
+          },
+          "text": "${pv1}"
+        },
+        {
+          "type": "input",
+          "containerStyling": {
+            "position": "relative",
+            "width": "30%"
+          },
+          "pvName": "${pv1}"
+        },
+        {
+          "type": "readback",
+          "containerStyling": {
+            "position": "relative",
+            "width": "30%"
+          },
+          "pvName": "${pv1}"
+        },
+        {
+          "type": "label",
+          "containerStyling": {
+            "position": "relative",
+            "width": "30%"
+          },
+          "text": "${pv2}"
+        },
+        {
+          "type": "input",
+          "containerStyling": {
+            "position": "relative",
+            "width": "30%"
+          },
+          "pvName": "${pv2}"
+        },
+        {
+          "type": "readback",
+          "containerStyling": {
+            "position": "relative",
+            "width": "30%"
+          },
+          "pvName": "${pv2}"
+        },
+        {
+          "type": "label",
+          "containerStyling": {
+            "position": "relative",
+            "width": "30%"
+          },
+          "text": "${pv3}"
+        },
+        {
+          "type": "input",
+          "containerStyling": {
+            "position": "relative",
+            "width": "30%"
+          },
+          "pvName": "${pv3}"
+        },
+        {
+          "type": "readback",
+          "containerStyling": {
+            "position": "relative",
+            "width": "30%"
+          },
+          "pvName": "${pv3}"
+        },
+        {
+          "type": "label",
+          "containerStyling": {
+            "position": "relative",
+            "width": "30%"
+          },
+          "text": "${pv4}"
+        },
+        {
+          "type": "input",
+          "containerStyling": {
+            "position": "relative",
+            "width": "30%"
+          },
+          "pvName": "${pv4}"
+        },
+        {
+          "type": "readback",
+          "containerStyling": {
+            "position": "relative",
+            "width": "30%"
+          },
+          "pvName": "${pv4}"
+        }
+      ]
+    },
+    {
+      "type": "actionbutton",
+      "pvName": "${pv1}",
+      "text": "set ${pv1} to 10",
+      "actions": {
+        "actions": [
+          {
+            "type": "WRITE_PV",
+            "pvName": "sim://limit#1",
+            "value": 10
+          }
+        ]
+      },
+      "executeAsOne": false
+    },
+    {
+      "type": "actionbutton",
+      "pvName": "${pv2}",
+      "text": "set ${pv2} to 10",
+      "actions": {
+        "actions": [
+          {
+            "type": "WRITE_PV",
+            "pvName": "sim://limit#2",
+            "value": 10
+          }
+        ]
+      },
+      "executeAsOne": false
+    },
+    {
+      "type": "actionbutton",
+      "pvName": "${pv3}",
+      "text": "set ${pv3} to 10",
+      "actions": {
+        "actions": [
+          {
+            "type": "WRITE_PV",
+            "pvName": "sim://limit#3",
+            "value": 10
+          }
+        ]
+      },
+      "executeAsOne": false
+    },
+    {
+      "type": "actionbutton",
+      "pvName": "${pv4}",
+      "text": "set ${pv4} to 10",
+      "actions": {
+        "actions": [
+          {
+            "type": "WRITE_PV",
+            "pvName": "sim://limit#4",
+            "value": 10
+          }
+        ]
+      },
+      "executeAsOne": false
+    }
+  ]
+}
