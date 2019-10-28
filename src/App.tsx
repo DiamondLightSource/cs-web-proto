@@ -18,7 +18,10 @@ import { MacrosPage } from "./pages/macrosPage";
 import { lightTheme, darkTheme, ThemeContext } from "./themeContext";
 import { FlexExamplePage } from "./pages/flexExamplePage";
 import { EmbeddedPage } from "./pages/embeddedPage";
+
 import { SimulatorPlugin } from "./connection/sim";
+// import { ConiqlPlugin } from "./connection/coniql";
+import { ConnectionForwarder } from "./connection/forwarder";
 
 log.setLevel("warn");
 
@@ -30,7 +33,16 @@ function applyTheme(theme: any): void {
 }
 
 const App: React.FC = (): JSX.Element => {
-  const plugin = new SimulatorPlugin();
+  const simulator = new SimulatorPlugin();
+  //"const coniql = new ConiqlPlugin();
+  const coniql = undefined;
+  const fallbackPlugin = simulator;
+  const plugin = new ConnectionForwarder([
+    ["sim://", simulator],
+    ["loc://", simulator],
+    ["pva://", coniql],
+    ["", fallbackPlugin]
+  ]);
   initialiseStore(plugin);
   const store = getStore();
   const { toggle, dark } = React.useContext(ThemeContext);
