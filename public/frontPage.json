@@ -44,7 +44,8 @@
           },
           "pvName": "loc://pv1",
           "wrappers": {
-            "copywrapper": true
+            "copywrapper": true,
+            "menuwrapper": true
           }
         },
         {
@@ -235,7 +236,7 @@
             "position": "relative",
             "margin": "5px 0 0 0"
           },
-            "pvName": "loc://enum1<VEnum>(2, \"une\", \"deux\", \"trois\")",
+          "pvName": "loc://enum1<VEnum>(2, \"une\", \"deux\", \"trois\")",
           "wrappers": {
             "copywrapper": true
           }
@@ -246,7 +247,7 @@
             "position": "relative",
             "margin": "5px 0 0 0"
           },
-            "pvName": "loc://enum1<VEnum>(2, \"une\", \"deux\", \"trois\")",
+          "pvName": "loc://enum1<VEnum>(2, \"une\", \"deux\", \"trois\")",
           "wrappers": {
             "copywrapper": true
           }
@@ -300,11 +301,12 @@
             "position": "relative",
             "margin": "5px 0 0 0"
           },
-            "pvName": "loc://test(1.1)",
+          "pvName": "loc://test(1.1)",
           "wrappers": {
             "copywrapper": true
           }
-        }]
+        }
+      ]
     }
   ]
 }

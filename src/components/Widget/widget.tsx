@@ -5,6 +5,7 @@ import { AlarmBorder } from "../AlarmBorder/alarmBorder";
 import { MacroMap } from "../../redux/csState";
 import { macroWrapper } from "../MacroWrapper/macroWrapper";
 import { connectionWrapper } from "../ConnectionWrapper/connectionWrapper";
+import { MenuWrapper } from "../MenuWrapper/menuWrapper";
 
 interface ContainerFeatures {
   margin?: string;
@@ -86,6 +87,7 @@ export interface WidgetComponentInterface extends BaseWidgetInterface {
   wrappers?: {
     copywrapper?: boolean;
     alarmborder?: boolean;
+    menuwrapper?: boolean;
   };
 }
 
@@ -116,7 +118,7 @@ export const WidgetComponent = (
 
   // Done like this in case only one of the values is passed through
   const requestedWrappers = {
-    ...{ alarmborder: false, copywrapper: false },
+    ...{ alarmborder: false, copywrapper: false, menuwrapper: false },
     ...wrappers
   };
 
@@ -125,6 +127,9 @@ export const WidgetComponent = (
   }
   if (requestedWrappers.copywrapper === true) {
     components.push(CopyWrapper);
+  }
+  if (requestedWrappers.menuwrapper === true) {
+    components.push(MenuWrapper);
   }
 
   components.push(baseWidget);
