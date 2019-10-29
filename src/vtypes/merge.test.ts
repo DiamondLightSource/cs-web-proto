@@ -64,5 +64,5 @@ it("handles null value in update", (): void => {
 
   const result = mergeVtype(original, update);
   expect(result).not.toBeUndefined();
-  expect(result!.getValue()).toEqual(0);
+  expect((result as VDouble).getValue()).toEqual(0);
 });

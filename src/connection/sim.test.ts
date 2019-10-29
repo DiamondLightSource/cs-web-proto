@@ -1,4 +1,4 @@
-import { SimulatorPlugin } from "./sim.ts";
+import { SimulatorPlugin } from "./sim";
 import { VType, vdouble } from "../vtypes/vtypes";
 import { mergeVtype, PartialVType } from "../vtypes/merge";
 import { nullConnCallback, nullValueCallback } from "./plugin";
@@ -199,11 +199,11 @@ it("distinguish sine values", (done): void => {
   let oneUpdated = false;
   let twoUpdated = false;
   function callback(update): void {
-    if (update.name == "sim://sine#one") {
+    if (update.name === "sim://sine#one") {
       oneUpdated = true;
     }
 
-    if (update.name == "sim://sine#two") {
+    if (update.name === "sim://sine#two") {
       twoUpdated = true;
     }
 
