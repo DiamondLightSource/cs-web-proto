@@ -1,5 +1,5 @@
-import { SimulatorPlugin } from "./sim.ts";
-import { VType, vdouble } from "../vtypes/vtypes";
+import { SimulatorPlugin } from "./sim";
+import { VType, vdouble, VDouble, VEnum } from "../vtypes/vtypes";
 import { mergeVtype, PartialVType } from "../vtypes/merge";
 import { nullConnCallback, nullValueCallback } from "./plugin";
 
@@ -8,8 +8,15 @@ beforeEach((): void => {
   simulator = new SimulatorPlugin();
 });
 
-function diffToValue(x: PartialVType): VType {
-  return x && mergeVtype(vdouble(0), x);
+// Some ugly TypeScript here.
+function diffToValue(x: PartialVType | VType | undefined): VType {
+  if (typeof x === undefined) {
+    return vdouble(0);
+  } else if (x instanceof VType) {
+    return x;
+  } else {
+    return mergeVtype(vdouble(0), x as PartialVType) as VType;
+  }
 }
 
 function getValue(pvName: string, callback: Function): void {
@@ -24,7 +31,7 @@ const assertValue = (
   pvName: string,
   impliedPv: string,
   value: any,
-  done
+  done: jest.DoneCallback
 ): void => {
   getValue(impliedPv, (updatedValue: VType): void => {
     expect(updatedValue.getValue()).toStrictEqual(value);
@@ -34,7 +41,7 @@ const assertValue = (
 };
 
 it("test local values", (done): void => {
-  getValue("loc://location", (value: VType | undefined): void => {
+  getValue("loc://location", (value: VType): void => {
     expect(value.getValue()).toEqual(17);
     done();
   });
@@ -43,7 +50,7 @@ it("test local values", (done): void => {
 
 it("test enum values blocked", (): void => {
   expect((): void => {
-    simulator.putPv("enum://name", 1);
+    simulator.putPv("enum://name", vdouble(1));
   }).toThrow();
 });
 
@@ -72,11 +79,11 @@ it("test random values ", (): void => {
 });
 
 it("test illegal names", (): void => {
-  expect(simulator.getValue("sim://sineillegalname", 17)).toBe(undefined);
+  expect(simulator.getValue("sim://sineillegalname")).toBe(undefined);
 });
 
 it("test enum", (): void => {
-  getValue("sim://enum", (value: VType | undefined): void => {
+  getValue("sim://enum", (value: VEnum): void => {
     expect(
       ["one", "two", "three", "four"].indexOf(value.getValue())
     ).toBeGreaterThan(-1);
@@ -102,7 +109,7 @@ it("test receive updates", (done): void => {
 });
 
 it("initial limit values", (done): void => {
-  getValue("sim://limit", (value): void => {
+  getValue("sim://limit", (value: VDouble): void => {
     expect(value.getValue()).toBe(50);
     done();
   });
@@ -110,7 +117,7 @@ it("initial limit values", (done): void => {
 });
 
 it("modifying limit values", (done): void => {
-  function* repeatedCallback(): void {
+  function* repeatedCallback(): any {
     const value1 = yield;
     expect(value1.getValue()).toEqual(50);
     const value2 = yield;
@@ -127,7 +134,7 @@ it("modifying limit values", (done): void => {
 });
 
 it("distinguish limit values", (done): void => {
-  function* repeatedCallback(): void {
+  function* repeatedCallback(): any {
     const update1 = yield;
     expect(update1.name).toEqual("sim://limit#one");
     expect(update1.value.getValue()).toEqual(1);
@@ -198,12 +205,12 @@ describe("supports local initialisation", (): void => {
 it("distinguish sine values", (done): void => {
   let oneUpdated = false;
   let twoUpdated = false;
-  function callback(update): void {
-    if (update.name == "sim://sine#one") {
+  function callback(update: any): void {
+    if (update.name === "sim://sine#one") {
       oneUpdated = true;
     }
 
-    if (update.name == "sim://sine#two") {
+    if (update.name === "sim://sine#two") {
       twoUpdated = true;
     }
 
@@ -219,8 +226,8 @@ it("distinguish sine values", (done): void => {
     callback({ name: name, value: diffToValue(value) });
   });
 
-  simulator.subscribe("sim://sine#one", vdouble(1));
-  simulator.subscribe("sim://sine#two", vdouble(2));
+  simulator.subscribe("sim://sine#one");
+  simulator.subscribe("sim://sine#two");
 });
 
 it("return undefined for bad pvs", (): void => {
@@ -231,7 +238,7 @@ it("return undefined for bad pvs", (): void => {
 });
 
 it("test sine values ", (): void => {
-  expect((): void => simulator.putPv("sim://sine", 17)).toThrow(
+  expect((): void => simulator.putPv("sim://sine", vdouble(17))).toThrow(
     new Error("Cannot set value on SinePv")
   );
 });

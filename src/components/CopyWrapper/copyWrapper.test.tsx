@@ -3,30 +3,14 @@ import { shallow, ShallowWrapper } from "enzyme";
 
 import { CopyWrapper } from "./copyWrapper";
 import Popover from "react-tiny-popover";
+import { vstring } from "../../vtypes/string";
 
 let wrapper: ShallowWrapper;
 let wrappedElement: ShallowWrapper;
 
 beforeEach((): void => {
-  // Get current time, separate into seconds and nanoseconds
-  let currentTime = new Date(0);
-  let seconds = Math.round(currentTime.getTime() / 1000),
-    nanoseconds = Math.round(currentTime.getTime() % 1000);
-
   const copywrapper = (
-    <CopyWrapper
-      pvName="pv"
-      connected={true}
-      value={{
-        type: "String",
-        value: "hello",
-        time: {
-          secondsPastEpoch: seconds,
-          nanoseconds: nanoseconds,
-          userTag: 0
-        }
-      }}
-    >
+    <CopyWrapper pvName="pv" connected={true} value={vstring("hello")}>
       Testing Copy Wrapper
     </CopyWrapper>
   );
