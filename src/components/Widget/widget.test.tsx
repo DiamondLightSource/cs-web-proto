@@ -3,19 +3,19 @@ import { mount } from "enzyme";
 
 import { Widget, PVWidget } from "./widget";
 import { LabelComponent } from "../Label/label";
-import { MacroProps } from "../MacroWrapper/macroWrapper";
+import { MacroProps } from "../../hooks/useMacros";
 import { vdouble } from "../../vtypes/vtypes";
-import { useConnection } from "../ConnectionWrapper/connectionWrapper";
+import { useConnection } from "../../hooks/useConnection";
 
 // Mock the useMacros hook as otherwise we'd have to provide
 // a store for it to use.
-jest.mock("../MacroWrapper/macroWrapper", (): object => {
+jest.mock("../../hooks/useMacros", (): object => {
   return {
     useMacros: (props: MacroProps): MacroProps => props
   };
 });
 // Slightly elaborate mocking of useConnection.
-jest.mock("../ConnectionWrapper/connectionWrapper", (): object => ({
+jest.mock("../../hooks/useConnection", (): object => ({
   useConnection: jest.fn()
 }));
 // This has to be done in a second step because Jest does the

@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { resolveMacros } from "../../macros";
-import { MacroMap, CsState } from "../../redux/csState";
+import { resolveMacros } from "../macros";
+import { MacroMap, CsState } from "../redux/csState";
 
 export interface MacroProps extends React.PropsWithChildren<any> {
   macroMap?: MacroMap;

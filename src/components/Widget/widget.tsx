@@ -3,8 +3,8 @@ import React from "react";
 import { CopyWrapper } from "../CopyWrapper/copyWrapper";
 import { AlarmBorder } from "../AlarmBorder/alarmBorder";
 import { MacroMap, FullPvState } from "../../redux/csState";
-import { useMacros } from "../MacroWrapper/macroWrapper";
-import { useConnection } from "../ConnectionWrapper/connectionWrapper";
+import { useMacros } from "../../hooks/useMacros";
+import { useConnection } from "../../hooks/useConnection";
 
 interface ContainerFeatures {
   margin?: string;

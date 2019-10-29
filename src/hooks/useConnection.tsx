@@ -1,9 +1,9 @@
 import React from "react";
 import { useId } from "react-id-generator";
-import { useSubscription } from "../../hooks/useCs";
+import { useSubscription } from "./useCs";
 import { useSelector } from "react-redux";
-import { CsState } from "../../redux/csState";
-import { VType } from "../../vtypes/vtypes";
+import { CsState } from "../redux/csState";
+import { VType } from "../vtypes/vtypes";
 
 export interface PvProps extends React.PropsWithChildren<any> {
   pvName: string;
