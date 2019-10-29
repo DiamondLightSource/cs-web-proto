@@ -122,14 +122,14 @@ export const WidgetComponent = (
     ...wrappers
   };
 
+  if (requestedWrappers.menuwrapper === true) {
+    components.push(MenuWrapper);
+  }
   if (requestedWrappers.alarmborder === true) {
     components.push(AlarmBorder);
   }
   if (requestedWrappers.copywrapper === true) {
     components.push(CopyWrapper);
-  }
-  if (requestedWrappers.menuwrapper === true) {
-    components.push(MenuWrapper);
   }
 
   components.push(baseWidget);
@@ -162,6 +162,7 @@ export interface PVWidgetInterface extends WidgetInterface {
   wrappers?: {
     copywrapper?: boolean;
     alarmborder?: boolean;
+    menuwrapper?: boolean;
     // ...any other borders that come up in the future
   };
 }

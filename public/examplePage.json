@@ -117,19 +117,40 @@
       ]
     },
     {
-      "type": "actionbutton",
+      "type": "readback",
       "pvName": "${pv1}",
       "text": "set ${pv1} to 10",
-      "actions": {
-        "actions": [
-          {
-            "type": "WRITE_PV",
-            "pvName": "sim://limit#1",
-            "value": 10
-          }
-        ]
-      },
-      "executeAsOne": false
+      "items": [
+        {
+          "label": "set limit #1 to 10",
+          "actions": {
+            "actions": [
+              {
+                "type": "WRITE_PV",
+                "pvName": "sim://limit#1",
+                "value": 10
+              }
+            ]
+          },
+          "executeAsOne": false
+        },
+        {
+          "label": "set limit #1 to 20",
+          "actions": {
+            "actions": [
+              {
+                "type": "WRITE_PV",
+                "pvName": "sim://limit#1",
+                "value": 20
+              }
+            ]
+          },
+          "executeAsOne": false
+        }
+      ],
+      "wrappers": {
+        "menuwrapper": true
+      }
     },
     {
       "type": "actionbutton",

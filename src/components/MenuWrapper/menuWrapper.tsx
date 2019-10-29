@@ -1,47 +1,30 @@
 import React, { ReactNode, useState } from "react";
+import { Actions, executeActions } from "../../actions";
 import classes from "./menuWrapper.module.css";
+import { SSL_OP_SSLEAY_080_CLIENT_DH_BUG } from "constants";
 
-function itemCallback() {
-  alert("clicked on item 1");
+export interface Items {
+  actions: Actions;
+  label: String;
 }
 
-export interface ActionMap {
-  [index: number]: {
-    label: string;
-    callback: () => void;
-  };
+function triggerCallback(actions: Actions) {
+  executeActions(actions);
 }
 
-let items: ActionMap = {
-  0: { label: "item1", callback: itemCallback },
-  1: { label: "item2", callback: itemCallback }
-};
-
-function triggerCallback(key: number) {
-  alert(key);
-}
-
-function returnMenu(items: ActionMap, x: number, y: number) {
+function returnMenu(items: Items[], x: number, y: number) {
   let entries = [];
-
-  for (let [index, item] of Object.entries(items)) {
-    var idx: number = 0;
-    var label: any = "";
-    for (let [key, value] of Object.entries(item)) {
-      if (key == "label") {
-        idx = entries.length;
-        label = value;
-      }
-      if (key == "callback") {
-        entries.push(
-          <div key={idx} className={classes.customContextItem}>
-            {label}
-          </div>
-        );
-      }
-    }
+  var length = items.length;
+  for (let i = 0; i < length; i++) {
+    entries.push(
+      <div
+        className={classes.customContextItem}
+        onClick={() => triggerCallback(items[i].actions)}
+      >
+        {items[i].label}
+      </div>
+    );
   }
-
   return (
     <div>
       <div
@@ -54,19 +37,6 @@ function returnMenu(items: ActionMap, x: number, y: number) {
         }}
       >
         {entries}
-        <div
-          key="4"
-          className={classes.customContextItem}
-          onClick={() => triggerCallback(0)}
-        >
-          hello
-        </div>
-        <div key="5" className={classes.customContextItem}>
-          test
-        </div>{" "}
-        <div key="6" className={classes.customContextItem}>
-          temp
-        </div>
       </div>
     </div>
   );
@@ -74,14 +44,13 @@ function returnMenu(items: ActionMap, x: number, y: number) {
 
 export const MenuWrapper = (props: {
   pvName: string;
+  items: Items[];
   children: ReactNode;
+  style?: object;
 }): JSX.Element => {
-  let { pvName } = props;
-
   const [contextOpen, setContextOpen] = useState(false);
   const [x, setX] = useState(0);
   const [y, setY] = useState(0);
-
   const handleClick = (e: React.MouseEvent): void => {
     e.preventDefault();
     if (e.button === 2) {
@@ -90,11 +59,10 @@ export const MenuWrapper = (props: {
       setY(e.nativeEvent.offsetY);
     }
   };
-
   if (contextOpen) {
     return (
       <div>
-        <div>{returnMenu(items, x, y)}</div>
+        <div>{returnMenu(props.items, x, y)}</div>
         <div onContextMenu={handleClick}>{props.children}</div>
       </div>
     );
