@@ -11,13 +11,11 @@ export interface BasicButtonProps {
 export const BasicButtonComponent = (props: BasicButtonProps): JSX.Element => {
   if (props.image !== undefined) {
     return (
-      <div style={props.style}>
-        <button className={classes.image}>
-          <img src={props.image} alt={props.image}></img>
-          <br></br>
-          {props.text}
-        </button>
-      </div>
+      <button className={classes.image}>
+        <img src={props.image} alt={props.image}></img>
+        <br></br>
+        {props.text}
+      </button>
     );
   } else {
     return <button>{props.text}</button>;
