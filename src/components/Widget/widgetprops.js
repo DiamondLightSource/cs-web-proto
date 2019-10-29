@@ -1,12 +1,12 @@
 import propTypes from "prop-types";
 import checkPropTypes from "check-prop-types";
 
-const ContainerFeaturesProps = {
+export const ContainerFeaturesProps = {
   margin: propTypes.string,
   padding: propTypes.string
 };
 
-const AbsoluteContainerProps = propTypes.exact({
+export const AbsoluteContainerProps = propTypes.exact({
   position: propTypes.oneOf(["absolute"]).isRequired,
   x: propTypes.oneOfType([propTypes.string, propTypes.number]).isRequired,
   y: propTypes.oneOfType([propTypes.string, propTypes.number]).isRequired,
@@ -15,16 +15,16 @@ const AbsoluteContainerProps = propTypes.exact({
   ...ContainerFeaturesProps
 });
 
-const FlexibleContainerProps = propTypes.exact({
+export const FlexibleContainerProps = propTypes.exact({
   position: propTypes.oneOf(["relative"]).isRequired,
   height: propTypes.oneOfType([propTypes.string, propTypes.number]),
   width: propTypes.oneOfType([propTypes.string, propTypes.number]),
   ...ContainerFeaturesProps
 });
 
-const macroMapProps = propTypes.objectOf(propTypes.string);
+export const macroMapProps = propTypes.objectOf(propTypes.string);
 
-const widgetStylingProps = propTypes.exact({
+export const widgetStylingProps = propTypes.exact({
   font: propTypes.string,
   fontSize: propTypes.oneOfType([propTypes.string, propTypes.number]),
   fontWeight: propTypes.oneOfType([propTypes.string, propTypes.number]),
