@@ -2,22 +2,12 @@ import React from "react";
 import { shallow, ShallowWrapper } from "enzyme";
 
 import { AlarmBorder } from "./alarmBorder";
+import { vdouble } from "../../vtypes/vtypes";
 
 let wrapper: ShallowWrapper;
 beforeEach((): void => {
   const alarmborder = (
-    <AlarmBorder
-      connected={true}
-      value={{
-        type: "NTScalar",
-        value: 0,
-        alarm: {
-          severity: 0,
-          status: 0,
-          message: ""
-        }
-      }}
-    >
+    <AlarmBorder connected={true} value={vdouble(0)}>
       Children
     </AlarmBorder>
   );

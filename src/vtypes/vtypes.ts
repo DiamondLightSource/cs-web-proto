@@ -160,7 +160,7 @@ export abstract class VEnum extends Scalar {
   public abstract getDisplay(): EnumDisplay;
 }
 
-export class IVEnum extends VEnum {
+class IVEnum extends VEnum {
   private index: number;
   private alarm: Alarm;
   private time: Time;
