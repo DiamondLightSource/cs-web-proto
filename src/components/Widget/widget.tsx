@@ -1,48 +1,54 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 import { CopyWrapper } from "../CopyWrapper/copyWrapper";
 import { AlarmBorder } from "../AlarmBorder/alarmBorder";
-import { MacroMap, PvState } from "../../redux/csState";
+import { PvState } from "../../redux/csState";
 import { useMacros } from "../MacroWrapper/macroWrapper";
 import { useConnection } from "../ConnectionWrapper/connectionWrapper";
+import {
+  AbsoluteContainerProps,
+  FlexibleContainerProps,
+  WidgetStylingProps,
+  MacroMapProps
+} from "./widgetprops";
 
-interface ContainerFeatures {
-  margin?: string;
-  padding?: string;
-}
+// type ContainerFeatures = PropTypes.InferProps<typeof ContainerFeaturesProps>;
+// interface ContainerFeatures {
+//   margin?: string;
+//   padding?: string;
+// }
 
 // Absolute requires x, y, height, width
-interface AbsoluteContainer extends ContainerFeatures {
-  position: "absolute";
-  x: number | string;
-  y: number | string;
-  width: number | string;
-  height: number | string;
-}
+type AbsoluteContainer = PropTypes.InferProps<typeof AbsoluteContainerProps>;
+// interface AbsoluteContainer extends ContainerFeatures {
+//   position: "absolute";
+//   x: number | string;
+//   y: number | string;
+//   width: number | string;
+//   height: number | string;
+// }
 
 // Flexible places relatively and doesn't require any information but can
 // include height and width information, otherwise will pop to default size
-interface FlexibleContainer extends ContainerFeatures {
-  position: "relative";
-  // Width and height not always necessary in this case as some components
-  // such as embedded screens will define their own dimensions
-  width?: number | string;
-  height?: number | string;
-}
+type FlexibleContainer = PropTypes.InferProps<typeof FlexibleContainerProps>;
+// interface FlexibleContainer extends ContainerFeatures {
+//   position: "relative";
+//   // Width and height not always necessary in this case as some components
+//   // such as embedded screens will define their own dimensions
+//   width?: number | string;
+//   height?: number | string;
+// }
 
-export interface WidgetProps {
+type WidgetStyling = PropTypes.InferProps<typeof WidgetStylingProps>;
+
+export type MacroMap = PropTypes.InferProps<typeof MacroMapProps>;
+
+export type WidgetProps = {
   containerStyling: AbsoluteContainer | FlexibleContainer;
   // ... other ways to customise the container itself could be added to this interface
-  widgetStyling?: {
-    font?: string;
-    fontSize?: string | number;
-    fontWeight?: string | number;
-    textAlign?: "center" | "left" | "right" | "justify";
-    backgroundColor?: string;
-    // ... all the styling things we want to allow
-  };
-  macroMap?: MacroMap;
-}
+  widgetStyling?: WidgetStyling;
+} & MacroMap;
 
 // Interface for the general functional component which creates a widget
 type WidgetComponent = WidgetProps & { baseWidget: React.FC<any> };

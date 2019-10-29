@@ -20,6 +20,9 @@ import { FlexExamplePage } from "./pages/flexExamplePage";
 import { EmbeddedPage } from "./pages/embeddedPage";
 import { SimulatorPlugin } from "./connection/sim";
 
+import PropTypes from "prop-types";
+import { MacroMap } from "./components/Widget/widget";
+
 log.setLevel("warn");
 
 function applyTheme(theme: any): void {
@@ -40,6 +43,23 @@ const App: React.FC = (): JSX.Element => {
     backgroundColor: "#eeeeee",
     margin: "10px 10px"
   };
+
+  PropTypes.checkPropTypes(
+    { s: PropTypes.string, macroMap: PropTypes.objectOf(PropTypes.string) },
+    { s: "test", macroMap: { otherKey: "555", k: "v", k1: "v" } },
+    "test",
+    "testComponent"
+  );
+
+  const StringObjectProps = { m: PropTypes.objectOf(PropTypes.string) };
+  PropTypes.checkPropTypes(
+    StringObjectProps,
+    { m: { k: "v", k1: "555" } },
+    "testing string object",
+    "here"
+  );
+  type StringObjectType = PropTypes.InferProps<typeof StringObjectProps>;
+  let a: StringObjectType = { m: { k: "v", k1: "555" } };
 
   return (
     <Provider store={store}>

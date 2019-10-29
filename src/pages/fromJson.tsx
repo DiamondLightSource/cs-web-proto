@@ -18,7 +18,6 @@ export const JsonPage = (): JSX.Element => (
     <div style={{ height: "100%", width: "100%", position: "relative" }}>
       <WidgetFromJson
         file="http://localhost:3000/simple.json"
-        macroMap={{}}
         containerStyling={{ position: "relative" }}
       />
     </div>

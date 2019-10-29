@@ -1,4 +1,5 @@
 import { useState } from "react";
+import PropTypes from "prop-types";
 import log from "loglevel";
 
 import {
@@ -12,9 +13,10 @@ import { FlexContainer } from "../FlexContainer/flexContainer";
 import { ProgressBar } from "../ProgressBar/progressBar";
 import { SlideControl } from "../SlideControl/slideControl";
 import { MenuButton } from "../MenuButton/menuButton";
-import { MacroMap } from "../../redux/csState";
+import { MacroMap } from "../Widget/widget";
 import { Display } from "../Display/display";
 import { WidgetProps } from "../Widget/widget";
+import { RequiredMacroMapProps } from "../Widget/widgetprops";
 
 const EMPTY_WIDGET: WidgetDescription = {
   type: "empty",
@@ -31,18 +33,23 @@ const ERROR_WIDGET: WidgetDescription = {
   text: "Error"
 };
 
-interface WidgetFromJsonProps extends WidgetProps {
-  file: string;
-  macroMap: MacroMap;
-}
+type RequiredMacroMap = PropTypes.InferProps<typeof RequiredMacroMapProps>;
+
+type WidgetFromJsonProps = WidgetProps &
+  RequiredMacroMap & {
+    file: string;
+  };
 
 export const WidgetFromJson = (
   props: WidgetFromJsonProps
 ): JSX.Element | null => {
   const [json, setJson] = useState<WidgetDescription>(EMPTY_WIDGET);
 
+  // Extract props
+  let { file, macroMap } = props;
+
   if (json["type"] === "empty") {
-    fetch(props.file)
+    fetch(file)
       .then(
         (response): Promise<any> => {
           return response.json();
@@ -67,15 +74,15 @@ export const WidgetFromJson = (
 
   let component: JSX.Element | null;
   try {
-    component = widgetDescriptionToComponent(json, widgetDict, props.macroMap);
+    component = widgetDescriptionToComponent(json, widgetDict, macroMap);
   } catch (e) {
-    log.error(`Error converting JSON into components in ${props.file}`);
+    log.error(`Error converting JSON into components in ${file}`);
     log.error(e.msg);
     log.error(e.object);
     component = widgetDescriptionToComponent(
       ERROR_WIDGET,
       widgetDict,
-      props.macroMap
+      macroMap
     );
   }
 

@@ -1,45 +1,58 @@
 import propTypes from "prop-types";
 import checkPropTypes from "check-prop-types";
 
-const ContainerFeaturesProps = {
+export const ContainerFeaturesProps = {
   margin: propTypes.string,
   padding: propTypes.string
 };
 
-const AbsoluteContainerProps = propTypes.exact({
+export const AbsoluteContainerProps = {
   position: propTypes.oneOf(["absolute"]).isRequired,
   x: propTypes.oneOfType([propTypes.string, propTypes.number]).isRequired,
   y: propTypes.oneOfType([propTypes.string, propTypes.number]).isRequired,
   height: propTypes.oneOfType([propTypes.string, propTypes.number]).isRequired,
   width: propTypes.oneOfType([propTypes.string, propTypes.number]).isRequired,
   ...ContainerFeaturesProps
-});
+};
 
-const FlexibleContainerProps = propTypes.exact({
+export const FlexibleContainerProps = {
   position: propTypes.oneOf(["relative"]).isRequired,
   height: propTypes.oneOfType([propTypes.string, propTypes.number]),
   width: propTypes.oneOfType([propTypes.string, propTypes.number]),
   ...ContainerFeaturesProps
-});
+};
 
-const macroMapProps = propTypes.objectOf(propTypes.string);
+export const MacroMapProps = {
+  macroMap: propTypes.objectOf(propTypes.string.isRequired)
+};
+export const RequiredMacroMapProps = {
+  macroMap: propTypes.objectOf(propTypes.string.isRequired)
+};
 
-const widgetStylingProps = propTypes.exact({
+export const WidgetStylingProps = {
   font: propTypes.string,
   fontSize: propTypes.oneOfType([propTypes.string, propTypes.number]),
   fontWeight: propTypes.oneOfType([propTypes.string, propTypes.number]),
   textAlign: propTypes.oneOf(["center", "left", "right", "justify"]),
   backgroundColor: propTypes.string
-});
+};
 
 export const BaseWidgetProps = {
   containerStyling: propTypes.oneOfType([
-    AbsoluteContainerProps,
-    FlexibleContainerProps
+    propTypes.exact(AbsoluteContainerProps),
+    propTypes.exact(FlexibleContainerProps)
   ]).isRequired,
-  widgetStyling: widgetStylingProps,
-  macroMap: macroMapProps,
-  children: propTypes.node
+  widgetStyling: propTypes.exact(WidgetStylingProps),
+  children: propTypes.node,
+  ...MacroMapProps
+};
+
+export const PVWidgetExtraProps = {
+  pvName: propTypes.string.isRequired,
+  wrappers: propTypes.shape({
+    copywrapper: propTypes.bool,
+    alarmborder: propTypes.bool
+  })
 };
 
 export const PVWidgetProperties = {
