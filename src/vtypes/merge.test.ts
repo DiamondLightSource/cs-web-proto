@@ -38,7 +38,7 @@ describe("mergeVtypes", (): void => {
     expect(result.getValue()).toBe("error");
 
     original = vdouble(0);
-    result = mergeVtype(original, { type: "VEnum", index: 0 }, false) as IVEnum;
+    result = mergeVtype(original, { type: "VEnum", index: 0 }, false) as VEnum;
     expect(result.getValue()).toBe("error");
   });
 
@@ -54,7 +54,7 @@ describe("mergeVtypes", (): void => {
     expect(result.getDisplay().getChoices().length).toBe(3);
 
     original = vdouble(0);
-    result = mergeVtype(original, { type: "IVDouble", value: 10 }) as IVDouble;
+    result = mergeVtype(original, { type: "IVDouble", value: 10 }) as VDouble;
     expect(result.getValue()).toBe(10);
 
     original = vdoubleArray([1, 2, 3], [3]);
