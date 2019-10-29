@@ -5,6 +5,7 @@ import { AlarmBorder } from "../AlarmBorder/alarmBorder";
 import { MacroMap, FullPvState } from "../../redux/csState";
 import { useMacros } from "../../hooks/useMacros";
 import { useConnection } from "../../hooks/useConnection";
+import { useId } from "react-id-generator";
 
 interface ContainerFeatures {
   margin?: string;
@@ -96,9 +97,11 @@ const recursiveWrapping = (
 
 export const Widget = (props: WidgetComponent): JSX.Element => {
   // Generic widget component
+  const [id] = useId();
+  let idProps = { ...props, id: id };
 
   // Apply macros.
-  const macroProps = useMacros(props);
+  const macroProps = useMacros(idProps);
   // Then rules
 
   // Give containers access to everything apart from the containerStyling
@@ -126,10 +129,14 @@ export const Widget = (props: WidgetComponent): JSX.Element => {
 };
 
 export const PVWidget = (props: PVWidgetComponent): JSX.Element => {
+  const [id] = useId();
+  let idProps = { ...props, id: id };
+
   // Apply macros.
-  const macroProps = useMacros(props);
+  const macroProps = useMacros(idProps);
   // Then rules
   const [shortPvName, connected, readonly, latestValue] = useConnection(
+    id,
     macroProps.pvName
   );
   let newProps: PVWidgetComponent & FullPvState = {

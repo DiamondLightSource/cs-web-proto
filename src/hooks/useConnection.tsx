@@ -1,5 +1,4 @@
 import React from "react";
-import { useId } from "react-id-generator";
 import { useSubscription } from "./useCs";
 import { useSelector } from "react-redux";
 import { CsState } from "../redux/csState";
@@ -28,9 +27,9 @@ function pvStateSelector(
 }
 
 export function useConnection(
+  id: string,
   pvName?: string
 ): [string, boolean, boolean, VType?] {
-  const [id] = useId();
   useSubscription(id, pvName);
   const [shortPvName, connected, readonly, latestValue] = useSelector(
     (state: CsState): [string, boolean, boolean, VType?] => {
