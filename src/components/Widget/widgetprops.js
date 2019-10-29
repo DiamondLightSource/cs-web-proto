@@ -42,7 +42,7 @@ export const BaseWidgetProps = {
   children: propTypes.node
 };
 
-export const PVWidgetProps = {
+export const PVWidgetProperties = {
   pvName: propTypes.string.isRequired,
   wrappers: propTypes.shape({
     copywrapper: propTypes.bool,

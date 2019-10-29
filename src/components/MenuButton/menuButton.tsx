@@ -3,7 +3,7 @@ import { writePv } from "../../hooks/useCs";
 
 import { VType, VEnum } from "../../vtypes/vtypes";
 import { vtypeToString, stringToVtype } from "../../vtypes/utils";
-import { PVWidget, PVWidgetInterface } from "../Widget/widget";
+import { Widget, PVWidgetProps } from "../Widget/widget";
 
 export interface MenuButtonProps {
   connected: boolean;
@@ -88,6 +88,6 @@ export const SmartMenuButton = (props: {
   );
 };
 
-export const MenuButton = (props: PVWidgetInterface): JSX.Element => (
-  <PVWidget baseWidget={SmartMenuButton} {...props} />
+export const MenuButton = (props: PVWidgetProps): JSX.Element => (
+  <Widget baseWidget={SmartMenuButton} {...props} />
 );

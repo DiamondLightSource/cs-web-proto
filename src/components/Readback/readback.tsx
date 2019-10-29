@@ -2,15 +2,13 @@ import React from "react";
 import propTypes from "prop-types";
 
 import classes from "./readback.module.css";
-import { VType } from "../../vtypes/vtypes";
 import { alarmOf, AlarmSeverity } from "../../vtypes/alarm";
 import { vtypeToString } from "../../vtypes/utils";
-import { PVWidget, PVWidgetInterface } from "../Widget/widget";
-import { PVWidgetProps } from "../Widget/widgetprops";
+import { PVWidgetProps, PVWidget } from "../Widget/widget";
+import { PVWidgetProperties } from "../Widget/widgetprops";
+import { PvState } from "../../redux/csState";
 
-export interface ReadbackProps {
-  connected: boolean;
-  value?: VType;
+export interface ReadbackProps extends PvState {
   precision?: number;
   style?: object;
 }
@@ -64,11 +62,11 @@ export const ReadbackComponent = (props: ReadbackProps): JSX.Element => {
 
 const ReadbackWidgetProps = {
   precision: propTypes.number,
-  ...PVWidgetProps
+  ...PVWidgetProperties
 };
 
 export const Readback = (
-  props: propTypes.InferProps<typeof ReadbackWidgetProps> & PVWidgetInterface
+  props: propTypes.InferProps<typeof ReadbackWidgetProps> & PVWidgetProps
 ): JSX.Element => <PVWidget baseWidget={ReadbackComponent} {...props} />;
 
 Readback.propTypes = ReadbackWidgetProps;

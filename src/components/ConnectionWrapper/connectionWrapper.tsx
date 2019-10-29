@@ -27,36 +27,19 @@ function pvStateSelector(
   return [shortPvName, connected, readonly, value];
 }
 
-/* See https://medium.com/@jrwebdev/react-higher-order-component-patterns-in-typescript-42278f7590fb
-   for some notes on types.
-   */
-export const connectionWrapper = <P extends object>(
-  Component: React.FC<P>
-  // This next line should be React.FC<P & PvProps> but I can't pass TypeScript.
-): React.FC<any> => {
-  // eslint-disable-next-line react/display-name
-  return (props: PvProps): JSX.Element => {
-    const [id] = useId();
-    useSubscription(id, props.pvName);
-    const [shortPvName, connected, readonly, latestValue] = useSelector(
-      (state: CsState): [string, boolean, boolean, VType?] => {
-        return pvStateSelector(props.pvName, state);
+export function useConnection(
+  pvName?: string
+): [string, boolean, boolean, VType?] {
+  const [id] = useId();
+  useSubscription(id, pvName);
+  const [shortPvName, connected, readonly, latestValue] = useSelector(
+    (state: CsState): [string, boolean, boolean, VType?] => {
+      if (pvName) {
+        return pvStateSelector(pvName, state);
+      } else {
+        return ["", false, false, undefined];
       }
-    );
-
-    // ShortPvName and  initializingPvName are to deal with initializers
-    // The short pvname is e.g. loc://hello as compared to loc://hello(1)
-    // InitializingPvName is whatever pvName was used to initialize the pv, e.g. loc://hello(1)
-    // pvName is the pvName specfied in the dom, which might either be a short name or an initializing name
-
-    return (
-      <Component
-        {...(props as P)}
-        shortPvName={shortPvName}
-        connected={connected}
-        readonly={readonly}
-        value={latestValue}
-      />
-    );
-  };
-};
+    }
+  );
+  return [shortPvName, connected, readonly, latestValue];
+}

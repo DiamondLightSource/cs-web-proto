@@ -14,7 +14,7 @@ import { SlideControl } from "../SlideControl/slideControl";
 import { MenuButton } from "../MenuButton/menuButton";
 import { MacroMap } from "../../redux/csState";
 import { Display } from "../Display/display";
-import { BaseWidgetInterface } from "../Widget/widget";
+import { WidgetProps } from "../Widget/widget";
 
 const EMPTY_WIDGET: WidgetDescription = {
   type: "empty",
@@ -31,7 +31,7 @@ const ERROR_WIDGET: WidgetDescription = {
   text: "Error"
 };
 
-interface WidgetFromJsonProps extends BaseWidgetInterface {
+interface WidgetFromJsonProps extends WidgetProps {
   file: string;
   macroMap: MacroMap;
 }

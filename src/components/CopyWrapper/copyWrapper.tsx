@@ -7,7 +7,6 @@ import React, { ReactNode, useState } from "react";
 import copyToClipboard from "clipboard-copy";
 import Popover from "react-tiny-popover";
 
-import { connectionWrapper } from "../ConnectionWrapper/connectionWrapper";
 import { VType } from "../../vtypes/vtypes";
 import classes from "./copyWrapper.module.css";
 import { vtypeToString } from "../../vtypes/utils";
@@ -88,11 +87,3 @@ export const CopyWrapper = (props: {
     </div>
   );
 };
-
-interface ConnectedCopyWrapperProps {
-  pvName: string;
-}
-
-export const ConnectedCopyWrapper: React.FC<
-  ConnectedCopyWrapperProps
-> = connectionWrapper(CopyWrapper);

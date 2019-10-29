@@ -16,33 +16,21 @@ function resolveStrings(value: any, macroMap?: MacroMap): any {
   }
 }
 
-export const macroWrapper = <P extends object>(
-  Component: React.FC<P>
-): React.FC<any> => {
-  // eslint-disable-next-line react/display-name
-  return (props: MacroProps): JSX.Element => {
-    // Resolve macros on every prop value.
-    const globalMacros = useSelector(
-      (state: CsState): MacroMap => state.macroMap
-    );
-    let allMacros = { ...globalMacros };
-    if (props.macroMap != null) {
-      allMacros = { ...allMacros, ...props.macroMap };
-    }
-    const rawPvName = props.pvName;
-    const resolvedProps = Object.entries(props).map(([key, value]): [
-      string,
-      string
-    ] => {
-      return [key, resolveStrings(value, allMacros)];
-    });
-    const obj: MacroProps = Array.from(resolvedProps).reduce(
-      (main, [key, value]): object => ({ ...main, [key]: value }),
-      {}
-    );
-    if (rawPvName != null) {
-      obj.rawPvName = rawPvName;
-    }
-    return <Component {...(obj as P)}></Component>;
-  };
-};
+export function useMacros(props: MacroProps): MacroProps {
+  const globalMacros = useSelector(
+    (state: CsState): MacroMap => state.macroMap
+  );
+  let allMacros = { ...globalMacros };
+  if (props.macroMap) {
+    allMacros = { ...allMacros, ...props.macroMap };
+  }
+  let resolvedProps: any = {};
+  const rawPvName = props.pvName;
+  Object.entries(props).forEach(([key, value]): void => {
+    resolvedProps[key] = resolveStrings(value, allMacros);
+  });
+  if (rawPvName != null) {
+    resolvedProps.rawPvName = rawPvName;
+  }
+  return resolvedProps;
+}

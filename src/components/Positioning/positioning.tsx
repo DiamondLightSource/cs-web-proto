@@ -4,9 +4,9 @@ import log from "loglevel";
 import checkPropTypes from "check-prop-types";
 
 import { MacroMap } from "../../redux/csState";
-import { BaseWidgetInterface } from "../Widget/widget";
+import { WidgetProps } from "../Widget/widget";
 
-export interface WidgetDescription extends BaseWidgetInterface {
+export interface WidgetDescription extends WidgetProps {
   type: string;
   // All other component properties
   [x: string]: any;

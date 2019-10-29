@@ -19,7 +19,7 @@ const initialState: CsState = {
 };
 
 export interface PvState {
-  value: VType;
+  value?: VType;
   connected: boolean;
   readonly: boolean;
   initializingPvName: string;
