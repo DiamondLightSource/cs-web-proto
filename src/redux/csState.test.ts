@@ -5,7 +5,7 @@ import {
   VALUE_CHANGED,
   CONNECTION_CHANGED
 } from "./actions";
-import { vdouble, VDoubleArray } from "../vtypes/vtypes";
+import { vdouble, VDoubleArray, VDouble } from "../vtypes/vtypes";
 import { AlarmSeverity, AlarmStatus, alarm } from "../vtypes/alarm";
 import { VString } from "../vtypes/string";
 
@@ -30,7 +30,7 @@ describe("VALUE_CHANGED", (): void => {
       payload: { pvName: "PV", value: vdouble(1) }
     };
     const newState = csReducer(initialState, action);
-    expect(newState.valueCache["PV"].value.getValue()).toEqual(1);
+    expect((newState.valueCache["PV"].value as VDouble).getValue()).toEqual(1);
   });
 
   test("csReducer handles alarm update", (): void => {

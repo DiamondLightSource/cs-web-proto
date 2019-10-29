@@ -3,7 +3,7 @@ import { writePv } from "../../hooks/useCs";
 
 import { VType, VEnum } from "../../vtypes/vtypes";
 import { vtypeToString, stringToVtype } from "../../vtypes/utils";
-import { Widget, PVWidgetProps, PVWidget } from "../Widget/widget";
+import { PVWidgetProps, PVWidget } from "../Widget/widget";
 
 export interface MenuButtonProps {
   connected: boolean;

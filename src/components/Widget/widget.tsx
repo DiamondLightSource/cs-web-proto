@@ -2,7 +2,7 @@ import React from "react";
 
 import { CopyWrapper } from "../CopyWrapper/copyWrapper";
 import { AlarmBorder } from "../AlarmBorder/alarmBorder";
-import { MacroMap, PvState } from "../../redux/csState";
+import { MacroMap, FullPvState } from "../../redux/csState";
 import { useMacros } from "../MacroWrapper/macroWrapper";
 import { useConnection } from "../ConnectionWrapper/connectionWrapper";
 
@@ -132,7 +132,7 @@ export const PVWidget = (props: PVWidgetComponent): JSX.Element => {
   const [shortPvName, connected, readonly, latestValue] = useConnection(
     macroProps.pvName
   );
-  let newProps: PVWidgetComponent & PvState = {
+  let newProps: PVWidgetComponent & FullPvState = {
     ...props,
     pvName: shortPvName,
     initializingPvName: props.pvName,
