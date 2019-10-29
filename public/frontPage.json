@@ -227,7 +227,7 @@
             "fontWeight": "bold",
             "backgroundColor": "transparent"
           },
-          "text": "Local Enum - [0, 1, 2, 3, 4, 5]"
+          "text": "Local Enum - [une deux trois]"
         },
         {
           "type": "menubutton",
@@ -235,7 +235,7 @@
             "position": "relative",
             "margin": "5px 0 0 0"
           },
-          "pvName": "enum://enum1",
+            "pvName": "loc://enum1<VEnum>(2, \"une\", \"deux\", \"trois\")",
           "wrappers": {
             "copywrapper": true
           }
@@ -246,7 +246,7 @@
             "position": "relative",
             "margin": "5px 0 0 0"
           },
-          "pvName": "enum://enum1",
+            "pvName": "loc://enum1<VEnum>(2, \"une\", \"deux\", \"trois\")",
           "wrappers": {
             "copywrapper": true
           }
@@ -257,12 +257,54 @@
             "position": "relative",
             "margin": "5px 0 0 0"
           },
-          "pvName": "enum://enum1",
+          "pvName": "loc://enum1",
+          "wrappers": {
+            "copywrapper": true
+          }
+        },
+        {
+          "type": "readback",
+          "containerStyling": {
+            "position": "relative",
+            "margin": "5px 0 0 0"
+          },
+          "pvName": "enum://bad",
           "wrappers": {
             "copywrapper": true
           }
         }
       ]
+    },
+    {
+      "type": "display",
+      "containerStyling": {
+        "position": "relative",
+        "margin": "20px 0 0 0"
+      },
+      "children": [
+        {
+          "type": "label",
+          "containerStyle": {
+            "position": "relative",
+            "width": "100%"
+          },
+          "widgetStyling": {
+            "fontWeight": "bold",
+            "backgroundColor": "transparent"
+          },
+          "text": "Local initialization"
+        },
+        {
+          "type": "readback",
+          "containerStyling": {
+            "position": "relative",
+            "margin": "5px 0 0 0"
+          },
+            "pvName": "loc://test(1.1)",
+          "wrappers": {
+            "copywrapper": true
+          }
+        }]
     }
   ]
 }

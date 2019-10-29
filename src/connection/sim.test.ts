@@ -20,6 +20,19 @@ function getValue(pvName: string, callback: Function): void {
   });
 }
 
+const assertValue = (
+  pvName: string,
+  impliedPv: string,
+  value: any,
+  done
+): void => {
+  getValue(impliedPv, (updatedValue: VType): void => {
+    expect(updatedValue.getValue()).toStrictEqual(value);
+    done();
+  });
+  simulator.subscribe(pvName);
+};
+
 it("test local values", (done): void => {
   getValue("loc://location", (value: VType | undefined): void => {
     expect(value.getValue()).toEqual(17);
@@ -28,12 +41,27 @@ it("test local values", (done): void => {
   simulator.putPv("loc://location", vdouble(17));
 });
 
-it("local values undefined if not set", (done): void => {
+it("test enum values blocked", (): void => {
+  expect((): void => {
+    simulator.putPv("enum://name", 1);
+  }).toThrow();
+});
+
+it("local values zero initially", (done): void => {
+  // "Unless a type selector and initial value are provided, a local value will be of type ‘double’ with initial value of 0." [https://buildmedia.readthedocs.org/media/pdf/phoebus-doc/latest/phoebus-doc.pdf]
   getValue("loc://location", (value: any): void => {
-    expect(value).toEqual(undefined);
+    expect(value.getValue()).toEqual(0.0);
     done();
   });
   simulator.subscribe("loc://location");
+});
+
+it("deletes pv on unsubscribe", (): void => {
+  // "Unless a type selector and initial value are provided, a local value will be of type ‘double’ with initial value of 0." [https://buildmedia.readthedocs.org/media/pdf/phoebus-doc/latest/phoebus-doc.pdf]
+  simulator.subscribe("loc://location");
+  expect(simulator["simPvs"].get("loc://location") === undefined).toBe(false);
+  simulator.unsubscribe("loc://location");
+  expect(simulator["simPvs"].get("loc://location")).toBe(undefined);
 });
 
 it("test random values ", (): void => {
@@ -140,6 +168,33 @@ it("test disconnector", (done): void => {
   simulator.subscribe("sim://disconnector");
 });
 
+describe("supports local initialisation", (): void => {
+  // See phoebus doc 7.3.4
+  // https://buildmedia.readthedocs.org/media/pdf/ph
+  it("floats", (done): void =>
+    assertValue("loc://num(1.2)", "loc://num", 1.2, done));
+  it("arrays", (done): void =>
+    assertValue("loc://nums(1.2, 1.3)", "loc://nums", [1.2, 1.3], done));
+  //it("text", (done): void => assertValue("loc://text(\"hello\")", "hello", done))
+  // no string vtype implemented
+  it("long", (done): void =>
+    assertValue("loc://long<Long>(1.8)", "loc://long", 1.8, done));
+  it("enums", (done): void =>
+    assertValue(
+      'loc://options<VEnum>(2, "A", "Initial", "B", "C")',
+      "loc://options",
+      "Initial",
+      done
+    ));
+  it("named enums", (done): void =>
+    assertValue(
+      'loc://options#test<VEnum>(2, "A", "Initial", "B", "C")',
+      "loc://options#test",
+      "Initial",
+      done
+    ));
+});
+
 it("distinguish sine values", (done): void => {
   let oneUpdated = false;
   let twoUpdated = false;
@@ -177,6 +232,6 @@ it("return undefined for bad pvs", (): void => {
 
 it("test sine values ", (): void => {
   expect((): void => simulator.putPv("sim://sine", 17)).toThrow(
-    new Error("Cannot set value on sine")
+    new Error("Cannot set value on SinePv")
   );
 });

@@ -7,7 +7,14 @@ import {
   nullConnCallback,
   nullValueCallback
 } from "./plugin";
-import { VType, vdouble, VNumber, venum, VEnum } from "../vtypes/vtypes";
+import {
+  VType,
+  vdouble,
+  vdoubleArray,
+  VNumber,
+  venum,
+  VEnum
+} from "../vtypes/vtypes";
 import { VString } from "../vtypes/string";
 import { alarm, ALARM_NONE } from "../vtypes/alarm";
 import { timeNow } from "../vtypes/time";
@@ -22,10 +29,9 @@ function partialise(value: VType | undefined): PartialVType | undefined {
 }
 
 abstract class SimPv {
-  abstract simulatorName(): string;
   protected onConnectionUpdate: ConnectionChangedCallback;
   protected onValueUpdate: ValueChangedCallback;
-  protected pvName: string;
+  public pvName: string;
   protected updateRate?: number;
   abstract getValue(): VType | undefined;
   public constructor(
@@ -49,8 +55,8 @@ abstract class SimPv {
     this.onValueUpdate(this.pvName, partialise(this.getValue()));
   }
 
-  public updateValue(value: VType): void {
-    throw new Error(`Cannot set value on ${this.simulatorName()}`);
+  public updateValue(_: VType): void {
+    throw new Error(`Cannot set value on ${this.constructor.name}`);
   }
 
   protected maybeSetInterval(callback: () => void): void {
@@ -63,10 +69,6 @@ abstract class SimPv {
 }
 
 class SinePv extends SimPv {
-  public simulatorName(): string {
-    return "sine";
-  }
-
   public constructor(
     pvName: string,
     onConnectionUpdate: ConnectionChangedCallback,
@@ -89,9 +91,6 @@ class SinePv extends SimPv {
 }
 
 class RandomPv extends SimPv {
-  public simulatorName(): string {
-    return "random";
-  }
   public constructor(
     pvName: string,
     onConnectionUpdate: ConnectionChangedCallback,
@@ -110,10 +109,6 @@ class RandomPv extends SimPv {
 }
 
 class Disconnector extends SimPv {
-  public simulatorName(): string {
-    return "disconnect";
-  }
-
   public constructor(
     pvName: string,
     onConnectionUpdate: ConnectionChangedCallback,
@@ -138,9 +133,6 @@ class Disconnector extends SimPv {
 }
 
 class SimEnumPv extends SimPv {
-  public simulatorName(): string {
-    return "simulated enum";
-  }
   private value: VEnum = venum(
     0,
     ["one", "two", "three", "four"],
@@ -179,9 +171,6 @@ class SimEnumPv extends SimPv {
 }
 
 class EnumPv extends SimPv {
-  public simulatorName(): string {
-    return "enumpv";
-  }
   private value: VEnum = venum(
     0,
     ["zero", "one", "two", "three", "four", "five"],
@@ -199,7 +188,6 @@ class EnumPv extends SimPv {
       isConnected: true,
       isReadonly: false
     });
-    this.onValueUpdate(this.pvName, partialise(this.getValue()));
     setInterval(
       (): void => this.onValueUpdate(this.pvName, partialise(this.getValue())),
       this.updateRate
@@ -207,7 +195,9 @@ class EnumPv extends SimPv {
   }
 
   public updateValue(value: VType): void {
-    if (value instanceof VNumber) {
+    if (value instanceof VEnum) {
+      this.value = value;
+    } else if (value instanceof VNumber) {
       // If it is a number, treat as index
       // Indexes outside the range to be ignored
       if (
@@ -238,6 +228,7 @@ class EnumPv extends SimPv {
         );
       }
     }
+    this.publish();
   }
 
   public getValue(): VType {
@@ -246,10 +237,6 @@ class EnumPv extends SimPv {
 }
 
 class LocalPv extends SimPv {
-  public simulatorName(): string {
-    return "loc";
-  }
-
   private value: VType | undefined;
   public constructor(
     pvName: string,
@@ -274,10 +261,6 @@ class LocalPv extends SimPv {
 }
 
 class LimitData extends SimPv {
-  public simulatorName(): string {
-    return "limit";
-  }
-
   private value: VType;
   // Class to provide PV value along with Alarm and Timestamp data
   // Initial limits will be 10, 20, 80 and 90 - with expected range between 0 and 100
@@ -318,8 +301,20 @@ class LimitData extends SimPv {
   }
 }
 
-interface SimCache {
-  [pvName: string]: SimPv;
+class SimCache {
+  private store: { [pvName: string]: SimPv | undefined };
+  public constructor() {
+    this.store = {};
+  }
+  public put(simPv: SimPv): void {
+    this.store[simPv.pvName] = simPv;
+  }
+  public get(pvName: string): SimPv | undefined {
+    return this.store[pvName];
+  }
+  public remove(pvName: string): void {
+    delete this.store[pvName];
+  }
 }
 
 export class SimulatorPlugin implements Connection {
@@ -330,13 +325,17 @@ export class SimulatorPlugin implements Connection {
   private connected: boolean;
 
   public constructor(updateRate?: number) {
-    this.simPvs = {};
+    this.simPvs = new SimCache();
     this.onConnectionUpdate = nullConnCallback;
     this.onValueUpdate = nullValueCallback;
-    this.subscribe = this.subscribe.bind(this);
     this.putPv = this.putPv.bind(this);
     this.updateRate = updateRate || 2000;
     this.connected = false;
+  }
+
+  public subscribe(pvName: string): string {
+    let simulator = this._subscribe(pvName);
+    return (simulator && simulator.pvName) || pvName;
   }
 
   public connect(
@@ -356,84 +355,153 @@ export class SimulatorPlugin implements Connection {
     return this.onConnectionUpdate !== nullConnCallback;
   }
 
+  protected parseName(
+    pvName: string
+  ): { initialValue: any; protocol: string; keyName: string } {
+    let parts = pvName.split("#");
+    let keyName;
+    let protocol: string;
+    let initial = undefined;
+    if (pvName.startsWith("loc://")) {
+      let matcher = new RegExp(
+        "loc://([^<(]*)(?:<([^>]*)>)?(?:\\(([^)]*)\\))?"
+      );
+      let groups = matcher.exec(pvName);
+
+      if (groups === null) {
+        initial = undefined;
+        keyName = pvName;
+      } else if (groups[3] !== undefined) {
+        let typeName = groups[2];
+        initial = JSON.parse("[" + groups[3] + "]");
+        keyName = "loc://" + groups[1];
+
+        if (typeName === "VEnum") {
+          initial = venum(
+            initial[0] - 1,
+            initial.slice(1),
+            ALARM_NONE,
+            timeNow()
+          );
+        } else if (initial.length === 1) {
+          initial = vdouble(initial[0]);
+        } else {
+          initial = vdoubleArray(initial, initial.length);
+        }
+      } else {
+        initial = undefined;
+        keyName = pvName;
+      }
+
+      protocol = "loc://";
+    } else {
+      initial = undefined;
+      keyName = pvName;
+      protocol = parts[0];
+    }
+    return { initialValue: initial, protocol: protocol, keyName: keyName };
+  }
+
   protected makeSimulator(
     pvName: string,
     onConnectionUpdate: ConnectionChangedCallback,
     onValueUpdate: ValueChangedCallback,
     updateRate: number
-  ): SimPv | undefined {
+  ): { simulator: SimPv | undefined; initialValue: any } {
     let cls;
+    let nameInfo = this.parseName(pvName);
+    let initial;
 
-    let parts = pvName.split("#");
-
-    if (pvName.startsWith("loc://")) {
+    if (nameInfo.protocol === "loc://") {
       cls = LocalPv;
-    } else if (parts[0] === "sim://disconnector") {
+
+      if (
+        nameInfo.initialValue !== undefined &&
+        nameInfo.initialValue instanceof VEnum
+      ) {
+        cls = EnumPv;
+      }
+      if (nameInfo.initialValue !== undefined) {
+        initial = nameInfo.initialValue;
+      } else {
+        initial = vdouble(0);
+      }
+    } else if (nameInfo.protocol === "sim://disconnector") {
       cls = Disconnector;
-    } else if (parts[0] === "sim://sine") {
+      initial = undefined;
+    } else if (nameInfo.protocol === "sim://sine") {
       cls = SinePv;
-    } else if (parts[0] === "sim://enum") {
+      initial = undefined;
+    } else if (nameInfo.protocol === "sim://enum") {
       cls = SimEnumPv;
-    } else if (pvName.startsWith("enum://")) {
-      cls = EnumPv;
-    } else if (parts[0] === "sim://random") {
+      initial = undefined;
+    } else if (nameInfo.protocol === "sim://random") {
+      initial = undefined;
       cls = RandomPv;
-    } else if (parts[0] === "sim://limit") {
+    } else if (nameInfo.protocol === "sim://limit") {
+      initial = undefined;
       cls = LimitData;
     } else {
-      return undefined;
+      return { simulator: undefined, initialValue: undefined };
     }
-    const result = new cls(
-      pvName,
+    let result = new cls(
+      nameInfo.keyName,
       onConnectionUpdate,
       onValueUpdate,
       updateRate
     );
-    return result;
+    return { simulator: result, initialValue: initial };
   }
 
-  public subscribe(pvName: string): void {
-    log.debug(`Subscribing to ${pvName}.`);
-    const pvSimulator = (this.simPvs[pvName] =
-      this.simPvs[pvName] ||
-      this.makeSimulator(
+  public _subscribe(
+    pvName: string,
+    publish: boolean = true
+  ): SimPv | undefined {
+    let nameInfo = this.parseName(pvName);
+
+    if (this.simPvs.get(nameInfo.keyName) === undefined) {
+      let simulatorInfo = this.makeSimulator(
         pvName,
         this.onConnectionUpdate,
         this.onValueUpdate,
         this.updateRate
-      ));
+      );
 
-    if (pvSimulator !== undefined) {
-      pvSimulator.publish();
+      if (simulatorInfo.simulator) {
+        this.simPvs.put(simulatorInfo.simulator);
+      }
+
+      if (publish && simulatorInfo.simulator !== undefined) {
+        if (simulatorInfo.initialValue !== undefined) {
+          simulatorInfo.simulator.updateValue(simulatorInfo.initialValue);
+        } else {
+          simulatorInfo.simulator.publish();
+        }
+      }
     }
+    return this.simPvs.get(nameInfo.keyName);
   }
 
   public putPv(pvName: string, value: VType): void {
-    const pvSimulator = (this.simPvs[pvName] ||
-      this.makeSimulator(
-        pvName,
-        this.onConnectionUpdate,
-        this.onValueUpdate,
-        this.updateRate
-      )) as SimPv;
-    this.simPvs[pvName] = pvSimulator;
+    let pvSimulator = this._subscribe(pvName, false);
     if (pvSimulator !== undefined) {
       pvSimulator.updateValue(value);
+    } else {
+      throw new Error(
+        `Could not create a simulated process variable for ${pvName}`
+      );
     }
   }
 
   public getValue(pvName: string): VType | undefined {
-    let pvData = (this.simPvs[pvName] ||
-      this.makeSimulator(
-        pvName,
-        this.onConnectionUpdate,
-        this.onValueUpdate,
-        this.updateRate
-      )) as SimPv;
-    return pvData && pvData.getValue();
+    let pvSimulator = this._subscribe(pvName, false);
+    return pvSimulator && pvSimulator.getValue();
   }
 
   public unsubscribe(pvName: string): void {
-    log.debug(`Unsubscribing from ${pvName}.`);
+    log.info(`Unsubscribing from ${pvName}.`);
+    if (this.simPvs.get(pvName)) {
+      this.simPvs.remove(pvName);
+    }
   }
 }

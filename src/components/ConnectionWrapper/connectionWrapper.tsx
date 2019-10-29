@@ -7,13 +7,15 @@ import { VType } from "../../vtypes/vtypes";
 
 export interface PvProps extends React.PropsWithChildren<any> {
   pvName: string;
+  shortPvName: string;
 }
 
 function pvStateSelector(
   pvName: string,
   state: CsState
-): [boolean, boolean, VType?] {
-  const pvState = state.valueCache[pvName];
+): [string, boolean, boolean, VType?] {
+  let shortPvName = state.shortPvNameMap[pvName] || pvName;
+  const pvState = state.valueCache[shortPvName];
   let connected = false;
   let readonly = false;
   let value = undefined;
@@ -22,22 +24,22 @@ function pvStateSelector(
     readonly = pvState.readonly || false;
     value = pvState.value;
   }
-  return [connected, readonly, value];
+  return [shortPvName, connected, readonly, value];
 }
 
-export function useConnection(pvName?: string): [boolean, boolean, VType?] {
+export function useConnection(
+  pvName?: string
+): [string, boolean, boolean, VType?] {
   const [id] = useId();
   useSubscription(id, pvName);
-  const [connected, readonly, latestValue] = useSelector((state: CsState): [
-    boolean,
-    boolean,
-    VType?
-  ] => {
-    if (pvName) {
-      return pvStateSelector(pvName, state);
-    } else {
-      return [false, false, undefined];
+  const [shortPvName, connected, readonly, latestValue] = useSelector(
+    (state: CsState): [string, boolean, boolean, VType?] => {
+      if (pvName) {
+        return pvStateSelector(pvName, state);
+      } else {
+        return ["", false, false, undefined];
+      }
     }
-  });
-  return [connected, readonly, latestValue];
+  );
+  return [shortPvName, connected, readonly, latestValue];
 }

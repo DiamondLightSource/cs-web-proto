@@ -103,9 +103,13 @@ const recursiveWrapping = (
 
 export const Widget = (props: WidgetComponentInterface): JSX.Element => {
   // Generic widget component
-  const [connected, readonly, latestValue] = useConnection(props.pvName);
+  const [shortPvName, connected, readonly, latestValue] = useConnection(
+    props.pvName
+  );
   let newProps: WidgetComponentInterface & PvState = {
     ...props,
+    // This isn't right!
+    initializingPvName: shortPvName,
     connected: connected,
     readonly: readonly,
     value: latestValue
