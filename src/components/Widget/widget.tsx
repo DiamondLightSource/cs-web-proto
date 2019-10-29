@@ -1,62 +1,48 @@
 import React from "react";
-import propTypes from "prop-types";
 
 import { CopyWrapper } from "../CopyWrapper/copyWrapper";
 import { AlarmBorder } from "../AlarmBorder/alarmBorder";
 import { MacroMap } from "../../redux/csState";
 import { macroWrapper } from "../MacroWrapper/macroWrapper";
 import { connectionWrapper } from "../ConnectionWrapper/connectionWrapper";
-import {
-  ContainerFeaturesProps,
-  AbsoluteContainerProps,
-  FlexibleContainerProps,
-  macroMapProps,
-  widgetStylingProps,
-  BaseWidgetProps,
-  PVWidgetProps
-} from "./widgetprops";
 
-type ContainerFeatures = typeof ContainerFeaturesProps;
-// interface ContainerFeatures {
-//   margin?: string;
-//   padding?: string;
-// }
+interface ContainerFeatures {
+  margin?: string;
+  padding?: string;
+}
 
 // Absolute requires x, y, height, width
-type AbsoluteContainer = typeof AbsoluteContainerProps;
-// interface AbsoluteContainer extends ContainerFeatures {
-//   position: "absolute";
-//   x: number | string;
-//   y: number | string;
-//   width: number | string;
-//   height: number | string;
-// }
+interface AbsoluteContainer extends ContainerFeatures {
+  position: "absolute";
+  x: number | string;
+  y: number | string;
+  width: number | string;
+  height: number | string;
+}
 
 // Flexible places relatively and doesn't require any information but can
 // include height and width information, otherwise will pop to default size
-type FlexibleContainer = typeof FlexibleContainerProps;
-// interface FlexibleContainer extends ContainerFeatures {
-//   position: "relative";
-//   // Width and height not always necessary in this case as some components
-//   // such as embedded screens will define their own dimensions
-//   width?: number | string;
-//   height?: number | string;
-// }
+interface FlexibleContainer extends ContainerFeatures {
+  position: "relative";
+  // Width and height not always necessary in this case as some components
+  // such as embedded screens will define their own dimensions
+  width?: number | string;
+  height?: number | string;
+}
 
-type BaseWidgetInterface = typeof BaseWidgetProps;
-// export interface BaseWidgetInterface {
-//   containerStyling: AbsoluteContainer | FlexibleContainer;
-//   // ... other ways to customise the container itself could be added to this interface
-//   widgetStyling?: {
-//     font?: string;
-//     fontSize?: string | number;
-//     fontWeight?: string | number;
-//     textAlign?: "center" | "left" | "right" | "justify";
-//     backgroundColor?: string;
-//     // ... all the styling things we want to allow
-//   };
-//   macroMap?: MacroMap;
-// }
+export interface BaseWidgetInterface {
+  containerStyling: AbsoluteContainer | FlexibleContainer;
+  // ... other ways to customise the container itself could be added to this interface
+  widgetStyling?: {
+    font?: string;
+    fontSize?: string | number;
+    fontWeight?: string | number;
+    textAlign?: "center" | "left" | "right" | "justify";
+    backgroundColor?: string;
+    // ... all the styling things we want to allow
+  };
+  macroMap?: MacroMap;
+}
 
 // Function to recursively wrap a given set of widgets
 const recursiveWrapping = (
@@ -95,22 +81,13 @@ const recursiveWrapping = (
 
 // Interface for the general functional component which creates a widget
 // May have wrappers
-const WidgetComponentProps = {
-  baseWidget: propTypes.element.isRequired,
-  wrappers: propTypes.shape({
-    copywrapper: propTypes.bool,
-    alarmborder: propTypes.bool
-  }),
-  ...BaseWidgetProps
-};
-type WidgetComponentInterface = typeof WidgetComponentProps;
-// export interface WidgetComponentInterface extends BaseWidgetInterface {
-//   baseWidget: React.FC<any>;
-//   wrappers?: {
-//     copywrapper?: boolean;
-//     alarmborder?: boolean;
-//   };
-// }
+export interface WidgetComponentInterface extends BaseWidgetInterface {
+  baseWidget: React.FC<any>;
+  wrappers?: {
+    copywrapper?: boolean;
+    alarmborder?: boolean;
+  };
+}
 
 export const WidgetComponent = (
   props: WidgetComponentInterface
@@ -165,14 +142,9 @@ export const WidgetComponent = (
 // Label, display, containers
 // No support for wrapping as this would not make sense
 // when they have no PV
-const WidgetInterfaceProps = {
-  children: propTypes.node,
-  ...BaseWidgetProps
-};
-export type WidgetInterface = typeof WidgetInterfaceProps;
-// export interface WidgetInterface extends BaseWidgetInterface {
-//   children?: React.ReactNode;
-// }
+export interface WidgetInterface extends BaseWidgetInterface {
+  children?: React.ReactNode;
+}
 
 export const Widget: React.FC<
   WidgetComponentInterface & WidgetInterface

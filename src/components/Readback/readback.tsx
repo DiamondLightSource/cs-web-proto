@@ -68,7 +68,7 @@ const ReadbackWidgetProps = {
 };
 
 export const Readback = (
-  props: propTypes.InferProps<typeof ReadbackWidgetProps>
+  props: propTypes.InferProps<typeof ReadbackWidgetProps> & PVWidgetInterface
 ): JSX.Element => <PVWidget baseWidget={ReadbackComponent} {...props} />;
 
 Readback.propTypes = ReadbackWidgetProps;
