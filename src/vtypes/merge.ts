@@ -54,13 +54,13 @@ export function vtypeInfo(
     ? original.constructor.name
     : undefined;
   const array =
-    update.array !== undefined
+    update.array != undefined
       ? update.array
-      : className !== undefined
+      : className != undefined
       ? className.includes("Array")
       : undefined;
   const value =
-    update.value !== undefined
+    update.value != undefined
       ? update.value
       : original
       ? original.getValue()
@@ -72,7 +72,7 @@ export function vtypeInfo(
 
   const originalEnum = enumOf(original);
   const index =
-    update.index !== undefined
+    update.index != undefined
       ? update.index
       : originalEnum
       ? originalEnum.getIndex()

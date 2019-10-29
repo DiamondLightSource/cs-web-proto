@@ -1,5 +1,6 @@
 import { mergeVtype } from "./merge";
 import { vdouble, venum, IVEnum, vdoubleArray } from "./vtypes";
+import { timeNow } from "./time";
 
 it("merges things", (): void => {
   let result;
@@ -52,4 +53,16 @@ it("merges things", (): void => {
   }) as IVDouble;
   expect(result.getValue()[1]).toBe(2);
   expect(result.getValue().length).toBe(2);
+});
+
+it("handles null value in update", (): void => {
+  const original = vdouble(0);
+  const update = {
+    time: timeNow(),
+    value: null
+  };
+
+  const result = mergeVtype(original, update);
+  expect(result).not.toBeUndefined();
+  expect(result!.getValue()).toEqual(0);
 });
