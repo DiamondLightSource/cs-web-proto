@@ -5,14 +5,12 @@ import classes from "./label.module.css";
 import { Widget, WidgetProps } from "../Widget/widget";
 import { BaseWidgetProps } from "../Widget/widgetprops";
 
-const labelComponentPropTypes = {
-  text: propTypes.oneOfType([propTypes.string, propTypes.number]).isRequired,
-  style: propTypes.object.isRequired
-};
+interface LabelComponentInterface {
+  text: string | number;
+  style: object;
+}
 
-export const LabelComponent = (
-  props: propTypes.InferProps<typeof labelComponentPropTypes>
-): JSX.Element => (
+export const LabelComponent = (props: LabelComponentInterface): JSX.Element => (
   // Simple component to display text - defaults to black text and dark grey background
   <div className={`Label ${classes.Label}`} style={props.style}>
     {props.text}
