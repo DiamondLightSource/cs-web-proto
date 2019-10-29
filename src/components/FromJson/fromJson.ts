@@ -12,14 +12,14 @@ import { SlideControl } from "../SlideControl/slideControl";
 import { MenuButton } from "../MenuButton/menuButton";
 import { MacroMap } from "../../redux/csState";
 import { Display } from "../Display/display";
-import { WidgetInterface } from "../Widget/widget";
+import { WidgetProps } from "../Widget/widget";
 
 const EMPTY_WIDGET: WidgetDescription = {
   type: "empty",
   containerStyling: { position: "absolute", x: 0, y: 0, width: 0, height: 0 }
 };
 
-interface WidgetFromJsonProps extends WidgetInterface {
+interface WidgetFromJsonProps extends WidgetProps {
   file: string;
   macroMap: MacroMap;
 }

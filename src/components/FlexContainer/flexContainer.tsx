@@ -1,7 +1,7 @@
 import React, { ReactNode } from "react";
 
 import classes from "./flexContainer.module.css";
-import { Widget, WidgetInterface } from "../Widget/widget";
+import { Widget, WidgetProps } from "../Widget/widget";
 
 interface FlexProps {
   children: ReactNode;
@@ -22,6 +22,6 @@ export const FlexContainerComponent = (props: FlexProps): JSX.Element => {
   );
 };
 
-export const FlexContainer = (
-  props: FlexProps & WidgetInterface
-): JSX.Element => <Widget baseWidget={FlexContainerComponent} {...props} />;
+export const FlexContainer = (props: FlexProps & WidgetProps): JSX.Element => (
+  <Widget baseWidget={FlexContainerComponent} {...props} />
+);

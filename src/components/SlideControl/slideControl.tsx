@@ -9,7 +9,7 @@ import { vtypeToString, stringToVtype } from "../../vtypes/utils";
 import { ProgressBarComponent } from "../ProgressBar/progressBar";
 import { writePv } from "../../hooks/useCs";
 import { VType } from "../../vtypes/vtypes";
-import { Widget, PVWidgetInterface } from "../Widget/widget";
+import { Widget, PVWidgetProps } from "../Widget/widget";
 
 interface SlideControlProps {
   pvName: string;
@@ -116,5 +116,5 @@ interface SlideControlWidgetProps {
 }
 
 export const SlideControl = (
-  props: SlideControlWidgetProps & PVWidgetInterface
+  props: SlideControlWidgetProps & PVWidgetProps
 ): JSX.Element => <Widget baseWidget={SlideControlComponent} {...props} />;

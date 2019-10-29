@@ -1,6 +1,6 @@
 import React, { ReactNode } from "react";
 
-import { Widget, WidgetInterface } from "../Widget/widget";
+import { Widget, WidgetProps } from "../Widget/widget";
 
 // Generic display widget to put other things inside
 const DisplayComponent = (props: {
@@ -14,6 +14,6 @@ const DisplayComponent = (props: {
   </div>
 );
 
-export const Display = (props: WidgetInterface): JSX.Element => (
+export const Display = (props: WidgetProps): JSX.Element => (
   <Widget baseWidget={DisplayComponent} {...props} />
 );

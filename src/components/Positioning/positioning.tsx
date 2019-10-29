@@ -1,8 +1,8 @@
 import React from "react";
 import { MacroMap } from "../../redux/csState";
-import { WidgetInterface } from "../Widget/widget";
+import { WidgetProps } from "../Widget/widget";
 
-export interface WidgetDescription extends WidgetInterface {
+export interface WidgetDescription extends WidgetProps {
   type: string;
   // All other component properties
   [x: string]: any;

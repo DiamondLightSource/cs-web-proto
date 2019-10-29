@@ -4,7 +4,7 @@ import classes from "./input.module.css";
 import { writePv } from "../../hooks/useCs";
 import { VType } from "../../vtypes/vtypes";
 import { vtypeToString, stringToVtype } from "../../vtypes/utils";
-import { Widget, PVWidgetInterface } from "../Widget/widget";
+import { PVWidget, PVWidgetProps } from "../Widget/widget";
 
 export interface InputProps {
   pvName: string;
@@ -96,6 +96,6 @@ interface InputWidgetProps {
   precision?: number;
 }
 
-export const Input = (
-  props: InputWidgetProps & PVWidgetInterface
-): JSX.Element => <Widget baseWidget={SmartInputComponent} {...props} />;
+export const Input = (props: InputWidgetProps & PVWidgetProps): JSX.Element => (
+  <PVWidget baseWidget={SmartInputComponent} {...props} />
+);

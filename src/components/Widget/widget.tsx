@@ -30,7 +30,7 @@ interface FlexibleContainer extends ContainerFeatures {
   height?: number | string;
 }
 
-export interface WidgetInterface {
+export interface WidgetProps {
   containerStyling: AbsoluteContainer | FlexibleContainer;
   // ... other ways to customise the container itself could be added to this interface
   widgetStyling?: {
@@ -44,27 +44,20 @@ export interface WidgetInterface {
   macroMap?: MacroMap;
 }
 
+// Interface for the general functional component which creates a widget
+type WidgetComponent = WidgetProps & { baseWidget: React.FC<any> };
+
 // Interface for widgets which handle PVs
 // May be wrapped to display PV metadata
-export interface PVWidgetInterface extends WidgetInterface {
+export interface PVWidgetProps extends WidgetProps {
   pvName: string;
   wrappers?: {
     copywrapper?: boolean;
     alarmborder?: boolean;
-    // ...any other borders that come up in the future
   };
 }
 
-// Interface for the general functional component which creates a widget
-// May have wrappers
-export interface WidgetComponentInterface extends WidgetInterface {
-  pvName?: string;
-  baseWidget: React.FC<any>;
-  wrappers?: {
-    copywrapper?: boolean;
-    alarmborder?: boolean;
-  };
-}
+type PVWidgetComponent = PVWidgetProps & { baseWidget: React.FC<any> };
 
 // Function to recursively wrap a given set of widgets
 const recursiveWrapping = (
@@ -101,26 +94,52 @@ const recursiveWrapping = (
   }
 };
 
-export const Widget = (props: WidgetComponentInterface): JSX.Element => {
+export const Widget = (props: WidgetComponent): JSX.Element => {
   // Generic widget component
-  const [shortPvName, connected, readonly, latestValue] = useConnection(
-    props.pvName
-  );
-  let newProps: WidgetComponentInterface & PvState = {
-    ...props,
-    // This isn't right!
-    initializingPvName: shortPvName,
-    connected: connected,
-    readonly: readonly,
-    value: latestValue
-  };
 
   // Apply macros.
-  const macroProps = useMacros(newProps);
+  const macroProps = useMacros(props);
+  // Then rules
 
   // Give containers access to everything apart from the containerStyling
   // Assume flexible position if not provided with anything
   const { containerStyling, ...containerProps } = macroProps;
+
+  // Manipulate for absolute styling
+  // Put x and y back in as left and top respectively
+  const { x = null, y = null } = { ...containerStyling };
+  const mappedContainerStyling = { top: y, left: x, ...containerStyling };
+
+  // Extract remaining parameters
+  let { baseWidget, widgetStyling = {}, ...baseWidgetProps } = containerProps;
+
+  // Put appropriate components on the list of components to be wrapped
+  let components = [baseWidget];
+
+  return recursiveWrapping(
+    components,
+    mappedContainerStyling,
+    widgetStyling,
+    containerProps,
+    baseWidgetProps
+  );
+};
+
+export const PVWidget = (props: PVWidgetComponent): JSX.Element => {
+  // Apply macros.
+  const macroProps = useMacros(props);
+  // Then rules
+  const [, connected, readonly, latestValue] = useConnection(macroProps.pvName);
+  let newProps: PVWidgetComponent & PvState = {
+    ...props,
+    initializingPvName: props.pvName,
+    connected: connected,
+    readonly: readonly,
+    value: latestValue
+  };
+  // Give containers access to everything apart from the containerStyling
+  // Assume flexible position if not provided with anything
+  const { containerStyling, ...containerProps } = newProps;
 
   // Manipulate for absolute styling
   // Put x and y back in as left and top respectively
@@ -135,9 +154,7 @@ export const Widget = (props: WidgetComponentInterface): JSX.Element => {
     ...baseWidgetProps
   } = containerProps;
 
-  // Put appropriate components on the list of components to be wrapped
-  let components = [];
-
+  const components = [];
   // Done like this in case only one of the values is passed through
   const requestedWrappers = {
     ...{ alarmborder: false, copywrapper: false },
