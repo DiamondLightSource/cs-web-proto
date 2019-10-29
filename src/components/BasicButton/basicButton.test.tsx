@@ -9,9 +9,6 @@ configure({ adapter: new Adapter() });
 let snapshot: ReactTestRenderer;
 let basicButtonWrapper: ShallowWrapper<BasicButtonProps>;
 beforeEach((): void => {
-  const mock = (_: any): void => {
-    // pass
-  };
   const basicButton = <BasicButtonComponent text={"hello"} />;
   snapshot = create(basicButton);
   basicButtonWrapper = shallow(basicButton);
