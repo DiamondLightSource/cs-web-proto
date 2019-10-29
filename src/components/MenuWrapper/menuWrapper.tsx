@@ -13,6 +13,18 @@ export const MenuWrapper = (props: {
   children: ReactNode;
   style?: object;
 }): JSX.Element => {
+  const [contextOpen, setContextOpen] = useState(false);
+  const [x, setX] = useState(0);
+  const [y, setY] = useState(0);
+  const handleClick = (e: React.MouseEvent): void => {
+    e.preventDefault();
+    if (e.button === 2) {
+      setContextOpen(contextOpen ? false : true);
+      setX(e.nativeEvent.offsetX);
+      setY(e.nativeEvent.offsetY);
+    }
+  };
+
   function triggerCallback(actions: Actions): void {
     executeActions(actions);
     setContextOpen(false);
@@ -49,17 +61,6 @@ export const MenuWrapper = (props: {
     );
   }
 
-  const [contextOpen, setContextOpen] = useState(false);
-  const [x, setX] = useState(0);
-  const [y, setY] = useState(0);
-  const handleClick = (e: React.MouseEvent): void => {
-    e.preventDefault();
-    if (e.button === 2) {
-      setContextOpen(contextOpen ? false : true);
-      setX(e.nativeEvent.offsetX);
-      setY(e.nativeEvent.offsetY);
-    }
-  };
   if (contextOpen) {
     return (
       <div>
