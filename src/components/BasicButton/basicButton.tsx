@@ -4,18 +4,20 @@ import classes from "./basicButton.module.css";
 
 export interface BasicButtonProps {
   text: string;
-  style?: {};
+  style?: object;
   image?: string;
 }
 
 export const BasicButtonComponent = (props: BasicButtonProps): JSX.Element => {
   if (props.image !== undefined) {
     return (
-      <button className={classes.image}>
-        <img src={props.image} alt={props.image}></img>
-        <br></br>
-        {props.text}
-      </button>
+      <div style={props.style}>
+        <button className={classes.image}>
+          <img src={props.image} alt={props.image}></img>
+          <br></br>
+          {props.text}
+        </button>
+      </div>
     );
   } else {
     return <button>{props.text}</button>;
@@ -24,7 +26,7 @@ export const BasicButtonComponent = (props: BasicButtonProps): JSX.Element => {
 
 export interface BasicButtonWidgetProps {
   text: string;
-  style?: {};
+  style?: object;
   image?: string;
 }
 

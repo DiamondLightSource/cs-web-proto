@@ -45,28 +45,31 @@ export const MenuWrapper = (props: {
     }
 
     return (
-      <div>
-        <div
-          className={classes.customContext}
-          style={{
-            position: "absolute",
-            zIndex: 1000,
-            top: `${y}px`,
-            left: `${x}px`
-          }}
-        >
-          {entries}
-        </div>
+      <div
+        className={classes.customContext}
+        style={{
+          position: "absolute",
+          zIndex: 1000,
+          top: `${y}px`,
+          left: `${x}px`
+        }}
+      >
+        {entries}
       </div>
     );
   }
 
   if (contextOpen) {
     return (
-      <div>
-        <div>{returnMenu(props.items, x, y)}</div>
-        <div onContextMenu={handleClick}>{props.children}</div>
+      <div style={props.style} onContextMenu={handleClick}>
+        {returnMenu(props.items, x, y)}
+        {props.children}
       </div>
     );
-  } else return <div onContextMenu={handleClick}>{props.children}</div>;
+  } else
+    return (
+      <div style={props.style} onContextMenu={handleClick}>
+        {props.children}
+      </div>
+    );
 };
