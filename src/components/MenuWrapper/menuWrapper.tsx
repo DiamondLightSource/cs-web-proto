@@ -1,25 +1,24 @@
 import React, { ReactNode, useState } from "react";
 import { Actions, executeActions } from "../../actions";
 import classes from "./menuWrapper.module.css";
-import { SSL_OP_SSLEAY_080_CLIENT_DH_BUG } from "constants";
 
 export interface Items {
   actions: Actions;
-  label: String;
+  label: string;
 }
 
-function triggerCallback(actions: Actions) {
+function triggerCallback(actions: Actions): void {
   executeActions(actions);
 }
 
-function returnMenu(items: Items[], x: number, y: number) {
+function returnMenu(items: Items[], x: number, y: number): JSX.Element {
   let entries = [];
   var length = items.length;
   for (let i = 0; i < length; i++) {
     entries.push(
       <div
         className={classes.customContextItem}
-        onClick={() => triggerCallback(items[i].actions)}
+        onClick={(): void => triggerCallback(items[i].actions)}
       >
         {items[i].label}
       </div>
