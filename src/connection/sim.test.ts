@@ -9,7 +9,7 @@ beforeEach((): void => {
 });
 
 function diffToValue(x: PartialVType): VType {
-  return x && mergeVtype(vdouble(0), x);
+  return x && (mergeVtype(vdouble(0), x) as VType);
 }
 
 function getValue(pvName: string, callback: Function): void {

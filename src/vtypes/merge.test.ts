@@ -1,12 +1,19 @@
 import { mergeVtype } from "./merge";
-import { vdouble, venum, IVEnum, vdoubleArray } from "./vtypes";
+import {
+  vdouble,
+  venum,
+  VEnum,
+  vdoubleArray,
+  VDoubleArray,
+  VDouble
+} from "./vtypes";
 import { timeNow } from "./time";
 
 it("merges things", (): void => {
   let result;
   let original;
-  original = venum(0, ["one", "two", "three"]);
-  result = mergeVtype(original, { type: "VEnum", index: 1 }) as IVEnum;
+  original = venum(1, ["one", "two", "three"]);
+  result = mergeVtype(original, { type: "VEnum", index: 1 }) as VEnum;
   expect(result.getIndex()).toBe(1);
   expect(result.getDisplay().getChoices().length).toBe(3);
   expect(result.getValue()).toBe("two");
@@ -14,7 +21,7 @@ it("merges things", (): void => {
   result = mergeVtype(original, {
     type: "VEnum",
     choices: ["une", "deux", "trois"]
-  }) as IVEnum;
+  }) as VEnum;
   expect(result.getIndex()).toBe(0);
   expect(result.getDisplay().getChoices().length).toBe(3);
   expect(result.getValue()).toBe("une");
@@ -24,7 +31,7 @@ it("merges things", (): void => {
     original,
     { type: "VEnum", choices: ["une", "deux", "trois"] },
     false
-  ) as IVEnum;
+  ) as VEnum;
   expect(result.getValue()).toBe("error");
 
   original = vdouble(0);
@@ -36,7 +43,7 @@ it("merges things", (): void => {
     original,
     { type: "VEnum", choices: ["une", "deux", "trois"], index: 1 },
     false
-  ) as IVEnum;
+  ) as VEnum;
   expect(result.getValue()).toBe("deux");
   expect(result.getIndex()).toBe(1);
   expect(result.getDisplay().getChoices().length).toBe(3);
@@ -50,7 +57,7 @@ it("merges things", (): void => {
     array: true,
     type: "IVDouble",
     value: [1, 2]
-  }) as IVDouble;
+  }) as VDoubleArray;
   expect(result.getValue()[1]).toBe(2);
   expect(result.getValue().length).toBe(2);
 });
