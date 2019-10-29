@@ -118,8 +118,13 @@
     },
     {
       "type": "basicbutton",
-      "pvName": "${pv1}",
+      "pvName": "sim://limit#1",
       "text": "more ...",
+      "image": "DCM-base.png",
+      "containerStyling": {
+        "position": "relative",
+        "width": "10%"
+      },
       "items": [
         {
           "label": "set limit #1 to 10",
@@ -146,10 +151,25 @@
             ]
           },
           "executeAsOne": false
+        },
+        {
+          "label": "set limit #1 to 100",
+          "actions": {
+            "actions": [
+              {
+                "type": "WRITE_PV",
+                "pvName": "sim://limit#1",
+                "value": 100
+              }
+            ]
+          },
+          "executeAsOne": false
         }
       ],
       "wrappers": {
-        "menuwrapper": true
+        "menuwrapper": true,
+        "copywrapper": true,
+        "alarmborder": true
       }
     },
     {
