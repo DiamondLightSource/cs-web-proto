@@ -41,10 +41,17 @@ const assertValue = (
 };
 
 it("test local values", (done): void => {
+  var zeroDone = false;
   getValue("loc://location", (value: VType): void => {
-    expect(value.getValue()).toEqual(17);
+    if (!zeroDone) {
+      expect(value.getValue()).toEqual(0.0);
+      zeroDone = true;
+    } else {
+      expect(value.getValue()).toEqual(17.0);
+    }
     done();
   });
+  simulator.subscribe("loc://location");
   simulator.putPv("loc://location", vdouble(17));
 });
 
@@ -63,12 +70,12 @@ it("local values zero initially", (done): void => {
   simulator.subscribe("loc://location");
 });
 
-it("deletes pv on unsubscribe", (): void => {
-  // "Unless a type selector and initial value are provided, a local value will be of type ‘double’ with initial value of 0." [https://buildmedia.readthedocs.org/media/pdf/phoebus-doc/latest/phoebus-doc.pdf]
-  simulator.subscribe("loc://location");
-  expect(simulator["simPvs"].get("loc://location") === undefined).toBe(false);
-  simulator.unsubscribe("loc://location");
+it("doesn't delete pv on unsubscribe", (): void => {
   expect(simulator["simPvs"].get("loc://location")).toBe(undefined);
+  simulator.subscribe("loc://location");
+  expect(simulator["simPvs"].get("loc://location")).toBeTruthy();
+  simulator.unsubscribe("loc://location");
+  expect(simulator["simPvs"].get("loc://location")).toBeTruthy();
 });
 
 it("test random values ", (): void => {
@@ -133,14 +140,22 @@ it("modifying limit values", (done): void => {
   simulator.putPv("sim://limit", vdouble(17));
 });
 
-it("distinguish limit values", (done): void => {
+it("distinguishes limit values", (done): void => {
   function* repeatedCallback(): any {
     const update1 = yield;
     expect(update1.name).toEqual("sim://limit#one");
-    expect(update1.value.getValue()).toEqual(1);
+    expect(update1.value.getValue()).toEqual(50);
+
     const update2 = yield;
     expect(update2.name).toEqual("sim://limit#two");
-    expect(update2.value.getValue()).toEqual(2);
+    expect(update2.value.getValue()).toEqual(50);
+
+    const update3 = yield;
+    expect(update3.name).toEqual("sim://limit#one");
+    expect(update3.value.getValue()).toEqual(1);
+    const update4 = yield;
+    expect(update4.name).toEqual("sim://limit#two");
+    expect(update4.value.getValue()).toEqual(2);
     done();
   }
   const iter = repeatedCallback();
@@ -150,6 +165,8 @@ it("distinguish limit values", (done): void => {
     iter.next({ name: name, value: diffToValue(value) });
   });
 
+  simulator.subscribe("sim://limit#one");
+  simulator.subscribe("sim://limit#two");
   simulator.putPv("sim://limit#one", vdouble(1));
   simulator.putPv("sim://limit#two", vdouble(2));
 });
@@ -235,6 +252,78 @@ it("return undefined for bad pvs", (): void => {
     expect(value).toBe(undefined);
   });
   simulator.subscribe("bad pv");
+});
+
+it("unsubscribe stops updates, but maintains value", (done): void => {
+  var expectedValue: VType;
+  var subscribed: boolean;
+
+  function subscribe(): void {
+    subscribed = true;
+    simulator.subscribe("loc://name");
+  }
+
+  function unsubscribe(): void {
+    subscribed = false;
+    simulator.unsubscribe("loc://name");
+  }
+
+  function putPv(value: number): void {
+    expectedValue = vdouble(value);
+    simulator.putPv("loc://name", vdouble(value));
+  }
+
+  class StageFinished extends Error {
+    public constructor(name: string) {
+      super(name);
+    }
+  }
+
+  var doneStages: string[] = [];
+  function stage(name: string, f: Function, ...args: any[]): void {
+    if (doneStages.indexOf(name) === -1) {
+      doneStages.push(name);
+      f(...args);
+      throw new StageFinished(name);
+    }
+  }
+
+  const callback = (data: { value: VType; name: string }): void => {
+    if (subscribed) {
+      expect(data.value.getValue()).toBe(expectedValue.getValue());
+      stage("zero", (): void => {
+        putPv(2.0);
+      });
+
+      stage("one", (): void => {
+        unsubscribe();
+        putPv(3.0);
+        setTimeout(function(): void {
+          subscribe();
+          putPv(4.0);
+        }, 100);
+      });
+      stage("two", (): void => {
+        done();
+      });
+    } else {
+      done.fail("Received updates after unsubscribe.");
+    }
+  };
+
+  simulator.connect(nullConnCallback, function(name, value): void {
+    try {
+      callback({ name: name, value: diffToValue(value) });
+    } catch (e) {
+      if (e instanceof StageFinished) {
+        return;
+      } else {
+        throw e;
+      }
+    }
+  });
+  expectedValue = vdouble(0.0);
+  subscribe();
 });
 
 it("test sine values ", (): void => {

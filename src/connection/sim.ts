@@ -31,6 +31,7 @@ function partialise(value: VType | undefined): PartialVType | undefined {
 abstract class SimPv {
   protected onConnectionUpdate: ConnectionChangedCallback;
   protected onValueUpdate: ValueChangedCallback;
+  protected subscribed: boolean;
   public pvName: string;
   protected updateRate?: number;
   abstract getValue(): VType | undefined;
@@ -45,14 +46,26 @@ abstract class SimPv {
     this.onValueUpdate = onValueUpdate;
     this.updateRate = updateRate;
     this.onConnectionUpdate(pvName, { isConnected: true, isReadonly: true });
+    this.subscribed = false;
   }
 
   public getConnection(): ConnectionState {
     return { isConnected: true, isReadonly: true };
   }
 
+  public subscribe(): void {
+    this.subscribed = true;
+    this.publish();
+  }
+
+  public unsubscribe(): void {
+    this.subscribed = false;
+  }
+
   public publish(): void {
-    this.onValueUpdate(this.pvName, partialise(this.getValue()));
+    if (this.subscribed) {
+      this.onValueUpdate(this.pvName, partialise(this.getValue()));
+    }
   }
 
   public updateValue(_: VType): void {
@@ -334,7 +347,10 @@ export class SimulatorPlugin implements Connection {
   }
 
   public subscribe(pvName: string): string {
-    let simulator = this._subscribe(pvName);
+    const simulator = this.initSimulator(pvName);
+    if (simulator !== undefined) {
+      simulator.subscribe();
+    }
     return (simulator && simulator.pvName) || pvName;
   }
 
@@ -453,10 +469,7 @@ export class SimulatorPlugin implements Connection {
     return { simulator: result, initialValue: initial };
   }
 
-  public _subscribe(
-    pvName: string,
-    publish: boolean = true
-  ): SimPv | undefined {
+  public initSimulator(pvName: string): SimPv | undefined {
     let nameInfo = this.parseName(pvName);
 
     if (this.simPvs.get(nameInfo.keyName) === undefined) {
@@ -471,19 +484,18 @@ export class SimulatorPlugin implements Connection {
         this.simPvs.put(simulatorInfo.simulator);
       }
 
-      if (publish && simulatorInfo.simulator !== undefined) {
-        if (simulatorInfo.initialValue !== undefined) {
+      if (simulatorInfo.initialValue !== undefined) {
+        if (simulatorInfo.simulator !== undefined) {
           simulatorInfo.simulator.updateValue(simulatorInfo.initialValue);
-        } else {
-          simulatorInfo.simulator.publish();
         }
       }
     }
+
     return this.simPvs.get(nameInfo.keyName);
   }
 
   public putPv(pvName: string, value: VType): void {
-    let pvSimulator = this._subscribe(pvName, false);
+    let pvSimulator = this.initSimulator(pvName);
     if (pvSimulator !== undefined) {
       pvSimulator.updateValue(value);
     } else {
@@ -494,14 +506,17 @@ export class SimulatorPlugin implements Connection {
   }
 
   public getValue(pvName: string): VType | undefined {
-    let pvSimulator = this._subscribe(pvName, false);
+    let pvSimulator = this.initSimulator(pvName);
     return pvSimulator && pvSimulator.getValue();
   }
 
   public unsubscribe(pvName: string): void {
     log.info(`Unsubscribing from ${pvName}.`);
-    if (this.simPvs.get(pvName)) {
-      this.simPvs.remove(pvName);
+    const simulator = this.simPvs.get(pvName);
+    if (simulator) {
+      if (simulator) {
+        simulator.unsubscribe();
+      }
     }
   }
 }
