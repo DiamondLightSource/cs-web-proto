@@ -1,13 +1,11 @@
 import React from "react";
 import { mount } from "enzyme";
 
-import { Widget } from "./widget";
+import { Widget, PVWidget } from "./widget";
 import { LabelComponent } from "../Label/label";
 import { MacroProps } from "../MacroWrapper/macroWrapper";
-
-let TestLabel = (): JSX.Element => {
-  return <LabelComponent text="Test" />;
-};
+import { vdouble } from "../../vtypes/vtypes";
+import { useConnection } from "../ConnectionWrapper/connectionWrapper";
 
 // Mock the useMacros hook as otherwise we'd have to provide
 // a store for it to use.
@@ -16,6 +14,20 @@ jest.mock("../MacroWrapper/macroWrapper", (): object => {
     useMacros: (props: MacroProps): MacroProps => props
   };
 });
+// Slightly elaborate mocking of useConnection.
+jest.mock("../ConnectionWrapper/connectionWrapper", (): object => ({
+  useConnection: jest.fn()
+}));
+// This has to be done in a second step because Jest does the
+// mocking before we have access to other imports (vdouble).
+(useConnection as jest.Mock).mockImplementation((pvName: string): any => {
+  const val = vdouble(0);
+  return [pvName, true, false, val];
+});
+
+let TestLabel = (): JSX.Element => {
+  return <LabelComponent text="Test" />;
+};
 
 describe("<Widget />", (): void => {
   let component = mount(
@@ -45,7 +57,8 @@ describe("<Widget />", (): void => {
   });
   test("it has copywrapper", (): void => {
     let component = mount(
-      <Widget
+      <PVWidget
+        pvName="pv"
         baseWidget={TestLabel}
         containerStyling={{ position: "relative" }}
         wrappers={{ copywrapper: true }}
@@ -56,7 +69,8 @@ describe("<Widget />", (): void => {
 
   test("it has alarmborder", (): void => {
     let component = mount(
-      <Widget
+      <PVWidget
+        pvName="pv"
         baseWidget={TestLabel}
         containerStyling={{ position: "relative" }}
         wrappers={{ alarmborder: true }}
@@ -67,7 +81,8 @@ describe("<Widget />", (): void => {
 
   test("it has alarmborder and copywrapper", (): void => {
     let component = mount(
-      <Widget
+      <PVWidget
+        pvName="pv"
         baseWidget={TestLabel}
         containerStyling={{ position: "relative" }}
         wrappers={{ alarmborder: true, copywrapper: true }}
