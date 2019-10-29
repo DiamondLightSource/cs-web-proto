@@ -7,46 +7,48 @@ export interface Items {
   label: string;
 }
 
-function triggerCallback(actions: Actions): void {
-  executeActions(actions);
-}
-
-function returnMenu(items: Items[], x: number, y: number): JSX.Element {
-  let entries = [];
-  var length = items.length;
-  for (let i = 0; i < length; i++) {
-    entries.push(
-      <div
-        className={classes.customContextItem}
-        onClick={(): void => triggerCallback(items[i].actions)}
-      >
-        {items[i].label}
-      </div>
-    );
-  }
-  return (
-    <div>
-      <div
-        className={classes.customContext}
-        style={{
-          position: "absolute",
-          zIndex: 1000,
-          top: `${y}px`,
-          left: `${x}px`
-        }}
-      >
-        {entries}
-      </div>
-    </div>
-  );
-}
-
 export const MenuWrapper = (props: {
   pvName: string;
   items: Items[];
   children: ReactNode;
   style?: object;
 }): JSX.Element => {
+  function triggerCallback(actions: Actions): void {
+    executeActions(actions);
+    setContextOpen(false);
+  }
+
+  function returnMenu(items: Items[], x: number, y: number): JSX.Element {
+    let entries = [];
+    var length = items.length;
+    for (let i = 0; i < length; i++) {
+      entries.push(
+        <div
+          className={classes.customContextItem}
+          onClick={(): void => triggerCallback(items[i].actions)}
+        >
+          {items[i].label}
+        </div>
+      );
+    }
+
+    return (
+      <div>
+        <div
+          className={classes.customContext}
+          style={{
+            position: "absolute",
+            zIndex: 1000,
+            top: `${y}px`,
+            left: `${x}px`
+          }}
+        >
+          {entries}
+        </div>
+      </div>
+    );
+  }
+
   const [contextOpen, setContextOpen] = useState(false);
   const [x, setX] = useState(0);
   const [y, setY] = useState(0);
