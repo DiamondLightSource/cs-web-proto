@@ -6,36 +6,88 @@ import { AlarmBorder } from "../AlarmBorder/alarmBorder";
 import { PvState } from "../../redux/csState";
 import { useMacros } from "../MacroWrapper/macroWrapper";
 import { useConnection } from "../ConnectionWrapper/connectionWrapper";
-import {
-  AbsoluteComponent,
-  FlexibleComponent,
-  WidgetStylingProps,
-  PVWidgetExtraProps,
-  MacroMapProps
-} from "./widgetprops";
 
-export type MacroMap = PropTypes.InferProps<typeof MacroMapProps>;
+// Number of prop types organised into useable sections to form more
+// complex units
+const ContainerFeaturesPropType = {
+  margin: PropTypes.string,
+  padding: PropTypes.string
+};
 
-type WidgetStylingType = PropTypes.InferProps<typeof WidgetStylingProps>;
-type AbsoluteType = PropTypes.InferProps<typeof AbsoluteComponent>;
-type FlexibleType = PropTypes.InferProps<typeof FlexibleComponent>;
+const AbsoluteContainerProps = {
+  position: PropTypes.oneOf(["absolute"]).isRequired,
+  x: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  y: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  ...ContainerFeaturesPropType
+};
 
-// Interface for the general functional component which creates a widget
+const FlexibleContainerProps = {
+  position: PropTypes.oneOf(["relative"]).isRequired,
+  height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  ...ContainerFeaturesPropType
+};
+
+const WidgetStylingPropType = {
+  font: PropTypes.string,
+  fontSize: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  fontWeight: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  textAlign: PropTypes.oneOf(["center", "left", "right", "justify"]),
+  backgroundColor: PropTypes.string
+};
+type WidgetStyling = PropTypes.InferProps<typeof WidgetStylingPropType>;
+
+const AbsoluteComponentPropType = {
+  containerStyling: PropTypes.shape(AbsoluteContainerProps).isRequired,
+  widgetStyling: PropTypes.shape(WidgetStylingPropType),
+  macroMap: PropTypes.objectOf(PropTypes.string)
+};
+type AbsoluteType = PropTypes.InferProps<typeof AbsoluteComponentPropType>;
+
+const FlexibleComponentPropType = {
+  containerStyling: PropTypes.shape(FlexibleContainerProps).isRequired,
+  widgetStyling: PropTypes.shape(WidgetStylingPropType),
+  macroMap: PropTypes.objectOf(PropTypes.string)
+};
+type FlexibleType = PropTypes.InferProps<typeof FlexibleComponentPropType>;
+
+// PropTypes object for a widget which can be expanded
+export const WidgetPropType = {
+  containerStyling: PropTypes.oneOfType([
+    PropTypes.shape(AbsoluteContainerProps),
+    PropTypes.shape(FlexibleContainerProps)
+  ]).isRequired,
+  widgetStyling: PropTypes.shape(WidgetStylingPropType),
+  macroMap: PropTypes.objectOf(PropTypes.string)
+};
+// Allows for either absolute or flexible positioning
 export type WidgetProps = AbsoluteType | FlexibleType;
+// Internal type for creating widgets
 type WidgetComponent = WidgetProps & { baseWidget: React.FC<any> };
 
-// Interface for widgets which handle PVs
-// May be wrapped to display PV metadata
-type PVWidgetExtras = PropTypes.InferProps<typeof PVWidgetExtraProps>;
-export type PVWidgetProps = WidgetProps & PVWidgetExtras;
-
+// Internal prop types object for properties which are not in a standard widget
+const PVExtras = {
+  pvName: PropTypes.string.isRequired,
+  wrappers: PropTypes.shape({
+    copywrapper: PropTypes.bool,
+    alarmborder: PropTypes.bool
+  })
+};
+// PropTypes object for a PV widget which can be expanded
+export const PVWidgetPropType = {
+  ...PVExtras,
+  ...WidgetPropType
+};
+export type PVWidgetProps = WidgetProps & PropTypes.InferProps<typeof PVExtras>;
 type PVWidgetComponent = PVWidgetProps & { baseWidget: React.FC<any> };
 
 // Function to recursively wrap a given set of widgets
 const recursiveWrapping = (
   components: React.FC<any>[],
   containerStyling: object,
-  widgetStyling: WidgetStylingType | null,
+  widgetStyling: WidgetStyling | null,
   containerProps: object,
   widgetProps: object
 ): JSX.Element => {

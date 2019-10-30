@@ -2,8 +2,7 @@ import React from "react";
 import propTypes from "prop-types";
 
 import classes from "./label.module.css";
-import { Widget } from "../Widget/widget";
-import { BaseWidgetProps } from "../Widget/widgetprops";
+import { Widget, WidgetPropType } from "../Widget/widget";
 
 interface LabelComponentInterface {
   text: string | number;
@@ -19,7 +18,7 @@ export const LabelComponent = (props: LabelComponentInterface): JSX.Element => (
 
 const LabelWidgetProps = {
   text: propTypes.oneOfType([propTypes.string, propTypes.number]).isRequired,
-  ...BaseWidgetProps
+  ...WidgetPropType
 };
 
 export const Label = (

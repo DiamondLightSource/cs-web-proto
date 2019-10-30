@@ -20,13 +20,6 @@ import { FlexExamplePage } from "./pages/flexExamplePage";
 import { EmbeddedPage } from "./pages/embeddedPage";
 import { SimulatorPlugin } from "./connection/sim";
 
-import PropTypes from "prop-types";
-import {
-  AbsoluteContainerProps,
-  FlexibleContainerProps,
-  WidgetStylingProps
-} from "./components/Widget/widgetprops";
-
 log.setLevel("warn");
 
 function applyTheme(theme: any): void {
@@ -47,93 +40,6 @@ const App: React.FC = (): JSX.Element => {
     backgroundColor: "#eeeeee",
     margin: "10px 10px"
   };
-
-  PropTypes.checkPropTypes(
-    { s: PropTypes.string, macroMap: PropTypes.objectOf(PropTypes.string) },
-    { s: "test", macroMap: { otherKey: "555", k: "v", k1: "v" } },
-    "test",
-    "testComponent"
-  );
-
-  PropTypes.checkPropTypes(
-    { a: PropTypes.exact({ b: PropTypes.number, c: PropTypes.string }) },
-    { a: { b: 1, c: "555", d: "another thing" } },
-    "testing shape",
-    "shapes"
-  );
-
-  PropTypes.checkPropTypes(
-    { containerStyling: PropTypes.exact(AbsoluteContainerProps) },
-    {
-      containerStyling: {
-        position: "absolute",
-        x: 5,
-        y: 5,
-        height: "5",
-        width: "5"
-      }
-    },
-    "containerStyling",
-    "test component"
-  );
-
-  PropTypes.checkPropTypes(
-    { containerStyling: PropTypes.exact(FlexibleContainerProps) },
-    {
-      containerStyling: {
-        position: "relative",
-        height: "5",
-        width: "5"
-      }
-    },
-    "containerStyling",
-    "test component"
-  );
-
-  const TestProps = {
-    containerStyling: PropTypes.shape(AbsoluteContainerProps).isRequired,
-    widgetStyling: PropTypes.shape(WidgetStylingProps),
-    macroMap: PropTypes.objectOf(PropTypes.string)
-  };
-
-  PropTypes.checkPropTypes(
-    TestProps,
-    {
-      containerStyling: {
-        position: "absolute",
-        x: 5,
-        y: 5,
-        height: "5",
-        width: "5"
-      },
-      widgetStyling: { fontWeight: "strong" }
-    },
-    "containerStyling",
-    "test component"
-  );
-
-  type TestType = PropTypes.InferProps<typeof TestProps>;
-  let TestObject: TestType = {
-    containerStyling: {
-      position: "absolute",
-      x: 5,
-      y: 5,
-      height: "5",
-      width: "5"
-    },
-    widgetStyling: {},
-    macroMap: {}
-  };
-
-  const StringObjectProps = { m: PropTypes.objectOf(PropTypes.string) };
-  PropTypes.checkPropTypes(
-    StringObjectProps,
-    { m: { k: "v", k1: "555" } },
-    "testing string object",
-    "here"
-  );
-  type StringObjectType = PropTypes.InferProps<typeof StringObjectProps>;
-  let a: StringObjectType = { m: { k: "v", k1: "555" } };
 
   return (
     <Provider store={store}>

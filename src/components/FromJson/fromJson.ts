@@ -1,11 +1,11 @@
 import { useState } from "react";
-import PropTypes from "prop-types";
 import log from "loglevel";
 
 import {
   widgetDescriptionToComponent,
   WidgetDescription
 } from "../Positioning/positioning";
+import { MacroMap } from "../../redux/csState";
 import { Label } from "../Label/label";
 import { Readback } from "../Readback/readback";
 import { Input } from "../Input/input";
@@ -13,10 +13,8 @@ import { FlexContainer } from "../FlexContainer/flexContainer";
 import { ProgressBar } from "../ProgressBar/progressBar";
 import { SlideControl } from "../SlideControl/slideControl";
 import { MenuButton } from "../MenuButton/menuButton";
-import { MacroMap } from "../Widget/widget";
 import { Display } from "../Display/display";
 import { WidgetProps } from "../Widget/widget";
-import { RequiredMacroMapProps } from "../Widget/widgetprops";
 
 const EMPTY_WIDGET: WidgetDescription = {
   type: "empty",
@@ -33,12 +31,10 @@ const ERROR_WIDGET: WidgetDescription = {
   text: "Error"
 };
 
-type RequiredMacroMap = PropTypes.InferProps<typeof RequiredMacroMapProps>;
-
-type WidgetFromJsonProps = WidgetProps &
-  RequiredMacroMap & {
-    file: string;
-  };
+type WidgetFromJsonProps = WidgetProps & {
+  file: string;
+  macroMap?: MacroMap;
+};
 
 export const WidgetFromJson = (
   props: WidgetFromJsonProps
