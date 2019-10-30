@@ -47,6 +47,15 @@ For more details on the development environment see
   developed by Facebook
 - [Prettier](https://github.com/prettier/prettier) is used for code formatting
 
+### Connection information
+
+This application can use data that come from external sources. These settings will vary from machine to machine, so must, if used, be configured when one checks out the source code.
+
+One needn't set connection information if you don't need any external sources of data; you could just use simulated and local process variables. However, if you want to connect to an external source of data:
+
+* Copying `src/settings.ts.template` to `src/settings.ts`
+* Editing `src/settings.ts` to contain the correct connection information
+
 ## Debugging
 
 The [loglevel](https://github.com/pimterry/loglevel) library is used for logging. To enable this, change the argument to `log.setLevel` in `App.tsx` and open the javascript console.
