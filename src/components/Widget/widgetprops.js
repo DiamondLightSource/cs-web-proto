@@ -1,65 +1,65 @@
-import propTypes from "prop-types";
+import PropTypes from "prop-types";
 import checkPropTypes from "check-prop-types";
 
 export const ContainerFeaturesProps = {
-  margin: propTypes.string,
-  padding: propTypes.string
+  margin: PropTypes.string,
+  padding: PropTypes.string
 };
 
 export const AbsoluteContainerProps = {
-  position: propTypes.oneOf(["absolute"]).isRequired,
-  x: propTypes.oneOfType([propTypes.string, propTypes.number]).isRequired,
-  y: propTypes.oneOfType([propTypes.string, propTypes.number]).isRequired,
-  height: propTypes.oneOfType([propTypes.string, propTypes.number]).isRequired,
-  width: propTypes.oneOfType([propTypes.string, propTypes.number]).isRequired,
+  position: PropTypes.oneOf(["absolute"]).isRequired,
+  x: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  y: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   ...ContainerFeaturesProps
 };
 
 export const FlexibleContainerProps = {
-  position: propTypes.oneOf(["relative"]).isRequired,
-  height: propTypes.oneOfType([propTypes.string, propTypes.number]),
-  width: propTypes.oneOfType([propTypes.string, propTypes.number]),
+  position: PropTypes.oneOf(["relative"]).isRequired,
+  height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   ...ContainerFeaturesProps
 };
 
 export const MacroMapProps = {
-  macroMap: propTypes.objectOf(propTypes.string.isRequired)
+  macroMap: PropTypes.objectOf(PropTypes.string.isRequired)
 };
 export const RequiredMacroMapProps = {
-  macroMap: propTypes.objectOf(propTypes.string.isRequired)
+  macroMap: PropTypes.objectOf(PropTypes.string.isRequired)
 };
 
 export const WidgetStylingProps = {
-  font: propTypes.string,
-  fontSize: propTypes.oneOfType([propTypes.string, propTypes.number]),
-  fontWeight: propTypes.oneOfType([propTypes.string, propTypes.number]),
-  textAlign: propTypes.oneOf(["center", "left", "right", "justify"]),
-  backgroundColor: propTypes.string
+  font: PropTypes.string,
+  fontSize: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  fontWeight: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  textAlign: PropTypes.oneOf(["center", "left", "right", "justify"]),
+  backgroundColor: PropTypes.string
 };
 
 export const BaseWidgetProps = {
-  containerStyling: propTypes.oneOfType([
-    propTypes.exact(AbsoluteContainerProps),
-    propTypes.exact(FlexibleContainerProps)
+  containerStyling: PropTypes.oneOfType([
+    PropTypes.exact(AbsoluteContainerProps),
+    PropTypes.exact(FlexibleContainerProps)
   ]).isRequired,
-  widgetStyling: propTypes.exact(WidgetStylingProps),
-  children: propTypes.node,
+  widgetStyling: PropTypes.exact(WidgetStylingProps),
+  children: PropTypes.node,
   ...MacroMapProps
 };
 
 export const PVWidgetExtraProps = {
-  pvName: propTypes.string.isRequired,
-  wrappers: propTypes.shape({
-    copywrapper: propTypes.bool,
-    alarmborder: propTypes.bool
+  pvName: PropTypes.string.isRequired,
+  wrappers: PropTypes.shape({
+    copywrapper: PropTypes.bool,
+    alarmborder: PropTypes.bool
   })
 };
 
 export const PVWidgetProperties = {
-  pvName: propTypes.string.isRequired,
-  wrappers: propTypes.shape({
-    copywrapper: propTypes.bool,
-    alarmborder: propTypes.bool
+  pvName: PropTypes.string.isRequired,
+  wrappers: PropTypes.shape({
+    copywrapper: PropTypes.bool,
+    alarmborder: PropTypes.bool
   }),
   ...BaseWidgetProps
 };
