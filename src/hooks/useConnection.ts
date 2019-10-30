@@ -28,9 +28,9 @@ function pvStateSelector(
 
 export function useConnection(
   id: string,
-  pvName?: string
+  pvName: string
 ): [string, boolean, boolean, VType?] {
-  useSubscription(id, pvName);
+  useSubscription(id, [pvName]);
   const [shortPvName, connected, readonly, latestValue] = useSelector(
     (state: CsState): [string, boolean, boolean, VType?] => {
       if (pvName) {
