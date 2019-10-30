@@ -19,6 +19,7 @@ import { lightTheme, darkTheme, ThemeContext } from "./themeContext";
 import { FlexExamplePage } from "./pages/flexExamplePage";
 import { EmbeddedPage } from "./pages/embeddedPage";
 import { SimulatorPlugin } from "./connection/sim";
+import { DynamicPage } from "./pages/dynamicPage";
 
 log.setLevel("warn");
 
@@ -80,6 +81,12 @@ const App: React.FC = (): JSX.Element => {
             <Link style={styleLinkButton} to="/embed">
               Embed
             </Link>
+            <Link
+              style={styleLinkButton}
+              to={'/dynamic/ionpExample/{"device":"SR03A-VA-IONP-01"}'}
+            >
+              Dynamic
+            </Link>
           </div>
           <div
             id="Central Column"
@@ -105,6 +112,11 @@ const App: React.FC = (): JSX.Element => {
             <Route path="/coniql" exact component={ConiqlPage} />
             <Route path="/flex" exact component={FlexExamplePage} />
             <Route path="/embed" exact component={EmbeddedPage} />
+            <Route
+              path="/dynamic/:json/:macros"
+              exact
+              component={DynamicPage}
+            />
           </div>
         </div>
       </BrowserRouter>
