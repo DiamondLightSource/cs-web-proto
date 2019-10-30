@@ -80,7 +80,7 @@ const App: React.FC = (): JSX.Element => {
             </Link>
             <Link style={styleLinkButton} to="/graphics">
               Graphics
-              </Link>
+            </Link>
             <Link
               style={styleLinkButton}
               to={'/dynamic/ionpExample/{"device":"SR03A-VA-IONP-01"}'}
@@ -111,15 +111,12 @@ const App: React.FC = (): JSX.Element => {
             <Route path="/coniql" exact component={ConiqlPage} />
             <Route path="/flex" exact component={FlexExamplePage} />
             <Route path="/embed" exact component={EmbeddedPage} />
-<<<<<<< HEAD
             <Route path="/graphics" exact component={GraphicalPage} />
-=======
             <Route
               path="/dynamic/:json/:macros"
               exact
               component={DynamicPage}
             />
->>>>>>> dynamic-router
           </div>
         </div>
       </BrowserRouter>
