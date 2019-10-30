@@ -37,14 +37,25 @@ export const WidgetStylingProps = {
   backgroundColor: PropTypes.string
 };
 
+export const AbsoluteComponent = {
+  containerStyling: PropTypes.shape(AbsoluteContainerProps).isRequired,
+  widgetStyling: PropTypes.shape(WidgetStylingProps),
+  macroMap: PropTypes.objectOf(PropTypes.string)
+};
+
+export const FlexibleComponent = {
+  containerStyling: PropTypes.shape(FlexibleContainerProps).isRequired,
+  widgetStyling: PropTypes.shape(WidgetStylingProps),
+  macroMap: PropTypes.objectOf(PropTypes.string)
+};
+
 export const BaseWidgetProps = {
   containerStyling: PropTypes.oneOfType([
-    PropTypes.exact(AbsoluteContainerProps),
-    PropTypes.exact(FlexibleContainerProps)
+    PropTypes.shape(AbsoluteContainerProps),
+    PropTypes.shape(FlexibleContainerProps)
   ]).isRequired,
-  widgetStyling: PropTypes.exact(WidgetStylingProps),
-  children: PropTypes.node,
-  ...MacroMapProps
+  widgetStyling: PropTypes.shape(WidgetStylingProps),
+  macroMap: PropTypes.objectOf(PropTypes.string)
 };
 
 export const PVWidgetExtraProps = {

@@ -7,61 +7,27 @@ import { PvState } from "../../redux/csState";
 import { useMacros } from "../MacroWrapper/macroWrapper";
 import { useConnection } from "../ConnectionWrapper/connectionWrapper";
 import {
-  AbsoluteContainerProps,
-  FlexibleContainerProps,
+  AbsoluteComponent,
+  FlexibleComponent,
   WidgetStylingProps,
+  PVWidgetExtraProps,
   MacroMapProps
 } from "./widgetprops";
 
-// type ContainerFeatures = PropTypes.InferProps<typeof ContainerFeaturesProps>;
-// interface ContainerFeatures {
-//   margin?: string;
-//   padding?: string;
-// }
-
-// Absolute requires x, y, height, width
-type AbsoluteContainer = PropTypes.InferProps<typeof AbsoluteContainerProps>;
-// interface AbsoluteContainer extends ContainerFeatures {
-//   position: "absolute";
-//   x: number | string;
-//   y: number | string;
-//   width: number | string;
-//   height: number | string;
-// }
-
-// Flexible places relatively and doesn't require any information but can
-// include height and width information, otherwise will pop to default size
-type FlexibleContainer = PropTypes.InferProps<typeof FlexibleContainerProps>;
-// interface FlexibleContainer extends ContainerFeatures {
-//   position: "relative";
-//   // Width and height not always necessary in this case as some components
-//   // such as embedded screens will define their own dimensions
-//   width?: number | string;
-//   height?: number | string;
-// }
-
-type WidgetStyling = PropTypes.InferProps<typeof WidgetStylingProps>;
-
 export type MacroMap = PropTypes.InferProps<typeof MacroMapProps>;
 
-export type WidgetProps = {
-  containerStyling: AbsoluteContainer | FlexibleContainer;
-  // ... other ways to customise the container itself could be added to this interface
-  widgetStyling?: WidgetStyling;
-} & MacroMap;
+type WidgetStylingType = PropTypes.InferProps<typeof WidgetStylingProps>;
+type AbsoluteType = PropTypes.InferProps<typeof AbsoluteComponent>;
+type FlexibleType = PropTypes.InferProps<typeof FlexibleComponent>;
 
 // Interface for the general functional component which creates a widget
+export type WidgetProps = AbsoluteType | FlexibleType;
 type WidgetComponent = WidgetProps & { baseWidget: React.FC<any> };
 
 // Interface for widgets which handle PVs
 // May be wrapped to display PV metadata
-export interface PVWidgetProps extends WidgetProps {
-  pvName: string;
-  wrappers?: {
-    copywrapper?: boolean;
-    alarmborder?: boolean;
-  };
-}
+type PVWidgetExtras = PropTypes.InferProps<typeof PVWidgetExtraProps>;
+export type PVWidgetProps = WidgetProps & PVWidgetExtras;
 
 type PVWidgetComponent = PVWidgetProps & { baseWidget: React.FC<any> };
 
@@ -69,7 +35,7 @@ type PVWidgetComponent = PVWidgetProps & { baseWidget: React.FC<any> };
 const recursiveWrapping = (
   components: React.FC<any>[],
   containerStyling: object,
-  widgetStyling: object,
+  widgetStyling: WidgetStylingType | null,
   containerProps: object,
   widgetProps: object
 ): JSX.Element => {

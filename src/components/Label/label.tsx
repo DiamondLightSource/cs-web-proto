@@ -2,7 +2,7 @@ import React from "react";
 import propTypes from "prop-types";
 
 import classes from "./label.module.css";
-import { Widget, WidgetProps } from "../Widget/widget";
+import { Widget } from "../Widget/widget";
 import { BaseWidgetProps } from "../Widget/widgetprops";
 
 interface LabelComponentInterface {
@@ -23,7 +23,7 @@ const LabelWidgetProps = {
 };
 
 export const Label = (
-  props: propTypes.InferProps<typeof LabelWidgetProps> & WidgetProps
+  props: propTypes.InferProps<typeof LabelWidgetProps>
 ): JSX.Element => <Widget baseWidget={LabelComponent} {...props} />;
 
 Label.propTypes = LabelWidgetProps;
