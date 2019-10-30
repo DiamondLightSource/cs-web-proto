@@ -18,8 +18,19 @@ import { MacrosPage } from "./pages/macrosPage";
 import { lightTheme, darkTheme, ThemeContext } from "./themeContext";
 import { FlexExamplePage } from "./pages/flexExamplePage";
 import { EmbeddedPage } from "./pages/embeddedPage";
+
 import { SimulatorPlugin } from "./connection/sim";
 import { DynamicPage } from "./pages/dynamicPage";
+import { ConiqlPlugin } from "./connection/coniql";
+import { ConnectionForwarder } from "./connection/forwarder";
+
+var settings: any;
+try {
+  // Use require so that we can catch this error
+  settings = require("./settings");
+} catch (e) {
+  settings = {};
+}
 
 log.setLevel("warn");
 
@@ -31,7 +42,20 @@ function applyTheme(theme: any): void {
 }
 
 const App: React.FC = (): JSX.Element => {
-  const plugin = new SimulatorPlugin();
+  const simulator = new SimulatorPlugin();
+  var coniql;
+  if (settings.coniqlSocket !== undefined) {
+    coniql = new ConiqlPlugin(settings.coniqlSocket);
+  } else {
+    coniql = undefined;
+  }
+  const fallbackPlugin = simulator;
+  const plugin = new ConnectionForwarder([
+    ["sim://", simulator],
+    ["loc://", simulator],
+    ["pva://", coniql],
+    ["", fallbackPlugin]
+  ]);
   initialiseStore(plugin);
   const store = getStore();
   const { toggle, dark } = React.useContext(ThemeContext);
