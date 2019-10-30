@@ -10,9 +10,17 @@ import { AlarmSeverity, AlarmStatus, alarm } from "../vtypes/alarm";
 import { VString } from "../vtypes/string";
 
 const initialState: CsState = {
-  valueCache: { PV: { value: vdouble(0), connected: true } },
+  valueCache: {
+    PV: {
+      value: vdouble(0),
+      connected: true,
+      readonly: false,
+      initializingPvName: ""
+    }
+  },
   macroMap: {},
-  subscriptions: {}
+  subscriptions: {},
+  shortPvNameMap: {}
 };
 
 describe("VALUE_CHANGED", (): void => {
