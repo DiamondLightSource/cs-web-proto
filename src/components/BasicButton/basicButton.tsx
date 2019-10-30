@@ -1,6 +1,7 @@
 import React from "react";
 import { PVWidget, PVWidgetInterface } from "../Widget/widget";
 import classes from "./basicButton.module.css";
+import { Link } from "react-router-dom";
 
 export interface BasicButtonProps {
   text: string;
@@ -11,11 +12,13 @@ export interface BasicButtonProps {
 export const BasicButtonComponent = (props: BasicButtonProps): JSX.Element => {
   if (props.image !== undefined) {
     return (
-      <button className={classes.image}>
-        <img src={props.image} alt={props.image}></img>
-        <br></br>
-        {props.text}
-      </button>
+      <Link to={'/dynamic/ionpExample/{"device":"SR03A-VA-IONP-01"}'}>
+        <button className={classes.image}>
+          <img src={props.image} alt={props.image}></img>
+          <br></br>
+          {props.text}
+        </button>
+      </Link>
     );
   } else {
     return <button>{props.text}</button>;
