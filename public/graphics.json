@@ -9,14 +9,43 @@
   },
   "children": [
     {
+      "type": "shape",
+      "pvName": "sim://limit#1",
+      "containerStyling": {
+        "position": "absolute",
+        "x": "0px",
+        "y": "0px"
+      },
+      "style": {
+        "width": "100px",
+        "height": "50px",
+        "border-radius": "50%",
+        "background-color": "grey"
+      }
+    },
+    {
+      "type": "shape",
+      "pvName": "sim://limit#1",
+      "containerStyling": {
+        "position": "absolute",
+        "x": "150px",
+        "y": "0px"
+      },
+      "style": {
+        "width": "100px",
+        "height": "5px",
+        "background-color": "yellow"
+      }
+    },
+    {
       "type": "basicbutton",
       "pvName": "sim://limit#1",
       "text": "more ...",
       "image": "DCM-base.png",
       "containerStyling": {
         "position": "absolute",
-        "x": "100px",
-        "y": "50px"
+        "x": "300px",
+        "y": "0px"
       },
       "items": [
         {

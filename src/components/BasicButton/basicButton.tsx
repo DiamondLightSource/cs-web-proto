@@ -7,21 +7,22 @@ export interface BasicButtonProps {
   text: string;
   style?: object;
   image?: string;
+  shape?: string;
 }
 
 export const BasicButtonComponent = (props: BasicButtonProps): JSX.Element => {
   if (props.image !== undefined) {
     return (
       <Link to={'/dynamic/ionpExample/{"device":"SR03A-VA-IONP-01"}'}>
-        <button className={classes.image}>
+        <div className={classes.image}>
           <img src={props.image} alt={props.image}></img>
           <br></br>
           {props.text}
-        </button>
+        </div>
       </Link>
     );
   } else {
-    return <button>{props.text}</button>;
+    return <div>{props.text}</div>;
   }
 };
 

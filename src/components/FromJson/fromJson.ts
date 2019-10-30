@@ -15,6 +15,7 @@ import { Display } from "../Display/display";
 import { BaseWidgetInterface } from "../Widget/widget";
 import { ActionButton } from "../ActionButton/actionButton";
 import { BasicButton } from "../BasicButton/basicButton";
+import { Shape } from "../Shape/shape";
 
 const EMPTY_WIDGET: WidgetDescription = {
   type: "empty",
@@ -52,6 +53,7 @@ export const WidgetFromJson = (
     flexcontainer: FlexContainer,
     actionbutton: ActionButton,
     basicbutton: BasicButton,
+    shape: Shape,
     display: Display,
     empty: Display,
     widgetFromJSON: WidgetFromJson
