@@ -19,7 +19,8 @@ export function widgetDescriptionToComponent(
   // can be overwritten. Uses recursion to generate children.
   widgetDescription: WidgetDescription | null,
   widgetDict: { [index: string]: React.FC<any> },
-  existingMacroMap: MacroMap
+  // This interface is a very ugly workaround to work with the PropTypes
+  existingMacroMap?: MacroMap | null
 ): JSX.Element | null {
   // If there is nothing here, return null
   if (widgetDescription === null) {
