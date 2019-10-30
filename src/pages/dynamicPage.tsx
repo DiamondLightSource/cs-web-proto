@@ -5,9 +5,14 @@ import React from "react";
 import { WidgetFromJson } from "../components/FromJson/fromJson";
 import { RouteComponentProps } from "react-router-dom";
 
-type DynamicParams = { json: string; macros: string };
+export interface DynamicParams {
+  json: string;
+  macros: string;
+}
 
-export function DynamicPage({ match }: RouteComponentProps<DynamicParams>) {
+export function DynamicPage({
+  match
+}: RouteComponentProps<DynamicParams>): JSX.Element {
   var file = "http://localhost:3000/" + match.params.json + ".json";
   var map = JSON.parse(match.params.macros);
   return (
