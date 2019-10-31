@@ -6,12 +6,19 @@ import { LabelComponent } from "../Label/label";
 import { MacroProps } from "../../hooks/useMacros";
 import { vdouble } from "../../vtypes/vtypes";
 import { useConnection } from "../../hooks/useConnection";
+import { RuleProps } from "../../hooks/useRules";
 
 // Mock the useMacros hook as otherwise we'd have to provide
 // a store for it to use.
 jest.mock("../../hooks/useMacros", (): object => {
   return {
     useMacros: (props: MacroProps): MacroProps => props
+  };
+});
+// Mock useRules.
+jest.mock("../../hooks/useRules", (): object => {
+  return {
+    useRules: (props: RuleProps): RuleProps => props
   };
 });
 // Slightly elaborate mocking of useConnection.
