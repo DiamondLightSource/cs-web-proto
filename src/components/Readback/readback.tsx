@@ -1,16 +1,14 @@
 import React from "react";
-import propTypes from "prop-types";
+import PropTypes from "prop-types";
 
 import classes from "./readback.module.css";
 import { alarmOf, AlarmSeverity } from "../../vtypes/alarm";
 import { vtypeToString } from "../../vtypes/utils";
-import { PVWidget, PVWidgetPropType } from "../Widget/widget";
-import { PvState } from "../../redux/csState";
+import { PVComponent, PVWidget, PVWidgetPropType } from "../Widget/widget";
 
-export interface ReadbackProps extends PvState {
-  precision?: number;
-  style?: object;
-}
+const ReadbackProps = {
+  precision: PropTypes.number
+};
 
 function getClass(alarmSeverity: any): string {
   switch (alarmSeverity) {
@@ -24,8 +22,10 @@ function getClass(alarmSeverity: any): string {
   return classes.Readback;
 }
 
-export const ReadbackComponent = (props: ReadbackProps): JSX.Element => {
-  let { connected, value, precision = undefined, style } = props;
+export const ReadbackComponent = (
+  props: PropTypes.InferProps<typeof ReadbackProps> & PVComponent
+): JSX.Element => {
+  let { connected, value, precision, style } = props;
   const alarm = alarmOf(value);
   let displayedValue;
   if (!value) {
@@ -55,17 +55,13 @@ export const ReadbackComponent = (props: ReadbackProps): JSX.Element => {
   );
 };
 
-// interface ReadbackWidgetProps {
-//   precision?: number;
-// }
-
 const ReadbackWidgetProps = {
-  precision: propTypes.number,
+  ...ReadbackProps,
   ...PVWidgetPropType
 };
 
 export const Readback = (
-  props: propTypes.InferProps<typeof ReadbackWidgetProps>
+  props: PropTypes.InferProps<typeof ReadbackWidgetProps>
 ): JSX.Element => <PVWidget baseWidget={ReadbackComponent} {...props} />;
 
 Readback.propTypes = ReadbackWidgetProps;

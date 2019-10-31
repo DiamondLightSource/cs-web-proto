@@ -9,6 +9,14 @@ import { useConnection } from "../../hooks/useConnection";
 import { useId } from "react-id-generator";
 import { useRules, RuleProps } from "../../hooks/useRules";
 
+// Useful types for components which will later be turned into widgets
+// Required to define stateless component
+export type Component = {
+  style?: object;
+};
+
+export type PVComponent = Component & FullPvState;
+
 // Number of prop types organised into useable sections to form more
 // complex units
 const ContainerFeaturesPropType = {
