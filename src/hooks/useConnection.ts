@@ -1,5 +1,5 @@
 import React from "react";
-import { useSubscription } from "./useCs";
+import { useSubscription } from "./useSubscription";
 import { useSelector } from "react-redux";
 import { CsState } from "../redux/csState";
 import { VType } from "../vtypes/vtypes";

@@ -7,7 +7,7 @@ import classes from "./slideControl.module.css";
 import { vtypeToString, stringToVtype } from "../../vtypes/utils";
 
 import { ProgressBarComponent } from "../ProgressBar/progressBar";
-import { writePv } from "../../hooks/useCs";
+import { writePv } from "../../hooks/useSubscription";
 import { VType } from "../../vtypes/vtypes";
 import { PVWidgetProps, PVWidget } from "../Widget/widget";
 

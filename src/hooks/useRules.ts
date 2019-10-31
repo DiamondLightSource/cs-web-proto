@@ -1,6 +1,6 @@
 import React, { ReactNode } from "react";
 
-import { useSubscription } from "./useCs";
+import { useSubscription } from "./useSubscription";
 import { useSelector } from "react-redux";
 import { MacroMap, CsState, PvState } from "../redux/csState";
 

@@ -1,7 +1,7 @@
 import { CsState } from "../redux/csState";
 import { pvStateSelector } from "./useConnection";
 
-jest.mock("../hooks/useCs", (): object => {
+jest.mock("../hooks/useSubscription", (): object => {
   return {
     useSubscription: (id: string, pvNames: string[]): void => {}
   };

@@ -1,5 +1,5 @@
 import React from "react";
-import { writePv } from "../../hooks/useCs";
+import { writePv } from "../../hooks/useSubscription";
 
 import { VType, VEnum } from "../../vtypes/vtypes";
 import { vtypeToString, stringToVtype } from "../../vtypes/utils";

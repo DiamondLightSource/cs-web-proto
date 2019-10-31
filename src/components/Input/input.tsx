@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import classes from "./input.module.css";
-import { writePv } from "../../hooks/useCs";
+import { writePv } from "../../hooks/useSubscription";
 import { VType } from "../../vtypes/vtypes";
 import { vtypeToString, stringToVtype } from "../../vtypes/utils";
 import { PVWidget, PVWidgetProps } from "../Widget/widget";
