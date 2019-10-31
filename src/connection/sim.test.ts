@@ -270,7 +270,6 @@ class ConnectionClient {
 
   public subscribe(key?: string): void {
     this.subscribed = true;
-    console.log(`Subscribed to ${this.key}`);
     simulator.subscribe(this.key);
   }
 
@@ -336,7 +335,7 @@ it("unsubscribe stops updates for simulated values", (done): void => {
   const callback = (data: { value: VType; name: string }): void => {
     if (client.subscribed) {
       callbacks.stage("one", () => { });
-      callbacks.stage("two", () => { client.unsubscribe(); console.log("unsubscribe"); setTimeout(function() { done() }, 2000) });
+      callbacks.stage("two", () => { client.unsubscribe(); setTimeout(function() { done() }, 2000) });
     } else {
       done.fail("Received updates after unsubscribe.");
       client.subscribe();

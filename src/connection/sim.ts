@@ -30,7 +30,7 @@ function partialise(value: VType | undefined): PartialVType | undefined {
 
 abstract class SimPv {
   protected onConnectionUpdate: ConnectionChangedCallback;
-  protected onValueUpdate: ValueChangedCallback;
+  private onValueUpdate: ValueChangedCallback;
   protected subscribed: boolean;
   public pvName: string;
   protected updateRate?: number;
@@ -89,10 +89,7 @@ class SinePv extends SimPv {
     updateRate?: number
   ) {
     super(pvName, onConnectionUpdate, onValueUpdate, updateRate);
-    setInterval((): void => {
-      const value = this.getValue();
-      this.onValueUpdate(this.pvName, partialise(value));
-    }, this.updateRate);
+    setInterval(this.publish.bind(this), this.updateRate);
   }
 
   public getValue(): VType | undefined {
@@ -111,10 +108,7 @@ class RandomPv extends SimPv {
     updateRate?: number
   ) {
     super(pvName, onConnectionUpdate, onValueUpdate, updateRate);
-
-    this.maybeSetInterval((): void => {
-      this.onValueUpdate(this.pvName, partialise(this.getValue()));
-    });
+    this.maybeSetInterval((): void => this.publish);
   }
   public getValue(): VType | undefined {
     return vdouble(Math.random());
@@ -130,7 +124,7 @@ class Disconnector extends SimPv {
   ) {
     super(pvName, onConnectionUpdate, onValueUpdate, updateRate);
     let value = this.getValue();
-    this.onValueUpdate(this.pvName, partialise(value));
+    this.publish()
     this.maybeSetInterval((): void =>
       this.onConnectionUpdate(this.pvName, this.getConnection())
     );
@@ -163,10 +157,8 @@ class SimEnumPv extends SimPv {
       isConnected: true,
       isReadonly: true
     });
-    this.onValueUpdate(this.pvName, partialise(this.getValue()));
-    setInterval(
-      (): void => this.onValueUpdate(this.pvName, partialise(this.getValue())),
-      this.updateRate
+    this.publish()
+    setInterval(this.publish.bind(this), this.updateRate
     );
   }
   public getValue(): VType {
@@ -201,10 +193,7 @@ class EnumPv extends SimPv {
       isConnected: true,
       isReadonly: false
     });
-    setInterval(
-      (): void => this.onValueUpdate(this.pvName, partialise(this.getValue())),
-      this.updateRate
-    );
+    setInterval(this.publish, this.updateRate);
   }
 
   public updateValue(value: VType): void {
