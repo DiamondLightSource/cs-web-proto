@@ -15,14 +15,19 @@ export const BasicButtonComponent = (props: BasicButtonProps): JSX.Element => {
     return (
       <Link to={'/dynamic/ionpExample/{"device":"SR03A-VA-IONP-01"}'}>
         <div className={classes.image}>
-          <img src={props.image} alt={props.image}></img>
-          <br></br>
-          {props.text}
+          <button>
+            <img src={props.image} alt={props.image}></img>
+            {props.text}
+          </button>
         </div>
       </Link>
     );
   } else {
-    return <div>{props.text}</div>;
+    return (
+      <div>
+        <button>{props.text}</button>
+      </div>
+    );
   }
 };
 
