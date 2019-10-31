@@ -65,9 +65,10 @@ function coniqlToPartialVtype(
   meta: any,
   status: ConiqlStatus
 ): PartialVType {
-  let result: PartialVType = {
-    value: value
-  };
+  let result: PartialVType = {};
+  if (value != null) {
+    result["value"] = value;
+  }
   if (value && value.numberType) {
     const bd = base64js.toByteArray(value.base64);
     const array = new ARRAY_TYPES[value.numberType as CONIQL_TYPE](bd.buffer);
