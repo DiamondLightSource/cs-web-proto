@@ -1,8 +1,5 @@
 import React from "react";
 import { PVWidget, PVWidgetInterface } from "../Widget/widget";
-import classes from "./basicButton.module.css";
-import { Link } from "react-router-dom";
-import { transform } from "@babel/core";
 
 export interface ShapeProps {
   shapeWidth?: string;
