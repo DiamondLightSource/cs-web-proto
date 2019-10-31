@@ -349,7 +349,7 @@ it("unsubscribe stops updates for simulated values", (done): void => {
 
 it("unsubscribe stops updates, but maintains value", (done): void => {
   var callbacks = new StagedCallbacks();
-  var client = new ConnectionClient(simulator);
+  var client = new ConnectionClient(simulator, "loc://name");
 
   const callback = (data: { value: VType; name: string }): void => {
     if (client.subscribed) {
