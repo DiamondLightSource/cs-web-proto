@@ -9,7 +9,7 @@ export interface PvProps extends React.PropsWithChildren<any> {
   shortPvName: string;
 }
 
-function pvStateSelector(
+export function pvStateSelector(
   pvName: string,
   state: CsState
 ): [string, boolean, boolean, VType?] {
