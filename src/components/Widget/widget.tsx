@@ -3,15 +3,25 @@ import PropTypes from "prop-types";
 
 import { CopyWrapper } from "../CopyWrapper/copyWrapper";
 import { AlarmBorder } from "../AlarmBorder/alarmBorder";
-import { PvState } from "../../redux/csState";
-import { useMacros } from "../MacroWrapper/macroWrapper";
-import { useConnection } from "../ConnectionWrapper/connectionWrapper";
+import { FullPvState } from "../../redux/csState";
+import { useMacros } from "../../hooks/useMacros";
+import { useConnection } from "../../hooks/useConnection";
+import { useId } from "react-id-generator";
+import { useRules, RuleProps } from "../../hooks/useRules";
 
 // Number of prop types organised into useable sections to form more
 // complex units
 const ContainerFeaturesPropType = {
   margin: PropTypes.string,
   padding: PropTypes.string
+};
+
+const RulesPropType = {
+  condition: PropTypes.string.isRequired,
+  trueState: PropTypes.string.isRequired,
+  falseState: PropTypes.string.isRequired,
+  substitutionMap: PropTypes.objectOf(PropTypes.string).isRequired,
+  prop: PropTypes.string.isRequired
 };
 
 const AbsoluteContainerProps = {
@@ -42,14 +52,16 @@ type WidgetStyling = PropTypes.InferProps<typeof WidgetStylingPropType>;
 const AbsoluteComponentPropType = {
   containerStyling: PropTypes.shape(AbsoluteContainerProps).isRequired,
   widgetStyling: PropTypes.shape(WidgetStylingPropType),
-  macroMap: PropTypes.objectOf(PropTypes.string)
+  macroMap: PropTypes.objectOf(PropTypes.string.isRequired),
+  rule: PropTypes.exact(RulesPropType)
 };
 type AbsoluteType = PropTypes.InferProps<typeof AbsoluteComponentPropType>;
 
 const FlexibleComponentPropType = {
   containerStyling: PropTypes.shape(FlexibleContainerProps).isRequired,
   widgetStyling: PropTypes.shape(WidgetStylingPropType),
-  macroMap: PropTypes.objectOf(PropTypes.string)
+  macroMap: PropTypes.objectOf(PropTypes.string.isRequired),
+  rule: PropTypes.exact(RulesPropType)
 };
 type FlexibleType = PropTypes.InferProps<typeof FlexibleComponentPropType>;
 
@@ -60,7 +72,8 @@ export const WidgetPropType = {
     PropTypes.shape(FlexibleContainerProps)
   ]).isRequired,
   widgetStyling: PropTypes.shape(WidgetStylingPropType),
-  macroMap: PropTypes.objectOf(PropTypes.string)
+  macroMap: PropTypes.objectOf(PropTypes.string.isRequired),
+  rule: PropTypes.exact(RulesPropType)
 };
 // Allows for either absolute or flexible positioning
 export type WidgetProps = AbsoluteType | FlexibleType;
@@ -120,14 +133,17 @@ const recursiveWrapping = (
 
 export const Widget = (props: WidgetComponent): JSX.Element => {
   // Generic widget component
+  const [id] = useId();
+  let idProps = { ...props, id: id };
 
   // Apply macros.
-  const macroProps = useMacros(props);
+  const macroProps = useMacros(idProps) as RuleProps;
   // Then rules
+  const ruleProps = useRules(macroProps);
 
   // Give containers access to everything apart from the containerStyling
   // Assume flexible position if not provided with anything
-  const { containerStyling, ...containerProps } = macroProps;
+  const { containerStyling, ...containerProps } = ruleProps;
 
   // Manipulate for absolute styling
   // Put x and y back in as left and top respectively
@@ -150,12 +166,20 @@ export const Widget = (props: WidgetComponent): JSX.Element => {
 };
 
 export const PVWidget = (props: PVWidgetComponent): JSX.Element => {
+  const [id] = useId();
+  let idProps = { ...props, id: id };
+
   // Apply macros.
-  const macroProps = useMacros(props);
+  const macroProps = useMacros(idProps) as RuleProps;
   // Then rules
-  const [, connected, readonly, latestValue] = useConnection(macroProps.pvName);
-  let newProps: PVWidgetComponent & PvState = {
+  const ruleProps = useRules(macroProps);
+  const [shortPvName, connected, readonly, latestValue] = useConnection(
+    id,
+    ruleProps.pvName
+  );
+  let newProps: PVWidgetComponent & FullPvState = {
     ...props,
+    pvName: shortPvName,
     initializingPvName: props.pvName,
     connected: connected,
     readonly: readonly,

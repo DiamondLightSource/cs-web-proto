@@ -1,16 +1,15 @@
 import React from "react";
-import { useId } from "react-id-generator";
-import { useSubscription } from "../../hooks/useCs";
+import { useSubscription } from "./useSubscription";
 import { useSelector } from "react-redux";
-import { CsState } from "../../redux/csState";
-import { VType } from "../../vtypes/vtypes";
+import { CsState } from "../redux/csState";
+import { VType } from "../vtypes/vtypes";
 
 export interface PvProps extends React.PropsWithChildren<any> {
   pvName: string;
   shortPvName: string;
 }
 
-function pvStateSelector(
+export function pvStateSelector(
   pvName: string,
   state: CsState
 ): [string, boolean, boolean, VType?] {
@@ -28,10 +27,10 @@ function pvStateSelector(
 }
 
 export function useConnection(
-  pvName?: string
+  id: string,
+  pvName: string
 ): [string, boolean, boolean, VType?] {
-  const [id] = useId();
-  useSubscription(id, pvName);
+  useSubscription(id, [pvName]);
   const [shortPvName, connected, readonly, latestValue] = useSelector(
     (state: CsState): [string, boolean, boolean, VType?] => {
       if (pvName) {

@@ -7,9 +7,9 @@ import classes from "./slideControl.module.css";
 import { vtypeToString, stringToVtype } from "../../vtypes/utils";
 
 import { ProgressBarComponent } from "../ProgressBar/progressBar";
-import { writePv } from "../../hooks/useCs";
+import { writePv } from "../../hooks/useSubscription";
 import { VType } from "../../vtypes/vtypes";
-import { Widget, PVWidgetProps } from "../Widget/widget";
+import { PVWidgetProps, PVWidget } from "../Widget/widget";
 
 interface SlideControlProps {
   pvName: string;
@@ -117,4 +117,4 @@ interface SlideControlWidgetProps {
 
 export const SlideControl = (
   props: SlideControlWidgetProps & PVWidgetProps
-): JSX.Element => <Widget baseWidget={SlideControlComponent} {...props} />;
+): JSX.Element => <PVWidget baseWidget={SlideControlComponent} {...props} />;
