@@ -10,32 +10,30 @@
   "children": [
     {
       "type": "shape",
-      "pvName": "sim://limit#1",
       "containerStyling": {
         "position": "absolute",
-        "x": "0px",
-        "y": "0px"
-      },
-      "style": {
+        "x": "70px",
+        "y": "0px",
         "width": "100px",
-        "height": "50px",
-        "border-radius": "50%",
-        "background-color": "grey"
-      }
+        "height": "100px"
+      },
+      "shapeWidth": "70px",
+      "shapeHeight": "70px",
+      "shapeRadius": "50%",
+      "shapeColour": "red"
     },
     {
       "type": "shape",
-      "pvName": "sim://limit#1",
       "containerStyling": {
         "position": "absolute",
         "x": "150px",
         "y": "0px"
       },
-      "style": {
-        "width": "100px",
-        "height": "5px",
-        "background-color": "yellow"
-      }
+      "shapeWidth": "70px",
+      "shapeHeight": "70px",
+      "shapeRadius": "0%",
+      "shapeColour": "purple",
+      "shapeTransform": "skew(10deg)"
     },
     {
       "type": "basicbutton",
