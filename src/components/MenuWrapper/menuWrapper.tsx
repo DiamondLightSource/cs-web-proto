@@ -24,6 +24,10 @@ export const MenuWrapper = (props: {
       setY(e.nativeEvent.offsetY);
     }
   };
+  const handleMouseLeave = (e: React.MouseEvent): void => {
+    e.preventDefault();
+    setContextOpen(false);
+  };
 
   function triggerCallback(actions: Actions): void {
     executeActions(actions);
@@ -61,14 +65,22 @@ export const MenuWrapper = (props: {
 
   if (contextOpen) {
     return (
-      <div style={props.style} onContextMenu={handleClick}>
+      <div
+        style={props.style}
+        onContextMenu={handleClick}
+        onMouseLeave={handleMouseLeave}
+      >
         {returnMenu(props.items, x, y)}
         {props.children}
       </div>
     );
   } else
     return (
-      <div style={props.style} onContextMenu={handleClick}>
+      <div
+        style={props.style}
+        onContextMenu={handleClick}
+        onMouseLeave={handleMouseLeave}
+      >
         {props.children}
       </div>
     );
