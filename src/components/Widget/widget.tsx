@@ -2,9 +2,11 @@ import React from "react";
 
 import { CopyWrapper } from "../CopyWrapper/copyWrapper";
 import { AlarmBorder } from "../AlarmBorder/alarmBorder";
-import { MacroMap } from "../../redux/csState";
-import { macroWrapper } from "../MacroWrapper/macroWrapper";
-import { connectionWrapper } from "../ConnectionWrapper/connectionWrapper";
+import { MacroMap, FullPvState } from "../../redux/csState";
+import { useMacros } from "../../hooks/useMacros";
+import { useConnection } from "../../hooks/useConnection";
+import { useId } from "react-id-generator";
+import { useRules, RuleProps } from "../../hooks/useRules";
 
 interface ContainerFeatures {
   margin?: string;
@@ -30,7 +32,7 @@ interface FlexibleContainer extends ContainerFeatures {
   height?: number | string;
 }
 
-export interface BaseWidgetInterface {
+export interface WidgetProps {
   containerStyling: AbsoluteContainer | FlexibleContainer;
   // ... other ways to customise the container itself could be added to this interface
   widgetStyling?: {
@@ -42,7 +44,29 @@ export interface BaseWidgetInterface {
     // ... all the styling things we want to allow
   };
   macroMap?: MacroMap;
+  rule?: {
+    condition: string;
+    trueState: string;
+    falseState: string;
+    substitutionMap: MacroMap;
+    prop: string;
+  };
 }
+
+// Interface for the general functional component which creates a widget
+type WidgetComponent = WidgetProps & { baseWidget: React.FC<any> };
+
+// Interface for widgets which handle PVs
+// May be wrapped to display PV metadata
+export interface PVWidgetProps extends WidgetProps {
+  pvName: string;
+  wrappers?: {
+    copywrapper?: boolean;
+    alarmborder?: boolean;
+  };
+}
+
+type PVWidgetComponent = PVWidgetProps & { baseWidget: React.FC<any> };
 
 // Function to recursively wrap a given set of widgets
 const recursiveWrapping = (
@@ -79,24 +103,63 @@ const recursiveWrapping = (
   }
 };
 
-// Interface for the general functional component which creates a widget
-// May have wrappers
-export interface WidgetComponentInterface extends BaseWidgetInterface {
-  baseWidget: React.FC<any>;
-  wrappers?: {
-    copywrapper?: boolean;
-    alarmborder?: boolean;
-  };
-}
-
-export const WidgetComponent = (
-  props: WidgetComponentInterface
-): JSX.Element => {
+export const Widget = (props: WidgetComponent): JSX.Element => {
   // Generic widget component
+  const [id] = useId();
+  let idProps = { ...props, id: id };
+
+  // Apply macros.
+  const macroProps = useMacros(idProps) as RuleProps;
+  // Then rules
+  const ruleProps = useRules(macroProps);
 
   // Give containers access to everything apart from the containerStyling
   // Assume flexible position if not provided with anything
-  const { containerStyling, ...containerProps } = props;
+  const { containerStyling, ...containerProps } = ruleProps;
+
+  // Manipulate for absolute styling
+  // Put x and y back in as left and top respectively
+  const { x = null, y = null } = { ...containerStyling };
+  const mappedContainerStyling = { top: y, left: x, ...containerStyling };
+
+  // Extract remaining parameters
+  let { baseWidget, widgetStyling = {}, ...baseWidgetProps } = containerProps;
+
+  // Put appropriate components on the list of components to be wrapped
+  let components = [baseWidget];
+
+  return recursiveWrapping(
+    components,
+    mappedContainerStyling,
+    widgetStyling,
+    containerProps,
+    baseWidgetProps
+  );
+};
+
+export const PVWidget = (props: PVWidgetComponent): JSX.Element => {
+  const [id] = useId();
+  let idProps = { ...props, id: id };
+
+  // Apply macros.
+  const macroProps = useMacros(idProps) as RuleProps;
+  // Then rules
+  const ruleProps = useRules(macroProps);
+  const [shortPvName, connected, readonly, latestValue] = useConnection(
+    id,
+    ruleProps.pvName
+  );
+  let newProps: PVWidgetComponent & FullPvState = {
+    ...props,
+    pvName: shortPvName,
+    initializingPvName: props.pvName,
+    connected: connected,
+    readonly: readonly,
+    value: latestValue
+  };
+  // Give containers access to everything apart from the containerStyling
+  // Assume flexible position if not provided with anything
+  const { containerStyling, ...containerProps } = newProps;
 
   // Manipulate for absolute styling
   // Put x and y back in as left and top respectively
@@ -111,9 +174,7 @@ export const WidgetComponent = (
     ...baseWidgetProps
   } = containerProps;
 
-  // Put appropriate components on the list of components to be wrapped
-  let components = [];
-
+  const components = [];
   // Done like this in case only one of the values is passed through
   const requestedWrappers = {
     ...{ alarmborder: false, copywrapper: false },
@@ -137,29 +198,3 @@ export const WidgetComponent = (
     baseWidgetProps
   );
 };
-
-// Interface for a widget which does not handle PVs
-// Label, display, containers
-// No support for wrapping as this would not make sense
-// when they have no PV
-export interface WidgetInterface extends BaseWidgetInterface {
-  children?: React.ReactNode;
-}
-
-export const Widget: React.FC<
-  WidgetComponentInterface & WidgetInterface
-> = macroWrapper(WidgetComponent);
-
-// Interface for widgets which handle PVs
-// May be wrapped to display PV metadata
-export interface PVWidgetInterface extends WidgetInterface {
-  pvName: string;
-  wrappers?: {
-    copywrapper?: boolean;
-    alarmborder?: boolean;
-    // ...any other borders that come up in the future
-  };
-}
-export const PVWidget: React.FC<
-  WidgetComponentInterface & PVWidgetInterface
-> = macroWrapper(connectionWrapper(WidgetComponent));

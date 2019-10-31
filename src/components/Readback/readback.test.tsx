@@ -14,6 +14,7 @@ beforeEach((): void => {
   const readback = (
     <ReadbackComponent
       connected={true}
+      readonly={false}
       value={stringToVtype("3.14159265359")}
       precision={2}
     />

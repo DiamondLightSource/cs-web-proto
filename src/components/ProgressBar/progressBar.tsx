@@ -4,7 +4,7 @@ import { VType } from "../../vtypes/vtypes";
 import classes from "./progressBar.module.css";
 
 import { vtypeOrUndefinedToNumber } from "../../vtypes/utils";
-import { PVWidget, PVWidgetInterface } from "../Widget/widget";
+import { PVWidget, PVWidgetProps } from "../Widget/widget";
 
 interface ProgressBarProps {
   connected: boolean;
@@ -92,5 +92,5 @@ interface ProgressBarWidgetProps {
 }
 
 export const ProgressBar = (
-  props: ProgressBarWidgetProps & PVWidgetInterface
+  props: ProgressBarWidgetProps & PVWidgetProps
 ): JSX.Element => <PVWidget baseWidget={ProgressBarComponent} {...props} />;

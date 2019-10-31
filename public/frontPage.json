@@ -13,14 +13,24 @@
       },
       "children": [
         {
-          "type": "readback",
-          "containerStyling": {
+          "type": "label",
+          "containerStyle": {
             "position": "relative",
-            "margin": "5px"
+            "width": "100%"
           },
-          "pvName": "TMC43-TS-IOC-01:AI",
-          "wrappers": {
-            "copywrapper": true
+          "widgetStyling": {
+            "fontWeight": "bold",
+            "backgroundColor": "transparent"
+          },
+          "text": "",
+          "rule": {
+            "condition": "pv1>=0",
+            "trueState": "Positive ⬇⬇⬇",
+            "falseState": "Negative ⬇⬇⬇",
+            "substitutionMap": {
+              "pv1": "loc://pv1"
+            },
+            "prop": "text"
           }
         },
         {
@@ -227,7 +237,7 @@
             "fontWeight": "bold",
             "backgroundColor": "transparent"
           },
-          "text": "Local Enum - [une deux trois]"
+          "text": "Local Enum - [un deux trois]"
         },
         {
           "type": "menubutton",
@@ -235,7 +245,7 @@
             "position": "relative",
             "margin": "5px 0 0 0"
           },
-            "pvName": "loc://enum1<VEnum>(2, \"une\", \"deux\", \"trois\")",
+          "pvName": "loc://enum1<VEnum>(2, \"un\", \"deux\", \"trois\")",
           "wrappers": {
             "copywrapper": true
           }
@@ -246,7 +256,7 @@
             "position": "relative",
             "margin": "5px 0 0 0"
           },
-            "pvName": "loc://enum1<VEnum>(2, \"une\", \"deux\", \"trois\")",
+          "pvName": "loc://enum1<VEnum>(2, \"un\", \"deux\", \"trois\")",
           "wrappers": {
             "copywrapper": true
           }
@@ -300,11 +310,12 @@
             "position": "relative",
             "margin": "5px 0 0 0"
           },
-            "pvName": "loc://test(1.1)",
+          "pvName": "loc://test(1.1)",
           "wrappers": {
             "copywrapper": true
           }
-        }]
+        }
+      ]
     }
   ]
 }
