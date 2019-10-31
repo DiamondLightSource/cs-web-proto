@@ -1,10 +1,9 @@
-import React, { Children } from "react";
+import React from "react";
 import { shallow, ShallowWrapper } from "enzyme";
 
 import { Items, MenuWrapper } from "./menuWrapper";
 
 let wrapper: ShallowWrapper;
-let wrappedElement: ShallowWrapper;
 
 beforeEach((): void => {
   let item: Items = {
@@ -18,7 +17,6 @@ beforeEach((): void => {
     </MenuWrapper>
   );
   wrapper = shallow(menuWrapper);
-  wrappedElement = wrapper.find("div").childAt(0);
 });
 
 describe("<MenuWrapper>", (): void => {
