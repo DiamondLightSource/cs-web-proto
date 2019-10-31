@@ -18,22 +18,58 @@ export const MacrosPage = (): JSX.Element => (
       <Label
         text="loc://pv${SUFFIX}"
         macroMap={{ SUFFIX1: "bba" }}
-        containerStyling={{ position: "relative" }}
+        containerStyling={{
+          position: "relative",
+          height: "",
+          width: "",
+          margin: "",
+          padding: ""
+        }}
       />
       <Input pvName={"loc://pv1"} containerStyling={{ position: "relative" }} />
-      <Label text="loc://pv2" containerStyling={{ position: "relative" }} />
-      <Input pvName={"loc://pv2"} containerStyling={{ position: "relative" }} />
+      <Label
+        text="loc://pv2"
+        containerStyling={{
+          position: "relative",
+          height: "",
+          width: "",
+          margin: "",
+          padding: ""
+        }}
+      />
+      <Input
+        pvName={"loc://pv2"}
+        containerStyling={{
+          position: "relative",
+          height: "",
+          width: "",
+          margin: "",
+          padding: ""
+        }}
+      />
       <div style={{ height: "30px" }}>
         <Readback
           pvName={"loc://pv${SUFFIX1}"}
-          containerStyling={{ position: "relative" }}
+          containerStyling={{
+            position: "relative",
+            height: "",
+            width: "",
+            margin: "",
+            padding: ""
+          }}
           wrappers={{ copywrapper: true }}
         />
       </div>
       <div style={{ height: "30px" }}>
         <Readback
           pvName={"loc://pv${SUFFIX2}"}
-          containerStyling={{ position: "relative" }}
+          containerStyling={{
+            position: "relative",
+            height: "",
+            width: "",
+            margin: "",
+            padding: ""
+          }}
           wrappers={{ copywrapper: true }}
         />
       </div>

@@ -49,29 +49,31 @@ const WidgetStylingPropType = {
 };
 type WidgetStyling = PropTypes.InferProps<typeof WidgetStylingPropType>;
 
-const AbsoluteComponentPropType = {
-  containerStyling: PropTypes.shape(AbsoluteContainerProps).isRequired,
+const CommonWidgetProps = {
   widgetStyling: PropTypes.shape(WidgetStylingPropType),
   macroMap: PropTypes.objectOf(PropTypes.string.isRequired),
-  rule: PropTypes.exact(RulesPropType)
+  rule: PropTypes.shape(RulesPropType)
+};
+
+const AbsoluteComponentPropType = {
+  containerStyling: PropTypes.shape(AbsoluteContainerProps).isRequired,
+  ...CommonWidgetProps
 };
 type AbsoluteType = PropTypes.InferProps<typeof AbsoluteComponentPropType>;
 
 const FlexibleComponentPropType = {
   containerStyling: PropTypes.shape(FlexibleContainerProps).isRequired,
-  widgetStyling: PropTypes.shape(WidgetStylingPropType),
-  macroMap: PropTypes.objectOf(PropTypes.string.isRequired),
-  rule: PropTypes.exact(RulesPropType)
+  ...CommonWidgetProps
 };
 type FlexibleType = PropTypes.InferProps<typeof FlexibleComponentPropType>;
 
 // PropTypes object for a widget which can be expanded
 export const WidgetPropType = {
   containerStyling: PropTypes.oneOfType([
-    PropTypes.shape(AbsoluteContainerProps),
-    PropTypes.shape(FlexibleContainerProps)
+    PropTypes.exact(AbsoluteContainerProps),
+    PropTypes.exact(FlexibleContainerProps)
   ]).isRequired,
-  widgetStyling: PropTypes.shape(WidgetStylingPropType),
+  widgetStyling: PropTypes.exact(WidgetStylingPropType),
   macroMap: PropTypes.objectOf(PropTypes.string.isRequired),
   rule: PropTypes.exact(RulesPropType)
 };
