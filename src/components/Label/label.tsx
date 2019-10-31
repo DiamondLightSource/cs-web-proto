@@ -20,9 +20,3 @@ interface LabelWidgetProps {
 export const Label = (props: LabelWidgetProps & WidgetProps): JSX.Element => (
   <Widget baseWidget={LabelComponent} {...props} />
 );
-
-export const Lab = (props: LabelWidgetProps): JSX.Element => {
-  return (
-    <Label text="hello" containerStyling={{ position: "relative" }}></Label>
-  );
-};
