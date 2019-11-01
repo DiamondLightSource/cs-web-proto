@@ -41,7 +41,7 @@ export function widgetDescriptionToComponent(
     //   widgetStyling: propTypes.object
     // };
 
-    if (type === "label" || type === "readback") {
+    if (type === "label" || type === "readback" || type === "shape") {
       // console.log("Got a label component");
       // console.log(otherProps);
       // console.log(widgetDict[type].propTypes);
