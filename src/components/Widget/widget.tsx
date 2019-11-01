@@ -15,7 +15,7 @@ export type Component = {
   style?: object;
 };
 
-export type PVComponent = Component & FullPvState;
+export type PVComponent = Component & FullPvState & { pvName: string };
 
 // Number of prop types organised into useable sections to form more
 // complex units
