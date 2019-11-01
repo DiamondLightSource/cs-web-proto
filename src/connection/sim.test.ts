@@ -41,10 +41,17 @@ const assertValue = (
 };
 
 it("test local values", (done): void => {
+  var zeroDone = false;
   getValue("loc://location", (value: VType): void => {
-    expect(value.getValue()).toEqual(17);
+    if (!zeroDone) {
+      expect(value.getValue()).toEqual(0.0);
+      zeroDone = true;
+    } else {
+      expect(value.getValue()).toEqual(17.0);
+    }
     done();
   });
+  simulator.subscribe("loc://location");
   simulator.putPv("loc://location", vdouble(17));
 });
 
@@ -63,12 +70,12 @@ it("local values zero initially", (done): void => {
   simulator.subscribe("loc://location");
 });
 
-it("deletes pv on unsubscribe", (): void => {
-  // "Unless a type selector and initial value are provided, a local value will be of type ‘double’ with initial value of 0." [https://buildmedia.readthedocs.org/media/pdf/phoebus-doc/latest/phoebus-doc.pdf]
-  simulator.subscribe("loc://location");
-  expect(simulator["simPvs"].get("loc://location") === undefined).toBe(false);
-  simulator.unsubscribe("loc://location");
+it("doesn't delete pv on unsubscribe", (): void => {
   expect(simulator["simPvs"].get("loc://location")).toBe(undefined);
+  simulator.subscribe("loc://location");
+  expect(simulator["simPvs"].get("loc://location")).toBeTruthy();
+  simulator.unsubscribe("loc://location");
+  expect(simulator["simPvs"].get("loc://location")).toBeTruthy();
 });
 
 it("test random values ", (): void => {
@@ -133,14 +140,22 @@ it("modifying limit values", (done): void => {
   simulator.putPv("sim://limit", vdouble(17));
 });
 
-it("distinguish limit values", (done): void => {
+it("distinguishes limit values", (done): void => {
   function* repeatedCallback(): any {
     const update1 = yield;
     expect(update1.name).toEqual("sim://limit#one");
-    expect(update1.value.getValue()).toEqual(1);
+    expect(update1.value.getValue()).toEqual(50);
+
     const update2 = yield;
     expect(update2.name).toEqual("sim://limit#two");
-    expect(update2.value.getValue()).toEqual(2);
+    expect(update2.value.getValue()).toEqual(50);
+
+    const update3 = yield;
+    expect(update3.name).toEqual("sim://limit#one");
+    expect(update3.value.getValue()).toEqual(1);
+    const update4 = yield;
+    expect(update4.name).toEqual("sim://limit#two");
+    expect(update4.value.getValue()).toEqual(2);
     done();
   }
   const iter = repeatedCallback();
@@ -150,6 +165,8 @@ it("distinguish limit values", (done): void => {
     iter.next({ name: name, value: diffToValue(value) });
   });
 
+  simulator.subscribe("sim://limit#one");
+  simulator.subscribe("sim://limit#two");
   simulator.putPv("sim://limit#one", vdouble(1));
   simulator.putPv("sim://limit#two", vdouble(2));
 });
@@ -235,6 +252,142 @@ it("return undefined for bad pvs", (): void => {
     expect(value).toBe(undefined);
   });
   simulator.subscribe("bad pv");
+});
+
+class ConnectionClient {
+  public expectedValue: VType;
+  public subscribed: boolean;
+  private simulator: SimulatorPlugin;
+  private key: string | undefined;
+
+  public constructor(simulator: SimulatorPlugin, key?: string) {
+    this.expectedValue = vdouble(0.0);
+    this.subscribed = false;
+    this.simulator = simulator;
+    this.key = key;
+  }
+
+  private _key(key?: string): string {
+    key = key || this.key;
+    if (key === undefined) {
+      throw new Error("No key");
+    }
+    return key;
+  }
+
+  public subscribe(key?: string): void {
+    this.subscribed = true;
+    simulator.subscribe(this._key(key));
+  }
+
+  public unsubscribe(key?: string): void {
+    this.subscribed = false;
+    simulator.unsubscribe(this._key(key));
+  }
+
+  public putPv(value: number, key?: string): void {
+    this.expectedValue = vdouble(value);
+    simulator.putPv(this._key(key), vdouble(value));
+  }
+
+  public callback(callback: Function): Function {
+    return function(name: string, value: PartialVType): void {
+      return callback({ name: name, value: diffToValue(value) });
+    };
+  }
+}
+
+class StageFinished extends Error {
+  public constructor(name: string) {
+    super(name);
+  }
+}
+
+class StagedCallbacks {
+  private doneStages: string[];
+  public constructor() {
+    this.doneStages = [];
+  }
+  public stage(name: string, f: Function, ...args: any[]): void {
+    if (this.doneStages.indexOf(name) === -1) {
+      this.doneStages.push(name);
+      f(...args);
+      throw new StageFinished(name);
+    }
+  }
+
+  public callback(callback: Function): any {
+    return function(...args: any[]): void {
+      try {
+        return callback(...args);
+      } catch (e) {
+        if (e instanceof StageFinished) {
+          return;
+        } else {
+          throw e;
+        }
+      }
+    };
+  }
+}
+
+it("unsubscribe stops updates for simulated values", (done): void => {
+  var callbacks = new StagedCallbacks();
+  simulator = new SimulatorPlugin(50);
+  var client = new ConnectionClient(simulator, "sim://sine");
+
+  const callback = (data: { value: VType; name: string }): void => {
+    if (client.subscribed) {
+      callbacks.stage("one", (): void => {});
+      callbacks.stage("two", (): void => {
+        client.unsubscribe();
+        setTimeout(done, 2000);
+      });
+    } else {
+      done.fail("Received updates after unsubscribe.");
+      client.subscribe();
+    }
+  };
+
+  simulator.connect(
+    nullConnCallback,
+    callbacks.callback(client.callback(callback))
+  );
+  client.subscribe();
+});
+
+it("unsubscribe stops updates, but maintains value", (done): void => {
+  var callbacks = new StagedCallbacks();
+  var client = new ConnectionClient(simulator, "loc://name");
+
+  const callback = (data: { value: VType; name: string }): void => {
+    if (client.subscribed) {
+      expect(data.value.getValue()).toBe(client.expectedValue.getValue());
+      callbacks.stage("zero", (): void => {
+        client.putPv(2.0);
+      });
+
+      callbacks.stage("one", (): void => {
+        client.unsubscribe();
+        client.putPv(3.0);
+        setTimeout(function(): void {
+          client.subscribe();
+          client.putPv(4.0);
+        }, 100);
+      });
+      callbacks.stage("two", (): void => {
+        done();
+      });
+    } else {
+      done.fail("Received updates after unsubscribe.");
+    }
+  };
+
+  simulator.connect(
+    nullConnCallback,
+    callbacks.callback(client.callback(callback))
+  );
+  client.subscribe();
 });
 
 it("test sine values ", (): void => {
