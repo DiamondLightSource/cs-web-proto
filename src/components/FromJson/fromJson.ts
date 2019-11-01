@@ -9,6 +9,7 @@ import { MacroMap } from "../../redux/csState";
 import { Label } from "../Label/label";
 import { Readback } from "../Readback/readback";
 import { Input } from "../Input/input";
+import { Shape } from "../Shape/shape";
 import { FlexContainer } from "../FlexContainer/flexContainer";
 import { ProgressBar } from "../ProgressBar/progressBar";
 import { SlideControl } from "../SlideControl/slideControl";
@@ -57,6 +58,7 @@ export const WidgetFromJson = (
   }
   const widgetDict = {
     readback: Readback,
+    shape: Shape,
     input: Input,
     label: Label,
     progressbar: ProgressBar,

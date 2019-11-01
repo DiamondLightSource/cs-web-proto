@@ -18,6 +18,7 @@ import { MacrosPage } from "./pages/macrosPage";
 import { lightTheme, darkTheme, ThemeContext } from "./themeContext";
 import { FlexExamplePage } from "./pages/flexExamplePage";
 import { EmbeddedPage } from "./pages/embeddedPage";
+import { ShapesPage } from "./pages/shapesPage";
 
 import { SimulatorPlugin } from "./connection/sim";
 import { ConiqlPlugin } from "./connection/coniql";
@@ -103,6 +104,9 @@ const App: React.FC = (): JSX.Element => {
             </Link>
             <Link style={styleLinkButton} to="/embed">
               Embed
+            </Link>{" "}
+            <Link style={styleLinkButton} to="/shapes">
+              Shapes
             </Link>
           </div>
           <div
@@ -129,6 +133,7 @@ const App: React.FC = (): JSX.Element => {
             <Route path="/coniql" exact component={ConiqlPage} />
             <Route path="/flex" exact component={FlexExamplePage} />
             <Route path="/embed" exact component={EmbeddedPage} />
+            <Route path="/shapes" exact component={ShapesPage} />
           </div>
         </div>
       </BrowserRouter>
