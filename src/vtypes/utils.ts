@@ -6,8 +6,8 @@ import { DISPLAY_NONE } from "./display";
 
 export const vtypeToString = (
   vtype?: VType,
-  // Because of PropTypes
-  precision?: number | null
+  // Because of PropTypes, now reverted.
+  precision?: number
 ): string => {
   if (vtype instanceof VNumber) {
     if (precision) {

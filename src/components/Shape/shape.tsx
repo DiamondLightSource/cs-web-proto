@@ -1,6 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Component, Widget, WidgetPropType } from "../Widget/widget";
+import {
+  Component,
+  Widget,
+  WidgetPropType,
+  InferWidgetProps
+} from "../Widget/widget";
 
 const ShapeProps = {
   shapeWidth: PropTypes.string,
@@ -11,17 +16,17 @@ const ShapeProps = {
 };
 
 export const ShapeComponent = (
-  props: PropTypes.InferProps<typeof ShapeProps> & Component
+  props: InferWidgetProps<typeof ShapeProps> & Component
 ): JSX.Element => {
   return (
     <div
       style={{
         ...props.style,
-        width: props.shapeWidth !== null ? props.shapeWidth : "",
-        height: props.shapeHeight !== null ? props.shapeHeight : "",
-        borderRadius: props.shapeRadius !== null ? props.shapeRadius : "",
-        transform: props.shapeTransform !== null ? props.shapeTransform : "",
-        backgroundColor: props.shapeColour !== null ? props.shapeColour : ""
+        width: props.shapeWidth ? props.shapeWidth : "",
+        height: props.shapeHeight ? props.shapeHeight : "",
+        borderRadius: props.shapeRadius ? props.shapeRadius : "",
+        transform: props.shapeTransform ? props.shapeTransform : "",
+        backgroundColor: props.shapeColour ? props.shapeColour : ""
       }}
     ></div>
   );
@@ -33,7 +38,7 @@ const ShapeWidgetProps = {
 };
 
 export const Shape = (
-  props: PropTypes.InferProps<typeof ShapeWidgetProps>
+  props: InferWidgetProps<typeof ShapeWidgetProps>
 ): JSX.Element => <Widget baseWidget={ShapeComponent} {...props} />;
 
 Shape.propTypes = ShapeWidgetProps;

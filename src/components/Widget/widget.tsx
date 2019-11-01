@@ -1,21 +1,31 @@
 import React from "react";
-import PropTypes from "prop-types";
+import PropTypes, { InferProps } from "prop-types";
 
 import { CopyWrapper } from "../CopyWrapper/copyWrapper";
 import { AlarmBorder } from "../AlarmBorder/alarmBorder";
-import { FullPvState } from "../../redux/csState";
+import { PvState } from "../../redux/csState";
 import { useMacros } from "../../hooks/useMacros";
 import { useConnection } from "../../hooks/useConnection";
 import { useId } from "react-id-generator";
 import { useRules, RuleProps } from "../../hooks/useRules";
 
+export type ExcludeNulls<T> = {
+  [P in keyof T]: Exclude<T[P], null>;
+};
+export type InferWidgetProps<T> = ExcludeNulls<InferProps<T>>;
+export const StringOrNum = PropTypes.oneOfType([
+  PropTypes.string,
+  PropTypes.number
+]);
+export const MapStringString = PropTypes.objectOf(PropTypes.string);
+
 // Useful types for components which will later be turned into widgets
 // Required to define stateless component
-export type Component = {
+export interface Component {
   style?: object;
-};
+}
 
-export type PVComponent = Component & FullPvState & { pvName: string };
+export type PVComponent = Component & PvState;
 
 // Number of prop types organised into useable sections to form more
 // complex units
@@ -28,16 +38,16 @@ const RulesPropType = {
   condition: PropTypes.string.isRequired,
   trueState: PropTypes.string.isRequired,
   falseState: PropTypes.string.isRequired,
-  substitutionMap: PropTypes.objectOf(PropTypes.string).isRequired,
+  substitutionMap: MapStringString.isRequired,
   prop: PropTypes.string.isRequired
 };
 
 const AbsoluteContainerProps = {
   position: PropTypes.oneOf(["absolute"]).isRequired,
-  x: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-  y: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-  height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-  width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  x: StringOrNum.isRequired,
+  y: StringOrNum.isRequired,
+  height: StringOrNum.isRequired,
+  width: StringOrNum.isRequired,
   ...ContainerFeaturesPropType
 };
 
@@ -55,7 +65,7 @@ const WidgetStylingPropType = {
   textAlign: PropTypes.oneOf(["center", "left", "right", "justify"]),
   backgroundColor: PropTypes.string
 };
-type WidgetStyling = PropTypes.InferProps<typeof WidgetStylingPropType>;
+type WidgetStyling = InferWidgetProps<typeof WidgetStylingPropType>;
 
 const CommonWidgetProps = {
   widgetStyling: PropTypes.shape(WidgetStylingPropType),
@@ -67,13 +77,13 @@ const AbsoluteComponentPropType = {
   containerStyling: PropTypes.shape(AbsoluteContainerProps).isRequired,
   ...CommonWidgetProps
 };
-type AbsoluteType = PropTypes.InferProps<typeof AbsoluteComponentPropType>;
+type AbsoluteType = InferWidgetProps<typeof AbsoluteComponentPropType>;
 
 const FlexibleComponentPropType = {
   containerStyling: PropTypes.shape(FlexibleContainerProps).isRequired,
   ...CommonWidgetProps
 };
-type FlexibleType = PropTypes.InferProps<typeof FlexibleComponentPropType>;
+type FlexibleType = InferWidgetProps<typeof FlexibleComponentPropType>;
 
 // PropTypes object for a widget which can be expanded
 export const WidgetPropType = {
@@ -103,7 +113,7 @@ export const PVWidgetPropType = {
   ...PVExtras,
   ...WidgetPropType
 };
-export type PVWidgetProps = WidgetProps & PropTypes.InferProps<typeof PVExtras>;
+export type PVWidgetProps = WidgetProps & InferWidgetProps<typeof PVExtras>;
 type PVWidgetComponent = PVWidgetProps & { baseWidget: React.FC<any> };
 
 // Function to recursively wrap a given set of widgets
@@ -187,10 +197,9 @@ export const PVWidget = (props: PVWidgetComponent): JSX.Element => {
     id,
     ruleProps.pvName
   );
-  let newProps: PVWidgetComponent & FullPvState = {
+  let newProps: PVWidgetComponent & PvState = {
     ...props,
     pvName: shortPvName,
-    initializingPvName: props.pvName,
     connected: connected,
     readonly: readonly,
     value: latestValue
