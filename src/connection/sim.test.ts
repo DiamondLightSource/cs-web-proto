@@ -254,7 +254,6 @@ it("return undefined for bad pvs", (): void => {
   simulator.subscribe("bad pv");
 });
 
-
 class ConnectionClient {
   public expectedValue: VType;
   public subscribed: boolean;
@@ -268,28 +267,35 @@ class ConnectionClient {
     this.key = key;
   }
 
+  private _key(key?: string): string {
+    key = key || this.key;
+    if (key === undefined) {
+      throw new Error("No key");
+    }
+    return key;
+  }
+
   public subscribe(key?: string): void {
     this.subscribed = true;
-    simulator.subscribe(this.key);
+    simulator.subscribe(this._key(key));
   }
 
   public unsubscribe(key?: string): void {
     this.subscribed = false;
-    simulator.unsubscribe(this.key);
+    simulator.unsubscribe(this._key(key));
   }
 
   public putPv(value: number, key?: string): void {
     this.expectedValue = vdouble(value);
-    simulator.putPv(this.key, vdouble(value));
+    simulator.putPv(this._key(key), vdouble(value));
   }
 
   public callback(callback: Function): Function {
-    return function(name: string, value: PartialVType) {
+    return function(name: string, value: PartialVType): void {
       return callback({ name: name, value: diffToValue(value) });
-    }
+    };
   }
 }
-
 
 class StageFinished extends Error {
   public constructor(name: string) {
@@ -310,8 +316,8 @@ class StagedCallbacks {
     }
   }
 
-  public callback(callback: Function) {
-    return function(...args: any[]) {
+  public callback(callback: Function): any {
+    return function(...args: any[]): void {
       try {
         return callback(...args);
       } catch (e) {
@@ -321,31 +327,34 @@ class StagedCallbacks {
           throw e;
         }
       }
-    }
+    };
   }
 }
-
 
 it("unsubscribe stops updates for simulated values", (done): void => {
   var callbacks = new StagedCallbacks();
   simulator = new SimulatorPlugin(50);
   var client = new ConnectionClient(simulator, "sim://sine");
 
-
   const callback = (data: { value: VType; name: string }): void => {
     if (client.subscribed) {
-      callbacks.stage("one", () => { });
-      callbacks.stage("two", () => { client.unsubscribe(); setTimeout(function() { done() }, 2000) });
+      callbacks.stage("one", (): void => {});
+      callbacks.stage("two", (): void => {
+        client.unsubscribe();
+        setTimeout(done, 2000);
+      });
     } else {
       done.fail("Received updates after unsubscribe.");
       client.subscribe();
     }
   };
 
-  simulator.connect(nullConnCallback, callbacks.callback(client.callback(callback)));
+  simulator.connect(
+    nullConnCallback,
+    callbacks.callback(client.callback(callback))
+  );
   client.subscribe();
 });
-
 
 it("unsubscribe stops updates, but maintains value", (done): void => {
   var callbacks = new StagedCallbacks();
@@ -353,7 +362,6 @@ it("unsubscribe stops updates, but maintains value", (done): void => {
 
   const callback = (data: { value: VType; name: string }): void => {
     if (client.subscribed) {
-
       expect(data.value.getValue()).toBe(client.expectedValue.getValue());
       callbacks.stage("zero", (): void => {
         client.putPv(2.0);
@@ -375,7 +383,10 @@ it("unsubscribe stops updates, but maintains value", (done): void => {
     }
   };
 
-  simulator.connect(nullConnCallback, callbacks.callback(client.callback(callback)));
+  simulator.connect(
+    nullConnCallback,
+    callbacks.callback(client.callback(callback))
+  );
   client.subscribe();
 });
 

@@ -28,7 +28,12 @@ function partialise(value: VType | undefined): PartialVType | undefined {
   }
 }
 
-type SimArgs = [string, ConnectionChangedCallback, ValueChangedCallback, number]
+type SimArgs = [
+  string,
+  ConnectionChangedCallback,
+  ValueChangedCallback,
+  number
+];
 
 abstract class SimPv {
   private onConnectionUpdate: ConnectionChangedCallback;
@@ -71,7 +76,7 @@ abstract class SimPv {
   }
 
   public publishConnection(): void {
-    this.onConnectionUpdate(this.pvName, this.getConnection())
+    this.onConnectionUpdate(this.pvName, this.getConnection());
   }
 
   public updateValue(_: VType): void {
@@ -114,7 +119,7 @@ class RandomPv extends SimPv {
 class Disconnector extends SimPv {
   public constructor(...args: SimArgs) {
     super(...args);
-    this.publish()
+    this.publish();
     this.maybeSetInterval(this.publishConnection.bind(this));
   }
   public getConnection(): ConnectionState {
@@ -127,7 +132,6 @@ class Disconnector extends SimPv {
   }
 }
 
-
 class SimEnumPv extends SimPv {
   private value: VEnum = venum(
     0,
@@ -138,9 +142,8 @@ class SimEnumPv extends SimPv {
   public constructor(...args: SimArgs) {
     super(...args);
     this.publishConnection();
-    this.publish()
-    setInterval(this.publish.bind(this), this.updateRate
-    );
+    this.publish();
+    setInterval(this.publish.bind(this), this.updateRate);
   }
   public getValue(): VType {
     const newIndex = Math.floor(
