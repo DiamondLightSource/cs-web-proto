@@ -10,10 +10,12 @@ import {
 
 import classes from "./readback.module.css";
 import { alarmOf, AlarmSeverity } from "../../vtypes/alarm";
+import { displayOf } from "../../vtypes/display";
 import { vtypeToString } from "../../vtypes/utils";
 
 const ReadbackProps = {
-  precision: PropTypes.number
+  precision: PropTypes.number,
+  showUnits: PropTypes.bool
 };
 
 // Needs to be exported for testing
@@ -35,8 +37,9 @@ function getClass(alarmSeverity: any): string {
 export const ReadbackComponent = (
   props: ReadbackComponentProps
 ): JSX.Element => {
-  let { connected, value, precision, style } = props;
+  let { connected, value, precision, showUnits = false, style } = props;
   const alarm = alarmOf(value);
+  const display = displayOf(value);
   let displayedValue;
   if (!value) {
     displayedValue = "Waiting for value";
@@ -44,6 +47,11 @@ export const ReadbackComponent = (
     displayedValue = vtypeToString(value, precision);
   }
   style = { backgroundColor: "#383838", ...props.style };
+
+  // Add units if there are any and show units is true
+  if (showUnits === true && display.getUnit() !== "") {
+    displayedValue = displayedValue + ` ${display.getUnit()}`;
+  }
 
   // Change text color depending on connection state
   if (!connected) {
