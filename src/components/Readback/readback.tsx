@@ -15,6 +15,8 @@ import { vtypeToString } from "../../vtypes/utils";
 const ReadbackProps = {
   precision: PropTypes.number
 };
+
+// Needs to be exported for testing
 export type ReadbackComponentProps = InferWidgetProps<typeof ReadbackProps> &
   PVComponent;
 
@@ -31,7 +33,7 @@ function getClass(alarmSeverity: any): string {
 }
 
 export const ReadbackComponent = (
-  props: InferWidgetProps<typeof ReadbackProps> & PVComponent
+  props: ReadbackComponentProps
 ): JSX.Element => {
   let { connected, value, precision, style } = props;
   const alarm = alarmOf(value);
