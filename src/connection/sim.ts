@@ -28,9 +28,17 @@ function partialise(value: VType | undefined): PartialVType | undefined {
   }
 }
 
+type SimArgs = [
+  string,
+  ConnectionChangedCallback,
+  ValueChangedCallback,
+  number
+];
+
 abstract class SimPv {
-  protected onConnectionUpdate: ConnectionChangedCallback;
-  protected onValueUpdate: ValueChangedCallback;
+  private onConnectionUpdate: ConnectionChangedCallback;
+  private onValueUpdate: ValueChangedCallback;
+  protected subscribed: boolean;
   public pvName: string;
   protected updateRate?: number;
   abstract getValue(): VType | undefined;
@@ -44,15 +52,31 @@ abstract class SimPv {
     this.onConnectionUpdate = onConnectionUpdate;
     this.onValueUpdate = onValueUpdate;
     this.updateRate = updateRate;
-    this.onConnectionUpdate(pvName, { isConnected: true, isReadonly: true });
+    this.publishConnection();
+    this.subscribed = false;
   }
 
   public getConnection(): ConnectionState {
     return { isConnected: true, isReadonly: true };
   }
 
+  public subscribe(): void {
+    this.subscribed = true;
+    this.publish();
+  }
+
+  public unsubscribe(): void {
+    this.subscribed = false;
+  }
+
   public publish(): void {
-    this.onValueUpdate(this.pvName, partialise(this.getValue()));
+    if (this.subscribed) {
+      this.onValueUpdate(this.pvName, partialise(this.getValue()));
+    }
+  }
+
+  public publishConnection(): void {
+    this.onConnectionUpdate(this.pvName, this.getConnection());
   }
 
   public updateValue(_: VType): void {
@@ -69,17 +93,9 @@ abstract class SimPv {
 }
 
 class SinePv extends SimPv {
-  public constructor(
-    pvName: string,
-    onConnectionUpdate: ConnectionChangedCallback,
-    onValueUpdate: ValueChangedCallback,
-    updateRate?: number
-  ) {
-    super(pvName, onConnectionUpdate, onValueUpdate, updateRate);
-    setInterval((): void => {
-      const value = this.getValue();
-      this.onValueUpdate(this.pvName, partialise(value));
-    }, this.updateRate);
+  public constructor(...args: SimArgs) {
+    super(...args);
+    setInterval(this.publish.bind(this), this.updateRate);
   }
 
   public getValue(): VType | undefined {
@@ -91,17 +107,9 @@ class SinePv extends SimPv {
 }
 
 class RandomPv extends SimPv {
-  public constructor(
-    pvName: string,
-    onConnectionUpdate: ConnectionChangedCallback,
-    onValueUpdate: ValueChangedCallback,
-    updateRate?: number
-  ) {
-    super(pvName, onConnectionUpdate, onValueUpdate, updateRate);
-
-    this.maybeSetInterval((): void => {
-      this.onValueUpdate(this.pvName, partialise(this.getValue()));
-    });
+  public constructor(...args: SimArgs) {
+    super(...args);
+    this.maybeSetInterval(this.publish.bind(this));
   }
   public getValue(): VType | undefined {
     return vdouble(Math.random());
@@ -109,18 +117,10 @@ class RandomPv extends SimPv {
 }
 
 class Disconnector extends SimPv {
-  public constructor(
-    pvName: string,
-    onConnectionUpdate: ConnectionChangedCallback,
-    onValueUpdate: ValueChangedCallback,
-    updateRate?: number
-  ) {
-    super(pvName, onConnectionUpdate, onValueUpdate, updateRate);
-    let value = this.getValue();
-    this.onValueUpdate(this.pvName, partialise(value));
-    this.maybeSetInterval((): void =>
-      this.onConnectionUpdate(this.pvName, this.getConnection())
-    );
+  public constructor(...args: SimArgs) {
+    super(...args);
+    this.publish();
+    this.maybeSetInterval(this.publishConnection.bind(this));
   }
   public getConnection(): ConnectionState {
     const randomBool = Math.random() >= 0.5;
@@ -139,22 +139,11 @@ class SimEnumPv extends SimPv {
     ALARM_NONE,
     timeNow()
   );
-  public constructor(
-    pvName: string,
-    onConnectionUpdate: ConnectionChangedCallback,
-    onValueUpdate: ValueChangedCallback,
-    updateRate: number
-  ) {
-    super(pvName, onConnectionUpdate, onValueUpdate, updateRate);
-    this.onConnectionUpdate(this.pvName, {
-      isConnected: true,
-      isReadonly: true
-    });
-    this.onValueUpdate(this.pvName, partialise(this.getValue()));
-    setInterval(
-      (): void => this.onValueUpdate(this.pvName, partialise(this.getValue())),
-      this.updateRate
-    );
+  public constructor(...args: SimArgs) {
+    super(...args);
+    this.publishConnection();
+    this.publish();
+    setInterval(this.publish.bind(this), this.updateRate);
   }
   public getValue(): VType {
     const newIndex = Math.floor(
@@ -177,21 +166,15 @@ class EnumPv extends SimPv {
     ALARM_NONE,
     timeNow()
   );
-  public constructor(
-    pvName: string,
-    onConnectionUpdate: ConnectionChangedCallback,
-    onValueUpdate: ValueChangedCallback,
-    updateRate: number
-  ) {
-    super(pvName, onConnectionUpdate, onValueUpdate, updateRate);
-    this.onConnectionUpdate(this.pvName, {
-      isConnected: true,
-      isReadonly: false
-    });
-    setInterval(
-      (): void => this.onValueUpdate(this.pvName, partialise(this.getValue())),
-      this.updateRate
-    );
+
+  public constructor(...args: SimArgs) {
+    super(...args);
+    this.publishConnection();
+    setInterval(this.publish.bind(this), this.updateRate);
+  }
+
+  public getConnection(): ConnectionState {
+    return { isConnected: true, isReadonly: false };
   }
 
   public updateValue(value: VType): void {
@@ -238,16 +221,14 @@ class EnumPv extends SimPv {
 
 class LocalPv extends SimPv {
   private value: VType | undefined;
-  public constructor(
-    pvName: string,
-    onConnectionUpdate: ConnectionChangedCallback,
-    onValueUpdate: ValueChangedCallback,
-    updateRate?: number
-  ) {
-    super(pvName, onConnectionUpdate, onValueUpdate, updateRate);
-    this.onConnectionUpdate(pvName, { isConnected: true, isReadonly: false });
+  public constructor(...args: SimArgs) {
+    super(...args);
+    this.publishConnection();
     this.value = undefined;
-    this.updateRate = updateRate;
+  }
+
+  public getConnection(): ConnectionState {
+    return { isConnected: true, isReadonly: false };
   }
 
   public getValue(): VType | undefined {
@@ -264,15 +245,11 @@ class LimitData extends SimPv {
   private value: VType;
   // Class to provide PV value along with Alarm and Timestamp data
   // Initial limits will be 10, 20, 80 and 90 - with expected range between 0 and 100
-  public constructor(
-    pvName: string,
-    onConnectionUpdate: ConnectionChangedCallback,
-    onValueUpdate: ValueChangedCallback,
-    updateRate?: number
-  ) {
-    super(pvName, onConnectionUpdate, onValueUpdate, updateRate);
+
+  public constructor(...args: SimArgs) {
+    super(...args);
     this.value = vdouble(50);
-    this.onConnectionUpdate(this.pvName, this.getConnection());
+    this.publishConnection();
   }
 
   public getConnection(): ConnectionState {
@@ -334,7 +311,10 @@ export class SimulatorPlugin implements Connection {
   }
 
   public subscribe(pvName: string): string {
-    let simulator = this._subscribe(pvName);
+    const simulator = this.initSimulator(pvName);
+    if (simulator !== undefined) {
+      simulator.subscribe();
+    }
     return (simulator && simulator.pvName) || pvName;
   }
 
@@ -453,10 +433,7 @@ export class SimulatorPlugin implements Connection {
     return { simulator: result, initialValue: initial };
   }
 
-  public _subscribe(
-    pvName: string,
-    publish: boolean = true
-  ): SimPv | undefined {
+  public initSimulator(pvName: string): SimPv | undefined {
     let nameInfo = this.parseName(pvName);
 
     if (this.simPvs.get(nameInfo.keyName) === undefined) {
@@ -471,19 +448,18 @@ export class SimulatorPlugin implements Connection {
         this.simPvs.put(simulatorInfo.simulator);
       }
 
-      if (publish && simulatorInfo.simulator !== undefined) {
-        if (simulatorInfo.initialValue !== undefined) {
+      if (simulatorInfo.initialValue !== undefined) {
+        if (simulatorInfo.simulator !== undefined) {
           simulatorInfo.simulator.updateValue(simulatorInfo.initialValue);
-        } else {
-          simulatorInfo.simulator.publish();
         }
       }
     }
+
     return this.simPvs.get(nameInfo.keyName);
   }
 
   public putPv(pvName: string, value: VType): void {
-    let pvSimulator = this._subscribe(pvName, false);
+    let pvSimulator = this.initSimulator(pvName);
     if (pvSimulator !== undefined) {
       pvSimulator.updateValue(value);
     } else {
@@ -494,14 +470,17 @@ export class SimulatorPlugin implements Connection {
   }
 
   public getValue(pvName: string): VType | undefined {
-    let pvSimulator = this._subscribe(pvName, false);
+    let pvSimulator = this.initSimulator(pvName);
     return pvSimulator && pvSimulator.getValue();
   }
 
   public unsubscribe(pvName: string): void {
     log.info(`Unsubscribing from ${pvName}.`);
-    if (this.simPvs.get(pvName)) {
-      this.simPvs.remove(pvName);
+    const simulator = this.simPvs.get(pvName);
+    if (simulator) {
+      if (simulator) {
+        simulator.unsubscribe();
+      }
     }
   }
 }
