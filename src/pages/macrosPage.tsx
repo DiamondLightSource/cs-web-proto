@@ -26,7 +26,16 @@ export const MacrosPage = (): JSX.Element => (
           padding: ""
         }}
       />
-      <Input pvName={"loc://pv1"} containerStyling={{ position: "relative" }} />
+      <Input
+        pvName={"loc://pv1"}
+        containerStyling={{
+          position: "relative",
+          height: "",
+          width: "",
+          margin: "",
+          padding: ""
+        }}
+      />
       <Label
         text="loc://pv2"
         containerStyling={{

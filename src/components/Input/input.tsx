@@ -1,10 +1,16 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 
 import classes from "./input.module.css";
 import { writePv } from "../../hooks/useSubscription";
 import { VType } from "../../vtypes/vtypes";
 import { vtypeToString, stringToVtype } from "../../vtypes/utils";
-import { PVWidget, PVWidgetProps } from "../Widget/widget";
+import {
+  InferWidgetProps,
+  PVComponent,
+  PVWidget,
+  PVWidgetPropType
+} from "../Widget/widget";
 
 export interface InputProps {
   pvName: string;
@@ -39,15 +45,18 @@ export const InputComponent: React.FC<InputProps> = (
   );
 };
 
-interface SmartInputProps {
-  pvName: string;
-  readonly: boolean;
-  value?: VType;
-  style?: object;
-}
+// interface SmartInputProps {
+//   pvName: string;
+//   readonly: boolean;
+//   value?: VType;
+//   style?: object;
+// }
+const SmartInputProps = {
+  pvName: PropTypes.string.isRequired
+};
 
-export const SmartInputComponent: React.FC<SmartInputProps> = (
-  props: SmartInputProps
+export const SmartInputComponent = (
+  props: InferWidgetProps<typeof SmartInputProps> & PVComponent
 ): JSX.Element => {
   const [inputValue, setInputValue] = useState("");
   const [editing, setEditing] = useState(false);
@@ -92,10 +101,16 @@ export const SmartInputComponent: React.FC<SmartInputProps> = (
   );
 };
 
-interface InputWidgetProps {
-  precision?: number;
-}
+// interface InputWidgetProps {
+//   precision?: number;
+// }
+const InputWidgetProps = {
+  ...SmartInputProps,
+  ...PVWidgetPropType
+};
 
-export const Input = (props: InputWidgetProps & PVWidgetProps): JSX.Element => (
-  <PVWidget baseWidget={SmartInputComponent} {...props} />
-);
+export const Input = (
+  props: InferWidgetProps<typeof InputWidgetProps>
+): JSX.Element => <PVWidget baseWidget={SmartInputComponent} {...props} />;
+
+Input.propTypes = InputWidgetProps;
