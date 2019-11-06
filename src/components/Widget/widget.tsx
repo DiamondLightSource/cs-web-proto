@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React, { memo, useMemo } from "react";
 import PropTypes, { InferProps } from "prop-types";
 
 import { CopyWrapper } from "../CopyWrapper/copyWrapper";
@@ -170,8 +170,6 @@ function widgetPropsAreEqual(
     ...nextProps.rule
   };
 
-  console.log("Calculating memo");
-
   if (JSON.stringify(prevExpanded) === JSON.stringify(nextExpanded)) {
     console.log("Props are equal!");
     return true;
@@ -205,13 +203,25 @@ export const WidgetMemo = (props: WidgetComponent): JSX.Element => {
   // Put appropriate components on the list of components to be wrapped
   let components = [baseWidget];
 
-  return recursiveWrapping(
-    components,
-    mappedContainerStyling,
-    widgetStyling,
-    containerProps,
-    baseWidgetProps
+  const wrappedComponent = useMemo(
+    () =>
+      recursiveWrapping(
+        components,
+        mappedContainerStyling,
+        widgetStyling,
+        containerProps,
+        baseWidgetProps
+      ),
+    [
+      components,
+      mappedContainerStyling,
+      widgetStyling,
+      containerProps,
+      baseWidgetProps
+    ]
   );
+
+  return wrappedComponent;
 };
 
 export const Widget = memo(WidgetMemo, widgetPropsAreEqual);
