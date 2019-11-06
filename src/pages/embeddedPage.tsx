@@ -17,7 +17,13 @@ export const EmbeddedPage = (): JSX.Element => (
     <div style={{ height: "100%", width: "100%" }}>
       <WidgetFromJson
         file="http://localhost:3000/embeddedScreens/flexiEmbedded.json"
-        containerStyling={{ position: "relative" }}
+        containerStyling={{
+          position: "relative",
+          height: "",
+          width: "",
+          margin: "",
+          padding: ""
+        }}
       />
     </div>
   </div>

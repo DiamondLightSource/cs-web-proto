@@ -25,7 +25,7 @@ export interface Component {
   style?: object;
 }
 
-export type PVComponent = Component & PvState;
+export type PVComponent = Component & PvState & { pvName: string };
 
 // Number of prop types organised into useable sections to form more
 // complex units

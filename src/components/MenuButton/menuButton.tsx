@@ -3,7 +3,12 @@ import { writePv } from "../../hooks/useSubscription";
 
 import { VType, VEnum } from "../../vtypes/vtypes";
 import { vtypeToString, stringToVtype } from "../../vtypes/utils";
-import { PVWidgetProps, PVWidget } from "../Widget/widget";
+import {
+  InferWidgetProps,
+  PVComponent,
+  PVWidget,
+  PVWidgetPropType
+} from "../Widget/widget";
 
 export interface MenuButtonProps {
   connected: boolean;
@@ -65,13 +70,7 @@ export const MenuButtonComponent = (props: MenuButtonProps): JSX.Element => {
 };
 
 // Menu button which also knows how to write to a PV
-export const SmartMenuButton = (props: {
-  connected: boolean;
-  pvName: string;
-  value?: VType;
-  readonly: boolean;
-  style?: {};
-}): JSX.Element => {
+export const SmartMenuButton = (props: PVComponent): JSX.Element => {
   // Function to send the value on to the PV
   function onChange(event: React.ChangeEvent<HTMLSelectElement>): void {
     writePv(props.pvName, stringToVtype(event.currentTarget.value));
@@ -88,6 +87,8 @@ export const SmartMenuButton = (props: {
   );
 };
 
-export const MenuButton = (props: PVWidgetProps): JSX.Element => (
-  <PVWidget baseWidget={SmartMenuButton} {...props} />
-);
+export const MenuButton = (
+  props: InferWidgetProps<typeof PVWidgetPropType>
+): JSX.Element => <PVWidget baseWidget={SmartMenuButton} {...props} />;
+
+MenuButton.propTypes = PVWidgetPropType;

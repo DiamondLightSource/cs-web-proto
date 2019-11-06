@@ -35,42 +35,26 @@ export function widgetDescriptionToComponent(
       ...otherProps
     } = widgetDescription;
 
-    // const LabelProps = {
-    //   text: propTypes.oneOfType([propTypes.string, propTypes.number])
-    //     .isRequired,
-    //   widgetStyling: propTypes.object
-    // };
-
-    if (
-      type === "label" ||
-      type === "readback" ||
-      type === "shape" ||
-      type === "display" ||
-      type === "input"
-    ) {
-      // console.log("Got a label component");
-      // console.log(otherProps);
-      // console.log(widgetDict[type].propTypes);
-      let widgetInfo = { containerStyling: containerStyling, ...otherProps };
-      let error: string | undefined = checkPropTypes(
-        widgetDict[type].propTypes,
-        widgetInfo,
-        "widget description",
-        type,
-        (): void => {
-          log.debug("Got an error");
-        }
-      );
-      if (error !== undefined) {
-        throw {
-          msg: error,
-          object: {
-            type: type,
-            containerStyling: containerStyling,
-            ...otherProps
-          }
-        };
+    // Perform checking on propTypes
+    let widgetInfo = { containerStyling: containerStyling, ...otherProps };
+    let error: string | undefined = checkPropTypes(
+      widgetDict[type].propTypes,
+      widgetInfo,
+      "widget description",
+      type,
+      (): void => {
+        log.debug("Got an error");
       }
+    );
+    if (error !== undefined) {
+      throw {
+        msg: error,
+        object: {
+          type: type,
+          containerStyling: containerStyling,
+          ...otherProps
+        }
+      };
     }
 
     // Collect macroMap passed into function and overwrite/add any
