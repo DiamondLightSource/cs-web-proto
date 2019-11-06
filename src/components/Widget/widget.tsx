@@ -203,30 +203,46 @@ export const WidgetMemo = (props: WidgetComponent): JSX.Element => {
   // Put appropriate components on the list of components to be wrapped
   let components = [baseWidget];
 
-  const wrappedComponent = useMemo(
-    () =>
-      recursiveWrapping(
-        components,
-        mappedContainerStyling,
-        widgetStyling,
-        containerProps,
-        baseWidgetProps
-      ),
-    [
-      components,
-      mappedContainerStyling,
-      widgetStyling,
-      containerProps,
-      baseWidgetProps
-    ]
+  return recursiveWrapping(
+    components,
+    mappedContainerStyling,
+    widgetStyling,
+    containerProps,
+    baseWidgetProps
   );
-
-  return wrappedComponent;
 };
 
 export const Widget = memo(WidgetMemo, widgetPropsAreEqual);
 
-export const PVWidget = (props: PVWidgetComponent): JSX.Element => {
+// Function to compare widget props
+function pvWidgetPropsAreEqual(
+  prevProps: PVWidgetComponent,
+  nextProps: PVWidgetComponent
+): boolean {
+  let prevExpanded = {
+    pvName: prevProps.pvName,
+    ...prevProps.containerStyling,
+    ...prevProps.widgetStyling,
+    ...prevProps.macroMap,
+    ...prevProps.rule
+  };
+  let nextExpanded = {
+    pvName: nextProps.pvName,
+    ...nextProps.containerStyling,
+    ...nextProps.widgetStyling,
+    ...nextProps.macroMap,
+    ...nextProps.rule
+  };
+
+  if (JSON.stringify(prevExpanded) === JSON.stringify(nextExpanded)) {
+    console.log("Props are equal!");
+    return true;
+  } else {
+    return false;
+  }
+}
+
+export const PVWidgetMemo = (props: PVWidgetComponent): JSX.Element => {
   const [id] = useId();
   let idProps = { ...props, id: id };
 
@@ -286,3 +302,5 @@ export const PVWidget = (props: PVWidgetComponent): JSX.Element => {
     baseWidgetProps
   );
 };
+
+export const PVWidget = memo(PVWidgetMemo, pvWidgetPropsAreEqual);
