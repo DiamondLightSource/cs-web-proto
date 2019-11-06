@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import PropTypes, { InferProps } from "prop-types";
 
 import { CopyWrapper } from "../CopyWrapper/copyWrapper";
@@ -152,19 +152,47 @@ const recursiveWrapping = (
   }
 };
 
-export const Widget = (props: WidgetComponent): JSX.Element => {
-  // Generic widget component
-  // const [id] = useId();
-  // let idProps = { ...props, id: id };
+// Function to compare widget props
+function widgetPropsAreEqual(
+  prevProps: WidgetComponent,
+  nextProps: WidgetComponent
+): boolean {
+  let prevExpanded = {
+    ...prevProps.containerStyling,
+    ...prevProps.widgetStyling,
+    ...prevProps.macroMap,
+    ...prevProps.rule
+  };
+  let nextExpanded = {
+    ...nextProps.containerStyling,
+    ...nextProps.widgetStyling,
+    ...nextProps.macroMap,
+    ...nextProps.rule
+  };
 
-  // // Apply macros.
-  // const macroProps = useMacros(idProps) as RuleProps;
-  // // Then rules
-  // const ruleProps = useRules(macroProps);
+  console.log("Calculating memo");
+
+  if (JSON.stringify(prevExpanded) === JSON.stringify(nextExpanded)) {
+    console.log("Props are equal!");
+    return true;
+  } else {
+    return false;
+  }
+}
+
+export const WidgetMemo = (props: WidgetComponent): JSX.Element => {
+  // Generic widget component
+  const [id] = useId();
+  let idProps = { ...props, id: id };
+
+  // Apply macros.
+  const macroProps = useMacros(idProps) as RuleProps;
+  // Then rules
+  const ruleProps = useRules(macroProps);
 
   // Give containers access to everything apart from the containerStyling
   // Assume flexible position if not provided with anything
-  const { containerStyling, ...containerProps } = props;
+  const { containerStyling, ...containerProps } = ruleProps;
 
   // Manipulate for absolute styling
   // Put x and y back in as left and top respectively
@@ -185,6 +213,8 @@ export const Widget = (props: WidgetComponent): JSX.Element => {
     baseWidgetProps
   );
 };
+
+export const Widget = memo(WidgetMemo, widgetPropsAreEqual);
 
 export const PVWidget = (props: PVWidgetComponent): JSX.Element => {
   const [id] = useId();
