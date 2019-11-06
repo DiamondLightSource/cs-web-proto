@@ -106,6 +106,23 @@ class SinePv extends SimPv {
   }
 }
 
+class RampPv extends SimPv {
+  // Goes from 0-99 on a loop
+  private value = 0;
+  public constructor(...args: SimArgs) {
+    super(...args);
+    setInterval(this.publish.bind(this), this.updateRate);
+  }
+
+  public getValue(): VType | undefined {
+    this.value = this.value + 1;
+    if (this.value >= 100) {
+      this.value = 0;
+    }
+    return vdouble(this.value);
+  }
+}
+
 class RandomPv extends SimPv {
   public constructor(...args: SimArgs) {
     super(...args);
@@ -421,6 +438,9 @@ export class SimulatorPlugin implements Connection {
     } else if (nameInfo.protocol === "sim://limit") {
       initial = undefined;
       cls = LimitData;
+    } else if (nameInfo.protocol === "sim://ramp") {
+      initial = undefined;
+      cls = RampPv;
     } else {
       return { simulator: undefined, initialValue: undefined };
     }

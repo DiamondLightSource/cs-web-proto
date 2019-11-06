@@ -19,6 +19,7 @@ import { lightTheme, darkTheme, ThemeContext } from "./themeContext";
 import { FlexExamplePage } from "./pages/flexExamplePage";
 import { EmbeddedPage } from "./pages/embeddedPage";
 import { ShapesPage } from "./pages/shapesPage";
+import { PerformancePage } from "./pages/performancePage";
 
 import { SimulatorPlugin } from "./connection/sim";
 import { ConiqlPlugin } from "./connection/coniql";
@@ -42,7 +43,7 @@ function applyTheme(theme: any): void {
 }
 
 const App: React.FC = (): JSX.Element => {
-  const simulator = new SimulatorPlugin();
+  const simulator = new SimulatorPlugin(100);
   var coniql;
   if (settings.coniqlSocket !== undefined) {
     coniql = new ConiqlPlugin(settings.coniqlSocket);
@@ -108,6 +109,9 @@ const App: React.FC = (): JSX.Element => {
             <Link style={styleLinkButton} to="/shapes">
               Shapes
             </Link>
+            <Link style={styleLinkButton} to="/performance">
+              Performance
+            </Link>
           </div>
           <div
             id="Central Column"
@@ -134,6 +138,7 @@ const App: React.FC = (): JSX.Element => {
             <Route path="/flex" exact component={FlexExamplePage} />
             <Route path="/embed" exact component={EmbeddedPage} />
             <Route path="/shapes" exact component={ShapesPage} />
+            <Route path="/performance" exact component={PerformancePage} />
           </div>
         </div>
       </BrowserRouter>
