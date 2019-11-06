@@ -5,7 +5,7 @@ import { writePv } from "../../hooks/useSubscription";
 import { vtypeToString, stringToVtype } from "../../vtypes/utils";
 import {
   InferWidgetProps,
-  PVComponent,
+  PVInputComponent,
   PVWidget,
   PVWidgetPropType
 } from "../Widget/widget";
@@ -43,7 +43,7 @@ export const InputComponent: React.FC<InputProps> = (
   );
 };
 
-export const SmartInputComponent = (props: PVComponent): JSX.Element => {
+export const SmartInputComponent = (props: PVInputComponent): JSX.Element => {
   const [inputValue, setInputValue] = useState("");
   const [editing, setEditing] = useState(false);
   function onKeyDown(event: React.KeyboardEvent<HTMLInputElement>): void {

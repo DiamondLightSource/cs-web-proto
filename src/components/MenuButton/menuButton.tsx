@@ -5,7 +5,7 @@ import { VType, VEnum } from "../../vtypes/vtypes";
 import { vtypeToString, stringToVtype } from "../../vtypes/utils";
 import {
   InferWidgetProps,
-  PVComponent,
+  PVInputComponent,
   PVWidget,
   PVWidgetPropType
 } from "../Widget/widget";
@@ -70,7 +70,7 @@ export const MenuButtonComponent = (props: MenuButtonProps): JSX.Element => {
 };
 
 // Menu button which also knows how to write to a PV
-export const SmartMenuButton = (props: PVComponent): JSX.Element => {
+export const SmartMenuButton = (props: PVInputComponent): JSX.Element => {
   // Function to send the value on to the PV
   function onChange(event: React.ChangeEvent<HTMLSelectElement>): void {
     writePv(props.pvName, stringToVtype(event.currentTarget.value));

@@ -11,7 +11,7 @@ import { ProgressBarComponent } from "../ProgressBar/progressBar";
 import { writePv } from "../../hooks/useSubscription";
 import {
   InferWidgetProps,
-  PVComponent,
+  PVInputComponent,
   PVWidget,
   PVWidgetPropType
 } from "../Widget/widget";
@@ -25,7 +25,7 @@ const SlideControlProps = {
 };
 
 export const SlideControlComponent = (
-  props: InferWidgetProps<typeof SlideControlProps> & PVComponent
+  props: InferWidgetProps<typeof SlideControlProps> & PVInputComponent
 ): JSX.Element => {
   let {
     pvName,
@@ -78,7 +78,6 @@ export const SlideControlComponent = (
           max={max}
           precision={precision}
           readonly={props.readonly}
-          pvName={pvName}
         />
       </div>
       <div
