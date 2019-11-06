@@ -1,4 +1,5 @@
-// Page to show off the progress bar and slide control
+// Page with many inputs
+
 import React from "react";
 
 import { WidgetFromJson } from "../components/FromJson/fromJson";

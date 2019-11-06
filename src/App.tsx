@@ -42,7 +42,7 @@ function applyTheme(theme: any): void {
 }
 
 const App: React.FC = (): JSX.Element => {
-  const simulator = new SimulatorPlugin();
+  const simulator = new SimulatorPlugin(100);
   var coniql;
   if (settings.coniqlSocket !== undefined) {
     coniql = new ConiqlPlugin(settings.coniqlSocket);
@@ -104,6 +104,9 @@ const App: React.FC = (): JSX.Element => {
             </Link>
             <Link style={styleLinkButton} to="/embed">
               Embed
+            </Link>
+            <Link style={styleLinkButton} to="/performance">
+              Performance
             </Link>
             <Link style={styleLinkButton} to="/performance">
               Performance
