@@ -7,6 +7,12 @@ export const PositioningExamplePage = (): JSX.Element => (
   <WidgetFromJson
     file="http://localhost:3000/ionpExample.json"
     macroMap={{ device: "SR03A-VA-IONP-01" }}
-    containerStyling={{ position: "relative" }}
+    containerStyling={{
+      position: "relative",
+      height: "",
+      width: "",
+      margin: "",
+      padding: ""
+    }}
   />
 );

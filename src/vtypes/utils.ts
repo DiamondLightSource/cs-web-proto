@@ -4,7 +4,11 @@ import { ALARM_NONE } from "./alarm";
 import { timeNow } from "./time";
 import { DISPLAY_NONE } from "./display";
 
-export const vtypeToString = (vtype?: VType, precision?: number): string => {
+export const vtypeToString = (
+  vtype?: VType,
+  // Because of PropTypes, now reverted.
+  precision?: number
+): string => {
   if (vtype instanceof VNumber) {
     if (precision) {
       return vtype.getValue().toFixed(precision);
