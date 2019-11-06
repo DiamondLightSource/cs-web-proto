@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import PropTypes from "prop-types";
 
 import {
@@ -28,8 +28,28 @@ const DisplayWidgetProps = {
   ...WidgetPropType
 };
 
+function areComponentPropsEqual(
+  prevProps: Component,
+  nextProps: Component
+): boolean {
+  let prevExpanded = {
+    ...prevProps.style
+  };
+  let nextExpanded = {
+    ...nextProps.style
+  };
+
+  if (JSON.stringify(prevExpanded) === JSON.stringify(nextExpanded)) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+const DisplayMemo = memo(DisplayComponent, areComponentPropsEqual);
+
 export const Display = (
   props: InferWidgetProps<typeof DisplayWidgetProps>
-): JSX.Element => <Widget baseWidget={DisplayComponent} {...props} />;
+): JSX.Element => <Widget baseWidget={DisplayMemo} {...props} />;
 
 Display.propTypes = DisplayWidgetProps;
