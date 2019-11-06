@@ -154,17 +154,17 @@ const recursiveWrapping = (
 
 export const Widget = (props: WidgetComponent): JSX.Element => {
   // Generic widget component
-  const [id] = useId();
-  let idProps = { ...props, id: id };
+  // const [id] = useId();
+  // let idProps = { ...props, id: id };
 
-  // Apply macros.
-  const macroProps = useMacros(idProps) as RuleProps;
-  // Then rules
-  const ruleProps = useRules(macroProps);
+  // // Apply macros.
+  // const macroProps = useMacros(idProps) as RuleProps;
+  // // Then rules
+  // const ruleProps = useRules(macroProps);
 
   // Give containers access to everything apart from the containerStyling
   // Assume flexible position if not provided with anything
-  const { containerStyling, ...containerProps } = ruleProps;
+  const { containerStyling, ...containerProps } = props;
 
   // Manipulate for absolute styling
   // Put x and y back in as left and top respectively
