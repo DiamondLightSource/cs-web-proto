@@ -1,3 +1,5 @@
+/* eslint react/forbid-foreign-prop-types: 0, no-throw-literal: 0 */
+
 import React from "react";
 import log from "loglevel";
 // @ts-ignore
@@ -37,6 +39,7 @@ export function widgetDescriptionToComponent(
 
     // Perform checking on propTypes
     let widgetInfo = { containerStyling: containerStyling, ...otherProps };
+    // @ts-ignore
     let error: string | undefined = checkPropTypes(
       widgetDict[type].propTypes,
       widgetInfo,
@@ -46,6 +49,7 @@ export function widgetDescriptionToComponent(
         log.debug("Got an error");
       }
     );
+    // @ts-ignore
     if (error !== undefined) {
       throw {
         msg: error,
