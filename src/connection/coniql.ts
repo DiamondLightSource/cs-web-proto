@@ -86,19 +86,19 @@ function coniqlToPartialVtype(
     if (meta.__typename === "NumberMeta") {
       result.type = VTYPE_CLASSES[meta.numberType as CONIQL_TYPE];
       if (meta.display) {
-        const {
-          controlRange,
-          displayRange,
-          alarmRange,
-          warningRange,
-          units
-        } = meta.display;
+        // const {
+        //   controlRange,
+        //   displayRange,
+        //   alarmRange,
+        //   warningRange,
+        //   units
+        // } = meta.display;
         result.display = display(
-          displayRange,
-          alarmRange,
-          warningRange,
-          controlRange,
-          units
+          meta.display.displayRange,
+          meta.display.alarmRange,
+          meta.display.warningRange,
+          meta.display.controlRange,
+          meta.display.units
         );
       }
     } else {

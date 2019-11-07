@@ -13,31 +13,31 @@ export interface ReadbackProps {
   style?: object;
 }
 
-function getClass(alarmSeverity: any): string {
-  switch (alarmSeverity) {
-    case AlarmSeverity.MINOR: {
-      return classes.Minor;
-    }
-    case AlarmSeverity.MAJOR: {
-      return classes.Major;
-    }
-  }
-  return classes.Readback;
-}
-
 export const ReadbackComponent = (props: ReadbackProps): JSX.Element => {
+  function getClass(alarmSeverity: any): string {
+    switch (alarmSeverity) {
+      case AlarmSeverity.MINOR: {
+        return classes.Minor;
+      }
+      case AlarmSeverity.MAJOR: {
+        return classes.Major;
+      }
+    }
+    return classes.Readback;
+  }
+
   let { connected, value, precision = undefined, style } = props;
   const alarm = alarmOf(value);
   let displayedValue;
-  if (!value) {
-    displayedValue = "Waiting for value";
-  } else {
+  if (value) {
     displayedValue = vtypeToString(value, precision);
+  } else {
+    displayedValue = "Waiting for value";
   }
   style = { backgroundColor: "#383838", ...props.style };
 
   // Change text color depending on connection state
-  if (!connected) {
+  if (connected === false) {
     style = {
       ...style,
       color: "#ffffff"
