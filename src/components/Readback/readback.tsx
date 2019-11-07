@@ -1,11 +1,13 @@
-import React from "react";
+import React, { memo } from "react";
 import PropTypes from "prop-types";
 
 import {
   InferWidgetProps,
   PVComponent,
   PVWidget,
-  PVWidgetPropType
+  PVWidgetPropType,
+  FlatPVComponent,
+  FlatPVWidget
 } from "../../components/Widget/widget";
 
 import classes from "./readback.module.css";
@@ -18,10 +20,6 @@ const ReadbackProps = {
   showUnits: PropTypes.bool
 };
 
-// Needs to be exported for testing
-export type ReadbackComponentProps = InferWidgetProps<typeof ReadbackProps> &
-  PVComponent;
-
 function getClass(alarmSeverity: any): string {
   switch (alarmSeverity) {
     case AlarmSeverity.MINOR: {
@@ -33,6 +31,10 @@ function getClass(alarmSeverity: any): string {
   }
   return classes.Readback;
 }
+
+// Needs to be exported for testing
+export type ReadbackComponentProps = InferWidgetProps<typeof ReadbackProps> &
+  PVComponent;
 
 export const ReadbackComponent = (
   props: ReadbackComponentProps
@@ -83,3 +85,57 @@ export const Readback = (
 ): JSX.Element => <PVWidget baseWidget={ReadbackComponent} {...props} />;
 
 Readback.propTypes = ReadbackWidgetProps;
+
+export const FlatReadbackComponent = (
+  props: InferWidgetProps<typeof ReadbackProps> & FlatPVComponent
+): JSX.Element => {
+  let { connected, value, precision, showUnits = false, ...otherProps } = props;
+  const alarm = alarmOf(value);
+  const display = displayOf(value);
+  let displayedValue;
+  if (!value) {
+    displayedValue = "Waiting for value";
+  } else {
+    displayedValue = vtypeToString(value, precision);
+  }
+  let style = {
+    backgroundColor: "#383838",
+    top: otherProps.y,
+    left: otherProps.x,
+    height: otherProps.height,
+    width: otherProps.width,
+    padding: otherProps.padding,
+    margin: otherProps.margin,
+    color: ""
+  };
+
+  // Add units if there are any and show units is true
+  if (showUnits === true && display.getUnit() !== "") {
+    displayedValue = displayedValue + ` ${display.getUnit()}`;
+  }
+
+  // Change text color depending on connection state
+  if (!connected) {
+    style = {
+      ...style,
+      color: "#ffffff"
+    };
+  }
+
+  return (
+    <div
+      className={`Readback ${classes.Readback} ${getClass(
+        alarm.getSeverity()
+      )}`}
+      style={{ position: "absolute", ...style }}
+    >
+      {displayedValue}
+    </div>
+  );
+};
+
+export const FlatReadback = (
+  props: InferWidgetProps<typeof ReadbackProps> & FlatPVWidget
+): JSX.Element => (
+  <FlatPVWidget Component={memo(FlatReadbackComponent)} {...props} />
+);

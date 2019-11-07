@@ -7,7 +7,7 @@ import {
   WidgetDescription
 } from "../Positioning/positioning";
 import { Label } from "../Label/label";
-import { Readback } from "../Readback/readback";
+import { Readback, FlatReadback } from "../Readback/readback";
 import { Input } from "../Input/input";
 import { Shape } from "../Shape/shape";
 import { FlexContainer } from "../FlexContainer/flexContainer";
@@ -58,6 +58,7 @@ export const WidgetFromJson = (
   }
   const widgetDict = {
     readback: Readback,
+    flatreadback: FlatReadback,
     shape: Shape,
     input: Input,
     label: Label,

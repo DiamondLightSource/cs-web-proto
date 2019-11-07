@@ -1,26 +1,320 @@
 {
-  "type": "display",
-  "containerStyling": {
-    "position": "absolute",
-    "x": "0px",
-    "y": "0px",
-    "width": "500px",
-    "height": "500px"
-  },
-  "widgetStyling": {
-    "backgroundColor": "#999999"
-  },
+  "type": "flatdisplay",
+  "position": "absolute",
+  "x": "0px",
+  "y": "0px",
+  "width": "500px",
+  "height": "500px",
+  "backgroundColor": "#999999",
   "children": [
     {
-      "type": "readback",
-      "containerStyling": {
-        "position": "absolute",
-        "x": "2px",
-        "y": "2px",
-        "width": "80px",
-        "height": "20px"
-      },
-      "pvName": "sim://ramp#000",
+      "type": "flatreadback",
+      "position": "absolute",
+      "x": "2px",
+      "y": "2px",
+      "width": "80px",
+      "height": "20px",
+      "pvName": "pva://performancetest:00",
+      "precision": 0
+    },
+    {
+      "type": "flatreadback",
+      "position": "absolute",
+      "x": "84px",
+      "y": "2px",
+      "width": "80px",
+      "height": "20px",
+      "pvName": "pva://performancetest:01",
+      "precision": 0
+    },
+    {
+      "type": "flatreadback",
+      "position": "absolute",
+      "x": "166px",
+      "y": "2px",
+      "width": "80px",
+      "height": "20px",
+      "pvName": "pva://performancetest:02",
+      "precision": 0
+    },
+    {
+      "type": "flatreadback",
+      "position": "absolute",
+      "x": "248px",
+      "y": "2px",
+      "width": "80px",
+      "height": "20px",
+      "pvName": "pva://performancetest:03",
+      "precision": 0
+    },
+    {
+      "type": "flatreadback",
+      "position": "absolute",
+      "x": "330px",
+      "y": "2px",
+      "width": "80px",
+      "height": "20px",
+      "pvName": "pva://performancetest:04",
+      "precision": 0
+    },
+    {
+      "type": "flatreadback",
+      "position": "absolute",
+      "x": "2px",
+      "y": "24px",
+      "width": "80px",
+      "height": "20px",
+      "pvName": "pva://performancetest:05",
+      "precision": 0
+    },
+    {
+      "type": "flatreadback",
+      "position": "absolute",
+      "x": "84px",
+      "y": "24px",
+      "width": "80px",
+      "height": "20px",
+      "pvName": "pva://performancetest:06",
+      "precision": 0
+    },
+    {
+      "type": "flatreadback",
+      "position": "absolute",
+      "x": "166px",
+      "y": "24px",
+      "width": "80px",
+      "height": "20px",
+      "pvName": "pva://performancetest:07",
+      "precision": 0
+    },
+    {
+      "type": "flatreadback",
+      "position": "absolute",
+      "x": "248px",
+      "y": "24px",
+      "width": "80px",
+      "height": "20px",
+      "pvName": "pva://performancetest:08",
+      "precision": 0
+    },
+    {
+      "type": "flatreadback",
+      "position": "absolute",
+      "x": "330px",
+      "y": "24px",
+      "width": "80px",
+      "height": "20px",
+      "pvName": "pva://performancetest:09",
+      "precision": 0
+    },
+    {
+      "type": "flatreadback",
+      "position": "absolute",
+      "x": "2px",
+      "y": "46px",
+      "width": "80px",
+      "height": "20px",
+      "pvName": "pva://performancetest:10",
+      "precision": 0
+    },
+    {
+      "type": "flatreadback",
+      "position": "absolute",
+      "x": "84px",
+      "y": "46px",
+      "width": "80px",
+      "height": "20px",
+      "pvName": "pva://performancetest:11",
+      "precision": 0
+    },
+    {
+      "type": "flatreadback",
+      "position": "absolute",
+      "x": "166px",
+      "y": "46px",
+      "width": "80px",
+      "height": "20px",
+      "pvName": "pva://performancetest:12",
+      "precision": 0
+    },
+    {
+      "type": "flatreadback",
+      "position": "absolute",
+      "x": "248px",
+      "y": "46px",
+      "width": "80px",
+      "height": "20px",
+      "pvName": "pva://performancetest:13",
+      "precision": 0
+    },
+    {
+      "type": "flatreadback",
+      "position": "absolute",
+      "x": "330px",
+      "y": "46px",
+      "width": "80px",
+      "height": "20px",
+      "pvName": "pva://performancetest:14",
+      "precision": 0
+    },
+    {
+      "type": "flatreadback",
+      "position": "absolute",
+      "x": "2px",
+      "y": "68px",
+      "width": "80px",
+      "height": "20px",
+      "pvName": "pva://performancetest:15",
+      "precision": 0
+    },
+    {
+      "type": "flatreadback",
+      "position": "absolute",
+      "x": "84px",
+      "y": "68px",
+      "width": "80px",
+      "height": "20px",
+      "pvName": "pva://performancetest:16",
+      "precision": 0
+    },
+    {
+      "type": "flatreadback",
+      "position": "absolute",
+      "x": "166px",
+      "y": "68px",
+      "width": "80px",
+      "height": "20px",
+      "pvName": "pva://performancetest:17",
+      "precision": 0
+    },
+    {
+      "type": "flatreadback",
+      "position": "absolute",
+      "x": "248px",
+      "y": "68px",
+      "width": "80px",
+      "height": "20px",
+      "pvName": "pva://performancetest:18",
+      "precision": 0
+    },
+    {
+      "type": "flatreadback",
+      "position": "absolute",
+      "x": "330px",
+      "y": "68px",
+      "width": "80px",
+      "height": "20px",
+      "pvName": "pva://performancetest:19",
+      "precision": 0
+    },
+    {
+      "type": "flatreadback",
+      "position": "absolute",
+      "x": "2px",
+      "y": "90px",
+      "width": "80px",
+      "height": "20px",
+      "pvName": "pva://performancetest:20",
+      "precision": 0
+    },
+    {
+      "type": "flatreadback",
+      "position": "absolute",
+      "x": "84px",
+      "y": "90px",
+      "width": "80px",
+      "height": "20px",
+      "pvName": "pva://performancetest:21",
+      "precision": 0
+    },
+    {
+      "type": "flatreadback",
+      "position": "absolute",
+      "x": "166px",
+      "y": "90px",
+      "width": "80px",
+      "height": "20px",
+      "pvName": "pva://performancetest:22",
+      "precision": 0
+    },
+    {
+      "type": "flatreadback",
+      "position": "absolute",
+      "x": "248px",
+      "y": "90px",
+      "width": "80px",
+      "height": "20px",
+      "pvName": "pva://performancetest:23",
+      "precision": 0
+    },
+    {
+      "type": "flatreadback",
+      "position": "absolute",
+      "x": "330px",
+      "y": "90px",
+      "width": "80px",
+      "height": "20px",
+      "pvName": "pva://performancetest:24",
+      "precision": 0
+    },
+    {
+      "type": "flatreadback",
+      "position": "absolute",
+      "x": "2px",
+      "y": "112px",
+      "width": "80px",
+      "height": "20px",
+      "pvName": "pva://performancetest:25",
+      "precision": 0
+    },
+    {
+      "type": "flatreadback",
+      "position": "absolute",
+      "x": "84px",
+      "y": "112px",
+      "width": "80px",
+      "height": "20px",
+      "pvName": "pva://performancetest:26",
+      "precision": 0
+    },
+    {
+      "type": "flatreadback",
+      "position": "absolute",
+      "x": "166px",
+      "y": "112px",
+      "width": "80px",
+      "height": "20px",
+      "pvName": "pva://performancetest:27",
+      "precision": 0
+    },
+    {
+      "type": "flatreadback",
+      "position": "absolute",
+      "x": "248px",
+      "y": "112px",
+      "width": "80px",
+      "height": "20px",
+      "pvName": "pva://performancetest:28",
+      "precision": 0
+    },
+    {
+      "type": "flatreadback",
+      "position": "absolute",
+      "x": "330px",
+      "y": "112px",
+      "width": "80px",
+      "height": "20px",
+      "pvName": "pva://performancetest:29",
+      "precision": 0
+    },
+    {
+      "type": "flatreadback",
+      "position": "absolute",
+      "x": "2px",
+      "y": "134px",
+      "width": "80px",
+      "height": "20px",
+      "pvName": "pva://performancetest:30",
       "precision": 0
     }
   ]

@@ -7,7 +7,6 @@ import {
   WidgetPropType,
   InferWidgetProps,
   FlatPositioned,
-  FlatWidgetComponent,
   FlatWidget
 } from "../Widget/widget";
 
@@ -63,13 +62,14 @@ export const FlatDisplayComponent = (
   <div
     style={{
       boxSizing: "border-box",
-      position: "relative",
+      position: "absolute",
       top: props.y,
       left: props.x,
       height: props.height,
       width: props.width,
       padding: props.padding,
-      margin: props.margin
+      margin: props.margin,
+      backgroundColor: props.backgroundColor
     }}
   >
     {props.children}
@@ -78,4 +78,6 @@ export const FlatDisplayComponent = (
 
 export const FlatDisplay = (
   props: InferWidgetProps<typeof DisplayProps> & FlatPositioned
-): JSX.Element => <FlatWidget Component={DisplayMemo} {...props} />;
+): JSX.Element => (
+  <FlatWidget Component={memo(FlatDisplayComponent)} {...props} />
+);

@@ -1,4 +1,4 @@
-import React, { memo, useMemo } from "react";
+import React, { memo } from "react";
 import PropTypes, { InferProps } from "prop-types";
 
 import { CopyWrapper } from "../CopyWrapper/copyWrapper";
@@ -7,7 +7,7 @@ import { PvState } from "../../redux/csState";
 import { useMacros } from "../../hooks/useMacros";
 import { useConnection } from "../../hooks/useConnection";
 import { useId } from "react-id-generator";
-import { useRules, RuleProps } from "../../hooks/useRules";
+import { RuleProps } from "../../hooks/useRules";
 
 export type ExcludeNulls<T> = {
   [P in keyof T]: Exclude<T[P], null>;
@@ -121,6 +121,14 @@ type FlatAbsoluteType = InferWidgetProps<typeof FlatAbsolutePropType>;
 type FlatFlexibleType = InferWidgetProps<typeof FlatFlexiblePropType>;
 export type FlatPositioned = FlatAbsoluteType | FlatFlexibleType;
 export type FlatWidgetComponent = { Component: React.FC<any> } & FlatPositioned;
+interface PVExtras {
+  pvName: string;
+  copywrapper?: boolean;
+  alarmborder?: boolean;
+}
+export type FlatPVWidget = FlatPositioned & PVExtras;
+export type FlatPVComponent = FlatPositioned & PvState;
+type FlatPVWidgetComponent = FlatWidgetComponent & PVExtras;
 
 // Allows for either absolute or flexible positioning
 export type WidgetProps = AbsoluteType | FlexibleType;
@@ -340,8 +348,42 @@ export const FlatWidget = (props: FlatWidgetComponent): JSX.Element => {
 
   // Apply macros.
   const macroProps = useMacros(idProps) as RuleProps;
-  // Then rules
-  const ruleProps = useRules(macroProps);
+  // // Then rules
+  // const ruleProps = useRules(macroProps);
 
-  return <Component {...ruleProps} />;
+  return <Component {...macroProps} />;
+};
+
+export const FlatPVWidget = (props: FlatPVWidgetComponent): JSX.Element => {
+  let { Component, ...otherProps } = props;
+  const [id] = useId();
+  let idProps = { ...otherProps, id: id };
+
+  // Apply macros.
+  const macroProps = useMacros(idProps) as RuleProps;
+  // Then rules
+  // const ruleProps = useRules(macroProps);
+  const [shortPvName, connected, readonly, latestValue] = useConnection(
+    id,
+    macroProps.pvName
+  );
+  let newProps: FlatPVWidgetComponent & PvState = {
+    ...props,
+    pvName: shortPvName,
+    connected: connected,
+    readonly: readonly,
+    value: latestValue
+  };
+
+  // Leave the wrappers for later
+  // if (otherProps.alarmborder === true) {
+  //   components.push(AlarmBorder);
+  // }
+  // if (otherProps.copywrapper === true) {
+  //   components.push(CopyWrapper);
+  // }
+
+  // components.push(Component);
+
+  return <Component {...newProps} />;
 };
