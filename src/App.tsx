@@ -18,6 +18,7 @@ import { MacrosPage } from "./pages/macrosPage";
 import { lightTheme, darkTheme, ThemeContext } from "./themeContext";
 import { FlexExamplePage } from "./pages/flexExamplePage";
 import { EmbeddedPage } from "./pages/embeddedPage";
+import { PerformancePage } from "./pages/performancePage";
 
 import { SimulatorPlugin } from "./connection/sim";
 import { ConiqlPlugin } from "./connection/coniql";
@@ -104,6 +105,9 @@ const App: React.FC = (): JSX.Element => {
             <Link style={styleLinkButton} to="/embed">
               Embed
             </Link>
+            <Link style={styleLinkButton} to="/performance">
+              Performance
+            </Link>
           </div>
           <div
             id="Central Column"
@@ -129,6 +133,7 @@ const App: React.FC = (): JSX.Element => {
             <Route path="/coniql" exact component={ConiqlPage} />
             <Route path="/flex" exact component={FlexExamplePage} />
             <Route path="/embed" exact component={EmbeddedPage} />
+            <Route path="/performance" exact component={PerformancePage} />
           </div>
         </div>
       </BrowserRouter>
