@@ -79,6 +79,49 @@ const recursiveWrapping = (
   }
 };
 
+const PVWrapping = (props: {
+  components: React.FC<any>[];
+  containerStyling: object;
+  widgetStyling: object;
+  containerProps: object;
+  widgetProps: object;
+}): JSX.Element => {
+  let {
+    components,
+    containerStyling,
+    widgetStyling,
+    containerProps,
+    widgetProps
+  } = props;
+
+  let [Component, ...remainingComponents] = components;
+  if (components.length === 1) {
+    // Return the base widget
+    return (
+      <Component
+        style={{ ...containerStyling, ...widgetStyling }}
+        {...widgetProps}
+      />
+    );
+  }
+  // If container styling is not empty, use it on the wrapper widget
+  // and pass on an empty object, otherwise wrap and move down
+  else {
+    return (
+      <Component style={containerStyling} {...containerProps}>
+        {recursiveWrapping(
+          remainingComponents,
+          {},
+          widgetStyling,
+          containerProps,
+          widgetProps
+        )}
+      </Component>
+    );
+  }
+};
+
+const ConnectedPVWrapping = macroWrapper(connectionWrapper(PVWrapping));
 // Interface for the general functional component which creates a widget
 // May have wrappers
 export interface WidgetComponentInterface extends BaseWidgetInterface {
@@ -160,6 +203,55 @@ export interface PVWidgetInterface extends WidgetInterface {
     // ...any other borders that come up in the future
   };
 }
-export const PVWidget: React.FC<
-  WidgetComponentInterface & PVWidgetInterface
-> = macroWrapper(connectionWrapper(WidgetComponent));
+// export const PVWidget: React.FC<
+//   WidgetComponentInterface & PVWidgetInterface
+// > = macroWrapper(connectionWrapper(WidgetComponent));
+
+export const PVWidget = (props: WidgetComponentInterface): JSX.Element => {
+  // Generic widget component
+
+  // Give containers access to everything apart from the containerStyling
+  // Assume flexible position if not provided with anything
+  const { containerStyling, ...containerProps } = props;
+
+  // Manipulate for absolute styling
+  // Put x and y back in as left and top respectively
+  const { x = null, y = null } = { ...containerStyling };
+  const mappedContainerStyling = { top: y, left: x, ...containerStyling };
+
+  // Extract remaining parameters
+  let {
+    baseWidget,
+    widgetStyling = {},
+    wrappers = {},
+    ...baseWidgetProps
+  } = containerProps;
+
+  // Put appropriate components on the list of components to be wrapped
+  let components = [];
+
+  // Done like this in case only one of the values is passed through
+  const requestedWrappers = {
+    ...{ alarmborder: false, copywrapper: false },
+    ...wrappers
+  };
+
+  if (requestedWrappers.alarmborder === true) {
+    components.push(AlarmBorder);
+  }
+  if (requestedWrappers.copywrapper === true) {
+    components.push(CopyWrapper);
+  }
+
+  components.push(baseWidget);
+
+  return (
+    <ConnectedPVWrapping
+      components={components}
+      containerStyling={mappedContainerStyling}
+      widgetStyling={widgetStyling}
+      containerProps={containerProps}
+      widgetProps={baseWidgetProps}
+    ></ConnectedPVWrapping>
+  );
+};
