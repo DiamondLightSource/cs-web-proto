@@ -14,7 +14,7 @@ import { FlexContainer } from "../FlexContainer/flexContainer";
 import { ProgressBar } from "../ProgressBar/progressBar";
 import { SlideControl } from "../SlideControl/slideControl";
 import { MenuButton } from "../MenuButton/menuButton";
-import { Display } from "../Display/display";
+import { Display, FlatDisplay } from "../Display/display";
 import { WidgetPropType, InferWidgetProps } from "../Widget/widget";
 
 const EMPTY_WIDGET: WidgetDescription = {
@@ -66,6 +66,7 @@ export const WidgetFromJson = (
     menubutton: MenuButton,
     flexcontainer: FlexContainer,
     display: Display,
+    flatdisplay: FlatDisplay,
     empty: Display,
     widgetFromJSON: WidgetFromJson
   };

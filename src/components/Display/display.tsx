@@ -5,7 +5,10 @@ import {
   Component,
   Widget,
   WidgetPropType,
-  InferWidgetProps
+  InferWidgetProps,
+  FlatPositioned,
+  FlatWidgetComponent,
+  FlatWidget
 } from "../Widget/widget";
 
 const DisplayProps = {
@@ -53,3 +56,26 @@ export const Display = (
 ): JSX.Element => <Widget baseWidget={DisplayMemo} {...props} />;
 
 Display.propTypes = DisplayWidgetProps;
+
+export const FlatDisplayComponent = (
+  props: InferWidgetProps<typeof DisplayProps> & FlatPositioned
+): JSX.Element => (
+  <div
+    style={{
+      boxSizing: "border-box",
+      position: "relative",
+      top: props.y,
+      left: props.x,
+      height: props.height,
+      width: props.width,
+      padding: props.padding,
+      margin: props.margin
+    }}
+  >
+    {props.children}
+  </div>
+);
+
+export const FlatDisplay = (
+  props: InferWidgetProps<typeof DisplayProps> & FlatPositioned
+): JSX.Element => <FlatWidget Component={DisplayMemo} {...props} />;

@@ -58,6 +58,14 @@ const FlexibleContainerProps = {
   width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   ...ContainerFeaturesPropType
 };
+const FlexibleContainerPropsFlat = {
+  position: PropTypes.oneOf(["relative"]).isRequired,
+  x: PropTypes.oneOf([null]),
+  y: PropTypes.oneOf([null]),
+  height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  ...ContainerFeaturesPropType
+};
 
 const WidgetStylingPropType = {
   font: PropTypes.string,
@@ -96,6 +104,24 @@ export const WidgetPropType = {
   macroMap: PropTypes.objectOf(PropTypes.string.isRequired),
   rule: PropTypes.exact(RulesPropType)
 };
+
+const FlatAbsolutePropType = {
+  ...AbsoluteContainerProps,
+  ...WidgetStylingPropType,
+  macroMap: PropTypes.objectOf(PropTypes.string.isRequired)
+};
+
+const FlatFlexiblePropType = {
+  ...FlexibleContainerPropsFlat,
+  ...WidgetStylingPropType,
+  macroMap: PropTypes.objectOf(PropTypes.string.isRequired)
+};
+
+type FlatAbsoluteType = InferWidgetProps<typeof FlatAbsolutePropType>;
+type FlatFlexibleType = InferWidgetProps<typeof FlatFlexiblePropType>;
+export type FlatPositioned = FlatAbsoluteType | FlatFlexibleType;
+export type FlatWidgetComponent = { Component: React.FC<any> } & FlatPositioned;
+
 // Allows for either absolute or flexible positioning
 export type WidgetProps = AbsoluteType | FlexibleType;
 // Internal type for creating widgets
@@ -304,3 +330,18 @@ export const PVWidgetMemo = (props: PVWidgetComponent): JSX.Element => {
 };
 
 export const PVWidget = memo(PVWidgetMemo, pvWidgetPropsAreEqual);
+
+export const FlatWidget = (props: FlatWidgetComponent): JSX.Element => {
+  // Generic widget component
+  // Generic widget component
+  let { Component, ...otherProps } = props;
+  const [id] = useId();
+  let idProps = { ...otherProps, id: id };
+
+  // Apply macros.
+  const macroProps = useMacros(idProps) as RuleProps;
+  // Then rules
+  const ruleProps = useRules(macroProps);
+
+  return <Component {...ruleProps} />;
+};
