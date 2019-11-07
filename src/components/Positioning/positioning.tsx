@@ -33,12 +33,11 @@ export function widgetDescriptionToComponent(
       type,
       children = null,
       macroMap = {},
-      containerStyling,
       ...otherProps
     } = widgetDescription;
 
     // Perform checking on propTypes
-    let widgetInfo = { containerStyling: containerStyling, ...otherProps };
+    let widgetInfo = { ...otherProps };
     // @ts-ignore
     let error: string | undefined = checkPropTypes(
       widgetDict[type].propTypes,
@@ -55,7 +54,6 @@ export function widgetDescriptionToComponent(
         msg: error,
         object: {
           type: type,
-          containerStyling: containerStyling,
           ...otherProps
         }
       };
@@ -82,11 +80,7 @@ export function widgetDescriptionToComponent(
     // Return the node with children as children
     // Pass any extra props and macromap
     return (
-      <Component
-        containerStyling={containerStyling}
-        macroMap={latestMacroMap}
-        {...otherProps}
-      >
+      <Component macroMap={latestMacroMap} {...otherProps}>
         {ChildComponents}
       </Component>
     );
