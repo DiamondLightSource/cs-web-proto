@@ -117,4 +117,4 @@ interface SlideControlWidgetProps {
 
 export const SlideControl = (
   props: SlideControlWidgetProps & PVWidgetInterface
-): JSX.Element => <PVWidget baseWidget={SlideControlComponent} {...props} />;
+): JSX.Element => PVWidget(SlideControlComponent, props);

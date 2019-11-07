@@ -98,4 +98,4 @@ interface InputWidgetProps {
 
 export const Input = (
   props: InputWidgetProps & PVWidgetInterface
-): JSX.Element => <PVWidget baseWidget={SmartInputComponent} {...props} />;
+): JSX.Element => PVWidget(SmartInputComponent, props);

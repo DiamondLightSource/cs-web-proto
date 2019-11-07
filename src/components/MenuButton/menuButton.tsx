@@ -88,6 +88,5 @@ export const SmartMenuButton = (props: {
   );
 };
 
-export const MenuButton = (props: PVWidgetInterface): JSX.Element => (
-  <PVWidget baseWidget={SmartMenuButton} {...props} />
-);
+export const MenuButton = (props: PVWidgetInterface): JSX.Element =>
+  PVWidget(SmartMenuButton, props);

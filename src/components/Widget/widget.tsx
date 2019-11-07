@@ -2,7 +2,7 @@ import React from "react";
 
 import { CopyWrapper } from "../CopyWrapper/copyWrapper";
 import { AlarmBorder } from "../AlarmBorder/alarmBorder";
-import { MacroMap } from "../../redux/csState";
+import { MacroMap, PvState } from "../../redux/csState";
 import { macroWrapper } from "../MacroWrapper/macroWrapper";
 import { connectionWrapper } from "../ConnectionWrapper/connectionWrapper";
 
@@ -79,49 +79,24 @@ const recursiveWrapping = (
   }
 };
 
-const PVWrapping = (props: {
+interface WrappingInterface extends PVWidgetInterface {
   components: React.FC<any>[];
-  containerStyling: object;
-  widgetStyling: object;
-  containerProps: object;
-  widgetProps: object;
-}): JSX.Element => {
-  let {
-    components,
-    containerStyling,
-    widgetStyling,
-    containerProps,
-    widgetProps
-  } = props;
+}
+
+export const PVWrapping = (props: WrappingInterface): JSX.Element => {
+  let { components, containerStyling, widgetStyling, ...otherProps } = props;
 
   let [Component, ...remainingComponents] = components;
-  if (components.length === 1) {
-    // Return the base widget
-    return (
-      <Component
-        style={{ ...containerStyling, ...widgetStyling }}
-        {...widgetProps}
-      />
-    );
-  }
-  // If container styling is not empty, use it on the wrapper widget
-  // and pass on an empty object, otherwise wrap and move down
-  else {
-    return (
-      <Component style={containerStyling} {...containerProps}>
-        {recursiveWrapping(
-          remainingComponents,
-          {},
-          widgetStyling,
-          containerProps,
-          widgetProps
-        )}
-      </Component>
-    );
-  }
+
+  // Return the base widget
+  return (
+    <Component
+      style={{ ...containerStyling, ...widgetStyling }}
+      {...otherProps}
+    />
+  );
 };
 
-const ConnectedPVWrapping = macroWrapper(connectionWrapper(PVWrapping));
 // Interface for the general functional component which creates a widget
 // May have wrappers
 export interface WidgetComponentInterface extends BaseWidgetInterface {
@@ -207,7 +182,19 @@ export interface PVWidgetInterface extends WidgetInterface {
 //   WidgetComponentInterface & PVWidgetInterface
 // > = macroWrapper(connectionWrapper(WidgetComponent));
 
-export const PVWidget = (props: WidgetComponentInterface): JSX.Element => {
+interface ConnectedWrappingInterface extends WrappingInterface {
+  pvName: string;
+  macroMap?: MacroMap;
+}
+
+export const ConnectedPVWrapping: React.FC<
+  ConnectedWrappingInterface
+> = macroWrapper(connectionWrapper(PVWrapping));
+
+export const PVWidget = <P extends object>(
+  baseWidget: React.FC<P>,
+  props: PVWidgetInterface
+): JSX.Element => {
   // Generic widget component
 
   // Give containers access to everything apart from the containerStyling
@@ -221,14 +208,13 @@ export const PVWidget = (props: WidgetComponentInterface): JSX.Element => {
 
   // Extract remaining parameters
   let {
-    baseWidget,
     widgetStyling = {},
     wrappers = {},
     ...baseWidgetProps
   } = containerProps;
 
   // Put appropriate components on the list of components to be wrapped
-  let components = [];
+  let components: React.FC<any>[] = [];
 
   // Done like this in case only one of the values is passed through
   const requestedWrappers = {
@@ -247,11 +233,11 @@ export const PVWidget = (props: WidgetComponentInterface): JSX.Element => {
 
   return (
     <ConnectedPVWrapping
+      pvName={props.pvName}
+      macroMap={props.macroMap}
       components={components}
       containerStyling={mappedContainerStyling}
-      widgetStyling={widgetStyling}
-      containerProps={containerProps}
-      widgetProps={baseWidgetProps}
-    ></ConnectedPVWrapping>
+      {...{ ...widgetStyling, ...containerProps, ...baseWidgetProps }}
+    />
   );
 };

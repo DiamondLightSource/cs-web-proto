@@ -62,4 +62,4 @@ interface ReadbackWidgetProps {
 
 export const Readback = (
   props: ReadbackWidgetProps & PVWidgetInterface
-): JSX.Element => <PVWidget baseWidget={ReadbackComponent} {...props} />;
+): JSX.Element => PVWidget(ReadbackComponent, props);

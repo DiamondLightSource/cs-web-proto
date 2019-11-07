@@ -9,12 +9,12 @@ export interface WidgetDescription extends BaseWidgetInterface {
   children?: WidgetDescription[] | null;
 }
 
-export function widgetDescriptionToComponent(
+export function widgetDescriptionToComponent<P extends object>(
   // Converts a JS object matching a position description into React component
   // from the component dictionary provided. Also passes down a macro map which
   // can be overwritten. Uses recursion to generate children.
   widgetDescription: WidgetDescription | null,
-  widgetDict: { [index: string]: React.FC<any> },
+  widgetDict: { [index: string]: any },
   existingMacroMap: MacroMap
 ): JSX.Element | null {
   // If there is nothing here, return null

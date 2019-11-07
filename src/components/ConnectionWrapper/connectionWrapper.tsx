@@ -34,6 +34,7 @@ export const connectionWrapper = <P extends object>(
   Component: React.FC<P>
   // This next line should be React.FC<P & PvProps> but I can't pass TypeScript.
 ): React.FC<any> => {
+  console.log("Using connection wrapper");
   // eslint-disable-next-line react/display-name
   return (props: PvProps): JSX.Element => {
     const [id] = useId();
