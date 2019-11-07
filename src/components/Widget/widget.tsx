@@ -186,11 +186,11 @@ export const WidgetMemo = (props: WidgetComponent): JSX.Element => {
   // Apply macros.
   const macroProps = useMacros(idProps) as RuleProps;
   // Then rules
-  const ruleProps = useRules(macroProps);
+  // const ruleProps = useRules(macroProps);
 
   // Give containers access to everything apart from the containerStyling
   // Assume flexible position if not provided with anything
-  const { containerStyling, ...containerProps } = ruleProps;
+  const { containerStyling, ...containerProps } = macroProps;
 
   // Manipulate for absolute styling
   // Put x and y back in as left and top respectively
@@ -249,10 +249,10 @@ export const PVWidgetMemo = (props: PVWidgetComponent): JSX.Element => {
   // Apply macros.
   const macroProps = useMacros(idProps) as RuleProps;
   // Then rules
-  const ruleProps = useRules(macroProps);
+  // const ruleProps = useRules(macroProps);
   const [shortPvName, connected, readonly, latestValue] = useConnection(
     id,
-    ruleProps.pvName
+    macroProps.pvName
   );
   let newProps: PVWidgetComponent & PvState = {
     ...props,
