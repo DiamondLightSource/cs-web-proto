@@ -19,7 +19,13 @@ export function DynamicPage({
     <WidgetFromJson
       file={file}
       macroMap={map}
-      containerStyling={{ position: "relative" }}
+      containerStyling={{
+        position: "relative",
+        height: "",
+        width: "",
+        margin: "",
+        padding: ""
+      }}
     />
   );
 }

@@ -3,7 +3,7 @@ import { Range, RANGE_NONE } from "./defs";
 /* Currently missing NumberFormat. */
 
 export interface DisplayProvider {
-  getAlarm(): Display;
+  getDisplay(): Display;
 }
 
 export abstract class Display {
@@ -74,7 +74,7 @@ export const isDisplayProvider = (object: any): object is DisplayProvider => {
 
 export const displayOf = (object: any): Display => {
   if (object && isDisplayProvider(object)) {
-    return object.getAlarm();
+    return object.getDisplay();
   }
   return DISPLAY_NONE;
 };

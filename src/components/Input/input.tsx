@@ -1,10 +1,14 @@
 import React, { useState } from "react";
 
 import classes from "./input.module.css";
-import { writePv } from "../../hooks/useCs";
-import { VType } from "../../vtypes/vtypes";
+import { writePv } from "../../hooks/useSubscription";
 import { vtypeToString, stringToVtype } from "../../vtypes/utils";
-import { PVWidget, PVWidgetInterface } from "../Widget/widget";
+import {
+  InferWidgetProps,
+  PVInputComponent,
+  PVWidget,
+  PVWidgetPropType
+} from "../Widget/widget";
 
 export interface InputProps {
   pvName: string;
@@ -39,16 +43,7 @@ export const InputComponent: React.FC<InputProps> = (
   );
 };
 
-interface SmartInputProps {
-  pvName: string;
-  readonly: boolean;
-  value?: VType;
-  style?: object;
-}
-
-export const SmartInputComponent: React.FC<SmartInputProps> = (
-  props: SmartInputProps
-): JSX.Element => {
+export const SmartInputComponent = (props: PVInputComponent): JSX.Element => {
   const [inputValue, setInputValue] = useState("");
   const [editing, setEditing] = useState(false);
   function onKeyDown(event: React.KeyboardEvent<HTMLInputElement>): void {
@@ -92,10 +87,8 @@ export const SmartInputComponent: React.FC<SmartInputProps> = (
   );
 };
 
-interface InputWidgetProps {
-  precision?: number;
-}
-
 export const Input = (
-  props: InputWidgetProps & PVWidgetInterface
+  props: InferWidgetProps<typeof PVWidgetPropType>
 ): JSX.Element => <PVWidget baseWidget={SmartInputComponent} {...props} />;
+
+Input.propTypes = PVWidgetPropType;

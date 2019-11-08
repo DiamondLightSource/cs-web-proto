@@ -18,6 +18,7 @@ import { MacrosPage } from "./pages/macrosPage";
 import { lightTheme, darkTheme, ThemeContext } from "./themeContext";
 import { FlexExamplePage } from "./pages/flexExamplePage";
 import { EmbeddedPage } from "./pages/embeddedPage";
+import { ShapesPage } from "./pages/shapesPage";
 
 import { SimulatorPlugin } from "./connection/sim";
 import { DynamicPage } from "./pages/dynamicPage";
@@ -104,6 +105,9 @@ const App: React.FC = (): JSX.Element => {
             </Link>
             <Link style={styleLinkButton} to="/embed">
               Embed
+            </Link>{" "}
+            <Link style={styleLinkButton} to="/shapes">
+              Shapes
             </Link>
             <Link
               style={styleLinkButton}
@@ -141,6 +145,7 @@ const App: React.FC = (): JSX.Element => {
               exact
               component={DynamicPage}
             />
+            <Route path="/shapes" exact component={ShapesPage} />
           </div>
         </div>
       </BrowserRouter>

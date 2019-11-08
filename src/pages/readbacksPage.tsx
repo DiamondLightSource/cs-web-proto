@@ -8,6 +8,12 @@ export const ReadbacksPage = (): JSX.Element => (
   <WidgetFromJson
     file="http://localhost:3000/readbacksPage.json"
     macroMap={{}}
-    containerStyling={{ position: "relative" }}
+    containerStyling={{
+      position: "relative",
+      height: "",
+      width: "",
+      margin: "",
+      padding: ""
+    }}
   />
 );
