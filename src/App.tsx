@@ -21,6 +21,7 @@ import { EmbeddedPage } from "./pages/embeddedPage";
 import { ShapesPage } from "./pages/shapesPage";
 
 import { SimulatorPlugin } from "./connection/sim";
+import { DynamicPage } from "./pages/dynamicPage";
 import { ConiqlPlugin } from "./connection/coniql";
 import { ConnectionForwarder } from "./connection/forwarder";
 
@@ -108,6 +109,12 @@ const App: React.FC = (): JSX.Element => {
             <Link style={styleLinkButton} to="/shapes">
               Shapes
             </Link>
+            <Link
+              style={styleLinkButton}
+              to={'/dynamic/ionpExample/{"device":"SR03A-VA-IONP-01"}'}
+            >
+              Dynamic
+            </Link>
           </div>
           <div
             id="Central Column"
@@ -133,6 +140,11 @@ const App: React.FC = (): JSX.Element => {
             <Route path="/coniql" exact component={ConiqlPage} />
             <Route path="/flex" exact component={FlexExamplePage} />
             <Route path="/embed" exact component={EmbeddedPage} />
+            <Route
+              path="/dynamic/:json/:macros"
+              exact
+              component={DynamicPage}
+            />
             <Route path="/shapes" exact component={ShapesPage} />
           </div>
         </div>
