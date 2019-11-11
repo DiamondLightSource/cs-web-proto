@@ -4,8 +4,7 @@ import { resolveMacros } from "../macros";
 import { MacroMap, CsState } from "../redux/csState";
 
 export interface MacroProps extends React.PropsWithChildren<any> {
-  // Takes null as well to allow for PropTypes weirdness
-  macroMap?: MacroMap | null;
+  macroMap?: MacroMap;
   pvName?: string;
 }
 
