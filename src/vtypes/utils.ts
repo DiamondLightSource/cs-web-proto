@@ -11,7 +11,8 @@ export const vtypeToString = (
 ): string => {
   if (vtype instanceof VNumber) {
     if (precision) {
-      return vtype.getValue().toFixed(precision);
+      // Can't say why this was necessary but Firefox throws errors in production build otherwise
+      return Number(vtype.getValue()).toFixed(precision);
     } else {
       return vtype.getValue().toString();
     }

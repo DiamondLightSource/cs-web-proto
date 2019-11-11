@@ -205,7 +205,6 @@ function widgetPropsAreEqual(
   };
 
   if (JSON.stringify(prevExpanded) === JSON.stringify(nextExpanded)) {
-    console.log("Props are equal!");
     return true;
   } else {
     return false;
@@ -269,7 +268,6 @@ function pvWidgetPropsAreEqual(
   };
 
   if (JSON.stringify(prevExpanded) === JSON.stringify(nextExpanded)) {
-    console.log("Props are equal!");
     return true;
   } else {
     return false;
