@@ -7,7 +7,8 @@ import { DISPLAY_NONE } from "./display";
 export const vtypeToString = (vtype?: VType, precision?: number): string => {
   if (vtype instanceof VNumber) {
     if (precision) {
-      return vtype.getValue().toFixed(precision);
+      // Necessary for production build
+      return Number(vtype.getValue()).toFixed(precision);
     } else {
       return vtype.getValue().toString();
     }

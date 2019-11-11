@@ -137,12 +137,8 @@ export function mergeVtype(
         if (info.type === undefined) {
           return undefined;
         } else {
-          return VNumbers[info.type](
-            info.value,
-            info.alarm,
-            info.time,
-            info.display
-          );
+          // Necessary for production build
+          return vdouble(info.value, info.alarm, info.time, info.display);
         }
       }
     }
