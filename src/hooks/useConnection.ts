@@ -25,7 +25,10 @@ export function pvStateSelector(pvName: string, state: CsState): PvState {
   return [shortPvName, connected, readonly, value];
 }
 
-function pvStateComparator(beforeState: PvState, afterState: PvState): boolean {
+export function pvStateComparator(
+  beforeState: PvState,
+  afterState: PvState
+): boolean {
   for (let i = 0; i < 4; i++) {
     if (beforeState[i] !== afterState[i]) {
       return false;
