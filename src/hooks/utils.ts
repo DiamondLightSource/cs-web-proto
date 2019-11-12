@@ -18,7 +18,13 @@ export function pvStateSelector(
   return results;
 }
 
-/* Used for preventing re-rendering if the results are equivalent. */
+/* Used for preventing re-rendering if the results are equivalent.
+   Note that if the state for a particular PV hasn't changed, we will
+   get back the same object as last time so we are safe to compare them.
+   We need to be careful that we don't have a situation where we get back
+   the same object with different properties and compare it as equal when
+   in fact it has changed.
+*/
 export function pvStateComparator(
   before: PvArrayResults,
   after: PvArrayResults
