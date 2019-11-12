@@ -6,7 +6,7 @@ import { WidgetFromJson } from "../components/FromJson/fromJson";
 
 export const PerformancePage = (): JSX.Element => (
   <WidgetFromJson
-    file="http://localhost:3000/performancePage.json"
+    file="http://pc0030.cs.diamond.ac.uk:3000/performancePage.json"
     containerStyling={{
       position: "relative",
       height: "",

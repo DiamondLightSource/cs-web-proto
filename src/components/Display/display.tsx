@@ -52,7 +52,7 @@ const DisplayMemo = memo(DisplayComponent, areComponentPropsEqual);
 
 export const Display = (
   props: InferWidgetProps<typeof DisplayWidgetProps>
-): JSX.Element => <Widget baseWidget={DisplayMemo} {...props} />;
+): JSX.Element => <Widget baseWidget={DisplayComponent} {...props} />;
 
 Display.propTypes = DisplayWidgetProps;
 
