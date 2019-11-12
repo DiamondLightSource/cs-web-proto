@@ -30,6 +30,23 @@ function pvStateSelector(pvNames: string[], state: CsState): PvArrayResults {
   return results;
 }
 
+/* Used for preventing re-rendering if the results are equivalent. */
+function pvStateComparator(
+  before: PvArrayResults,
+  after: PvArrayResults
+): boolean {
+  let same = true;
+  if (Object.keys(before).length !== Object.keys(after).length) {
+    return false;
+  }
+  for (const [pvName, beforeVal] of Object.entries(before)) {
+    const afterVal = after[pvName];
+    // Do we get exactly the same object from the new state?
+    same = beforeVal === afterVal;
+  }
+  return same;
+}
+
 export function useRules(props: RuleProps): RuleProps {
   const newProps: RuleProps = { ...props };
   let pvs: string[] =
@@ -38,7 +55,8 @@ export function useRules(props: RuleProps): RuleProps {
   useSubscription(props.id, pvs);
   // Get results from all PVs.
   const results = useSelector(
-    (state: CsState): PvArrayResults => pvStateSelector(pvs, state)
+    (state: CsState): PvArrayResults => pvStateSelector(pvs, state),
+    pvStateComparator
   );
 
   if (props.rule !== undefined) {
