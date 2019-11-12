@@ -341,15 +341,15 @@ export const FlatWidget = (props: FlatWidgetComponent): JSX.Element => {
   // Generic widget component
   // Generic widget component
   let { Component, ...otherProps } = props;
-  const [id] = useId();
-  let idProps = { ...otherProps, id: id };
+  // const [id] = useId();
+  // let idProps = { ...otherProps, id: id };
 
-  // Apply macros.
-  const macroProps = useMacros(idProps) as RuleProps;
+  // // Apply macros.
+  // const macroProps = useMacros(idProps) as RuleProps;
   // // Then rules
   // const ruleProps = useRules(macroProps);
 
-  return <Component {...macroProps} />;
+  return <Component {...otherProps} />;
 };
 
 export const FlatPVWidget = (props: FlatPVWidgetComponent): JSX.Element => {

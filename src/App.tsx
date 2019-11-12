@@ -43,7 +43,7 @@ function applyTheme(theme: any): void {
 }
 
 const App: React.FC = (): JSX.Element => {
-  const simulator = new SimulatorPlugin(100);
+  const simulator = new SimulatorPlugin();
   var coniql;
   if (settings.coniqlSocket !== undefined) {
     coniql = new ConiqlPlugin(settings.coniqlSocket);

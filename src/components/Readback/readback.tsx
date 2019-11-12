@@ -136,6 +136,4 @@ export const FlatReadbackComponent = (
 
 export const FlatReadback = (
   props: InferWidgetProps<typeof ReadbackProps> & FlatPVWidget
-): JSX.Element => (
-  <FlatPVWidget Component={memo(FlatReadbackComponent)} {...props} />
-);
+): JSX.Element => <FlatPVWidget Component={FlatReadbackComponent} {...props} />;
