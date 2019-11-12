@@ -9,10 +9,9 @@ export interface PvProps extends React.PropsWithChildren<any> {
   shortPvName: string;
 }
 
-export function pvStateSelector(
-  pvName: string,
-  state: CsState
-): [string, boolean, boolean, VType?] {
+type PvState = [string, boolean, boolean, VType?];
+
+export function pvStateSelector(pvName: string, state: CsState): PvState {
   let shortPvName = state.shortPvNameMap[pvName] || pvName;
   const pvState = state.valueCache[shortPvName];
   let connected = false;
@@ -24,6 +23,15 @@ export function pvStateSelector(
     value = pvState.value;
   }
   return [shortPvName, connected, readonly, value];
+}
+
+function pvStateComparator(beforeState: PvState, afterState: PvState): boolean {
+  for (let i = 0; i < 4; i++) {
+    if (beforeState[i] !== afterState[i]) {
+      return false;
+    }
+  }
+  return true;
 }
 
 export function useConnection(
@@ -38,7 +46,8 @@ export function useConnection(
       } else {
         return ["", false, false, undefined];
       }
-    }
+    },
+    pvStateComparator
   );
   return [shortPvName, connected, readonly, latestValue];
 }
