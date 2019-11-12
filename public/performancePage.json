@@ -1,19 +1,23 @@
 {
-  "type": "flatdisplay",
-  "position": "absolute",
-  "x": "0px",
-  "y": "0px",
-  "width": "500px",
-  "height": "500px",
+  "type": "display",
+  "containerStyling": {
+    "position": "absolute",
+    "x": "0px",
+    "y": "0px",
+    "width": "500px",
+    "height": "500px"
+  },
   "backgroundColor": "#999999",
   "children": [
     {
-      "type": "flatreadback",
-      "position": "absolute",
-      "x": "2px",
-      "y": "2px",
-      "width": "80px",
-      "height": "20px",
+      "type": "readback",
+      "containerStyling": {
+        "position": "absolute",
+        "x": "2px",
+        "y": "2px",
+        "width": "80px",
+        "height": "20px"
+      },
       "pvName": "sim://ramp#00",
       "precision": 0
     }

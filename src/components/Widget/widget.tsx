@@ -7,7 +7,7 @@ import { PvState } from "../../redux/csState";
 import { useMacros } from "../../hooks/useMacros";
 import { useConnection } from "../../hooks/useConnection";
 import { useId } from "react-id-generator";
-import { RuleProps } from "../../hooks/useRules";
+import { RuleProps, useRules } from "../../hooks/useRules";
 
 export type ExcludeNulls<T> = {
   [P in keyof T]: Exclude<T[P], null>;
@@ -211,7 +211,7 @@ function widgetPropsAreEqual(
   }
 }
 
-export const WidgetMemo = (props: WidgetComponent): JSX.Element => {
+export const Widget = (props: WidgetComponent): JSX.Element => {
   // Generic widget component
   const [id] = useId();
   let idProps = { ...props, id: id };
@@ -219,11 +219,11 @@ export const WidgetMemo = (props: WidgetComponent): JSX.Element => {
   // Apply macros.
   const macroProps = useMacros(idProps) as RuleProps;
   // Then rules
-  // const ruleProps = useRules(macroProps);
+  const ruleProps = useRules(macroProps);
 
   // Give containers access to everything apart from the containerStyling
   // Assume flexible position if not provided with anything
-  const { containerStyling, ...containerProps } = macroProps;
+  const { containerStyling, ...containerProps } = ruleProps;
 
   // Manipulate for absolute styling
   // Put x and y back in as left and top respectively
@@ -245,7 +245,7 @@ export const WidgetMemo = (props: WidgetComponent): JSX.Element => {
   );
 };
 
-export const Widget = memo(WidgetMemo, widgetPropsAreEqual);
+// export const Widget = memo(WidgetMemo, widgetPropsAreEqual);
 
 // Function to compare widget props
 function pvWidgetPropsAreEqual(
@@ -274,17 +274,17 @@ function pvWidgetPropsAreEqual(
   }
 }
 
-export const PVWidgetMemo = (props: PVWidgetComponent): JSX.Element => {
+export const PVWidget = (props: PVWidgetComponent): JSX.Element => {
   const [id] = useId();
   let idProps = { ...props, id: id };
 
   // Apply macros.
   const macroProps = useMacros(idProps) as RuleProps;
   // Then rules
-  // const ruleProps = useRules(macroProps);
+  const ruleProps = useRules(macroProps);
   const [shortPvName, connected, readonly, latestValue] = useConnection(
     id,
-    macroProps.pvName
+    ruleProps.pvName
   );
   let newProps: PVWidgetComponent & PvState = {
     ...props,
@@ -335,7 +335,7 @@ export const PVWidgetMemo = (props: PVWidgetComponent): JSX.Element => {
   );
 };
 
-export const PVWidget = memo(PVWidgetMemo, pvWidgetPropsAreEqual);
+// export const PVWidget = memo(PVWidgetMemo, pvWidgetPropsAreEqual);
 
 export const FlatWidget = (props: FlatWidgetComponent): JSX.Element => {
   // Generic widget component
