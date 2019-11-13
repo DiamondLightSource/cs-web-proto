@@ -1,55 +1,48 @@
+* {
+  box-sizing: border-box;
+}
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--colour-background);
+  color: var(--color-text);
+  font-family: "Open sans";
+  font-size: 16px;
+}
 .App {
-  text-align: center;
-  background-color: var(--colour-background);
-  position: absolute;
-  height: auto;
-  min-height: 100vh;
+  width: 1200px;
+  float: left;
+  position: relative;
+  left: 50%;
+  margin-left: -600px;
+  background: var(--colour-background);
+  padding: 10px;
+}
+.header {
+  float: left;
   width: 100%;
+  padding: 10px;
+  background: var(--colour-secondary-background);
+  text-align: right;
+  height: 100px;
 }
-
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
+.left {
+  text-align: center;
+  width: 24%;
+  margin-right: 1%;
+  border: 1px solid #ccc;
+  margin: 5px;
+  float: left;
+  padding: 10px;
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.right {
+  width: 74%;
+  float: left;
+  padding: 10px;
+  border: 1px solid #ccc;
+  margin: 5px;
 }
-
-.App-link {
-  color: #61dafb;
-}
-
-.Input {
-  color: blue;
-}
-
-.Label {
-  color: var(--colour-text);
-}
-
-.Readback {
-  font-weight: bold;
-  color: #2fdb04;
-}
-
-.Slider {
-  cursor: grab;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.last {
+  margin-right: 0;
 }

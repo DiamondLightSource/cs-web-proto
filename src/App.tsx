@@ -25,6 +25,8 @@ import { DynamicPage } from "./pages/dynamicPage";
 import { ConiqlPlugin } from "./connection/coniql";
 import { ConnectionForwarder } from "./connection/forwarder";
 
+import { WidgetFromJson } from "./components/FromJson/fromJson";
+
 var settings: any;
 try {
   // Use require so that we can catch this error
@@ -74,8 +76,19 @@ const App: React.FC = (): JSX.Element => {
           <button type="button" onClick={toggle}>
             Toggle Theme
           </button>
-          <h1>CS Web Proto</h1>
-          <div id="Links" style={{ margin: "5px" }}>
+          <div className="header" id="Links">
+            <b>CS Web Proto</b>
+            <br></br>
+            <WidgetFromJson
+              file="http://localhost:3000/shapesPage.json"
+              containerStyling={{
+                position: "relative",
+                height: "",
+                width: "",
+                margin: "",
+                padding: ""
+              }}
+            />
             <Link style={styleLinkButton} to="/">
               Home
             </Link>
@@ -116,18 +129,9 @@ const App: React.FC = (): JSX.Element => {
               Dynamic
             </Link>
           </div>
-          <div
-            id="Central Column"
-            style={{
-              width: "50%",
-              height: "800px",
-              border: "solid 3px #dddddd",
-              margin: "auto",
-              position: "relative"
-            }}
-          >
+          <div className="left">
+            left
             <Route path="/" exact component={FrontPage} />
-            <Route path="/inputs" exact component={InputsPage} />
             <Route path="/readbacks" exact component={ReadbacksPage} />
             <Route path="/progress" exact component={ProgressPage} />
             <Route
@@ -140,12 +144,16 @@ const App: React.FC = (): JSX.Element => {
             <Route path="/coniql" exact component={ConiqlPage} />
             <Route path="/flex" exact component={FlexExamplePage} />
             <Route path="/embed" exact component={EmbeddedPage} />
+          </div>
+          <div className="right">
+            right
             <Route
               path="/dynamic/:json/:macros"
               exact
               component={DynamicPage}
             />
             <Route path="/shapes" exact component={ShapesPage} />
+            <Route path="/inputs" exact component={InputsPage} />
           </div>
         </div>
       </BrowserRouter>
