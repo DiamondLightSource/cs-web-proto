@@ -1,0 +1,71 @@
+{
+  "type": "display",
+  "containerStyling": {
+    "position": "absolute",
+    "x": "0px",
+    "y": "0px",
+    "width": "1000px",
+    "height": "168px"
+  },
+  "children": [
+    {
+      "type": "actionbutton",
+      "pvName": "sim://limit#1",
+      "text": "more ...",
+      "image": "DCM-base.png",
+      "containerStyling": {
+        "position": "absolute",
+        "x": "100px",
+        "y": "50px",
+        "width": "",
+        "height": ""
+      },
+      "items": [
+        {
+          "label": "set limit #1 to 10",
+          "actions": {
+            "actions": [
+              {
+                "type": "WRITE_PV",
+                "pvName": "sim://limit#1",
+                "value": 10
+              }
+            ]
+          },
+          "executeAsOne": false
+        },
+        {
+          "label": "set limit #1 to 20",
+          "actions": {
+            "actions": [
+              {
+                "type": "WRITE_PV",
+                "pvName": "sim://limit#1",
+                "value": 20
+              }
+            ]
+          },
+          "executeAsOne": false
+        },
+        {
+          "label": "set limit #1 to 100",
+          "actions": {
+            "actions": [
+              {
+                "type": "WRITE_PV",
+                "pvName": "sim://limit#1",
+                "value": 100
+              }
+            ]
+          },
+          "executeAsOne": false
+        }
+      ],
+      "wrappers": {
+        "menuwrapper": true,
+        "copywrapper": true,
+        "alarmborder": true
+      }
+    }
+  ]
+}

@@ -8,8 +8,8 @@ import { BrowserRouter, Link, Route } from "react-router-dom";
 import { getStore, initialiseStore } from "./redux/store";
 import log from "loglevel";
 import { FrontPage } from "./pages/frontpage";
-import { InputsPage } from "./pages/inputsPage";
-import { ReadbacksPage } from "./pages/readbacksPage";
+import { GraphicalPage } from "./pages/graphics";
+import { ExamplePage } from "./pages/examplePage";
 import { ProgressPage } from "./pages/progressPage";
 import { PositioningExamplePage } from "./pages/positioningExamplePage";
 import { JsonPage } from "./pages/fromJson";
@@ -79,11 +79,8 @@ const App: React.FC = (): JSX.Element => {
             <Link style={styleLinkButton} to="/">
               Home
             </Link>
-            <Link style={styleLinkButton} to="/inputs">
-              Inputs
-            </Link>
-            <Link style={styleLinkButton} to="/readbacks">
-              Readbacks
+            <Link style={styleLinkButton} to="/example">
+              Simple example
             </Link>
             <Link style={styleLinkButton} to="/progress">
               Progress
@@ -115,6 +112,9 @@ const App: React.FC = (): JSX.Element => {
             >
               Dynamic
             </Link>
+            <Link style={styleLinkButton} to="/graphics">
+              Graphics
+            </Link>
           </div>
           <div
             id="Central Column"
@@ -127,8 +127,7 @@ const App: React.FC = (): JSX.Element => {
             }}
           >
             <Route path="/" exact component={FrontPage} />
-            <Route path="/inputs" exact component={InputsPage} />
-            <Route path="/readbacks" exact component={ReadbacksPage} />
+            <Route path="/example" exact component={ExamplePage} />
             <Route path="/progress" exact component={ProgressPage} />
             <Route
               path="/positioning"
@@ -140,6 +139,7 @@ const App: React.FC = (): JSX.Element => {
             <Route path="/coniql" exact component={ConiqlPage} />
             <Route path="/flex" exact component={FlexExamplePage} />
             <Route path="/embed" exact component={EmbeddedPage} />
+            <Route path="/graphics" exact component={GraphicalPage} />
             <Route
               path="/dynamic/:json/:macros"
               exact
