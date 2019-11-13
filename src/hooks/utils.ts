@@ -10,10 +10,8 @@ export function pvStateSelector(
 ): PvArrayResults {
   const results: PvArrayResults = {};
   for (const pvName of pvNames) {
-    results[pvName] = [
-      state.valueCache[pvName],
-      state.shortPvNameMap[pvName] || pvName
-    ];
+    const effectivePvName = state.shortPvNameMap[pvName] || pvName;
+    results[pvName] = [state.valueCache[effectivePvName], effectivePvName];
   }
   return results;
 }
