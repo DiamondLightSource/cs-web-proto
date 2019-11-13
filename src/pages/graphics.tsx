@@ -5,7 +5,7 @@ import { WidgetFromJson } from "../components/FromJson/fromJson";
 
 export const GraphicalPage = (): JSX.Element => (
   <WidgetFromJson
-    file="http://localhost:3000/inputsPage.json"
+    file="http://localhost:3000/graphics.json"
     containerStyling={{
       position: "relative",
       height: "",

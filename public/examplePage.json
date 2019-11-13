@@ -3,7 +3,9 @@
   "containerStyling": {
     "position": "relative",
     "width": "80%",
-    "margin": "auto"
+    "margin": "auto",
+    "height": "",
+    "padding": ""
   },
   "macroMap": {
     "pv1": "sim://limit#1",
@@ -15,14 +17,21 @@
     {
       "type": "flexcontainer",
       "containerStyling": {
-        "position": "relative"
+        "position": "relative",
+        "width": "",
+        "margin": "",
+        "height": "",
+        "padding": ""
       },
       "children": [
         {
           "type": "label",
           "containerStyling": {
             "position": "relative",
-            "width": "30%"
+            "width": "30%",
+            "margin": "",
+            "height": "",
+            "padding": ""
           },
           "text": "${pv1}"
         },
@@ -30,7 +39,10 @@
           "type": "input",
           "containerStyling": {
             "position": "relative",
-            "width": "30%"
+            "width": "30%",
+            "margin": "",
+            "height": "",
+            "padding": ""
           },
           "pvName": "${pv1}"
         },
@@ -38,7 +50,10 @@
           "type": "readback",
           "containerStyling": {
             "position": "relative",
-            "width": "30%"
+            "width": "30%",
+            "margin": "",
+            "height": "",
+            "padding": ""
           },
           "pvName": "${pv1}"
         },
@@ -46,7 +61,10 @@
           "type": "label",
           "containerStyling": {
             "position": "relative",
-            "width": "30%"
+            "width": "30%",
+            "margin": "",
+            "height": "",
+            "padding": ""
           },
           "text": "${pv2}"
         },
@@ -54,7 +72,10 @@
           "type": "input",
           "containerStyling": {
             "position": "relative",
-            "width": "30%"
+            "width": "30%",
+            "margin": "",
+            "height": "",
+            "padding": ""
           },
           "pvName": "${pv2}"
         },
@@ -62,7 +83,10 @@
           "type": "readback",
           "containerStyling": {
             "position": "relative",
-            "width": "30%"
+            "width": "30%",
+            "margin": "",
+            "height": "",
+            "padding": ""
           },
           "pvName": "${pv2}"
         },
@@ -70,7 +94,10 @@
           "type": "label",
           "containerStyling": {
             "position": "relative",
-            "width": "30%"
+            "width": "30%",
+            "margin": "",
+            "height": "",
+            "padding": ""
           },
           "text": "${pv3}"
         },
@@ -78,7 +105,10 @@
           "type": "input",
           "containerStyling": {
             "position": "relative",
-            "width": "30%"
+            "width": "30%",
+            "margin": "",
+            "height": "",
+            "padding": ""
           },
           "pvName": "${pv3}"
         },
@@ -86,7 +116,10 @@
           "type": "readback",
           "containerStyling": {
             "position": "relative",
-            "width": "30%"
+            "width": "30%",
+            "margin": "",
+            "height": "",
+            "padding": ""
           },
           "pvName": "${pv3}"
         },
@@ -94,7 +127,10 @@
           "type": "label",
           "containerStyling": {
             "position": "relative",
-            "width": "30%"
+            "width": "30%",
+            "margin": "",
+            "height": "",
+            "padding": ""
           },
           "text": "${pv4}"
         },
@@ -102,7 +138,10 @@
           "type": "input",
           "containerStyling": {
             "position": "relative",
-            "width": "30%"
+            "width": "30%",
+            "margin": "",
+            "height": "",
+            "padding": ""
           },
           "pvName": "${pv4}"
         },
@@ -110,7 +149,10 @@
           "type": "readback",
           "containerStyling": {
             "position": "relative",
-            "width": "30%"
+            "width": "30%",
+            "margin": "",
+            "height": "",
+            "padding": ""
           },
           "pvName": "${pv4}"
         }
@@ -123,7 +165,10 @@
       "image": "DCM-base.png",
       "containerStyling": {
         "position": "relative",
-        "width": "20%"
+        "width": "20%",
+        "margin": "",
+        "height": "",
+        "padding": ""
       },
       "items": [
         {
@@ -174,6 +219,13 @@
     },
     {
       "type": "actionbutton",
+      "containerStyling": {
+        "position": "relative",
+        "width": "80%",
+        "margin": "auto",
+        "height": "",
+        "padding": ""
+      },
       "pvName": "${pv2}",
       "text": "set ${pv2} to 10",
       "actions": {
@@ -189,6 +241,13 @@
     },
     {
       "type": "actionbutton",
+      "containerStyling": {
+        "position": "relative",
+        "width": "80%",
+        "margin": "auto",
+        "height": "",
+        "padding": ""
+      },
       "pvName": "${pv3}",
       "text": "set ${pv3} to 10",
       "actions": {
@@ -204,6 +263,13 @@
     },
     {
       "type": "actionbutton",
+      "containerStyling": {
+        "position": "relative",
+        "width": "80%",
+        "margin": "auto",
+        "height": "",
+        "padding": ""
+      },
       "pvName": "${pv4}",
       "text": "set ${pv4} to 10",
       "actions": {
