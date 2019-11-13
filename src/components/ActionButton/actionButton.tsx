@@ -39,7 +39,7 @@ export const ActionButtonWidget = (
 ): JSX.Element => {
   // Function to send the value on to the PV
   function onClick(event: React.MouseEvent<HTMLButtonElement>): void {
-    if (props.actions != undefined) executeActions(props.actions);
+    if (props.actions !== undefined) executeActions(props.actions);
   }
 
   return (
