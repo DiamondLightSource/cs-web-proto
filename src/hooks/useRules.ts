@@ -2,9 +2,10 @@ import React, { ReactNode } from "react";
 
 import { useSubscription } from "./useSubscription";
 import { useSelector } from "react-redux";
-import { MacroMap, CsState, PvState } from "../redux/csState";
+import { MacroMap, CsState } from "../redux/csState";
 
 import { evaluate } from "mathjs";
+import { PvArrayResults, pvStateSelector, pvStateComparator } from "./utils";
 
 export interface RuleProps extends React.PropsWithChildren<any> {
   id: string;
@@ -16,35 +17,6 @@ export interface RuleProps extends React.PropsWithChildren<any> {
     prop: string;
   };
   children: ReactNode;
-}
-
-interface PvArrayResults {
-  [pvName: string]: PvState;
-}
-
-function pvStateSelector(pvNames: string[], state: CsState): PvArrayResults {
-  const results: PvArrayResults = {};
-  for (const pvName of pvNames) {
-    results[pvName] = state.valueCache[pvName];
-  }
-  return results;
-}
-
-/* Used for preventing re-rendering if the results are equivalent. */
-function pvStateComparator(
-  before: PvArrayResults,
-  after: PvArrayResults
-): boolean {
-  let same = true;
-  if (Object.keys(before).length !== Object.keys(after).length) {
-    return false;
-  }
-  for (const [pvName, beforeVal] of Object.entries(before)) {
-    const afterVal = after[pvName];
-    // Do we get exactly the same object from the new state?
-    same = beforeVal === afterVal;
-  }
-  return same;
 }
 
 export function useRules(props: RuleProps): RuleProps {
@@ -74,7 +46,7 @@ export function useRules(props: RuleProps): RuleProps {
 
     for (let [name, pv] of Object.entries(substitutionMap)) {
       console.log(results);
-      const pvState = results[pv];
+      const [pvState] = results[pv];
       if (pvState && pvState.value !== undefined && pvState.connected) {
         condition = condition.replace(name, pvState.value.getValue());
         let state = evaluate(condition);
