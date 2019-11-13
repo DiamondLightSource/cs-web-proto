@@ -40,6 +40,7 @@ export const MenuWrapper = (props: {
     for (let i = 0; i < length; i++) {
       entries.push(
         <div
+          key={i}
           className={classes.customContextItem}
           onClick={(): void => triggerCallback(items[i].actions)}
         >

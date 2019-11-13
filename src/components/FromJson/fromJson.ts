@@ -16,7 +16,6 @@ import { SlideControl } from "../SlideControl/slideControl";
 import { MenuButton } from "../MenuButton/menuButton";
 import { Display } from "../Display/display";
 import { ActionButton } from "../ActionButton/actionButton";
-import { BasicButton } from "../BasicButton/basicButton";
 import { WidgetPropType, InferWidgetProps } from "../Widget/widget";
 
 const EMPTY_WIDGET: WidgetDescription = {
@@ -68,7 +67,6 @@ export const WidgetFromJson = (
     menubutton: MenuButton,
     flexcontainer: FlexContainer,
     actionbutton: ActionButton,
-    basicbutton: BasicButton,
     display: Display,
     empty: Display,
     widgetFromJSON: WidgetFromJson
