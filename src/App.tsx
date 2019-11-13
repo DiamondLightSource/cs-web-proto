@@ -77,8 +77,6 @@ const App: React.FC = (): JSX.Element => {
             Toggle Theme
           </button>
           <div className="header" id="Links">
-            <b>CS Web Proto</b>
-            <br></br>
             <WidgetFromJson
               file="http://localhost:3000/shapesPage.json"
               containerStyling={{
@@ -130,7 +128,7 @@ const App: React.FC = (): JSX.Element => {
             </Link>
           </div>
           <div className="left">
-            left
+            - Left -
             <Route path="/" exact component={FrontPage} />
             <Route path="/readbacks" component={ReadbacksPage} />
             <Route path="/progress" exact component={ProgressPage} />
@@ -146,12 +144,8 @@ const App: React.FC = (): JSX.Element => {
             <Route path="/embed" exact component={EmbeddedPage} />
           </div>
           <div className="right">
-            right
-            <Route
-              path="/readbacks/:json/:macros"
-              exact
-              component={DynamicPage}
-            />
+            - Right -
+            <Route path="/:any/:json/:macros" exact component={DynamicPage} />
             <Route path="/shapes" exact component={ShapesPage} />
             <Route path="/inputs" exact component={InputsPage} />
           </div>
