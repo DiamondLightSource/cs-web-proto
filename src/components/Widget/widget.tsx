@@ -37,8 +37,9 @@ const ContainerFeaturesPropType = {
 
 const RulesPropType = {
   condition: PropTypes.string.isRequired,
-  trueState: PropTypes.string.isRequired,
-  falseState: PropTypes.string.isRequired,
+  trueState: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]).isRequired,
+  falseState: PropTypes.oneOfType([PropTypes.string, PropTypes.bool])
+    .isRequired,
   substitutionMap: MapStringString.isRequired,
   prop: PropTypes.string.isRequired
 };
@@ -71,7 +72,7 @@ type WidgetStyling = InferWidgetProps<typeof WidgetStylingPropType>;
 const CommonWidgetProps = {
   widgetStyling: PropTypes.shape(WidgetStylingPropType),
   macroMap: PropTypes.objectOf(PropTypes.string.isRequired),
-  rule: PropTypes.shape(RulesPropType)
+  rules: PropTypes.arrayOf(PropTypes.shape(RulesPropType))
 };
 
 const AbsoluteComponentPropType = {
@@ -92,9 +93,7 @@ export const WidgetPropType = {
     PropTypes.exact(AbsoluteContainerProps),
     PropTypes.exact(FlexibleContainerProps)
   ]).isRequired,
-  widgetStyling: PropTypes.exact(WidgetStylingPropType),
-  macroMap: PropTypes.objectOf(PropTypes.string.isRequired),
-  rule: PropTypes.exact(RulesPropType)
+  ...CommonWidgetProps
 };
 // Allows for either absolute or flexible positioning
 export type WidgetProps = AbsoluteType | FlexibleType;
