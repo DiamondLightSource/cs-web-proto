@@ -8,8 +8,7 @@ import { BrowserRouter, Link, Route } from "react-router-dom";
 import { getStore, initialiseStore } from "./redux/store";
 import log from "loglevel";
 import { FrontPage } from "./pages/frontpage";
-import { InputsPage } from "./pages/inputsPage";
-import { ReadbacksPage } from "./pages/readbacksPage";
+import { ExamplePage } from "./pages/examplePage";
 import { ProgressPage } from "./pages/progressPage";
 import { PositioningExamplePage } from "./pages/positioningExamplePage";
 import { JsonPage } from "./pages/fromJson";
@@ -90,11 +89,8 @@ const App: React.FC = (): JSX.Element => {
             <Link style={styleLinkButton} to="/">
               Home
             </Link>
-            <Link style={styleLinkButton} to="/inputs">
-              Inputs
-            </Link>
-            <Link style={styleLinkButton} to="/readbacks">
-              Readbacks
+            <Link style={styleLinkButton} to="/example">
+              Simple example
             </Link>
             <Link style={styleLinkButton} to="/progress">
               Progress
@@ -122,15 +118,18 @@ const App: React.FC = (): JSX.Element => {
             </Link>
             <Link
               style={styleLinkButton}
-              to={'/readbacks/ionpExample/{"device":"SR03A-VA-IONP-01"}'}
+              to={'/example/ionpExample/{"device":"SR03A-VA-IONP-01"}'}
             >
               Nested
+            </Link>
+            <Link style={styleLinkButton} to="/graphics">
+              Graphics
             </Link>
           </div>
           <div className="left">
             - Left -
             <Route path="/" exact component={FrontPage} />
-            <Route path="/readbacks" component={ReadbacksPage} />
+            <Route path="/example" component={ExamplePage} />
             <Route path="/progress" exact component={ProgressPage} />
             <Route
               path="/positioning"
@@ -147,7 +146,6 @@ const App: React.FC = (): JSX.Element => {
             - Right -
             <Route path="/:any/:json/:macros" exact component={DynamicPage} />
             <Route path="/shapes" exact component={ShapesPage} />
-            <Route path="/inputs" exact component={InputsPage} />
           </div>
         </div>
       </BrowserRouter>

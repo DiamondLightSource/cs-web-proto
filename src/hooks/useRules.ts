@@ -2,9 +2,10 @@ import React, { ReactNode } from "react";
 
 import { useSubscription } from "./useSubscription";
 import { useSelector } from "react-redux";
-import { MacroMap, CsState, PvState } from "../redux/csState";
+import { MacroMap, CsState } from "../redux/csState";
 
 import { evaluate } from "mathjs";
+import { PvArrayResults, pvStateSelector, pvStateComparator } from "./utils";
 
 export interface RuleProps extends React.PropsWithChildren<any> {
   id: string;
@@ -18,18 +19,6 @@ export interface RuleProps extends React.PropsWithChildren<any> {
   children: ReactNode;
 }
 
-interface PvArrayResults {
-  [pvName: string]: PvState;
-}
-
-function pvStateSelector(pvNames: string[], state: CsState): PvArrayResults {
-  const results: PvArrayResults = {};
-  for (const pvName of pvNames) {
-    results[pvName] = state.valueCache[pvName];
-  }
-  return results;
-}
-
 export function useRules(props: RuleProps): RuleProps {
   const newProps: RuleProps = { ...props };
   let pvs: string[] =
@@ -38,7 +27,8 @@ export function useRules(props: RuleProps): RuleProps {
   useSubscription(props.id, pvs);
   // Get results from all PVs.
   const results = useSelector(
-    (state: CsState): PvArrayResults => pvStateSelector(pvs, state)
+    (state: CsState): PvArrayResults => pvStateSelector(pvs, state),
+    pvStateComparator
   );
 
   if (props.rule !== undefined) {
@@ -56,7 +46,7 @@ export function useRules(props: RuleProps): RuleProps {
 
     for (let [name, pv] of Object.entries(substitutionMap)) {
       console.log(results);
-      const pvState = results[pv];
+      const [pvState] = results[pv];
       if (pvState && pvState.value !== undefined && pvState.connected) {
         condition = condition.replace(name, pvState.value.getValue());
         let state = evaluate(condition);

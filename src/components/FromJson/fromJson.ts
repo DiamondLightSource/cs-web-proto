@@ -15,6 +15,7 @@ import { ProgressBar } from "../ProgressBar/progressBar";
 import { SlideControl } from "../SlideControl/slideControl";
 import { MenuButton } from "../MenuButton/menuButton";
 import { Display } from "../Display/display";
+import { ActionButton } from "../ActionButton/actionButton";
 import { WidgetPropType, InferWidgetProps } from "../Widget/widget";
 
 const EMPTY_WIDGET: WidgetDescription = {
@@ -65,6 +66,7 @@ export const WidgetFromJson = (
     slidecontrol: SlideControl,
     menubutton: MenuButton,
     flexcontainer: FlexContainer,
+    actionbutton: ActionButton,
     display: Display,
     empty: Display,
     widgetFromJSON: WidgetFromJson
