@@ -124,15 +124,15 @@ const App: React.FC = (): JSX.Element => {
             </Link>
             <Link
               style={styleLinkButton}
-              to={'/dynamic/ionpExample/{"device":"SR03A-VA-IONP-01"}'}
+              to={'/readbacks/ionpExample/{"device":"SR03A-VA-IONP-01"}'}
             >
-              Dynamic
+              Nested
             </Link>
           </div>
           <div className="left">
             left
             <Route path="/" exact component={FrontPage} />
-            <Route path="/readbacks" exact component={ReadbacksPage} />
+            <Route path="/readbacks" component={ReadbacksPage} />
             <Route path="/progress" exact component={ProgressPage} />
             <Route
               path="/positioning"
@@ -148,7 +148,7 @@ const App: React.FC = (): JSX.Element => {
           <div className="right">
             right
             <Route
-              path="/dynamic/:json/:macros"
+              path="/readbacks/:json/:macros"
               exact
               component={DynamicPage}
             />
