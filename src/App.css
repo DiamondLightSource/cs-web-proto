@@ -19,7 +19,7 @@ body {
   background: var(--colour-background);
   padding: 10px;
 }
-.header {
+.top {
   float: left;
   width: 100%;
   padding: 10px;
@@ -37,11 +37,13 @@ body {
   padding: 10px;
 }
 .right {
+  text-align: center;
   width: 49%;
-  float: left;
-  padding: 10px;
+  margin-right: 1%;
   border: 1px solid #ccc;
   margin: 5px;
+  float: left;
+  padding: 10px;
 }
 .last {
   margin-right: 0;

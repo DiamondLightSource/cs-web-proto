@@ -65,7 +65,6 @@ const App: React.FC = (): JSX.Element => {
   applyTheme(dark ? darkTheme : lightTheme);
 
   const styleLinkButton = {
-    backgroundColor: "#eeeeee",
     margin: "10px 10px"
   };
 
@@ -76,7 +75,8 @@ const App: React.FC = (): JSX.Element => {
           <button type="button" onClick={toggle}>
             Toggle Theme
           </button>
-          <div className="header" id="Links">
+          <div className="top" id="Links">
+            - Top -
             <WidgetFromJson
               file="http://localhost:3000/shapesPage.json"
               containerStyling={{

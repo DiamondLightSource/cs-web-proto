@@ -3,15 +3,15 @@ import React, { useState, useEffect } from "react";
 export const lightTheme = {
   "--colour-text": "#000000",
   "--colour-secondary-text": "#000000",
-  "--colour-background": "#DDDDDD",
-  "--colour-secondary-background": "#DDDDFF"
+  "--colour-background": "#F7F9FB",
+  "--colour-secondary-background": "#8FC1E3"
 };
 
 export const darkTheme = {
   "--colour-text": "#FFFFFF",
-  "--colour-secondary-text": "#FFFF00",
-  "--colour-background": "#535353",
-  "--colour-secondary-background": "#555555"
+  "--colour-secondary-text": "#FFFFFF",
+  "--colour-background": "#282828",
+  "--colour-secondary-background": "#0C0032"
 };
 
 const initialState = {
