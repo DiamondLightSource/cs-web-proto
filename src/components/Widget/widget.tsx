@@ -3,6 +3,7 @@ import PropTypes, { InferProps } from "prop-types";
 
 import { CopyWrapper } from "../CopyWrapper/copyWrapper";
 import { AlarmBorder } from "../AlarmBorder/alarmBorder";
+import { MenuWrapper } from "../MenuWrapper/menuWrapper";
 import { PvState } from "../../redux/csState";
 import { useMacros } from "../../hooks/useMacros";
 import { useConnection } from "../../hooks/useConnection";
@@ -224,10 +225,13 @@ export const PVWidget = (props: PVWidgetComponent): JSX.Element => {
   const components = [];
   // Done like this in case only one of the values is passed through
   const requestedWrappers = {
-    ...{ alarmborder: false, copywrapper: false },
+    ...{ alarmborder: false, copywrapper: false, menuwrapper: false },
     ...wrappers
   };
 
+  if (requestedWrappers.menuwrapper === true) {
+    components.push(MenuWrapper);
+  }
   if (requestedWrappers.alarmborder === true) {
     components.push(AlarmBorder);
   }
