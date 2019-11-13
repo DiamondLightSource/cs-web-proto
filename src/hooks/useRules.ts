@@ -1,4 +1,5 @@
 import React, { ReactNode } from "react";
+import log from "loglevel";
 
 import { useSubscription } from "./useSubscription";
 import { useSelector } from "react-redux";
@@ -32,7 +33,6 @@ export function useRules(props: RuleProps): RuleProps {
   );
 
   if (props.rule !== undefined) {
-    console.log(props.rule);
     let {
       condition,
       trueState,
@@ -45,14 +45,16 @@ export function useRules(props: RuleProps): RuleProps {
     }
 
     for (let [name, pv] of Object.entries(substitutionMap)) {
-      console.log(results);
       const [pvState] = results[pv];
       if (pvState && pvState.value !== undefined && pvState.connected) {
         condition = condition.replace(name, pvState.value.getValue());
-        let state = evaluate(condition);
-        console.log(`state is ${state}`);
-        let styleValue = state ? trueState : falseState;
-        newProps[prop] = styleValue;
+        try {
+          let state = evaluate(condition);
+          let styleValue = state ? trueState : falseState;
+          newProps[prop] = styleValue;
+        } catch (error) {
+          log.warn(`Failed to evaluate rule ${condition}: ${error}`);
+        }
       }
     }
   }
