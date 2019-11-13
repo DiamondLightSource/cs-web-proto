@@ -6,7 +6,8 @@ import {
   WRITE_PV,
   CONNECTION_CHANGED,
   MACRO_UPDATED,
-  UNSUBSCRIBE
+  UNSUBSCRIBE,
+  VALUES_CHANGED
 } from "./actions";
 import { VType } from "../vtypes/vtypes";
 import { mergeVtype } from "../vtypes/merge";
@@ -49,6 +50,25 @@ export interface CsState {
   subscriptions: Subscriptions;
 }
 
+function updateValueCache(
+  oldValueCache: ValueCache,
+  newValueCache: ValueCache,
+  action: any
+): void {
+  const { pvName, value } = action.payload;
+  const pvState = oldValueCache[pvName];
+  let newValue: VType | undefined;
+  if (value instanceof VType) {
+    newValue = value;
+  } else {
+    newValue = mergeVtype(pvState.value, value);
+  }
+  const newPvState = Object.assign({}, pvState, {
+    value: newValue
+  });
+  newValueCache[action.payload.pvName] = newPvState;
+}
+
 export function csReducer(state = initialState, action: ActionType): CsState {
   log.debug(action);
   switch (action.type) {
@@ -66,6 +86,13 @@ export function csReducer(state = initialState, action: ActionType): CsState {
         value: newValue
       });
       newValueCache[action.payload.pvName] = newPvState;
+      return { ...state, valueCache: newValueCache };
+    }
+    case VALUES_CHANGED: {
+      const newValueCache: ValueCache = { ...state.valueCache };
+      for (const changedAction of action.payload) {
+        updateValueCache(state.valueCache, newValueCache, changedAction);
+      }
       return { ...state, valueCache: newValueCache };
     }
     case CONNECTION_CHANGED: {

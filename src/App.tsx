@@ -33,7 +33,7 @@ try {
   settings = {};
 }
 
-log.setLevel("warn");
+log.setLevel("info");
 
 function applyTheme(theme: any): void {
   Object.keys(theme).forEach(function(key): void {

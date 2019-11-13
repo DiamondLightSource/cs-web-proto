@@ -1,11 +1,14 @@
 import { Store } from "redux";
+import log from "loglevel";
 import { Connection, ConnectionState } from "../connection/plugin";
 import {
   CONNECTION_CHANGED,
   SUBSCRIBE,
   WRITE_PV,
   VALUE_CHANGED,
-  UNSUBSCRIBE
+  VALUES_CHANGED,
+  UNSUBSCRIBE,
+  Action
 } from "./actions";
 
 function connectionChanged(
@@ -19,12 +22,32 @@ function connectionChanged(
   });
 }
 
+let queueStarted = false;
+let globalStore: any = undefined;
+const queue: Action[] = [];
+function clearQueue(): void {
+  log.info("Clearing queues");
+  log.info(queue);
+  if (globalStore) {
+    globalStore.dispatch({ type: VALUES_CHANGED, payload: [...queue] });
+    queue.length = 0;
+  }
+}
+// Event loop
+log.info(`outside event loop ${queueStarted}`);
+if (!queueStarted) {
+  log.info("Starting queue");
+  setInterval(clearQueue, 100);
+  queueStarted = true;
+}
+
 function valueChanged(
   store: Store,
   pvName: string,
   value: object | undefined
 ): void {
-  store.dispatch({
+  globalStore = store;
+  queue.push({
     type: VALUE_CHANGED,
     payload: { pvName: pvName, value: value }
   });
