@@ -18,8 +18,10 @@ import { MacrosPage } from "./pages/macrosPage";
 import { lightTheme, darkTheme, ThemeContext } from "./themeContext";
 import { FlexExamplePage } from "./pages/flexExamplePage";
 import { EmbeddedPage } from "./pages/embeddedPage";
+import { ShapesPage } from "./pages/shapesPage";
 
 import { SimulatorPlugin } from "./connection/sim";
+import { DynamicPage } from "./pages/dynamicPage";
 import { ConiqlPlugin } from "./connection/coniql";
 import { ConnectionForwarder } from "./connection/forwarder";
 
@@ -100,6 +102,15 @@ const App: React.FC = (): JSX.Element => {
             </Link>
             <Link style={styleLinkButton} to="/embed">
               Embed
+            </Link>{" "}
+            <Link style={styleLinkButton} to="/shapes">
+              Shapes
+            </Link>
+            <Link
+              style={styleLinkButton}
+              to={'/dynamic/ionpExample/{"device":"SR03A-VA-IONP-01"}'}
+            >
+              Dynamic
             </Link>
             <Link style={styleLinkButton} to="/graphics">
               Graphics
@@ -129,6 +140,12 @@ const App: React.FC = (): JSX.Element => {
             <Route path="/flex" exact component={FlexExamplePage} />
             <Route path="/embed" exact component={EmbeddedPage} />
             <Route path="/graphics" exact component={GraphicalPage} />
+            <Route
+              path="/dynamic/:json/:macros"
+              exact
+              component={DynamicPage}
+            />
+            <Route path="/shapes" exact component={ShapesPage} />
           </div>
         </div>
       </BrowserRouter>

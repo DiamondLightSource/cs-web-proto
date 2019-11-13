@@ -1,17 +1,26 @@
 import React from "react";
+import PropTypes from "prop-types";
+
+import {
+  InferWidgetProps,
+  PVComponent,
+  PVWidget,
+  PVWidgetPropType
+} from "../../components/Widget/widget";
 
 import classes from "./readback.module.css";
-import { VType } from "../../vtypes/vtypes";
 import { alarmOf, AlarmSeverity } from "../../vtypes/alarm";
+import { displayOf } from "../../vtypes/display";
 import { vtypeToString } from "../../vtypes/utils";
-import { PVWidget, PVWidgetInterface } from "../Widget/widget";
 
-export interface ReadbackProps {
-  connected: boolean;
-  value?: VType;
-  precision?: number;
-  style?: object;
-}
+const ReadbackProps = {
+  precision: PropTypes.number,
+  showUnits: PropTypes.bool
+};
+
+// Needs to be exported for testing
+export type ReadbackComponentProps = InferWidgetProps<typeof ReadbackProps> &
+  PVComponent;
 
 function getClass(alarmSeverity: any): string {
   switch (alarmSeverity) {
@@ -25,9 +34,12 @@ function getClass(alarmSeverity: any): string {
   return classes.Readback;
 }
 
-export const ReadbackComponent = (props: ReadbackProps): JSX.Element => {
-  let { connected, value, precision = undefined, style } = props;
+export const ReadbackComponent = (
+  props: ReadbackComponentProps
+): JSX.Element => {
+  let { connected, value, precision, showUnits = false, style } = props;
   const alarm = alarmOf(value);
+  const display = displayOf(value);
   let displayedValue;
   if (!value) {
     displayedValue = "Waiting for value";
@@ -35,6 +47,11 @@ export const ReadbackComponent = (props: ReadbackProps): JSX.Element => {
     displayedValue = vtypeToString(value, precision);
   }
   style = { backgroundColor: "#383838", ...props.style };
+
+  // Add units if there are any and show units is true
+  if (showUnits === true && display.getUnit() !== "") {
+    displayedValue = displayedValue + ` ${display.getUnit()}`;
+  }
 
   // Change text color depending on connection state
   if (!connected) {
@@ -56,10 +73,13 @@ export const ReadbackComponent = (props: ReadbackProps): JSX.Element => {
   );
 };
 
-interface ReadbackWidgetProps {
-  precision?: number;
-}
+const ReadbackWidgetProps = {
+  ...ReadbackProps,
+  ...PVWidgetPropType
+};
 
 export const Readback = (
-  props: ReadbackWidgetProps & PVWidgetInterface
+  props: InferWidgetProps<typeof ReadbackWidgetProps>
 ): JSX.Element => <PVWidget baseWidget={ReadbackComponent} {...props} />;
+
+Readback.propTypes = ReadbackWidgetProps;

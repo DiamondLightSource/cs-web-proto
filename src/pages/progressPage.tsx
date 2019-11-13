@@ -7,6 +7,12 @@ export const ProgressPage = (): JSX.Element => (
   <WidgetFromJson
     file="http://localhost:3000/progressPage.json"
     macroMap={{}}
-    containerStyling={{ position: "relative" }}
+    containerStyling={{
+      position: "relative",
+      height: "",
+      width: "",
+      margin: "",
+      padding: ""
+    }}
   />
 );

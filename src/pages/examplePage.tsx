@@ -8,6 +8,12 @@ export const ExamplePage = (): JSX.Element => (
   <WidgetFromJson
     file="http://localhost:3000/examplePage.json"
     macroMap={{}}
-    containerStyling={{ position: "relative" }}
+    containerStyling={{
+      position: "relative",
+      height: "",
+      width: "",
+      margin: "",
+      padding: ""
+    }}
   />
 );

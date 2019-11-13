@@ -1,15 +1,22 @@
-import React, { ReactNode } from "react";
+import React from "react";
+import PropTypes from "prop-types";
 
 import classes from "./flexContainer.module.css";
-import { Widget, WidgetInterface } from "../Widget/widget";
+import {
+  Component,
+  Widget,
+  WidgetPropType,
+  InferWidgetProps
+} from "../Widget/widget";
 
-interface FlexProps {
-  children: ReactNode;
-  flexFlow?: "rowWrap" | "column" | "row" | "columnWrap";
-  style?: object;
-}
+const FlexProps = {
+  flexFlow: PropTypes.oneOf(["rowWrap", "column", "row", "columnWrap"]),
+  children: PropTypes.node
+};
 
-export const FlexContainerComponent = (props: FlexProps): JSX.Element => {
+export const FlexContainerComponent = (
+  props: InferWidgetProps<typeof FlexProps> & Component
+): JSX.Element => {
   let classNames = [classes.FlexContainer];
   let { flexFlow = null } = props;
   if (flexFlow !== null) {
@@ -22,6 +29,13 @@ export const FlexContainerComponent = (props: FlexProps): JSX.Element => {
   );
 };
 
+const FlexWidgetProps = {
+  ...FlexProps,
+  ...WidgetPropType
+};
+
 export const FlexContainer = (
-  props: FlexProps & WidgetInterface
+  props: InferWidgetProps<typeof FlexWidgetProps>
 ): JSX.Element => <Widget baseWidget={FlexContainerComponent} {...props} />;
+
+FlexContainer.propTypes = FlexWidgetProps;

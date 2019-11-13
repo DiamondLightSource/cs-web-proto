@@ -19,14 +19,17 @@ const initialState: CsState = {
 };
 
 export interface PvState {
-  value: VType;
+  value?: VType;
   connected: boolean;
   readonly: boolean;
+}
+
+export interface FullPvState extends PvState {
   initializingPvName: string;
 }
 
 export interface ValueCache {
-  [key: string]: PvState;
+  [key: string]: FullPvState;
 }
 
 /* A simple dictionary from key to value. */

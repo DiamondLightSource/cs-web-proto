@@ -1,5 +1,5 @@
 import React from "react";
-import { PVWidget, PVWidgetInterface } from "../Widget/widget";
+import { InferWidgetProps, PVWidget, PVWidgetPropType } from "../Widget/widget";
 import classes from "./basicButton.module.css";
 
 export interface BasicButtonProps {
@@ -41,5 +41,7 @@ export const BasicButtonWidget = (
 };
 
 export const BasicButton = (
-  props: BasicButtonWidgetProps & PVWidgetInterface
+  props: InferWidgetProps<typeof PVWidgetPropType>
 ): JSX.Element => <PVWidget baseWidget={BasicButtonWidget} {...props} />;
+
+BasicButton.propTypes = PVWidgetPropType;

@@ -1,13 +1,19 @@
-import React from "react";
-import { MacroMap } from "../../redux/csState";
-import { BaseWidgetInterface } from "../Widget/widget";
+/* eslint react/forbid-foreign-prop-types: 0, no-throw-literal: 0 */
 
-export interface WidgetDescription extends BaseWidgetInterface {
+import React from "react";
+import log from "loglevel";
+// @ts-ignore
+import checkPropTypes from "check-prop-types";
+
+import { MacroMap } from "../../redux/csState";
+import { WidgetProps } from "../Widget/widget";
+
+export type WidgetDescription = WidgetProps & {
   type: string;
   // All other component properties
   [x: string]: any;
   children?: WidgetDescription[] | null;
-}
+};
 
 export function widgetDescriptionToComponent(
   // Converts a JS object matching a position description into React component
@@ -15,7 +21,8 @@ export function widgetDescriptionToComponent(
   // can be overwritten. Uses recursion to generate children.
   widgetDescription: WidgetDescription | null,
   widgetDict: { [index: string]: React.FC<any> },
-  existingMacroMap: MacroMap
+  // This interface is a very ugly workaround to work with the PropTypes
+  existingMacroMap?: MacroMap | null
 ): JSX.Element | null {
   // If there is nothing here, return null
   if (widgetDescription === null) {
@@ -29,6 +36,30 @@ export function widgetDescriptionToComponent(
       containerStyling,
       ...otherProps
     } = widgetDescription;
+
+    // Perform checking on propTypes
+    let widgetInfo = { containerStyling: containerStyling, ...otherProps };
+    // @ts-ignore
+    let error: string | undefined = checkPropTypes(
+      widgetDict[type].propTypes,
+      widgetInfo,
+      "widget description",
+      type,
+      (): void => {
+        log.debug("Got an error");
+      }
+    );
+    // @ts-ignore
+    if (error !== undefined) {
+      throw {
+        msg: error,
+        object: {
+          type: type,
+          containerStyling: containerStyling,
+          ...otherProps
+        }
+      };
+    }
 
     // Collect macroMap passed into function and overwrite/add any
     // new values from the object macroMap

@@ -1,29 +1,25 @@
 import React from "react";
+import PropTypes from "prop-types";
 
-import { VType } from "../../vtypes/vtypes";
 import classes from "./progressBar.module.css";
-
 import { vtypeOrUndefinedToNumber } from "../../vtypes/utils";
-import { PVWidget, PVWidgetInterface } from "../Widget/widget";
+import {
+  InferWidgetProps,
+  PVComponent,
+  PVWidget,
+  PVWidgetPropType
+} from "../Widget/widget";
 
-interface ProgressBarProps {
-  connected: boolean;
-  value?: VType;
-  min: number;
-  max: number;
-  vertical?: boolean;
-  color?: string;
-  top?: string;
-  left?: string;
-  height?: string;
-  width?: string;
-  fontStyle?: object;
-  precision?: number;
-  style?: object;
-}
+const ProgressBarProps = {
+  min: PropTypes.number,
+  max: PropTypes.number,
+  vertical: PropTypes.bool,
+  color: PropTypes.string,
+  precision: PropTypes.number
+};
 
-export const ProgressBarComponent: React.FC<ProgressBarProps> = (
-  props: ProgressBarProps
+export const ProgressBarComponent = (
+  props: InferWidgetProps<typeof ProgressBarProps> & PVComponent
 ): JSX.Element => {
   let {
     value,
@@ -82,15 +78,13 @@ export const ProgressBarComponent: React.FC<ProgressBarProps> = (
   );
 };
 
-interface ProgressBarWidgetProps {
-  min: number;
-  max: number;
-  vertical?: boolean;
-  color?: string;
-  precision?: number;
-  style?: object;
-}
+const ProgressBarWidgetProps = {
+  ...ProgressBarProps,
+  ...PVWidgetPropType
+};
 
 export const ProgressBar = (
-  props: ProgressBarWidgetProps & PVWidgetInterface
+  props: InferWidgetProps<typeof ProgressBarWidgetProps>
 ): JSX.Element => <PVWidget baseWidget={ProgressBarComponent} {...props} />;
+
+ProgressBar.propTypes = ProgressBarWidgetProps;

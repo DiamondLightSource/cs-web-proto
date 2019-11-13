@@ -1,6 +1,6 @@
 import React from "react";
 import { Actions, executeActions } from "../../actions";
-import { PVWidget, PVWidgetInterface } from "../Widget/widget";
+import { InferWidgetProps, PVWidget, PVWidgetPropType } from "../Widget/widget";
 
 export interface ActionButtonProps {
   text: string;
@@ -39,5 +39,7 @@ export const ActionButtonWidget = (
 };
 
 export const ActionButton = (
-  props: ActionButtonWidgetProps & PVWidgetInterface
+  props: InferWidgetProps<typeof PVWidgetPropType>
 ): JSX.Element => <PVWidget baseWidget={ActionButtonWidget} {...props} />;
+
+ActionButton.propTypes = PVWidgetPropType;
