@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React from "react";
 import log from "loglevel";
 
 import { useSubscription } from "./useSubscription";
@@ -17,7 +17,6 @@ export interface RuleProps extends React.PropsWithChildren<any> {
     substitutionMap: MacroMap;
     prop: string;
   };
-  children: ReactNode;
 }
 
 export function useRules(props: RuleProps): RuleProps {

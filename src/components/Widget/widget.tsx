@@ -7,7 +7,7 @@ import { PvState } from "../../redux/csState";
 import { useMacros } from "../../hooks/useMacros";
 import { useConnection } from "../../hooks/useConnection";
 import { useId } from "react-id-generator";
-import { useRules, RuleProps } from "../../hooks/useRules";
+import { useRules } from "../../hooks/useRules";
 
 export type ExcludeNulls<T> = {
   [P in keyof T]: Exclude<T[P], null>;
@@ -158,9 +158,9 @@ export const Widget = (props: WidgetComponent): JSX.Element => {
   let idProps = { ...props, id: id };
 
   // Apply macros.
-  const macroProps = useMacros(idProps) as RuleProps;
+  const macroProps = useMacros(idProps) as WidgetComponent & { id: string };
   // Then rules
-  const ruleProps = useRules(macroProps);
+  const ruleProps = useRules(macroProps) as WidgetComponent & { id: string };
 
   // Give containers access to everything apart from the containerStyling
   // Assume flexible position if not provided with anything
@@ -191,15 +191,15 @@ export const PVWidget = (props: PVWidgetComponent): JSX.Element => {
   let idProps = { ...props, id: id };
 
   // Apply macros.
-  const macroProps = useMacros(idProps) as RuleProps;
+  const macroProps = useMacros(idProps) as PVWidgetComponent & { id: string };
   // Then rules
-  const ruleProps = useRules(macroProps);
+  const ruleProps = useRules(macroProps) as PVWidgetComponent & { id: string };
   const [shortPvName, connected, readonly, latestValue] = useConnection(
     id,
     ruleProps.pvName
   );
-  let newProps: PVWidgetComponent & PvState = {
-    ...props,
+  let connectedProps = {
+    ...ruleProps,
     pvName: shortPvName,
     connected: connected,
     readonly: readonly,
@@ -207,7 +207,7 @@ export const PVWidget = (props: PVWidgetComponent): JSX.Element => {
   };
   // Give containers access to everything apart from the containerStyling
   // Assume flexible position if not provided with anything
-  const { containerStyling, ...containerProps } = newProps;
+  const { containerStyling, ...containerProps } = connectedProps;
 
   // Manipulate for absolute styling
   // Put x and y back in as left and top respectively
