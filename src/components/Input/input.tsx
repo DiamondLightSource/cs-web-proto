@@ -51,6 +51,7 @@ export const SmartInputComponent = (props: PVInputComponent): JSX.Element => {
       writePv(props.pvName, stringToVtype(event.currentTarget.value));
       setInputValue("");
       setEditing(false);
+      event.currentTarget.blur();
     }
   }
   function onChange(event: React.ChangeEvent<HTMLInputElement>): void {
