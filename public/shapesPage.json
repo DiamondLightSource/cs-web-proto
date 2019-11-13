@@ -4,23 +4,37 @@
     "position": "absolute",
     "x": "0px",
     "y": "0px",
-    "width": "1000px",
-    "height": "168px"
+    "width": "100px",
+    "height": "100px"
   },
   "children": [
     {
       "type": "shape",
       "containerStyling": {
         "position": "absolute",
-        "x": "70px",
+        "x": "0px",
         "y": "0px",
         "width": "100px",
         "height": "100px"
       },
       "shapeWidth": "100px",
-      "shapeHeight": "70px",
+      "shapeHeight": "50px",
       "shapeRadius": "50%",
       "shapeColour": "red"
+    },
+    {
+      "type": "shape",
+      "containerStyling": {
+        "position": "absolute",
+        "x": "100px",
+        "y": "0px",
+        "width": "100px",
+        "height": "100px"
+      },
+      "shapeWidth": "50px",
+      "shapeHeight": "100px",
+      "shapeRadius": "50%",
+      "shapeColour": "green"
     }
   ]
 }
