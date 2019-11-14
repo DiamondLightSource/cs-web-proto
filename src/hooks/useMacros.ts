@@ -8,8 +8,7 @@ export interface MacroProps extends React.PropsWithChildren<any> {
   pvName?: string;
 }
 
-// Exported for testing only.
-export function rescursiveResolve(props: object, macroMap: MacroMap): any {
+function rescursiveResolve(props: object, macroMap: MacroMap): any {
   const resolvedProps: any = {};
   for (const [prop, value] of Object.entries(props)) {
     if (typeof value === "object" && !Array.isArray(value)) {
