@@ -9,6 +9,7 @@ import { useMacros } from "../../hooks/useMacros";
 import { useConnection } from "../../hooks/useConnection";
 import { useId } from "react-id-generator";
 import { useRules } from "../../hooks/useRules";
+import { VType } from "../../vtypes/vtypes";
 
 export type ExcludeNulls<T> = {
   [P in keyof T]: Exclude<T[P], null>;
@@ -152,6 +153,60 @@ const recursiveWrapping = (
   }
 };
 
+// Function to recursively wrap a given set of widgets
+const PVrecursiveWrapping = (
+  components: React.FC<any>[],
+  containerStyling: object,
+  widgetStyling: WidgetStyling | null,
+  containerProps: object,
+  widgetProps: object,
+  pvName: string,
+  connected: boolean,
+  readonly: boolean,
+  value?: VType
+): JSX.Element => {
+  let [Component, ...remainingComponents] = components;
+  if (components.length === 1) {
+    // Return the base widget
+    return (
+      <Component
+        style={{ ...containerStyling, ...widgetStyling }}
+        pvName={pvName}
+        connected={connected}
+        readonly={readonly}
+        value={value}
+        {...widgetProps}
+      />
+    );
+  }
+  // If container styling is not empty, use it on the wrapper widget
+  // and pass on an empty object, otherwise wrap and move down
+  else {
+    return (
+      <Component
+        style={containerStyling}
+        pvName={pvName}
+        connected={connected}
+        readonly={readonly}
+        value={value}
+        {...containerProps}
+      >
+        {PVrecursiveWrapping(
+          remainingComponents,
+          {},
+          widgetStyling,
+          containerProps,
+          widgetProps,
+          pvName,
+          connected,
+          readonly,
+          value
+        )}
+      </Component>
+    );
+  }
+};
+
 export const Widget = (props: WidgetComponent): JSX.Element => {
   // Generic widget component
   const [id] = useId();
@@ -193,20 +248,10 @@ export const PVWidget = (props: PVWidgetComponent): JSX.Element => {
   const macroProps = useMacros(idProps) as PVWidgetComponent & { id: string };
   // Then rules
   const ruleProps = useRules(macroProps) as PVWidgetComponent & { id: string };
-  const [shortPvName, connected, readonly, latestValue] = useConnection(
-    id,
-    ruleProps.pvName
-  );
-  let connectedProps = {
-    ...ruleProps,
-    pvName: shortPvName,
-    connected: connected,
-    readonly: readonly,
-    value: latestValue
-  };
+
   // Give containers access to everything apart from the containerStyling
   // Assume flexible position if not provided with anything
-  const { containerStyling, ...containerProps } = connectedProps;
+  const { containerStyling, ...containerProps } = ruleProps;
 
   // Manipulate for absolute styling
   // Put x and y back in as left and top respectively
@@ -221,7 +266,7 @@ export const PVWidget = (props: PVWidgetComponent): JSX.Element => {
     ...baseWidgetProps
   } = containerProps;
 
-  const components = [];
+  const components: React.FC<any>[] = [];
   // Done like this in case only one of the values is passed through
   const requestedWrappers = {
     ...{ alarmborder: false, copywrapper: false, menuwrapper: false },
@@ -240,11 +285,32 @@ export const PVWidget = (props: PVWidgetComponent): JSX.Element => {
 
   components.push(baseWidget);
 
-  return recursiveWrapping(
-    components,
-    mappedContainerStyling,
-    widgetStyling,
-    containerProps,
-    baseWidgetProps
-  );
+  // Create a connected component
+  const ConnectedWrappedComponent = (props: { id: string; pvName: string }) => {
+    const WrappedComponent = (
+      pvName: string,
+      connected: boolean,
+      readonly: boolean,
+      value?: VType
+    ): JSX.Element =>
+      PVrecursiveWrapping(
+        components,
+        mappedContainerStyling,
+        widgetStyling,
+        containerProps,
+        baseWidgetProps,
+        pvName,
+        connected,
+        readonly,
+        value
+      );
+    const [shortPvName, connected, readonly, value] = useConnection(
+      props.id,
+      props.pvName
+    );
+
+    return WrappedComponent(shortPvName, connected, readonly, value);
+  };
+
+  return <ConnectedWrappedComponent id={id} pvName={ruleProps.pvName} />;
 };
