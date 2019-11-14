@@ -71,7 +71,12 @@ describe("<Widget />", (): void => {
         wrappers={{ copywrapper: true }}
       />
     );
-    expect(component.childAt(0).name()).toEqual("CopyWrapper");
+    expect(
+      component
+        .childAt(0)
+        .childAt(0)
+        .name()
+    ).toEqual("CopyWrapper");
   });
 
   test("it has alarmborder", (): void => {
@@ -83,7 +88,12 @@ describe("<Widget />", (): void => {
         wrappers={{ alarmborder: true }}
       />
     );
-    expect(component.childAt(0).name()).toEqual("AlarmBorder");
+    expect(
+      component
+        .childAt(0)
+        .childAt(0)
+        .name()
+    ).toEqual("AlarmBorder");
   });
 
   test("it has alarmborder and copywrapper", (): void => {
@@ -95,11 +105,16 @@ describe("<Widget />", (): void => {
         wrappers={{ alarmborder: true, copywrapper: true }}
       />
     );
-    expect(component.childAt(0).name()).toEqual("AlarmBorder");
+    expect(
+      component
+        .childAt(0)
+        .childAt(0)
+        .name()
+    ).toEqual("AlarmBorder");
     // Alarm children div
     let c1 = component.childAt(0);
     // Copy wrapper
-    let c2 = c1.childAt(0);
-    expect(c2.childAt(0).name()).toEqual("CopyWrapper");
+    let c3 = c1.childAt(0).childAt(0);
+    expect(c3.childAt(0).name()).toEqual("CopyWrapper");
   });
 });

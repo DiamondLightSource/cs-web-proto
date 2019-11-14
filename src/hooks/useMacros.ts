@@ -16,7 +16,7 @@ function resolveStrings(value: any, macroMap?: MacroMap): any {
   }
 }
 
-export function useMacros(props: MacroProps): MacroProps {
+export function useMacros<P extends MacroProps>(props: P): P {
   const globalMacros = useSelector(
     (state: CsState): MacroMap => state.macroMap
   );

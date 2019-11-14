@@ -133,7 +133,3 @@ export const FlatReadbackComponent = (
     </div>
   );
 };
-
-export const FlatReadback = (
-  props: InferWidgetProps<typeof ReadbackProps> & FlatPVWidget
-): JSX.Element => <FlatPVWidget Component={FlatReadbackComponent} {...props} />;

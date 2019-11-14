@@ -7,14 +7,15 @@ import {
   WidgetDescription
 } from "../Positioning/positioning";
 import { Label } from "../Label/label";
-import { Readback, FlatReadback } from "../Readback/readback";
+import { Readback } from "../Readback/readback";
 import { Input } from "../Input/input";
 import { Shape } from "../Shape/shape";
 import { FlexContainer } from "../FlexContainer/flexContainer";
 import { ProgressBar } from "../ProgressBar/progressBar";
 import { SlideControl } from "../SlideControl/slideControl";
 import { MenuButton } from "../MenuButton/menuButton";
-import { Display, FlatDisplay } from "../Display/display";
+import { Display } from "../Display/display";
+import { ActionButton } from "../ActionButton/actionButton";
 import { WidgetPropType, InferWidgetProps } from "../Widget/widget";
 
 const EMPTY_WIDGET: WidgetDescription = {
@@ -58,7 +59,6 @@ export const WidgetFromJson = (
   }
   const widgetDict = {
     readback: Readback,
-    flatreadback: FlatReadback,
     shape: Shape,
     input: Input,
     label: Label,
@@ -66,8 +66,8 @@ export const WidgetFromJson = (
     slidecontrol: SlideControl,
     menubutton: MenuButton,
     flexcontainer: FlexContainer,
+    actionbutton: ActionButton,
     display: Display,
-    flatdisplay: FlatDisplay,
     empty: Display,
     widgetFromJSON: WidgetFromJson
   };

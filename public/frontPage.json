@@ -23,15 +23,26 @@
             "backgroundColor": "transparent"
           },
           "text": "",
-          "rule": {
-            "condition": "pv1>=0",
-            "trueState": "Positive ⬇⬇⬇",
-            "falseState": "Negative ⬇⬇⬇",
-            "substitutionMap": {
-              "pv1": "loc://pv1"
+          "rules": [
+            {
+              "condition": "pv1>=0",
+              "trueState": "Positive ⬇⬇⬇",
+              "falseState": "Negative ⬇⬇⬇",
+              "substitutionMap": {
+                "pv1": "loc://pv1"
+              },
+              "prop": "text"
             },
-            "prop": "text"
-          }
+            {
+              "condition": "pv1>=100",
+              "trueState": false,
+              "falseState": true,
+              "substitutionMap": {
+                "pv1": "loc://pv1"
+              },
+              "prop": "visible"
+            }
+          ]
         },
         {
           "type": "input",
