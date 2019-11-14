@@ -1,12 +1,17 @@
+html,
+body,
+#root {
+  height: 100%;
+  width: 100%;
+}
+
 .hidden {
   display: none;
 }
+
 .App {
   text-align: center;
   background-color: var(--colour-background);
-  position: absolute;
-  height: 100%;
-  width: 100%;
 }
 
 .App-logo {

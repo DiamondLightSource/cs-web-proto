@@ -10,17 +10,24 @@ import {
 } from "../Widget/widget";
 
 const LabelProps = {
-  text: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired
+  text: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  visible: PropTypes.bool
 };
 
 export const LabelComponent = (
   props: PropTypes.InferProps<typeof LabelProps> & Component
-): JSX.Element => (
+): JSX.Element => {
+  const style: any = { ...props.style };
+  if (props.visible !== undefined && !props.visible) {
+    style["visibility"] = "hidden";
+  }
   // Simple component to display text - defaults to black text and dark grey background
-  <div className={`Label ${classes.Label}`} style={props.style}>
-    {props.text}
-  </div>
-);
+  return (
+    <div className={`Label ${classes.Label}`} style={style}>
+      {props.text}
+    </div>
+  );
+};
 
 const LabelWidgetProps = {
   ...LabelProps,
