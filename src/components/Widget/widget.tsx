@@ -175,14 +175,13 @@ export const Widget = (props: WidgetComponent): JSX.Element => {
   let { baseWidget, widgetStyling = {}, ...baseWidgetProps } = containerProps;
 
   // Put appropriate components on the list of components to be wrapped
-  let components = [baseWidget];
+  let Component = baseWidget;
 
-  return recursiveWrapping(
-    components,
-    mappedContainerStyling,
-    widgetStyling,
-    containerProps,
-    baseWidgetProps
+  return (
+    <Component
+      style={{ ...mappedContainerStyling, ...widgetStyling }}
+      {...baseWidgetProps}
+    />
   );
 };
 
