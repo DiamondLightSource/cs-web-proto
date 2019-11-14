@@ -19,12 +19,12 @@ export function useConnection(
     (state: CsState): PvArrayResults => pvStateSelector([pvName], state),
     pvStateComparator
   );
-  const [pvState, shortPvName] = pvResults[pvName];
+  const [pvState, effectivePvName] = pvResults[pvName];
   if (pvState) {
     const connected = pvState.connected || false;
     const readonly = pvState.readonly || false;
-    return [shortPvName, connected, readonly, pvState.value];
+    return [effectivePvName, connected, readonly, pvState.value];
   } else {
-    return ["", false, false, undefined];
+    return [effectivePvName, false, false, undefined];
   }
 }

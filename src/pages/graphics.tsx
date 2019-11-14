@@ -1,13 +1,11 @@
-// Page with many readbacks
-
+// Page to show off graphical layouts
 import React from "react";
 
 import { WidgetFromJson } from "../components/FromJson/fromJson";
 
-export const ReadbacksPage = (): JSX.Element => (
+export const GraphicalPage = (): JSX.Element => (
   <WidgetFromJson
-    file="http://localhost:3000/readbacksPage.json"
-    macroMap={{}}
+    file="http://localhost:3000/graphics.json"
     containerStyling={{
       position: "relative",
       height: "",
