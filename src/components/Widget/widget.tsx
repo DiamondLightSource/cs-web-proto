@@ -204,7 +204,7 @@ const PVrecursiveWrapping = (
     // Return the base widget
     return (
       <Component
-        style={{ ...containerStyling, ...widgetStyling }}
+        style={widgetStyling}
         pvName={pvName}
         connected={connected}
         readonly={readonly}
@@ -293,7 +293,7 @@ export const PVWidget = (props: PVWidgetComponent): JSX.Element => {
   const mappedContainerStyling = { top: y, left: x, ...containerStyling };
 
   // Extract remaining parameters
-  let {
+  const {
     baseWidget,
     widgetStyling = {},
     wrappers = {},
@@ -318,6 +318,10 @@ export const PVWidget = (props: PVWidgetComponent): JSX.Element => {
   }
 
   components.push(baseWidget);
+  const mappedWidgetStyling: object =
+    components.length === 1
+      ? { ...mappedContainerStyling, ...widgetStyling }
+      : widgetStyling;
 
   // Create a connected component
   const ConnectedWrappedComponent = (props: { id: string; pvName: string }) => {
@@ -330,7 +334,7 @@ export const PVWidget = (props: PVWidgetComponent): JSX.Element => {
       PVrecursiveWrapping(
         components,
         mappedContainerStyling,
-        widgetStyling,
+        mappedWidgetStyling,
         containerProps,
         baseWidgetProps,
         pvName,
