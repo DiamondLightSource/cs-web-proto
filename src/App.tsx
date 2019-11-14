@@ -25,6 +25,7 @@ import { ConiqlPlugin } from "./connection/coniql";
 import { ConnectionForwarder } from "./connection/forwarder";
 
 import { WidgetFromJson } from "./components/FromJson/fromJson";
+import { withRouter } from "react-router-dom";
 
 var settings: any;
 try {
@@ -69,88 +70,82 @@ const App: React.FC = (): JSX.Element => {
 
   return (
     <Provider store={store}>
-      <BrowserRouter>
-        <div className="App">
-          <button type="button" onClick={toggle}>
-            Toggle Theme
-          </button>
-          <div className="top" id="Links">
-            - Top -
-            <WidgetFromJson
-              file="http://localhost:3000/shapesPage.json"
-              containerStyling={{
-                position: "relative",
-                height: "",
-                width: "",
-                margin: "",
-                padding: ""
-              }}
-            />
-            <Link style={styleLinkButton} to="/">
-              Home
-            </Link>
-            <Link style={styleLinkButton} to="/example">
-              Simple example
-            </Link>
-            <Link style={styleLinkButton} to="/progress">
-              Progress
-            </Link>
-            <Link style={styleLinkButton} to="/positioning">
-              Positioning
-            </Link>
-            <Link style={styleLinkButton} to="/macros">
-              Macros
-            </Link>
-            <Link style={styleLinkButton} to="/fromJson">
-              JSON Loading
-            </Link>
-            <Link style={styleLinkButton} to="/coniql">
-              Coniql
-            </Link>
-            <Link style={styleLinkButton} to="/flex">
-              Flex
-            </Link>
-            <Link style={styleLinkButton} to="/embed">
-              Embed
-            </Link>{" "}
-            <Link style={styleLinkButton} to="/shapes">
-              Shapes
-            </Link>
-            <Link
-              style={styleLinkButton}
-              to={'/example/ionpExample/{"device":"SR03A-VA-IONP-01"}'}
-            >
-              Nested
-            </Link>
-            <Link style={styleLinkButton} to="/graphics">
-              Graphics
-            </Link>
-          </div>
-          <div className="left">
-            - Left -
-            <Route path="/" exact component={FrontPage} />
-            <Route path="/example" component={ExamplePage} />
-            <Route path="/progress" exact component={ProgressPage} />
-            <Route
-              path="/positioning"
-              exact
-              component={PositioningExamplePage}
-            />
-            <Route path="/macros" exact component={MacrosPage} />
-            <Route path="/fromJson" exact component={JsonPage} />
-            <Route path="/coniql" exact component={ConiqlPage} />
-            <Route path="/flex" exact component={FlexExamplePage} />
-            <Route path="/embed" exact component={EmbeddedPage} />
-          </div>
-          <div className="right">
-            - Right -
-            <Route path="/:any/:json/:macros" exact component={DynamicPage} />
-            <Route path="/shapes" exact component={ShapesPage} />
-          </div>
+      <div className="App">
+        <button type="button" onClick={toggle}>
+          Toggle Theme
+        </button>
+        <div className="top" id="Links">
+          - Top -
+          <WidgetFromJson
+            file="http://localhost:3000/shapesPage.json"
+            containerStyling={{
+              position: "relative",
+              height: "",
+              width: "",
+              margin: "",
+              padding: ""
+            }}
+          />
+          <Link style={styleLinkButton} to="/">
+            Home
+          </Link>
+          <Link style={styleLinkButton} to="/example">
+            Simple example
+          </Link>
+          <Link style={styleLinkButton} to="/progress">
+            Progress
+          </Link>
+          <Link style={styleLinkButton} to="/positioning">
+            Positioning
+          </Link>
+          <Link style={styleLinkButton} to="/macros">
+            Macros
+          </Link>
+          <Link style={styleLinkButton} to="/fromJson">
+            JSON Loading
+          </Link>
+          <Link style={styleLinkButton} to="/coniql">
+            Coniql
+          </Link>
+          <Link style={styleLinkButton} to="/flex">
+            Flex
+          </Link>
+          <Link style={styleLinkButton} to="/embed">
+            Embed
+          </Link>{" "}
+          <Link style={styleLinkButton} to="/shapes">
+            Shapes
+          </Link>
+          <Link
+            style={styleLinkButton}
+            to={'/example/ionpExample/{"device":"SR03A-VA-IONP-01"}'}
+          >
+            Nested
+          </Link>
+          <Link style={styleLinkButton} to="/graphics">
+            Graphics
+          </Link>
         </div>
-      </BrowserRouter>
+        <div className="left">
+          - Left -
+          <Route path="/" exact component={FrontPage} />
+          <Route path="/example" component={ExamplePage} />
+          <Route path="/progress" exact component={ProgressPage} />
+          <Route path="/positioning" exact component={PositioningExamplePage} />
+          <Route path="/macros" exact component={MacrosPage} />
+          <Route path="/fromJson" exact component={JsonPage} />
+          <Route path="/coniql" exact component={ConiqlPage} />
+          <Route path="/flex" exact component={FlexExamplePage} />
+          <Route path="/embed" exact component={EmbeddedPage} />
+        </div>
+        <div className="right">
+          - Right -
+          <Route path="/:any/:json/:macros" exact component={DynamicPage} />
+          <Route path="/shapes" exact component={ShapesPage} />
+        </div>
+      </div>
     </Provider>
   );
 };
 
-export default App;
+export default withRouter(App);

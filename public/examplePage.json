@@ -170,6 +170,16 @@
         "height": "",
         "padding": ""
       },
+      "actions": {
+        "actions": [
+          {
+            "type": "OPEN_PAGE",
+            "page": "example/ionpExample",
+            "macros": "{\"device\":\"SR03A-VA-IONP-01\"}"
+          }
+        ]
+      },
+      "executeAsOne": false,
       "items": [
         {
           "label": "set limit #1 to 10",

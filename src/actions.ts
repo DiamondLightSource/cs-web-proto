@@ -1,9 +1,17 @@
 import { writePv } from "./hooks/useSubscription";
 import { valueToVtype } from "./vtypes/utils";
 import log from "loglevel";
+import createHistory from "history/createBrowserHistory";
 
+export const OPEN_PAGE = "OPEN_PAGE";
 export const OPEN_WEBPAGE = "OPEN_WEBPAGE";
 export const WRITE_PV = "WRITE_PV";
+
+export interface OpenPage {
+  type: typeof OPEN_PAGE;
+  page: string;
+  macros: string;
+}
 
 export interface OpenWebpage {
   type: typeof OPEN_WEBPAGE;
@@ -17,7 +25,7 @@ export interface WritePv {
   value: string | number;
 }
 
-export type ACTION_TYPE = OpenWebpage | WritePv;
+export type ACTION_TYPE = OpenPage | OpenWebpage | WritePv;
 
 export interface Actions {
   actions: ACTION_TYPE[];
@@ -34,6 +42,13 @@ export const executeActions = (actions: Actions): void => {
   }
   for (const action of toExecute) {
     switch (action.type) {
+      case OPEN_PAGE:
+        const history = createHistory();
+        //history.push("/" + action.page + "/" + action.macros);
+        //history.goForward();
+        //window.location.href =
+        window.location.href = "/" + action.page + "/" + action.macros;
+        break;
       case OPEN_WEBPAGE:
         window.open(action.url);
         break;

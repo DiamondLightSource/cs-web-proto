@@ -41,7 +41,6 @@ export const ActionButtonWidget = (
   function onClick(event: React.MouseEvent<HTMLButtonElement>): void {
     if (props.actions !== undefined) executeActions(props.actions);
   }
-
   return (
     <ActionButtonComponent
       text={props.text}
