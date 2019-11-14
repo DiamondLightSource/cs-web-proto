@@ -1,49 +1,2415 @@
 {
   "type": "display",
   "containerStyling": {
-    "position": "absolute",
-    "x": "0px",
-    "y": "0px",
-    "width": "500px",
-    "height": "500px"
+      "position": "absolute",
+      "x": "0px",
+      "y": "0px",
+      "width": "1100px",
+      "height": "100px"
   },
-  "backgroundColor": "#999999",
+  "widgetStyling": {
+      "backgroundColor": "#999999"
+  },
   "children": [
-    {
-      "type": "readback",
-      "containerStyling": {
-        "position": "absolute",
-        "x": "2px",
-        "y": "2px",
-        "width": "80px",
-        "height": "20px"
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "5px",
+              "y": "5px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
       },
-      "pvName": "sim://ramp#00",
-      "precision": 0
-    },
-    {
-      "type": "readback",
-      "containerStyling": {
-        "position": "absolute",
-        "x": "87px",
-        "y": "2px",
-        "width": "80px",
-        "height": "20px"
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "110px",
+              "y": "5px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
       },
-      "pvName": "loc://pv1",
-      "precision": 0
-    },
-    {
-      "type": "readback",
-      "containerStyling": {
-        "position": "absolute",
-        "x": "172px",
-        "y": "2px",
-        "width": "80px",
-        "height": "20px"
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "215px",
+              "y": "5px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
       },
-      "pvName": "loc://pv2",
-      "precision": 0
-    }
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "320px",
+              "y": "5px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "425px",
+              "y": "5px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "530px",
+              "y": "5px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "635px",
+              "y": "5px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "740px",
+              "y": "5px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "845px",
+              "y": "5px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "950px",
+              "y": "5px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "5px",
+              "y": "30px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "110px",
+              "y": "30px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "215px",
+              "y": "30px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "320px",
+              "y": "30px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "425px",
+              "y": "30px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "530px",
+              "y": "30px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "635px",
+              "y": "30px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "740px",
+              "y": "30px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "845px",
+              "y": "30px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "950px",
+              "y": "30px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "5px",
+              "y": "55px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "110px",
+              "y": "55px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "215px",
+              "y": "55px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "320px",
+              "y": "55px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "425px",
+              "y": "55px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "530px",
+              "y": "55px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "635px",
+              "y": "55px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "740px",
+              "y": "55px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "845px",
+              "y": "55px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "950px",
+              "y": "55px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "5px",
+              "y": "80px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "110px",
+              "y": "80px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "215px",
+              "y": "80px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "320px",
+              "y": "80px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "425px",
+              "y": "80px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "530px",
+              "y": "80px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "635px",
+              "y": "80px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "740px",
+              "y": "80px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "845px",
+              "y": "80px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "950px",
+              "y": "80px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "5px",
+              "y": "105px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "110px",
+              "y": "105px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "215px",
+              "y": "105px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "320px",
+              "y": "105px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "425px",
+              "y": "105px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "530px",
+              "y": "105px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "635px",
+              "y": "105px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "740px",
+              "y": "105px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "845px",
+              "y": "105px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "950px",
+              "y": "105px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "5px",
+              "y": "130px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "110px",
+              "y": "130px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "215px",
+              "y": "130px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "320px",
+              "y": "130px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "425px",
+              "y": "130px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "530px",
+              "y": "130px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "635px",
+              "y": "130px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "740px",
+              "y": "130px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "845px",
+              "y": "130px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "950px",
+              "y": "130px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "5px",
+              "y": "155px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "110px",
+              "y": "155px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "215px",
+              "y": "155px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "320px",
+              "y": "155px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "425px",
+              "y": "155px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "530px",
+              "y": "155px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "635px",
+              "y": "155px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "740px",
+              "y": "155px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "845px",
+              "y": "155px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "950px",
+              "y": "155px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "5px",
+              "y": "180px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "110px",
+              "y": "180px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "215px",
+              "y": "180px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "320px",
+              "y": "180px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "425px",
+              "y": "180px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "530px",
+              "y": "180px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "635px",
+              "y": "180px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "740px",
+              "y": "180px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "845px",
+              "y": "180px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "950px",
+              "y": "180px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "5px",
+              "y": "205px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "110px",
+              "y": "205px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "215px",
+              "y": "205px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "320px",
+              "y": "205px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "425px",
+              "y": "205px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "530px",
+              "y": "205px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "635px",
+              "y": "205px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "740px",
+              "y": "205px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "845px",
+              "y": "205px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "950px",
+              "y": "205px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "5px",
+              "y": "230px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "110px",
+              "y": "230px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "215px",
+              "y": "230px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "320px",
+              "y": "230px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "425px",
+              "y": "230px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "530px",
+              "y": "230px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "635px",
+              "y": "230px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "740px",
+              "y": "230px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "845px",
+              "y": "230px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "950px",
+              "y": "230px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "5px",
+              "y": "255px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "110px",
+              "y": "255px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "215px",
+              "y": "255px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "320px",
+              "y": "255px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "425px",
+              "y": "255px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "530px",
+              "y": "255px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "635px",
+              "y": "255px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "740px",
+              "y": "255px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "845px",
+              "y": "255px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "950px",
+              "y": "255px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "5px",
+              "y": "280px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "110px",
+              "y": "280px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "215px",
+              "y": "280px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "320px",
+              "y": "280px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "425px",
+              "y": "280px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "530px",
+              "y": "280px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "635px",
+              "y": "280px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "740px",
+              "y": "280px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "845px",
+              "y": "280px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "950px",
+              "y": "280px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "5px",
+              "y": "305px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "110px",
+              "y": "305px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "215px",
+              "y": "305px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "320px",
+              "y": "305px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "425px",
+              "y": "305px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "530px",
+              "y": "305px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "635px",
+              "y": "305px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "740px",
+              "y": "305px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "845px",
+              "y": "305px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "950px",
+              "y": "305px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "5px",
+              "y": "330px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "110px",
+              "y": "330px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "215px",
+              "y": "330px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "320px",
+              "y": "330px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "425px",
+              "y": "330px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "530px",
+              "y": "330px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "635px",
+              "y": "330px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "740px",
+              "y": "330px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "845px",
+              "y": "330px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "950px",
+              "y": "330px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "5px",
+              "y": "355px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "110px",
+              "y": "355px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "215px",
+              "y": "355px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "320px",
+              "y": "355px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "425px",
+              "y": "355px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "530px",
+              "y": "355px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "635px",
+              "y": "355px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "740px",
+              "y": "355px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "845px",
+              "y": "355px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "950px",
+              "y": "355px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "5px",
+              "y": "380px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "110px",
+              "y": "380px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "215px",
+              "y": "380px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "320px",
+              "y": "380px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "425px",
+              "y": "380px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "530px",
+              "y": "380px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "635px",
+              "y": "380px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "740px",
+              "y": "380px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "845px",
+              "y": "380px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "950px",
+              "y": "380px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "5px",
+              "y": "405px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "110px",
+              "y": "405px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "215px",
+              "y": "405px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "320px",
+              "y": "405px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "425px",
+              "y": "405px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "530px",
+              "y": "405px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "635px",
+              "y": "405px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "740px",
+              "y": "405px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "845px",
+              "y": "405px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "950px",
+              "y": "405px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "5px",
+              "y": "430px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "110px",
+              "y": "430px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "215px",
+              "y": "430px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "320px",
+              "y": "430px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "425px",
+              "y": "430px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "530px",
+              "y": "430px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "635px",
+              "y": "430px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "740px",
+              "y": "430px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "845px",
+              "y": "430px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "950px",
+              "y": "430px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "5px",
+              "y": "455px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "110px",
+              "y": "455px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "215px",
+              "y": "455px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "320px",
+              "y": "455px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "425px",
+              "y": "455px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "530px",
+              "y": "455px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "635px",
+              "y": "455px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "740px",
+              "y": "455px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "845px",
+              "y": "455px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "950px",
+              "y": "455px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "5px",
+              "y": "480px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "110px",
+              "y": "480px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "215px",
+              "y": "480px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "320px",
+              "y": "480px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "425px",
+              "y": "480px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "530px",
+              "y": "480px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "635px",
+              "y": "480px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "740px",
+              "y": "480px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "845px",
+              "y": "480px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      },
+      {
+          "type": "readback",
+          "containerStyling": {
+              "position": "absolute",
+              "x": "950px",
+              "y": "480px",
+              "width": "100px",
+              "height": "20px"
+          },
+          "pvName": "sim://ramp#01",
+          "precision": 0
+      }
   ]
 }
