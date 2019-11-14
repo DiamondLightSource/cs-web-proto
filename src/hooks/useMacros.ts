@@ -32,8 +32,6 @@ export function useMacros<P extends MacroProps>(props: P): P {
   }
   const rawPvName = props.pvName;
   const resolvedProps: any = rescursiveResolve(props, allMacros);
-  if (rawPvName != null) {
-    resolvedProps.rawPvName = rawPvName;
-  }
+  resolvedProps.rawPvName = rawPvName;
   return resolvedProps;
 }
