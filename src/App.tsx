@@ -7,27 +7,12 @@ import { Provider } from "react-redux";
 import { BrowserRouter, Link, Route } from "react-router-dom";
 import { getStore, initialiseStore } from "./redux/store";
 import log from "loglevel";
-import { FrontPage } from "./pages/frontpage";
-import { ExamplePage } from "./pages/examplePage";
-import { ProgressPage } from "./pages/progressPage";
-import { PositioningExamplePage } from "./pages/positioningExamplePage";
-import { JsonPage } from "./pages/fromJson";
-import { ConiqlPage } from "./pages/coniqlPage";
-import { MacrosPage } from "./pages/macrosPage";
 import { lightTheme, darkTheme, ThemeContext } from "./themeContext";
-import { FlexExamplePage } from "./pages/flexExamplePage";
-import { EmbeddedPage } from "./pages/embeddedPage";
-import { ShapesPage } from "./pages/shapesPage";
-import { DynamicPageWidget } from "./components/DynamicPage/dynamicPage";
-
 import { SimulatorPlugin } from "./connection/sim";
-import { DynamicPage } from "./pages/dynamicPage";
 import { ConiqlPlugin } from "./connection/coniql";
 import { ConnectionForwarder } from "./connection/forwarder";
-
 import { WidgetFromJson } from "./components/FromJson/fromJson";
 import { withRouter } from "react-router-dom";
-import { posix } from "path";
 
 var settings: any;
 try {
