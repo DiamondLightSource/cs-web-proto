@@ -18,6 +18,7 @@ import { lightTheme, darkTheme, ThemeContext } from "./themeContext";
 import { FlexExamplePage } from "./pages/flexExamplePage";
 import { EmbeddedPage } from "./pages/embeddedPage";
 import { ShapesPage } from "./pages/shapesPage";
+import { DynamicPageWidget } from "./components/DynamicPage/dynamicPage";
 
 import { SimulatorPlugin } from "./connection/sim";
 import { DynamicPage } from "./pages/dynamicPage";
@@ -26,6 +27,7 @@ import { ConnectionForwarder } from "./connection/forwarder";
 
 import { WidgetFromJson } from "./components/FromJson/fromJson";
 import { withRouter } from "react-router-dom";
+import { posix } from "path";
 
 var settings: any;
 try {
@@ -74,7 +76,11 @@ const App: React.FC = (): JSX.Element => {
         <button type="button" onClick={toggle}>
           Toggle Theme
         </button>
-        <div className="top" id="Links">
+        <div
+          className="top"
+          id="Links"
+          style={{ position: "relative", display: "block" }}
+        >
           - Top -
           <WidgetFromJson
             file="http://localhost:3000/shapesPage.json"
@@ -83,65 +89,68 @@ const App: React.FC = (): JSX.Element => {
               height: "",
               width: "",
               margin: "",
-              padding: ""
+              padding: "",
+              border: ""
             }}
           />
           <Link style={styleLinkButton} to="/">
             Home
           </Link>
-          <Link style={styleLinkButton} to="/example">
+          <Link style={styleLinkButton} to="/left/examplePage/{}">
             Simple example
           </Link>
-          <Link style={styleLinkButton} to="/progress">
+          <Link style={styleLinkButton} to="/right/progressPage/{}">
             Progress
           </Link>
-          <Link style={styleLinkButton} to="/positioning">
+          <Link style={styleLinkButton} to="/left/ionpExample/{}">
             Positioning
           </Link>
-          <Link style={styleLinkButton} to="/macros">
-            Macros
+          <Link style={styleLinkButton} to="/right/simple/{}">
+            Simple
           </Link>
-          <Link style={styleLinkButton} to="/fromJson">
-            JSON Loading
-          </Link>
-          <Link style={styleLinkButton} to="/coniql">
+          <Link style={styleLinkButton} to="/left/coniqlPage/{}">
             Coniql
           </Link>
-          <Link style={styleLinkButton} to="/flex">
+          <Link style={styleLinkButton} to="/right/flexiblePage/{}">
             Flex
           </Link>
-          <Link style={styleLinkButton} to="/embed">
+          <Link style={styleLinkButton} to="/left/flexiEmbedded/{}">
             Embed
-          </Link>{" "}
-          <Link style={styleLinkButton} to="/shapes">
+          </Link>
+          <Link style={styleLinkButton} to="/right/shapesPage/{}">
             Shapes
           </Link>
           <Link
             style={styleLinkButton}
-            to={'/example/ionpExample/{"device":"SR03A-VA-IONP-01"}'}
+            to='/left/ionpExample/{"device":"TEST-DEVICE-LEFT"}'
           >
-            Nested
+            Nested Left
           </Link>
-          <Link style={styleLinkButton} to="/graphics">
+          <Link
+            style={styleLinkButton}
+            to='/right/ionpExample/{"device":"TEST-DEVICE-RIGHT"}'
+          >
+            Nested Right
+          </Link>
+          <Link style={styleLinkButton} to="/left/graphics/{}">
             Graphics
           </Link>
         </div>
-        <div className="left">
-          - Left -
-          <Route path="/" exact component={FrontPage} />
-          <Route path="/example" component={ExamplePage} />
-          <Route path="/progress" exact component={ProgressPage} />
-          <Route path="/positioning" exact component={PositioningExamplePage} />
-          <Route path="/macros" exact component={MacrosPage} />
-          <Route path="/fromJson" exact component={JsonPage} />
-          <Route path="/coniql" exact component={ConiqlPage} />
-          <Route path="/flex" exact component={FlexExamplePage} />
-          <Route path="/embed" exact component={EmbeddedPage} />
-        </div>
-        <div className="right">
-          - Right -
-          <Route path="/:any/:json/:macros" exact component={DynamicPage} />
-          <Route path="/shapes" exact component={ShapesPage} />
+        <div
+          style={{ position: "relative", display: "block" }}
+          id="Dynamic Pages"
+        >
+          <WidgetFromJson
+            containerStyling={{
+              position: "relative",
+              height: "100%",
+              width: "100%",
+              border: "3px solid #ccc",
+              margin: "",
+              padding: ""
+            }}
+            file="http://localhost:3000/splitPage.json"
+          />
         </div>
       </div>
     </Provider>

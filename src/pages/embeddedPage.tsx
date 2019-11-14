@@ -22,7 +22,8 @@ export const EmbeddedPage = (): JSX.Element => (
           height: "",
           width: "",
           margin: "",
-          padding: ""
+          padding: "",
+          border: ""
         }}
       />
     </div>

@@ -16,6 +16,7 @@ import { SlideControl } from "../SlideControl/slideControl";
 import { MenuButton } from "../MenuButton/menuButton";
 import { Display } from "../Display/display";
 import { ActionButton } from "../ActionButton/actionButton";
+import { DynamicPageWidget } from "../DynamicPage/dynamicPage";
 import { WidgetPropType, InferWidgetProps } from "../Widget/widget";
 
 const EMPTY_WIDGET: WidgetDescription = {
@@ -69,7 +70,8 @@ export const WidgetFromJson = (
     actionbutton: ActionButton,
     display: Display,
     empty: Display,
-    widgetFromJSON: WidgetFromJson
+    widgetFromJSON: WidgetFromJson,
+    dynamicpage: DynamicPageWidget
   };
 
   let component: JSX.Element | null;

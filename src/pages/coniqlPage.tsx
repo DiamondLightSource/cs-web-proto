@@ -12,7 +12,8 @@ export const ConiqlPage = (): JSX.Element => (
       height: "",
       width: "",
       margin: "",
-      padding: ""
+      padding: "",
+      border: ""
     }}
   />
 );

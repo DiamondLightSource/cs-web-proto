@@ -14,7 +14,8 @@ export const ExamplePage = (): JSX.Element => (
       height: "",
       width: "",
       margin: "",
-      padding: ""
+      padding: "",
+      border: ""
     }}
   />
 );

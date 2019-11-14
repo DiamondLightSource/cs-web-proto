@@ -23,7 +23,8 @@ export const MacrosPage = (): JSX.Element => (
           height: "",
           width: "",
           margin: "",
-          padding: ""
+          padding: "",
+          border: ""
         }}
       />
       <Input
@@ -33,7 +34,8 @@ export const MacrosPage = (): JSX.Element => (
           height: "",
           width: "",
           margin: "",
-          padding: ""
+          padding: "",
+          border: ""
         }}
       />
       <Label
@@ -43,7 +45,8 @@ export const MacrosPage = (): JSX.Element => (
           height: "",
           width: "",
           margin: "",
-          padding: ""
+          padding: "",
+          border: ""
         }}
       />
       <Input
@@ -53,7 +56,8 @@ export const MacrosPage = (): JSX.Element => (
           height: "",
           width: "",
           margin: "",
-          padding: ""
+          padding: "",
+          border: ""
         }}
       />
       <div style={{ height: "30px" }}>
@@ -64,7 +68,8 @@ export const MacrosPage = (): JSX.Element => (
             height: "",
             width: "",
             margin: "",
-            padding: ""
+            padding: "",
+            border: ""
           }}
           wrappers={{ copywrapper: true }}
         />
@@ -77,7 +82,8 @@ export const MacrosPage = (): JSX.Element => (
             height: "",
             width: "",
             margin: "",
-            padding: ""
+            padding: "",
+            border: ""
           }}
           wrappers={{ copywrapper: true }}
         />

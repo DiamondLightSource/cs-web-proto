@@ -24,7 +24,8 @@ export function DynamicPage({
         height: "",
         width: "",
         margin: "",
-        padding: ""
+        padding: "",
+        border: ""
       }}
     />
   );
