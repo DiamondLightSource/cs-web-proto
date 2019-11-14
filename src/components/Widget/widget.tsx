@@ -323,31 +323,52 @@ export const PVWidget = (props: PVWidgetComponent): JSX.Element => {
       ? { ...mappedContainerStyling, ...widgetStyling }
       : widgetStyling;
 
+  const Component = baseWidget;
+
+  const WrappedComponent = (props: {
+    pvName: string;
+    connected: boolean;
+    readonly: boolean;
+    value?: VType;
+  }): JSX.Element => (
+    <CopyWrapper
+      pvName={props.pvName}
+      connected={props.connected}
+      style={mappedContainerStyling}
+    >
+      <AlarmBorder connected={props.connected} value={props.value}>
+        <Component
+          connected={props.connected}
+          readonly={props.readonly}
+          value={props.value}
+        />
+      </AlarmBorder>
+    </CopyWrapper>
+  );
+
   // Create a connected component
   const ConnectedWrappedComponent = (props: { id: string; pvName: string }) => {
-    const WrappedComponent = (
-      pvName: string,
-      connected: boolean,
-      readonly: boolean,
-      value?: VType
-    ): JSX.Element =>
-      PVrecursiveWrapping(
-        components,
-        mappedContainerStyling,
-        mappedWidgetStyling,
-        containerProps,
-        baseWidgetProps,
-        pvName,
-        connected,
-        readonly,
-        value
-      );
     const [shortPvName, connected, readonly, value] = useConnection(
       props.id,
       props.pvName
     );
 
-    return WrappedComponent(shortPvName, connected, readonly, value);
+    return (
+      <CopyWrapper
+        pvName={shortPvName}
+        connected={connected}
+        style={mappedContainerStyling}
+      >
+        <AlarmBorder connected={connected} value={value}>
+          <Component
+            connected={connected}
+            readonly={readonly}
+            value={value}
+            {...baseWidgetProps}
+          />
+        </AlarmBorder>
+      </CopyWrapper>
+    );
   };
 
   return <ConnectedWrappedComponent id={id} pvName={ruleProps.pvName} />;
