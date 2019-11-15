@@ -33,7 +33,8 @@ export type PVInputComponent = PVComponent & { pvName: string };
 // complex units
 const ContainerFeaturesPropType = {
   margin: PropTypes.string,
-  padding: PropTypes.string
+  padding: PropTypes.string,
+  border: PropTypes.string
 };
 
 const RulesPropType = {

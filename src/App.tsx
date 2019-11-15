@@ -4,16 +4,13 @@
 import React from "react";
 import "./App.css";
 import { Provider } from "react-redux";
-import { BrowserRouter, Route } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import { getStore, initialiseStore } from "./redux/store";
 import log from "loglevel";
 import { lightTheme, darkTheme, ThemeContext } from "./themeContext";
-
 import { SimulatorPlugin } from "./connection/sim";
-import { DynamicPage } from "./pages/dynamicPage";
 import { ConiqlPlugin } from "./connection/coniql";
 import { ConnectionForwarder } from "./connection/forwarder";
-
 import { WidgetFromJson } from "./components/FromJson/fromJson";
 
 var settings: any;
@@ -68,15 +65,26 @@ const App: React.FC = (): JSX.Element => {
                 height: "",
                 width: "",
                 margin: "",
-                padding: ""
+                padding: "",
+                border: ""
               }}
             />
           </div>
-          <div className="primary">
-            <Route path="*/left/:json/:macros" component={DynamicPage} />
-          </div>
-          <div className="secondary">
-            <Route path="*/right/:json/:macros/" component={DynamicPage} />
+          <div
+            style={{ position: "relative", display: "block" }}
+            id="Dynamic Pages"
+          >
+            <WidgetFromJson
+              containerStyling={{
+                position: "relative",
+                height: "100%",
+                width: "100%",
+                border: "3px solid #ccc",
+                margin: "",
+                padding: ""
+              }}
+              file="http://localhost:3000/splitPage.json"
+            />
           </div>
         </div>
       </Provider>

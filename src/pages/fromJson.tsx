@@ -23,7 +23,8 @@ export const JsonPage = (): JSX.Element => (
           height: "",
           width: "",
           margin: "",
-          padding: ""
+          padding: "",
+          border: ""
         }}
       />
     </div>

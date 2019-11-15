@@ -11,7 +11,8 @@ export const GraphicalPage = (): JSX.Element => (
       height: "",
       width: "",
       margin: "",
-      padding: ""
+      padding: "",
+      border: ""
     }}
   />
 );

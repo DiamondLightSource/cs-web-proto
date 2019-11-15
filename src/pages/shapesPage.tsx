@@ -12,7 +12,8 @@ export const ShapesPage = (): JSX.Element => (
       height: "",
       width: "",
       margin: "",
-      padding: ""
+      padding: "",
+      border: ""
     }}
   />
 );

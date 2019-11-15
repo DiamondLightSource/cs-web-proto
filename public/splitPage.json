@@ -1,0 +1,82 @@
+{
+  "type": "display",
+  "containerStyling": {
+    "position": "relative",
+    "width": "100%",
+    "height": "100%",
+    "margin": "auto"
+  },
+  "children": [
+    {
+      "type": "flexcontainer",
+      "containerStyling": {
+        "position": "relative"
+      },
+      "children": [
+        {
+          "type": "flexcontainer",
+          "containerStyling": {
+            "position": "relative",
+            "border": "solid 1px blue",
+            "width": "40%",
+            "margin": "5%"
+          },
+          "flexflow": "column",
+          "children": [
+            {
+              "type": "label",
+              "containerStyling": {
+                "position": "relative",
+                "height": "30px",
+                "margin": "10px"
+              },
+              "widgetStyling": {
+                "fontWeight": "bold",
+                "textAlign": "center"
+              },
+              "text": "left"
+            },
+            {
+              "type": "dynamicpage",
+              "containerStyling": {
+                "position": "relative"
+              },
+              "routePath": "*left/:json/:macros"
+            }
+          ]
+        },
+        {
+          "type": "flexcontainer",
+          "containerStyling": {
+            "position": "relative",
+            "border": "solid 1px green",
+            "width": "40%",
+            "margin": "5%"
+          },
+          "children": [
+            {
+              "type": "label",
+              "containerStyling": {
+                "position": "relative",
+                "height": "30px",
+                "margin": "10px"
+              },
+              "widgetStyling": {
+                "fontWeight": "bold",
+                "textAlign": "center"
+              },
+              "text": "right"
+            },
+            {
+              "type": "dynamicpage",
+              "containerStyling": {
+                "position": "relative"
+              },
+              "routePath": "*right/:json/:macros"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
