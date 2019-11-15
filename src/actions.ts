@@ -1,5 +1,6 @@
 import { writePv } from "./hooks/useSubscription";
 import { valueToVtype } from "./vtypes/utils";
+import { History } from "history";
 import log from "loglevel";
 
 export const OPEN_PAGE = "OPEN_PAGE";
@@ -31,7 +32,7 @@ export interface Actions {
   executeAsOne: boolean;
 }
 
-export const executeActions = (actions: Actions, history?: object): void => {
+export const executeActions = (actions: Actions, history?: History): void => {
   log.debug(`executing an action ${actions.actions[0].type}`);
   let toExecute: ACTION_TYPE[] = [];
   if (actions.executeAsOne) {
@@ -42,7 +43,11 @@ export const executeActions = (actions: Actions, history?: object): void => {
   for (const action of toExecute) {
     switch (action.type) {
       case OPEN_PAGE:
-        //history.push("/" + action.page + "/" + action.macros);
+        if (history) {
+          history.push("/" + action.page + "/" + action.macros);
+        } else {
+          log.error("Tried to open a page but no history object passed");
+        }
         //window.location.href =
         //window.location.href = "/" + action.page + "/" + action.macros;
         break;

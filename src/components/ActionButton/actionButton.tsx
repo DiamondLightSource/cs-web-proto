@@ -2,7 +2,7 @@ import React from "react";
 import { Actions, executeActions } from "../../actions";
 import { InferWidgetProps, PVWidget, PVWidgetPropType } from "../Widget/widget";
 import classes from "./actionButton.module.css";
-import { RouteComponentProps } from "react-router-dom";
+import { RouteComponentProps, useHistory } from "react-router-dom";
 
 export interface ActionButtonProps {
   text: string;
@@ -39,9 +39,9 @@ export const ActionButtonWidget = (
   props: ActionButtonWidgetProps
 ): JSX.Element => {
   // Function to send the value on to the PV
+  const history = useHistory();
   function onClick(event: React.MouseEvent<HTMLButtonElement>): void {
-    if (props.actions !== undefined)
-      executeActions(props.actions, props.history);
+    if (props.actions !== undefined) executeActions(props.actions, history);
   }
   return (
     <ActionButtonComponent
