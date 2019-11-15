@@ -45,7 +45,10 @@ const DynamicPageComponent = (
   props: InferWidgetProps<typeof DynamicPageProps> & Component
 ): JSX.Element => (
   <div style={props.style}>
-    <Route path={props.routePath} component={DynamicPageFetch} />
+    <Route
+      path={`*/${props.routePath}/:json/:macros`}
+      component={DynamicPageFetch}
+    />
   </div>
 );
 
