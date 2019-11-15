@@ -125,11 +125,10 @@ const App: React.FC = (): JSX.Element => {
             Graphics
           </Link>
         </div>
-        <div className="left">
-          - Left -
+        <div className="primary">
           <Route path="/" exact component={FrontPage} />
           <Route path="/example" component={ExamplePage} />
-          <Route path="/progress" exact component={ProgressPage} />
+          <Route path="/progress" component={ProgressPage} />
           <Route path="/positioning" exact component={PositioningExamplePage} />
           <Route path="/macros" exact component={MacrosPage} />
           <Route path="/fromJson" exact component={JsonPage} />
@@ -137,8 +136,7 @@ const App: React.FC = (): JSX.Element => {
           <Route path="/flex" exact component={FlexExamplePage} />
           <Route path="/embed" exact component={EmbeddedPage} />
         </div>
-        <div className="right">
-          - Right -
+        <div className="secondary">
           <Route path="/:any/:json/:macros" exact component={DynamicPage} />
           <Route path="/shapes" exact component={ShapesPage} />
         </div>

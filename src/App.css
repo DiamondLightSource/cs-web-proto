@@ -27,23 +27,29 @@ body {
   text-align: right;
   height: 200px;
 }
-.left {
+.primary {
   text-align: center;
-  width: 49%;
+  width: auto;
   margin-right: 1%;
   border: 1px solid #ccc;
   margin: 5px;
   float: left;
   padding: 10px;
 }
-.right {
+.primary:empty {
+  display: none;
+}
+.secondary {
   text-align: center;
-  width: 49%;
+  width: auto;
   margin-right: 1%;
   border: 1px solid #ccc;
   margin: 5px;
   float: left;
   padding: 10px;
+}
+.secondary:empty {
+  display: none;
 }
 .last {
   margin-right: 0;
