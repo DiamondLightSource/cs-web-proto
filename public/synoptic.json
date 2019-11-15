@@ -1,0 +1,86 @@
+{
+  "type": "display",
+  "containerStyling": {
+    "position": "relative",
+    "width": "auto",
+    "height": "auto"
+  },
+  "children": [
+    {
+      "type": "actionbutton",
+      "pvName": "sim://limit#1",
+      "text": "Component 1",
+      "image": "DCM-base.png",
+      "containerStyling": {
+        "position": "absolute",
+        "x": "0px",
+        "y": "0px",
+        "width": "20px",
+        "height": "20px"
+      },
+      "actions": {
+        "actions": [
+          {
+            "type": "OPEN_PAGE",
+            "location": "left",
+            "page": "ionpExample",
+            "macros": "{\"device\":\"SR03A-VA-IONP-01\"}"
+          }
+        ]
+      },
+      "executeAsOne": false
+    },
+    {
+      "type": "actionbutton",
+      "pvName": "sim://limit#1",
+      "text": "Component 2",
+      "image": "DCM-base.png",
+      "containerStyling": {
+        "position": "absolute",
+        "x": "150px",
+        "y": "0px",
+        "width": "20px",
+        "height": "20px"
+      },
+      "actions": {
+        "actions": [
+          {
+            "type": "OPEN_PAGE",
+            "location": "left",
+            "page": "ionpExample",
+            "macros": "{\"device\":\"SR04A-VA-IONP-01\"}"
+          }
+        ]
+      },
+      "executeAsOne": false
+    },
+    {
+      "type": "shape",
+      "containerStyling": {
+        "position": "absolute",
+        "x": "250px",
+        "y": "50px",
+        "width": "100px",
+        "height": "100px"
+      },
+      "shapeWidth": "100px",
+      "shapeHeight": "5px",
+      "shapeRadius": "0",
+      "shapeColour": "red"
+    },
+    {
+      "type": "shape",
+      "containerStyling": {
+        "position": "absolute",
+        "x": "100px",
+        "y": "0px",
+        "width": "100px",
+        "height": "100px"
+      },
+      "shapeWidth": "50px",
+      "shapeHeight": "100px",
+      "shapeRadius": "50%",
+      "shapeColour": "green"
+    }
+  ]
+}

@@ -202,6 +202,32 @@
       "wrappers": {
         "copywrapper": true
       }
+    },
+    {
+      "type": "actionbutton",
+      "pvName": "sim://limit#1",
+      "text": "And another ... >>",
+      "containerStyling": {
+        "position": "absolute",
+        "x": "16px",
+        "y": "250px",
+        "width": "200px",
+        "height": "50px"
+      },
+      "widgetStyling": {
+        "fontSize": "0.8em"
+      },
+      "actions": {
+        "actions": [
+          {
+            "type": "OPEN_PAGE",
+            "location": "right",
+            "page": "ionpExample",
+            "macros": "{\"device\":\"SR03A-VA-IONP-01\"}"
+          }
+        ]
+      },
+      "executeAsOne": false
     }
   ]
 }

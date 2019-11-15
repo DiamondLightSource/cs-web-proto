@@ -10,6 +10,7 @@ export const WRITE_PV = "WRITE_PV";
 export interface OpenPage {
   type: typeof OPEN_PAGE;
   page: string;
+  location: string;
   macros: string;
 }
 
@@ -44,12 +45,23 @@ export const executeActions = (actions: Actions, history?: History): void => {
     switch (action.type) {
       case OPEN_PAGE:
         if (history) {
-          history.push("/" + action.page + "/" + action.macros);
+          let currentPath = "";
+          if (history.location.pathname !== undefined)
+            currentPath = history.location.pathname;
+
+          let newPathComponent =
+            action.location + "/" + action.page + "/" + action.macros + "/";
+          let matcher = new RegExp(action.location + "/.+/.+");
+          let groups = matcher.exec(currentPath);
+          if (groups !== null && groups[0] !== undefined) {
+            currentPath = currentPath.replace(groups[0], newPathComponent);
+          } else {
+            currentPath = currentPath + newPathComponent;
+          }
+          history.push(currentPath);
         } else {
           log.error("Tried to open a page but no history object passed");
         }
-        //window.location.href =
-        //window.location.href = "/" + action.page + "/" + action.macros;
         break;
       case OPEN_WEBPAGE:
         window.open(action.url);
