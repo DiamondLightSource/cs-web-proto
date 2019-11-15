@@ -6,10 +6,8 @@ import { ThemeProvider } from "./themeContext";
 import { BrowserRouter } from "react-router-dom";
 
 ReactDOM.render(
-  <BrowserRouter>
-    <ThemeProvider>
-      <App />
-    </ThemeProvider>
-  </BrowserRouter>,
+  <ThemeProvider>
+    <App />
+  </ThemeProvider>,
   document.getElementById("root")
 );
