@@ -11,7 +11,9 @@ export interface DynamicParams {
 }
 
 export function DynamicPage({
-  match
+  match,
+  location,
+  history
 }: RouteComponentProps<DynamicParams>): JSX.Element {
   var file = "http://localhost:3000/" + match.params.json + ".json";
   var map = JSON.parse(match.params.macros);
@@ -26,6 +28,9 @@ export function DynamicPage({
         margin: "",
         padding: ""
       }}
+      history={history}
+      match={match}
+      location={location}
     />
   );
 }

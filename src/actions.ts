@@ -1,7 +1,6 @@
 import { writePv } from "./hooks/useSubscription";
 import { valueToVtype } from "./vtypes/utils";
 import log from "loglevel";
-import createHistory from "history/createBrowserHistory";
 
 export const OPEN_PAGE = "OPEN_PAGE";
 export const OPEN_WEBPAGE = "OPEN_WEBPAGE";
@@ -43,7 +42,6 @@ export const executeActions = (actions: Actions): void => {
   for (const action of toExecute) {
     switch (action.type) {
       case OPEN_PAGE:
-        const history = createHistory();
         //history.push("/" + action.page + "/" + action.macros);
         //history.goForward();
         //window.location.href =

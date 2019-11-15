@@ -9,7 +9,6 @@ import { useMacros } from "../../hooks/useMacros";
 import { useConnection } from "../../hooks/useConnection";
 import { useId } from "react-id-generator";
 import { useRules, RuleProps } from "../../hooks/useRules";
-import { RouteComponentProps } from "react-router-dom";
 
 export type ExcludeNulls<T> = {
   [P in keyof T]: Exclude<T[P], null>;
@@ -96,7 +95,10 @@ export const WidgetPropType = {
   ]).isRequired,
   widgetStyling: PropTypes.exact(WidgetStylingPropType),
   macroMap: PropTypes.objectOf(PropTypes.string.isRequired),
-  rule: PropTypes.exact(RulesPropType)
+  rule: PropTypes.exact(RulesPropType),
+  history: PropTypes.object,
+  match: PropTypes.object,
+  location: PropTypes.object
 };
 // Allows for either absolute or flexible positioning
 export type WidgetProps = AbsoluteType | FlexibleType;

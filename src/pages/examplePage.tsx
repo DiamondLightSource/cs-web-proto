@@ -2,10 +2,14 @@
 
 import React from "react";
 
-import { BrowserRouter, Link, Route } from "react-router-dom";
 import { WidgetFromJson } from "../components/FromJson/fromJson";
+import { RouteComponentProps } from "react-router-dom";
 
-export const ExamplePage = (): JSX.Element => (
+export const ExamplePage = ({
+  history,
+  match,
+  location
+}: RouteComponentProps<any>): JSX.Element => (
   <WidgetFromJson
     file="http://localhost:3000/examplePage.json"
     macroMap={{}}
@@ -16,5 +20,8 @@ export const ExamplePage = (): JSX.Element => (
       margin: "",
       padding: ""
     }}
+    history={history}
+    match={match}
+    location={location}
   />
 );

@@ -4,7 +4,7 @@
 import React from "react";
 import "./App.css";
 import { Provider } from "react-redux";
-import { BrowserRouter, Link, Route } from "react-router-dom";
+import { withRouter, Link, Route } from "react-router-dom";
 import { getStore, initialiseStore } from "./redux/store";
 import log from "loglevel";
 import { FrontPage } from "./pages/frontpage";
@@ -25,7 +25,6 @@ import { ConiqlPlugin } from "./connection/coniql";
 import { ConnectionForwarder } from "./connection/forwarder";
 
 import { WidgetFromJson } from "./components/FromJson/fromJson";
-import { withRouter } from "react-router-dom";
 
 var settings: any;
 try {

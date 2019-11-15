@@ -2,6 +2,7 @@ import React from "react";
 import { Actions, executeActions } from "../../actions";
 import { InferWidgetProps, PVWidget, PVWidgetPropType } from "../Widget/widget";
 import classes from "./actionButton.module.css";
+import { RouteComponentProps } from "react-router-dom";
 
 export interface ActionButtonProps {
   text: string;
@@ -26,7 +27,7 @@ export const ActionButtonComponent = (
   }
 };
 
-export interface ActionButtonWidgetProps {
+export interface ActionButtonWidgetProps extends RouteComponentProps {
   text: string;
   actions: Actions;
   style?: {};
@@ -40,6 +41,7 @@ export const ActionButtonWidget = (
   // Function to send the value on to the PV
   function onClick(event: React.MouseEvent<HTMLButtonElement>): void {
     if (props.actions !== undefined) executeActions(props.actions);
+    props.history.push("test");
   }
   return (
     <ActionButtonComponent
