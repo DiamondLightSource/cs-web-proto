@@ -17,6 +17,7 @@ export function DynamicPage({
 }: RouteComponentProps<DynamicParams>): JSX.Element {
   var file = "http://localhost:3000/" + match.params.json + ".json";
   var map = JSON.parse(match.params.macros);
+  console.log(history);
   return (
     <WidgetFromJson
       file={file}
