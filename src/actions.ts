@@ -31,7 +31,7 @@ export interface Actions {
   executeAsOne: boolean;
 }
 
-export const executeActions = (actions: Actions): void => {
+export const executeActions = (actions: Actions, history?: object): void => {
   log.debug(`executing an action ${actions.actions[0].type}`);
   let toExecute: ACTION_TYPE[] = [];
   if (actions.executeAsOne) {
@@ -43,9 +43,8 @@ export const executeActions = (actions: Actions): void => {
     switch (action.type) {
       case OPEN_PAGE:
         //history.push("/" + action.page + "/" + action.macros);
-        //history.goForward();
         //window.location.href =
-        window.location.href = "/" + action.page + "/" + action.macros;
+        //window.location.href = "/" + action.page + "/" + action.macros;
         break;
       case OPEN_WEBPAGE:
         window.open(action.url);
