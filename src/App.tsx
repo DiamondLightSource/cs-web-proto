@@ -92,7 +92,7 @@ const App: React.FC = (): JSX.Element => {
               Macros
             </Link>
             <Link style={styleLinkButton} to="/fromJson">
-              JSON Loading
+              File Loading
             </Link>
             <Link style={styleLinkButton} to="/coniql">
               Coniql

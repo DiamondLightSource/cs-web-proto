@@ -14,7 +14,7 @@ export const JsonPage = (): JSX.Element => (
       margin: "auto"
     }}
   >
-    <h2>Loading from JSON</h2>
+    <h2>Loading from JSON and Bob</h2>
     <div style={{ height: "100%", width: "100%", position: "relative" }}>
       <WidgetFromJson
         file="http://localhost:3000/simple.json"
