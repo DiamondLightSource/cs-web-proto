@@ -17,44 +17,9 @@ import { Input } from "../Input/input";
 import { Display } from "../Display/display";
 import { WidgetPropType, InferWidgetProps } from "../Widget/widget";
 
-type BobDescription = { [key: string]: any };
-
-export const convertBobToWidgetDescription = (
-  xml_input: string,
-  keySubstitutions?: { [key: string]: any }
-): WidgetDescription => {
-  // Provide a raw xml file in the bob format for conversion
-  // Optionally provide a substition map for keys
-
-  // Convert it to a "compact format"
-  const compactJSON = convert.xml2js(xml_input, {
-    compact: true
-  }) as BobDescription;
-
-  console.log(compactJSON);
-  console.log(bobMacrosToMacroMap(compactJSON.display.macros));
-
-  // Extract children if there are any
-  const children = compactJSON.display.widget || [];
-
-  // Special case for the root component
-  let rootDescription: WidgetDescription = {
-    type: "display",
-    containerStyling: {
-      position: "absolute",
-      x: 0,
-      y: 0,
-      width: `${compactJSON.display.width._text}px`,
-      height: `${compactJSON.display.height._text}px`
-    },
-    macroMap: bobMacrosToMacroMap(compactJSON.display.macros),
-    children: children.map((w: any) =>
-      bobChildToWidgetChild(w as BobDescription, keySubstitutions)
-    )
-  };
-
-  return rootDescription;
-};
+interface BobDescription {
+  [key: string]: any;
+}
 
 const bobMacrosToMacroMap = (macros: object): MacroMap => {
   // Start with blank object
@@ -105,12 +70,51 @@ const bobChildToWidgetChild = (
     },
     macroMap: bobMacrosToMacroMap(macros),
     ...mappedProps,
-    children: widget.map((w: any) =>
-      bobChildToWidgetChild(w as BobDescription, keySubstitutions)
+    children: widget.map(
+      (w: any): WidgetDescription =>
+        bobChildToWidgetChild(w as BobDescription, keySubstitutions)
     )
   };
 
   return outputWidget;
+};
+
+export const convertBobToWidgetDescription = (
+  bobInputString: string,
+  keySubstitutions?: { [key: string]: any }
+): WidgetDescription => {
+  // Provide a raw xml file in the bob format for conversion
+  // Optionally provide a substition map for keys
+
+  // Convert it to a "compact format"
+  const compactJSON = convert.xml2js(bobInputString, {
+    compact: true
+  }) as BobDescription;
+
+  console.log(compactJSON);
+  console.log(bobMacrosToMacroMap(compactJSON.display.macros));
+
+  // Extract children if there are any
+  const children = compactJSON.display.widget || [];
+
+  // Special case for the root component
+  let rootDescription: WidgetDescription = {
+    type: "display",
+    containerStyling: {
+      position: "absolute",
+      x: 0,
+      y: 0,
+      width: `${compactJSON.display.width._text}px`,
+      height: `${compactJSON.display.height._text}px`
+    },
+    macroMap: bobMacrosToMacroMap(compactJSON.display.macros),
+    children: children.map(
+      (w: any): WidgetDescription =>
+        bobChildToWidgetChild(w as BobDescription, keySubstitutions)
+    )
+  };
+
+  return rootDescription;
 };
 
 const EMPTY_WIDGET: WidgetDescription = {
@@ -170,7 +174,7 @@ export const WidgetFromBob = (
     } else {
       // Convert the bob to widget description style object
       bobDescription = convertBobToWidgetDescription(bob, {
-        pv_name: "pvName"
+        pv_name: "pvName" // eslint-disable-line @typescript-eslint/camelcase
       });
     }
     console.log(bobDescription);
