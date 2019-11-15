@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<display version="2.0.0">
+  <name>Display</name>
+  <macros>
+    <PV>loc://pv1</PV>
+  </macros>
+  <width>200</width>
+  <height>200</height>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update</name>
+    <pv_name>$(PV)</pv_name>
+    <x>20</x>
+    <y>140</y>
+    <width>140</width>
+    <height>50</height>
+  </widget>
+  <widget type="textentry" version="3.0.0">
+    <name>Text Entry</name>
+    <pv_name>${PV}</pv_name>
+    <x>20</x>
+    <y>80</y>
+    <width>140</width>
+    <height>40</height>
+    <foreground_color>
+      <color name="On" red="0" green="255" blue="0">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color name="Grid" red="128" green="128" blue="128">
+      </color>
+    </background_color>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label</name>
+    <text>From .bob file</text>
+    <x>20</x>
+    <y>20</y>
+    <width>140</width>
+    <height>40</height>
+  </widget>
+</display>
