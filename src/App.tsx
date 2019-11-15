@@ -25,6 +25,8 @@ import { DynamicPage } from "./pages/dynamicPage";
 import { ConiqlPlugin } from "./connection/coniql";
 import { ConnectionForwarder } from "./connection/forwarder";
 
+import { convertBobToWidgetDescription } from "./components/FromBob/fromBob";
+
 var settings: any;
 try {
   // Use require so that we can catch this error
@@ -66,6 +68,10 @@ const App: React.FC = (): JSX.Element => {
     backgroundColor: "#eeeeee",
     margin: "10px 10px"
   };
+
+  fetch("http://localhost:3000/basic.bob")
+    .then(response => response.text())
+    .then(str => console.log(convertBobToWidgetDescription(str)));
 
   return (
     <Provider store={store}>
