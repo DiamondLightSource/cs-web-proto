@@ -7,7 +7,7 @@ import { pvStateSelector, PvArrayResults, pvStateComparator } from "./utils";
 
 export interface PvProps extends React.PropsWithChildren<any> {
   pvName: string;
-  shortPvName: string;
+  effectivePvName: string;
 }
 
 export function useConnection(
