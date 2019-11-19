@@ -1,4 +1,4 @@
-.ToolTip {
+.Tooltip {
   background-color: black;
   white-space: pre-line;
   color: #fff;
@@ -10,8 +10,15 @@
   left: 50%;
 }
 
-.Children {
+.TooltipAvailable {
   cursor: context-menu;
+}
+
+.Copying {
+  cursor: crosshair;
+}
+
+.Children {
   height: 100%;
   width: 100%;
 }

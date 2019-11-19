@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes, { InferProps } from "prop-types";
 
-import { CopyWrapper } from "../CopyWrapper/copyWrapper";
+import { TooltipWrapper } from "../TooltipWrapper/tooltipWrapper";
 import { AlarmBorder } from "../AlarmBorder/alarmBorder";
 import { MenuWrapper } from "../MenuWrapper/menuWrapper";
 import { PvState } from "../../redux/csState";
@@ -9,6 +9,7 @@ import { useMacros } from "../../hooks/useMacros";
 import { useConnection } from "../../hooks/useConnection";
 import { useId } from "react-id-generator";
 import { useRules } from "../../hooks/useRules";
+import { resolveTooltip } from "./tooltip";
 
 export type ExcludeNulls<T> = {
   [P in keyof T]: Exclude<T[P], null>;
@@ -73,7 +74,9 @@ type WidgetStyling = InferWidgetProps<typeof WidgetStylingPropType>;
 const CommonWidgetProps = {
   widgetStyling: PropTypes.shape(WidgetStylingPropType),
   macroMap: PropTypes.objectOf(PropTypes.string.isRequired),
-  rules: PropTypes.arrayOf(PropTypes.shape(RulesPropType))
+  rules: PropTypes.arrayOf(PropTypes.shape(RulesPropType)),
+  tooltip: PropTypes.string,
+  resolvedTooltip: PropTypes.string
 };
 
 const AbsoluteComponentPropType = {
@@ -105,7 +108,6 @@ type WidgetComponent = WidgetProps & { baseWidget: React.FC<any> };
 const PVExtras = {
   pvName: PropTypes.string.isRequired,
   wrappers: PropTypes.shape({
-    copywrapper: PropTypes.bool,
     alarmborder: PropTypes.bool
   })
 };
@@ -160,7 +162,9 @@ export const Widget = (props: WidgetComponent): JSX.Element => {
   // Apply macros.
   const macroProps = useMacros(idProps) as WidgetComponent & { id: string };
   // Then rules
-  const ruleProps = useRules(macroProps) as WidgetComponent & { id: string };
+  const ruleProps = useRules(macroProps);
+  const resolvedTooltip = resolveTooltip(ruleProps);
+  ruleProps["resolvedTooltip"] = resolvedTooltip;
 
   // Give containers access to everything apart from the containerStyling
   // Assume flexible position if not provided with anything
@@ -175,7 +179,7 @@ export const Widget = (props: WidgetComponent): JSX.Element => {
   let { baseWidget, widgetStyling = {}, ...baseWidgetProps } = containerProps;
 
   // Put appropriate components on the list of components to be wrapped
-  let components = [baseWidget];
+  let components = [TooltipWrapper, baseWidget];
 
   return recursiveWrapping(
     components,
@@ -185,10 +189,12 @@ export const Widget = (props: WidgetComponent): JSX.Element => {
     baseWidgetProps
   );
 };
+const DEFAULT_TOOLTIP = "${pvName}\n${pvValue}";
 
 export const PVWidget = (props: PVWidgetComponent): JSX.Element => {
   const [id] = useId();
-  let idProps = { ...props, id: id };
+  const tooltip = props.tooltip === undefined ? DEFAULT_TOOLTIP : props.tooltip;
+  let idProps = { ...props, id: id, tooltip: tooltip };
 
   // Apply macros.
   const macroProps = useMacros(idProps) as PVWidgetComponent & { id: string };
@@ -205,6 +211,9 @@ export const PVWidget = (props: PVWidgetComponent): JSX.Element => {
     readonly: readonly,
     value: latestValue
   };
+  const resolvedTooltip = resolveTooltip(connectedProps);
+  connectedProps.resolvedTooltip = resolvedTooltip;
+
   // Give containers access to everything apart from the containerStyling
   // Assume flexible position if not provided with anything
   const { containerStyling, ...containerProps } = connectedProps;
@@ -225,7 +234,7 @@ export const PVWidget = (props: PVWidgetComponent): JSX.Element => {
   const components = [];
   // Done like this in case only one of the values is passed through
   const requestedWrappers = {
-    ...{ alarmborder: false, copywrapper: false, menuwrapper: false },
+    ...{ alarmborder: false, menuwrapper: false },
     ...wrappers
   };
 
@@ -235,10 +244,7 @@ export const PVWidget = (props: PVWidgetComponent): JSX.Element => {
   if (requestedWrappers.alarmborder === true) {
     components.push(AlarmBorder);
   }
-  if (requestedWrappers.copywrapper === true) {
-    components.push(CopyWrapper);
-  }
-
+  components.push(TooltipWrapper);
   components.push(baseWidget);
 
   return recursiveWrapping(
