@@ -17,7 +17,7 @@ export class ConnectionForwarder implements Connection {
         if (connection !== undefined) {
           return connection;
         } else {
-          throw new Error(`Connection for {prefix} not initiated`);
+          throw new Error(`Connection for ${prefix} not initiated`);
         }
       }
     }
