@@ -33,7 +33,7 @@ function applyTheme(theme: any): void {
 }
 
 const App: React.FC = (): JSX.Element => {
-  const simulator = new SimulatorPlugin();
+  const simulator = new SimulatorPlugin(100);
   const fallbackPlugin = simulator;
   const plugins: [string, Connection][] = [
     ["sim://", simulator],
