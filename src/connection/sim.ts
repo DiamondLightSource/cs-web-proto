@@ -108,18 +108,16 @@ class SinePv extends SimPv {
 
 class RampPv extends SimPv {
   // Goes from 0-99 on a loop
-  private value = 0;
   public constructor(...args: SimArgs) {
     super(...args);
     setInterval(this.publish.bind(this), this.updateRate);
   }
 
   public getValue(): VType | undefined {
-    this.value = this.value + 1;
-    if (this.value >= 100) {
-      this.value = 0;
-    }
-    return vdouble(this.value);
+    let d = new Date();
+    return vdouble(
+      (d.getSeconds() % 10) * 10 + Math.floor(d.getMilliseconds() / 100)
+    );
   }
 }
 
