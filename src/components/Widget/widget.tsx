@@ -189,6 +189,7 @@ export const Widget = (props: WidgetComponent): JSX.Element => {
     baseWidgetProps
   );
 };
+// eslint-disable-next-line no-template-curly-in-string
 const DEFAULT_TOOLTIP = "${pvName}\n${pvValue}";
 
 export const PVWidget = (props: PVWidgetComponent): JSX.Element => {

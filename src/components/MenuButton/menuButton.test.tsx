@@ -1,5 +1,4 @@
 import React from "react";
-import ReactTestUtils from "react-dom/test-utils";
 import { MenuButtonComponent, MenuButtonProps } from "./menuButton";
 import { configure, shallow, ShallowWrapper } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
