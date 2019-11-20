@@ -35,6 +35,8 @@ export function widgetDescriptionToComponent(
 
   // Perform checking on propTypes
   let widgetInfo = { containerStyling: containerStyling, ...otherProps };
+  console.log("Prop Type");
+  console.log(widgetDict[type].propTypes);
   let error: string | undefined = checkPropTypes(
     widgetDict[type].propTypes,
     widgetInfo,

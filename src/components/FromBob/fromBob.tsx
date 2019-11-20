@@ -60,7 +60,7 @@ const bobChildToWidgetChild = (
 
   // Check that the primary props were defined or use a default value
   let outputWidget: WidgetDescription = {
-    type: _attributes.type,
+    type: _attributes.type || _attributes.typeId,
     containerStyling: {
       position: "absolute",
       x: `${(x && x._text) || 0}px`,
@@ -158,8 +158,11 @@ export const WidgetFromBob = (
   }
   const widgetDict = {
     textupdate: Readback,
+    "org.csstudio.opibuilder.widgets.TextUpdate": Readback,
     textentry: Input,
+    "org.csstudio.opibuilder.widgets.TextInput": Input,
     label: Label,
+    "org.csstudio.opibuilder.widgets.Label": Label,
     group: Display,
     display: Display,
     empty: Display,
