@@ -22,7 +22,7 @@ export const TooltipWrapper = (props: {
   const [popoverOpen, setPopoverOpen] = useState(false);
   let { pvName, style = {} } = props;
 
-  let activeClasses = classes.Children;
+  let activeClasses = "";
   if (props.resolvedTooltip) {
     activeClasses += ` ${classes.TooltipAvailable}`;
   }
@@ -45,14 +45,7 @@ export const TooltipWrapper = (props: {
 
   if (props.resolvedTooltip) {
     return (
-      <div
-        style={{
-          position: "relative",
-          height: "100%",
-          width: "100%",
-          ...style
-        }}
-      >
+      <div style={{ height: "100%", width: "100%", ...style }}>
         <Popover
           isOpen={popoverOpen}
           position={["top"]}
@@ -67,6 +60,7 @@ export const TooltipWrapper = (props: {
             onMouseDown={mouseDown}
             onMouseUp={mouseUp}
             className={activeClasses}
+            style={{ height: "100%", width: "100%" }}
           >
             {props.children}
           </div>
@@ -79,6 +73,7 @@ export const TooltipWrapper = (props: {
         onMouseDown={mouseDown}
         onMouseUp={mouseUp}
         className={activeClasses}
+        style={style}
       >
         {props.children}
       </div>
