@@ -21,7 +21,7 @@ beforeEach((): void => {
     </TooltipWrapper>
   );
   wrapper = shallow(tooltipWrapper);
-  wrappedElement = wrapper.find(".Children").childAt(0);
+  wrappedElement = wrapper.childAt(0);
 });
 
 describe("TooltipWrapper", (): void => {
@@ -30,12 +30,12 @@ describe("TooltipWrapper", (): void => {
     expect(popover.name()).toEqual("Popover");
   });
   test("it contains one child element", (): void => {
-    const children = wrapper.find(".Children");
+    const children = wrapper.children();
     expect(children).toHaveLength(1);
   });
 
   test("it renders text", (): void => {
-    expect(wrappedElement.text()).toEqual("Testing Tooltip Wrapper");
+    expect(wrappedElement.childAt(0).text()).toEqual("Testing Tooltip Wrapper");
   });
 
   // How do we test the popover content? It renders on the
