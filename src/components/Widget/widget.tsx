@@ -225,15 +225,15 @@ export const PVWidget = (props: PVWidgetComponent): JSX.Element => {
   let idProps = { ...props, id: id };
 
   // Apply macros.
-  const macroProps = useMacros(idProps) as PVWidgetComponent & { id: string };
-  // Then rules
-  const ruleProps = useRules(macroProps) as PVWidgetComponent & { id: string };
+  // const macroProps = useMacros(idProps) as PVWidgetComponent & { id: string };
+  // // Then rules
+  // const ruleProps = useRules(macroProps) as PVWidgetComponent & { id: string };
   const [shortPvName, connected, readonly, latestValue] = useConnection(
     id,
-    ruleProps.pvName
+    props.pvName
   );
   let connectedProps = {
-    ...ruleProps,
+    ...props,
     pvName: shortPvName,
     connected: connected,
     readonly: readonly,
