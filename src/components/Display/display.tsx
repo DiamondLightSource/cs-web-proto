@@ -17,7 +17,13 @@ const DisplayComponent = (
   props: InferWidgetProps<typeof DisplayProps> & Component
 ): JSX.Element => (
   <div
-    style={{ position: "relative", boxSizing: "border-box", ...props.style }}
+    style={{
+      position: "relative",
+      boxSizing: "border-box",
+      height: "100%",
+      width: "100%",
+      ...props.style
+    }}
   >
     {props.children}
   </div>

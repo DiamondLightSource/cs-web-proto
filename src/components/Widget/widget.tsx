@@ -179,7 +179,7 @@ export const Widget = (props: WidgetComponent): JSX.Element => {
   let { baseWidget, widgetStyling = {}, ...baseWidgetProps } = containerProps;
 
   // Put appropriate components on the list of components to be wrapped
-  let components = [baseWidget];
+  let components = [TooltipWrapper, baseWidget];
 
   return recursiveWrapping(
     components,
