@@ -76,7 +76,8 @@ const CommonWidgetProps = {
   macroMap: PropTypes.objectOf(PropTypes.string.isRequired),
   rules: PropTypes.arrayOf(PropTypes.shape(RulesPropType)),
   tooltip: PropTypes.string,
-  resolvedTooltip: PropTypes.string
+  resolvedTooltip: PropTypes.string,
+  menuWrapper: PropTypes.bool
 };
 
 const AbsoluteComponentPropType = {
@@ -107,9 +108,7 @@ type WidgetComponent = WidgetProps & { baseWidget: React.FC<any> };
 // Internal prop types object for properties which are not in a standard widget
 const PVExtras = {
   pvName: PropTypes.string.isRequired,
-  wrappers: PropTypes.shape({
-    alarmborder: PropTypes.bool
-  })
+  alarmBorder: PropTypes.bool
 };
 // PropTypes object for a PV widget which can be expanded
 export const PVWidgetPropType = {
@@ -228,21 +227,17 @@ export const PVWidget = (props: PVWidgetComponent): JSX.Element => {
   let {
     baseWidget,
     widgetStyling = {},
-    wrappers = {},
+    menuWrapper = false,
+    alarmBorder = false,
     ...baseWidgetProps
   } = containerProps;
 
   const components = [];
-  // Done like this in case only one of the values is passed through
-  const requestedWrappers = {
-    ...{ alarmborder: false, menuwrapper: false },
-    ...wrappers
-  };
 
-  if (requestedWrappers.menuwrapper === true) {
+  if (menuWrapper) {
     components.push(MenuWrapper);
   }
-  if (requestedWrappers.alarmborder === true) {
+  if (alarmBorder) {
     components.push(AlarmBorder);
   }
   components.push(TooltipWrapper);
