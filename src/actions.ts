@@ -15,6 +15,7 @@ export interface WritePv {
   type: typeof WRITE_PV;
   pvName: string;
   value: string | number;
+  description: string;
 }
 
 export type ACTION_TYPE = OpenWebpage | WritePv;
@@ -23,6 +24,19 @@ export interface Actions {
   actions: ACTION_TYPE[];
   executeAsOne: boolean;
 }
+
+export const executeAction = (action: ACTION_TYPE): void => {
+  switch (action.type) {
+    case OPEN_WEBPAGE:
+      window.open(action.url);
+      break;
+    case WRITE_PV:
+      writePv(action.pvName, valueToVtype(action.value));
+      break;
+    default:
+      log.warn(`unexpected action type`);
+  }
+};
 
 export const executeActions = (actions: Actions): void => {
   log.debug(`executing an action ${actions.actions[0].type}`);
@@ -33,15 +47,6 @@ export const executeActions = (actions: Actions): void => {
     toExecute = [actions.actions[0]];
   }
   for (const action of toExecute) {
-    switch (action.type) {
-      case OPEN_WEBPAGE:
-        window.open(action.url);
-        break;
-      case WRITE_PV:
-        writePv(action.pvName, valueToVtype(action.value));
-        break;
-      default:
-        log.warn(`unexpected action type`);
-    }
+    executeAction(action);
   }
 };

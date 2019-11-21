@@ -20,48 +20,29 @@
         "width": "",
         "height": ""
       },
-      "items": [
-        {
-          "label": "set limit #1 to 10",
-          "actions": {
-            "actions": [
-              {
-                "type": "WRITE_PV",
-                "pvName": "sim://limit#1",
-                "value": 10
-              }
-            ]
+      "actions": {
+        "executeAsOne": false,
+        "actions": [
+          {
+            "type": "WRITE_PV",
+            "pvName": "sim://limit#1",
+            "value": 10,
+            "description": "set limit #1 to 10"
           },
-          "executeAsOne": false
-        },
-        {
-          "label": "set limit #1 to 20",
-          "actions": {
-            "actions": [
-              {
-                "type": "WRITE_PV",
-                "pvName": "sim://limit#1",
-                "value": 20
-              }
-            ]
+          {
+            "type": "WRITE_PV",
+            "pvName": "sim://limit#1",
+            "value": 20,
+            "description": "set limit #1 to 20"
           },
-          "executeAsOne": false
-        },
-        {
-          "label": "set limit #1 to 100",
-          "actions": {
-            "actions": [
-              {
-                "type": "WRITE_PV",
-                "pvName": "sim://limit#1",
-                "value": 100
-              }
-            ]
-          },
-          "executeAsOne": false
-        }
-      ],
-      "menuWrapper": true,
+          {
+            "type": "WRITE_PV",
+            "pvName": "sim://limit#1",
+            "value": 100,
+            "description": "set limit #1 to 100"
+          }
+        ]
+      },
       "alarmBorder": true
     }
   ]

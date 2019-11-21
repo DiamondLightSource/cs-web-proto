@@ -37,14 +37,37 @@ const ContainerFeaturesPropType = {
   padding: PropTypes.string
 };
 
-const RulesPropType = {
+const OpenWebpagePropType = PropTypes.shape({
+  type: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired,
+  description: PropTypes.string
+});
+
+const WritePvPropType = PropTypes.shape({
+  type: PropTypes.string.isRequired,
+  pvName: PropTypes.string.isRequired,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  description: PropTypes.string
+});
+
+const ActionPropType = PropTypes.oneOfType([
+  OpenWebpagePropType,
+  WritePvPropType
+]);
+
+const ActionsPropType = PropTypes.shape({
+  executeAsOne: PropTypes.bool,
+  actions: PropTypes.arrayOf(ActionPropType)
+});
+
+const RulesPropType = PropTypes.shape({
   condition: PropTypes.string.isRequired,
   trueState: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]).isRequired,
   falseState: PropTypes.oneOfType([PropTypes.string, PropTypes.bool])
     .isRequired,
   substitutionMap: MapStringString.isRequired,
   prop: PropTypes.string.isRequired
-};
+});
 
 const AbsoluteContainerProps = {
   position: PropTypes.oneOf(["absolute"]).isRequired,
@@ -74,7 +97,8 @@ type WidgetStyling = InferWidgetProps<typeof WidgetStylingPropType>;
 const CommonWidgetProps = {
   widgetStyling: PropTypes.shape(WidgetStylingPropType),
   macroMap: PropTypes.objectOf(PropTypes.string.isRequired),
-  rules: PropTypes.arrayOf(PropTypes.shape(RulesPropType)),
+  rules: PropTypes.arrayOf(RulesPropType),
+  actions: ActionsPropType,
   tooltip: PropTypes.string,
   resolvedTooltip: PropTypes.string,
   menuWrapper: PropTypes.bool
@@ -178,7 +202,12 @@ export const Widget = (props: WidgetComponent): JSX.Element => {
   let { baseWidget, widgetStyling = {}, ...baseWidgetProps } = containerProps;
 
   // Put appropriate components on the list of components to be wrapped
-  let components = [TooltipWrapper, baseWidget];
+  const components = [];
+  if (props.actions) {
+    components.push(MenuWrapper);
+  }
+  components.push(TooltipWrapper);
+  components.push(baseWidget);
 
   return recursiveWrapping(
     components,
@@ -227,14 +256,13 @@ export const PVWidget = (props: PVWidgetComponent): JSX.Element => {
   let {
     baseWidget,
     widgetStyling = {},
-    menuWrapper = false,
     alarmBorder = false,
     ...baseWidgetProps
   } = containerProps;
 
   const components = [];
 
-  if (menuWrapper) {
+  if (props.actions) {
     components.push(MenuWrapper);
   }
   if (alarmBorder) {
