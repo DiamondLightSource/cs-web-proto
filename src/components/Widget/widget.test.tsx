@@ -92,7 +92,7 @@ describe("<Widget />", (): void => {
         pvName="pv"
         baseWidget={TestLabel}
         containerStyling={{ position: "relative" }}
-        wrappers={{ alarmborder: true }}
+        alarmBorder={true}
       />
     );
     expect(component.childAt(0).name()).toEqual("AlarmBorder");
@@ -104,7 +104,7 @@ describe("<Widget />", (): void => {
         pvName="pv"
         baseWidget={TestLabel}
         containerStyling={{ position: "relative" }}
-        wrappers={{ alarmborder: true }}
+        alarmBorder={true}
       />
     );
     expect(component.childAt(0).name()).toEqual("AlarmBorder");
