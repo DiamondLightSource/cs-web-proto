@@ -57,10 +57,7 @@
           "widgetStyling": {
             "color": "${COLOUR}"
           },
-          "pvName": "loc://pv1",
-          "wrappers": {
-            "copywrapper": true
-          }
+          "pvName": "loc://pv1"
         },
         {
           "type": "readback",
@@ -70,9 +67,7 @@
             "margin": "2%"
           },
           "pvName": "loc://pv1",
-          "wrappers": {
-            "copywrapper": true
-          }
+          "tooltip": "Custom tooltip:\n${pvName}\n${pvValue}"
         },
         {
           "type": "input",
@@ -81,10 +76,7 @@
             "width": "45%",
             "margin": "2%"
           },
-          "pvName": "loc://pv2",
-          "wrappers": {
-            "copywrapper": true
-          }
+          "pvName": "loc://pv2"
         },
         {
           "type": "readback",
@@ -93,10 +85,7 @@
             "width": "45%",
             "margin": "2%"
           },
-          "pvName": "loc://pv2",
-          "wrappers": {
-            "copywrapper": true
-          }
+          "pvName": "loc://pv2"
         },
         {
           "type": "readback",
@@ -105,10 +94,7 @@
             "width": "45%",
             "margin": "2%"
           },
-          "pvName": "sim://sine",
-          "wrappers": {
-            "copywrapper": true
-          }
+          "pvName": "sim://sine"
         },
         {
           "type": "readback",
@@ -118,10 +104,7 @@
             "margin": "2%"
           },
           "pvName": "sim://sine",
-          "precision": 3,
-          "wrappers": {
-            "copywrapper": true
-          }
+          "precision": 3
         }
       ]
     },
@@ -151,10 +134,7 @@
             "height": "2em",
             "margin": "5px 0 0 0"
           },
-          "pvName": "sim://limit#metapv1",
-          "wrappers": {
-            "copywrapper": true
-          }
+          "pvName": "sim://limit#metapv1"
         },
         {
           "type": "readback",
@@ -163,10 +143,7 @@
             "width": "50%",
             "margin": "5px 0 0 0"
           },
-          "pvName": "sim://limit#metapv1",
-          "wrappers": {
-            "copywrapper": true
-          }
+          "pvName": "sim://limit#metapv1"
         },
         {
           "type": "readback",
@@ -176,10 +153,7 @@
             "margin": "5px 0 0 0"
           },
           "pvName": "sim://limit#metapv1",
-          "wrappers": {
-            "alarmborder": true,
-            "copywrapper": true
-          }
+          "alarmBorder": true
         }
       ]
     },
@@ -208,10 +182,7 @@
             "position": "relative",
             "margin": "5px 0 0 0"
           },
-          "pvName": "sim://enum",
-          "wrappers": {
-            "copywrapper": true
-          }
+          "pvName": "sim://enum"
         },
         {
           "type": "input",
@@ -219,10 +190,7 @@
             "position": "relative",
             "margin": "5px 0 0 0"
           },
-          "pvName": "sim://enum",
-          "wrappers": {
-            "copywrapper": true
-          }
+          "pvName": "sim://enum"
         },
         {
           "type": "readback",
@@ -230,10 +198,7 @@
             "position": "relative",
             "margin": "5px 0 0 0"
           },
-          "pvName": "sim://enum",
-          "wrappers": {
-            "copywrapper": true
-          }
+          "pvName": "sim://enum"
         }
       ]
     },
@@ -262,10 +227,7 @@
             "position": "relative",
             "margin": "5px 0 0 0"
           },
-          "pvName": "loc://enum1<VEnum>(2, \"un\", \"deux\", \"trois\")",
-          "wrappers": {
-            "copywrapper": true
-          }
+          "pvName": "loc://enum1<VEnum>(2, \"un\", \"deux\", \"trois\")"
         },
         {
           "type": "input",
@@ -273,10 +235,7 @@
             "position": "relative",
             "margin": "5px 0 0 0"
           },
-          "pvName": "loc://enum1<VEnum>(2, \"un\", \"deux\", \"trois\")",
-          "wrappers": {
-            "copywrapper": true
-          }
+          "pvName": "loc://enum1<VEnum>(2, \"un\", \"deux\", \"trois\")"
         },
         {
           "type": "readback",
@@ -284,10 +243,7 @@
             "position": "relative",
             "margin": "5px 0 0 0"
           },
-          "pvName": "loc://enum1",
-          "wrappers": {
-            "copywrapper": true
-          }
+          "pvName": "loc://enum1"
         },
         {
           "type": "readback",
@@ -295,10 +251,7 @@
             "position": "relative",
             "margin": "5px 0 0 0"
           },
-          "pvName": "enum://bad",
-          "wrappers": {
-            "copywrapper": true
-          }
+          "pvName": "enum://bad"
         }
       ]
     },
@@ -327,10 +280,7 @@
             "position": "relative",
             "margin": "5px 0 0 0"
           },
-          "pvName": "loc://test(1.1)",
-          "wrappers": {
-            "copywrapper": true
-          }
+          "pvName": "loc://test(1.1)"
         }
       ]
     }
