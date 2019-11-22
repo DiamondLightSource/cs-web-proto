@@ -1,7 +1,7 @@
 import React from "react";
 import { shallow, ShallowWrapper } from "enzyme";
 
-import { CopyWrapper } from "./copyWrapper";
+import { TooltipWrapper } from "./tooltipWrapper";
 import Popover from "react-tiny-popover";
 import { vstring } from "../../vtypes/string";
 
@@ -9,27 +9,33 @@ let wrapper: ShallowWrapper;
 let wrappedElement: ShallowWrapper;
 
 beforeEach((): void => {
-  const copywrapper = (
-    <CopyWrapper pvName="pv" connected={true} value={vstring("hello")}>
-      Testing Copy Wrapper
-    </CopyWrapper>
+  const tooltipWrapper = (
+    <TooltipWrapper
+      pvName="pv"
+      // eslint-disable-next-line no-template-curly-in-string
+      resolvedTooltip="${pvName}"
+      connected={true}
+      value={vstring("hello")}
+    >
+      Testing Tooltip Wrapper
+    </TooltipWrapper>
   );
-  wrapper = shallow(copywrapper);
-  wrappedElement = wrapper.find(".Children").childAt(0);
+  wrapper = shallow(tooltipWrapper);
+  wrappedElement = wrapper.childAt(0);
 });
 
-describe("<CopyWrapper>", (): void => {
+describe("TooltipWrapper", (): void => {
   test("it contains a Popover", (): void => {
     const popover = wrapper.find(Popover);
     expect(popover.name()).toEqual("Popover");
   });
   test("it contains one child element", (): void => {
-    const children = wrapper.find(".Children");
+    const children = wrapper.children();
     expect(children).toHaveLength(1);
   });
 
   test("it renders text", (): void => {
-    expect(wrappedElement.text()).toEqual("Testing Copy Wrapper");
+    expect(wrappedElement.childAt(0).text()).toEqual("Testing Tooltip Wrapper");
   });
 
   // How do we test the popover content? It renders on the

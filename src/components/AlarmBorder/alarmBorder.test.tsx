@@ -14,7 +14,7 @@ beforeEach((): void => {
   wrapper = shallow(alarmborder);
 });
 
-describe("<CopyWrapper>", (): void => {
+describe("AlarmBorder", (): void => {
   test("it renders a basic element", (): void => {
     expect(wrapper.text()).toContain("Children");
   });

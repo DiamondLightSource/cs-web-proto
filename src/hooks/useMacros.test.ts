@@ -16,7 +16,7 @@ const macroMap: MacroMap = {
   c: "d"
 };
 
-describe("rescursiveResolve", (): void => {
+describe("useMacros", (): void => {
   it("resolves macros", (): void => {
     const props = { prop: "${a}b", macroMap: macroMap };
     const resolvedProps = useMacros(props);

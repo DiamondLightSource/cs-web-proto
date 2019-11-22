@@ -1,18 +1,14 @@
 import React from "react";
 import { shallow, ShallowWrapper } from "enzyme";
 
-import { Items, MenuWrapper } from "./menuWrapper";
+import { MenuWrapper } from "./menuWrapper";
 
 let wrapper: ShallowWrapper;
 
 beforeEach((): void => {
-  let item: Items = {
-    actions: { executeAsOne: false, actions: [] },
-    label: "empty"
-  };
-  let items: Items[] = [item];
+  const actions = { executeAsOne: false, actions: [] };
   const menuWrapper = (
-    <MenuWrapper pvName="pv" items={items}>
+    <MenuWrapper pvName="pv" actions={actions}>
       Children
     </MenuWrapper>
   );
