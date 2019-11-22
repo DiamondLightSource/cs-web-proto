@@ -61,13 +61,11 @@ const bobChildToWidgetChild = (
   // Check that the primary props were defined or use a default value
   let outputWidget: WidgetDescription = {
     type: _attributes.type || _attributes.typeId,
-    containerStyling: {
-      position: "absolute",
-      x: `${(x && x._text) || 0}px`,
-      y: `${(y && y._text) || 0}px`,
-      height: `${(height && height._text) || 0}px`,
-      width: `${(width && width._text) || 0}px`
-    },
+    position: "absolute",
+    x: `${(x && x._text) || 0}px`,
+    y: `${(y && y._text) || 0}px`,
+    height: `${(height && height._text) || 0}px`,
+    width: `${(width && width._text) || 0}px`,
     macroMap: bobMacrosToMacroMap(macros),
     ...mappedProps,
     children: widget.map(
@@ -100,13 +98,11 @@ export const convertBobToWidgetDescription = (
   // Special case for the root component
   let rootDescription: WidgetDescription = {
     type: "display",
-    containerStyling: {
-      position: "absolute",
-      x: 0,
-      y: 0,
-      width: `${compactJSON.display.width._text}px`,
-      height: `${compactJSON.display.height._text}px`
-    },
+    position: "absolute",
+    x: 0,
+    y: 0,
+    width: `${compactJSON.display.width._text}px`,
+    height: `${compactJSON.display.height._text}px`,
     macroMap: bobMacrosToMacroMap(compactJSON.display.macros),
     children: children.map(
       (w: any): WidgetDescription =>
@@ -119,16 +115,18 @@ export const convertBobToWidgetDescription = (
 
 const EMPTY_WIDGET: WidgetDescription = {
   type: "empty",
-  containerStyling: { position: "absolute", x: 0, y: 0, width: 0, height: 0 }
+  position: "absolute",
+  x: 0,
+  y: 0,
+  width: 0,
+  height: 0
 };
 
 const ERROR_WIDGET: WidgetDescription = {
   type: "label",
-  containerStyling: { position: "relative" },
-  widgetStyling: {
-    fontWeight: "bold",
-    backgroundColor: "red"
-  },
+  position: "relative",
+  fontWeight: "bold",
+  backgroundColor: "red",
   text: "Error"
 };
 
@@ -139,7 +137,7 @@ const WidgetFromBobProps = {
 
 export const WidgetFromBob = (
   props: InferWidgetProps<typeof WidgetFromBobProps>
-): JSX.Element | null => {
+): JSX.Element => {
   const [bob, setBob] = useState<string>("");
 
   // Extract props
@@ -169,7 +167,7 @@ export const WidgetFromBob = (
     widgetFromBob: WidgetFromBob
   };
 
-  let component: JSX.Element | null;
+  let component: JSX.Element;
   try {
     let bobDescription;
     if (bob === "") {
@@ -181,23 +179,19 @@ export const WidgetFromBob = (
       });
     }
     console.log(bobDescription);
-    component = (
-      <Display
-        containerStyling={{ ...props.containerStyling, ...props.widgetStyling }}
-      >
-        {widgetDescriptionToComponent(bobDescription, widgetDict, macroMap)}
-      </Display>
+    component = widgetDescriptionToComponent(
+      bobDescription,
+      widgetDict,
+      macroMap
     );
   } catch (e) {
     log.error(`Error converting Bob into components in ${file}`);
     log.error(e.msg);
     log.error(e.object);
-    component = (
-      <Display
-        containerStyling={{ ...props.containerStyling, ...props.widgetStyling }}
-      >
-        {widgetDescriptionToComponent(ERROR_WIDGET, widgetDict, macroMap)}
-      </Display>
+    component = widgetDescriptionToComponent(
+      ERROR_WIDGET,
+      widgetDict,
+      macroMap
     );
   }
 
