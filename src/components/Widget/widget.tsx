@@ -167,7 +167,7 @@ const recursiveWrapping = (
       <Component style={containerStyling} {...containerProps}>
         {recursiveWrapping(
           remainingComponents,
-          {},
+          { height: "100%", width: "100%" },
           widgetStyling,
           containerProps,
           widgetProps
