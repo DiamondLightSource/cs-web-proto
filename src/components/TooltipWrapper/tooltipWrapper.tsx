@@ -45,7 +45,7 @@ export const TooltipWrapper = (props: {
 
   if (props.resolvedTooltip) {
     return (
-      <div style={{ height: "100%", width: "100%", ...style }}>
+      <div style={style}>
         <Popover
           isOpen={popoverOpen}
           position={["top"]}
