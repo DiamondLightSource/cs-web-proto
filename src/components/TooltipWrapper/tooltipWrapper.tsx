@@ -73,7 +73,7 @@ export const TooltipWrapper = (props: {
         onMouseDown={mouseDown}
         onMouseUp={mouseUp}
         className={activeClasses}
-        style={style}
+        style={{ height: "100%", width: "100%", ...style }}
       >
         {props.children}
       </div>

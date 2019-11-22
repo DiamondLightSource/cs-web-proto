@@ -62,7 +62,7 @@ export const MenuWrapper = (props: {
   if (contextOpen) {
     return (
       <div
-        style={props.style}
+        style={{ height: "100%", width: "100%", ...props.style }}
         onContextMenu={handleClick}
         onMouseLeave={handleMouseLeave}
       >
@@ -73,7 +73,7 @@ export const MenuWrapper = (props: {
   } else
     return (
       <div
-        style={props.style}
+        style={{ height: "100%", width: "100%", ...props.style }}
         onContextMenu={handleClick}
         onMouseLeave={handleMouseLeave}
       >
