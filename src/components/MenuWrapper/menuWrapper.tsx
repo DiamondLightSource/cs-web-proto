@@ -1,5 +1,10 @@
 import React, { ReactNode, useState } from "react";
-import { Actions, ACTION_TYPE, executeAction } from "../../actions";
+import {
+  Actions,
+  Action,
+  executeAction,
+  getActionDescription
+} from "../../actions";
 import classes from "./menuWrapper.module.css";
 
 export const MenuWrapper = (props: {
@@ -24,7 +29,7 @@ export const MenuWrapper = (props: {
     setContextOpen(false);
   };
 
-  function triggerCallback(action: ACTION_TYPE): void {
+  function triggerCallback(action: Action): void {
     executeAction(action);
     setContextOpen(false);
   }
@@ -39,7 +44,7 @@ export const MenuWrapper = (props: {
           className={classes.customContextItem}
           onClick={(): void => triggerCallback(actions.actions[i])}
         >
-          {actions.actions[i].description}
+          {getActionDescription(actions.actions[i])}
         </div>
       );
     }
