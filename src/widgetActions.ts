@@ -18,21 +18,21 @@ export interface WritePv {
   description: string;
 }
 
-export type Action = OpenWebpage | WritePv;
+export type WidgetAction = OpenWebpage | WritePv;
 
-export interface Actions {
-  actions: Action[];
+export interface WidgetActions {
+  actions: WidgetAction[];
   executeAsOne: boolean;
 }
 
-/* Special class to ensure that switches on Action type are complete. */
+/* Special class to ensure that switches on WidgetAction type are complete. */
 class InvalidAction extends Error {
   public constructor(val: never) {
     super(`Invalid action: ${val}`);
   }
 }
 
-export const getActionDescription = (action: Action): string => {
+export const getActionDescription = (action: WidgetAction): string => {
   if (action.description) {
     return action.description;
   } else {
@@ -47,7 +47,7 @@ export const getActionDescription = (action: Action): string => {
   }
 };
 
-export const executeAction = (action: Action): void => {
+export const executeAction = (action: WidgetAction): void => {
   switch (action.type) {
     case OPEN_WEBPAGE:
       window.open(action.url);
@@ -60,9 +60,9 @@ export const executeAction = (action: Action): void => {
   }
 };
 
-export const executeActions = (actions: Actions): void => {
+export const executeActions = (actions: WidgetActions): void => {
   log.debug(`executing an action ${actions.actions[0].type}`);
-  let toExecute: Action[] = [];
+  let toExecute: WidgetAction[] = [];
   if (actions.executeAsOne) {
     toExecute = actions.actions;
   } else {
