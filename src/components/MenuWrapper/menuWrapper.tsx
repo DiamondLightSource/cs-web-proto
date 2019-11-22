@@ -1,15 +1,15 @@
 import React, { ReactNode, useState } from "react";
-import { Actions, executeActions } from "../../actions";
+import {
+  Actions,
+  Action,
+  executeAction,
+  getActionDescription
+} from "../../actions";
 import classes from "./menuWrapper.module.css";
-
-export interface Items {
-  actions: Actions;
-  label: string;
-}
 
 export const MenuWrapper = (props: {
   pvName: string;
-  items: Items[];
+  actions: Actions;
   children: ReactNode;
   style?: object;
 }): JSX.Element => {
@@ -29,22 +29,22 @@ export const MenuWrapper = (props: {
     setContextOpen(false);
   };
 
-  function triggerCallback(actions: Actions): void {
-    executeActions(actions);
+  function triggerCallback(action: Action): void {
+    executeAction(action);
     setContextOpen(false);
   }
 
-  function returnMenu(items: Items[], x: number, y: number): JSX.Element {
+  function returnMenu(actions: Actions, x: number, y: number): JSX.Element {
     let entries = [];
-    var length = items.length;
+    var length = actions.actions.length;
     for (let i = 0; i < length; i++) {
       entries.push(
         <div
           key={i}
           className={classes.customContextItem}
-          onClick={(): void => triggerCallback(items[i].actions)}
+          onClick={(): void => triggerCallback(actions.actions[i])}
         >
-          {items[i].label}
+          {getActionDescription(actions.actions[i])}
         </div>
       );
     }
@@ -71,7 +71,7 @@ export const MenuWrapper = (props: {
         onContextMenu={handleClick}
         onMouseLeave={handleMouseLeave}
       >
-        {returnMenu(props.items, x, y)}
+        {returnMenu(props.actions, x, y)}
         {props.children}
       </div>
     );

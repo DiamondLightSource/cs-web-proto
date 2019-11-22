@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes, { InferProps } from "prop-types";
 
-import { CopyWrapper } from "../CopyWrapper/copyWrapper";
+import { TooltipWrapper } from "../TooltipWrapper/tooltipWrapper";
 import { AlarmBorder } from "../AlarmBorder/alarmBorder";
 import { MenuWrapper } from "../MenuWrapper/menuWrapper";
 import { PvState } from "../../redux/csState";
@@ -9,6 +9,7 @@ import { useMacros } from "../../hooks/useMacros";
 import { useConnection } from "../../hooks/useConnection";
 import { useId } from "react-id-generator";
 import { useRules } from "../../hooks/useRules";
+import { resolveTooltip } from "./tooltip";
 
 export type ExcludeNulls<T> = {
   [P in keyof T]: Exclude<T[P], null>;
@@ -36,14 +37,37 @@ const ContainerFeaturesPropType = {
   padding: PropTypes.string
 };
 
-const RulesPropType = {
+const OpenWebpagePropType = PropTypes.shape({
+  type: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired,
+  description: PropTypes.string
+});
+
+const WritePvPropType = PropTypes.shape({
+  type: PropTypes.string.isRequired,
+  pvName: PropTypes.string.isRequired,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  description: PropTypes.string
+});
+
+const ActionPropType = PropTypes.oneOfType([
+  OpenWebpagePropType,
+  WritePvPropType
+]);
+
+const ActionsPropType = PropTypes.shape({
+  executeAsOne: PropTypes.bool,
+  actions: PropTypes.arrayOf(ActionPropType)
+});
+
+const RulesPropType = PropTypes.shape({
   condition: PropTypes.string.isRequired,
   trueState: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]).isRequired,
   falseState: PropTypes.oneOfType([PropTypes.string, PropTypes.bool])
     .isRequired,
   substitutionMap: MapStringString.isRequired,
   prop: PropTypes.string.isRequired
-};
+});
 
 const AbsoluteContainerProps = {
   position: PropTypes.oneOf(["absolute"]).isRequired,
@@ -73,7 +97,11 @@ type WidgetStyling = InferWidgetProps<typeof WidgetStylingPropType>;
 const CommonWidgetProps = {
   widgetStyling: PropTypes.shape(WidgetStylingPropType),
   macroMap: PropTypes.objectOf(PropTypes.string.isRequired),
-  rules: PropTypes.arrayOf(PropTypes.shape(RulesPropType))
+  rules: PropTypes.arrayOf(RulesPropType),
+  actions: ActionsPropType,
+  tooltip: PropTypes.string,
+  resolvedTooltip: PropTypes.string,
+  menuWrapper: PropTypes.bool
 };
 
 const AbsoluteComponentPropType = {
@@ -104,10 +132,7 @@ type WidgetComponent = WidgetProps & { baseWidget: React.FC<any> };
 // Internal prop types object for properties which are not in a standard widget
 const PVExtras = {
   pvName: PropTypes.string.isRequired,
-  wrappers: PropTypes.shape({
-    copywrapper: PropTypes.bool,
-    alarmborder: PropTypes.bool
-  })
+  alarmBorder: PropTypes.bool
 };
 // PropTypes object for a PV widget which can be expanded
 export const PVWidgetPropType = {
@@ -142,7 +167,7 @@ const recursiveWrapping = (
       <Component style={containerStyling} {...containerProps}>
         {recursiveWrapping(
           remainingComponents,
-          {},
+          { height: "100%", width: "100%" },
           widgetStyling,
           containerProps,
           widgetProps
@@ -160,7 +185,9 @@ export const Widget = (props: WidgetComponent): JSX.Element => {
   // Apply macros.
   const macroProps = useMacros(idProps) as WidgetComponent & { id: string };
   // Then rules
-  const ruleProps = useRules(macroProps) as WidgetComponent & { id: string };
+  const ruleProps = useRules(macroProps);
+  const resolvedTooltip = resolveTooltip(ruleProps);
+  ruleProps["resolvedTooltip"] = resolvedTooltip;
 
   // Give containers access to everything apart from the containerStyling
   // Assume flexible position if not provided with anything
@@ -175,7 +202,12 @@ export const Widget = (props: WidgetComponent): JSX.Element => {
   let { baseWidget, widgetStyling = {}, ...baseWidgetProps } = containerProps;
 
   // Put appropriate components on the list of components to be wrapped
-  let components = [baseWidget];
+  const components = [];
+  if (props.actions) {
+    components.push(MenuWrapper);
+  }
+  components.push(TooltipWrapper);
+  components.push(baseWidget);
 
   return recursiveWrapping(
     components,
@@ -185,26 +217,32 @@ export const Widget = (props: WidgetComponent): JSX.Element => {
     baseWidgetProps
   );
 };
+// eslint-disable-next-line no-template-curly-in-string
+const DEFAULT_TOOLTIP = "${pvName}\n${pvValue}";
 
 export const PVWidget = (props: PVWidgetComponent): JSX.Element => {
   const [id] = useId();
-  let idProps = { ...props, id: id };
+  const tooltip = props.tooltip === undefined ? DEFAULT_TOOLTIP : props.tooltip;
+  let idProps = { ...props, id: id, tooltip: tooltip };
 
   // Apply macros.
   const macroProps = useMacros(idProps) as PVWidgetComponent & { id: string };
   // Then rules
   const ruleProps = useRules(macroProps) as PVWidgetComponent & { id: string };
-  const [shortPvName, connected, readonly, latestValue] = useConnection(
+  const [effectivePvName, connected, readonly, latestValue] = useConnection(
     id,
     ruleProps.pvName
   );
   let connectedProps = {
     ...ruleProps,
-    pvName: shortPvName,
+    pvName: effectivePvName,
     connected: connected,
     readonly: readonly,
     value: latestValue
   };
+  const resolvedTooltip = resolveTooltip(connectedProps);
+  connectedProps.resolvedTooltip = resolvedTooltip;
+
   // Give containers access to everything apart from the containerStyling
   // Assume flexible position if not provided with anything
   const { containerStyling, ...containerProps } = connectedProps;
@@ -218,27 +256,19 @@ export const PVWidget = (props: PVWidgetComponent): JSX.Element => {
   let {
     baseWidget,
     widgetStyling = {},
-    wrappers = {},
+    alarmBorder = false,
     ...baseWidgetProps
   } = containerProps;
 
   const components = [];
-  // Done like this in case only one of the values is passed through
-  const requestedWrappers = {
-    ...{ alarmborder: false, copywrapper: false, menuwrapper: false },
-    ...wrappers
-  };
 
-  if (requestedWrappers.menuwrapper === true) {
+  if (props.actions) {
     components.push(MenuWrapper);
   }
-  if (requestedWrappers.alarmborder === true) {
+  if (alarmBorder) {
     components.push(AlarmBorder);
   }
-  if (requestedWrappers.copywrapper === true) {
-    components.push(CopyWrapper);
-  }
-
+  components.push(TooltipWrapper);
   components.push(baseWidget);
 
   return recursiveWrapping(

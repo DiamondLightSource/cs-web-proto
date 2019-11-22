@@ -14,7 +14,7 @@ const pvState: FullPvState = {
 const state: CsState = {
   valueCache: { pv1: pvState },
   macroMap: {},
-  shortPvNameMap: { pv1: "pv1", pv2: "pv3" },
+  effectivePvNameMap: { pv1: "pv1", pv2: "pv3" },
   subscriptions: {}
 };
 

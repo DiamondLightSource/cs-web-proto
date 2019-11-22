@@ -24,14 +24,60 @@ export function widgetDescriptionToComponent(
   existingMacroMap?: MacroMap,
   listIndex?: number
 ): JSX.Element {
-  // Extract named properties and leave everything else in otherProps
+  // Extract known properties and leave everything else in otherProps
   let {
     type,
     children = [],
     macroMap = {},
-    containerStyling,
+    position = undefined,
+    x = undefined,
+    y = undefined,
+    height = undefined,
+    width = undefined,
+    margin = undefined,
+    padding = undefined,
+    color = undefined,
+    font = undefined,
+    fontSize = undefined,
+    fontWeight = undefined,
+    textAlign = undefined,
+    backgroundColor = undefined,
     ...otherProps
   } = widgetDescription;
+
+  function filterUndefinedOut(input: {
+    [index: string]: any;
+  }): { [index: string]: any } {
+    let output: { [index: string]: any } = {};
+    let key;
+
+    for (key in input) {
+      if (input.hasOwnProperty(key) && input[key]) {
+        output[key] = input[key];
+      }
+    }
+
+    return output;
+  }
+
+  // Group props into container and widget
+  const containerStyling = filterUndefinedOut({
+    position: position,
+    x: x,
+    y: y,
+    height: height,
+    width: width,
+    margin: margin,
+    padding: padding
+  });
+  const widgetStyling = filterUndefinedOut({
+    color: color,
+    font: font,
+    fontSize: fontSize,
+    fontWeight: fontWeight,
+    textAlign: textAlign,
+    backgroundColor: backgroundColor
+  });
 
   // Perform checking on propTypes
   let widgetInfo = { containerStyling: containerStyling, ...otherProps };
@@ -77,6 +123,7 @@ export function widgetDescriptionToComponent(
       // If this component has siblings, use its index in the array as a key.
       key={listIndex}
       containerStyling={containerStyling}
+      widgetStyling={widgetStyling}
       macroMap={latestMacroMap}
       {...otherProps}
     >

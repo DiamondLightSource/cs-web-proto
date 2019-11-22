@@ -66,7 +66,6 @@ export const MacrosPage = (): JSX.Element => (
             margin: "",
             padding: ""
           }}
-          wrappers={{ copywrapper: true }}
         />
       </div>
       <div style={{ height: "30px" }}>
@@ -79,7 +78,6 @@ export const MacrosPage = (): JSX.Element => (
             margin: "",
             padding: ""
           }}
-          wrappers={{ copywrapper: true }}
         />
       </div>
     </div>

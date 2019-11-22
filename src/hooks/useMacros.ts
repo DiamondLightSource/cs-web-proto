@@ -8,12 +8,18 @@ export interface MacroProps extends React.PropsWithChildren<any> {
   pvName?: string;
 }
 
-function resolveStrings(value: any, macroMap?: MacroMap): any {
-  if (typeof value === "string" && macroMap != null) {
-    return resolveMacros(value, macroMap);
-  } else {
-    return value;
+function rescursiveResolve(props: object, macroMap: MacroMap): any {
+  const resolvedProps: any = {};
+  for (const [prop, value] of Object.entries(props)) {
+    if (typeof value === "object" && !Array.isArray(value)) {
+      resolvedProps[prop] = rescursiveResolve(value, macroMap);
+    } else if (typeof value === "string") {
+      resolvedProps[prop] = resolveMacros(value, macroMap);
+    } else {
+      resolvedProps[prop] = value;
+    }
   }
+  return resolvedProps;
 }
 
 export function useMacros<P extends MacroProps>(props: P): P {
@@ -24,13 +30,8 @@ export function useMacros<P extends MacroProps>(props: P): P {
   if (props.macroMap) {
     allMacros = { ...allMacros, ...props.macroMap };
   }
-  let resolvedProps: any = {};
   const rawPvName = props.pvName;
-  Object.entries(props).forEach(([key, value]): void => {
-    resolvedProps[key] = resolveStrings(value, allMacros);
-  });
-  if (rawPvName != null) {
-    resolvedProps.rawPvName = rawPvName;
-  }
+  const resolvedProps: any = rescursiveResolve(props, allMacros);
+  resolvedProps.rawPvName = rawPvName;
   return resolvedProps;
 }
