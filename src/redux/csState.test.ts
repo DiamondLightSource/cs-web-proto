@@ -1,4 +1,4 @@
-import { csReducer, CsState, ValueCache } from "./csState";
+import { csReducer, CsState } from "./csState";
 import {
   UNSUBSCRIBE,
   SUBSCRIBE,
@@ -10,7 +10,7 @@ import {
   ValueChanged
 } from "./actions";
 import { vdouble, VDoubleArray, VDouble, vdoubleArray } from "../vtypes/vtypes";
-import { AlarmSeverity, AlarmStatus, alarm, alarmOf } from "../vtypes/alarm";
+import { AlarmSeverity, AlarmStatus, alarm } from "../vtypes/alarm";
 import { VString, vstring } from "../vtypes/string";
 
 const initialState: CsState = {
