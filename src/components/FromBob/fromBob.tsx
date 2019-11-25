@@ -180,7 +180,12 @@ export const WidgetFromBob = (
     }
     console.log(bobDescription);
     component = widgetDescriptionToComponent(
-      bobDescription,
+      {
+        type: "display",
+        containerStyling: props.containerStyling,
+        overflow: "scroll",
+        children: [bobDescription]
+      },
       widgetDict,
       macroMap
     );

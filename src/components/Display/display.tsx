@@ -9,7 +9,8 @@ import {
 } from "../Widget/widget";
 
 const DisplayProps = {
-  children: PropTypes.node
+  children: PropTypes.node,
+  overflow: PropTypes.oneOf(["scroll", "hidden", "auto", "visible"])
 };
 
 // Generic display widget to put other things inside
@@ -20,6 +21,7 @@ const DisplayComponent = (
     style={{
       position: "relative",
       boxSizing: "border-box",
+      overflow: props.overflow,
       ...props.style
     }}
   >
