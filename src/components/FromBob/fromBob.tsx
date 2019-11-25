@@ -242,6 +242,7 @@ export const WidgetFromBob = (
     label: Label,
     "org.csstudio.opibuilder.widgets.Label": Label,
     group: GroupingContainer,
+    "org.csstudio.opibuilder.widgets.groupingContainer": GroupingContainer,
     display: Display,
     empty: Display,
     widgetFromBob: WidgetFromBob

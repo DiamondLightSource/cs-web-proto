@@ -1,39 +1,49 @@
 {
   "type": "display",
-  "containerStyling": {
-    "position": "absolute",
-    "x": "0",
-    "y": "0",
-    "width": "400px",
-    "height": "600px"
-  },
+  "position": "relative",
   "macroMap": {
     "metapv": "metapv1"
   },
   "children": [
     {
-      "type": "actionbutton",
-      "pvName": "sim://limit#1",
-      "image": "basicBob.png",
-      "containerStyling": {
-        "position": "absolute",
-        "x": "100px",
-        "y": "50px",
-        "width": "",
-        "height": ""
-      }
-    },
-    {
-      "type": "widgetFromBob",
-      "containerStyling": {
-        "position": "absolute",
-        "x": "410px",
-        "y": "10px",
-        "height": "300px",
-        "width": "200px"
-      },
-      "widgetStyling": { "backgroundColor": "#999999" },
-      "file": "http://localhost:3000/basic.bob"
+      "type": "flexcontainer",
+      "position": "relative",
+      "width": "100%",
+      "height": "100%",
+      "children": [
+        {
+          "type": "actionbutton",
+          "pvName": "sim://limit#1",
+          "image": "basicBob.png",
+          "position": "relative",
+          "margin": "20px"
+        },
+        {
+          "type": "widgetFromBob",
+          "position": "relative",
+          "margin": "20px",
+          "backgroundColor": "#ffffff",
+          "file": "http://localhost:3000/basic.bob"
+        },
+        {
+          "type": "actionbutton",
+          "pvName": "sim://limit#1",
+          "image": "basicOpi.png",
+          "position": "relative",
+          "margin": "20px"
+        },
+        {
+          "type": "widgetFromBob",
+          "position": "relative",
+          "margin": "20px",
+          "backgroundColor": "#ffffff",
+          "file": "http://localhost:3000/basic.opi",
+          "macroMap": {
+            "pv_name": "${pvName}",
+            "pv_value": "${pvValue}"
+          }
+        }
+      ]
     }
   ]
 }
