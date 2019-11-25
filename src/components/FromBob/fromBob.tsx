@@ -2,7 +2,7 @@
 providing a useful widget dictionary */
 
 import React, { useState } from "react";
-import PropTypes from "prop-types";
+import PropTypes, { object } from "prop-types";
 import log from "loglevel";
 import convert from "xml-js";
 
@@ -22,22 +22,39 @@ interface BobDescription {
   [key: string]: any;
 }
 
-const bobMacrosToMacroMap = (macros: object): MacroMap => {
+type UnknownPropsObject = {
+  [key: string]: any;
+};
+
+interface functionSubstitutionInterface {
+  [key: string]: (
+    inputProps: UnknownPropsObject,
+    ouptutProps: UnknownPropsObject
+  ) => void;
+}
+
+const bobMacrosToMacroMap = (
+  inputProps: UnknownPropsObject,
+  outputProps: UnknownPropsObject
+): void => {
   // Start with blank object
-  let outputMacros: MacroMap = {};
-  Object.entries(macros).forEach(([key, value]): void => {
-    outputMacros[key] = value["_text"];
-  });
-  return outputMacros;
+  if (inputProps.macros) {
+    outputProps.macroMap = {};
+    Object.entries(inputProps.macros as object).forEach(
+      ([key, value]): void => {
+        outputProps.macroMap[key] = value["_text"];
+      }
+    );
+  }
 };
 
 const bobChildToWidgetChild = (
   bobChild: BobDescription,
+  functionSubstitutions?: functionSubstitutionInterface,
   keySubstitutions?: { [key: string]: any }
 ): WidgetDescription => {
   // Convert a non-root widget from the bob file into a widget
   // It is passed as a JS object now
-
   // Extract useful props
   const {
     _attributes,
@@ -45,7 +62,6 @@ const bobChildToWidgetChild = (
     y,
     height,
     width,
-    macros = {},
     widget = [],
     ...remainingProps
   } = bobChild;
@@ -53,10 +69,19 @@ const bobChildToWidgetChild = (
   // Map the remaining props
   // Checks that there is a substitution map
   let mappedProps: { [key: string]: any } = {};
-  Object.entries(remainingProps).map(([key, value]): void =>
-    keySubstitutions && keySubstitutions[key]
-      ? (mappedProps[keySubstitutions[key]] = value._text)
-      : (mappedProps[key] = value._text)
+  Object.entries(remainingProps as UnknownPropsObject).map(
+    ([key, value]): void => {
+      if (functionSubstitutions && functionSubstitutions[key]) {
+        // Use the function substitution
+        functionSubstitutions[key](remainingProps, mappedProps);
+      } else if (keySubstitutions && keySubstitutions[key]) {
+        // Just substitute the key and extract from _text
+        mappedProps[keySubstitutions[key]] = value._text;
+      } else {
+        // Just extract from text
+        mappedProps[key] = value._text;
+      }
+    }
   );
 
   // Check that the primary props were defined or use a default value
@@ -67,11 +92,14 @@ const bobChildToWidgetChild = (
     y: `${(y && y._text) || 0}px`,
     height: `${(height && height._text) || 0}px`,
     width: `${(width && width._text) || 0}px`,
-    macroMap: bobMacrosToMacroMap(macros),
     ...mappedProps,
     children: widget.map(
       (w: any): WidgetDescription =>
-        bobChildToWidgetChild(w as BobDescription, keySubstitutions)
+        bobChildToWidgetChild(
+          w as BobDescription,
+          functionSubstitutions,
+          keySubstitutions
+        )
     )
   };
 
@@ -80,6 +108,9 @@ const bobChildToWidgetChild = (
 
 export const convertBobToWidgetDescription = (
   bobInputString: string,
+  functionSubstitutions?: {
+    [key: string]: (inputProps: object, ouptutProps: object) => void;
+  },
   keySubstitutions?: { [key: string]: any }
 ): WidgetDescription => {
   // Provide a raw xml file in the bob format for conversion
@@ -91,27 +122,16 @@ export const convertBobToWidgetDescription = (
   }) as BobDescription;
 
   console.log(compactJSON);
-  console.log(bobMacrosToMacroMap(compactJSON.display.macros));
 
-  // Extract children if there are any
-  const children = compactJSON.display.widget || [];
+  // Add display to top of JSON to be processed
+  // Assumes top level widget is always display - valid for XML files
+  compactJSON.display._attributes = { type: "display" };
 
-  // Special case for the root component
-  let rootDescription: WidgetDescription = {
-    type: "display",
-    position: "absolute",
-    x: 0,
-    y: 0,
-    width: `${compactJSON.display.width._text}px`,
-    height: `${compactJSON.display.height._text}px`,
-    macroMap: bobMacrosToMacroMap(compactJSON.display.macros),
-    children: children.map(
-      (w: any): WidgetDescription =>
-        bobChildToWidgetChild(w as BobDescription, keySubstitutions)
-    )
-  };
-
-  return rootDescription;
+  return bobChildToWidgetChild(
+    compactJSON.display,
+    functionSubstitutions,
+    keySubstitutions
+  );
 };
 
 const EMPTY_WIDGET: WidgetDescription = {
@@ -175,23 +195,38 @@ export const WidgetFromBob = (
       bobDescription = EMPTY_WIDGET;
     } else {
       // Convert the bob to widget description style object
-      bobDescription = convertBobToWidgetDescription(bob, {
-        pv_name: "pvName" // eslint-disable-line @typescript-eslint/camelcase
-      });
+      bobDescription = convertBobToWidgetDescription(
+        bob,
+        { macros: bobMacrosToMacroMap },
+        {
+          pv_name: "pvName" // eslint-disable-line @typescript-eslint/camelcase
+        }
+      );
     }
     console.log(bobDescription);
+
+    // Apply the Bob height to the top level if relative layout and none have been provided
+    if (props.containerStyling.position === "relative") {
+      props.containerStyling.height =
+        props.containerStyling.height || bobDescription.height;
+      props.containerStyling.width =
+        props.containerStyling.width || bobDescription.width;
+    }
+
     // Overflow set to scroll only if needed
-    // If absolute positioning AND (height or width of Bob is bigger than display)
+    // If height or width is defined and is smaller than Bob
     const overflow =
-      props.containerStyling.position == "absolute" &&
+      props.containerStyling.position === "absolute" &&
       (bobDescription.height > (props.containerStyling.height || 0) ||
         bobDescription.width > (props.containerStyling.width || 0))
         ? "scroll"
         : "visible";
+
     component = widgetDescriptionToComponent(
       {
         type: "display",
         containerStyling: props.containerStyling,
+        widgetStyling: props.widgetStyling,
         overflow: overflow,
         children: [bobDescription]
       },
