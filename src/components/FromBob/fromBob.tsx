@@ -15,6 +15,7 @@ import { Label } from "../Label/label";
 import { Readback } from "../Readback/readback";
 import { Input } from "../Input/input";
 import { Display } from "../Display/display";
+import { GroupingContainer } from "../GroupingContainer/groupingContainer";
 import { WidgetPropType, InferWidgetProps } from "../Widget/widget";
 
 interface BobDescription {
@@ -161,7 +162,7 @@ export const WidgetFromBob = (
     "org.csstudio.opibuilder.widgets.TextInput": Input,
     label: Label,
     "org.csstudio.opibuilder.widgets.Label": Label,
-    group: Display,
+    group: GroupingContainer,
     display: Display,
     empty: Display,
     widgetFromBob: WidgetFromBob
