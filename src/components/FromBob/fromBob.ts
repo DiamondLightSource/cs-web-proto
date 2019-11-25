@@ -14,8 +14,10 @@ import { Label } from "../Label/label";
 import { Readback } from "../Readback/readback";
 import { Input } from "../Input/input";
 import { Display } from "../Display/display";
+import { Shape } from "../Shape/shape";
 import { GroupingContainer } from "../GroupingContainer/groupingContainer";
 import { WidgetPropType, InferWidgetProps } from "../Widget/widget";
+import { Actions, WRITE_PV } from "../../actions";
 
 interface BobDescription {
   [key: string]: any;
@@ -101,10 +103,50 @@ const bobVisibleToBoolen = (
   }
 };
 
-const BobAvoidStyleProp = (
+const bobAvoidStyleProp = (
   inputProps: UnknownPropsObject,
   outputProps: UnknownPropsObject
 ): void => {};
+
+const bobActionToAction = (bobAction: UnknownPropsObject): Actions => {
+  let actionsToProcess: any[] = [];
+  if (Array.isArray(bobAction)) {
+    actionsToProcess = bobAction;
+  } else {
+    actionsToProcess = [bobAction];
+  }
+
+  // Object of available actions
+  const availableActions: { [key: string]: any } = {
+    write_pv: WRITE_PV, // eslint-disable-line @typescript-eslint/camelcase
+    WRITE_PV: WRITE_PV
+  };
+
+  // Turn into an array of Actions
+  let processedActions: Actions = { executeAsOne: false, actions: [] };
+
+  actionsToProcess.forEach((action): void => {
+    log.debug(action);
+    let type: string = action._attributes.type;
+    processedActions.actions.push({
+      type: availableActions[type],
+      pvName: action.pv_name._text,
+      value: action.value._text,
+      description: action.description._text
+    });
+  });
+
+  return processedActions;
+};
+
+const bobHandleActions = (
+  inputProps: UnknownPropsObject,
+  outputProps: UnknownPropsObject
+): void => {
+  if (inputProps.actions.action) {
+    outputProps.actions = bobActionToAction(inputProps.actions.action);
+  }
+};
 
 const bobChildToWidgetChild = (
   bobChild: BobDescription,
@@ -243,6 +285,8 @@ export const WidgetFromBob = (
     group: GroupingContainer,
     "org.csstudio.opibuilder.widgets.groupingContainer": GroupingContainer,
     display: Display,
+    rectangle: Shape,
+    "org.csstudio.opibuilder.widgets.Rectangle": Shape,
     empty: Display,
     widgetFromBob: WidgetFromBob
   };
@@ -262,7 +306,8 @@ export const WidgetFromBob = (
           foreground_color: bobForegroundColor, // eslint-disable-line @typescript-eslint/camelcase
           precision: bobPrecisionToNumber,
           visible: bobVisibleToBoolen,
-          style: BobAvoidStyleProp
+          style: bobAvoidStyleProp,
+          actions: bobHandleActions
         },
         {
           pv_name: "pvName" // eslint-disable-line @typescript-eslint/camelcase
