@@ -7,12 +7,12 @@ import checkPropTypes from "check-prop-types";
 
 import { MacroMap } from "../../redux/csState";
 
-export type WidgetDescription = {
+export interface WidgetDescription {
   type: string;
   // All other component properties
   [x: string]: any;
   children?: WidgetDescription[];
-};
+}
 
 export function widgetDescriptionToComponent(
   // Converts a JS object matching a position description into React component

@@ -1,8 +1,8 @@
 /* Provide the same component as fromJson but converting bob files and
 providing a useful widget dictionary */
 
-import React, { useState } from "react";
-import PropTypes, { object } from "prop-types";
+import { useState } from "react";
+import PropTypes from "prop-types";
 import log from "loglevel";
 import convert from "xml-js";
 
@@ -10,7 +10,6 @@ import {
   WidgetDescription,
   widgetDescriptionToComponent
 } from "../Positioning/positioning";
-import { MacroMap } from "../../redux/csState";
 import { Label } from "../Label/label";
 import { Readback } from "../Readback/readback";
 import { Input } from "../Input/input";
@@ -22,11 +21,11 @@ interface BobDescription {
   [key: string]: any;
 }
 
-type UnknownPropsObject = {
+interface UnknownPropsObject {
   [key: string]: any;
-};
+}
 
-interface functionSubstitutionInterface {
+interface FunctionSubstitutionInterface {
   [key: string]: (
     inputProps: UnknownPropsObject,
     ouptutProps: UnknownPropsObject
@@ -109,7 +108,7 @@ const BobAvoidStyleProp = (
 
 const bobChildToWidgetChild = (
   bobChild: BobDescription,
-  functionSubstitutions?: functionSubstitutionInterface,
+  functionSubstitutions?: FunctionSubstitutionInterface,
   keySubstitutions?: { [key: string]: any }
 ): WidgetDescription => {
   // Convert a non-root widget from the bob file into a widget
@@ -128,7 +127,7 @@ const bobChildToWidgetChild = (
   // Map the remaining props
   // Checks that there is a substitution map
   let mappedProps: { [key: string]: any } = {};
-  Object.entries(remainingProps as UnknownPropsObject).map(
+  Object.entries(remainingProps as UnknownPropsObject).forEach(
     ([key, value]): void => {
       if (functionSubstitutions && functionSubstitutions[key]) {
         // Use the function substitution
@@ -259,8 +258,8 @@ export const WidgetFromBob = (
         bob,
         {
           macros: bobMacrosToMacroMap,
-          background_color: bobBackgroundColor,
-          foreground_color: bobForegroundColor,
+          background_color: bobBackgroundColor, // eslint-disable-line @typescript-eslint/camelcase
+          foreground_color: bobForegroundColor, // eslint-disable-line @typescript-eslint/camelcase
           precision: bobPrecisionToNumber,
           visible: bobVisibleToBoolen,
           style: BobAvoidStyleProp
