@@ -20,7 +20,12 @@ const GroupingContainerComponent = (
   // Uses an inner margin for children similar to Phoebus
   // This prevents the title being overwritten
   // Could be changed or perhaps customisable as a prop
-  <fieldset style={props.style}>
+  <fieldset
+    style={{
+      boxSizing: "border-box",
+      ...props.style
+    }}
+  >
     <legend>{props.name}</legend>
     <div style={{ position: "absolute", top: "20px", left: "20px" }}>
       {props.children}

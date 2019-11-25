@@ -180,11 +180,19 @@ export const WidgetFromBob = (
       });
     }
     console.log(bobDescription);
+    // Overflow set to scroll only if needed
+    // If absolute positioning AND (height or width of Bob is bigger than display)
+    const overflow =
+      props.containerStyling.position == "absolute" &&
+      (bobDescription.height > (props.containerStyling.height || 0) ||
+        bobDescription.width > (props.containerStyling.width || 0))
+        ? "scroll"
+        : "visible";
     component = widgetDescriptionToComponent(
       {
         type: "display",
         containerStyling: props.containerStyling,
-        overflow: "scroll",
+        overflow: overflow,
         children: [bobDescription]
       },
       widgetDict,
