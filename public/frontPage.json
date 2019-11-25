@@ -1,27 +1,19 @@
 {
   "type": "display",
-  "containerStyling": {
-    "position": "relative",
-    "width": "80%",
-    "margin": "auto"
-  },
+  "position": "relative",
+  "width": "80%",
+  "margin": "auto",
   "children": [
     {
       "type": "flexcontainer",
-      "containerStyling": {
-        "position": "relative"
-      },
+      "position": "relative",
       "children": [
         {
           "type": "label",
-          "containerStyling": {
-            "position": "relative",
-            "width": "100%"
-          },
-          "widgetStyling": {
-            "fontWeight": "bold",
-            "backgroundColor": "transparent"
-          },
+          "position": "relative",
+          "width": "100%",
+          "fontWeight": "bold",
+          "backgroundColor": "transparent",
           "text": "",
           "rules": [
             {
@@ -46,63 +38,49 @@
         },
         {
           "type": "input",
-          "containerStyling": {
-            "position": "relative",
-            "width": "45%",
-            "margin": "2%"
-          },
+          "position": "relative",
+          "width": "45%",
+          "margin": "2%",
           "macroMap": {
             "COLOUR": "purple"
           },
-          "widgetStyling": {
-            "color": "${COLOUR}"
-          },
+          "color": "${COLOUR}",
           "pvName": "loc://pv1"
         },
         {
           "type": "readback",
-          "containerStyling": {
-            "position": "relative",
-            "width": "45%",
-            "margin": "2%"
-          },
+          "position": "relative",
+          "width": "45%",
+          "margin": "2%",
           "pvName": "loc://pv1",
           "tooltip": "Custom tooltip:\n${pvName}\n${pvValue}"
         },
         {
           "type": "input",
-          "containerStyling": {
-            "position": "relative",
-            "width": "45%",
-            "margin": "2%"
-          },
+          "position": "relative",
+          "width": "45%",
+          "margin": "2%",
           "pvName": "loc://pv2"
         },
         {
           "type": "readback",
-          "containerStyling": {
-            "position": "relative",
-            "width": "45%",
-            "margin": "2%"
-          },
+          "position": "relative",
+          "width": "45%",
+          "margin": "2%",
           "pvName": "loc://pv2"
         },
         {
           "type": "readback",
-          "containerStyling": {
-            "position": "relative",
-            "width": "45%",
-            "margin": "2%"
-          },
+          "position": "relative",
+          "width": "45%",
+          "margin": "2%",
           "pvName": "sim://sine"
         },
         {
           "type": "readback",
-          "containerStyling": {
-            "position": "relative",
-            "width": "45%",
-            "margin": "2%"
-          },
+          "position": "relative",
+          "width": "45%",
+          "margin": "2%",
           "pvName": "sim://sine",
           "precision": 3
         }
@@ -110,48 +88,36 @@
     },
     {
       "type": "flexcontainer",
-      "containerStyling": {
-        "position": "relative"
-      },
+      "position": "relative",
       "children": [
         {
           "type": "label",
-          "containerStyling": {
-            "position": "relative",
-            "width": "100%"
-          },
-          "widgetStyling": {
-            "fontWeight": "bold",
-            "backgroundColor": "transparent"
-          },
+          "position": "relative",
+          "width": "100%",
+          "fontWeight": "bold",
+          "backgroundColor": "transparent",
           "text": "Alarm PV - Happy between 20 and 80"
         },
         {
           "type": "input",
-          "containerStyling": {
-            "position": "relative",
-            "width": "50%",
-            "height": "2em",
-            "margin": "5px 0 0 0"
-          },
+          "position": "relative",
+          "width": "50%",
+          "height": "2em",
+          "margin": "5px 0 0 0",
           "pvName": "sim://limit#metapv1"
         },
         {
           "type": "readback",
-          "containerStyling": {
-            "position": "relative",
-            "width": "50%",
-            "margin": "5px 0 0 0"
-          },
+          "position": "relative",
+          "width": "50%",
+          "margin": "5px 0 0 0",
           "pvName": "sim://limit#metapv1"
         },
         {
           "type": "readback",
-          "containerStyling": {
-            "position": "relative",
-            "width": "100%",
-            "margin": "5px 0 0 0"
-          },
+          "position": "relative",
+          "width": "100%",
+          "margin": "5px 0 0 0",
           "pvName": "sim://limit#metapv1",
           "alarmBorder": true
         }
@@ -159,127 +125,93 @@
     },
     {
       "type": "display",
-      "containerStyling": {
-        "position": "relative",
-        "margin": "20px 0 0 0"
-      },
+      "position": "relative",
+      "margin": "20px 0 0 0",
       "children": [
         {
           "type": "label",
-          "containerStyling": {
-            "position": "relative",
-            "width": "100%"
-          },
-          "widgetStyling": {
-            "fontWeight": "bold",
-            "backgroundColor": "transparent"
-          },
+          "position": "relative",
+          "width": "100%",
+          "fontWeight": "bold",
+          "backgroundColor": "transparent",
           "text": "Sim Enum"
         },
         {
           "type": "menubutton",
-          "containerStyling": {
-            "position": "relative",
-            "margin": "5px 0 0 0"
-          },
+          "position": "relative",
+          "margin": "5px 0 0 0",
           "pvName": "sim://enum"
         },
         {
           "type": "input",
-          "containerStyling": {
-            "position": "relative",
-            "margin": "5px 0 0 0"
-          },
+          "position": "relative",
+          "margin": "5px 0 0 0",
           "pvName": "sim://enum"
         },
         {
           "type": "readback",
-          "containerStyling": {
-            "position": "relative",
-            "margin": "5px 0 0 0"
-          },
+          "position": "relative",
+          "margin": "5px 0 0 0",
           "pvName": "sim://enum"
         }
       ]
     },
     {
       "type": "display",
-      "containerStyling": {
-        "position": "relative",
-        "margin": "20px 0 0 0"
-      },
+      "position": "relative",
+      "margin": "20px 0 0 0",
       "children": [
         {
           "type": "label",
-          "containerStyling": {
-            "position": "relative",
-            "width": "100%"
-          },
-          "widgetStyling": {
-            "fontWeight": "bold",
-            "backgroundColor": "transparent"
-          },
+          "position": "relative",
+          "width": "100%",
+          "fontWeight": "bold",
+          "backgroundColor": "transparent",
           "text": "Local Enum - [un deux trois]"
         },
         {
           "type": "menubutton",
-          "containerStyling": {
-            "position": "relative",
-            "margin": "5px 0 0 0"
-          },
+          "position": "relative",
+          "margin": "5px 0 0 0",
           "pvName": "loc://enum1<VEnum>(2, \"un\", \"deux\", \"trois\")"
         },
         {
           "type": "input",
-          "containerStyling": {
-            "position": "relative",
-            "margin": "5px 0 0 0"
-          },
+          "position": "relative",
+          "margin": "5px 0 0 0",
           "pvName": "loc://enum1<VEnum>(2, \"un\", \"deux\", \"trois\")"
         },
         {
           "type": "readback",
-          "containerStyling": {
-            "position": "relative",
-            "margin": "5px 0 0 0"
-          },
+          "position": "relative",
+          "margin": "5px 0 0 0",
           "pvName": "loc://enum1"
         },
         {
           "type": "readback",
-          "containerStyling": {
-            "position": "relative",
-            "margin": "5px 0 0 0"
-          },
+          "position": "relative",
+          "margin": "5px 0 0 0",
           "pvName": "enum://bad"
         }
       ]
     },
     {
       "type": "display",
-      "containerStyling": {
-        "position": "relative",
-        "margin": "20px 0 0 0"
-      },
+      "position": "relative",
+      "margin": "20px 0 0 0",
       "children": [
         {
           "type": "label",
-          "containerStyling": {
-            "position": "relative",
-            "width": "100%"
-          },
-          "widgetStyling": {
-            "fontWeight": "bold",
-            "backgroundColor": "transparent"
-          },
+          "position": "relative",
+          "width": "100%",
+          "fontWeight": "bold",
+          "backgroundColor": "transparent",
           "text": "Local initialization"
         },
         {
           "type": "readback",
-          "containerStyling": {
-            "position": "relative",
-            "margin": "5px 0 0 0"
-          },
+          "position": "relative",
+          "margin": "5px 0 0 0",
           "pvName": "loc://test(1.1)"
         }
       ]
