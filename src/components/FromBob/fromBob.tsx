@@ -48,6 +48,65 @@ const bobMacrosToMacroMap = (
   }
 };
 
+const bobColorsToColor = (color: {
+  _attributes: { name: string; red: string; blue: string; green: string };
+}): string => {
+  try {
+    return `rgb( ${color._attributes.red},  ${color._attributes.green}, ${color._attributes.blue})`;
+  } catch (e) {
+    log.error(`Could not convert color object`);
+    log.error(color);
+    return "";
+  }
+};
+
+const bobBackgroundColor = (
+  inputProps: UnknownPropsObject,
+  outputProps: UnknownPropsObject
+): void => {
+  outputProps.backgroundColor = bobColorsToColor(
+    inputProps.background_color.color
+  );
+};
+
+const bobForegroundColor = (
+  inputProps: UnknownPropsObject,
+  outputProps: UnknownPropsObject
+): void => {
+  outputProps.color = bobColorsToColor(inputProps.foreground_color.color);
+};
+
+const bobPrecisionToNumber = (
+  inputProps: UnknownPropsObject,
+  outputProps: UnknownPropsObject
+): void => {
+  try {
+    outputProps.precision = Number(inputProps.precision._text);
+  } catch (e) {
+    log.error(
+      `Could not convert precision of ${inputProps.precision} to a number`
+    );
+  }
+};
+
+const bobVisibleToBoolen = (
+  inputProps: UnknownPropsObject,
+  outputProps: UnknownPropsObject
+): void => {
+  try {
+    outputProps.visible = Boolean(inputProps.visible._text);
+  } catch (e) {
+    log.error(
+      `Could not convert visible property ${inputProps.visible} to a number`
+    );
+  }
+};
+
+const BobAvoidStyleProp = (
+  inputProps: UnknownPropsObject,
+  outputProps: UnknownPropsObject
+): void => {};
+
 const bobChildToWidgetChild = (
   bobChild: BobDescription,
   functionSubstitutions?: functionSubstitutionInterface,
@@ -197,7 +256,14 @@ export const WidgetFromBob = (
       // Convert the bob to widget description style object
       bobDescription = convertBobToWidgetDescription(
         bob,
-        { macros: bobMacrosToMacroMap },
+        {
+          macros: bobMacrosToMacroMap,
+          background_color: bobBackgroundColor,
+          foreground_color: bobForegroundColor,
+          precision: bobPrecisionToNumber,
+          visible: bobVisibleToBoolen,
+          style: BobAvoidStyleProp
+        },
         {
           pv_name: "pvName" // eslint-disable-line @typescript-eslint/camelcase
         }
