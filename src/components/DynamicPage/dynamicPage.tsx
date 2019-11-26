@@ -49,7 +49,7 @@ const DynamicPageComponent = (
   <div style={props.style}>
     <Route
       path={`*/${props.routePath}/:json/:macros`}
-      render={routeProps => (
+      render={(routeProps): JSX.Element => (
         <div>
           <div
             style={{
