@@ -100,7 +100,8 @@ const WidgetStylingPropType = {
   fontSize: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   fontWeight: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   textAlign: PropTypes.oneOf(["center", "left", "right", "justify"]),
-  backgroundColor: PropTypes.string
+  backgroundColor: PropTypes.string,
+  color: PropTypes.string
 };
 type WidgetStyling = InferWidgetProps<typeof WidgetStylingPropType>;
 

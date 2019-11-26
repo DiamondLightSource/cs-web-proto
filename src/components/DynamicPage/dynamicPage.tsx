@@ -9,6 +9,7 @@ import {
   InferWidgetProps
 } from "../Widget/widget";
 import { WidgetFromJson } from "../FromJson/fromJson";
+import { Label } from "../Label/label";
 
 export interface DynamicParams {
   json: string;
@@ -47,7 +48,58 @@ const DynamicPageComponent = (
   <div style={props.style}>
     <Route
       path={`*/${props.routePath}/:json/:macros`}
-      component={DynamicPageFetch}
+      render={routeProps => (
+        <div>
+          <div
+            style={{
+              position: "relative",
+              height: "30px"
+            }}
+          >
+            <div
+              style={{
+                position: "absolute",
+                right: "5px",
+                top: "5px",
+                width: "20px",
+                height: "20px",
+                backgroundColor: "green"
+              }}
+            >
+              <Label
+                containerStyling={{
+                  position: "relative",
+                  height: "",
+                  width: "",
+                  margin: "",
+                  padding: "",
+                  border: ""
+                }}
+                widgetStyling={{
+                  textAlign: "center",
+                  fontWeight: "bold",
+                  backgroundColor: "#ff3333",
+                  color: "#ffffff"
+                }}
+                actions={{
+                  executeAsOne: false,
+                  actions: [
+                    {
+                      type: "OPEN_PAGE",
+                      location: "right",
+                      page: "ionpExample",
+                      description: "Close",
+                      macros: '{"device":"SR03A-VA-IONP-01"}'
+                    }
+                  ]
+                }}
+                text="X"
+              />
+            </div>
+          </div>
+          <DynamicPageFetch {...routeProps} />
+        </div>
+      )}
     />
   </div>
 );
