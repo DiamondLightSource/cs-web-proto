@@ -2,6 +2,7 @@ import { writePv } from "./hooks/useSubscription";
 import { valueToVtype } from "./vtypes/utils";
 import { History } from "history";
 import log from "loglevel";
+import { ActionButton } from "./components/ActionButton/actionButton";
 
 export const OPEN_PAGE = "OPEN_PAGE";
 export const OPEN_WEBPAGE = "OPEN_WEBPAGE";
@@ -59,6 +60,32 @@ export const getActionDescription = (action: WidgetAction): string => {
   }
 };
 
+export const openPage = (action: OpenPage, history: History): void => {
+  //Find current browser path: currentPath
+  let currentPath = "";
+  if (history.location.pathname !== undefined)
+    currentPath = history.location.pathname;
+
+  //New page component in action.location
+  let newPathComponent =
+    action.location + "/" + action.page + "/" + action.macros + "/";
+
+  //Find existing component in same location
+  let matcher = new RegExp(action.location + "/[^/]*/[^/]*/");
+  let groups = matcher.exec(currentPath);
+  console.log("currentPath", currentPath);
+  console.log("newPathComponent", newPathComponent);
+  if (groups !== null && groups[0] !== undefined) {
+    //Swap component in location
+    console.log("groups[0]", groups[0]);
+    currentPath = currentPath.replace(groups[0], newPathComponent);
+  } else {
+    //Append component in location
+    currentPath = currentPath + newPathComponent;
+  }
+  history.push(currentPath);
+};
+
 export const executeAction = (
   action: WidgetAction,
   history?: History
@@ -66,20 +93,7 @@ export const executeAction = (
   switch (action.type) {
     case OPEN_PAGE:
       if (history) {
-        let currentPath = "";
-        if (history.location.pathname !== undefined)
-          currentPath = history.location.pathname;
-
-        let newPathComponent =
-          action.location + "/" + action.page + "/" + action.macros + "/";
-        let matcher = new RegExp(action.location + "/.+/.+");
-        let groups = matcher.exec(currentPath);
-        if (groups !== null && groups[0] !== undefined) {
-          currentPath = currentPath.replace(groups[0], newPathComponent);
-        } else {
-          currentPath = currentPath + newPathComponent;
-        }
-        history.push(currentPath);
+        openPage(action, history);
       } else {
         log.error("Tried to open a page but no history object passed");
       }
