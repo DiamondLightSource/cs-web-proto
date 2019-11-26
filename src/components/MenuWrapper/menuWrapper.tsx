@@ -1,15 +1,15 @@
 import React, { ReactNode, useState } from "react";
 import {
-  Actions,
-  Action,
+  WidgetActions,
+  WidgetAction,
   executeAction,
   getActionDescription
-} from "../../actions";
+} from "../../widgetActions";
 import classes from "./menuWrapper.module.css";
 
 export const MenuWrapper = (props: {
   pvName: string;
-  actions: Actions;
+  actions: WidgetActions;
   children: ReactNode;
   style?: object;
 }): JSX.Element => {
@@ -29,12 +29,16 @@ export const MenuWrapper = (props: {
     setContextOpen(false);
   };
 
-  function triggerCallback(action: Action): void {
+  function triggerCallback(action: WidgetAction): void {
     executeAction(action);
     setContextOpen(false);
   }
 
-  function returnMenu(actions: Actions, x: number, y: number): JSX.Element {
+  function returnMenu(
+    actions: WidgetActions,
+    x: number,
+    y: number
+  ): JSX.Element {
     let entries = [];
     var length = actions.actions.length;
     for (let i = 0; i < length; i++) {
