@@ -6,6 +6,7 @@ import {
   getActionDescription
 } from "../../widgetActions";
 import classes from "./menuWrapper.module.css";
+import { useHistory } from "react-router-dom";
 
 export const MenuWrapper = (props: {
   pvName: string;
@@ -16,6 +17,9 @@ export const MenuWrapper = (props: {
   const [contextOpen, setContextOpen] = useState(false);
   const [x, setX] = useState(0);
   const [y, setY] = useState(0);
+
+  const history = useHistory();
+
   const handleClick = (e: React.MouseEvent): void => {
     e.preventDefault();
     if (e.button === 2) {
@@ -30,7 +34,7 @@ export const MenuWrapper = (props: {
   };
 
   function triggerCallback(action: WidgetAction): void {
-    executeAction(action);
+    executeAction(action, history);
     setContextOpen(false);
   }
 
