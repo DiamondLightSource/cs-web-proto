@@ -7,6 +7,7 @@ import { MacroProps } from "../../hooks/useMacros";
 import { vdouble } from "../../vtypes/vtypes";
 import { useConnection } from "../../hooks/useConnection";
 import { RuleProps } from "../../hooks/useRules";
+import { TooltipWrapper } from "../TooltipWrapper/tooltipWrapper";
 
 // Mock the useMacros hook as otherwise we'd have to provide
 // a store for it to use.
@@ -43,35 +44,46 @@ describe("<Widget />", (): void => {
       containerStyling={{ position: "relative" }}
     />
   );
+
   test("it retains label text", (): void => {
     expect(component.text()).toEqual("Test");
   });
+
   test("it has one child all the way down", (): void => {
     // Widget
     expect(component.children()).toHaveLength(1);
-    //TestLabel
+    // TooltipWrapper
     let c1 = component.childAt(0);
-
-    expect(component.children()).toHaveLength(1);
-    //Label
+    expect(c1.type()).toEqual(TooltipWrapper);
+    expect(c1.children()).toHaveLength(1);
+    // div child of TooltipWrapper
     let c2 = c1.childAt(0);
     expect(c2.children()).toHaveLength(1);
-    // div has no child
+    console.log(c2);
+    expect(c2.type()).toEqual("div");
+    // TestLabel
     let c3 = c2.childAt(0);
-    expect(c3.children()).toHaveLength(0);
-    expect(c3.type()).toEqual("div");
-    expect(c3.text()).toEqual("Test");
+    expect(c3.type()).toEqual(TestLabel);
+    expect(c3.children()).toHaveLength(1);
+    // LabelComponent
+    let c4 = c3.childAt(0);
+    expect(c4.type()).toEqual(LabelComponent);
+    // Finally the Label div
+    let c5 = c4.childAt(0);
+    expect(c5.type()).toEqual("div");
+    // No further children
+    expect(c5.children()).toHaveLength(0);
   });
-  test("it has copywrapper", (): void => {
+
+  test("it has TooltipWrapper", (): void => {
     let component = mount(
       <PVWidget
         pvName="pv"
         baseWidget={TestLabel}
         containerStyling={{ position: "relative" }}
-        wrappers={{ copywrapper: true }}
       />
     );
-    expect(component.childAt(0).name()).toEqual("CopyWrapper");
+    expect(component.childAt(0).name()).toEqual("TooltipWrapper");
   });
 
   test("it has alarmborder", (): void => {
@@ -80,19 +92,19 @@ describe("<Widget />", (): void => {
         pvName="pv"
         baseWidget={TestLabel}
         containerStyling={{ position: "relative" }}
-        wrappers={{ alarmborder: true }}
+        alarmBorder={true}
       />
     );
     expect(component.childAt(0).name()).toEqual("AlarmBorder");
   });
 
-  test("it has alarmborder and copywrapper", (): void => {
+  test("it has alarmborder and TooltipWrapper", (): void => {
     let component = mount(
       <PVWidget
         pvName="pv"
         baseWidget={TestLabel}
         containerStyling={{ position: "relative" }}
-        wrappers={{ alarmborder: true, copywrapper: true }}
+        alarmBorder={true}
       />
     );
     expect(component.childAt(0).name()).toEqual("AlarmBorder");
@@ -100,6 +112,6 @@ describe("<Widget />", (): void => {
     let c1 = component.childAt(0);
     // Copy wrapper
     let c2 = c1.childAt(0);
-    expect(c2.childAt(0).name()).toEqual("CopyWrapper");
+    expect(c2.childAt(0).name()).toEqual("TooltipWrapper");
   });
 });
