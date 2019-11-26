@@ -191,24 +191,27 @@
         "height": "",
         "padding": ""
       },
+      "macroMap": {
+        "prefix": "sim://"
+      },
       "actions": {
         "executeAsOne": false,
         "actions": [
           {
             "type": "WRITE_PV",
-            "pvName": "sim://limit#1",
+            "pvName": "${prefix}limit#1",
             "value": 10,
             "description": "set limit #1 to 10"
           },
           {
             "type": "WRITE_PV",
-            "pvName": "sim://limit#1",
+            "pvName": "${prefix}limit#1",
             "value": 20,
             "description": "set limit #1 to 20"
           },
           {
             "type": "WRITE_PV",
-            "pvName": "sim://limit#1",
+            "pvName": "${prefix}limit#1",
             "value": 100,
             "description": "set limit #1 to 100"
           }

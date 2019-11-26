@@ -10,17 +10,28 @@ export interface MacroProps extends React.PropsWithChildren<any> {
 
 function rescursiveResolve(props: object, macroMap: MacroMap): any {
   const resolvedProps: any = {};
+  if (props === null) {
+    return null;
+  }
   for (const [prop, value] of Object.entries(props)) {
-    if (typeof value === "object" && !Array.isArray(value)) {
-      resolvedProps[prop] = rescursiveResolve(value, macroMap);
-    } else if (typeof value === "string") {
-      resolvedProps[prop] = resolveMacros(value, macroMap);
-    } else if (prop === "actions") {
-      resolvedProps[prop] = (value as object[]).map(v =>
-        rescursiveResolve(v, macroMap)
-      );
-    } else {
+    // Don't descend into child components.
+    if (prop === "children") {
       resolvedProps[prop] = value;
+    } else {
+      if (typeof value === "object") {
+        if (Array.isArray(value)) {
+          const newArray = value.map((member: object): object =>
+            rescursiveResolve(member, macroMap)
+          );
+          resolvedProps[prop] = newArray;
+        } else {
+          resolvedProps[prop] = rescursiveResolve(value, macroMap);
+        }
+      } else if (typeof value === "string") {
+        resolvedProps[prop] = resolveMacros(value, macroMap);
+      } else {
+        resolvedProps[prop] = value;
+      }
     }
   }
   return resolvedProps;
