@@ -2,8 +2,10 @@ import { writePv } from "./hooks/useSubscription";
 import { valueToVtype } from "./vtypes/utils";
 import { History } from "history";
 import log from "loglevel";
+import { ActionButton } from "./components/ActionButton/actionButton";
 
 export const OPEN_PAGE = "OPEN_PAGE";
+export const CLOSE_PAGE = "CLOSE_PAGE";
 export const OPEN_WEBPAGE = "OPEN_WEBPAGE";
 export const WRITE_PV = "WRITE_PV";
 
@@ -12,6 +14,12 @@ export interface OpenPage {
   page: string;
   location: string;
   macros: string;
+  description: string;
+}
+
+export interface ClosePage {
+  type: typeof CLOSE_PAGE;
+  location: string;
   description: string;
 }
 
@@ -28,7 +36,7 @@ export interface WritePv {
   description: string;
 }
 
-export type WidgetAction = OpenWebpage | WritePv | OpenPage;
+export type WidgetAction = OpenWebpage | WritePv | OpenPage | ClosePage;
 
 export interface WidgetActions {
   actions: WidgetAction[];
@@ -53,10 +61,51 @@ export const getActionDescription = (action: WidgetAction): string => {
         return `Open ${action.url}`;
       case OPEN_PAGE:
         return `Open ${action.page}`;
+      case CLOSE_PAGE:
+        return `Close ${action.location}`;
       default:
         throw new InvalidAction(action);
     }
   }
+};
+
+export const openPage = (action: OpenPage, history: History): void => {
+  //Find current browser path: currentPath
+  let currentPath = "";
+  if (history.location.pathname !== undefined)
+    currentPath = history.location.pathname;
+
+  //New page component in action.location
+  let newPathComponent =
+    action.location + "/" + action.page + "/" + action.macros + "/";
+
+  //Find existing component in same location
+  let matcher = new RegExp(action.location + "/[^/]*/[^/]*/");
+  let groups = matcher.exec(currentPath);
+  if (groups !== null && groups[0] !== undefined) {
+    //Swap component in location
+    currentPath = currentPath.replace(groups[0], newPathComponent);
+  } else {
+    //Append component in location
+    currentPath = currentPath + newPathComponent;
+  }
+  history.push(currentPath);
+};
+
+export const closePage = (action: ClosePage, history: History): void => {
+  //Find current browser path: currentPath
+  let currentPath = "";
+  if (history.location.pathname !== undefined)
+    currentPath = history.location.pathname;
+
+  //Find any existing component in action location
+  let matcher = new RegExp(action.location + "/[^/]*/[^/]*/");
+  let groups = matcher.exec(currentPath);
+  if (groups !== null && groups[0] !== undefined) {
+    //Remove component in location
+    currentPath = currentPath.replace(groups[0], "");
+  }
+  history.push(currentPath);
 };
 
 export const executeAction = (
@@ -66,20 +115,14 @@ export const executeAction = (
   switch (action.type) {
     case OPEN_PAGE:
       if (history) {
-        let currentPath = "";
-        if (history.location.pathname !== undefined)
-          currentPath = history.location.pathname;
-
-        let newPathComponent =
-          action.location + "/" + action.page + "/" + action.macros + "/";
-        let matcher = new RegExp(action.location + "/.+/.+");
-        let groups = matcher.exec(currentPath);
-        if (groups !== null && groups[0] !== undefined) {
-          currentPath = currentPath.replace(groups[0], newPathComponent);
-        } else {
-          currentPath = currentPath + newPathComponent;
-        }
-        history.push(currentPath);
+        openPage(action, history);
+      } else {
+        log.error("Tried to open a page but no history object passed");
+      }
+      break;
+    case CLOSE_PAGE:
+      if (history) {
+        closePage(action, history);
       } else {
         log.error("Tried to open a page but no history object passed");
       }
