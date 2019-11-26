@@ -12,29 +12,14 @@
       "position": "relative",
       "children": [
         {
-          "type": "flexcontainer",
+          "type": "dynamicpage",
           "position": "relative",
-          "width": "auto",
-          "flexflow": "column",
-          "children": [
-            {
-              "type": "dynamicpage",
-              "position": "relative",
-              "routePath": "left"
-            }
-          ]
+          "routePath": "left"
         },
         {
-          "type": "flexcontainer",
+          "type": "dynamicpage",
           "position": "relative",
-          "width": "auto",
-          "children": [
-            {
-              "type": "dynamicpage",
-              "position": "relative",
-              "routePath": "right"
-            }
-          ]
+          "routePath": "right"
         }
       ]
     }
