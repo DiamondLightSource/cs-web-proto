@@ -52,6 +52,12 @@ const OpenPagePropType = PropTypes.shape({
   description: PropTypes.string.isRequired
 });
 
+const ClosePagePropType = PropTypes.shape({
+  type: PropTypes.string.isRequired,
+  location: PropTypes.string.isRequired,
+  description: PropTypes.string
+});
+
 const WritePvPropType = PropTypes.shape({
   type: PropTypes.string.isRequired,
   pvName: PropTypes.string.isRequired,
@@ -61,6 +67,7 @@ const WritePvPropType = PropTypes.shape({
 
 const ActionPropType = PropTypes.oneOfType([
   OpenPagePropType,
+  ClosePagePropType,
   WritePvPropType,
   OpenWebpagePropType
 ]);
