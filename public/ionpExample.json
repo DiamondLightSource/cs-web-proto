@@ -49,10 +49,7 @@
         "width": "72px",
         "height": "22px"
       },
-      "pvName": "loc://ionp:pressure",
-      "wrappers": {
-        "copywrapper": true
-      }
+      "pvName": "loc://ionp:pressure"
     },
     {
       "type": "progressbar",
@@ -66,10 +63,7 @@
       "widgetStyling": { "fontSize": "1em" },
       "min": -12,
       "max": 3,
-      "pvName": "loc://${device}:pressure",
-      "wrappers": {
-        "copywrapper": true
-      }
+      "pvName": "loc://${device}:pressure"
     },
     {
       "type": "label",
@@ -93,10 +87,7 @@
         "height": "22px"
       },
       "widgetStyling": { "fontSize": "0.8em" },
-      "pvName": "loc://${device}:status",
-      "wrappers": {
-        "copywrapper": true
-      }
+      "pvName": "loc://${device}:status"
     },
     {
       "type": "label",
@@ -119,10 +110,7 @@
         "width": "216px",
         "height": "22px"
       },
-      "pvName": "loc://${device}:error",
-      "wrappers": {
-        "copywrapper": true
-      }
+      "pvName": "loc://${device}:error"
     },
     {
       "type": "label",
@@ -145,10 +133,7 @@
         "width": "72px",
         "height": "22px"
       },
-      "pvName": "loc://${device}:error",
-      "wrappers": {
-        "copywrapper": true
-      }
+      "pvName": "loc://${device}:error"
     },
     {
       "type": "label",
@@ -171,10 +156,7 @@
         "width": "72px",
         "height": "22px"
       },
-      "pvName": "loc://${device}:current",
-      "wrappers": {
-        "copywrapper": true
-      }
+      "pvName": "loc://${device}:current"
     },
     {
       "type": "label",
@@ -198,36 +180,7 @@
         "height": "22px"
       },
       "widgetStyling": { "fontSize": "0.8em" },
-      "pvName": "loc://${device}:strapping",
-      "wrappers": {
-        "copywrapper": true
-      }
-    },
-    {
-      "type": "actionbutton",
-      "pvName": "sim://limit#1",
-      "text": "And another ... >>",
-      "containerStyling": {
-        "position": "absolute",
-        "x": "16px",
-        "y": "250px",
-        "width": "200px",
-        "height": "50px"
-      },
-      "widgetStyling": {
-        "fontSize": "0.8em"
-      },
-      "actions": {
-        "actions": [
-          {
-            "type": "OPEN_PAGE",
-            "location": "right",
-            "page": "ionpExample",
-            "macros": "{\"device\":\"SR03A-VA-IONP-01\"}"
-          }
-        ]
-      },
-      "executeAsOne": false
+      "pvName": "loc://${device}:strapping"
     }
   ]
 }

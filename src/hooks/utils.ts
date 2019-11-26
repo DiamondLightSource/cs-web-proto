@@ -10,10 +10,8 @@ export function pvStateSelector(
 ): PvArrayResults {
   const results: PvArrayResults = {};
   for (const pvName of pvNames) {
-    results[pvName] = [
-      state.valueCache[pvName],
-      state.shortPvNameMap[pvName] || pvName
-    ];
+    const effectivePvName = state.effectivePvNameMap[pvName] || pvName;
+    results[pvName] = [state.valueCache[effectivePvName], effectivePvName];
   }
   return results;
 }
@@ -32,13 +30,11 @@ export function pvStateComparator(
   if (Object.keys(before).length !== Object.keys(after).length) {
     return false;
   }
-  for (const [pvName, [beforeVal, beforeShortPvName]] of Object.entries(
-    before
-  )) {
-    const [afterVal, afterShortPvName] = after[pvName];
+  for (const [pvName, [beforeVal, beforeEffPvName]] of Object.entries(before)) {
+    const [afterVal, afterEffPvName] = after[pvName];
     // If the PV state hasn't changed in the store, we will receive the same
     // object when selecting that PV state.
-    if (beforeVal !== afterVal || beforeShortPvName !== afterShortPvName) {
+    if (beforeVal !== afterVal || beforeEffPvName !== afterEffPvName) {
       return false;
     }
   }

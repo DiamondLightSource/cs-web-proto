@@ -19,16 +19,17 @@
         "height": "20px"
       },
       "actions": {
+        "executeAsOne": false,
         "actions": [
           {
             "type": "OPEN_PAGE",
             "location": "left",
             "page": "ionpExample",
+            "description": "test",
             "macros": "{\"device\":\"SR03A-VA-IONP-01\"}"
           }
         ]
-      },
-      "executeAsOne": false
+      }
     },
     {
       "type": "actionbutton",
@@ -43,16 +44,17 @@
         "height": "20px"
       },
       "actions": {
+        "executeAsOne": false,
         "actions": [
           {
             "type": "OPEN_PAGE",
             "location": "left",
             "page": "ionpExample",
+            "description": "test",
             "macros": "{\"device\":\"SR04A-VA-IONP-01\"}"
           }
         ]
-      },
-      "executeAsOne": false
+      }
     },
     {
       "type": "shape",

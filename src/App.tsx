@@ -12,6 +12,7 @@ import { SimulatorPlugin } from "./connection/sim";
 import { ConiqlPlugin } from "./connection/coniql";
 import { ConnectionForwarder } from "./connection/forwarder";
 import { WidgetFromJson } from "./components/FromJson/fromJson";
+import { Connection } from "./connection/plugin";
 
 var settings: any;
 try {
@@ -32,19 +33,17 @@ function applyTheme(theme: any): void {
 
 const App: React.FC = (): JSX.Element => {
   const simulator = new SimulatorPlugin();
-  var coniql;
-  if (settings.coniqlSocket !== undefined) {
-    coniql = new ConiqlPlugin(settings.coniqlSocket);
-  } else {
-    coniql = undefined;
-  }
   const fallbackPlugin = simulator;
-  const plugin = new ConnectionForwarder([
+  const plugins: [string, Connection][] = [
     ["sim://", simulator],
     ["loc://", simulator],
-    ["pva://", coniql],
     ["", fallbackPlugin]
-  ]);
+  ];
+  if (settings.coniqlSocket !== undefined) {
+    const coniql = new ConiqlPlugin(settings.coniqlSocket);
+    plugins.push(["pva://", coniql]);
+  }
+  const plugin = new ConnectionForwarder(plugins);
   initialiseStore(plugin);
   const store = getStore();
   const { toggle, dark } = React.useContext(ThemeContext);

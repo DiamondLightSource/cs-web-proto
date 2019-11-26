@@ -11,21 +11,24 @@
     {
       "type": "label",
       "containerStyling": {
-        "position": "relative"
+        "position": "relative",
+        "height": "100%"
       },
       "text": "Screen: ${EMBEDSUFFIX}"
     },
     {
       "type": "input",
       "containerStyling": {
-        "position": "relative"
+        "position": "relative",
+        "height": "100%"
       },
       "pvName": "sim://limit#pv${EMBEDSUFFIX}"
     },
     {
       "type": "readback",
       "containerStyling": {
-        "position": "relative"
+        "position": "relative",
+        "height": "100%"
       },
       "pvName": "sim://limit#pv${EMBEDSUFFIX}",
       "precision": 3

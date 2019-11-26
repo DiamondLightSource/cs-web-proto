@@ -97,7 +97,6 @@ describe("<MenuButton />", (): void => {
     expect(options.length).toBe(1);
     expect(options.text()).toBe("testing enum");
   });
-
   test("it takes VDouble", (): void => {
     const select = numberwrapper.find("select");
     expect(select.prop("value")).toEqual(0);
@@ -105,17 +104,18 @@ describe("<MenuButton />", (): void => {
     expect(options.length).toBe(1);
     expect(options.text()).toBe("3.14159");
   });
-  test("it is enabled on VEnum", (): void => {
-    const select = enumwrapper.find("select");
-    expect(select.prop("disabled")).toEqual(false);
-  });
-  test("it is disabled on VString", (): void => {
-    const select = stringwrapper.find("select");
-    expect(select.prop("disabled")).toEqual(true);
-  });
 
-  test("it is disabled on VDouble", (): void => {
-    const select = numberwrapper.find("select");
-    expect(select.prop("disabled")).toEqual(true);
+  test("preventDefault is not called when enabled", (): void => {
+    const mockPreventDefault = jest.fn();
+    const event = { preventDefault: mockPreventDefault };
+    enumwrapper.find("select").simulate("mousedown", event);
+    expect(mockPreventDefault).not.toHaveBeenCalled();
+  });
+  test("preventDefault is called when disabled", (): void => {
+    const mockPreventDefault = jest.fn();
+    const event = { preventDefault: mockPreventDefault };
+    stringwrapper.find("select").simulate("mousedown", event);
+    expect(mockPreventDefault).toHaveBeenCalled();
+    console.log("done");
   });
 });

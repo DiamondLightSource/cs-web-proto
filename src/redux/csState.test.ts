@@ -20,7 +20,7 @@ const initialState: CsState = {
   },
   macroMap: {},
   subscriptions: {},
-  shortPvNameMap: {}
+  effectivePvNameMap: {}
 };
 
 describe("VALUE_CHANGED", (): void => {
@@ -102,15 +102,15 @@ describe("CONNECTION_CHANGED", (): void => {
 test("handles initializers", (): void => {
   const action = {
     type: SUBSCRIBE,
-    payload: { pvName: "PV(1)", shortPvName: "PV", componentId: "0" }
+    payload: { pvName: "PV(1)", effectivePvName: "PV", componentId: "0" }
   };
   const action2 = {
     type: SUBSCRIBE,
-    payload: { pvName: "PV(1)", shortPvName: "PV", componentId: "1" }
+    payload: { pvName: "PV(1)", effectivePvName: "PV", componentId: "1" }
   };
   const state2 = csReducer(initialState, action);
   const state3 = csReducer(state2, action2);
-  expect(state3.shortPvNameMap["PV(1)"]).toEqual("PV");
+  expect(state3.effectivePvNameMap["PV(1)"]).toEqual("PV");
 
   const unsubAction = {
     type: UNSUBSCRIBE,
@@ -123,7 +123,7 @@ test("handles initializers", (): void => {
   };
 
   const state4 = csReducer(state3, unsubAction);
-  expect(state4.shortPvNameMap["PV(1)"]).toEqual("PV");
+  expect(state4.effectivePvNameMap["PV(1)"]).toEqual("PV");
   const state5 = csReducer(state4, unsubAction2);
-  expect(state5.shortPvNameMap["PV(1)"]).toEqual(undefined);
+  expect(state5.effectivePvNameMap["PV(1)"]).toEqual(undefined);
 });

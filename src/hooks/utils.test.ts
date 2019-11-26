@@ -1,27 +1,36 @@
 import { CsState, PvState, FullPvState } from "../redux/csState";
 import { pvStateSelector, pvStateComparator, PvArrayResults } from "./utils";
 
-const pvName = "pv1";
+const pv1 = "pv1";
+const pv2 = "pv2";
+const pv3 = "pv3";
 const pvState: FullPvState = {
   value: undefined,
   connected: true,
   readonly: true,
-  initializingPvName: pvName
+  initializingPvName: pv1
 };
 
 const state: CsState = {
   valueCache: { pv1: pvState },
   macroMap: {},
-  shortPvNameMap: { pv1: "pv1" },
+  effectivePvNameMap: { pv1: "pv1", pv2: "pv3" },
   subscriptions: {}
 };
 
 describe("pvStateSelector", (): void => {
   it("returns appropriate values if PV present", (): void => {
-    const results = pvStateSelector([pvName], state);
-    const [pvState, shortName] = results[pvName];
+    const results = pvStateSelector([pv1], state);
+    const [pvState, effectivePv] = results[pv1];
     expect(pvState).toEqual(pvState);
-    expect(shortName).toEqual(pvName);
+    expect(effectivePv).toEqual(pv1);
+  });
+
+  it("returns correct effective PV name", (): void => {
+    const results = pvStateSelector([pv2], state);
+    const [pvState, effectivePv] = results[pv2];
+    expect(pvState).toBeUndefined();
+    expect(effectivePv).toEqual(pv3);
   });
 
   it("returns appropriate values if PV not present", (): void => {
