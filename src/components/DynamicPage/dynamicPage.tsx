@@ -9,7 +9,7 @@ import {
   InferWidgetProps
 } from "../Widget/widget";
 import { WidgetFromJson } from "../FromJson/fromJson";
-import { Label } from "../Label/label";
+import { ActionButton } from "../ActionButton/actionButton";
 
 export interface DynamicParams {
   json: string;
@@ -38,7 +38,7 @@ export function DynamicPageFetch({
 }
 
 const DynamicPageProps = {
-  routePath: PropTypes.string
+  routePath: PropTypes.string.isRequired
 };
 
 // Generic display widget to put other things inside
@@ -61,12 +61,12 @@ const DynamicPageComponent = (
                 position: "absolute",
                 right: "5px",
                 top: "5px",
-                width: "20px",
+                width: "40px",
                 height: "20px",
                 backgroundColor: "green"
               }}
             >
-              <Label
+              <ActionButton
                 containerStyling={{
                   position: "relative",
                   height: "",
@@ -86,13 +86,14 @@ const DynamicPageComponent = (
                   actions: [
                     {
                       type: "OPEN_PAGE",
-                      location: "right",
+                      location: props.routePath,
                       page: "ionpExample",
                       description: "Close",
-                      macros: '{"device":"SR03A-VA-IONP-01"}'
+                      macros: '{"device":"CLOSED"}'
                     }
                   ]
                 }}
+                pvName=""
                 text="X"
               />
             </div>
