@@ -54,13 +54,13 @@ export const WidgetFromJson = (
     fetch(file)
       .then(
         (response): Promise<any> => {
-          setFile(file);
-          setMacros(macroMap as MacroMap);
           return response.json();
         }
       )
       .then((json): void => {
         setJson(json);
+        setFile(file);
+        setMacros(macroMap as MacroMap);
       });
   }
   const widgetDict = {
