@@ -22,19 +22,21 @@ export const ActionButtonComponent = (
 ): JSX.Element => {
   if (props.image !== undefined) {
     return (
-      <div style={props.style}>
-        <button className={classes.image} onClick={props.onClick}>
-          <img src={props.image} alt={props.image}></img>
-          <br></br>
-          {props.text}
-        </button>
-      </div>
+      <button
+        className={classes.image}
+        onClick={props.onClick}
+        style={props.style}
+      >
+        <img src={props.image} alt={props.image}></img>
+        <br></br>
+        {props.text}
+      </button>
     );
   } else {
     return (
-      <div style={props.style}>
-        <button onClick={props.onClick}>{props.text}</button>
-      </div>
+      <button onClick={props.onClick} style={props.style}>
+        {props.text}
+      </button>
     );
   }
 };
