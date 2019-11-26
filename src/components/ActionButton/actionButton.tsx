@@ -1,5 +1,5 @@
 import React from "react";
-import { Actions, executeActions } from "../../actions";
+import { WidgetActions, executeActions } from "../../widgetActions";
 import { InferWidgetProps, PVWidget, PVWidgetPropType } from "../Widget/widget";
 import classes from "./actionButton.module.css";
 import { RouteComponentProps, useHistory } from "react-router-dom";
@@ -35,7 +35,7 @@ export const ActionButtonComponent = (
 
 export interface ActionButtonWidgetProps extends RouteComponentProps {
   text: string;
-  actions: Actions;
+  actions: WidgetActions;
   style?: {};
   image?: string;
 }

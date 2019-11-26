@@ -28,10 +28,10 @@ export interface WritePv {
   description: string;
 }
 
-export type Action = OpenPage | OpenWebpage | WritePv;
+export type WidgetAction = OpenWebpage | WritePv | OpenPage;
 
-export interface Actions {
-  actions: Action[];
+export interface WidgetActions {
+  actions: WidgetAction[];
   executeAsOne: boolean;
 }
 
@@ -42,7 +42,7 @@ class InvalidAction extends Error {
   }
 }
 
-export const getActionDescription = (action: Action): string => {
+export const getActionDescription = (action: WidgetAction): string => {
   if (action.description) {
     return action.description;
   } else {
@@ -59,7 +59,10 @@ export const getActionDescription = (action: Action): string => {
   }
 };
 
-export const executeAction = (action: Action, history?: History): void => {
+export const executeAction = (
+  action: WidgetAction,
+  history?: History
+): void => {
   switch (action.type) {
     case OPEN_PAGE:
       if (history) {
@@ -92,9 +95,12 @@ export const executeAction = (action: Action, history?: History): void => {
   }
 };
 
-export const executeActions = (actions: Actions, history?: History): void => {
+export const executeActions = (
+  actions: WidgetActions,
+  history?: History
+): void => {
   log.debug(`executing an action ${actions.actions[0].type}`);
-  let toExecute: Action[] = [];
+  let toExecute: WidgetAction[] = [];
   if (actions.executeAsOne) {
     toExecute = actions.actions;
   } else {
