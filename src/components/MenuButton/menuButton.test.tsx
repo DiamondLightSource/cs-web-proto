@@ -116,6 +116,5 @@ describe("<MenuButton />", (): void => {
     const event = { preventDefault: mockPreventDefault };
     stringwrapper.find("select").simulate("mousedown", event);
     expect(mockPreventDefault).toHaveBeenCalled();
-    console.log("done");
   });
 });
