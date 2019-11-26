@@ -128,7 +128,7 @@ const bobActionToAction = (bobAction: UnknownPropsObject): Actions => {
   actionsToProcess.forEach((action): void => {
     log.debug(action);
     let type: string = availableActions[action._attributes.type];
-    if (type == WRITE_PV) {
+    if (type === WRITE_PV) {
       processedActions.actions.push({
         type: WRITE_PV,
         pvName: action.pv_name._text,
