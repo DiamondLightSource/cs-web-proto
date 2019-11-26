@@ -1,10 +1,8 @@
 {
   "type": "display",
-  "containerStyling": {
-    "position": "relative",
-    "width": "auto",
-    "height": "auto"
-  },
+  "position": "relative",
+  "width": "auto",
+  "height": "auto",
   "children": [
     {
       "type": "actionbutton",
@@ -22,9 +20,9 @@
           {
             "type": "OPEN_PAGE",
             "location": "left",
-            "page": "ionpExample",
+            "page": "embed",
             "description": "test",
-            "macros": "{\"device\":\"SR03A-VA-IONP-01\"}"
+            "macros": "{\"DEVICE\":\"SR03A-VA-IONP-01\"}"
           }
         ]
       }
@@ -47,7 +45,7 @@
             "location": "left",
             "page": "ionpExample",
             "description": "test",
-            "macros": "{\"device\":\"SR04A-VA-IONP-01\"}"
+            "macros": "{\"DEVICE\":\"SR04A-VA-IONP-01\"}"
           }
         ]
       }
