@@ -9,39 +9,29 @@
   "children": [
     {
       "type": "flexcontainer",
-      "containerStyling": {
-        "position": "relative"
-      },
+      "position": "relative",
       "children": [
         {
           "type": "flexcontainer",
-          "containerStyling": {
-            "position": "relative",
-            "width": "auto"
-          },
+          "position": "relative",
+          "width": "auto",
           "flexflow": "column",
           "children": [
             {
               "type": "dynamicpage",
-              "containerStyling": {
-                "position": "relative"
-              },
+              "position": "relative",
               "routePath": "left"
             }
           ]
         },
         {
           "type": "flexcontainer",
-          "containerStyling": {
-            "position": "relative",
-            "width": "auto"
-          },
+          "position": "relative",
+          "width": "auto",
           "children": [
             {
               "type": "dynamicpage",
-              "containerStyling": {
-                "position": "relative"
-              },
+              "position": "relative",
               "routePath": "right"
             }
           ]
