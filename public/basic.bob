@@ -5,7 +5,7 @@
     <PV>loc://pv1</PV>
   </macros>
   <width>200</width>
-  <height>300</height>
+  <height>350</height>
   <widget type="label" version="2.0.0">
     <name>Label</name>
     <text>From .bob file</text>
@@ -86,5 +86,32 @@
       </color>
     </background_color>
     <precision>3</precision>
+  </widget>
+  <widget type="rectangle" version="2.0.0">
+    <name>Rectangle</name>
+    <x>30</x>
+    <y>315</y>
+    <width>140</width>
+    <height>21</height>
+    <line_color>
+      <color red="0" green="0" blue="254">
+      </color>
+    </line_color>
+    <background_color>
+      <color red="30" green="144" blue="254">
+      </color>
+    </background_color>
+    <actions>
+      <action type="write_pv">
+        <pv_name>loc://pv1</pv_name>
+        <value>50</value>
+        <description>Write pv1 to 50</description>
+      </action>
+      <action type="write_pv">
+        <pv_name>loc://pv2</pv_name>
+        <value>Testing</value>
+        <description>Write pv2 to "Testing"</description>
+      </action>
+    </actions>
   </widget>
 </display>
