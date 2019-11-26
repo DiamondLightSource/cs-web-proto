@@ -2,7 +2,6 @@ import { writePv } from "./hooks/useSubscription";
 import { valueToVtype } from "./vtypes/utils";
 import { History } from "history";
 import log from "loglevel";
-import { ActionButton } from "./components/ActionButton/actionButton";
 
 export const OPEN_PAGE = "OPEN_PAGE";
 export const CLOSE_PAGE = "CLOSE_PAGE";

@@ -10,6 +10,7 @@ import {
 } from "../Widget/widget";
 import { WidgetFromJson } from "../FromJson/fromJson";
 import { ActionButton } from "../ActionButton/actionButton";
+import { CLOSE_PAGE } from "../../widgetActions";
 
 export interface DynamicParams {
   json: string;
@@ -85,11 +86,9 @@ const DynamicPageComponent = (
                   executeAsOne: false,
                   actions: [
                     {
-                      type: "OPEN_PAGE",
+                      type: CLOSE_PAGE,
                       location: props.routePath,
-                      page: "ionpExample",
-                      description: "Close",
-                      macros: '{"device":"CLOSED"}'
+                      description: "Close"
                     }
                   ]
                 }}
