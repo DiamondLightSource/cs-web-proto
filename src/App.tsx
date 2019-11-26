@@ -56,35 +56,17 @@ const App: React.FC = (): JSX.Element => {
           <button type="button" onClick={toggle}>
             Toggle Theme
           </button>
-          <div className="top" id="Links">
-            <WidgetFromJson
-              file="http://localhost:3000/synoptic.json"
-              containerStyling={{
-                position: "relative",
-                height: "",
-                width: "",
-                margin: "",
-                padding: "",
-                border: ""
-              }}
-            />
-          </div>
-          <div
-            style={{ position: "relative", display: "block" }}
-            id="Dynamic Pages"
-          >
-            <WidgetFromJson
-              containerStyling={{
-                position: "relative",
-                height: "100%",
-                width: "100%",
-                border: "3px solid #ccc",
-                margin: "",
-                padding: ""
-              }}
-              file="http://localhost:3000/splitPage.json"
-            />
-          </div>
+          <WidgetFromJson
+            file="http://localhost:3000/beamline.json"
+            containerStyling={{
+              position: "relative",
+              height: "",
+              width: "",
+              margin: "",
+              padding: "",
+              border: ""
+            }}
+          />
         </div>
       </Provider>
     </BrowserRouter>
