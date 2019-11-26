@@ -38,13 +38,13 @@ const ContainerFeaturesPropType = {
   border: PropTypes.string
 };
 
-const OpenPagePropType = PropTypes.shape({
+const OpenWebpagePropType = PropTypes.shape({
   type: PropTypes.string.isRequired,
   url: PropTypes.string.isRequired,
   description: PropTypes.string
 });
 
-const OpenWebpagePropType = PropTypes.shape({
+const OpenPagePropType = PropTypes.shape({
   type: PropTypes.string.isRequired,
   page: PropTypes.string.isRequired,
   location: PropTypes.string.isRequired,
