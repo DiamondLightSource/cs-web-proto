@@ -20,8 +20,8 @@ export interface DynamicParams {
 export function DynamicPageFetch({
   match
 }: RouteComponentProps<DynamicParams>): JSX.Element {
-  var file = "http://localhost:3000/" + match.params.json + ".json";
-  var map = match.params.macros && JSON.parse(match.params.macros);
+  const file = "http://localhost:3000/" + match.params.json + ".json";
+  const map = match.params.macros && JSON.parse(match.params.macros);
   return (
     <WidgetFromJson
       file={file}
