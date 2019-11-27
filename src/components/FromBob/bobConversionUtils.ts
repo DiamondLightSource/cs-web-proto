@@ -5,7 +5,7 @@ import log from "loglevel";
 import convert from "xml-js";
 
 import { WidgetDescription } from "../Positioning/positioning";
-import { Actions, WRITE_PV } from "../../actions";
+import { WidgetActions, WRITE_PV } from "../../widgetActions";
 
 interface BobDescription {
   [key: string]: any;
@@ -37,11 +37,11 @@ export const bobMacrosToMacroMap = (
   }
 };
 
-export interface bobColor {
+export interface BobColor {
   _attributes: { name: string; red: string; blue: string; green: string };
 }
 
-export const bobColorsToColor = (color: bobColor): string => {
+export const bobColorsToColor = (color: BobColor): string => {
   try {
     return `rgb(${color._attributes.red}, ${color._attributes.green}, ${color._attributes.blue})`;
   } catch (e) {
@@ -103,7 +103,9 @@ export const bobAvoidStyleProp = (
   outputProps: UnknownPropsObject
 ): void => {};
 
-export const bobActionToAction = (bobAction: UnknownPropsObject): Actions => {
+export const bobActionToAction = (
+  bobAction: UnknownPropsObject
+): WidgetActions => {
   let actionsToProcess: any[] = [];
   if (Array.isArray(bobAction)) {
     actionsToProcess = bobAction;
@@ -118,7 +120,7 @@ export const bobActionToAction = (bobAction: UnknownPropsObject): Actions => {
   };
 
   // Turn into an array of Actions
-  let processedActions: Actions = { executeAsOne: false, actions: [] };
+  let processedActions: WidgetActions = { executeAsOne: false, actions: [] };
 
   actionsToProcess.forEach((action): void => {
     log.debug(action);

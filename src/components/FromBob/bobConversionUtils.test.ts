@@ -4,7 +4,7 @@ import convert from "xml-js";
 
 import {
   bobMacrosToMacroMap,
-  bobColor,
+  BobColor,
   bobColorsToColor,
   UnknownPropsObject,
   bobBackgroundColor,
@@ -14,7 +14,7 @@ import {
   bobActionToAction,
   bobHandleActions
 } from "./bobConversionUtils";
-import { WRITE_PV } from "../../actions";
+import { WRITE_PV } from "../../widgetActions";
 
 describe("simple macros convert", (): void => {
   const xmlInput = "<macros><Test>Value</Test></macros>";
@@ -35,13 +35,13 @@ describe("color conversion", (): void => {
   });
   test("it converts xml color to rgb string", (): void => {
     expect(
-      bobColorsToColor((convertedColor as { color: bobColor }).color)
+      bobColorsToColor((convertedColor as { color: BobColor }).color)
     ).toEqual("rgb(0, 255, 0)");
   });
 
   test("background color correctly extracted", (): void => {
     const input = {
-      background_color: convertedColor
+      background_color: convertedColor // eslint-disable-line @typescript-eslint/camelcase
     };
     const output: UnknownPropsObject = {};
     bobBackgroundColor(input, output);
@@ -49,7 +49,7 @@ describe("color conversion", (): void => {
   });
   test("foreground color correctly extracted", (): void => {
     const input = {
-      foreground_color: convertedColor
+      foreground_color: convertedColor // eslint-disable-line @typescript-eslint/camelcase
     };
     const output: UnknownPropsObject = {};
     bobForegroundColor(input, output);

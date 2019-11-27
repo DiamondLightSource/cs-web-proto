@@ -1,5 +1,5 @@
 import React from "react";
-import { Actions, executeActions } from "../../actions";
+import { WidgetActions, executeActions } from "../../widgetActions";
 import { InferWidgetProps, PVWidget, PVWidgetPropType } from "../Widget/widget";
 import classes from "./actionButton.module.css";
 
@@ -28,7 +28,7 @@ export const ActionButtonComponent = (
 
 export interface ActionButtonWidgetProps {
   text: string;
-  actions: Actions;
+  actions: WidgetActions;
   style?: {};
   image?: string;
 }

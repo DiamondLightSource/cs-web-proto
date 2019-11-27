@@ -1,7 +1,7 @@
 import log from "loglevel";
 import {
   VALUE_CHANGED,
-  ActionType,
+  Action,
   SUBSCRIBE,
   WRITE_PV,
   CONNECTION_CHANGED,
@@ -49,7 +49,7 @@ export interface CsState {
   subscriptions: Subscriptions;
 }
 
-export function csReducer(state = initialState, action: ActionType): CsState {
+export function csReducer(state = initialState, action: Action): CsState {
   log.debug(action);
   switch (action.type) {
     case VALUE_CHANGED: {
