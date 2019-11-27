@@ -11,7 +11,7 @@ interface BobDescription {
   [key: string]: any;
 }
 
-interface UnknownPropsObject {
+export interface UnknownPropsObject {
   [key: string]: any;
 }
 
@@ -37,9 +37,11 @@ export const bobMacrosToMacroMap = (
   }
 };
 
-export const bobColorsToColor = (color: {
+export interface bobColor {
   _attributes: { name: string; red: string; blue: string; green: string };
-}): string => {
+}
+
+export const bobColorsToColor = (color: bobColor): string => {
   try {
     return `rgb(${color._attributes.red}, ${color._attributes.green}, ${color._attributes.blue})`;
   } catch (e) {
@@ -83,7 +85,12 @@ export const bobVisibleToBoolen = (
   outputProps: UnknownPropsObject
 ): void => {
   try {
-    outputProps.visible = Boolean(inputProps.visible._text);
+    let visible = inputProps.visible._text;
+    if (visible === "true") {
+      outputProps.visible = true;
+    } else if (visible === "false") {
+      outputProps.visible = false;
+    }
   } catch (e) {
     log.error(
       `Could not convert visible property ${inputProps.visible} to a number`
