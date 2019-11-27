@@ -7,9 +7,9 @@ let snapshot: ReactTestRenderer;
 let wrapper: ShallowWrapper;
 
 beforeEach((): void => {
-  const label = <GroupingContainerComponent name={"Test"} />;
-  wrapper = shallow(label);
-  snapshot = create(label);
+  const grouping = <GroupingContainerComponent name={"Test"} />;
+  wrapper = shallow(grouping);
+  snapshot = create(grouping);
 });
 
 describe("<GroupingContainerComponent />", (): void => {
@@ -31,5 +31,21 @@ describe("<GroupingContainerComponent />", (): void => {
 
   test("it has a div for other children", (): void => {
     expect(wrapper.childAt(1).type()).toEqual("div");
+  });
+
+  test("it renders child div with text", (): void => {
+    let childText = "Testing Child Component";
+    let groupingWithChild = (
+      <GroupingContainerComponent name={"Test"}>
+        <div>{childText}</div>
+      </GroupingContainerComponent>
+    );
+    let wrapperWithChild = shallow(groupingWithChild);
+    expect(
+      wrapperWithChild
+        .childAt(1)
+        .childAt(0)
+        .text()
+    ).toEqual(childText);
   });
 });
