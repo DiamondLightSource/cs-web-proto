@@ -14,7 +14,7 @@ const GroupingContainerProps = {
 };
 
 // Generic display widget to put other things inside
-const GroupingContainerComponent = (
+export const GroupingContainerComponent = (
   props: InferWidgetProps<typeof GroupingContainerProps> & Component
 ): JSX.Element => (
   // Uses an inner margin for children similar to Phoebus
