@@ -12,7 +12,9 @@ import {
   bobPrecisionToNumber,
   bobVisibleToBoolen,
   bobActionToAction,
-  bobHandleActions
+  bobHandleActions,
+  bobChildToWidgetChild,
+  convertBobToWidgetDescription
 } from "./bobConversionUtils";
 import { WRITE_PV } from "../../widgetActions";
 
@@ -25,6 +27,12 @@ describe("simple macros convert", (): void => {
     let props = { macroMap: {} };
     bobMacrosToMacroMap(convertedXML, props);
     expect(props.macroMap).toEqual({ Test: "Value" });
+  });
+
+  test("it ignores when there are not macros", (): void => {
+    let props = {};
+    bobMacrosToMacroMap({}, props);
+    expect(props).toEqual({});
   });
 });
 
@@ -146,6 +154,263 @@ describe("actions conversion", (): void => {
           pvName: "testPV2",
           value: "Testing",
           description: "Write pv2 to Testing"
+        }
+      ]
+    });
+  });
+});
+
+describe("bob child conversion", (): void => {
+  test("it converts a simple widget", (): void => {
+    const xmlWidget = `
+    <widget type="testwidget" version="2.0.0">
+      <name>Test Widget</name>
+      <pv_name>TESTPV</pv_name>
+      <x>99</x>
+      <y>199</y>
+      <width>299</width>
+      <height>399</height>
+    </widget>`;
+    const compactWidget: UnknownPropsObject = convert.xml2js(xmlWidget, {
+      compact: true
+    });
+
+    expect(bobChildToWidgetChild(compactWidget.widget)).toEqual({
+      type: "testwidget",
+      name: "Test Widget",
+      pv_name: "TESTPV", // eslint-disable-line @typescript-eslint/camelcase
+      position: "absolute",
+      x: "99px",
+      y: "199px",
+      width: "299px",
+      height: "399px",
+      children: []
+    });
+  });
+
+  test("it converts a simple widget with key subsitutions", (): void => {
+    const xmlWidget = `
+    <widget type="testwidget" version="2.0.0">
+      <name>Test Widget</name>
+      <pv_name>TESTPV</pv_name>
+      <x>99</x>
+      <y>199</y>
+      <width>299</width>
+      <height>399</height>
+    </widget>`;
+    const compactWidget: UnknownPropsObject = convert.xml2js(xmlWidget, {
+      compact: true
+    });
+
+    expect(
+      bobChildToWidgetChild(compactWidget.widget, {}, { pv_name: "pvName" }) // eslint-disable-line @typescript-eslint/camelcase
+    ).toEqual({
+      type: "testwidget",
+      name: "Test Widget",
+      pvName: "TESTPV",
+      position: "absolute",
+      x: "99px",
+      y: "199px",
+      width: "299px",
+      height: "399px",
+      children: []
+    });
+  });
+
+  test("it converts a simple widget with function subsitutions", (): void => {
+    const xmlWidget = `
+    <widget type="testwidget" version="2.0.0">
+      <name>Test Widget</name>
+      <pv_name>TESTPV</pv_name>
+      <x>99</x>
+      <y>199</y>
+      <width>299</width>
+      <foreground_color>
+        <color name="On" red="0" green="255" blue="0">
+        </color>
+      </foreground_color>
+      <background_color>
+        <color name="Grid" red="128" green="128" blue="128">
+        </color>
+      </background_color>
+      <height>399</height>
+    </widget>`;
+    const compactWidget: UnknownPropsObject = convert.xml2js(xmlWidget, {
+      compact: true
+    });
+
+    expect(
+      bobChildToWidgetChild(
+        compactWidget.widget,
+        {
+          background_color: bobBackgroundColor, // eslint-disable-line @typescript-eslint/camelcase
+          foreground_color: bobForegroundColor // eslint-disable-line @typescript-eslint/camelcase
+        },
+        { pv_name: "pvName" } // eslint-disable-line @typescript-eslint/camelcase
+      )
+    ).toEqual({
+      type: "testwidget",
+      name: "Test Widget",
+      pvName: "TESTPV",
+      position: "absolute",
+      x: "99px",
+      y: "199px",
+      width: "299px",
+      height: "399px",
+      color: "rgb(0, 255, 0)",
+      backgroundColor: "rgb(128, 128, 128)",
+      children: []
+    });
+  });
+
+  test("it converts a widget with a child", (): void => {
+    const xmlWidget = `
+    <widget type="parent" version="2.0.0">
+        <name>Parent Widget</name>
+        <x>100</x>
+        <y>200</y>
+        <width>300</width>
+        <height>400</height>
+        <widget type="testwidget" version="2.0.0">
+            <name>Test Widget</name>
+            <pv_name>TESTPV</pv_name>
+            <x>99</x>
+            <y>199</y>
+            <width>299</width>
+            <height>399</height>
+        </widget>
+    </widget>`;
+    const compactWidget: UnknownPropsObject = convert.xml2js(xmlWidget, {
+      compact: true
+    });
+
+    expect(bobChildToWidgetChild(compactWidget.widget)).toEqual({
+      type: "parent",
+      name: "Parent Widget",
+      position: "absolute",
+      x: "100px",
+      y: "200px",
+      width: "300px",
+      height: "400px",
+      children: [
+        {
+          type: "testwidget",
+          name: "Test Widget",
+          pv_name: "TESTPV",
+          position: "absolute",
+          x: "99px",
+          y: "199px",
+          width: "299px",
+          height: "399px",
+          children: []
+        }
+      ]
+    });
+  });
+
+  test("it converts a widget with multiple children", (): void => {
+    const xmlWidget = `
+    <widget type="parent" version="2.0.0">
+        <name>Parent Widget</name>
+        <x>100</x>
+        <y>200</y>
+        <width>300</width>
+        <height>400</height>
+        <widget type="testwidget" version="2.0.0">
+            <name>Test Widget</name>
+            <pv_name>TESTPV</pv_name>
+            <x>99</x>
+            <y>199</y>
+            <width>299</width>
+            <height>399</height>
+        </widget>
+        <widget type="testwidget" version="2.0.0">
+            <name>Test Widget</name>
+            <pv_name>TESTPV</pv_name>
+            <x>999</x>
+            <y>899</y>
+            <width>799</width>
+            <height>699</height>
+        </widget>
+    </widget>`;
+    const compactWidget: UnknownPropsObject = convert.xml2js(xmlWidget, {
+      compact: true
+    });
+
+    expect(bobChildToWidgetChild(compactWidget.widget)).toEqual({
+      type: "parent",
+      name: "Parent Widget",
+      position: "absolute",
+      x: "100px",
+      y: "200px",
+      width: "300px",
+      height: "400px",
+      children: [
+        {
+          type: "testwidget",
+          name: "Test Widget",
+          pv_name: "TESTPV",
+          position: "absolute",
+          x: "99px",
+          y: "199px",
+          width: "299px",
+          height: "399px",
+          children: []
+        },
+        {
+          type: "testwidget",
+          name: "Test Widget",
+          pv_name: "TESTPV",
+          position: "absolute",
+          x: "999px",
+          y: "899px",
+          width: "799px",
+          height: "699px",
+          children: []
+        }
+      ]
+    });
+  });
+});
+
+describe("bob conversion", (): void => {
+  test("it converts a simple bob file", (): void => {
+    const xmlBob = `
+    <?xml version="1.0" encoding="UTF-8"?>
+    <display version="2.0.0">
+        <name>Display</name>
+        <width>200</width>
+        <height>350</height>
+        <widget type="testwidget" version="2.0.0">
+            <name>Test Widget</name>
+            <pv_name>TESTPV</pv_name>
+            <x>99</x>
+            <y>199</y>
+            <width>299</width>
+            <height>399</height>
+        </widget>
+    </display>
+    `;
+
+    expect(convertBobToWidgetDescription(xmlBob)).toEqual({
+      type: "display",
+      name: "Display",
+      position: "absolute",
+      x: "0px",
+      y: "0px",
+      width: "200px",
+      height: "350px",
+      children: [
+        {
+          type: "testwidget",
+          name: "Test Widget",
+          pv_name: "TESTPV",
+          position: "absolute",
+          x: "99px",
+          y: "199px",
+          width: "299px",
+          height: "399px",
+          children: []
         }
       ]
     });

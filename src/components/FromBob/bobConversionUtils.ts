@@ -183,6 +183,14 @@ export const bobChildToWidgetChild = (
     }
   );
 
+  // Make sure widget is an array, otherwise it is seen as an object only
+  let widgetList = [];
+  if (Array.isArray(widget)) {
+    widgetList = widget;
+  } else {
+    widgetList = [widget];
+  }
+
   // Check that the primary props were defined or use a default value
   let outputWidget: WidgetDescription = {
     type: _attributes.type || _attributes.typeId,
@@ -192,7 +200,7 @@ export const bobChildToWidgetChild = (
     height: `${(height && height._text) || 0}px`,
     width: `${(width && width._text) || 0}px`,
     ...mappedProps,
-    children: widget.map(
+    children: widgetList.map(
       (w: any): WidgetDescription =>
         bobChildToWidgetChild(
           w as BobDescription,
