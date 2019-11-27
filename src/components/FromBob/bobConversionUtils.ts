@@ -41,7 +41,7 @@ export const bobColorsToColor = (color: {
   _attributes: { name: string; red: string; blue: string; green: string };
 }): string => {
   try {
-    return `rgb( ${color._attributes.red},  ${color._attributes.green}, ${color._attributes.blue})`;
+    return `rgb(${color._attributes.red}, ${color._attributes.green}, ${color._attributes.blue})`;
   } catch (e) {
     log.error(`Could not convert color object`);
     log.error(color);
