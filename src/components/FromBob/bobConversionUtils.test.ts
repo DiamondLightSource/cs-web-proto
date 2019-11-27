@@ -296,7 +296,7 @@ describe("bob child conversion", (): void => {
         {
           type: "testwidget",
           name: "Test Widget",
-          pv_name: "TESTPV",
+          pv_name: "TESTPV", // eslint-disable-line @typescript-eslint/camelcase
           position: "absolute",
           x: "99px",
           y: "199px",
@@ -349,7 +349,7 @@ describe("bob child conversion", (): void => {
         {
           type: "testwidget",
           name: "Test Widget",
-          pv_name: "TESTPV",
+          pv_name: "TESTPV", // eslint-disable-line @typescript-eslint/camelcase
           position: "absolute",
           x: "99px",
           y: "199px",
@@ -360,7 +360,7 @@ describe("bob child conversion", (): void => {
         {
           type: "testwidget",
           name: "Test Widget",
-          pv_name: "TESTPV",
+          pv_name: "TESTPV", // eslint-disable-line @typescript-eslint/camelcase
           position: "absolute",
           x: "999px",
           y: "899px",
@@ -404,7 +404,7 @@ describe("bob conversion", (): void => {
         {
           type: "testwidget",
           name: "Test Widget",
-          pv_name: "TESTPV",
+          pv_name: "TESTPV", // eslint-disable-line @typescript-eslint/camelcase
           position: "absolute",
           x: "99px",
           y: "199px",
