@@ -34,7 +34,7 @@ try {
   settings = {};
 }
 
-log.setLevel("warn");
+log.setLevel("debug");
 
 function applyTheme(theme: any): void {
   Object.keys(theme).forEach(function(key): void {
@@ -91,7 +91,7 @@ const App: React.FC = (): JSX.Element => {
               Macros
             </Link>
             <Link style={styleLinkButton} to="/fromJson">
-              JSON Loading
+              File Loading
             </Link>
             <Link style={styleLinkButton} to="/coniql">
               Coniql

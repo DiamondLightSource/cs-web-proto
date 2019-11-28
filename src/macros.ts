@@ -6,7 +6,7 @@ function interpolate(
 ): string {
   const requiredMappings: string[] = [];
 
-  const regexp = /\${(.*?)}/g;
+  const regexp = /\$[{(](.*?)[})]/g;
   let result = null;
   while ((result = regexp.exec(str))) {
     requiredMappings.push(result[1]);
@@ -20,7 +20,7 @@ function interpolate(
     substitutions[missing] = "${" + missing + "}";
   }
 
-  return str.replace(/\${(.*?)}/g, (x, g): string => substitutions[g]);
+  return str.replace(/\$[{(](.*?)[})]/g, (x, g): string => substitutions[g]);
 }
 
 export function resolveMacros(

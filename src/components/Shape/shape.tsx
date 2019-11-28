@@ -11,7 +11,6 @@ const ShapeProps = {
   shapeWidth: PropTypes.string,
   shapeHeight: PropTypes.string,
   shapeRadius: PropTypes.string,
-  shapeColour: PropTypes.string,
   shapeTransform: PropTypes.string
 };
 
@@ -22,13 +21,12 @@ export const ShapeComponent = (
     <div
       style={{
         ...props.style,
-        width: props.shapeWidth ? props.shapeWidth : "",
-        height: props.shapeHeight ? props.shapeHeight : "",
+        width: props.shapeWidth ? props.shapeWidth : "100%",
+        height: props.shapeHeight ? props.shapeHeight : "100%",
         borderRadius: props.shapeRadius ? props.shapeRadius : "",
-        transform: props.shapeTransform ? props.shapeTransform : "",
-        backgroundColor: props.shapeColour ? props.shapeColour : ""
+        transform: props.shapeTransform ? props.shapeTransform : ""
       }}
-    ></div>
+    />
   );
 };
 
