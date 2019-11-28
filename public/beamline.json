@@ -13,28 +13,64 @@
       "border": "solid 3px green",
       "children": [
         {
-          "type": "label",
+          "type": "flexcontainer",
           "position": "relative",
           "height": "25%",
           "width": "100%",
           "border": "solid 3px blue",
-          "text": "synoptic"
+          "backgroundColor": "#cccccc",
+          "children": [
+            {
+              "type": "label",
+              "position": "relative",
+              "width": "100%",
+              "height": "20px",
+              "textAlign": "center",
+              "fontWeight": "bold",
+              "backgroundColor": "#eeeeee",
+              "text": "Synoptic"
+            }
+          ]
         },
         {
-          "type": "label",
+          "type": "flexcontainer",
           "position": "relative",
           "height": "75%",
           "width": "75%",
           "border": "solid 3px pink",
-          "text": "embedded screens"
+          "backgroundColor": "#cccccc",
+          "children": [
+            {
+              "type": "label",
+              "position": "relative",
+              "width": "100%",
+              "height": "20px",
+              "textAlign": "center",
+              "fontWeight": "bold",
+              "backgroundColor": "#eeeeee",
+              "text": "Detail"
+            }
+          ]
         },
         {
-          "type": "label",
+          "type": "flexcontainer",
           "position": "relative",
           "height": "75%",
           "width": "25%",
           "border": "solid 3px orange",
-          "text": "detail panels"
+          "backgroundColor": "#cccccc",
+          "children": [
+            {
+              "type": "label",
+              "position": "relative",
+              "width": "100%",
+              "height": "20px",
+              "textAlign": "center",
+              "fontWeight": "bold",
+              "backgroundColor": "#eeeeee",
+              "text": "Embed"
+            }
+          ]
         }
       ]
     }
