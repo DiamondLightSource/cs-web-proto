@@ -11,8 +11,15 @@ describe("<WidgetFromBob>", (): void => {
     const mockFetchPromise = Promise.resolve({
       json: (): Promise<{}> => mockJsonPromise
     });
+
+    // Hack to satisfy typescript
+    interface GlobalFetch extends NodeJS.Global {
+      fetch: any;
+    }
+    const globalWithFetch = global as GlobalFetch;
+
     jest
-      .spyOn(global, "fetch")
+      .spyOn(global as GlobalFetch, "fetch")
       .mockImplementation((): Promise<{}> => mockFetchPromise);
 
     const wrapper = shallow(
@@ -28,15 +35,14 @@ describe("<WidgetFromBob>", (): void => {
       />
     );
 
-    expect(global.fetch).toHaveBeenCalledTimes(1);
-    expect(global.fetch).toHaveBeenCalledWith("TestFile");
+    expect(globalWithFetch.fetch).toHaveBeenCalledTimes(1);
+    expect(globalWithFetch.fetch).toHaveBeenCalledWith("TestFile");
 
     process.nextTick((): void => {
       // 6
-      console.log(wrapper.debug());
       expect(wrapper.type()).toEqual(Display);
 
-      global.fetch.mockClear(); // 7
+      globalWithFetch.fetch.mockClear(); // 7
       done(); // 8
     });
   });
