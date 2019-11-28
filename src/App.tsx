@@ -34,7 +34,7 @@ try {
   settings = {};
 }
 
-log.setLevel("warn");
+log.setLevel("debug");
 
 function applyTheme(theme: any): void {
   Object.keys(theme).forEach(function(key): void {

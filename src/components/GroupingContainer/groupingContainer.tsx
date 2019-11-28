@@ -27,7 +27,7 @@ export const GroupingContainerComponent = (
     }}
   >
     <legend>{props.name}</legend>
-    <div style={{ position: "absolute", top: "20px", left: "20px" }}>
+    <div style={{ position: "relative", height: "100%", width: "100%" }}>
       {props.children}
     </div>
   </fieldset>

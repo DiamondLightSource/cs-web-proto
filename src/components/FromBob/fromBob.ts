@@ -84,6 +84,20 @@ export const WidgetFromBob = (
     widgetFromBob: WidgetFromBob
   };
 
+  const functionSubstitutions = {
+    macros: bobMacrosToMacroMap,
+    background_color: bobBackgroundColor, // eslint-disable-line @typescript-eslint/camelcase
+    foreground_color: bobForegroundColor, // eslint-disable-line @typescript-eslint/camelcase
+    precision: bobPrecisionToNumber,
+    visible: bobVisibleToBoolen,
+    style: bobAvoidStyleProp,
+    actions: bobHandleActions
+  };
+
+  const keySubstitutions = {
+    pv_name: "pvName" // eslint-disable-line @typescript-eslint/camelcase
+  };
+
   let component: JSX.Element;
   try {
     let bobDescription;
@@ -93,18 +107,8 @@ export const WidgetFromBob = (
       // Convert the bob to widget description style object
       bobDescription = convertBobToWidgetDescription(
         bob,
-        {
-          macros: bobMacrosToMacroMap,
-          background_color: bobBackgroundColor, // eslint-disable-line @typescript-eslint/camelcase
-          foreground_color: bobForegroundColor, // eslint-disable-line @typescript-eslint/camelcase
-          precision: bobPrecisionToNumber,
-          visible: bobVisibleToBoolen,
-          style: bobAvoidStyleProp,
-          actions: bobHandleActions
-        },
-        {
-          pv_name: "pvName" // eslint-disable-line @typescript-eslint/camelcase
-        }
+        functionSubstitutions,
+        keySubstitutions
       );
     }
     log.info(bobDescription);

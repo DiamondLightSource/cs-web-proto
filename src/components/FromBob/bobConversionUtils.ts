@@ -8,6 +8,12 @@ import { WidgetDescription } from "../Positioning/positioning";
 import { WidgetActions, WRITE_PV } from "../../widgetActions";
 
 interface BobDescription {
+  _attributes: { [key: string]: string };
+  x?: { _text: string };
+  y?: { _text: string };
+  height?: { _text: string };
+  width?: { _text: string };
+  widget?: BobDescription;
   [key: string]: any;
 }
 
@@ -98,6 +104,10 @@ export const bobVisibleToBoolen = (
   }
 };
 
+/* Bob and OPI files have a style object which clashes with our own style object
+At some later date a proper conversion for this should be implemented
+General styling elements such as color, size and font are handled in other objects
+so perhaps it is not that important */
 export const bobAvoidStyleProp = (
   inputProps: UnknownPropsObject,
   outputProps: UnknownPropsObject
@@ -124,14 +134,20 @@ export const bobActionToAction = (
 
   actionsToProcess.forEach((action): void => {
     log.debug(action);
-    let type: string = availableActions[action._attributes.type];
-    if (type === WRITE_PV) {
-      processedActions.actions.push({
-        type: WRITE_PV,
-        pvName: action.pv_name._text,
-        value: action.value._text,
-        description: action.description._text
-      });
+    try {
+      let type: string = availableActions[action._attributes.type];
+      if (type === WRITE_PV) {
+        processedActions.actions.push({
+          type: WRITE_PV,
+          pvName: action.pv_name._text,
+          value: action.value._text,
+          description: action.description._text
+        });
+      }
+    } catch (e) {
+      log.error(
+        `Could not find action ${action._attributes.type} in available actions to convert`
+      );
     }
   });
 
@@ -192,6 +208,9 @@ export const bobChildToWidgetChild = (
   }
 
   // Check that the primary props were defined or use a default value
+  /* In bob files, many widgets have default values for height, width and even x and y
+  The default values can be different from each other
+  This could make life a bit difficult but should be looked at later */
   let outputWidget: WidgetDescription = {
     type: _attributes.type || _attributes.typeId,
     position: "absolute",
