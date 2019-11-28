@@ -18,6 +18,7 @@ import { MenuButton } from "../MenuButton/menuButton";
 import { Display } from "../Display/display";
 import { ActionButton } from "../ActionButton/actionButton";
 import { DynamicPageWidget } from "../DynamicPage/dynamicPage";
+import { WidgetFromBob } from "../FromBob/fromBob";
 import { WidgetPropType, InferWidgetProps } from "../Widget/widget";
 
 const EMPTY_WIDGET: WidgetDescription = {
@@ -76,7 +77,8 @@ export const WidgetFromJson = (
     display: Display,
     empty: Display,
     widgetFromJSON: WidgetFromJson,
-    dynamicpage: DynamicPageWidget
+    dynamicpage: DynamicPageWidget,
+    widgetFromBob: WidgetFromBob
   };
 
   let component: JSX.Element | null;

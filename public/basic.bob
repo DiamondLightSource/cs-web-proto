@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<display version="2.0.0">
+  <name>Display</name>
+  <macros>
+    <PV>loc://pv1</PV>
+  </macros>
+  <width>200</width>
+  <height>350</height>
+  <widget type="label" version="2.0.0">
+    <name>Label</name>
+    <text>From .bob file</text>
+    <x>30</x>
+    <y>10</y>
+    <width>140</width>
+  </widget>
+  <widget type="group" version="2.0.0">
+    <name>Test Group</name>
+    <macros>
+      <PV>loc://pv2</PV>
+    </macros>
+    <y>152</y>
+    <width>180</width>
+    <height>150</height>
+    <widget type="textentry" version="3.0.0">
+      <name>Text Entry</name>
+      <pv_name>${PV}</pv_name>
+      <x>12</x>
+      <y>12</y>
+      <width>140</width>
+      <height>40</height>
+      <foreground_color>
+        <color name="On" red="0" green="255" blue="0">
+        </color>
+      </foreground_color>
+      <background_color>
+        <color name="Grid" red="128" green="128" blue="128">
+        </color>
+      </background_color>
+    </widget>
+    <widget type="textupdate" version="2.0.0">
+      <name>Text Update</name>
+      <pv_name>$(PV)</pv_name>
+      <x>12</x>
+      <y>62</y>
+      <width>140</width>
+      <height>50</height>
+      <foreground_color>
+        <color name="INVALID" red="255" green="0" blue="255">
+        </color>
+      </foreground_color>
+      <background_color>
+        <color red="242" green="242" blue="242">
+        </color>
+      </background_color>
+    </widget>
+  </widget>
+  <widget type="textentry" version="3.0.0">
+    <name>Text Entry_1</name>
+    <pv_name>${PV}</pv_name>
+    <x>30</x>
+    <y>44</y>
+    <width>140</width>
+    <height>40</height>
+    <foreground_color>
+      <color name="On" red="0" green="255" blue="0">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color name="Grid" red="128" green="128" blue="128">
+      </color>
+    </background_color>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_1</name>
+    <pv_name>$(PV)</pv_name>
+    <x>30</x>
+    <y>94</y>
+    <width>140</width>
+    <height>50</height>
+    <foreground_color>
+      <color name="MINOR" red="255" green="128" blue="0">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color red="242" green="242" blue="242">
+      </color>
+    </background_color>
+    <precision>3</precision>
+  </widget>
+  <widget type="rectangle" version="2.0.0">
+    <name>Rectangle</name>
+    <x>30</x>
+    <y>315</y>
+    <width>140</width>
+    <height>21</height>
+    <line_color>
+      <color red="0" green="0" blue="254">
+      </color>
+    </line_color>
+    <background_color>
+      <color red="30" green="144" blue="254">
+      </color>
+    </background_color>
+    <actions>
+      <action type="write_pv">
+        <pv_name>loc://pv1</pv_name>
+        <value>50</value>
+        <description>Write pv1 to 50</description>
+      </action>
+      <action type="write_pv">
+        <pv_name>loc://pv2</pv_name>
+        <value>Testing</value>
+        <description>Write pv2 to "Testing"</description>
+      </action>
+    </actions>
+  </widget>
+</display>

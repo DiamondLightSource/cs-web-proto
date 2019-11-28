@@ -6,14 +6,13 @@ import log from "loglevel";
 import checkPropTypes from "check-prop-types";
 
 import { MacroMap } from "../../redux/csState";
-import { WidgetProps } from "../Widget/widget";
 
-export type WidgetDescription = WidgetProps & {
+export interface WidgetDescription {
   type: string;
   // All other component properties
   [x: string]: any;
   children?: WidgetDescription[];
-};
+}
 
 export function widgetDescriptionToComponent(
   // Converts a JS object matching a position description into React component
@@ -53,7 +52,7 @@ export function widgetDescriptionToComponent(
     let key;
 
     for (key in input) {
-      if (input.hasOwnProperty(key) && input[key]) {
+      if (input.hasOwnProperty(key) && input[key] !== undefined) {
         output[key] = input[key];
       }
     }
