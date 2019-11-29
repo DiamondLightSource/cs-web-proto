@@ -68,7 +68,7 @@
           "type": "menubutton",
           "position": "relative",
           "width": "25%",
-          "pvName": "loc://enum1<VEnum>(2, \"slow\", \"med\", \"fast\")",
+          "pvName": "loc://enum#m${motor}<VEnum>(2, \"slow\", \"med\", \"fast\")",
           "border": "1px solid #aaaaaa",
           "margin": "5px 0px 0px 0px",
           "fontSize": "0.75em"
@@ -77,10 +77,79 @@
           "type": "readback",
           "position": "relative",
           "width": "25%",
-          "pvName": "loc://enum1",
+          "pvName": "loc://enum#m${motor}",
           "color": "#22ee22",
           "margin": "5px 0px 0px 0px",
           "fontSize": "1em"
+        },
+        {
+          "type": "actionbutton",
+          "pvName": "sim://limit#m${motor}",
+          "position": "relative",
+          "width": "100%",
+          "margin": "5px 0px 0px 0px",
+          "text": "SLOW",
+          "actions": {
+            "executeAsOne": true,
+            "actions": [
+              {
+                "type": "WRITE_PV",
+                "pvName": "sim://limit#m${motor}",
+                "value": 15
+              },
+              {
+                "type": "WRITE_PV",
+                "pvName": "loc://enum#m${motor}",
+                "value": "slow"
+              }
+            ]
+          }
+        },
+        {
+          "type": "actionbutton",
+          "pvName": "sim://limit#m${motor}",
+          "position": "relative",
+          "width": "100%",
+          "margin": "5px 0px 0px 0px",
+          "text": "MEDIUM",
+          "actions": {
+            "executeAsOne": true,
+            "actions": [
+              {
+                "type": "WRITE_PV",
+                "pvName": "sim://limit#m${motor}",
+                "value": 50
+              },
+              {
+                "type": "WRITE_PV",
+                "pvName": "loc://enum#m${motor}",
+                "value": "med"
+              }
+            ]
+          }
+        },
+        {
+          "type": "actionbutton",
+          "pvName": "sim://limit#m${motor}",
+          "position": "relative",
+          "width": "100%",
+          "margin": "5px 0px 0px 0px",
+          "text": "FAST",
+          "actions": {
+            "executeAsOne": true,
+            "actions": [
+              {
+                "type": "WRITE_PV",
+                "pvName": "sim://limit#m${motor}",
+                "value": 99
+              },
+              {
+                "type": "WRITE_PV",
+                "pvName": "loc://enum#m${motor}",
+                "value": "fast"
+              }
+            ]
+          }
         }
       ]
     }

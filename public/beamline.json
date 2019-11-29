@@ -1,11 +1,13 @@
 {
   "type": "display",
   "position": "relative",
+  "overflow": "auto",
   "border": "solid 3px red",
   "children": [
     {
       "type": "flexcontainer",
       "position": "relative",
+      "overflow": "auto",
       "border": "solid 3px green",
       "children": [
         {
@@ -39,8 +41,7 @@
           "width": "75%",
           "border": "solid 3px pink",
           "backgroundColor": "#cccccc",
-          "minWidth": "600px",
-          "overflow": "scroll",
+          "overflow": "auto",
           "macroMap": {
             "motor": "1"
           },
@@ -68,8 +69,7 @@
           "width": "25%",
           "border": "solid 3px orange",
           "backgroundColor": "#cccccc",
-          "minWidth": "300px",
-          "overflow": "scroll",
+          "overflow": "auto",
           "children": [
             {
               "type": "label",
