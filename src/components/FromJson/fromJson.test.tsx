@@ -31,7 +31,10 @@ describe("<WidgetFromJson>", (): void => {
           height: "",
           width: "",
           margin: "",
-          padding: ""
+          padding: "",
+          border: "",
+          minWidth: "",
+          maxWidth: ""
         }}
         file="TestFile"
       />
@@ -70,7 +73,10 @@ describe("<WidgetFromJson>", (): void => {
           height: "",
           width: "",
           margin: "",
-          padding: ""
+          padding: "",
+          border: "",
+          minWidth: "",
+          maxWidth: ""
         }}
         file="TestFile"
       />
@@ -116,7 +122,10 @@ describe("<WidgetFromJson>", (): void => {
           height: "",
           width: "",
           margin: "",
-          padding: ""
+          padding: "",
+          border: "",
+          minWidth: "",
+          maxWidth: ""
         }}
         file="TestFile"
       />

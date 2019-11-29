@@ -13,7 +13,9 @@ export const ProgressPage = (): JSX.Element => (
       width: "",
       margin: "",
       padding: "",
-      border: ""
+      border: "",
+      minWidth: "",
+      maxWidth: ""
     }}
   />
 );

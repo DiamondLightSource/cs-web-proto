@@ -1,44 +1,49 @@
 {
   "type": "display",
   "position": "relative",
-  "width": "100%",
-  "height": "100%",
   "border": "solid 3px red",
   "children": [
     {
       "type": "flexcontainer",
       "position": "relative",
-      "height": "100%",
-      "width": "100%",
       "border": "solid 3px green",
       "children": [
         {
-          "type": "flexcontainer",
+          "type": "display",
           "position": "relative",
-          "height": "25%",
           "width": "100%",
           "border": "solid 3px blue",
           "backgroundColor": "#cccccc",
+          "overflow": "auto",
           "children": [
             {
               "type": "label",
               "position": "relative",
-              "width": "100%",
+              "width": "90%",
               "height": "20px",
               "textAlign": "center",
               "fontWeight": "bold",
               "backgroundColor": "#eeeeee",
               "text": "Synoptic"
+            },
+            {
+              "type": "widgetFromJSON",
+              "position": "relative",
+              "file": "http://localhost:3000/synoptic.json"
             }
           ]
         },
         {
-          "type": "flexcontainer",
+          "type": "display",
           "position": "relative",
-          "height": "75%",
           "width": "75%",
           "border": "solid 3px pink",
           "backgroundColor": "#cccccc",
+          "minWidth": "600px",
+          "overflow": "scroll",
+          "macroMap": {
+            "motor": "1"
+          },
           "children": [
             {
               "type": "label",
@@ -49,16 +54,22 @@
               "fontWeight": "bold",
               "backgroundColor": "#eeeeee",
               "text": "Detail"
+            },
+            {
+              "type": "widgetFromJSON",
+              "position": "relative",
+              "file": "http://localhost:3000/motor.json"
             }
           ]
         },
         {
-          "type": "flexcontainer",
+          "type": "display",
           "position": "relative",
-          "height": "75%",
           "width": "25%",
           "border": "solid 3px orange",
           "backgroundColor": "#cccccc",
+          "minWidth": "300px",
+          "overflow": "scroll",
           "children": [
             {
               "type": "label",

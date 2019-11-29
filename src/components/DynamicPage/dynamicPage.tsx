@@ -32,7 +32,9 @@ export function DynamicPageFetch({
         width: "",
         margin: "",
         padding: "",
-        border: ""
+        border: "",
+        minWidth: "",
+        maxWidth: ""
       }}
     />
   );
@@ -74,7 +76,9 @@ const DynamicPageComponent = (
                   width: "",
                   margin: "",
                   padding: "",
-                  border: ""
+                  border: "",
+                  minWidth: "",
+                  maxWidth: ""
                 }}
                 widgetStyling={{
                   textAlign: "center",

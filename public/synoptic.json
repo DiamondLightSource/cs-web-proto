@@ -1,9 +1,10 @@
 {
   "type": "display",
   "position": "relative",
-  "width": "100%",
-  "height": "100%",
-  "border": "solid 3px red",
+  "width": "600px",
+  "height": "200px",
+  "margin": "10px",
+  "border": "dashed 3px red",
   "children": [
     {
       "type": "actionbutton",
@@ -61,7 +62,7 @@
       "shapeWidth": "100px",
       "shapeHeight": "5px",
       "shapeRadius": "0",
-      "shapeColour": "red"
+      "backgroundColor": "red"
     },
     {
       "type": "shape",
@@ -73,7 +74,7 @@
       "shapeWidth": "50px",
       "shapeHeight": "100px",
       "shapeRadius": "50%",
-      "shapeColour": "green"
+      "backgroundColor": "green"
     }
   ]
 }

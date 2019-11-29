@@ -36,6 +36,8 @@ export function widgetDescriptionToComponent(
     margin = undefined,
     padding = undefined,
     border = undefined,
+    minWidth = undefined,
+    maxWidth = undefined,
     color = undefined,
     font = undefined,
     fontSize = undefined,
@@ -69,7 +71,9 @@ export function widgetDescriptionToComponent(
     width: width,
     margin: margin,
     padding: padding,
-    border: border
+    border: border,
+    minWidth,
+    maxWidth
   });
   const widgetStyling = filterUndefinedOut({
     color: color,

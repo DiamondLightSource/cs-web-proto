@@ -13,7 +13,9 @@ export const FrontPage = (): JSX.Element => (
       width: "",
       margin: "",
       padding: "",
-      border: ""
+      border: "",
+      minWidth: "",
+      maxWidth: ""
     }}
   />
 );

@@ -13,7 +13,9 @@ export const PositioningExamplePage = (): JSX.Element => (
       width: "",
       margin: "",
       padding: "",
-      border: ""
+      border: "",
+      minWidth: "",
+      maxWidth: ""
     }}
   />
 );

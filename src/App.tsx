@@ -22,7 +22,7 @@ try {
   settings = {};
 }
 
-log.setLevel("debug");
+log.setLevel("warn");
 
 function applyTheme(theme: any): void {
   Object.keys(theme).forEach(function(key): void {
@@ -64,7 +64,9 @@ const App: React.FC = (): JSX.Element => {
               width: "",
               margin: "",
               padding: "",
-              border: ""
+              border: "",
+              minWidth: "",
+              maxWidth: ""
             }}
           />
         </div>

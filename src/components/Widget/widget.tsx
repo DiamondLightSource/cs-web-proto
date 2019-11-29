@@ -35,7 +35,9 @@ export type PVInputComponent = PVComponent & { pvName: string };
 const ContainerFeaturesPropType = {
   margin: PropTypes.string,
   padding: PropTypes.string,
-  border: PropTypes.string
+  border: PropTypes.string,
+  minWidth: PropTypes.string,
+  maxWidth: PropTypes.string
 };
 
 const OpenWebpagePropType = PropTypes.shape({
