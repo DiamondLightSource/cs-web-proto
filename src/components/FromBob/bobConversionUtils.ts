@@ -50,13 +50,7 @@ export const bobParseColor = (name: string, jsonProp: any): string => {
 };
 
 export const bobParsePrecision = (name: string, jsonProp: any): number => {
-  let prec = -1;
-  try {
-    prec = Number(jsonProp._text);
-  } catch (e) {
-    log.error(`Could not convert ${name} of ${jsonProp} to a number`);
-  }
-  return prec;
+  return Number(jsonProp._text);
 };
 
 export const bobParseBoolean = (name: string, jsonProp: any): boolean => {
@@ -199,8 +193,8 @@ export const convertBobToWidgetDescription = (
   compactJSON.display._attributes = { type: "display" };
   // We don't care about the position of the top-level display widget.
   // We place it at 0,0 within its container.
-  compactJSON.display.x = { _text: "0px" };
-  compactJSON.display.y = { _text: "0px" };
+  compactJSON.display.x = { _text: "0" };
+  compactJSON.display.y = { _text: "0" };
   log.debug(compactJSON);
 
   return bobChildToWidgetChild(
