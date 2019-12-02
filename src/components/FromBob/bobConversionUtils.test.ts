@@ -149,34 +149,43 @@ describe("bob child conversion", (): void => {
     });
   });
 
-  test("it converts a simple widget with boolean prop", (): void => {
-    const xmlWidget = `
+  const trueWidget = `
     <widget type="testwidget" version="2.0.0">
       <name>Test Widget</name>
       <true_or_false>true</true_or_false>
     </widget>`;
-    const compactWidget: convert.ElementCompact = convert.xml2js(xmlWidget, {
-      compact: true
-    });
+  const falseWidget = `
+    <widget type="testwidget" version="2.0.0">
+      <name>Test Widget</name>
+      <true_or_false>false</true_or_false>
+    </widget>`;
 
-    expect(
-      bobChildToWidgetChild(
-        compactWidget.widget,
-        { true_or_false: bobParseBoolean }, // eslint-disable-line @typescript-eslint/camelcase
-        {}
-      )
-    ).toEqual({
-      type: "testwidget",
-      name: "Test Widget",
-      x: "0px",
-      y: "0px",
-      width: "0px",
-      height: "0px",
-      position: "absolute",
-      true_or_false: true, // eslint-disable-line @typescript-eslint/camelcase
-      children: []
-    });
-  });
+  test.each([[true, trueWidget], [false, falseWidget]])(
+    "it converts a simple widget with %s boolean prop",
+    (expected, widgetXml): void => {
+      const compactWidget: convert.ElementCompact = convert.xml2js(widgetXml, {
+        compact: true
+      });
+
+      expect(
+        bobChildToWidgetChild(
+          compactWidget.widget,
+          { true_or_false: bobParseBoolean }, // eslint-disable-line @typescript-eslint/camelcase
+          {}
+        )
+      ).toEqual({
+        type: "testwidget",
+        name: "Test Widget",
+        x: "0px",
+        y: "0px",
+        width: "0px",
+        height: "0px",
+        position: "absolute",
+        true_or_false: expected, // eslint-disable-line @typescript-eslint/camelcase
+        children: []
+      });
+    }
+  );
   test("it converts a simple widget with function subsitutions", (): void => {
     const xmlWidget = `
     <widget type="testwidget" version="2.0.0">
