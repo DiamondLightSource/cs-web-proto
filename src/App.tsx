@@ -53,7 +53,7 @@ const App: React.FC = (): JSX.Element => {
   ];
   if (settings.coniqlSocket !== undefined) {
     const coniql = new ConiqlPlugin(settings.coniqlSocket);
-    plugins.push(["pva://", coniql]);
+    plugins.unshift(["pva://", coniql]);
   }
   const plugin = new ConnectionForwarder(plugins);
   initialiseStore(plugin);
