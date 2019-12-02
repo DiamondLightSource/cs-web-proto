@@ -61,14 +61,16 @@ export const executeAction = (action: WidgetAction): void => {
 };
 
 export const executeActions = (actions: WidgetActions): void => {
-  log.debug(`executing an action ${actions.actions[0].type}`);
-  let toExecute: WidgetAction[] = [];
-  if (actions.executeAsOne) {
-    toExecute = actions.actions;
-  } else {
-    toExecute = [actions.actions[0]];
-  }
-  for (const action of toExecute) {
-    executeAction(action);
+  if (actions.actions.length > 0) {
+    let toExecute: WidgetAction[] = [];
+    if (actions.executeAsOne) {
+      toExecute = actions.actions;
+    } else {
+      toExecute = [actions.actions[0]];
+    }
+    for (const action of toExecute) {
+      log.debug(`executing an action ${action.type}`);
+      executeAction(action);
+    }
   }
 };
