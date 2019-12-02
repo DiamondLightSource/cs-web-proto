@@ -21,10 +21,16 @@ interface BobDescription {
 }
 
 interface FunctionSubstitutionInterface {
-  [key: string]: (name: string, jsonProp: any) => GenericProp;
+  [key: string]: (
+    name: string,
+    jsonProp: convert.ElementCompact
+  ) => GenericProp;
 }
 
-export const bobParseMacros = (name: string, jsonProp: any): MacroMap => {
+export const bobParseMacros = (
+  name: string,
+  jsonProp: convert.ElementCompact
+): MacroMap => {
   const macroMap: MacroMap = {};
   Object.entries(jsonProp as object).forEach(([key, value]): void => {
     macroMap[key] = value["_text"];
@@ -36,7 +42,10 @@ export interface BobColor {
   _attributes: { name: string; red: string; blue: string; green: string };
 }
 
-export const bobParseColor = (name: string, jsonProp: any): string => {
+export const bobParseColor = (
+  name: string,
+  jsonProp: convert.ElementCompact
+): string => {
   const color = jsonProp.color as BobColor;
   console.log("bobparsecolor");
   console.log(color);
@@ -49,11 +58,17 @@ export const bobParseColor = (name: string, jsonProp: any): string => {
   }
 };
 
-export const bobParsePrecision = (name: string, jsonProp: any): number => {
+export const bobParsePrecision = (
+  name: string,
+  jsonProp: convert.ElementCompact
+): number => {
   return Number(jsonProp._text);
 };
 
-export const bobParseBoolean = (name: string, jsonProp: any): boolean => {
+export const bobParseBoolean = (
+  name: string,
+  jsonProp: convert.ElementCompact
+): boolean => {
   let visible = true;
   try {
     let visibleText = jsonProp._text;
@@ -66,7 +81,10 @@ export const bobParseBoolean = (name: string, jsonProp: any): boolean => {
   return visible;
 };
 
-export const bobParseActions = (name: string, jsonProp: any): WidgetActions => {
+export const bobParseActions = (
+  name: string,
+  jsonProp: convert.ElementCompact
+): WidgetActions => {
   let actionsToProcess: any[] = [];
   if (Array.isArray(jsonProp.action)) {
     actionsToProcess = jsonProp.action;
@@ -178,7 +196,7 @@ export const convertBobToWidgetDescription = (
   functionSubstitutions?: {
     [key: string]: (name: string, inputProp: object) => GenericProp;
   },
-  keySubstitutions?: { [key: string]: any }
+  keySubstitutions?: { [key: string]: string }
 ): WidgetDescription => {
   // Provide a raw xml file in the bob format for conversion
   // Optionally provide a substition map for keys

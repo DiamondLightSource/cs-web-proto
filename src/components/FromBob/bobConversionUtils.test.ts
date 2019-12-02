@@ -15,7 +15,7 @@ import { WRITE_PV } from "../../widgetActions";
 
 describe("simple macros convert", (): void => {
   const xmlInput = "<macros><Test>Value</Test></macros>";
-  const convertedXML: any = convert.xml2js(xmlInput, {
+  const convertedXML: convert.ElementCompact = convert.xml2js(xmlInput, {
     compact: true
   });
   test("it collects the macro", (): void => {
@@ -41,9 +41,12 @@ describe("color conversion", (): void => {
 
 describe("precision conversion", (): void => {
   const xmlPrecision = "<precision>5</precision>";
-  const convertedPrecision: any = convert.xml2js(xmlPrecision, {
-    compact: true
-  });
+  const convertedPrecision: convert.ElementCompact = convert.xml2js(
+    xmlPrecision,
+    {
+      compact: true
+    }
+  );
 
   test("it correctly gets the precision and turns it into a number", (): void => {
     const output = bobParsePrecision("precision", convertedPrecision.precision);
@@ -65,7 +68,7 @@ describe("actions conversion", (): void => {
     <description>Write pv2 to Testing</description>
   </action>
 </actions>`;
-  const compactActions: any = convert.xml2js(xmlActions, {
+  const compactActions: convert.ElementCompact = convert.xml2js(xmlActions, {
     compact: true
   });
   test("it correctly converts write PV actions", (): void => {
@@ -100,7 +103,7 @@ describe("bob child conversion", (): void => {
       <width>299</width>
       <height>399</height>
     </widget>`;
-    const compactWidget: any = convert.xml2js(xmlWidget, {
+    const compactWidget: convert.ElementCompact = convert.xml2js(xmlWidget, {
       compact: true
     });
 
@@ -127,7 +130,7 @@ describe("bob child conversion", (): void => {
       <width>299</width>
       <height>399</height>
     </widget>`;
-    const compactWidget: any = convert.xml2js(xmlWidget, {
+    const compactWidget: convert.ElementCompact = convert.xml2js(xmlWidget, {
       compact: true
     });
 
@@ -152,7 +155,7 @@ describe("bob child conversion", (): void => {
       <name>Test Widget</name>
       <true_or_false>true</true_or_false>
     </widget>`;
-    const compactWidget: any = convert.xml2js(xmlWidget, {
+    const compactWidget: convert.ElementCompact = convert.xml2js(xmlWidget, {
       compact: true
     });
 
@@ -192,7 +195,7 @@ describe("bob child conversion", (): void => {
       </background_color>
       <height>399</height>
     </widget>`;
-    const compactWidget: any = convert.xml2js(xmlWidget, {
+    const compactWidget: convert.ElementCompact = convert.xml2js(xmlWidget, {
       compact: true
     });
 
@@ -241,7 +244,7 @@ describe("bob child conversion", (): void => {
             <height>399</height>
         </widget>
     </widget>`;
-    const compactWidget: any = convert.xml2js(xmlWidget, {
+    const compactWidget: convert.ElementCompact = convert.xml2js(xmlWidget, {
       compact: true
     });
 
@@ -294,7 +297,7 @@ describe("bob child conversion", (): void => {
             <height>699</height>
         </widget>
     </widget>`;
-    const compactWidget: any = convert.xml2js(xmlWidget, {
+    const compactWidget: convert.ElementCompact = convert.xml2js(xmlWidget, {
       compact: true
     });
 
