@@ -76,11 +76,10 @@ export const WidgetFromBob = (
     "org.csstudio.opibuilder.widgets.Label": Label,
     group: GroupingContainer,
     "org.csstudio.opibuilder.widgets.groupingContainer": GroupingContainer,
-    "org.csstudio.opibuilder.widgets.linkingContainer": WidgetFromBob,
-    "org.csstudio.opibuilder.widgets.choiceButton": Shape,
     display: Display,
     rectangle: Shape,
     "org.csstudio.opibuilder.widgets.Rectangle": Shape,
+    action_button: ActionButton, // eslint-disable-line @typescript-eslint/camelcase
     "org.csstudio.opibuilder.widgets.ActionButton": ActionButton,
     empty: Display,
     widgetFromBob: WidgetFromBob

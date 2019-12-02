@@ -194,11 +194,11 @@ export const convertBobToWidgetDescription = (
     compact: true
   }) as BobDescription;
 
-  log.debug(compactJSON);
-
   // Add display to top of JSON to be processed
   // Assumes top level widget is always display - valid for XML files
   compactJSON.display._attributes = { type: "display" };
+  // We don't care about the position of the top-level display widget.
+  // We place it at 0,0 within its container.
   compactJSON.display.x = { _text: "0px" };
   compactJSON.display.y = { _text: "0px" };
   log.debug(compactJSON);
