@@ -23,7 +23,8 @@ import {
   bobHandleActions,
   bobMacrosToMacroMap,
   bobPrecisionToNumber,
-  bobVisibleToBoolen,
+  bobVisibleToBoolean,
+  bobTransparentToBoolean,
   convertBobToWidgetDescription
 } from "./bobConversionUtils";
 
@@ -89,7 +90,8 @@ export const WidgetFromBob = (
     background_color: bobBackgroundColor, // eslint-disable-line @typescript-eslint/camelcase
     foreground_color: bobForegroundColor, // eslint-disable-line @typescript-eslint/camelcase
     precision: bobPrecisionToNumber,
-    visible: bobVisibleToBoolen,
+    visible: bobVisibleToBoolean,
+    transparent: bobTransparentToBoolean,
     style: bobAvoidStyleProp,
     actions: bobHandleActions
   };

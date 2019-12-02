@@ -86,7 +86,7 @@ export const bobPrecisionToNumber = (
   }
 };
 
-export const bobVisibleToBoolen = (
+export const bobVisibleToBoolean = (
   inputProps: UnknownPropsObject,
   outputProps: UnknownPropsObject
 ): void => {
@@ -100,6 +100,24 @@ export const bobVisibleToBoolen = (
   } catch (e) {
     log.error(
       `Could not convert visible property ${inputProps.visible} to a number`
+    );
+  }
+};
+
+export const bobTransparentToBoolean = (
+  inputProps: UnknownPropsObject,
+  outputProps: UnknownPropsObject
+): void => {
+  try {
+    let transparent = inputProps.transparent._text;
+    if (transparent === "true") {
+      outputProps.transparent = true;
+    } else if (transparent === "false") {
+      outputProps.transparent = false;
+    }
+  } catch (e) {
+    log.error(
+      `Could not convert transparent property ${inputProps.transparent} to a number`
     );
   }
 };
