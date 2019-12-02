@@ -74,10 +74,10 @@ export const bobParseBoolean = (name: string, jsonProp: any): boolean => {
 
 export const bobParseActions = (name: string, jsonProp: any): WidgetActions => {
   let actionsToProcess: any[] = [];
-  if (Array.isArray(jsonProp)) {
-    actionsToProcess = jsonProp;
-  } else {
-    actionsToProcess = [jsonProp];
+  if (Array.isArray(jsonProp.action)) {
+    actionsToProcess = jsonProp.action;
+  } else if (jsonProp.action !== undefined) {
+    actionsToProcess = [jsonProp.action];
   }
 
   // Object of available actions

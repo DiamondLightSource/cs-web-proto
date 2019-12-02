@@ -69,7 +69,7 @@ export const executeActions = (actions: WidgetActions): void => {
       toExecute = [actions.actions[0]];
     }
     for (const action of toExecute) {
-      log.debug(`executing an action ${action.type}`);
+      log.debug(`executing an action: ${getActionDescription(action)}`);
       executeAction(action);
     }
   }
