@@ -12,19 +12,28 @@ export interface PvProps extends React.PropsWithChildren<any> {
 
 export function useConnection(
   id: string,
-  pvName: string
+  pvName?: string
 ): [string, boolean, boolean, VType?] {
-  useSubscription(id, [pvName]);
+  const pvNameArray = pvName === undefined ? [] : [pvName];
+  useSubscription(id, pvNameArray);
   const pvResults = useSelector(
-    (state: CsState): PvArrayResults => pvStateSelector([pvName], state),
+    (state: CsState): PvArrayResults => pvStateSelector(pvNameArray, state),
     pvStateComparator
   );
-  const [pvState, effectivePvName] = pvResults[pvName];
-  if (pvState) {
-    const connected = pvState.connected || false;
-    const readonly = pvState.readonly || false;
-    return [effectivePvName, connected, readonly, pvState.value];
+  let connected = false;
+  let readonly = false;
+  let effectivePvName = pvName === undefined ? "undefined" : pvName;
+  let value = undefined;
+  if (pvName !== undefined) {
+    const [pvState, effPvName] = pvResults[pvName];
+    effectivePvName = effPvName;
+    if (pvState) {
+      connected = pvState.connected || false;
+      readonly = pvState.readonly || false;
+      value = pvState.value;
+    } else {
+    }
   } else {
-    return [effectivePvName, false, false, undefined];
   }
+  return [effectivePvName, connected, readonly, value];
 }
