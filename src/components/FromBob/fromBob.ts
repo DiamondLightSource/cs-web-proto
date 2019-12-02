@@ -17,16 +17,14 @@ import { Shape } from "../Shape/shape";
 import { GroupingContainer } from "../GroupingContainer/groupingContainer";
 import { WidgetPropType, InferWidgetProps } from "../Widget/widget";
 import {
-  bobAvoidStyleProp,
-  bobBackgroundColor,
-  bobForegroundColor,
-  bobHandleActions,
-  bobMacrosToMacroMap,
-  bobPrecisionToNumber,
-  bobVisibleToBoolean,
-  bobTransparentToBoolean,
-  convertBobToWidgetDescription
+  convertBobToWidgetDescription,
+  bobParseBoolean,
+  bobParsePrecision,
+  bobParseColor,
+  bobParseMacros,
+  bobParseActions
 } from "./bobConversionUtils";
+import { ActionButton } from "../ActionButton/actionButton";
 
 const EMPTY_WIDGET: WidgetDescription = {
   type: "empty",
@@ -78,26 +76,33 @@ export const WidgetFromBob = (
     "org.csstudio.opibuilder.widgets.Label": Label,
     group: GroupingContainer,
     "org.csstudio.opibuilder.widgets.groupingContainer": GroupingContainer,
+    "org.csstudio.opibuilder.widgets.linkingContainer": WidgetFromBob,
+    "org.csstudio.opibuilder.widgets.choiceButton": Shape,
     display: Display,
     rectangle: Shape,
     "org.csstudio.opibuilder.widgets.Rectangle": Shape,
+    "org.csstudio.opibuilder.widgets.ActionButton": ActionButton,
     empty: Display,
     widgetFromBob: WidgetFromBob
   };
 
   const functionSubstitutions = {
-    macros: bobMacrosToMacroMap,
-    background_color: bobBackgroundColor, // eslint-disable-line @typescript-eslint/camelcase
-    foreground_color: bobForegroundColor, // eslint-disable-line @typescript-eslint/camelcase
-    precision: bobPrecisionToNumber,
-    visible: bobVisibleToBoolean,
-    transparent: bobTransparentToBoolean,
-    style: bobAvoidStyleProp,
-    actions: bobHandleActions
+    macros: bobParseMacros,
+    background_color: bobParseColor, // eslint-disable-line @typescript-eslint/camelcase
+    foreground_color: bobParseColor, // eslint-disable-line @typescript-eslint/camelcase
+    precision: bobParsePrecision,
+    visible: bobParseBoolean,
+    transparent: bobParseBoolean,
+    actions: bobParseActions
   };
 
   const keySubstitutions = {
-    pv_name: "pvName" // eslint-disable-line @typescript-eslint/camelcase
+    pv_name: "pvName", // eslint-disable-line @typescript-eslint/camelcase
+    opi_file: "file", // eslint-disable-line @typescript-eslint/camelcase
+    background_color: "backgroundColor", // eslint-disable-line @typescript-eslint/camelcase
+    foreground_color: "color", // eslint-disable-line @typescript-eslint/camelcase
+    // Rename style prop to make sure it isn't used directly to style components.
+    style: "bobStyle" // eslint-disable-line @typescript-eslint/camelcase
   };
 
   let component: JSX.Element;
@@ -145,6 +150,7 @@ export const WidgetFromBob = (
     );
   } catch (e) {
     log.error(`Error converting Bob into components in ${file}`);
+    log.error(e);
     log.error(e.msg);
     log.error(e.object);
     component = widgetDescriptionToComponent(
