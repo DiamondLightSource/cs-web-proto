@@ -11,7 +11,9 @@ import {
 
 const LabelProps = {
   text: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-  visible: PropTypes.bool
+  visible: PropTypes.bool,
+  height: PropTypes.string,
+  transparent: PropTypes.bool
 };
 
 export const LabelComponent = (
@@ -20,6 +22,9 @@ export const LabelComponent = (
   const style: any = { ...props.style };
   if (props.visible !== undefined && !props.visible) {
     style["visibility"] = "hidden";
+  }
+  if (props.transparent !== undefined && props.transparent) {
+    style["background-color"] = "transparent";
   }
   // Simple component to display text - defaults to black text and dark grey background
   return (
