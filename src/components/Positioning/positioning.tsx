@@ -44,6 +44,10 @@ export function widgetDescriptionToComponent(
     ...otherProps
   } = widgetDescription;
 
+  if (!widgetDict.hasOwnProperty(type)) {
+    throw new Error(`No widget defined for type ${type}`);
+  }
+
   function filterUndefinedOut(input: {
     [index: string]: any;
   }): { [index: string]: any } {
@@ -84,7 +88,7 @@ export function widgetDescriptionToComponent(
     widgetDict[type].propTypes,
     widgetInfo,
     "widget description",
-    type,
+    widgetDict[type].name,
     (): void => {
       log.debug("Got an error");
     }
