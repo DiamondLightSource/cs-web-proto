@@ -8,14 +8,14 @@ export const WRITE_PV = "WRITE_PV";
 export interface OpenWebpage {
   type: typeof OPEN_WEBPAGE;
   url: string;
-  description: string;
+  description?: string;
 }
 
 export interface WritePv {
   type: typeof WRITE_PV;
   pvName: string;
   value: string | number;
-  description: string;
+  description?: string;
 }
 
 export type WidgetAction = OpenWebpage | WritePv;
