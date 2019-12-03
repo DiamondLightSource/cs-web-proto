@@ -131,7 +131,7 @@ type WidgetComponent = WidgetProps & { baseWidget: React.FC<any> };
 
 // Internal prop types object for properties which are not in a standard widget
 const PVExtras = {
-  pvName: PropTypes.string.isRequired,
+  pvName: PropTypes.string,
   alarmBorder: PropTypes.bool
 };
 // PropTypes object for a PV widget which can be expanded
