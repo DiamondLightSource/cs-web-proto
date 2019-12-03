@@ -22,8 +22,8 @@ export function useConnection(
   );
   let connected = false;
   let readonly = false;
-  let effectivePvName = pvName === undefined ? "undefined" : pvName;
   let value = undefined;
+  let effectivePvName = "undefined";
   if (pvName !== undefined) {
     const [pvState, effPvName] = pvResults[pvName];
     effectivePvName = effPvName;
@@ -31,9 +31,7 @@ export function useConnection(
       connected = pvState.connected || false;
       readonly = pvState.readonly || false;
       value = pvState.value;
-    } else {
     }
-  } else {
   }
   return [effectivePvName, connected, readonly, value];
 }
