@@ -24,7 +24,7 @@ export const LabelComponent = (
     style["visibility"] = "hidden";
   }
   if (props.transparent !== undefined && props.transparent) {
-    style["background-color"] = "transparent";
+    style["backgroundColor"] = "transparent";
   }
   // Simple component to display text - defaults to black text and dark grey background
   return (

@@ -27,7 +27,7 @@ export const ShapeComponent = (
   };
 
   if (props.transparent !== undefined && props.transparent) {
-    newStyle["background-color"] = "transparent";
+    newStyle["backgroundColor"] = "transparent";
   }
   return <div style={newStyle} />;
 };
