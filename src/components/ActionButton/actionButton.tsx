@@ -27,7 +27,11 @@ export const ActionButtonComponent = (
     );
   } else {
     return (
-      <button onClick={props.onClick} style={props.style}>
+      <button
+        className={classes.actionbutton}
+        onClick={props.onClick}
+        style={props.style}
+      >
         {props.text}
       </button>
     );
