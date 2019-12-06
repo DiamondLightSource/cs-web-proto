@@ -1,9 +1,7 @@
 .Readback {
   text-align: center;
   font-size: 1rem;
-  min-height: 1rem;
-  height: 100%;
-  width: 100%;
+  padding: 3px;
   overflow: hidden;
   text-overflow: ellipsis;
   background-color: "#383838";
@@ -12,6 +10,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  box-sizing: border-box;
 }
 
 .Readback.Minor {
