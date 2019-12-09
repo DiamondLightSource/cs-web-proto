@@ -102,8 +102,7 @@ export const WidgetFromBob = (
     background_color: "backgroundColor", // eslint-disable-line @typescript-eslint/camelcase
     foreground_color: "color", // eslint-disable-line @typescript-eslint/camelcase
     // Rename style prop to make sure it isn't used directly to style components.
-    style: "bobStyle", // eslint-disable-line @typescript-eslint/camelcase
-    macros: "macroMap"
+    style: "bobStyle" // eslint-disable-line @typescript-eslint/camelcase
   };
 
   let component: JSX.Element;
