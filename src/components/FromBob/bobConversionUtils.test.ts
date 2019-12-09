@@ -221,6 +221,28 @@ describe("bob child conversion", (): void => {
       });
     }
   );
+  test("it throws error if boolean invalid", (): void => {
+    const invalidBoolWidget = `
+    <widget type="testwidget" version="2.0.0">
+      <name>Test Widget</name>
+      <true_or_false>not-a-bool</true_or_false>
+    </widget>`;
+    const compactWidget: convert.ElementCompact = convert.xml2js(
+      invalidBoolWidget,
+      {
+        compact: true
+      }
+    );
+    expect((): void => {
+      bobChildToWidgetChild(
+        compactWidget.widget,
+        {
+          true_or_false: bobParseBoolean // eslint-disable-line @typescript-eslint/camelcase
+        },
+        {}
+      );
+    }).toThrow();
+  });
   test("it converts a simple widget with function subsitutions", (): void => {
     const xmlWidget = `
     <widget type="testwidget" version="2.0.0">

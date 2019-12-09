@@ -69,16 +69,14 @@ export const bobParseBoolean = (
   name: string,
   jsonProp: convert.ElementCompact
 ): boolean => {
-  let boolValue = true;
-  try {
-    let boolText = jsonProp._text;
-    if (boolText === "false") {
-      boolValue = false;
-    }
-  } catch (e) {
-    log.error(`Could not convert ${name} property ${jsonProp} to a boolean`);
+  let boolText = jsonProp._text;
+  if (boolText === "false") {
+    return false;
+  } else if (boolText === "true") {
+    return true;
+  } else {
+    throw new Error(`Could not parse boolean from ${name}: ${boolText}`);
   }
-  return boolValue;
 };
 
 export const bobParseActions = (
