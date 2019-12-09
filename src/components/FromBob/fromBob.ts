@@ -97,6 +97,7 @@ export const WidgetFromBob = (
 
   const keySubstitutions = {
     pv_name: "pvName", // eslint-disable-line @typescript-eslint/camelcase
+    macros: "macroMap",
     opi_file: "file", // eslint-disable-line @typescript-eslint/camelcase
     background_color: "backgroundColor", // eslint-disable-line @typescript-eslint/camelcase
     foreground_color: "color", // eslint-disable-line @typescript-eslint/camelcase
