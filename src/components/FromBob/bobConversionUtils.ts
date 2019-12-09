@@ -98,8 +98,18 @@ export const bobParseActions = (
     WRITE_PV: WRITE_PV
   };
 
+  // Extract information about whether to execute all actions at once
+  const executeAsOne =
+    (jsonProp._attributes !== undefined &&
+      jsonProp._attributes.execute_as_one) === "true"
+      ? true
+      : false;
+
   // Turn into an array of Actions
-  let processedActions: WidgetActions = { executeAsOne: false, actions: [] };
+  let processedActions: WidgetActions = {
+    executeAsOne: executeAsOne,
+    actions: []
+  };
 
   actionsToProcess.forEach((action): void => {
     log.debug(action);

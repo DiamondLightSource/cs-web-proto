@@ -90,6 +90,41 @@ describe("actions conversion", (): void => {
       ]
     });
   });
+  test("it correctly converts actions which execute as one", (): void => {
+    const xmlActions = `
+    <actions execute_as_one="true">
+      <action type="write_pv">
+        <pv_name>testPV1</pv_name>
+        <value>1</value>
+        <description>Write pv1 to 1</description>
+      </action>
+      <action type="write_pv">
+        <pv_name>testPV2</pv_name>
+        <value>Testing</value>
+        <description>Write pv2 to Testing</description>
+      </action>
+    </actions>`;
+    const compactActions: convert.ElementCompact = convert.xml2js(xmlActions, {
+      compact: true
+    });
+    expect(bobParseActions("actions", compactActions.actions)).toEqual({
+      executeAsOne: true,
+      actions: [
+        {
+          type: WRITE_PV,
+          pvName: "testPV1",
+          value: "1",
+          description: "Write pv1 to 1"
+        },
+        {
+          type: WRITE_PV,
+          pvName: "testPV2",
+          value: "Testing",
+          description: "Write pv2 to Testing"
+        }
+      ]
+    });
+  });
 });
 
 describe("bob child conversion", (): void => {
