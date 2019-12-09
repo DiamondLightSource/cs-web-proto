@@ -47,9 +47,9 @@ export function widgetDescriptionToComponent(
 
   let Component: React.FC<any>;
   if (widgetDict.hasOwnProperty(type)) {
-    log.warn(`Failed to load unknown widget type ${type}`);
     Component = widgetDict[type];
   } else {
+    log.warn(`Failed to load unknown widget type ${type}`);
     Component = Shape;
     backgroundColor = "magenta";
   }

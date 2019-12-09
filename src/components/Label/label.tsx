@@ -12,7 +12,6 @@ import {
 const LabelProps = {
   text: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   visible: PropTypes.bool,
-  height: PropTypes.string,
   transparent: PropTypes.bool
 };
 
