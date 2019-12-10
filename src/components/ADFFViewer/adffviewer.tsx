@@ -15,13 +15,13 @@ const RawADFFViewerProps = {
   label: PropTypes.string
 };
 
-export type RawADFFViewerComponentProps = InferWidgetProps<
+export type RawADFFViewerComponentPropsType = InferWidgetProps<
   typeof RawADFFViewerProps
 > &
   PVComponent;
 
 export const RawADFFViewerComponent = (
-  props: RawADFFViewerComponentProps
+  props: RawADFFViewerComponentPropsType
 ): JSX.Element => (
   <div style={props.style}>
     {props.label}
@@ -58,11 +58,13 @@ const ADFFViewerWidgetProps = {
   ...WidgetPropType
 };
 
+export type ADFFViewerWidgetPropsType = InferWidgetProps<
+  typeof ADFFViewerWidgetProps
+>;
+
 // This widget takes a prefix for a FFmpeg plugin and derives
 // the needed PV to instanciate a RawADFFViewerComponent
-export const ADFFViewer = (
-  props: InferWidgetProps<typeof ADFFViewerWidgetProps>
-): JSX.Element => (
+export const ADFFViewer = (props: ADFFViewerWidgetPropsType): JSX.Element => (
   <RawADFFViewer pvName={`${props.prefix}:MJPG_URL_RBV`} {...props} />
 );
 
