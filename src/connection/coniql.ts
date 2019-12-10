@@ -49,7 +49,8 @@ type CONIQL_TYPE = "FLOAT64" | "INT32" | "INT64";
 const VTYPE_CLASSES = {
   FLOAT64: "VDouble",
   INT32: "VInt",
-  INT64: "VLong"
+  INT64: "VLong",
+  String: "VString"
 };
 
 const ARRAY_TYPES = {
@@ -67,7 +68,7 @@ function coniqlToPartialVtype(
 ): PartialVType {
   let result: PartialVType = {};
   if (value != null) {
-    result["value"] = value;
+    result.value = value;
   }
   if (value && value.numberType) {
     const bd = base64js.toByteArray(value.base64);
@@ -101,6 +102,10 @@ function coniqlToPartialVtype(
           units
         );
       }
+    } else if (meta.__typename === "EnumMeta") {
+      result.type = "VEnum";
+      result.choices = meta.choices;
+      result.index = value;
     } else {
       result.type = VTYPE_CLASSES[meta.type as CONIQL_TYPE];
     }
@@ -151,6 +156,10 @@ const PV_SUBSCRIPTION = gql`
             precision
             form
           }
+        }
+        ... on EnumMeta {
+          array
+          choices
         }
       }
       status {

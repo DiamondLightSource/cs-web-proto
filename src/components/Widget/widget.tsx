@@ -57,7 +57,7 @@ const ActionPropType = PropTypes.oneOfType([
 
 const ActionsPropType = PropTypes.shape({
   executeAsOne: PropTypes.bool,
-  actions: PropTypes.arrayOf(ActionPropType)
+  actions: PropTypes.arrayOf(ActionPropType).isRequired
 });
 
 const RulesPropType = PropTypes.shape({
@@ -203,7 +203,7 @@ export const Widget = (props: WidgetComponent): JSX.Element => {
 
   // Put appropriate components on the list of components to be wrapped
   const components = [];
-  if (props.actions) {
+  if (props.actions && props.actions.actions.length > 0) {
     components.push(MenuWrapper);
   }
   components.push(TooltipWrapper);
@@ -262,7 +262,7 @@ export const PVWidget = (props: PVWidgetComponent): JSX.Element => {
 
   const components = [];
 
-  if (props.actions) {
+  if (props.actions && props.actions.actions.length > 0) {
     components.push(MenuWrapper);
   }
   if (alarmBorder) {

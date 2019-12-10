@@ -6,6 +6,9 @@ import convert from "xml-js";
 
 import { WidgetDescription } from "../Positioning/positioning";
 import { WidgetActions, WRITE_PV } from "../../widgetActions";
+import { MacroMap } from "../../redux/csState";
+
+type GenericProp = string | boolean | number | MacroMap | WidgetActions;
 
 interface BobDescription {
   _attributes: { [key: string]: string };
@@ -17,110 +20,74 @@ interface BobDescription {
   [key: string]: any;
 }
 
-export interface UnknownPropsObject {
-  [key: string]: any;
-}
-
 interface FunctionSubstitutionInterface {
   [key: string]: (
-    inputProps: UnknownPropsObject,
-    ouptutProps: UnknownPropsObject
-  ) => void;
+    name: string,
+    jsonProp: convert.ElementCompact
+  ) => GenericProp;
 }
 
-export const bobMacrosToMacroMap = (
-  inputProps: UnknownPropsObject,
-  outputProps: UnknownPropsObject
-): void => {
-  // Start with blank object
-  if (inputProps.macros) {
-    outputProps.macroMap = {};
-    Object.entries(inputProps.macros as object).forEach(
-      ([key, value]): void => {
-        outputProps.macroMap[key] = value["_text"];
-      }
-    );
-  }
+export const bobParseMacros = (
+  name: string,
+  jsonProp: convert.ElementCompact
+): MacroMap => {
+  const macroMap: MacroMap = {};
+  Object.entries(jsonProp as object).forEach(([key, value]): void => {
+    macroMap[key] = value["_text"];
+  });
+  return macroMap;
 };
 
 export interface BobColor {
   _attributes: { name: string; red: string; blue: string; green: string };
 }
 
-export const bobColorsToColor = (color: BobColor): string => {
+export const bobParseColor = (
+  name: string,
+  jsonProp: convert.ElementCompact
+): string => {
+  const color = jsonProp.color as BobColor;
+  console.log("bobparsecolor");
+  console.log(color);
   try {
     return `rgb(${color._attributes.red}, ${color._attributes.green}, ${color._attributes.blue})`;
   } catch (e) {
-    log.error(`Could not convert color object`);
+    log.error(`Could not convert color object ${name}`);
     log.error(color);
     return "";
   }
 };
 
-export const bobBackgroundColor = (
-  inputProps: UnknownPropsObject,
-  outputProps: UnknownPropsObject
-): void => {
-  outputProps.backgroundColor = bobColorsToColor(
-    inputProps.background_color.color
-  );
+export const bobParsePrecision = (
+  name: string,
+  jsonProp: convert.ElementCompact
+): number => {
+  return Number(jsonProp._text);
 };
 
-export const bobForegroundColor = (
-  inputProps: UnknownPropsObject,
-  outputProps: UnknownPropsObject
-): void => {
-  outputProps.color = bobColorsToColor(inputProps.foreground_color.color);
-};
-
-export const bobPrecisionToNumber = (
-  inputProps: UnknownPropsObject,
-  outputProps: UnknownPropsObject
-): void => {
-  try {
-    outputProps.precision = Number(inputProps.precision._text);
-  } catch (e) {
-    log.error(
-      `Could not convert precision of ${inputProps.precision} to a number`
-    );
+export const bobParseBoolean = (
+  name: string,
+  jsonProp: convert.ElementCompact
+): boolean => {
+  let boolText = jsonProp._text;
+  if (boolText === "false") {
+    return false;
+  } else if (boolText === "true") {
+    return true;
+  } else {
+    throw new Error(`Could not parse boolean from ${name}: ${boolText}`);
   }
 };
 
-export const bobVisibleToBoolen = (
-  inputProps: UnknownPropsObject,
-  outputProps: UnknownPropsObject
-): void => {
-  try {
-    let visible = inputProps.visible._text;
-    if (visible === "true") {
-      outputProps.visible = true;
-    } else if (visible === "false") {
-      outputProps.visible = false;
-    }
-  } catch (e) {
-    log.error(
-      `Could not convert visible property ${inputProps.visible} to a number`
-    );
-  }
-};
-
-/* Bob and OPI files have a style object which clashes with our own style object
-At some later date a proper conversion for this should be implemented
-General styling elements such as color, size and font are handled in other objects
-so perhaps it is not that important */
-export const bobAvoidStyleProp = (
-  inputProps: UnknownPropsObject,
-  outputProps: UnknownPropsObject
-): void => {};
-
-export const bobActionToAction = (
-  bobAction: UnknownPropsObject
+export const bobParseActions = (
+  name: string,
+  jsonProp: convert.ElementCompact
 ): WidgetActions => {
   let actionsToProcess: any[] = [];
-  if (Array.isArray(bobAction)) {
-    actionsToProcess = bobAction;
-  } else {
-    actionsToProcess = [bobAction];
+  if (Array.isArray(jsonProp.action)) {
+    actionsToProcess = jsonProp.action;
+  } else if (jsonProp.action !== undefined) {
+    actionsToProcess = [jsonProp.action];
   }
 
   // Object of available actions
@@ -129,8 +96,18 @@ export const bobActionToAction = (
     WRITE_PV: WRITE_PV
   };
 
+  // Extract information about whether to execute all actions at once
+  const executeAsOne =
+    (jsonProp._attributes !== undefined &&
+      jsonProp._attributes.execute_as_one) === "true"
+      ? true
+      : false;
+
   // Turn into an array of Actions
-  let processedActions: WidgetActions = { executeAsOne: false, actions: [] };
+  let processedActions: WidgetActions = {
+    executeAsOne: executeAsOne,
+    actions: []
+  };
 
   actionsToProcess.forEach((action): void => {
     log.debug(action);
@@ -154,15 +131,6 @@ export const bobActionToAction = (
   return processedActions;
 };
 
-export const bobHandleActions = (
-  inputProps: UnknownPropsObject,
-  outputProps: UnknownPropsObject
-): void => {
-  if (inputProps.actions.action) {
-    outputProps.actions = bobActionToAction(inputProps.actions.action);
-  }
-};
-
 export const bobChildToWidgetChild = (
   bobChild: BobDescription,
   functionSubstitutions?: FunctionSubstitutionInterface,
@@ -184,20 +152,19 @@ export const bobChildToWidgetChild = (
   // Map the remaining props
   // Checks that there is a substitution map
   let mappedProps: { [key: string]: any } = {};
-  Object.entries(remainingProps as UnknownPropsObject).forEach(
-    ([key, value]): void => {
-      if (functionSubstitutions && functionSubstitutions[key]) {
-        // Use the function substitution
-        functionSubstitutions[key](remainingProps, mappedProps);
-      } else if (keySubstitutions && keySubstitutions[key]) {
-        // Just substitute the key and extract from _text
-        mappedProps[keySubstitutions[key]] = value._text;
-      } else {
-        // Just extract from text
-        mappedProps[key] = value._text;
-      }
+  Object.entries(remainingProps).forEach(([key, value]): void => {
+    if (functionSubstitutions && functionSubstitutions[key]) {
+      // Use the function substitution
+      mappedProps[key] = functionSubstitutions[key](key, value);
+    } else {
+      // Just extract from text
+      mappedProps[key] = value._text;
     }
-  );
+    if (keySubstitutions && keySubstitutions[key]) {
+      mappedProps[keySubstitutions[key]] = mappedProps[key];
+      delete mappedProps[key];
+    }
+  });
 
   // Make sure widget is an array, otherwise it is seen as an object only
   let widgetList = [];
@@ -235,9 +202,9 @@ export const bobChildToWidgetChild = (
 export const convertBobToWidgetDescription = (
   bobInputString: string,
   functionSubstitutions?: {
-    [key: string]: (inputProps: object, ouptutProps: object) => void;
+    [key: string]: (name: string, inputProp: object) => GenericProp;
   },
-  keySubstitutions?: { [key: string]: any }
+  keySubstitutions?: { [key: string]: string }
 ): WidgetDescription => {
   // Provide a raw xml file in the bob format for conversion
   // Optionally provide a substition map for keys
@@ -247,11 +214,14 @@ export const convertBobToWidgetDescription = (
     compact: true
   }) as BobDescription;
 
-  log.debug(compactJSON);
-
   // Add display to top of JSON to be processed
   // Assumes top level widget is always display - valid for XML files
   compactJSON.display._attributes = { type: "display" };
+  // We don't care about the position of the top-level display widget.
+  // We place it at 0,0 within its container.
+  compactJSON.display.x = { _text: "0" };
+  compactJSON.display.y = { _text: "0" };
+  log.debug(compactJSON);
 
   return bobChildToWidgetChild(
     compactJSON.display,

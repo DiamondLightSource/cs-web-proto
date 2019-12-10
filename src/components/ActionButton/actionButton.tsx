@@ -15,14 +15,26 @@ export const ActionButtonComponent = (
 ): JSX.Element => {
   if (props.image !== undefined) {
     return (
-      <button className={classes.image} onClick={props.onClick}>
+      <button
+        className={classes.image}
+        onClick={props.onClick}
+        style={props.style}
+      >
         <img src={props.image} alt={props.image}></img>
         <br></br>
         {props.text}
       </button>
     );
   } else {
-    return <button onClick={props.onClick}>{props.text}</button>;
+    return (
+      <button
+        className={classes.actionbutton}
+        onClick={props.onClick}
+        style={props.style}
+      >
+        {props.text}
+      </button>
+    );
   }
 };
 
