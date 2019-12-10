@@ -20,4 +20,11 @@ describe("<Label Label />", (): void => {
   test("it renders a basic element", (): void => {
     expect(wrapper.text()).toEqual("hello");
   });
+
+  test("it handles transparent prop", (): void => {
+    wrapper = shallow(<LabelComponent text={"hello"} transparent={true} />);
+    expect(
+      wrapper.find("div").getElement().props.style["backgroundColor"]
+    ).toEqual("transparent");
+  });
 });

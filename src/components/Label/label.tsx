@@ -12,7 +12,7 @@ import {
 const LabelProps = {
   text: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   visible: PropTypes.bool,
-  indent: PropTypes.string
+  transparent: PropTypes.bool
 };
 
 export const LabelComponent = (
@@ -22,8 +22,8 @@ export const LabelComponent = (
   if (props.visible !== undefined && !props.visible) {
     style["visibility"] = "hidden";
   }
-  if (props.indent !== undefined) {
-    style["text-indent"] = props.indent;
+  if (props.transparent !== undefined && props.transparent) {
+    style["backgroundColor"] = "transparent";
   }
   // Simple component to display text - defaults to black text and dark grey background
   return (
