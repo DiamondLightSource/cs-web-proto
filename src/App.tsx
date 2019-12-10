@@ -14,6 +14,8 @@ import { ConnectionForwarder } from "./connection/forwarder";
 import { WidgetFromJson } from "./components/FromJson/fromJson";
 import { DynamicPageWidget } from "./components/DynamicPage/dynamicPage";
 import { Connection } from "./connection/plugin";
+import { ActionButton } from "./components/ActionButton/actionButton";
+import { OPEN_PAGE } from "./widgetActions";
 
 var settings: any;
 try {
@@ -57,8 +59,27 @@ const App: React.FC = (): JSX.Element => {
           <button type="button" onClick={toggle}>
             Toggle Theme
           </button>
+          <ActionButton
+            containerStyling={{
+              position: "relative",
+              height: "30px",
+              width: "100px",
+              margin: "auto",
+              padding: "",
+              border: "",
+              minWidth: "",
+              maxWidth: ""
+            }}
+            text="Main Menu"
+            actions={{
+              executeAsOne: false,
+              actions: [
+                { type: OPEN_PAGE, location: "app", page: "menu", macros: "{}" }
+              ]
+            }}
+          />
           <DynamicPageWidget
-            routePath="page"
+            routePath="app"
             containerStyling={{
               position: "relative",
               height: "",
