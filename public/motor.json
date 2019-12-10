@@ -84,7 +84,6 @@
         },
         {
           "type": "actionbutton",
-          "pvName": "sim://limit#m${motor}",
           "position": "relative",
           "width": "100%",
           "margin": "5px 0px 0px 0px",
@@ -107,7 +106,6 @@
         },
         {
           "type": "actionbutton",
-          "pvName": "sim://limit#m${motor}",
           "position": "relative",
           "width": "100%",
           "margin": "5px 0px 0px 0px",
@@ -130,7 +128,6 @@
         },
         {
           "type": "actionbutton",
-          "pvName": "sim://limit#m${motor}",
           "position": "relative",
           "width": "100%",
           "margin": "5px 0px 0px 0px",
@@ -147,6 +144,24 @@
                 "type": "WRITE_PV",
                 "pvName": "loc://enum#m${motor}",
                 "value": "fast"
+              }
+            ]
+          }
+        },
+        {
+          "type": "actionbutton",
+          "position": "relative",
+          "width": "100%",
+          "margin": "5px 0px 0px 0px",
+          "text": "More...",
+          "actions": {
+            "executeAsOne": false,
+            "actions": [
+              {
+                "type": "OPEN_PAGE",
+                "location": "detail",
+                "page": "motorDetail",
+                "macros": "{\"motor\":\"${motor}\"}"
               }
             ]
           }
