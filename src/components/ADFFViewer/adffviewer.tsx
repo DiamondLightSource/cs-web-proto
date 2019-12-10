@@ -5,13 +5,21 @@ import { displayOf } from "../../vtypes/display";
 import { VType, VEnum } from "../../vtypes/vtypes";
 // used for className={`MyComponent ${classes.MyComponent}`}
 // import classes from "./mycomponent.module.css";
-import { InferWidgetProps, PVComponent, PVWidget, WidgetPropType, PVWidgetPropType } from "../Widget/widget";
+import {
+  InferWidgetProps,
+  PVComponent,
+  PVWidget,
+  WidgetPropType,
+  PVWidgetPropType
+} from "../Widget/widget";
 
 const RawADFFViewerProps = {
-  label: PropTypes.string,
+  label: PropTypes.string
 };
 
-export type RawADFFViewerComponentProps = InferWidgetProps<typeof RawADFFViewerProps> &
+export type RawADFFViewerComponentProps = InferWidgetProps<
+  typeof RawADFFViewerProps
+> &
   PVComponent;
 
 export const RawADFFViewerComponent = (
@@ -19,11 +27,13 @@ export const RawADFFViewerComponent = (
 ): JSX.Element => (
   <div style={props.style}>
     {props.label}
-    <img src={vtypeToString(props.value)} style={{
-      width: "100%",
-      height: "100%"
-    }}/>
-
+    <img
+      src={vtypeToString(props.value)}
+      style={{
+        width: "100%",
+        height: "100%"
+      }}
+    />
   </div>
 );
 
@@ -53,6 +63,8 @@ const ADFFViewerWidgetProps = {
 // the needed PV to instanciate a RawADFFViewerComponent
 export const ADFFViewer = (
   props: InferWidgetProps<typeof ADFFViewerWidgetProps>
-): JSX.Element => <RawADFFViewer pvName={`${props.prefix}:MJPG_URL_RBV`} {...props} />;
+): JSX.Element => (
+  <RawADFFViewer pvName={`${props.prefix}:MJPG_URL_RBV`} {...props} />
+);
 
 ADFFViewer.propTypes = ADFFViewerWidgetProps;
