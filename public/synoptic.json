@@ -9,22 +9,22 @@
     {
       "type": "actionbutton",
       "pvName": "sim://limit#1",
-      "text": "Component 1",
-      "image": "http://localhost:3000/DCM-base.png",
+      "text": "Motor 1",
+      "image": "http://pc0030.cs.diamond.ac.uk:3000/DCM-base.png",
       "position": "absolute",
       "x": "0px",
       "y": "0px",
-      "width": "20px",
-      "height": "20px",
+      "width": "100px",
+      "height": "100px",
       "actions": {
         "executeAsOne": false,
         "actions": [
           {
             "type": "OPEN_PAGE",
-            "location": "left",
-            "page": "embed",
-            "description": "test",
-            "macros": "{\"DEVICE\":\"SR03A-VA-IONP-01\"}"
+            "location": "embed",
+            "page": "motor",
+            "description": "Motor 1 Info",
+            "macros": "{\"motor\":\"1\"}"
           }
         ]
       }
@@ -32,22 +32,22 @@
     {
       "type": "actionbutton",
       "pvName": "sim://limit#1",
-      "text": "Component 2",
-      "image": "http://localhost:3000/DCM-base.png",
+      "text": "Motor 2",
+      "image": "http://pc0030.cs.diamond.ac.uk:3000/DCM-base.png",
       "position": "absolute",
       "x": "150px",
       "y": "0px",
-      "width": "20px",
-      "height": "20px",
+      "width": "100px",
+      "height": "100px",
       "actions": {
         "executeAsOne": false,
         "actions": [
           {
             "type": "OPEN_PAGE",
-            "location": "left",
-            "page": "ionpExample",
-            "description": "test",
-            "macros": "{\"device\":\"SR04A-VA-IONP-01\"}"
+            "location": "embed",
+            "page": "motor",
+            "description": "Motor 2 Info",
+            "macros": "{\"motor\":\"2\"}"
           }
         ]
       }
@@ -75,6 +75,52 @@
       "shapeHeight": "100px",
       "shapeRadius": "50%",
       "backgroundColor": "green"
+    },
+    {
+      "type": "actionbutton",
+      "pvName": "sim://limit#1",
+      "text": "Motor 3",
+      "image": "http://pc0030.cs.diamond.ac.uk:3000/DCM-base.png",
+      "position": "absolute",
+      "x": "350px",
+      "y": "0px",
+      "width": "100px",
+      "height": "100px",
+      "actions": {
+        "executeAsOne": false,
+        "actions": [
+          {
+            "type": "OPEN_PAGE",
+            "location": "embed",
+            "page": "motor",
+            "description": "Motor 3 Info",
+            "macros": "{\"motor\":\"3\"}"
+          }
+        ]
+      }
+    },
+
+    {
+      "type": "actionbutton",
+      "text": "Motor Summary Screen",
+      "position": "absolute",
+      "x": "20px",
+      "y": "125px",
+      "width": "200px",
+      "height": "40px",
+      "backgroundColor": "#aaaaaa",
+      "actions": {
+        "executeAsOne": false,
+        "actions": [
+          {
+            "type": "OPEN_PAGE",
+            "location": "embed",
+            "page": "motorSummary",
+            "macros": "{}",
+            "description": "Motor Summary Screen"
+          }
+        ]
+      }
     }
   ]
 }

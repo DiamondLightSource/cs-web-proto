@@ -54,12 +54,12 @@
               "textAlign": "center",
               "fontWeight": "bold",
               "backgroundColor": "#eeeeee",
-              "text": "Detail"
+              "text": "Embed"
             },
             {
-              "type": "widgetFromJSON",
+              "type": "dynamicpage",
               "position": "relative",
-              "file": "http://pc0030.cs.diamond.ac.uk:3000/motor.json"
+              "routePath": "embed"
             }
           ]
         },
@@ -79,7 +79,7 @@
               "textAlign": "center",
               "fontWeight": "bold",
               "backgroundColor": "#eeeeee",
-              "text": "Embed"
+              "text": "Detail"
             }
           ]
         }

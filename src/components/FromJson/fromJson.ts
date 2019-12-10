@@ -52,7 +52,11 @@ export const WidgetFromJson = (
   // Extract props
   let { file, macroMap } = props;
 
-  if (json["type"] === "empty" || file !== renderedFile) {
+  if (
+    json["type"] === "empty" ||
+    file !== renderedFile ||
+    macroMap !== currentMacros
+  ) {
     fetch(file)
       .then(
         (response): Promise<any> => {
