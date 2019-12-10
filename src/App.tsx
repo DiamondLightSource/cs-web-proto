@@ -12,6 +12,7 @@ import { SimulatorPlugin } from "./connection/sim";
 import { ConiqlPlugin } from "./connection/coniql";
 import { ConnectionForwarder } from "./connection/forwarder";
 import { WidgetFromJson } from "./components/FromJson/fromJson";
+import { DynamicPageWidget } from "./components/DynamicPage/dynamicPage";
 import { Connection } from "./connection/plugin";
 
 var settings: any;
@@ -56,8 +57,8 @@ const App: React.FC = (): JSX.Element => {
           <button type="button" onClick={toggle}>
             Toggle Theme
           </button>
-          <WidgetFromJson
-            file="http://localhost:3000/beamline.json"
+          <DynamicPageWidget
+            routePath="page"
             containerStyling={{
               position: "relative",
               height: "",

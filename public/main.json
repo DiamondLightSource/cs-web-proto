@@ -1,0 +1,26 @@
+{
+  "type": "flexcontainer",
+  "position": "relative",
+  "height": "100%",
+  "width": "100%",
+  "children": [
+    {
+      "type": "actionbutton",
+      "text": "Beamline Synoptic",
+      "position": "relative",
+      "width": "300px",
+      "height": "200px",
+      "actions": {
+        "executeAsOne": false,
+        "actions": [
+          {
+            "type": "OPEN_PAGE",
+            "location": "page",
+            "page": "beamline",
+            "macros": {}
+          }
+        ]
+      }
+    }
+  ]
+}
