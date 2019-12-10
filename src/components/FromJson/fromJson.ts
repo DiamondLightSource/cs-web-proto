@@ -18,6 +18,7 @@ import { Display } from "../Display/display";
 import { ActionButton } from "../ActionButton/actionButton";
 import { WidgetFromBob } from "../FromBob/fromBob";
 import { WidgetPropType, InferWidgetProps } from "../Widget/widget";
+import { ADFFViewer } from "../ADFFViewer/adffviewer";
 
 const EMPTY_WIDGET: WidgetDescription = {
   type: "empty",
@@ -71,7 +72,8 @@ export const WidgetFromJson = (
     display: Display,
     empty: Display,
     widgetFromJSON: WidgetFromJson,
-    widgetFromBob: WidgetFromBob
+    widgetFromBob: WidgetFromBob,
+    adffviewer: ADFFViewer
   };
 
   let component: JSX.Element | null;
