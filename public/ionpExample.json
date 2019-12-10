@@ -182,6 +182,18 @@
       },
       "widgetStyling": { "fontSize": "0.8em" },
       "pvName": "loc://${device}:strapping"
+    },
+    {
+      "type": "adffviewer",
+      "containerStyling": {
+        "position": "absolute",
+        "x": "64px",
+        "y": "250px",
+        "width": "200px",
+        "height": "150px"
+      },
+      "label": "Live View",
+      "prefix": "loc://pv-prefix-1"
     }
   ]
 }
