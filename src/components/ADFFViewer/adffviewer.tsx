@@ -1,8 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { vtypeToString } from "../../vtypes/utils";
-import { displayOf } from "../../vtypes/display";
-import { VType, VEnum } from "../../vtypes/vtypes";
 // used for className={`MyComponent ${classes.MyComponent}`}
 // import classes from "./mycomponent.module.css";
 import {
@@ -33,6 +31,7 @@ export const RawADFFViewerComponent = (
         width: "100%",
         height: "100%"
       }}
+      alt="ffmpeg stream"
     />
   </div>
 );
