@@ -31,7 +31,7 @@ export const RawADFFViewerComponent = (
         width: "100%",
         height: "100%"
       }}
-      alt="ffmpeg stream"
+      alt=""
     />
   </div>
 );
