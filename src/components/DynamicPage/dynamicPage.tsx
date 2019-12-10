@@ -1,4 +1,5 @@
 import React from "react";
+import log from "loglevel";
 import PropTypes from "prop-types";
 import { Route, RouteComponentProps } from "react-router-dom";
 
@@ -20,9 +21,14 @@ export interface DynamicParams {
 export function DynamicPageFetch({
   match
 }: RouteComponentProps<DynamicParams>): JSX.Element {
-  const file =
-    "http://pc0030.cs.diamond.ac.uk:3000/" + match.params.json + ".json";
-  const map = match.params.macros && JSON.parse(match.params.macros);
+  const file = "http://localhost:3000/" + match.params.json + ".json";
+  let map = {};
+  try {
+    map = match.params.macros && JSON.parse(match.params.macros);
+  } catch (error) {
+    log.warn(match.params.json);
+    log.warn(error);
+  }
   return (
     <WidgetFromJson
       file={file}

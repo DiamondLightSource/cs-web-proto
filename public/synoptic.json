@@ -10,7 +10,7 @@
       "type": "actionbutton",
       "pvName": "sim://limit#1",
       "text": "Motor 1",
-      "image": "http://pc0030.cs.diamond.ac.uk:3000/DCM-base.png",
+      "image": "http://localhost:3000/DCM-base.png",
       "position": "absolute",
       "x": "0px",
       "y": "0px",
@@ -33,7 +33,7 @@
       "type": "actionbutton",
       "pvName": "sim://limit#1",
       "text": "Motor 2",
-      "image": "http://pc0030.cs.diamond.ac.uk:3000/DCM-base.png",
+      "image": "http://localhost:3000/DCM-base.png",
       "position": "absolute",
       "x": "150px",
       "y": "0px",
@@ -80,7 +80,7 @@
       "type": "actionbutton",
       "pvName": "sim://limit#1",
       "text": "Motor 3",
-      "image": "http://pc0030.cs.diamond.ac.uk:3000/DCM-base.png",
+      "image": "http://localhost:3000/DCM-base.png",
       "position": "absolute",
       "x": "350px",
       "y": "0px",
@@ -99,7 +99,52 @@
         ]
       }
     },
-
+    {
+      "type": "actionbutton",
+      "pvName": "sim://limit#1",
+      "text": "Digitel MPC",
+      "image": "http://localhost:3000/ionp.svg",
+      "position": "absolute",
+      "x": "450px",
+      "y": "0px",
+      "width": "100px",
+      "height": "80px",
+      "actions": {
+        "executeAsOne": false,
+        "actions": [
+          {
+            "type": "OPEN_PAGE",
+            "location": "embed",
+            "page": "digitelmpc",
+            "description": "Digitel MPC Sim",
+            "macros": "{}"
+          }
+        ]
+      }
+    },
+    {
+      "type": "actionbutton",
+      "pvName": "sim://limit#1",
+      "text": "Digitel MPC Ionp",
+      "image": "http://localhost:3000/ionp.svg",
+      "position": "absolute",
+      "x": "450px",
+      "y": "80px",
+      "width": "100px",
+      "height": "80px",
+      "actions": {
+        "executeAsOne": false,
+        "actions": [
+          {
+            "type": "OPEN_PAGE",
+            "location": "embed",
+            "page": "digitelmpcionp",
+            "description": "Digitel MPC Ionp Sim",
+            "macros": "{}"
+          }
+        ]
+      }
+    },
     {
       "type": "actionbutton",
       "text": "Motor Summary Screen",

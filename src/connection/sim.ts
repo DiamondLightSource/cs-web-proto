@@ -481,9 +481,7 @@ export class SimulatorPlugin implements Connection {
     if (pvSimulator !== undefined) {
       pvSimulator.updateValue(value);
     } else {
-      throw new Error(
-        `Could not create a simulated process variable for ${pvName}`
-      );
+      log.error(`Could not create a simulated process variable for ${pvName}`);
     }
   }
 
