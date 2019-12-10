@@ -14,7 +14,7 @@ export interface MenuButtonProps {
 }
 
 export const MenuButtonComponent = (props: MenuButtonProps): JSX.Element => {
-  let { connected, value = null, style = { color: "#000000" } } = props;
+  const { connected, value = null, style = { color: "#000000" } } = props;
 
   // Store whether component is disabled or not
   let disabled = false;

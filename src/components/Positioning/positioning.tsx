@@ -2,7 +2,6 @@
 
 import React from "react";
 import log from "loglevel";
-// @ts-ignore
 import checkPropTypes from "check-prop-types";
 
 import { MacroMap } from "../../redux/csState";
@@ -24,7 +23,7 @@ export function widgetDescriptionToComponent(
   listIndex?: number
 ): JSX.Element {
   // Extract known properties and leave everything else in otherProps
-  let {
+  const {
     type,
     children = [],
     macroMap = {},
@@ -47,7 +46,7 @@ export function widgetDescriptionToComponent(
   function filterUndefinedOut(input: {
     [index: string]: any;
   }): { [index: string]: any } {
-    let output: { [index: string]: any } = {};
+    const output: { [index: string]: any } = {};
     let key;
 
     for (key in input) {
@@ -79,8 +78,8 @@ export function widgetDescriptionToComponent(
   });
 
   // Perform checking on propTypes
-  let widgetInfo = { containerStyling: containerStyling, ...otherProps };
-  let error: string | undefined = checkPropTypes(
+  const widgetInfo = { containerStyling: containerStyling, ...otherProps };
+  const error: string | undefined = checkPropTypes(
     widgetDict[type].propTypes,
     widgetInfo,
     "widget description",
@@ -105,7 +104,7 @@ export function widgetDescriptionToComponent(
   const latestMacroMap = { ...existingMacroMap, ...macroMap };
 
   // Create the main component
-  let Component = widgetDict[type];
+  const Component = widgetDict[type];
 
   // Create all children components - recursive
   // Pass the latest macroMap down

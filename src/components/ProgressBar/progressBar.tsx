@@ -21,7 +21,7 @@ const ProgressBarProps = {
 export const ProgressBarComponent = (
   props: InferWidgetProps<typeof ProgressBarProps> & PVComponent
 ): JSX.Element => {
-  let {
+  const {
     value,
     min = 0,
     max = 100,
@@ -31,8 +31,8 @@ export const ProgressBarComponent = (
   } = props;
 
   // eslint-disable-next-line no-undef
-  let numValue = vtypeOrUndefinedToNumber(value);
-  let onPercent =
+  const numValue = vtypeOrUndefinedToNumber(value);
+  const onPercent =
     numValue < min
       ? 0
       : numValue > max
@@ -40,12 +40,12 @@ export const ProgressBarComponent = (
       : ((numValue - min) / (max - min)) * 100.0;
   // Store styles in these variables
   // Change the direction of the gradient depending on wehether the bar is vertical
-  let direction = vertical === true ? "to left" : "to top";
-  let barColor = {
-      backgroundImage: `linear-gradient(${direction}, ${color} 50%, #ffffff 130%)`
-    },
-    onStyle = {},
-    offStyle = {};
+  const direction = vertical === true ? "to left" : "to top";
+  const barColor = {
+    backgroundImage: `linear-gradient(${direction}, ${color} 50%, #ffffff 130%)`
+  };
+  const offStyle = {};
+  let onStyle = {};
   if (vertical === true) {
     onStyle = {
       ...barColor,
@@ -62,7 +62,7 @@ export const ProgressBarComponent = (
   }
 
   // Show a warning if min is bigger than max and apply precision if provided
-  let valueText =
+  const valueText =
     min > max
       ? "Check min and max values"
       : precision

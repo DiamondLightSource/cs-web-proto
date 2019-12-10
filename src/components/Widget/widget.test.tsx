@@ -33,12 +33,12 @@ jest.mock("../../hooks/useConnection", (): object => ({
   return [pvName, true, false, val];
 });
 
-let TestLabel = (): JSX.Element => {
+const TestLabel = (): JSX.Element => {
   return <LabelComponent text="Test" />;
 };
 
 describe("<Widget />", (): void => {
-  let component = mount(
+  const component = mount(
     <Widget
       baseWidget={TestLabel}
       containerStyling={{ position: "relative" }}
@@ -53,30 +53,30 @@ describe("<Widget />", (): void => {
     // Widget
     expect(component.children()).toHaveLength(1);
     // TooltipWrapper
-    let c1 = component.childAt(0);
+    const c1 = component.childAt(0);
     expect(c1.type()).toEqual(TooltipWrapper);
     expect(c1.children()).toHaveLength(1);
     // div child of TooltipWrapper
-    let c2 = c1.childAt(0);
+    const c2 = c1.childAt(0);
     expect(c2.children()).toHaveLength(1);
     console.log(c2);
     expect(c2.type()).toEqual("div");
     // TestLabel
-    let c3 = c2.childAt(0);
+    const c3 = c2.childAt(0);
     expect(c3.type()).toEqual(TestLabel);
     expect(c3.children()).toHaveLength(1);
     // LabelComponent
-    let c4 = c3.childAt(0);
+    const c4 = c3.childAt(0);
     expect(c4.type()).toEqual(LabelComponent);
     // Finally the Label div
-    let c5 = c4.childAt(0);
+    const c5 = c4.childAt(0);
     expect(c5.type()).toEqual("div");
     // No further children
     expect(c5.children()).toHaveLength(0);
   });
 
   test("it has TooltipWrapper", (): void => {
-    let component = mount(
+    const component = mount(
       <PVWidget
         pvName="pv"
         baseWidget={TestLabel}
@@ -87,7 +87,7 @@ describe("<Widget />", (): void => {
   });
 
   test("it has alarmborder", (): void => {
-    let component = mount(
+    const component = mount(
       <PVWidget
         pvName="pv"
         baseWidget={TestLabel}
@@ -99,7 +99,7 @@ describe("<Widget />", (): void => {
   });
 
   test("it has alarmborder and TooltipWrapper", (): void => {
-    let component = mount(
+    const component = mount(
       <PVWidget
         pvName="pv"
         baseWidget={TestLabel}
@@ -109,9 +109,9 @@ describe("<Widget />", (): void => {
     );
     expect(component.childAt(0).name()).toEqual("AlarmBorder");
     // Alarm children div
-    let c1 = component.childAt(0);
+    const c1 = component.childAt(0);
     // Copy wrapper
-    let c2 = c1.childAt(0);
+    const c2 = c1.childAt(0);
     expect(c2.childAt(0).name()).toEqual("TooltipWrapper");
   });
 });

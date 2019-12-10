@@ -45,7 +45,7 @@ export const WidgetFromJson = (
   const [json, setJson] = useState<WidgetDescription>(EMPTY_WIDGET);
 
   // Extract props
-  let { file, macroMap } = props;
+  const { file, macroMap } = props;
 
   if (json["type"] === "empty") {
     fetch(file)

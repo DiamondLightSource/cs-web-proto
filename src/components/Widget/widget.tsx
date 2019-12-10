@@ -150,7 +150,7 @@ const recursiveWrapping = (
   containerProps: object,
   widgetProps: object
 ): JSX.Element => {
-  let [Component, ...remainingComponents] = components;
+  const [Component, ...remainingComponents] = components;
   if (components.length === 1) {
     // Return the base widget
     return (
@@ -180,7 +180,7 @@ const recursiveWrapping = (
 export const Widget = (props: WidgetComponent): JSX.Element => {
   // Generic widget component
   const [id] = useId();
-  let idProps = { ...props, id: id };
+  const idProps = { ...props, id: id };
 
   // Apply macros.
   const macroProps = useMacros(idProps) as WidgetComponent & { id: string };
@@ -199,7 +199,7 @@ export const Widget = (props: WidgetComponent): JSX.Element => {
   const mappedContainerStyling = { top: y, left: x, ...containerStyling };
 
   // Extract remaining parameters
-  let { baseWidget, widgetStyling = {}, ...baseWidgetProps } = containerProps;
+  const { baseWidget, widgetStyling = {}, ...baseWidgetProps } = containerProps;
 
   // Put appropriate components on the list of components to be wrapped
   const components = [];
@@ -223,7 +223,7 @@ const DEFAULT_TOOLTIP = "${pvName}\n${pvValue}";
 export const PVWidget = (props: PVWidgetComponent): JSX.Element => {
   const [id] = useId();
   const tooltip = props.tooltip === undefined ? DEFAULT_TOOLTIP : props.tooltip;
-  let idProps = { ...props, id: id, tooltip: tooltip };
+  const idProps = { ...props, id: id, tooltip: tooltip };
 
   // Apply macros.
   const macroProps = useMacros(idProps) as PVWidgetComponent & { id: string };
@@ -233,7 +233,7 @@ export const PVWidget = (props: PVWidgetComponent): JSX.Element => {
     id,
     ruleProps.pvName
   );
-  let connectedProps = {
+  const connectedProps = {
     ...ruleProps,
     pvName: effectivePvName,
     connected: connected,
@@ -253,7 +253,7 @@ export const PVWidget = (props: PVWidgetComponent): JSX.Element => {
   const mappedContainerStyling = { top: y, left: x, ...containerStyling };
 
   // Extract remaining parameters
-  let {
+  const {
     baseWidget,
     widgetStyling = {},
     alarmBorder = false,

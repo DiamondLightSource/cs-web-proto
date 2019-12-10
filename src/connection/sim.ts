@@ -198,7 +198,7 @@ class EnumPv extends SimPv {
       // If a string, see if that string is stored as a value in the enum
       // If it is, change index to index of the string
       // Otherwise ignore
-      let valueIndex = this.value
+      const valueIndex = this.value
         .getDisplay()
         .getChoices()
         .indexOf(value.getValue());
@@ -260,7 +260,7 @@ class LimitData extends SimPv {
     // Set alarm status
     let alarmSeverity = 0;
     if (value instanceof VNumber) {
-      let v = value.getValue();
+      const v = value.getValue();
       alarmSeverity = v < 10 ? 2 : v > 90 ? 2 : v < 20 ? 1 : v > 80 ? 1 : 0;
       this.value = vdouble(
         value.getValue(),
@@ -338,21 +338,21 @@ export class SimulatorPlugin implements Connection {
   protected parseName(
     pvName: string
   ): { initialValue: any; protocol: string; keyName: string } {
-    let parts = pvName.split("#");
+    const parts = pvName.split("#");
     let keyName;
     let protocol: string;
     let initial = undefined;
     if (pvName.startsWith("loc://")) {
-      let matcher = new RegExp(
+      const matcher = new RegExp(
         "loc://([^<(]*)(?:<([^>]*)>)?(?:\\(([^)]*)\\))?"
       );
-      let groups = matcher.exec(pvName);
+      const groups = matcher.exec(pvName);
 
       if (groups === null) {
         initial = undefined;
         keyName = pvName;
       } else if (groups[3] !== undefined) {
-        let typeName = groups[2];
+        const typeName = groups[2];
         initial = JSON.parse("[" + groups[3] + "]");
         keyName = "loc://" + groups[1];
 
@@ -389,7 +389,7 @@ export class SimulatorPlugin implements Connection {
     updateRate: number
   ): { simulator: SimPv | undefined; initialValue: any } {
     let cls;
-    let nameInfo = this.parseName(pvName);
+    const nameInfo = this.parseName(pvName);
     let initial;
 
     if (nameInfo.protocol === "loc://") {
@@ -424,7 +424,7 @@ export class SimulatorPlugin implements Connection {
     } else {
       return { simulator: undefined, initialValue: undefined };
     }
-    let result = new cls(
+    const result = new cls(
       nameInfo.keyName,
       onConnectionUpdate,
       onValueUpdate,
@@ -434,10 +434,10 @@ export class SimulatorPlugin implements Connection {
   }
 
   public initSimulator(pvName: string): SimPv | undefined {
-    let nameInfo = this.parseName(pvName);
+    const nameInfo = this.parseName(pvName);
 
     if (this.simPvs.get(nameInfo.keyName) === undefined) {
-      let simulatorInfo = this.makeSimulator(
+      const simulatorInfo = this.makeSimulator(
         pvName,
         this.onConnectionUpdate,
         this.onValueUpdate,
@@ -459,7 +459,7 @@ export class SimulatorPlugin implements Connection {
   }
 
   public putPv(pvName: string, value: VType): void {
-    let pvSimulator = this.initSimulator(pvName);
+    const pvSimulator = this.initSimulator(pvName);
     if (pvSimulator !== undefined) {
       pvSimulator.updateValue(value);
     } else {
@@ -470,7 +470,7 @@ export class SimulatorPlugin implements Connection {
   }
 
   public getValue(pvName: string): VType | undefined {
-    let pvSimulator = this.initSimulator(pvName);
+    const pvSimulator = this.initSimulator(pvName);
     return pvSimulator && pvSimulator.getValue();
   }
 

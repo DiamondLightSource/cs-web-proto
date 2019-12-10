@@ -55,7 +55,7 @@ export const WidgetFromBob = (
   const [bob, setBob] = useState<string>("");
 
   // Extract props
-  let { file, macroMap } = props;
+  const { file, macroMap } = props;
 
   if (bob === "") {
     fetch(file)

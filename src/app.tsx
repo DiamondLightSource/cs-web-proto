@@ -1,8 +1,5 @@
-// Special-case filename App.tsx is permitted.
-/* eslint unicorn/filename-case: 0 */ // --> OFF
-
 import React from "react";
-import "./App.css";
+import "./app.css";
 import { Provider } from "react-redux";
 import { BrowserRouter, Link, Route } from "react-router-dom";
 import { getStore, initialiseStore } from "./redux/store";
@@ -26,7 +23,7 @@ import { ConiqlPlugin } from "./connection/coniql";
 import { ConnectionForwarder } from "./connection/forwarder";
 import { Connection } from "./connection/plugin";
 
-var settings: any;
+let settings: any;
 try {
   // Use require so that we can catch this error
   settings = require("./settings");

@@ -24,13 +24,13 @@ describe("simple macros convert", (): void => {
     compact: true
   });
   test("it collects the macro", (): void => {
-    let props = { macroMap: {} };
+    const props = { macroMap: {} };
     bobMacrosToMacroMap(convertedXML, props);
     expect(props.macroMap).toEqual({ Test: "Value" });
   });
 
   test("it ignores when there are not macros", (): void => {
-    let props = {};
+    const props = {};
     bobMacrosToMacroMap({}, props);
     expect(props).toEqual({});
   });

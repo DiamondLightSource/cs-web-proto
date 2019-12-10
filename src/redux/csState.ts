@@ -107,7 +107,7 @@ export function csReducer(state = initialState, action: Action): CsState {
     }
     case UNSUBSCRIBE: {
       const newEffectivePvMap = { ...state.effectivePvNameMap };
-      let { componentId, pvName } = action.payload;
+      const { componentId, pvName } = action.payload;
       const effectivePvName = state.effectivePvNameMap[pvName] || pvName;
 
       if (

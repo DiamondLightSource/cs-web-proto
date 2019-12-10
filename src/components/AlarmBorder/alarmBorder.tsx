@@ -10,10 +10,10 @@ export const AlarmBorder = (props: {
   children: ReactNode;
   style?: object;
 }): JSX.Element => {
-  let { connected, value = null } = props;
-  let alarm: Alarm = alarmOf(value);
+  const { connected, value = null } = props;
+  const alarm: Alarm = alarmOf(value);
   // Sort out alarm border classes
-  let alarmClasses = [classes.Border, classes.Children];
+  const alarmClasses = [classes.Border, classes.Children];
   if (connected === false) {
     alarmClasses.push(classes.NotConnected);
   } else if (alarm.getSeverity() === AlarmSeverity.MINOR) {

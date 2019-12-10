@@ -91,7 +91,7 @@ export const bobVisibleToBoolen = (
   outputProps: UnknownPropsObject
 ): void => {
   try {
-    let visible = inputProps.visible._text;
+    const visible = inputProps.visible._text;
     if (visible === "true") {
       outputProps.visible = true;
     } else if (visible === "false") {
@@ -130,12 +130,12 @@ export const bobActionToAction = (
   };
 
   // Turn into an array of Actions
-  let processedActions: WidgetActions = { executeAsOne: false, actions: [] };
+  const processedActions: WidgetActions = { executeAsOne: false, actions: [] };
 
   actionsToProcess.forEach((action): void => {
     log.debug(action);
     try {
-      let type: string = availableActions[action._attributes.type];
+      const type: string = availableActions[action._attributes.type];
       if (type === WRITE_PV) {
         processedActions.actions.push({
           type: WRITE_PV,
@@ -183,13 +183,13 @@ export const bobChildToWidgetChild = (
 
   // Map the remaining props
   // Checks that there is a substitution map
-  let mappedProps: { [key: string]: any } = {};
+  const mappedProps: { [key: string]: any } = {};
   Object.entries(remainingProps as UnknownPropsObject).forEach(
     ([key, value]): void => {
-      if (functionSubstitutions && functionSubstitutions[key]) {
+      if (functionSubstitutions?.hasOwnProperty(key)) {
         // Use the function substitution
         functionSubstitutions[key](remainingProps, mappedProps);
-      } else if (keySubstitutions && keySubstitutions[key]) {
+      } else if (keySubstitutions?.hasOwnProperty(key)) {
         // Just substitute the key and extract from _text
         mappedProps[keySubstitutions[key]] = value._text;
       } else {
@@ -211,7 +211,7 @@ export const bobChildToWidgetChild = (
   /* In bob files, many widgets have default values for height, width and even x and y
   The default values can be different from each other
   This could make life a bit difficult but should be looked at later */
-  let outputWidget: WidgetDescription = {
+  const outputWidget: WidgetDescription = {
     type: _attributes.type || _attributes.typeId,
     position: "absolute",
     x: `${(x && x._text) || 0}px`,
