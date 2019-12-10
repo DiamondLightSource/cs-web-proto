@@ -3,16 +3,11 @@ import {} from "enzyme";
 import convert from "xml-js";
 
 import {
-  bobMacrosToMacroMap,
-  BobColor,
-  bobColorsToColor,
-  UnknownPropsObject,
-  bobBackgroundColor,
-  bobForegroundColor,
-  bobPrecisionToNumber,
-  bobVisibleToBoolen,
-  bobActionToAction,
-  bobHandleActions,
+  bobParseMacros,
+  bobParseColor,
+  bobParsePrecision,
+  bobParseBoolean,
+  bobParseActions,
   bobChildToWidgetChild,
   convertBobToWidgetDescription
 } from "./bobConversionUtils";
@@ -20,19 +15,17 @@ import { WRITE_PV } from "../../widgetActions";
 
 describe("simple macros convert", (): void => {
   const xmlInput = "<macros><Test>Value</Test></macros>";
-  const convertedXML = convert.xml2js(xmlInput, {
+  const convertedXML: convert.ElementCompact = convert.xml2js(xmlInput, {
     compact: true
   });
   test("it collects the macro", (): void => {
-    let props = { macroMap: {} };
-    bobMacrosToMacroMap(convertedXML, props);
-    expect(props.macroMap).toEqual({ Test: "Value" });
+    const macros = bobParseMacros("macros", convertedXML["macros"]);
+    expect(macros).toEqual({ Test: "Value" });
   });
 
   test("it ignores when there are not macros", (): void => {
-    let props = {};
-    bobMacrosToMacroMap({}, props);
-    expect(props).toEqual({});
+    const macros = bobParseMacros("macros", {});
+    expect(macros).toEqual({});
   });
 });
 
@@ -42,61 +35,22 @@ describe("color conversion", (): void => {
     compact: true
   });
   test("it converts xml color to rgb string", (): void => {
-    expect(
-      bobColorsToColor((convertedColor as { color: BobColor }).color)
-    ).toEqual("rgb(0, 255, 0)");
-  });
-
-  test("background color correctly extracted", (): void => {
-    const input = {
-      background_color: convertedColor // eslint-disable-line @typescript-eslint/camelcase
-    };
-    const output: UnknownPropsObject = {};
-    bobBackgroundColor(input, output);
-    expect(output.backgroundColor).toBe("rgb(0, 255, 0)");
-  });
-  test("foreground color correctly extracted", (): void => {
-    const input = {
-      foreground_color: convertedColor // eslint-disable-line @typescript-eslint/camelcase
-    };
-    const output: UnknownPropsObject = {};
-    bobForegroundColor(input, output);
-    expect(output.color).toBe("rgb(0, 255, 0)");
+    expect(bobParseColor("color", convertedColor)).toEqual("rgb(0, 255, 0)");
   });
 });
 
 describe("precision conversion", (): void => {
   const xmlPrecision = "<precision>5</precision>";
-  const convertedPrecision: UnknownPropsObject = convert.xml2js(xmlPrecision, {
-    compact: true
-  });
+  const convertedPrecision: convert.ElementCompact = convert.xml2js(
+    xmlPrecision,
+    {
+      compact: true
+    }
+  );
 
   test("it correctly gets the precision and turns it into a number", (): void => {
-    const output: UnknownPropsObject = {};
-    bobPrecisionToNumber(convertedPrecision, output);
-    expect(output.precision).toBe(5);
-  });
-});
-
-describe("visible conversion", (): void => {
-  const xmlVisible = "<visible>true</visible>";
-  const compactVisible: UnknownPropsObject = convert.xml2js(xmlVisible, {
-    compact: true
-  });
-  const xmlInvisible = "<visible>false</visible>";
-  const compactInvisible: UnknownPropsObject = convert.xml2js(xmlInvisible, {
-    compact: true
-  });
-
-  test("it correctly converts visibility when true", (): void => {
-    const output: UnknownPropsObject = {};
-    bobVisibleToBoolen(compactVisible, output);
-    expect(output.visible).toBe(true);
-  });
-  test("it correctly converts visibility when false", (): void => {
-    const output: UnknownPropsObject = {};
-    bobVisibleToBoolen(compactInvisible, output);
-    expect(output.visible).toBe(false);
+    const output = bobParsePrecision("precision", convertedPrecision.precision);
+    expect(output).toBe(5);
   });
 });
 
@@ -114,11 +68,11 @@ describe("actions conversion", (): void => {
     <description>Write pv2 to Testing</description>
   </action>
 </actions>`;
-  const compactActions: UnknownPropsObject = convert.xml2js(xmlActions, {
+  const compactActions: convert.ElementCompact = convert.xml2js(xmlActions, {
     compact: true
   });
   test("it correctly converts write PV actions", (): void => {
-    expect(bobActionToAction(compactActions.actions.action)).toEqual({
+    expect(bobParseActions("actions", compactActions.actions)).toEqual({
       executeAsOne: false,
       actions: [
         {
@@ -136,12 +90,25 @@ describe("actions conversion", (): void => {
       ]
     });
   });
-
-  test("it correctly handles actions in props", (): void => {
-    const output: UnknownPropsObject = {};
-    bobHandleActions(compactActions, output);
-    expect(output.actions).toEqual({
-      executeAsOne: false,
+  test("it correctly converts actions which execute as one", (): void => {
+    const xmlActions = `
+    <actions execute_as_one="true">
+      <action type="write_pv">
+        <pv_name>testPV1</pv_name>
+        <value>1</value>
+        <description>Write pv1 to 1</description>
+      </action>
+      <action type="write_pv">
+        <pv_name>testPV2</pv_name>
+        <value>Testing</value>
+        <description>Write pv2 to Testing</description>
+      </action>
+    </actions>`;
+    const compactActions: convert.ElementCompact = convert.xml2js(xmlActions, {
+      compact: true
+    });
+    expect(bobParseActions("actions", compactActions.actions)).toEqual({
+      executeAsOne: true,
       actions: [
         {
           type: WRITE_PV,
@@ -171,7 +138,7 @@ describe("bob child conversion", (): void => {
       <width>299</width>
       <height>399</height>
     </widget>`;
-    const compactWidget: UnknownPropsObject = convert.xml2js(xmlWidget, {
+    const compactWidget: convert.ElementCompact = convert.xml2js(xmlWidget, {
       compact: true
     });
 
@@ -198,7 +165,7 @@ describe("bob child conversion", (): void => {
       <width>299</width>
       <height>399</height>
     </widget>`;
-    const compactWidget: UnknownPropsObject = convert.xml2js(xmlWidget, {
+    const compactWidget: convert.ElementCompact = convert.xml2js(xmlWidget, {
       compact: true
     });
 
@@ -217,6 +184,65 @@ describe("bob child conversion", (): void => {
     });
   });
 
+  const trueWidget = `
+    <widget type="testwidget" version="2.0.0">
+      <name>Test Widget</name>
+      <true_or_false>true</true_or_false>
+    </widget>`;
+  const falseWidget = `
+    <widget type="testwidget" version="2.0.0">
+      <name>Test Widget</name>
+      <true_or_false>false</true_or_false>
+    </widget>`;
+
+  test.each<[boolean, string]>([[true, trueWidget], [false, falseWidget]])(
+    "it converts a simple widget with %s boolean prop",
+    (expected, widgetXml): void => {
+      const compactWidget: convert.ElementCompact = convert.xml2js(widgetXml, {
+        compact: true
+      });
+
+      expect(
+        bobChildToWidgetChild(
+          compactWidget.widget,
+          { true_or_false: bobParseBoolean }, // eslint-disable-line @typescript-eslint/camelcase
+          {}
+        )
+      ).toEqual({
+        type: "testwidget",
+        name: "Test Widget",
+        x: "0px",
+        y: "0px",
+        width: "0px",
+        height: "0px",
+        position: "absolute",
+        true_or_false: expected, // eslint-disable-line @typescript-eslint/camelcase
+        children: []
+      });
+    }
+  );
+  test("it throws error if boolean invalid", (): void => {
+    const invalidBoolWidget = `
+    <widget type="testwidget" version="2.0.0">
+      <name>Test Widget</name>
+      <true_or_false>not-a-bool</true_or_false>
+    </widget>`;
+    const compactWidget: convert.ElementCompact = convert.xml2js(
+      invalidBoolWidget,
+      {
+        compact: true
+      }
+    );
+    expect((): void => {
+      bobChildToWidgetChild(
+        compactWidget.widget,
+        {
+          true_or_false: bobParseBoolean // eslint-disable-line @typescript-eslint/camelcase
+        },
+        {}
+      );
+    }).toThrow();
+  });
   test("it converts a simple widget with function subsitutions", (): void => {
     const xmlWidget = `
     <widget type="testwidget" version="2.0.0">
@@ -235,7 +261,7 @@ describe("bob child conversion", (): void => {
       </background_color>
       <height>399</height>
     </widget>`;
-    const compactWidget: UnknownPropsObject = convert.xml2js(xmlWidget, {
+    const compactWidget: convert.ElementCompact = convert.xml2js(xmlWidget, {
       compact: true
     });
 
@@ -243,10 +269,14 @@ describe("bob child conversion", (): void => {
       bobChildToWidgetChild(
         compactWidget.widget,
         {
-          background_color: bobBackgroundColor, // eslint-disable-line @typescript-eslint/camelcase
-          foreground_color: bobForegroundColor // eslint-disable-line @typescript-eslint/camelcase
+          background_color: bobParseColor, // eslint-disable-line @typescript-eslint/camelcase
+          foreground_color: bobParseColor // eslint-disable-line @typescript-eslint/camelcase
         },
-        { pv_name: "pvName" } // eslint-disable-line @typescript-eslint/camelcase
+        {
+          pv_name: "pvName", // eslint-disable-line @typescript-eslint/camelcase
+          background_color: "backgroundColor", // eslint-disable-line @typescript-eslint/camelcase
+          foreground_color: "color" // eslint-disable-line @typescript-eslint/camelcase
+        }
       )
     ).toEqual({
       type: "testwidget",
@@ -280,7 +310,7 @@ describe("bob child conversion", (): void => {
             <height>399</height>
         </widget>
     </widget>`;
-    const compactWidget: UnknownPropsObject = convert.xml2js(xmlWidget, {
+    const compactWidget: convert.ElementCompact = convert.xml2js(xmlWidget, {
       compact: true
     });
 
@@ -333,7 +363,7 @@ describe("bob child conversion", (): void => {
             <height>699</height>
         </widget>
     </widget>`;
-    const compactWidget: UnknownPropsObject = convert.xml2js(xmlWidget, {
+    const compactWidget: convert.ElementCompact = convert.xml2js(xmlWidget, {
       compact: true
     });
 

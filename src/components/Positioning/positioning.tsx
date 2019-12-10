@@ -6,6 +6,7 @@ import log from "loglevel";
 import checkPropTypes from "check-prop-types";
 
 import { MacroMap } from "../../redux/csState";
+import { Shape } from "../Shape/shape";
 
 export interface WidgetDescription {
   type: string;
@@ -47,6 +48,15 @@ export function widgetDescriptionToComponent(
     ...otherProps
   } = widgetDescription;
 
+  let Component: React.FC<any>;
+  if (widgetDict.hasOwnProperty(type)) {
+    Component = widgetDict[type];
+  } else {
+    log.warn(`Failed to load unknown widget type ${type}`);
+    Component = Shape;
+    backgroundColor = "magenta";
+  }
+
   function filterUndefinedOut(input: {
     [index: string]: any;
   }): { [index: string]: any } {
@@ -87,10 +97,10 @@ export function widgetDescriptionToComponent(
   // Perform checking on propTypes
   let widgetInfo = { containerStyling: containerStyling, ...otherProps };
   let error: string | undefined = checkPropTypes(
-    widgetDict[type].propTypes,
+    Component.propTypes,
     widgetInfo,
     "widget description",
-    type,
+    Component.name,
     (): void => {
       log.debug("Got an error");
     }
@@ -109,9 +119,6 @@ export function widgetDescriptionToComponent(
   // Collect macroMap passed into function and overwrite/add any
   // new values from the object macroMap
   const latestMacroMap = { ...existingMacroMap, ...macroMap };
-
-  // Create the main component
-  let Component = widgetDict[type];
 
   // Create all children components - recursive
   // Pass the latest macroMap down

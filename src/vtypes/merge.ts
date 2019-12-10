@@ -23,11 +23,15 @@ import { Time, timeOf } from "../vtypes/time";
 import { Display, displayOf } from "../vtypes/display";
 
 const VNumbers: { [index: string]: VNumberBuilder } = {
+  IVInt: vdouble,
+  VInt: vdouble,
   IVDouble: vdouble,
   VDouble: vdouble
 };
 
 const VNumberArrays: { [index: string]: VNumberArrayBuilder } = {
+  IVIntArray: vdoubleArray,
+  VIntArray: vdoubleArray,
   IVDoubleArray: vdoubleArray,
   VDoubleArray: vdoubleArray
 };
@@ -109,11 +113,11 @@ export function mergeVtype(
       return vstring(info.value, info.alarm, info.time);
     } else if (info.type === "VEnum" || info.type === "IVEnum") {
       if (info.index === undefined) {
-        throw new Error("index unknown");
+        throw new Error("Enum index unknown");
       }
 
       if (info.choices === undefined) {
-        throw new Error("Choices unknown");
+        throw new Error("Enum choices unknown");
       }
       return venum(info.index, info.choices, info.alarm, info.time);
     } else {
@@ -154,7 +158,6 @@ export function mergeVtype(
     }
     return vstring(
       "error",
-
       alarm(AlarmSeverity.MAJOR, AlarmStatus.NONE, "error")
     );
   }

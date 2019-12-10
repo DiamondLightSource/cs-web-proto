@@ -25,14 +25,14 @@ export interface ClosePage {
 export interface OpenWebpage {
   type: typeof OPEN_WEBPAGE;
   url: string;
-  description: string;
+  description?: string;
 }
 
 export interface WritePv {
   type: typeof WRITE_PV;
   pvName: string;
   value: string | number;
-  description: string;
+  description?: string;
 }
 
 export type WidgetAction = OpenWebpage | WritePv | OpenPage | ClosePage;
@@ -141,14 +141,16 @@ export const executeActions = (
   actions: WidgetActions,
   history?: History
 ): void => {
-  log.debug(`executing an action ${actions.actions[0].type}`);
-  let toExecute: WidgetAction[] = [];
-  if (actions.executeAsOne) {
-    toExecute = actions.actions;
-  } else {
-    toExecute = [actions.actions[0]];
-  }
-  for (const action of toExecute) {
-    executeAction(action, history);
+  if (actions.actions.length > 0) {
+    let toExecute: WidgetAction[] = [];
+    if (actions.executeAsOne) {
+      toExecute = actions.actions;
+    } else {
+      toExecute = [actions.actions[0]];
+    }
+    for (const action of toExecute) {
+      log.debug(`executing an action: ${getActionDescription(action)}`);
+      executeAction(action, history);
+    }
   }
 };
