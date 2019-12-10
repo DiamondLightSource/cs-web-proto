@@ -4,7 +4,8 @@
   "height": "300px",
   "width": "350px",
   "margin": "10px",
-  "fontSize": "1.5rem",
+  "fontSize": "1.5em",
+  "backgroundColor": "#dddddd",
   "name": "Motor Screen ${motor}",
   "children": [
     {
@@ -16,7 +17,6 @@
           "position": "relative",
           "width": "50%",
           "text": "Position",
-          "fontSize": "1.5rem",
           "backgroundColor": "transparent"
         },
         {
@@ -28,7 +28,7 @@
           "min": -1,
           "max": 1,
           "border": "1px solid #aaaaaa",
-          "fontSize": "1.5rem"
+          "fontSize": "1em"
         },
         {
           "type": "label",
@@ -36,7 +36,6 @@
           "width": "50%",
           "text": "Motor Speed",
           "margin": "5px 0px 0px 0px",
-          "fontSize": "1.5rem",
           "backgroundColor": "transparent"
         },
         {
@@ -46,7 +45,7 @@
           "pvName": "sim://limit#m${motor}",
           "border": "1px solid #aaaaaa",
           "margin": "5px 0px 0px 0px",
-          "fontSize": "1.5rem"
+          "fontSize": "1em"
         },
         {
           "type": "readback",
@@ -55,7 +54,7 @@
           "pvName": "sim://limit#m${motor}",
           "alarmBorder": true,
           "margin": "5px 0px 0px 0px",
-          "fontSize": "1.5rem"
+          "fontSize": "1em"
         },
         {
           "type": "label",
@@ -63,7 +62,6 @@
           "width": "50%",
           "text": "Motor Mode",
           "margin": "5px 0px 0px 0px",
-          "fontSize": "1.5rem",
           "backgroundColor": "transparent"
         },
         {
@@ -73,7 +71,7 @@
           "pvName": "loc://enum#m${motor}<VEnum>(2, \"slow\", \"med\", \"fast\")",
           "border": "1px solid #aaaaaa",
           "margin": "5px 0px 0px 0px",
-          "fontSize": "1rem"
+          "fontSize": "0.75em"
         },
         {
           "type": "readback",
@@ -82,7 +80,7 @@
           "pvName": "loc://enum#m${motor}",
           "color": "#22ee22",
           "margin": "5px 0px 0px 0px",
-          "fontSize": "1.5rem"
+          "fontSize": "1em"
         },
         {
           "type": "actionbutton",
@@ -90,7 +88,6 @@
           "position": "relative",
           "width": "100%",
           "margin": "5px 0px 0px 0px",
-          "fontSize": "1rem",
           "text": "SLOW",
           "actions": {
             "executeAsOne": true,
@@ -114,7 +111,6 @@
           "position": "relative",
           "width": "100%",
           "margin": "5px 0px 0px 0px",
-          "fontSize": "1rem",
           "text": "MEDIUM",
           "actions": {
             "executeAsOne": true,
@@ -138,7 +134,6 @@
           "position": "relative",
           "width": "100%",
           "margin": "5px 0px 0px 0px",
-          "fontSize": "1rem",
           "text": "FAST",
           "actions": {
             "executeAsOne": true,

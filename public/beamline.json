@@ -31,7 +31,7 @@
             {
               "type": "widgetFromJSON",
               "position": "relative",
-              "file": "http://pc0030.cs.diamond.ac.uk:3000/synoptic.json"
+              "file": "http://localhost:3000/synoptic.json"
             }
           ]
         },
@@ -59,7 +59,7 @@
             {
               "type": "widgetFromJSON",
               "position": "relative",
-              "file": "http://pc0030.cs.diamond.ac.uk:3000/motor.json"
+              "file": "http://localhost:3000/motor.json"
             }
           ]
         },
@@ -80,12 +80,6 @@
               "fontWeight": "bold",
               "backgroundColor": "#eeeeee",
               "text": "Embed"
-            },
-            {
-              "type": "widgetFromJSON",
-              "position": "relative",
-              "height": "95%",
-              "file": "http://pc0030.cs.diamond.ac.uk:3000/embeddedMotor.json"
             }
           ]
         }

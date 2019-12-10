@@ -57,7 +57,7 @@ const App: React.FC = (): JSX.Element => {
             Toggle Theme
           </button>
           <WidgetFromJson
-            file="http://pc0030.cs.diamond.ac.uk:3000/beamline.json"
+            file="http://localhost:3000/beamline.json"
             containerStyling={{
               position: "relative",
               height: "",
