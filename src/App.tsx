@@ -11,7 +11,6 @@ import { lightTheme, darkTheme, ThemeContext } from "./themeContext";
 import { SimulatorPlugin } from "./connection/sim";
 import { ConiqlPlugin } from "./connection/coniql";
 import { ConnectionForwarder } from "./connection/forwarder";
-import { WidgetFromJson } from "./components/FromJson/fromJson";
 import { DynamicPageWidget } from "./components/DynamicPage/dynamicPage";
 import { Connection } from "./connection/plugin";
 import { ActionButton } from "./components/ActionButton/actionButton";

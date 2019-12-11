@@ -9,6 +9,7 @@ import {
   WidgetDescription,
   widgetDescriptionToComponent
 } from "../Positioning/positioning";
+import { MacroMap } from "../../redux/csState";
 import { Label } from "../Label/label";
 import { Readback } from "../Readback/readback";
 import { Input } from "../Input/input";
@@ -52,11 +53,13 @@ export const WidgetFromBob = (
   props: InferWidgetProps<typeof WidgetFromBobProps>
 ): JSX.Element => {
   const [bob, setBob] = useState<string>("");
+  const [renderedFile, setFile] = useState("");
+  const [currentMacros, setMacros] = useState<MacroMap>({});
 
   // Extract props
   let { file, macroMap } = props;
 
-  if (bob === "") {
+  if (bob === "" || file !== renderedFile || macroMap !== currentMacros) {
     fetch(file)
       .then(
         (response): Promise<any> => {
@@ -65,6 +68,8 @@ export const WidgetFromBob = (
       )
       .then((bob): void => {
         setBob(bob);
+        setFile(file);
+        setMacros(macroMap as MacroMap);
       });
   }
   const widgetDict = {
@@ -81,6 +86,7 @@ export const WidgetFromBob = (
     "org.csstudio.opibuilder.widgets.Rectangle": Shape,
     action_button: ActionButton, // eslint-disable-line @typescript-eslint/camelcase
     "org.csstudio.opibuilder.widgets.ActionButton": ActionButton,
+    "org.csstudio.opibuilder.widgets.BoolButton": Shape,
     empty: Display,
     widgetFromBob: WidgetFromBob
   };

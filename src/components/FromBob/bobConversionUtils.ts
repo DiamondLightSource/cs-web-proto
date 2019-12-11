@@ -115,8 +115,7 @@ export const bobParseActions = (
         processedActions.actions.push({
           type: WRITE_PV,
           pvName: action.pv_name._text,
-          value: action.value._text,
-          description: action.description._text
+          value: action.value._text
         });
       }
     } catch (e) {
