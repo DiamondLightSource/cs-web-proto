@@ -21,7 +21,6 @@ import { DynamicPageWidget } from "../DynamicPage/dynamicPage";
 import { WidgetFromBob } from "../FromBob/fromBob";
 import { GroupingContainer } from "../GroupingContainer/groupingContainer";
 import { WidgetPropType, InferWidgetProps } from "../Widget/widget";
-import { resolve } from "dns";
 
 const EMPTY_WIDGET: WidgetDescription = {
   type: "empty",
@@ -58,10 +57,9 @@ export const WidgetFromJson = (
     let mounted = true;
     if (file !== renderedFile) {
       fetch(file)
-        .then(x => new Promise(resolve => setTimeout(() => resolve(x), 5000)))
         .then(
           (response): Promise<any> => {
-            return (response as Response).json();
+            return response.json();
           }
         )
         .then((json): void => {
