@@ -1,7 +1,14 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { WidgetActions, executeActions } from "../../widgetActions";
-import { InferWidgetProps, PVWidget, PVWidgetPropType } from "../Widget/widget";
+import {
+  InferWidgetProps,
+  PVComponent,
+  PVWidget,
+  PVWidgetPropType
+} from "../Widget/widget";
 import classes from "./actionButton.module.css";
+import { useHistory } from "react-router-dom";
 
 export interface ActionButtonProps {
   text: string;
@@ -38,22 +45,31 @@ export const ActionButtonComponent = (
   }
 };
 
-export interface ActionButtonWidgetProps {
-  text: string;
-  actions: WidgetActions;
-  style?: {};
-  image?: string;
-}
+const ActionButtonPropType = {
+  text: PropTypes.string.isRequired,
+  actions: PropTypes.shape({
+    executeAsOne: PropTypes.bool,
+    actions: PropTypes.arrayOf(PropTypes.object)
+  }).isRequired,
+  style: PropTypes.object,
+  image: PropTypes.string
+};
+
+const ActionButtonProps = {
+  ...ActionButtonPropType,
+  ...PVWidgetPropType
+};
 
 // Menu button which also knows how to write to a PV
 export const ActionButtonWidget = (
-  props: ActionButtonWidgetProps
+  props: InferWidgetProps<typeof ActionButtonPropType> & PVComponent
 ): JSX.Element => {
   // Function to send the value on to the PV
+  const history = useHistory();
   function onClick(event: React.MouseEvent<HTMLButtonElement>): void {
-    if (props.actions !== undefined) executeActions(props.actions);
+    if (props.actions !== undefined)
+      executeActions(props.actions as WidgetActions, history);
   }
-
   return (
     <ActionButtonComponent
       text={props.text}
@@ -65,7 +81,7 @@ export const ActionButtonWidget = (
 };
 
 export const ActionButton = (
-  props: InferWidgetProps<typeof PVWidgetPropType>
+  props: InferWidgetProps<typeof ActionButtonProps>
 ): JSX.Element => <PVWidget baseWidget={ActionButtonWidget} {...props} />;
 
-ActionButton.propTypes = PVWidgetPropType;
+ActionButton.propTypes = ActionButtonProps;

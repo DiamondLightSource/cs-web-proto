@@ -1,0 +1,17 @@
+{
+  "type": "flexcontainer",
+  "position": "relative",
+  "children": [
+    {
+      "type": "widgetFromBob",
+      "position": "relative",
+      "margin": "10px",
+      "file": "http://localhost:3000/digitelMpc.opi",
+      "macroMap": {
+        "device": "pva://TEST",
+        "pv_name": "${pvName}",
+        "pv_value": "${pvValue}"
+      }
+    }
+  ]
+}

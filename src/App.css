@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 html,
 body,
 #root {
@@ -5,9 +9,14 @@ body,
   width: 100%;
   background-color: var(--colour-background);
 }
-
-.hidden {
-  display: none;
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--colour-background);
+  color: var(--color-text);
+  font-family: "Open sans";
+  font-size: 16px;
 }
 
 .App {
@@ -52,12 +61,9 @@ body,
 .Slider {
   cursor: grab;
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.top {
+  width: 100%;
+  background: var(--colour-background);
+  text-align: right;
+  height: 200px;
 }

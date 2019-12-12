@@ -5,6 +5,15 @@ import { shallow } from "enzyme";
 import { Display } from "../Display/display";
 import { Label } from "../Label/label";
 
+beforeEach((): void => {
+  const useEffect = jest.spyOn(React, "useEffect");
+  const mockUseEffect = (): void => {
+    useEffect.mockImplementationOnce((f): any => f());
+  };
+
+  mockUseEffect();
+});
+
 describe("<WidgetFromJson>", (): void => {
   it("fetches a file from the server", (done): void => {
     const mockSuccessResponse = {};
@@ -31,7 +40,10 @@ describe("<WidgetFromJson>", (): void => {
           height: "",
           width: "",
           margin: "",
-          padding: ""
+          padding: "",
+          border: "",
+          minWidth: "",
+          maxWidth: ""
         }}
         file="TestFile"
       />
@@ -70,7 +82,10 @@ describe("<WidgetFromJson>", (): void => {
           height: "",
           width: "",
           margin: "",
-          padding: ""
+          padding: "",
+          border: "",
+          minWidth: "",
+          maxWidth: ""
         }}
         file="TestFile"
       />
@@ -116,7 +131,10 @@ describe("<WidgetFromJson>", (): void => {
           height: "",
           width: "",
           margin: "",
-          padding: ""
+          padding: "",
+          border: "",
+          minWidth: "",
+          maxWidth: ""
         }}
         file="TestFile"
       />

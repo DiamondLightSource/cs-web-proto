@@ -47,8 +47,6 @@ export const bobParseColor = (
   jsonProp: convert.ElementCompact
 ): string => {
   const color = jsonProp.color as BobColor;
-  console.log("bobparsecolor");
-  console.log(color);
   try {
     return `rgb(${color._attributes.red}, ${color._attributes.green}, ${color._attributes.blue})`;
   } catch (e) {
@@ -114,11 +112,13 @@ export const bobParseActions = (
     try {
       let type: string = availableActions[action._attributes.type];
       if (type === WRITE_PV) {
+        // Not all actions have descriptions so ret
         processedActions.actions.push({
           type: WRITE_PV,
           pvName: action.pv_name._text,
           value: action.value._text,
-          description: action.description._text
+          description:
+            (action.description && action.description._text) || undefined
         });
       }
     } catch (e) {

@@ -1,0 +1,94 @@
+{
+  "type": "display",
+  "position": "relative",
+  "overflow": "auto",
+  "border": "solid 3px red",
+  "children": [
+    {
+      "type": "flexcontainer",
+      "position": "relative",
+      "overflow": "auto",
+      "border": "solid 3px green",
+      "children": [
+        {
+          "type": "display",
+          "position": "relative",
+          "width": "100%",
+          "border": "solid 3px blue",
+          "backgroundColor": "#cccccc",
+          "overflow": "auto",
+          "children": [
+            {
+              "type": "label",
+              "position": "relative",
+              "width": "90%",
+              "height": "20px",
+              "textAlign": "center",
+              "fontWeight": "bold",
+              "backgroundColor": "#eeeeee",
+              "text": "Synoptic"
+            },
+            {
+              "type": "widgetFromJSON",
+              "position": "relative",
+              "file": "http://localhost:3000/synoptic.json"
+            }
+          ]
+        },
+        {
+          "type": "display",
+          "position": "relative",
+          "width": "75%",
+          "border": "solid 3px pink",
+          "backgroundColor": "#cccccc",
+          "overflow": "auto",
+          "macroMap": {
+            "motor": "1"
+          },
+          "children": [
+            {
+              "type": "label",
+              "position": "relative",
+              "width": "100%",
+              "height": "20px",
+              "textAlign": "center",
+              "fontWeight": "bold",
+              "backgroundColor": "#eeeeee",
+              "text": "Embed"
+            },
+            {
+              "type": "dynamicpage",
+              "position": "relative",
+              "routePath": "embed"
+            }
+          ]
+        },
+        {
+          "type": "display",
+          "position": "relative",
+          "width": "25%",
+          "border": "solid 3px orange",
+          "backgroundColor": "#cccccc",
+          "overflow": "auto",
+          "children": [
+            {
+              "type": "label",
+              "position": "relative",
+              "width": "100%",
+              "height": "20px",
+              "textAlign": "center",
+              "fontWeight": "bold",
+              "backgroundColor": "#eeeeee",
+              "text": "Detail"
+            },
+            {
+              "type": "dynamicpage",
+              "position": "relative",
+              "routePath": "detail"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

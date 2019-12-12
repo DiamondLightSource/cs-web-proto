@@ -5,6 +5,15 @@ import { shallow } from "enzyme";
 import { Display } from "../Display/display";
 import { Label } from "../Label/label";
 
+const useEffect = jest.spyOn(React, "useEffect");
+const mockUseEffect = (): void => {
+  useEffect.mockImplementationOnce((f): any => f());
+};
+
+beforeEach((): void => {
+  mockUseEffect();
+});
+
 describe("<WidgetFromBob>", (): void => {
   it("fetches a file from the server", (done): void => {
     const mockSuccessResponse = {};
@@ -30,7 +39,10 @@ describe("<WidgetFromBob>", (): void => {
           height: "",
           width: "",
           margin: "",
-          padding: ""
+          padding: "",
+          border: "",
+          minWidth: "",
+          maxWidth: ""
         }}
         file="TestFile"
       />
@@ -78,7 +90,10 @@ describe("<WidgetFromBob>", (): void => {
           height: "",
           width: "",
           margin: "",
-          padding: ""
+          padding: "",
+          border: "",
+          minWidth: "",
+          maxWidth: ""
         }}
         file="TestFile"
       />
@@ -100,7 +115,8 @@ describe("<WidgetFromBob>", (): void => {
     const mockSuccessResponse = `
     <?xml version="1.0" encoding="UTF-8"?>
     <display version="2.0.0">
-        <name>Display</name><width>200</width>
+        <name>Display</name>
+        <width>200</width>
         <height>350</height>
         <widget type="label" version="2.0.0">
             <name>Label</name>
@@ -132,7 +148,10 @@ describe("<WidgetFromBob>", (): void => {
           height: "",
           width: "",
           margin: "",
-          padding: ""
+          padding: "",
+          border: "",
+          minWidth: "",
+          maxWidth: ""
         }}
         file="TestFile"
       />

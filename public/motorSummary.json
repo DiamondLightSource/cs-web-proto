@@ -1,0 +1,33 @@
+{
+  "type": "flexcontainer",
+  "position": "relative",
+  "children": [
+    {
+      "type": "widgetFromJSON",
+      "position": "relative",
+      "margin": "10px",
+      "file": "http://localhost:3000/motor.json",
+      "macroMap": {
+        "motor": "1"
+      }
+    },
+    {
+      "type": "widgetFromJSON",
+      "position": "relative",
+      "margin": "10px",
+      "file": "http://localhost:3000/motor.json",
+      "macroMap": {
+        "motor": "2"
+      }
+    },
+    {
+      "type": "widgetFromJSON",
+      "position": "relative",
+      "margin": "10px",
+      "file": "http://localhost:3000/motor.json",
+      "macroMap": {
+        "motor": "3"
+      }
+    }
+  ]
+}

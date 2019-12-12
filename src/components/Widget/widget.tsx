@@ -34,12 +34,29 @@ export type PVInputComponent = PVComponent & { pvName: string };
 // complex units
 const ContainerFeaturesPropType = {
   margin: PropTypes.string,
-  padding: PropTypes.string
+  padding: PropTypes.string,
+  border: PropTypes.string,
+  minWidth: PropTypes.string,
+  maxWidth: PropTypes.string
 };
 
 const OpenWebpagePropType = PropTypes.shape({
   type: PropTypes.string.isRequired,
   url: PropTypes.string.isRequired,
+  description: PropTypes.string
+});
+
+const OpenPagePropType = PropTypes.shape({
+  type: PropTypes.string.isRequired,
+  page: PropTypes.string.isRequired,
+  location: PropTypes.string.isRequired,
+  macros: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired
+});
+
+const ClosePagePropType = PropTypes.shape({
+  type: PropTypes.string.isRequired,
+  location: PropTypes.string.isRequired,
   description: PropTypes.string
 });
 
@@ -51,8 +68,10 @@ const WritePvPropType = PropTypes.shape({
 });
 
 const ActionPropType = PropTypes.oneOfType([
-  OpenWebpagePropType,
-  WritePvPropType
+  OpenPagePropType,
+  ClosePagePropType,
+  WritePvPropType,
+  OpenWebpagePropType
 ]);
 
 const ActionsPropType = PropTypes.shape({
@@ -90,7 +109,8 @@ const WidgetStylingPropType = {
   fontSize: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   fontWeight: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   textAlign: PropTypes.oneOf(["center", "left", "right", "justify"]),
-  backgroundColor: PropTypes.string
+  backgroundColor: PropTypes.string,
+  color: PropTypes.string
 };
 type WidgetStyling = InferWidgetProps<typeof WidgetStylingPropType>;
 

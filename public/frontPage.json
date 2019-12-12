@@ -1,7 +1,8 @@
 {
   "type": "display",
   "position": "relative",
-  "width": "80%",
+  "width": "90%",
+  "maxWidth": "600px",
   "margin": "auto",
   "children": [
     {
@@ -211,8 +212,29 @@
         {
           "type": "readback",
           "position": "relative",
-          "margin": "5px 0 0 0",
+          "margin": "5px 0 30px 0",
           "pvName": "loc://test(1.1)"
+        }
+      ]
+    },
+    {
+      "type": "grouping",
+      "position": "relative",
+      "margin": "20px 0 0 0",
+      "name": "Slide Control",
+      "children": [
+        {
+          "type": "label",
+          "position": "relative",
+          "text": "In a grouping container...",
+          "textAlign": "left",
+          "backgroundColor": "transparent"
+        },
+        {
+          "type": "slidecontrol",
+          "position": "relative",
+          "pvName": "sim://limit#progressPV",
+          "alarmBorder": true
         }
       ]
     }
