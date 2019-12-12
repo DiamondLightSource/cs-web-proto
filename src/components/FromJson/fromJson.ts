@@ -53,22 +53,32 @@ export const WidgetFromJson = (
   // Extract props
   let { file, macroMap } = props;
 
-  if (file !== renderedFile) {
-    fetch(file)
-      .then(x => new Promise(resolve => setTimeout(() => resolve(x), 5000)))
-      .then(
-        (response): Promise<any> => {
-          return (response as Response).json();
-        }
-      )
-      .then((json): void => {
-        // Check component is still mounted when result comes back
+  useEffect(() => {
+    // Will be set on the first render
+    let mounted = true;
+    if (file !== renderedFile) {
+      fetch(file)
+        .then(x => new Promise(resolve => setTimeout(() => resolve(x), 5000)))
+        .then(
+          (response): Promise<any> => {
+            return (response as Response).json();
+          }
+        )
+        .then((json): void => {
+          // Check component is still mounted when result comes back
+          if (mounted) {
+            setJson(json);
+            setFile(file);
+            setMacros(macroMap as MacroMap);
+          }
+        });
+    }
 
-        setJson(json);
-        setFile(file);
-        setMacros(macroMap as MacroMap);
-      });
-  }
+    // Clean up function
+    return () => {
+      mounted = false;
+    };
+  });
 
   if (macroMap !== currentMacros) {
     setMacros(macroMap as MacroMap);
