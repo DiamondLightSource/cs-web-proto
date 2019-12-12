@@ -9,7 +9,7 @@ import {
   WidgetPropType,
   InferWidgetProps
 } from "../Widget/widget";
-import { WidgetFromJson } from "../FromJson/fromJson";
+import { WidgetFromJson } from "../FromJson/fromJson"; // eslint-disable-line import/no-cycle
 import { ActionButton } from "../ActionButton/actionButton";
 import { CLOSE_PAGE } from "../../widgetActions";
 

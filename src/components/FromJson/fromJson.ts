@@ -17,7 +17,7 @@ import { SlideControl } from "../SlideControl/slideControl";
 import { MenuButton } from "../MenuButton/menuButton";
 import { Display } from "../Display/display";
 import { ActionButton } from "../ActionButton/actionButton";
-import { DynamicPageWidget } from "../DynamicPage/dynamicPage";
+import { DynamicPageWidget } from "../DynamicPage/dynamicPage"; // eslint-disable-line import/no-cycle
 import { WidgetFromBob } from "../FromBob/fromBob";
 import { GroupingContainer } from "../GroupingContainer/groupingContainer";
 import { WidgetPropType, InferWidgetProps } from "../Widget/widget";
