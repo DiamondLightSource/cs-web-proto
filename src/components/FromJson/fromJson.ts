@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import log from "loglevel";
 
@@ -21,6 +21,7 @@ import { DynamicPageWidget } from "../DynamicPage/dynamicPage";
 import { WidgetFromBob } from "../FromBob/fromBob";
 import { GroupingContainer } from "../GroupingContainer/groupingContainer";
 import { WidgetPropType, InferWidgetProps } from "../Widget/widget";
+import { resolve } from "dns";
 
 const EMPTY_WIDGET: WidgetDescription = {
   type: "empty",
@@ -54,12 +55,15 @@ export const WidgetFromJson = (
 
   if (file !== renderedFile) {
     fetch(file)
+      .then(x => new Promise(resolve => setTimeout(() => resolve(x), 5000)))
       .then(
         (response): Promise<any> => {
-          return response.json();
+          return (response as Response).json();
         }
       )
       .then((json): void => {
+        // Check component is still mounted when result comes back
+
         setJson(json);
         setFile(file);
         setMacros(macroMap as MacroMap);
@@ -69,6 +73,7 @@ export const WidgetFromJson = (
   if (macroMap !== currentMacros) {
     setMacros(macroMap as MacroMap);
   }
+
   const widgetDict = {
     readback: Readback,
     shape: Shape,

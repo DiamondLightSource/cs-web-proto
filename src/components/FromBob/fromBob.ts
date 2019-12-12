@@ -61,9 +61,10 @@ export const WidgetFromBob = (
 
   if (file !== renderedFile) {
     fetch(file)
+      .then(x => new Promise(resolve => setTimeout(() => resolve(x), 5000)))
       .then(
         (response): Promise<any> => {
-          return response.text();
+          return (response as Response).text();
         }
       )
       .then((bob): void => {
