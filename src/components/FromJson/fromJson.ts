@@ -52,11 +52,7 @@ export const WidgetFromJson = (
   // Extract props
   let { file, macroMap } = props;
 
-  if (
-    json["type"] === "empty" ||
-    file !== renderedFile ||
-    macroMap !== currentMacros
-  ) {
+  if (file !== renderedFile) {
     fetch(file)
       .then(
         (response): Promise<any> => {
@@ -68,6 +64,10 @@ export const WidgetFromJson = (
         setFile(file);
         setMacros(macroMap as MacroMap);
       });
+  }
+
+  if (macroMap !== currentMacros) {
+    setMacros(macroMap as MacroMap);
   }
   const widgetDict = {
     readback: Readback,

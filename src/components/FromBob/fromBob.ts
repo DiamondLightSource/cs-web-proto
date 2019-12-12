@@ -59,7 +59,7 @@ export const WidgetFromBob = (
   // Extract props
   let { file, macroMap } = props;
 
-  if (bob === "" || file !== renderedFile || macroMap !== currentMacros) {
+  if (file !== renderedFile) {
     fetch(file)
       .then(
         (response): Promise<any> => {
@@ -72,6 +72,11 @@ export const WidgetFromBob = (
         setMacros(macroMap as MacroMap);
       });
   }
+
+  if (macroMap !== currentMacros) {
+    setMacros(macroMap as MacroMap);
+  }
+
   const widgetDict = {
     textupdate: Readback,
     "org.csstudio.opibuilder.widgets.TextUpdate": Readback,
