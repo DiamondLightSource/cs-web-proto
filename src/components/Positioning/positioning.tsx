@@ -82,8 +82,8 @@ export function widgetDescriptionToComponent(
     margin: margin,
     padding: padding,
     border: border,
-    minWidth,
-    maxWidth
+    minWidth: minWidth,
+    maxWidth: maxWidth
   });
   const widgetStyling = filterUndefinedOut({
     color: color,
