@@ -5,6 +5,13 @@ import { MenuWrapper } from "./menuWrapper";
 
 let wrapper: ShallowWrapper;
 
+// Mock the useHistory hook
+jest.mock("react-router-dom", (): object => ({
+  useHistory: (): object => ({
+    push: jest.fn()
+  })
+}));
+
 beforeEach((): void => {
   const actions = { executeAsOne: false, actions: [] };
   const menuWrapper = (
