@@ -1,7 +1,7 @@
 /* Provide the same component as fromJson but converting bob files and
 providing a useful widget dictionary */
 
-import { useState, useEffect } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import log from "loglevel";
 
@@ -59,14 +59,15 @@ export const WidgetFromBob = (
   // Extract props
   let { file, macroMap } = props;
 
-  useEffect(() => {
+  // Using directly from React for testing purposes
+  React.useEffect((): (() => void) => {
     // Will be set on the first render
     let mounted = true;
     if (file !== renderedFile) {
       fetch(file)
         .then(
           (response): Promise<any> => {
-            return response.json();
+            return response.text();
           }
         )
         .then((bob): void => {
@@ -80,7 +81,7 @@ export const WidgetFromBob = (
     }
 
     // Clean up function
-    return () => {
+    return (): void => {
       mounted = false;
     };
   });

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import log from "loglevel";
 
@@ -52,7 +52,8 @@ export const WidgetFromJson = (
   // Extract props
   let { file, macroMap } = props;
 
-  useEffect(() => {
+  // Using directly from React for testing purposes
+  React.useEffect((): (() => void) => {
     // Will be set on the first render
     let mounted = true;
     if (file !== renderedFile) {
@@ -73,7 +74,7 @@ export const WidgetFromJson = (
     }
 
     // Clean up function
-    return () => {
+    return (): void => {
       mounted = false;
     };
   });
