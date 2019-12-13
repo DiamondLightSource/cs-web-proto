@@ -11,16 +11,16 @@ import {
 const ImageProps = {
   src: PropTypes.string.isRequired,
   alt: PropTypes.string,
-  size_to_container: PropTypes.bool
+  fill: PropTypes.bool
 };
 
 export const ImageComponent = (
   props: PropTypes.InferProps<typeof ImageProps> & Component
 ): JSX.Element => {
-  let image_size = undefined;
+  let imageSize = undefined;
   let overflow = "auto";
-  if (props.size_to_container === true) {
-    image_size = "100%";
+  if (props.fill === true) {
+    imageSize = "100%";
     overflow = "hidden";
   }
 
@@ -36,8 +36,8 @@ export const ImageComponent = (
         src={props.src || undefined}
         alt={props.alt || undefined}
         style={{
-          height: image_size,
-          width: image_size
+          height: imageSize,
+          width: imageSize
         }}
       />
     </div>
