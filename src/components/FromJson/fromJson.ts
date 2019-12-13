@@ -20,6 +20,7 @@ import { ActionButton } from "../ActionButton/actionButton";
 import { DynamicPageWidget } from "../DynamicPage/dynamicPage"; // eslint-disable-line import/no-cycle
 import { WidgetFromBob } from "../FromBob/fromBob";
 import { GroupingContainer } from "../GroupingContainer/groupingContainer";
+import { Image } from "../Image/image";
 import { WidgetPropType, InferWidgetProps } from "../Widget/widget";
 
 const EMPTY_WIDGET: WidgetDescription = {
@@ -98,7 +99,8 @@ export const WidgetFromJson = (
     widgetFromJSON: WidgetFromJson,
     dynamicpage: DynamicPageWidget,
     widgetFromBob: WidgetFromBob,
-    grouping: GroupingContainer
+    grouping: GroupingContainer,
+    image: Image
   };
 
   let component: JSX.Element | null;
