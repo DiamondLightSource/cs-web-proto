@@ -16,8 +16,12 @@ import {
   StringOrNumProp,
   StringPropOpt,
   BoolPropOpt,
-  MapStringString,
-  InferWidgetProps
+  InferWidgetProps,
+  StringProp,
+  StringOrNumPropOpt,
+  ChoicePropOpt,
+  MacrosProp,
+  MacrosPropOpt
 } from "../propTypes";
 
 // Useful types for components which will later be turned into widgets
@@ -30,12 +34,12 @@ export type PVComponent = Component & PvState;
 export type PVInputComponent = PVComponent & { pvName: string };
 
 const RulesPropType = PropTypes.shape({
-  condition: PropTypes.string.isRequired,
+  condition: StringProp,
   trueState: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]).isRequired,
   falseState: PropTypes.oneOfType([PropTypes.string, PropTypes.bool])
     .isRequired,
-  substitutionMap: MapStringString,
-  prop: PropTypes.string.isRequired
+  substitutionMap: MacrosProp,
+  prop: StringProp
 });
 
 const AbsoluteContainerProps = {
@@ -49,29 +53,29 @@ const AbsoluteContainerProps = {
 
 const FlexibleContainerProps = {
   position: PropTypes.oneOf(["relative"]).isRequired,
-  height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  height: StringOrNumPropOpt,
+  width: StringOrNumPropOpt,
   ...ContainerFeaturesPropType
 };
 
 const WidgetStylingPropType = {
-  font: PropTypes.string,
-  fontSize: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  fontWeight: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  textAlign: PropTypes.oneOf(["center", "left", "right", "justify"]),
-  backgroundColor: PropTypes.string,
-  color: PropTypes.string
+  font: StringPropOpt,
+  fontSize: StringOrNumPropOpt,
+  fontWeight: StringOrNumPropOpt,
+  textAlign: ChoicePropOpt(["center", "left", "right", "justify"]),
+  backgroundColor: StringPropOpt,
+  color: StringPropOpt
 };
 type WidgetStyling = InferWidgetProps<typeof WidgetStylingPropType>;
 
 const CommonWidgetProps = {
   widgetStyling: PropTypes.shape(WidgetStylingPropType),
-  macroMap: PropTypes.objectOf(PropTypes.string.isRequired),
+  macroMap: MacrosPropOpt,
   rules: PropTypes.arrayOf(RulesPropType),
   actions: ActionsPropType,
-  tooltip: PropTypes.string,
-  resolvedTooltip: PropTypes.string,
-  menuWrapper: PropTypes.bool
+  tooltip: StringPropOpt,
+  resolvedTooltip: StringPropOpt,
+  menuWrapper: BoolPropOpt
 };
 
 const AbsoluteComponentPropType = {

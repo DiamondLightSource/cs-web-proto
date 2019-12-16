@@ -5,9 +5,6 @@ export type ExcludeNulls<T> = {
 };
 export type InferWidgetProps<T> = ExcludeNulls<InferProps<T>>;
 
-export const MapStringStringOpt = PropTypes.objectOf(PropTypes.string);
-export const MapStringString = PropTypes.objectOf(PropTypes.string).isRequired;
-
 export const StringProp = PropTypes.string.isRequired;
 export const StringPropOpt = PropTypes.string;
 
@@ -28,6 +25,10 @@ export const ChildrenPropOpt = PropTypes.node;
 
 export const ObjectProp = PropTypes.object.isRequired;
 export const ObjectPropOpt = PropTypes.object;
+
+export const MacrosPropOpt = PropTypes.objectOf(PropTypes.string.isRequired);
+export const MacrosProp = PropTypes.objectOf(PropTypes.string.isRequired)
+  .isRequired;
 
 export const StringOrNumPropOpt = PropTypes.oneOfType([
   PropTypes.string,
