@@ -43,5 +43,4 @@ export const Label = (
   props: InferWidgetProps<typeof LabelWidgetProps>
 ): JSX.Element => <Widget baseWidget={LabelComponent} {...props} />;
 
-console.log("register widget");
 registerWidget(Label, LabelWidgetProps, "label");

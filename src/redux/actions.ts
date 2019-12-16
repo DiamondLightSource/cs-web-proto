@@ -7,15 +7,12 @@ export const UNSUBSCRIBE = "unsubscribe";
 export const VALUE_CHANGED = "value_changed";
 export const WRITE_PV = "write_pv";
 export const MACRO_UPDATED = "macro_updated";
-export const REGISTER_WIDGET = "register_widget";
 
 /* The never type in the constructor ensures that TypeScript
    won't allow this error to be created. This is useful in
    switch blocks to check that all cases have been handled. */
 export class InvalidAction extends Error {
   public constructor(val: never) {
-    console.log("the object is");
-    console.log(val);
     super(`Invalid action: ${val}`);
   }
 }
@@ -69,20 +66,10 @@ export interface MacroUpdated {
   };
 }
 
-export interface RegisterWidget {
-  type: typeof REGISTER_WIDGET;
-  payload: {
-    component: any;
-    Props: any;
-    name: string;
-  };
-}
-
 export type Action =
   | ConnectionChanged
   | Subscribe
   | Unsubscribe
   | ValueChanged
   | WritePv
-  | MacroUpdated
-  | RegisterWidget;
+  | MacroUpdated;

@@ -15,7 +15,6 @@ import { DynamicPageWidget } from "./components/DynamicPage/dynamicPage";
 import { Connection } from "./connection/plugin";
 import { ActionButton } from "./components/";
 import { OPEN_PAGE } from "./widgetActions";
-import { registerWidgets } from "./components/register";
 
 var settings: any;
 try {
@@ -48,9 +47,7 @@ const App: React.FC = (): JSX.Element => {
   }
   const plugin = new ConnectionForwarder(plugins);
   initialiseStore(plugin);
-  registerWidgets();
   const store = getStore();
-
   const { toggle, dark } = React.useContext(ThemeContext);
   applyTheme(dark ? darkTheme : lightTheme);
 

@@ -34,12 +34,7 @@ const EMPTY_WIDGET: WidgetDescription = {
   x: 0,
   y: 0,
   width: 0,
-  height: 0,
-  margin: "",
-  border: "",
-  maxWidth: "",
-  minWidth: "",
-  padding: ""
+  height: 0
 };
 
 const ERROR_WIDGET: WidgetDescription = {

@@ -5,10 +5,9 @@ import {
   widgetDescriptionToComponent,
   WidgetDescription
 } from "../Positioning/positioning";
-import { MacroMap, CsState, WidgetNames } from "../../redux/csState";
+import { MacroMap } from "../../redux/csState";
 import { WidgetPropType, InferWidgetProps } from "../Widget/widget";
-import { useSelector } from "react-redux";
-import { registerWidget } from "../register";
+import { widgets, registerWidget } from "../register";
 import { StringProp } from "../propTypes";
 
 const EMPTY_WIDGET: WidgetDescription = {
@@ -18,12 +17,7 @@ const EMPTY_WIDGET: WidgetDescription = {
     x: 0,
     y: 0,
     width: 0,
-    height: 0,
-    margin: "",
-    border: "",
-    maxWidth: "",
-    minWidth: "",
-    padding: ""
+    height: 0
   }
 };
 
@@ -83,11 +77,11 @@ export const WidgetFromJson = (
     setMacros(macroMap as MacroMap);
   }
 
-  const widgetDict = useSelector(
-    (state: CsState): WidgetNames => {
-      return state.widgetNames;
-    }
+  let widgetDict = Object.assign(
+    {},
+    ...Object.entries(widgets).map(([k, v]): any => ({ [k]: v[0] }))
   );
+
   let component: JSX.Element | null;
   try {
     component = widgetDescriptionToComponent(json, widgetDict, currentMacros);

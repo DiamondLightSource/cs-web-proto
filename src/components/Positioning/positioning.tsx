@@ -107,11 +107,6 @@ export function widgetDescriptionToComponent(
     }
   );
   if (error !== undefined) {
-    console.log("cs");
-    console.log(containerStyling);
-    console.log("widgetInfo");
-    console.log(widgetInfo);
-    console.log(Component);
     throw {
       msg: error,
       object: {

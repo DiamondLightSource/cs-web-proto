@@ -39,5 +39,4 @@ export const Display = (
   props: InferWidgetProps<typeof DisplayWidgetProps>
 ): JSX.Element => <Widget baseWidget={DisplayComponent} {...props} />;
 
-console.log("register widget");
 registerWidget(Display, DisplayWidgetProps, "display");

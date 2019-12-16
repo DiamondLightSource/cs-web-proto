@@ -19,7 +19,7 @@ export const StringOrNumPropOpt = PropTypes.oneOfType([
   PropTypes.string,
   PropTypes.number
 ]);
-export const StringOrNumProp = StringPropOpt.isRequired;
+export const StringOrNumProp = StringOrNumPropOpt.isRequired;
 
 // Number of prop types organised into useable sections to form more
 // complex units
