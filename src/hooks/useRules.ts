@@ -37,7 +37,8 @@ export function useRules(props: RuleProps): RuleProps {
   );
 
   for (const rule of rules) {
-    let { condition, trueState, falseState, substitutionMap, prop } = rule;
+    let { condition } = rule;
+    const { trueState, falseState, substitutionMap, prop } = rule;
     if (condition !== undefined && substitutionMap !== undefined) {
       pvs = Object.values(substitutionMap);
     }

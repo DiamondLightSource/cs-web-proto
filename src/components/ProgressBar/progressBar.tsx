@@ -43,11 +43,11 @@ export const ProgressBarComponent = (
   // Store styles in these variables
   // Change the direction of the gradient depending on wehether the bar is vertical
   const direction = vertical === true ? "to left" : "to top";
-  let barColor = {
-      backgroundImage: `linear-gradient(${direction}, ${color} 50%, #ffffff 130%)`
-    },
-    onStyle = {},
-    offStyle = {};
+  let onStyle = {};
+  const offStyle = {};
+  const barColor = {
+    backgroundImage: `linear-gradient(${direction}, ${color} 50%, #ffffff 130%)`
+  };
   if (vertical === true) {
     onStyle = {
       ...barColor,

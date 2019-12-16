@@ -2,7 +2,6 @@
 
 import React from "react";
 import log from "loglevel";
-// @ts-ignore
 import checkPropTypes from "check-prop-types";
 
 import { MacroMap } from "../../redux/csState";
@@ -24,7 +23,9 @@ export function widgetDescriptionToComponent(
   existingMacroMap?: MacroMap,
   listIndex?: number
 ): JSX.Element {
-  // Extract known properties and leave everything else in otherProps
+  // Extract known properties and leave everything else in otherProps.
+  // It's awkward to split this destructuring into separate let and const.
+  // eslint-disable-next-line prefer-const
   let {
     type,
     children = [],

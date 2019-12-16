@@ -1,6 +1,3 @@
-// Special-case filename App.tsx is permitted.
-/* eslint unicorn/filename-case: 0 */ // --> OFF
-
 import React from "react";
 import "./App.css";
 import { Provider } from "react-redux";
@@ -13,7 +10,7 @@ import { ConiqlPlugin } from "./connection/coniql";
 import { ConnectionForwarder } from "./connection/forwarder";
 import { DynamicPageWidget } from "./components/DynamicPage/dynamicPage";
 import { Connection } from "./connection/plugin";
-import { ActionButton } from "./components/";
+import { ActionButton } from "./components";
 import { OPEN_PAGE } from "./widgetActions";
 
 let settings: any;

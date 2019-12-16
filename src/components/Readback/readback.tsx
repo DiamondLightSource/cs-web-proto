@@ -33,7 +33,8 @@ function getClass(alarmSeverity: any): string {
 export const ReadbackComponent = (
   props: ReadbackComponentProps
 ): JSX.Element => {
-  let { connected, value, precision, showUnits = false, style } = props;
+  const { connected, value, precision, showUnits = false } = props;
+  let { style } = props;
   const alarm = alarmOf(value);
   const display = displayOf(value);
   let displayedValue;
