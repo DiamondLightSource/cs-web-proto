@@ -3,6 +3,7 @@ export { Display } from "./Display/display";
 export { DynamicPageWidget } from "./DynamicPage/dynamicPage";
 export { FlexContainer } from "./FlexContainer/flexContainer";
 export { GroupingContainer } from "./GroupingContainer/groupingContainer";
+export { Image } from "./Image/image";
 export { Input } from "./Input/input";
 export { Label } from "./Label/label";
 export { MenuButton } from "./MenuButton/menuButton";
