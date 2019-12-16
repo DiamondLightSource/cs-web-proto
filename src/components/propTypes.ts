@@ -1,4 +1,12 @@
-import PropTypes from "prop-types";
+import PropTypes, { InferProps } from "prop-types";
+
+export type ExcludeNulls<T> = {
+  [P in keyof T]: Exclude<T[P], null>;
+};
+export type InferWidgetProps<T> = ExcludeNulls<InferProps<T>>;
+
+export const MapStringStringOpt = PropTypes.objectOf(PropTypes.string);
+export const MapStringString = PropTypes.objectOf(PropTypes.string).isRequired;
 
 export const StringProp = PropTypes.string.isRequired;
 export const StringPropOpt = PropTypes.string;
@@ -15,11 +23,26 @@ export const BoolPropOpt = PropTypes.bool;
 export const PvProp = PropTypes.string.isRequired;
 export const PvPropOpt = PropTypes.string;
 
+export const ChildrenProp = PropTypes.node.isRequired;
+export const ChildrenPropOpt = PropTypes.node;
+
+export const ObjectProp = PropTypes.object.isRequired;
+export const ObjectPropOpt = PropTypes.object;
+
 export const StringOrNumPropOpt = PropTypes.oneOfType([
   PropTypes.string,
   PropTypes.number
 ]);
 export const StringOrNumProp = StringOrNumPropOpt.isRequired;
+
+export function ChoicePropOpt(
+  options: string[]
+): PropTypes.Requireable<string> {
+  return PropTypes.oneOf(options);
+}
+export function ChoiceProp(options: string[]): PropTypes.Validator<string> {
+  return PropTypes.oneOf(options).isRequired;
+}
 
 // Number of prop types organised into useable sections to form more
 // complex units

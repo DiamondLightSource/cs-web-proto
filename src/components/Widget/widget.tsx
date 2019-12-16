@@ -1,5 +1,5 @@
 import React from "react";
-import PropTypes, { InferProps } from "prop-types";
+import PropTypes from "prop-types";
 
 import { TooltipWrapper } from "../TooltipWrapper/tooltipWrapper";
 import { AlarmBorder } from "../AlarmBorder/alarmBorder";
@@ -15,14 +15,10 @@ import {
   ActionsPropType,
   StringOrNumProp,
   StringPropOpt,
-  BoolPropOpt
+  BoolPropOpt,
+  MapStringString,
+  InferWidgetProps
 } from "../propTypes";
-
-export type ExcludeNulls<T> = {
-  [P in keyof T]: Exclude<T[P], null>;
-};
-export type InferWidgetProps<T> = ExcludeNulls<InferProps<T>>;
-export const MapStringString = PropTypes.objectOf(PropTypes.string);
 
 // Useful types for components which will later be turned into widgets
 // Required to define stateless component
@@ -38,7 +34,7 @@ const RulesPropType = PropTypes.shape({
   trueState: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]).isRequired,
   falseState: PropTypes.oneOfType([PropTypes.string, PropTypes.bool])
     .isRequired,
-  substitutionMap: MapStringString.isRequired,
+  substitutionMap: MapStringString,
   prop: PropTypes.string.isRequired
 });
 

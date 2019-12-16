@@ -6,9 +6,9 @@ import {
   WidgetDescription
 } from "../Positioning/positioning";
 import { MacroMap } from "../../redux/csState";
-import { WidgetPropType, InferWidgetProps } from "../Widget/widget";
+import { WidgetPropType } from "../Widget/widget";
 import { widgets, registerWidget } from "../register";
-import { StringProp } from "../propTypes";
+import { StringProp, InferWidgetProps } from "../propTypes";
 
 const EMPTY_WIDGET: WidgetDescription = {
   type: "empty",

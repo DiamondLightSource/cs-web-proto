@@ -1,17 +1,12 @@
 import React from "react";
-import PropTypes from "prop-types";
 
-import {
-  Component,
-  Widget,
-  WidgetPropType,
-  InferWidgetProps
-} from "../Widget/widget";
+import { Component, Widget, WidgetPropType } from "../Widget/widget";
 import { registerWidget } from "../register";
+import { ChoicePropOpt, ChildrenPropOpt, InferWidgetProps } from "../propTypes";
 
 const DisplayProps = {
-  children: PropTypes.node,
-  overflow: PropTypes.oneOf(["scroll", "hidden", "auto", "visible"])
+  children: ChildrenPropOpt,
+  overflow: ChoicePropOpt(["scroll", "hidden", "auto", "visible"])
 };
 
 // Generic display widget to put other things inside

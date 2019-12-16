@@ -2,30 +2,20 @@
 // Displays value via an embedded progressbar widget
 
 import React, { useState } from "react";
-import PropTypes from "prop-types";
 
 import classes from "./slideControl.module.css";
 import { vtypeToString, stringToVtype } from "../../vtypes/utils";
 
-import { ProgressBarComponent } from "../ProgressBar/progressBar";
-import { writePv } from "../../hooks/useSubscription";
 import {
-  InferWidgetProps,
-  PVInputComponent,
-  PVWidget,
-  PVWidgetPropType
-} from "../Widget/widget";
-
-const SlideControlProps = {
-  min: PropTypes.number,
-  max: PropTypes.number,
-  vertical: PropTypes.bool,
-  color: PropTypes.string,
-  precision: PropTypes.number
-};
+  ProgressBarComponent,
+  ProgressBarProps
+} from "../ProgressBar/progressBar";
+import { writePv } from "../../hooks/useSubscription";
+import { PVInputComponent, PVWidget, PVWidgetPropType } from "../Widget/widget";
+import { InferWidgetProps } from "../propTypes";
 
 export const SlideControlComponent = (
-  props: InferWidgetProps<typeof SlideControlProps> & PVInputComponent
+  props: InferWidgetProps<typeof ProgressBarProps> & PVInputComponent
 ): JSX.Element => {
   let {
     pvName,
@@ -107,7 +97,7 @@ export const SlideControlComponent = (
 };
 
 const SlideControlWidgetProps = {
-  ...SlideControlProps,
+  ...ProgressBarProps,
   ...PVWidgetPropType
 };
 

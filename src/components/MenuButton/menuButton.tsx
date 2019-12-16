@@ -3,8 +3,9 @@ import { writePv } from "../../hooks/useSubscription";
 
 import { VType, VEnum } from "../../vtypes/vtypes";
 import { vtypeToString, stringToVtype } from "../../vtypes/utils";
-import { InferWidgetProps, PVWidget, PVWidgetPropType } from "../Widget/widget";
+import { PVWidget, PVWidgetPropType } from "../Widget/widget";
 import { registerWidget } from "../register";
+import { InferWidgetProps } from "../propTypes";
 
 export interface MenuButtonProps {
   connected: boolean;

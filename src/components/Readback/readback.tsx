@@ -1,17 +1,12 @@
 import React from "react";
 
-import {
-  InferWidgetProps,
-  PVComponent,
-  PVWidget,
-  PVWidgetPropType
-} from "../../components/Widget/widget";
+import { PVComponent, PVWidget, PVWidgetPropType } from "../Widget/widget";
 
 import classes from "./readback.module.css";
 import { alarmOf, AlarmSeverity } from "../../vtypes/alarm";
 import { displayOf } from "../../vtypes/display";
 import { vtypeToString } from "../../vtypes/utils";
-import { IntPropOpt, BoolPropOpt } from "../propTypes";
+import { IntPropOpt, BoolPropOpt, InferWidgetProps } from "../propTypes";
 import { registerWidget } from "../register";
 
 const ReadbackProps = {

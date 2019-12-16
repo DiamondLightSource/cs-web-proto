@@ -1,17 +1,12 @@
 import React from "react";
-import PropTypes from "prop-types";
 
-import {
-  Component,
-  Widget,
-  WidgetPropType,
-  InferWidgetProps
-} from "../Widget/widget";
+import { Component, Widget, WidgetPropType } from "../Widget/widget";
 import { registerWidget } from "../register";
+import { StringProp, ChildrenPropOpt, InferWidgetProps } from "../propTypes";
 
 const GroupingContainerProps = {
-  name: PropTypes.string.isRequired,
-  children: PropTypes.node
+  name: StringProp,
+  children: ChildrenPropOpt
 };
 
 // Generic display widget to put other things inside
