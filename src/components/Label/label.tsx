@@ -8,6 +8,7 @@ import {
   WidgetPropType,
   InferWidgetProps
 } from "../Widget/widget";
+import { registerWidget } from "../register";
 
 const LabelProps = {
   text: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
@@ -42,4 +43,5 @@ export const Label = (
   props: InferWidgetProps<typeof LabelWidgetProps>
 ): JSX.Element => <Widget baseWidget={LabelComponent} {...props} />;
 
-Label.propTypes = LabelWidgetProps;
+console.log("register widget");
+registerWidget(Label, LabelWidgetProps, "label");

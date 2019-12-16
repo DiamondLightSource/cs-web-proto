@@ -6,7 +6,8 @@ import {
   WRITE_PV,
   CONNECTION_CHANGED,
   MACRO_UPDATED,
-  UNSUBSCRIBE
+  UNSUBSCRIBE,
+  REGISTER_WIDGET
 } from "./actions";
 import { VType } from "../vtypes/vtypes";
 import { mergeVtype } from "../vtypes/merge";
@@ -15,7 +16,8 @@ const initialState: CsState = {
   valueCache: {},
   macroMap: { SUFFIX: "1" },
   effectivePvNameMap: {},
-  subscriptions: {}
+  subscriptions: {},
+  widgetNames: {}
 };
 
 export interface PvState {
@@ -41,12 +43,17 @@ export interface Subscriptions {
   [pv: string]: string[];
 }
 
+export interface WidgetNames {
+  [name: string]: any;
+}
+
 /* The shape of the store for the entire application. */
 export interface CsState {
   valueCache: ValueCache;
   effectivePvNameMap: { [pvName: string]: string };
   macroMap: MacroMap;
   subscriptions: Subscriptions;
+  widgetNames: WidgetNames;
 }
 
 export function csReducer(state = initialState, action: Action): CsState {
@@ -137,6 +144,15 @@ export function csReducer(state = initialState, action: Action): CsState {
     case WRITE_PV: {
       // Handled by middleware.
       break;
+    }
+    case REGISTER_WIDGET: {
+      const newWidgetNames = { ...state.widgetNames };
+      const { name, component } = action.payload;
+      newWidgetNames[name] = component;
+      return {
+        ...state,
+        widgetNames: newWidgetNames
+      };
     }
   }
   return state;

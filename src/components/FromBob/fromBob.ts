@@ -26,6 +26,7 @@ import {
   bobParseActions
 } from "./bobConversionUtils";
 import { ActionButton } from "../ActionButton/actionButton";
+import { registerWidget } from "../register";
 
 const EMPTY_WIDGET: WidgetDescription = {
   type: "empty",
@@ -33,7 +34,12 @@ const EMPTY_WIDGET: WidgetDescription = {
   x: 0,
   y: 0,
   width: 0,
-  height: 0
+  height: 0,
+  margin: "",
+  border: "",
+  maxWidth: "",
+  minWidth: "",
+  padding: ""
 };
 
 const ERROR_WIDGET: WidgetDescription = {
@@ -187,4 +193,4 @@ export const WidgetFromBob = (
   return component;
 };
 
-WidgetFromBob.propTypes = WidgetFromBobProps;
+registerWidget(WidgetFromBob, WidgetFromBobProps, "widgetFromBob");

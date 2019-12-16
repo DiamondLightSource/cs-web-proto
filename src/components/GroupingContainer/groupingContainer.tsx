@@ -7,6 +7,7 @@ import {
   WidgetPropType,
   InferWidgetProps
 } from "../Widget/widget";
+import { registerWidget } from "../register";
 
 const GroupingContainerProps = {
   name: PropTypes.string.isRequired,
@@ -42,4 +43,4 @@ export const GroupingContainer = (
   props: InferWidgetProps<typeof GroupingWidgetProps>
 ): JSX.Element => <Widget baseWidget={GroupingContainerComponent} {...props} />;
 
-GroupingContainer.propTypes = GroupingWidgetProps;
+registerWidget(GroupingContainer, GroupingWidgetProps, "grouping");

@@ -12,6 +12,7 @@ import {
 import { WidgetFromJson } from "../FromJson/fromJson"; // eslint-disable-line import/no-cycle
 import { ActionButton } from "../ActionButton/actionButton";
 import { CLOSE_PAGE } from "../../widgetActions";
+import { registerWidget } from "../register";
 
 export interface DynamicParams {
   json: string;
@@ -124,4 +125,4 @@ export const DynamicPageWidget = (
   props: InferWidgetProps<typeof DynamicPageWidgetProps>
 ): JSX.Element => <Widget baseWidget={DynamicPageComponent} {...props} />;
 
-DynamicPageWidget.propTypes = DynamicPageWidgetProps;
+registerWidget(DynamicPageWidget, DynamicPageWidgetProps, "dynamicpage");

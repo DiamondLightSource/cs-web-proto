@@ -8,6 +8,7 @@ import {
   WidgetPropType,
   InferWidgetProps
 } from "../Widget/widget";
+import { registerWidget } from "../register";
 
 const FlexProps = {
   flexFlow: PropTypes.oneOf(["rowWrap", "column", "row", "columnWrap"]),
@@ -38,4 +39,4 @@ export const FlexContainer = (
   props: InferWidgetProps<typeof FlexWidgetProps>
 ): JSX.Element => <Widget baseWidget={FlexContainerComponent} {...props} />;
 
-FlexContainer.propTypes = FlexWidgetProps;
+registerWidget(FlexContainer, FlexWidgetProps, "flexcontainer");

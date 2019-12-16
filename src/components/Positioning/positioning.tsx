@@ -85,6 +85,7 @@ export function widgetDescriptionToComponent(
     minWidth: minWidth,
     maxWidth: maxWidth
   });
+
   const widgetStyling = filterUndefinedOut({
     color: color,
     font: font,
@@ -106,6 +107,11 @@ export function widgetDescriptionToComponent(
     }
   );
   if (error !== undefined) {
+    console.log("cs");
+    console.log(containerStyling);
+    console.log("widgetInfo");
+    console.log(widgetInfo);
+    console.log(Component);
     throw {
       msg: error,
       object: {

@@ -9,6 +9,7 @@ import {
   PVWidget,
   PVWidgetPropType
 } from "../Widget/widget";
+import { registerWidget } from "../register";
 
 const ProgressBarProps = {
   min: PropTypes.number,
@@ -87,4 +88,4 @@ export const ProgressBar = (
   props: InferWidgetProps<typeof ProgressBarWidgetProps>
 ): JSX.Element => <PVWidget baseWidget={ProgressBarComponent} {...props} />;
 
-ProgressBar.propTypes = ProgressBarWidgetProps;
+registerWidget(ProgressBar, ProgressBarWidgetProps, "progressbar");

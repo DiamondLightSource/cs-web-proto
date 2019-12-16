@@ -7,6 +7,7 @@ import {
   WidgetPropType,
   InferWidgetProps
 } from "../Widget/widget";
+import { registerWidget } from "../register";
 
 const DisplayProps = {
   children: PropTypes.node,
@@ -38,4 +39,5 @@ export const Display = (
   props: InferWidgetProps<typeof DisplayWidgetProps>
 ): JSX.Element => <Widget baseWidget={DisplayComponent} {...props} />;
 
-Display.propTypes = DisplayWidgetProps;
+console.log("register widget");
+registerWidget(Display, DisplayWidgetProps, "display");

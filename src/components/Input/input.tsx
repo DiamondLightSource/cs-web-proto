@@ -9,6 +9,7 @@ import {
   PVWidget,
   PVWidgetPropType
 } from "../Widget/widget";
+import { registerWidget } from "../register";
 
 export interface InputProps {
   pvName: string;
@@ -92,4 +93,4 @@ export const Input = (
   props: InferWidgetProps<typeof PVWidgetPropType>
 ): JSX.Element => <PVWidget baseWidget={SmartInputComponent} {...props} />;
 
-Input.propTypes = PVWidgetPropType;
+registerWidget(Input, PVWidgetPropType, "input");

@@ -6,6 +6,7 @@ import {
   WidgetPropType,
   InferWidgetProps
 } from "../Widget/widget";
+import { registerWidget } from "../register";
 
 const ShapeProps = {
   shapeWidth: PropTypes.string,
@@ -41,4 +42,4 @@ export const Shape = (
   props: InferWidgetProps<typeof ShapeWidgetProps>
 ): JSX.Element => <Widget baseWidget={ShapeComponent} {...props} />;
 
-Shape.propTypes = ShapeWidgetProps;
+registerWidget(Shape, ShapeWidgetProps, "shape");
