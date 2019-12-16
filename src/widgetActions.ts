@@ -75,12 +75,12 @@ export const openPage = (action: OpenPage, history: History): void => {
     currentPath = history.location.pathname;
 
   //New page component in action.location
-  let newPathComponent =
+  const newPathComponent =
     action.location + "/" + action.page + "/" + action.macros + "/";
 
   //Find existing component in same location
-  let matcher = new RegExp(action.location + "/[^/]*/[^/]*/");
-  let groups = matcher.exec(currentPath);
+  const matcher = new RegExp(action.location + "/[^/]*/[^/]*/");
+  const groups = matcher.exec(currentPath);
   if (groups !== null && groups[0] !== undefined) {
     //Swap component in location
     currentPath = currentPath.replace(groups[0], newPathComponent);
@@ -98,8 +98,8 @@ export const closePage = (action: ClosePage, history: History): void => {
     currentPath = history.location.pathname;
 
   //Find any existing component in action location
-  let matcher = new RegExp(action.location + "/[^/]*/[^/]*/");
-  let groups = matcher.exec(currentPath);
+  const matcher = new RegExp(action.location + "/[^/]*/[^/]*/");
+  const groups = matcher.exec(currentPath);
   if (groups !== null && groups[0] !== undefined) {
     //Remove component in location
     currentPath = currentPath.replace(groups[0], "");

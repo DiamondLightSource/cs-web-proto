@@ -66,7 +66,7 @@ function coniqlToPartialVtype(
   meta: any,
   status: ConiqlStatus
 ): PartialVType {
-  let result: PartialVType = {};
+  const result: PartialVType = {};
   if (value != null) {
     result.value = value;
   }
@@ -249,7 +249,7 @@ export class ConiqlPlugin implements Connection {
               isReadonly: !meta.mutable
             });
           }
-          let pvtype = coniqlToPartialVtype(value, time, meta, status);
+          const pvtype = coniqlToPartialVtype(value, time, meta, status);
           this.onValueUpdate(pvName, pvtype);
         },
         error: (err): void => {

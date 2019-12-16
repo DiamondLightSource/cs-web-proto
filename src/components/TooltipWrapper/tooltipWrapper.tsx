@@ -20,7 +20,7 @@ export const TooltipWrapper = (props: {
   resolvedTooltip?: string;
 }): JSX.Element => {
   const [popoverOpen, setPopoverOpen] = useState(false);
-  let { pvName, style = {} } = props;
+  const { pvName, style = {} } = props;
 
   let activeClasses = "";
   if (props.resolvedTooltip) {

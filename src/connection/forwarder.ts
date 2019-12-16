@@ -12,7 +12,7 @@ export class ConnectionForwarder implements Connection {
     this.connected = false;
   }
   private getConnection(pvName: string): Connection {
-    for (let [prefix, connection] of this.prefixConnections) {
+    for (const [prefix, connection] of this.prefixConnections) {
       if (pvName.startsWith(prefix)) {
         if (connection !== undefined) {
           return connection;
@@ -25,12 +25,12 @@ export class ConnectionForwarder implements Connection {
   }
 
   public subscribe(pvName: string): string {
-    let connection = this.getConnection(pvName);
+    const connection = this.getConnection(pvName);
     return connection.subscribe(pvName);
   }
 
   public unsubscribe(pvName: string): void {
-    let connection = this.getConnection(pvName);
+    const connection = this.getConnection(pvName);
     return connection.unsubscribe(pvName);
   }
 
@@ -39,7 +39,7 @@ export class ConnectionForwarder implements Connection {
   }
 
   public putPv(pvName: string, value: any): void {
-    let connection = this.getConnection(pvName);
+    const connection = this.getConnection(pvName);
     return connection.putPv(pvName, value);
   }
 
@@ -47,7 +47,7 @@ export class ConnectionForwarder implements Connection {
     connectionCallback: ConnectionChangedCallback,
     valueCallback: ValueChangedCallback
   ): void {
-    for (var [, connection] of this.prefixConnections) {
+    for (const [, connection] of this.prefixConnections) {
       if (connection !== undefined) {
         if (!connection.isConnected()) {
           connection.connect(connectionCallback, valueCallback);

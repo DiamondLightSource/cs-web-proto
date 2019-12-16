@@ -60,7 +60,7 @@ export function widgetDescriptionToComponent(
   function filterUndefinedOut(input: {
     [index: string]: any;
   }): { [index: string]: any } {
-    let output: { [index: string]: any } = {};
+    const output: { [index: string]: any } = {};
     let key;
 
     for (key in input) {
@@ -96,8 +96,8 @@ export function widgetDescriptionToComponent(
   });
 
   // Perform checking on propTypes
-  let widgetInfo = { containerStyling: containerStyling, ...otherProps };
-  let error: string | undefined = checkPropTypes(
+  const widgetInfo = { containerStyling: containerStyling, ...otherProps };
+  const error: string | undefined = checkPropTypes(
     Component.propTypes,
     widgetInfo,
     "widget description",

@@ -58,7 +58,7 @@ export const WidgetFromBob = (
   const [currentMacros, setMacros] = useState<MacroMap>({});
 
   // Extract props
-  let { file, macroMap } = props;
+  const { file, macroMap } = props;
 
   // Using directly from React for testing purposes
   React.useEffect((): (() => void) => {

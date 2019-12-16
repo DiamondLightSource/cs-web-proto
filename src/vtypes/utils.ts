@@ -27,7 +27,7 @@ export const vtypeToString = (
 };
 
 export function vtypeToNumber(vtype: VType): number {
-  let value = vtype.getValue();
+  const value = vtype.getValue();
   let numericValue;
   if (typeof value === "number") {
     numericValue = value;
@@ -57,7 +57,7 @@ export const stringToVtype = (
     if (isNaN(parseFloat(value))) {
       throw new Error("Not a number");
     }
-    let numberValue = parseFloat(value);
+    const numberValue = parseFloat(value);
     return vdouble(numberValue, alarm, time, display);
   } catch (error) {
     return vstring(value, alarm, time);

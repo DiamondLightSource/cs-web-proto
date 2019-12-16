@@ -6,8 +6,8 @@ import { vtypeToString } from "../../vtypes/utils";
 import { VType } from "../../vtypes/vtypes";
 
 function tooltipValue(connected: boolean, value: VType): any {
-  let time = timeOf(value);
-  let alarm = alarmOf(value);
+  const time = timeOf(value);
+  const alarm = alarmOf(value);
   let displayValue = "";
   if (!connected) {
     displayValue = "WARNING: Not Connected";
@@ -18,7 +18,7 @@ function tooltipValue(connected: boolean, value: VType): any {
       displayValue = vtypeToString(value, 3);
     }
   }
-  let dateAndAlarm = [
+  const dateAndAlarm = [
     value ? (time ? time.asDate() : "") : "",
     value ? (alarm ? alarm.getName() : "") : ""
   ]

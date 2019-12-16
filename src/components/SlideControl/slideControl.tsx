@@ -17,7 +17,7 @@ import { InferWidgetProps } from "../propTypes";
 export const SlideControlComponent = (
   props: InferWidgetProps<typeof ProgressBarProps> & PVInputComponent
 ): JSX.Element => {
-  let {
+  const {
     pvName,
     connected,
     value,
@@ -44,7 +44,7 @@ export const SlideControlComponent = (
     writePv(pvName, stringToVtype(event.currentTarget.value));
   }
 
-  let stringValue = vtypeToString(value);
+  const stringValue = vtypeToString(value);
   if (!editing && inputValue !== stringValue) {
     setInputValue(stringValue);
   }

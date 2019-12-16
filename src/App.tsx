@@ -16,7 +16,7 @@ import { Connection } from "./connection/plugin";
 import { ActionButton } from "./components/";
 import { OPEN_PAGE } from "./widgetActions";
 
-var settings: any;
+let settings: any;
 try {
   // Use require so that we can catch this error
   settings = require("./settings");
