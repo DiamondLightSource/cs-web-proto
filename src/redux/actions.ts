@@ -13,8 +13,6 @@ export const MACRO_UPDATED = "macro_updated";
    switch blocks to check that all cases have been handled. */
 export class InvalidAction extends Error {
   public constructor(val: never) {
-    console.log("the object is");
-    console.log(val);
     super(`Invalid action: ${val}`);
   }
 }

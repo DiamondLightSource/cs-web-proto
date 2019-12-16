@@ -2,7 +2,6 @@
 providing a useful widget dictionary */
 
 import React, { useState } from "react";
-import PropTypes from "prop-types";
 import log from "loglevel";
 
 import {
@@ -16,7 +15,7 @@ import { Input } from "../Input/input";
 import { Display } from "../Display/display";
 import { Shape } from "../Shape/shape";
 import { GroupingContainer } from "../GroupingContainer/groupingContainer";
-import { WidgetPropType, InferWidgetProps } from "../Widget/widget";
+import { WidgetPropType } from "../Widget/widget";
 import {
   convertBobToWidgetDescription,
   bobParseBoolean,
@@ -26,6 +25,8 @@ import {
   bobParseActions
 } from "./bobConversionUtils";
 import { ActionButton } from "../ActionButton/actionButton";
+import { registerWidget } from "../register";
+import { StringProp, InferWidgetProps } from "../propTypes";
 
 const EMPTY_WIDGET: WidgetDescription = {
   type: "empty",
@@ -45,7 +46,7 @@ const ERROR_WIDGET: WidgetDescription = {
 };
 
 const WidgetFromBobProps = {
-  file: PropTypes.string.isRequired,
+  file: StringProp,
   ...WidgetPropType
 };
 
@@ -187,4 +188,4 @@ export const WidgetFromBob = (
   return component;
 };
 
-WidgetFromBob.propTypes = WidgetFromBobProps;
+registerWidget(WidgetFromBob, WidgetFromBobProps, "widgetFromBob");

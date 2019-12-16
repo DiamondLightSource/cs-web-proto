@@ -1,14 +1,16 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { WidgetActions, executeActions } from "../../widgetActions";
-import {
-  InferWidgetProps,
-  PVComponent,
-  PVWidget,
-  PVWidgetPropType
-} from "../Widget/widget";
+import { PVComponent, PVWidget, PVWidgetPropType } from "../Widget/widget";
 import classes from "./actionButton.module.css";
 import { useHistory } from "react-router-dom";
+import { registerWidget } from "../register";
+import {
+  ActionsPropType,
+  StringProp,
+  ObjectPropOpt,
+  StringPropOpt,
+  InferWidgetProps
+} from "../propTypes";
 
 export interface ActionButtonProps {
   text: string;
@@ -46,13 +48,10 @@ export const ActionButtonComponent = (
 };
 
 const ActionButtonPropType = {
-  text: PropTypes.string.isRequired,
-  actions: PropTypes.shape({
-    executeAsOne: PropTypes.bool,
-    actions: PropTypes.arrayOf(PropTypes.object)
-  }).isRequired,
-  style: PropTypes.object,
-  image: PropTypes.string
+  text: StringProp,
+  actions: ActionsPropType,
+  style: ObjectPropOpt,
+  image: StringPropOpt
 };
 
 const ActionButtonProps = {
@@ -84,4 +83,4 @@ export const ActionButton = (
   props: InferWidgetProps<typeof ActionButtonProps>
 ): JSX.Element => <PVWidget baseWidget={ActionButtonWidget} {...props} />;
 
-ActionButton.propTypes = ActionButtonProps;
+registerWidget(ActionButton, ActionButtonProps, "actionbutton");

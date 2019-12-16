@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import PropTypes from "prop-types";
 import log from "loglevel";
 
 import {
@@ -7,24 +6,19 @@ import {
   WidgetDescription
 } from "../Positioning/positioning";
 import { MacroMap } from "../../redux/csState";
-import { Label } from "../Label/label";
-import { Readback } from "../Readback/readback";
-import { Input } from "../Input/input";
-import { Shape } from "../Shape/shape";
-import { FlexContainer } from "../FlexContainer/flexContainer";
-import { ProgressBar } from "../ProgressBar/progressBar";
-import { SlideControl } from "../SlideControl/slideControl";
-import { MenuButton } from "../MenuButton/menuButton";
-import { Display } from "../Display/display";
-import { ActionButton } from "../ActionButton/actionButton";
-import { DynamicPageWidget } from "../DynamicPage/dynamicPage"; // eslint-disable-line import/no-cycle
-import { WidgetFromBob } from "../FromBob/fromBob";
-import { GroupingContainer } from "../GroupingContainer/groupingContainer";
-import { WidgetPropType, InferWidgetProps } from "../Widget/widget";
+import { WidgetPropType } from "../Widget/widget";
+import { widgets, registerWidget } from "../register";
+import { StringProp, InferWidgetProps } from "../propTypes";
 
 const EMPTY_WIDGET: WidgetDescription = {
   type: "empty",
-  containerStyling: { position: "absolute", x: 0, y: 0, width: 0, height: 0 }
+  containerStyling: {
+    position: "absolute",
+    x: 0,
+    y: 0,
+    width: 0,
+    height: 0
+  }
 };
 
 const ERROR_WIDGET: WidgetDescription = {
@@ -38,7 +32,7 @@ const ERROR_WIDGET: WidgetDescription = {
 };
 
 const WidgetFromJsonProps = {
-  file: PropTypes.string.isRequired,
+  file: StringProp,
   ...WidgetPropType
 };
 
@@ -83,23 +77,10 @@ export const WidgetFromJson = (
     setMacros(macroMap as MacroMap);
   }
 
-  const widgetDict = {
-    readback: Readback,
-    shape: Shape,
-    input: Input,
-    label: Label,
-    progressbar: ProgressBar,
-    slidecontrol: SlideControl,
-    menubutton: MenuButton,
-    flexcontainer: FlexContainer,
-    actionbutton: ActionButton,
-    display: Display,
-    empty: Display,
-    widgetFromJSON: WidgetFromJson,
-    dynamicpage: DynamicPageWidget,
-    widgetFromBob: WidgetFromBob,
-    grouping: GroupingContainer
-  };
+  let widgetDict = Object.assign(
+    {},
+    ...Object.entries(widgets).map(([k, v]): any => ({ [k]: v[0] }))
+  );
 
   let component: JSX.Element | null;
   try {
@@ -118,4 +99,4 @@ export const WidgetFromJson = (
   return component;
 };
 
-WidgetFromJson.propTypes = WidgetFromJsonProps;
+registerWidget(WidgetFromJson, WidgetFromJsonProps, "widgetFromJSON");

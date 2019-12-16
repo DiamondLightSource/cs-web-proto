@@ -1,17 +1,13 @@
 import React from "react";
 import log from "loglevel";
-import PropTypes from "prop-types";
 import { Route, RouteComponentProps } from "react-router-dom";
 
-import {
-  Component,
-  Widget,
-  WidgetPropType,
-  InferWidgetProps
-} from "../Widget/widget";
+import { Component, Widget, WidgetPropType } from "../Widget/widget";
 import { WidgetFromJson } from "../FromJson/fromJson"; // eslint-disable-line import/no-cycle
 import { ActionButton } from "../ActionButton/actionButton";
 import { CLOSE_PAGE } from "../../widgetActions";
+import { registerWidget } from "../register";
+import { StringProp, InferWidgetProps } from "../propTypes";
 
 export interface DynamicParams {
   json: string;
@@ -48,7 +44,7 @@ export function DynamicPageFetch({
 }
 
 const DynamicPageProps = {
-  routePath: PropTypes.string.isRequired
+  routePath: StringProp
 };
 
 // Generic display widget to put other things inside
@@ -124,4 +120,4 @@ export const DynamicPageWidget = (
   props: InferWidgetProps<typeof DynamicPageWidgetProps>
 ): JSX.Element => <Widget baseWidget={DynamicPageComponent} {...props} />;
 
-DynamicPageWidget.propTypes = DynamicPageWidgetProps;
+registerWidget(DynamicPageWidget, DynamicPageWidgetProps, "dynamicpage");

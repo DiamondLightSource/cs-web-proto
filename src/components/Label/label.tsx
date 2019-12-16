@@ -1,22 +1,18 @@
 import React from "react";
-import PropTypes from "prop-types";
 
 import classes from "./label.module.css";
-import {
-  Component,
-  Widget,
-  WidgetPropType,
-  InferWidgetProps
-} from "../Widget/widget";
+import { Component, Widget, WidgetPropType } from "../Widget/widget";
+import { registerWidget } from "../register";
+import { BoolPropOpt, StringOrNumProp, InferWidgetProps } from "../propTypes";
 
 const LabelProps = {
-  text: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-  visible: PropTypes.bool,
-  transparent: PropTypes.bool
+  text: StringOrNumProp,
+  visible: BoolPropOpt,
+  transparent: BoolPropOpt
 };
 
 export const LabelComponent = (
-  props: PropTypes.InferProps<typeof LabelProps> & Component
+  props: InferWidgetProps<typeof LabelProps> & Component
 ): JSX.Element => {
   const style: any = { ...props.style };
   if (props.visible !== undefined && !props.visible) {
@@ -42,4 +38,4 @@ export const Label = (
   props: InferWidgetProps<typeof LabelWidgetProps>
 ): JSX.Element => <Widget baseWidget={LabelComponent} {...props} />;
 
-Label.propTypes = LabelWidgetProps;
+registerWidget(Label, LabelWidgetProps, "label");

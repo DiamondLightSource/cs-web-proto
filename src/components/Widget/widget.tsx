@@ -1,5 +1,5 @@
 import React from "react";
-import PropTypes, { InferProps } from "prop-types";
+import PropTypes from "prop-types";
 
 import { TooltipWrapper } from "../TooltipWrapper/tooltipWrapper";
 import { AlarmBorder } from "../AlarmBorder/alarmBorder";
@@ -10,16 +10,19 @@ import { useConnection } from "../../hooks/useConnection";
 import { useId } from "react-id-generator";
 import { useRules } from "../../hooks/useRules";
 import { resolveTooltip } from "./tooltip";
-
-export type ExcludeNulls<T> = {
-  [P in keyof T]: Exclude<T[P], null>;
-};
-export type InferWidgetProps<T> = ExcludeNulls<InferProps<T>>;
-export const StringOrNum = PropTypes.oneOfType([
-  PropTypes.string,
-  PropTypes.number
-]);
-export const MapStringString = PropTypes.objectOf(PropTypes.string);
+import {
+  ContainerFeaturesPropType,
+  ActionsPropType,
+  StringOrNumProp,
+  StringPropOpt,
+  BoolPropOpt,
+  InferWidgetProps,
+  StringProp,
+  StringOrNumPropOpt,
+  ChoicePropOpt,
+  MacrosProp,
+  MacrosPropOpt
+} from "../propTypes";
 
 // Useful types for components which will later be turned into widgets
 // Required to define stateless component
@@ -30,98 +33,49 @@ export interface Component {
 export type PVComponent = Component & PvState;
 export type PVInputComponent = PVComponent & { pvName: string };
 
-// Number of prop types organised into useable sections to form more
-// complex units
-const ContainerFeaturesPropType = {
-  margin: PropTypes.string,
-  padding: PropTypes.string,
-  border: PropTypes.string,
-  minWidth: PropTypes.string,
-  maxWidth: PropTypes.string
-};
-
-const OpenWebpagePropType = PropTypes.shape({
-  type: PropTypes.string.isRequired,
-  url: PropTypes.string.isRequired,
-  description: PropTypes.string
-});
-
-const OpenPagePropType = PropTypes.shape({
-  type: PropTypes.string.isRequired,
-  page: PropTypes.string.isRequired,
-  location: PropTypes.string.isRequired,
-  macros: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired
-});
-
-const ClosePagePropType = PropTypes.shape({
-  type: PropTypes.string.isRequired,
-  location: PropTypes.string.isRequired,
-  description: PropTypes.string
-});
-
-const WritePvPropType = PropTypes.shape({
-  type: PropTypes.string.isRequired,
-  pvName: PropTypes.string.isRequired,
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  description: PropTypes.string
-});
-
-const ActionPropType = PropTypes.oneOfType([
-  OpenPagePropType,
-  ClosePagePropType,
-  WritePvPropType,
-  OpenWebpagePropType
-]);
-
-const ActionsPropType = PropTypes.shape({
-  executeAsOne: PropTypes.bool,
-  actions: PropTypes.arrayOf(ActionPropType).isRequired
-});
-
 const RulesPropType = PropTypes.shape({
-  condition: PropTypes.string.isRequired,
+  condition: StringProp,
   trueState: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]).isRequired,
   falseState: PropTypes.oneOfType([PropTypes.string, PropTypes.bool])
     .isRequired,
-  substitutionMap: MapStringString.isRequired,
-  prop: PropTypes.string.isRequired
+  substitutionMap: MacrosProp,
+  prop: StringProp
 });
 
 const AbsoluteContainerProps = {
   position: PropTypes.oneOf(["absolute"]).isRequired,
-  x: StringOrNum.isRequired,
-  y: StringOrNum.isRequired,
-  height: StringOrNum.isRequired,
-  width: StringOrNum.isRequired,
+  x: StringOrNumProp,
+  y: StringOrNumProp,
+  height: StringOrNumProp,
+  width: StringOrNumProp,
   ...ContainerFeaturesPropType
 };
 
 const FlexibleContainerProps = {
   position: PropTypes.oneOf(["relative"]).isRequired,
-  height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  height: StringOrNumPropOpt,
+  width: StringOrNumPropOpt,
   ...ContainerFeaturesPropType
 };
 
 const WidgetStylingPropType = {
-  font: PropTypes.string,
-  fontSize: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  fontWeight: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  textAlign: PropTypes.oneOf(["center", "left", "right", "justify"]),
-  backgroundColor: PropTypes.string,
-  color: PropTypes.string
+  font: StringPropOpt,
+  fontSize: StringOrNumPropOpt,
+  fontWeight: StringOrNumPropOpt,
+  textAlign: ChoicePropOpt(["center", "left", "right", "justify"]),
+  backgroundColor: StringPropOpt,
+  color: StringPropOpt
 };
 type WidgetStyling = InferWidgetProps<typeof WidgetStylingPropType>;
 
 const CommonWidgetProps = {
   widgetStyling: PropTypes.shape(WidgetStylingPropType),
-  macroMap: PropTypes.objectOf(PropTypes.string.isRequired),
+  macroMap: MacrosPropOpt,
   rules: PropTypes.arrayOf(RulesPropType),
   actions: ActionsPropType,
-  tooltip: PropTypes.string,
-  resolvedTooltip: PropTypes.string,
-  menuWrapper: PropTypes.bool
+  tooltip: StringPropOpt,
+  resolvedTooltip: StringPropOpt,
+  menuWrapper: BoolPropOpt
 };
 
 const AbsoluteComponentPropType = {
@@ -151,8 +105,8 @@ type WidgetComponent = WidgetProps & { baseWidget: React.FC<any> };
 
 // Internal prop types object for properties which are not in a standard widget
 const PVExtras = {
-  pvName: PropTypes.string,
-  alarmBorder: PropTypes.bool
+  pvName: StringPropOpt,
+  alarmBorder: BoolPropOpt
 };
 // PropTypes object for a PV widget which can be expanded
 export const PVWidgetPropType = {

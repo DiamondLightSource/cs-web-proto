@@ -1,21 +1,17 @@
 import React from "react";
-import PropTypes from "prop-types";
 
-import {
-  InferWidgetProps,
-  PVComponent,
-  PVWidget,
-  PVWidgetPropType
-} from "../../components/Widget/widget";
+import { PVComponent, PVWidget, PVWidgetPropType } from "../Widget/widget";
 
 import classes from "./readback.module.css";
 import { alarmOf, AlarmSeverity } from "../../vtypes/alarm";
 import { displayOf } from "../../vtypes/display";
 import { vtypeToString } from "../../vtypes/utils";
+import { IntPropOpt, BoolPropOpt, InferWidgetProps } from "../propTypes";
+import { registerWidget } from "../register";
 
 const ReadbackProps = {
-  precision: PropTypes.number,
-  showUnits: PropTypes.bool
+  precision: IntPropOpt,
+  showUnits: BoolPropOpt
 };
 
 // Needs to be exported for testing
@@ -82,4 +78,4 @@ export const Readback = (
   props: InferWidgetProps<typeof ReadbackWidgetProps>
 ): JSX.Element => <PVWidget baseWidget={ReadbackComponent} {...props} />;
 
-Readback.propTypes = ReadbackWidgetProps;
+registerWidget(Readback, ReadbackWidgetProps, "readback");

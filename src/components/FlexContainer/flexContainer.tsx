@@ -1,17 +1,13 @@
 import React from "react";
-import PropTypes from "prop-types";
 
 import classes from "./flexContainer.module.css";
-import {
-  Component,
-  Widget,
-  WidgetPropType,
-  InferWidgetProps
-} from "../Widget/widget";
+import { Component, Widget, WidgetPropType } from "../Widget/widget";
+import { registerWidget } from "../register";
+import { ChildrenPropOpt, ChoicePropOpt, InferWidgetProps } from "../propTypes";
 
 const FlexProps = {
-  flexFlow: PropTypes.oneOf(["rowWrap", "column", "row", "columnWrap"]),
-  children: PropTypes.node
+  flexFlow: ChoicePropOpt(["rowWrap", "column", "row", "columnWrap"]),
+  children: ChildrenPropOpt
 };
 
 export const FlexContainerComponent = (
@@ -38,4 +34,4 @@ export const FlexContainer = (
   props: InferWidgetProps<typeof FlexWidgetProps>
 ): JSX.Element => <Widget baseWidget={FlexContainerComponent} {...props} />;
 
-FlexContainer.propTypes = FlexWidgetProps;
+registerWidget(FlexContainer, FlexWidgetProps, "flexcontainer");

@@ -3,12 +3,9 @@ import React, { useState } from "react";
 import classes from "./input.module.css";
 import { writePv } from "../../hooks/useSubscription";
 import { vtypeToString, stringToVtype } from "../../vtypes/utils";
-import {
-  InferWidgetProps,
-  PVInputComponent,
-  PVWidget,
-  PVWidgetPropType
-} from "../Widget/widget";
+import { PVInputComponent, PVWidget, PVWidgetPropType } from "../Widget/widget";
+import { registerWidget } from "../register";
+import { InferWidgetProps } from "../propTypes";
 
 export interface InputProps {
   pvName: string;
@@ -92,4 +89,4 @@ export const Input = (
   props: InferWidgetProps<typeof PVWidgetPropType>
 ): JSX.Element => <PVWidget baseWidget={SmartInputComponent} {...props} />;
 
-Input.propTypes = PVWidgetPropType;
+registerWidget(Input, PVWidgetPropType, "input");

@@ -1,18 +1,14 @@
 import React from "react";
-import PropTypes from "prop-types";
-import {
-  Component,
-  Widget,
-  WidgetPropType,
-  InferWidgetProps
-} from "../Widget/widget";
+import { Component, Widget, WidgetPropType } from "../Widget/widget";
+import { registerWidget } from "../register";
+import { BoolPropOpt, StringPropOpt, InferWidgetProps } from "../propTypes";
 
 const ShapeProps = {
-  shapeWidth: PropTypes.string,
-  shapeHeight: PropTypes.string,
-  shapeRadius: PropTypes.string,
-  shapeTransform: PropTypes.string,
-  transparent: PropTypes.bool
+  shapeWidth: StringPropOpt,
+  shapeHeight: StringPropOpt,
+  shapeRadius: StringPropOpt,
+  shapeTransform: StringPropOpt,
+  transparent: BoolPropOpt
 };
 
 export const ShapeComponent = (
@@ -41,4 +37,4 @@ export const Shape = (
   props: InferWidgetProps<typeof ShapeWidgetProps>
 ): JSX.Element => <Widget baseWidget={ShapeComponent} {...props} />;
 
-Shape.propTypes = ShapeWidgetProps;
+registerWidget(Shape, ShapeWidgetProps, "shape");

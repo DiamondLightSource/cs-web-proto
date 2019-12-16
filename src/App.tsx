@@ -13,7 +13,7 @@ import { ConiqlPlugin } from "./connection/coniql";
 import { ConnectionForwarder } from "./connection/forwarder";
 import { DynamicPageWidget } from "./components/DynamicPage/dynamicPage";
 import { Connection } from "./connection/plugin";
-import { ActionButton } from "./components/ActionButton/actionButton";
+import { ActionButton } from "./components/";
 import { OPEN_PAGE } from "./widgetActions";
 
 var settings: any;
