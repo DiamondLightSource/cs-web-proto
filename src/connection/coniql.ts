@@ -19,12 +19,12 @@ import {
   nullConnCallback,
   nullValueCallback
 } from "./plugin";
-import { VType } from "../vtypes/vtypes";
-import { AlarmStatus, alarm } from "../vtypes/alarm";
-import { time } from "../vtypes/time";
+import { VType } from "../types/vtypes/vtypes";
+import { AlarmStatus, alarm } from "../types/vtypes/alarm";
+import { time } from "../types/vtypes/time";
 import { SubscriptionClient } from "subscriptions-transport-ws";
-import { display } from "../vtypes/display";
-import { PartialVType } from "../vtypes/merge";
+import { display } from "../types/vtypes/display";
+import { PartialVType } from "../types/vtypes/merge";
 
 export interface ConiqlStatus {
   quality: "ALARM" | "WARNING" | "VALID";

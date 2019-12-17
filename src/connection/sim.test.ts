@@ -1,6 +1,6 @@
 import { SimulatorPlugin } from "./sim";
-import { VType, vdouble, VDouble, VEnum } from "../vtypes/vtypes";
-import { mergeVtype, PartialVType } from "../vtypes/merge";
+import { VType, vdouble, VDouble, VEnum } from "../types/vtypes/vtypes";
+import { mergeVtype, PartialVType } from "../types/vtypes/merge";
 import { nullConnCallback, nullValueCallback } from "./plugin";
 
 let simulator: SimulatorPlugin;

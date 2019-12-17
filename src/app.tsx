@@ -8,10 +8,10 @@ import { lightTheme, darkTheme, ThemeContext } from "./themeContext";
 import { SimulatorPlugin } from "./connection/sim";
 import { ConiqlPlugin } from "./connection/coniql";
 import { ConnectionForwarder } from "./connection/forwarder";
-import { DynamicPageWidget } from "./components/DynamicPage/dynamicPage";
+import { DynamicPageWidget } from "./ui/widgets/DynamicPage/dynamicPage";
 import { Connection } from "./connection/plugin";
-import { ActionButton } from "./components";
-import { OPEN_PAGE } from "./widgetActions";
+import { ActionButton } from "./ui/widgets";
+import { OPEN_PAGE } from "./ui/widgets/widgetActions";
 
 let settings: any;
 try {
