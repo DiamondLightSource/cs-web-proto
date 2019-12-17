@@ -77,15 +77,19 @@ describe("actions conversion", (): void => {
       actions: [
         {
           type: WRITE_PV,
-          pvName: "testPV1",
-          value: "1",
-          description: "Write pv1 to 1"
+          writePvInfo: {
+            pvName: "testPV1",
+            value: "1",
+            description: "Write pv1 to 1"
+          }
         },
         {
           type: WRITE_PV,
-          pvName: "testPV2",
-          value: "Testing",
-          description: "Write pv2 to Testing"
+          writePvInfo: {
+            pvName: "testPV2",
+            value: "Testing",
+            description: "Write pv2 to Testing"
+          }
         }
       ]
     });
@@ -112,15 +116,19 @@ describe("actions conversion", (): void => {
       actions: [
         {
           type: WRITE_PV,
-          pvName: "testPV1",
-          value: "1",
-          description: "Write pv1 to 1"
+          writePvInfo: {
+            pvName: "testPV1",
+            value: "1",
+            description: "Write pv1 to 1"
+          }
         },
         {
           type: WRITE_PV,
-          pvName: "testPV2",
-          value: "Testing",
-          description: "Write pv2 to Testing"
+          writePvInfo: {
+            pvName: "testPV2",
+            value: "Testing",
+            description: "Write pv2 to Testing"
+          }
         }
       ]
     });
@@ -195,10 +203,7 @@ describe("bob child conversion", (): void => {
       <true_or_false>false</true_or_false>
     </widget>`;
 
-  test.each<[boolean, string]>([
-    [true, trueWidget],
-    [false, falseWidget]
-  ])(
+  test.each<[boolean, string]>([[true, trueWidget], [false, falseWidget]])(
     "it converts a simple widget with %s boolean prop",
     (expected, widgetXml): void => {
       const compactWidget: convert.ElementCompact = convert.xml2js(widgetXml, {

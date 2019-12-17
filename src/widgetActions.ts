@@ -8,6 +8,12 @@ export const CLOSE_PAGE = "CLOSE_PAGE";
 export const OPEN_WEBPAGE = "OPEN_WEBPAGE";
 export const WRITE_PV = "WRITE_PV";
 
+/* Giving info properties to each of the following works around a
+   difficulty with TypeScript and PropTypes, where there's a problem
+   when different actions have more than one property with the same
+   name: https://stackoverflow.com/questions/59373461/proptypes-oneoftype-not-working-as-i-expect-with-typescript
+*/
+
 export interface OpenPage {
   type: typeof OPEN_PAGE;
   openPageInfo: {
