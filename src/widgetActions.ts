@@ -10,29 +10,37 @@ export const WRITE_PV = "WRITE_PV";
 
 export interface OpenPage {
   type: typeof OPEN_PAGE;
-  page: string;
-  location: string;
-  macros: string;
-  description: string;
+  openPageInfo: {
+    page: string;
+    location: string;
+    macros: string;
+    description: string;
+  };
 }
 
 export interface ClosePage {
   type: typeof CLOSE_PAGE;
-  location: string;
-  description: string;
+  closePageInfo: {
+    location: string;
+    description: string;
+  };
 }
 
 export interface OpenWebpage {
   type: typeof OPEN_WEBPAGE;
-  url: string;
-  description?: string;
+  openWebpageInfo: {
+    url: string;
+    description?: string;
+  };
 }
 
 export interface WritePv {
   type: typeof WRITE_PV;
-  pvName: string;
-  value: string | number;
-  description?: string;
+  writePvInfo: {
+    pvName: string;
+    value: string | number;
+    description?: string;
+  };
 }
 
 export type WidgetAction = OpenWebpage | WritePv | OpenPage | ClosePage;
@@ -50,21 +58,33 @@ class InvalidAction extends Error {
 }
 
 export const getActionDescription = (action: WidgetAction): string => {
-  if (action.description) {
-    return action.description;
-  } else {
-    switch (action.type) {
-      case WRITE_PV:
-        return `Write ${action.value} to ${action.pvName}`;
-      case OPEN_WEBPAGE:
-        return `Open ${action.url}`;
-      case OPEN_PAGE:
-        return `Open ${action.page}`;
-      case CLOSE_PAGE:
-        return `Close ${action.location}`;
-      default:
-        throw new InvalidAction(action);
-    }
+  switch (action.type) {
+    case WRITE_PV:
+      if (action.writePvInfo.description) {
+        return action.writePvInfo.description;
+      } else {
+        return `Write ${action.writePvInfo.value} to ${action.writePvInfo.pvName}`;
+      }
+    case OPEN_WEBPAGE:
+      if (action.openWebpageInfo.description) {
+        return action.openWebpageInfo.description;
+      } else {
+        return `Open ${action.openWebpageInfo.url}`;
+      }
+    case OPEN_PAGE:
+      if (action.openPageInfo.description) {
+        return action.openPageInfo.description;
+      } else {
+        return `Open ${action.openPageInfo.page}`;
+      }
+    case CLOSE_PAGE:
+      if (action.closePageInfo.description) {
+        return action.closePageInfo.description;
+      } else {
+        return `Open ${action.closePageInfo.location}`;
+      }
+    default:
+      throw new InvalidAction(action);
   }
 };
 
@@ -73,13 +93,13 @@ export const openPage = (action: OpenPage, history: History): void => {
   let currentPath = "";
   if (history.location.pathname !== undefined)
     currentPath = history.location.pathname;
+  const { location, page, macros } = action.openPageInfo;
 
   //New page component in action.location
-  const newPathComponent =
-    action.location + "/" + action.page + "/" + action.macros + "/";
+  const newPathComponent = location + "/" + page + "/" + macros + "/";
 
   //Find existing component in same location
-  const matcher = new RegExp(action.location + "/[^/]*/[^/]*/");
+  const matcher = new RegExp(location + "/[^/]*/[^/]*/");
   const groups = matcher.exec(currentPath);
   if (groups !== null && groups[0] !== undefined) {
     //Swap component in location
@@ -92,13 +112,14 @@ export const openPage = (action: OpenPage, history: History): void => {
 };
 
 export const closePage = (action: ClosePage, history: History): void => {
+  const { location } = action.closePageInfo;
   //Find current browser path: currentPath
   let currentPath = "";
   if (history.location.pathname !== undefined)
     currentPath = history.location.pathname;
 
   //Find any existing component in action location
-  const matcher = new RegExp(action.location + "/[^/]*/[^/]*/");
+  const matcher = new RegExp(location + "/[^/]*/[^/]*/");
   const groups = matcher.exec(currentPath);
   if (groups !== null && groups[0] !== undefined) {
     //Remove component in location
@@ -127,10 +148,13 @@ export const executeAction = (
       }
       break;
     case OPEN_WEBPAGE:
-      window.open(action.url);
+      window.open(action.openWebpageInfo.url);
       break;
     case WRITE_PV:
-      writePv(action.pvName, valueToVtype(action.value));
+      writePv(
+        action.writePvInfo.pvName,
+        valueToVtype(action.writePvInfo.value)
+      );
       break;
     default:
       throw new InvalidAction(action);

@@ -70,7 +70,10 @@ const App: React.FC = (): JSX.Element => {
             actions={{
               executeAsOne: false,
               actions: [
-                { type: OPEN_PAGE, location: "app", page: "menu", macros: "{}" }
+                {
+                  type: OPEN_PAGE,
+                  openPageInfo: { location: "app", page: "menu", macros: "{}" }
+                }
               ]
             }}
           />

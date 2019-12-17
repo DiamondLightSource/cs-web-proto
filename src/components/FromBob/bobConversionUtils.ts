@@ -115,10 +115,12 @@ export const bobParseActions = (
         // Not all actions have descriptions so ret
         processedActions.actions.push({
           type: WRITE_PV,
-          pvName: action.pv_name._text,
-          value: action.value._text,
-          description:
-            (action.description && action.description._text) || undefined
+          writePvInfo: {
+            pvName: action.pv_name._text,
+            value: action.value._text,
+            description:
+              (action.description && action.description._text) || undefined
+          }
         });
       }
     } catch (e) {
