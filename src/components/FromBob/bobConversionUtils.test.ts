@@ -203,7 +203,10 @@ describe("bob child conversion", (): void => {
       <true_or_false>false</true_or_false>
     </widget>`;
 
-  test.each<[boolean, string]>([[true, trueWidget], [false, falseWidget]])(
+  test.each<[boolean, string]>([
+    [true, trueWidget],
+    [false, falseWidget]
+  ])(
     "it converts a simple widget with %s boolean prop",
     (expected, widgetXml): void => {
       const compactWidget: convert.ElementCompact = convert.xml2js(widgetXml, {

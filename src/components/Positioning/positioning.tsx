@@ -26,7 +26,8 @@ export function widgetDescriptionToComponent(
   // Extract known properties and leave everything else in otherProps.
   // It's awkward to split this destructuring into separate let and const.
   // eslint-disable-next-line prefer-const
-  let {
+  let { backgroundColor, ...constProps } = widgetDescription;
+  const {
     type,
     children = [],
     macroMap = {},
@@ -45,9 +46,8 @@ export function widgetDescriptionToComponent(
     fontSize = undefined,
     fontWeight = undefined,
     textAlign = undefined,
-    backgroundColor = undefined,
     ...otherProps
-  } = widgetDescription;
+  } = constProps;
 
   let Component: React.FC<any>;
   if (widgetDict.hasOwnProperty(type)) {
