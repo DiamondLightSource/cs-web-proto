@@ -18,9 +18,11 @@
         "actions": [
           {
             "type": "OPEN_PAGE",
-            "location": "app",
-            "page": "beamline",
-            "macros": "{}"
+            "openPageInfo": {
+              "location": "app",
+              "page": "beamline",
+              "macros": "{}"
+            }
           }
         ]
       }
@@ -39,9 +41,11 @@
         "actions": [
           {
             "type": "OPEN_PAGE",
-            "location": "app",
-            "page": "frontPage",
-            "macros": "{}"
+            "openPageInfo": {
+              "location": "app",
+              "page": "frontPage",
+              "macros": "{}"
+            }
           }
         ]
       }
@@ -60,9 +64,11 @@
         "actions": [
           {
             "type": "OPEN_PAGE",
-            "location": "app",
-            "page": "performance",
-            "macros": "{}"
+            "openPageInfo": {
+              "location": "app",
+              "page": "performance",
+              "macros": "{}"
+            }
           }
         ]
       }

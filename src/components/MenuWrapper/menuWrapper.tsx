@@ -43,8 +43,8 @@ export const MenuWrapper = (props: {
     x: number,
     y: number
   ): JSX.Element {
-    let entries = [];
-    var length = actions.actions.length;
+    const entries = [];
+    const length = actions.actions.length;
     for (let i = 0; i < length; i++) {
       entries.push(
         <div

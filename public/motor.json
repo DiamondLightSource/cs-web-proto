@@ -93,13 +93,17 @@
             "actions": [
               {
                 "type": "WRITE_PV",
-                "pvName": "sim://limit#m${motor}",
-                "value": 15
+                "writePvInfo": {
+                  "pvName": "sim://limit#m${motor}",
+                  "value": 15
+                }
               },
               {
                 "type": "WRITE_PV",
-                "pvName": "loc://enum#m${motor}",
-                "value": "slow"
+                "writePvInfo": {
+                  "pvName": "loc://enum#m${motor}",
+                  "value": "slow"
+                }
               }
             ]
           }
@@ -115,13 +119,17 @@
             "actions": [
               {
                 "type": "WRITE_PV",
-                "pvName": "sim://limit#m${motor}",
-                "value": 50
+                "writePvInfo": {
+                  "pvName": "sim://limit#m${motor}",
+                  "value": 50
+                }
               },
               {
                 "type": "WRITE_PV",
-                "pvName": "loc://enum#m${motor}",
-                "value": "med"
+                "writePvInfo": {
+                  "pvName": "loc://enum#m${motor}",
+                  "value": "med"
+                }
               }
             ]
           }
@@ -137,13 +145,17 @@
             "actions": [
               {
                 "type": "WRITE_PV",
-                "pvName": "sim://limit#m${motor}",
-                "value": 99
+                "writePvInfo": {
+                  "pvName": "sim://limit#m${motor}",
+                  "value": 99
+                }
               },
               {
                 "type": "WRITE_PV",
-                "pvName": "loc://enum#m${motor}",
-                "value": "fast"
+                "writePvInfo": {
+                  "pvName": "loc://enum#m${motor}",
+                  "value": "fast"
+                }
               }
             ]
           }
@@ -159,9 +171,11 @@
             "actions": [
               {
                 "type": "OPEN_PAGE",
-                "location": "detail",
-                "page": "motorDetail",
-                "macros": "{\"motor\":\"${motor}\"}"
+                "openPageInfo": {
+                  "location": "detail",
+                  "page": "motorDetail",
+                  "macros": "{\"motor\":\"${motor}\"}"
+                }
               }
             ]
           }

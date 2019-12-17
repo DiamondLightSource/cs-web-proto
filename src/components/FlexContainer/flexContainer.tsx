@@ -13,8 +13,8 @@ const FlexProps = {
 export const FlexContainerComponent = (
   props: InferWidgetProps<typeof FlexProps> & Component
 ): JSX.Element => {
-  let classNames = [classes.FlexContainer];
-  let { flexFlow = null } = props;
+  const classNames = [classes.FlexContainer];
+  const { flexFlow = null } = props;
   if (flexFlow !== null) {
     classNames.push(classes[flexFlow]);
   }

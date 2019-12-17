@@ -67,7 +67,7 @@ export const bobParseBoolean = (
   name: string,
   jsonProp: convert.ElementCompact
 ): boolean => {
-  let boolText = jsonProp._text;
+  const boolText = jsonProp._text;
   if (boolText === "false") {
     return false;
   } else if (boolText === "true") {
@@ -102,7 +102,7 @@ export const bobParseActions = (
       : false;
 
   // Turn into an array of Actions
-  let processedActions: WidgetActions = {
+  const processedActions: WidgetActions = {
     executeAsOne: executeAsOne,
     actions: []
   };
@@ -110,15 +110,17 @@ export const bobParseActions = (
   actionsToProcess.forEach((action): void => {
     log.debug(action);
     try {
-      let type: string = availableActions[action._attributes.type];
+      const type: string = availableActions[action._attributes.type];
       if (type === WRITE_PV) {
         // Not all actions have descriptions so ret
         processedActions.actions.push({
           type: WRITE_PV,
-          pvName: action.pv_name._text,
-          value: action.value._text,
-          description:
-            (action.description && action.description._text) || undefined
+          writePvInfo: {
+            pvName: action.pv_name._text,
+            value: action.value._text,
+            description:
+              (action.description && action.description._text) || undefined
+          }
         });
       }
     } catch (e) {
@@ -151,7 +153,7 @@ export const bobChildToWidgetChild = (
 
   // Map the remaining props
   // Checks that there is a substitution map
-  let mappedProps: { [key: string]: any } = {};
+  const mappedProps: { [key: string]: any } = {};
   Object.entries(remainingProps).forEach(([key, value]): void => {
     if (functionSubstitutions && functionSubstitutions[key]) {
       // Use the function substitution
@@ -178,7 +180,7 @@ export const bobChildToWidgetChild = (
   /* In bob files, many widgets have default values for height, width and even x and y
   The default values can be different from each other
   This could make life a bit difficult but should be looked at later */
-  let outputWidget: WidgetDescription = {
+  const outputWidget: WidgetDescription = {
     type: _attributes.type || _attributes.typeId,
     position: "absolute",
     x: `${(x && x._text) || 0}px`,

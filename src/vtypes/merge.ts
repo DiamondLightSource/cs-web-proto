@@ -52,7 +52,7 @@ export function vtypeInfo(
   original: VType | undefined,
   update: PartialVType
 ): PartialVType | undefined {
-  let className = update.type
+  const className = update.type
     ? update.type
     : original
     ? original.constructor.name
@@ -101,13 +101,13 @@ export function vtypeInfo(
 export function mergeVtype(
   original?: VType,
   update?: PartialVType,
-  showErrors: boolean = true
+  showErrors = true
 ): VType | undefined {
   try {
     if (update === undefined) {
       return undefined;
     }
-    let info = vtypeInfo(original, update) || {};
+    const info = vtypeInfo(original, update) || {};
     if (info.type === "VString" || info.type === "IVString") {
       // what happened to VStringArray in VTypes?
       return vstring(info.value, info.alarm, info.time);

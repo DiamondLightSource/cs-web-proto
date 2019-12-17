@@ -34,13 +34,13 @@ describe("<GroupingContainerComponent />", (): void => {
   });
 
   test("it renders child div with text", (): void => {
-    let childText = "Testing Child Component";
-    let groupingWithChild = (
+    const childText = "Testing Child Component";
+    const groupingWithChild = (
       <GroupingContainerComponent name={"Test"}>
         <div>{childText}</div>
       </GroupingContainerComponent>
     );
-    let wrapperWithChild = shallow(groupingWithChild);
+    const wrapperWithChild = shallow(groupingWithChild);
     expect(
       wrapperWithChild
         .childAt(1)

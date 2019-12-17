@@ -37,18 +37,19 @@ export function useRules(props: RuleProps): RuleProps {
   );
 
   for (const rule of rules) {
-    let { condition, trueState, falseState, substitutionMap, prop } = rule;
+    let { condition } = rule;
+    const { trueState, falseState, substitutionMap, prop } = rule;
     if (condition !== undefined && substitutionMap !== undefined) {
       pvs = Object.values(substitutionMap);
     }
 
-    for (let [name, pv] of Object.entries(substitutionMap)) {
+    for (const [name, pv] of Object.entries(substitutionMap)) {
       const [pvState] = results[pv];
       if (pvState && pvState.value !== undefined && pvState.connected) {
         condition = condition.replace(name, pvState.value.getValue());
         try {
-          let state = evaluate(condition);
-          let styleValue = state ? trueState : falseState;
+          const state = evaluate(condition);
+          const styleValue = state ? trueState : falseState;
           newProps[prop] = styleValue;
         } catch (error) {
           log.warn(`Failed to evaluate rule ${condition}: ${error}`);

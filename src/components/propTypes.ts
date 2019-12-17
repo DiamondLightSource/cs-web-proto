@@ -57,29 +57,37 @@ export const ContainerFeaturesPropType = {
 
 const OpenWebpagePropType = PropTypes.shape({
   type: StringProp,
-  url: StringProp,
-  description: StringPropOpt
+  openWebpageInfo: PropTypes.shape({
+    url: StringProp,
+    description: StringPropOpt
+  }).isRequired
 });
 
 const OpenPagePropType = PropTypes.shape({
   type: StringProp,
-  page: StringProp,
-  location: StringProp,
-  macros: StringProp,
-  description: StringPropOpt
+  openPageInfo: PropTypes.shape({
+    page: StringProp,
+    location: StringProp,
+    macros: StringProp,
+    description: StringPropOpt
+  }).isRequired
 });
 
 const ClosePagePropType = PropTypes.shape({
   type: StringProp,
-  location: StringProp,
-  description: StringPropOpt
+  closePageInfo: PropTypes.shape({
+    location: StringProp,
+    description: StringPropOpt
+  }).isRequired
 });
 
 const WritePvPropType = PropTypes.shape({
   type: StringProp,
-  pvName: StringProp,
-  value: PropTypes.oneOfType([StringPropOpt, FloatPropOpt]),
-  description: StringPropOpt
+  writePvInfo: PropTypes.shape({
+    pvName: StringProp,
+    value: PropTypes.oneOfType([StringPropOpt, FloatPropOpt]),
+    description: StringPropOpt
+  }).isRequired
 });
 
 const ActionPropType = PropTypes.oneOfType([

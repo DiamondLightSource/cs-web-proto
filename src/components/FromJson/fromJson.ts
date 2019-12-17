@@ -44,7 +44,7 @@ export const WidgetFromJson = (
   const [currentMacros, setMacros] = useState<MacroMap>({});
 
   // Extract props
-  let { file, macroMap } = props;
+  const { file, macroMap } = props;
 
   // Using directly from React for testing purposes
   React.useEffect((): (() => void) => {
@@ -77,7 +77,7 @@ export const WidgetFromJson = (
     setMacros(macroMap as MacroMap);
   }
 
-  let widgetDict = Object.assign(
+  const widgetDict = Object.assign(
     {},
     ...Object.entries(widgets).map(([k, v]): any => ({ [k]: v[0] }))
   );

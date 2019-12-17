@@ -1,8 +1,5 @@
-// Special-case filename App.tsx is permitted.
-/* eslint unicorn/filename-case: 0 */ // --> OFF
-
 import React from "react";
-import "./App.css";
+import "./app.css";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 import { getStore, initialiseStore } from "./redux/store";
@@ -13,10 +10,10 @@ import { ConiqlPlugin } from "./connection/coniql";
 import { ConnectionForwarder } from "./connection/forwarder";
 import { DynamicPageWidget } from "./components/DynamicPage/dynamicPage";
 import { Connection } from "./connection/plugin";
-import { ActionButton } from "./components/";
+import { ActionButton } from "./components";
 import { OPEN_PAGE } from "./widgetActions";
 
-var settings: any;
+let settings: any;
 try {
   // Use require so that we can catch this error
   settings = require("./settings");
@@ -73,7 +70,10 @@ const App: React.FC = (): JSX.Element => {
             actions={{
               executeAsOne: false,
               actions: [
-                { type: OPEN_PAGE, location: "app", page: "menu", macros: "{}" }
+                {
+                  type: OPEN_PAGE,
+                  openPageInfo: { location: "app", page: "menu", macros: "{}" }
+                }
               ]
             }}
           />

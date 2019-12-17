@@ -94,8 +94,10 @@ const DynamicPageComponent = (
                   actions: [
                     {
                       type: CLOSE_PAGE,
-                      location: props.routePath,
-                      description: "Close"
+                      closePageInfo: {
+                        location: props.routePath,
+                        description: "Close"
+                      }
                     }
                   ]
                 }}

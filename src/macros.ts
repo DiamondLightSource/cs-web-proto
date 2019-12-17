@@ -16,7 +16,7 @@ function interpolate(
   );
 
   /* Allow missing macros to go unresolved. */
-  for (var missing of missingMappings) {
+  for (const missing of missingMappings) {
     substitutions[missing] = "${" + missing + "}";
   }
 

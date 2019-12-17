@@ -2,7 +2,6 @@
 
 import React from "react";
 import log from "loglevel";
-// @ts-ignore
 import checkPropTypes from "check-prop-types";
 
 import { MacroMap } from "../../redux/csState";
@@ -24,8 +23,11 @@ export function widgetDescriptionToComponent(
   existingMacroMap?: MacroMap,
   listIndex?: number
 ): JSX.Element {
-  // Extract known properties and leave everything else in otherProps
-  let {
+  // Extract known properties and leave everything else in otherProps.
+  // It's awkward to split this destructuring into separate let and const.
+  // eslint-disable-next-line prefer-const
+  let { backgroundColor, ...constProps } = widgetDescription;
+  const {
     type,
     children = [],
     macroMap = {},
@@ -44,9 +46,8 @@ export function widgetDescriptionToComponent(
     fontSize = undefined,
     fontWeight = undefined,
     textAlign = undefined,
-    backgroundColor = undefined,
     ...otherProps
-  } = widgetDescription;
+  } = constProps;
 
   let Component: React.FC<any>;
   if (widgetDict.hasOwnProperty(type)) {
@@ -60,7 +61,7 @@ export function widgetDescriptionToComponent(
   function filterUndefinedOut(input: {
     [index: string]: any;
   }): { [index: string]: any } {
-    let output: { [index: string]: any } = {};
+    const output: { [index: string]: any } = {};
     let key;
 
     for (key in input) {
@@ -96,8 +97,8 @@ export function widgetDescriptionToComponent(
   });
 
   // Perform checking on propTypes
-  let widgetInfo = { containerStyling: containerStyling, ...otherProps };
-  let error: string | undefined = checkPropTypes(
+  const widgetInfo = { containerStyling: containerStyling, ...otherProps };
+  const error: string | undefined = checkPropTypes(
     Component.propTypes,
     widgetInfo,
     "widget description",
