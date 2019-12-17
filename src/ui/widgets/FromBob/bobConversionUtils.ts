@@ -4,7 +4,7 @@
 import log from "loglevel";
 import convert from "xml-js";
 
-import { WidgetDescription } from "../../components/Positioning/positioning";
+import { WidgetDescription } from "../createComponent";
 import { WidgetActions, WRITE_PV } from "../widgetActions";
 import { MacroMap } from "../../../redux/csState";
 

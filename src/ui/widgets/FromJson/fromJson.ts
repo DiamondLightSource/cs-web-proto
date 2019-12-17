@@ -4,7 +4,7 @@ import log from "loglevel";
 import {
   widgetDescriptionToComponent,
   WidgetDescription
-} from "../../components/Positioning/positioning";
+} from "../createComponent";
 import { MacroMap } from "../../../redux/csState";
 import { WidgetPropType } from "../widget";
 import { widgets, registerWidget } from "../register";

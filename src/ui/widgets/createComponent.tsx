@@ -4,8 +4,8 @@ import React from "react";
 import log from "loglevel";
 import checkPropTypes from "check-prop-types";
 
-import { MacroMap } from "../../../redux/csState";
-import { Shape } from "../../widgets/Shape/shape";
+import { MacroMap } from "../../redux/csState";
+import { Shape } from "./Shape/shape";
 
 export interface WidgetDescription {
   type: string;

@@ -7,7 +7,7 @@ import log from "loglevel";
 import {
   WidgetDescription,
   widgetDescriptionToComponent
-} from "../../components/Positioning/positioning";
+} from "../createComponent";
 import { MacroMap } from "../../../redux/csState";
 import { Label } from "../Label/label";
 import { Readback } from "../Readback/readback";
