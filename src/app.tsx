@@ -22,7 +22,7 @@ try {
   settings = {};
 }
 
-const baseUrl = settings.baseUrl ?? "http://localhost:3000";
+const baseUrl = settings.baseUrl ? settings.baseUrl : "http://localhost:3000";
 
 log.setLevel("warn");
 

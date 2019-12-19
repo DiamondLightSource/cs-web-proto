@@ -4,6 +4,7 @@ import { shallow } from "enzyme";
 
 import { Display } from "../Display/display";
 import { Label } from "../Label/label";
+import { DEFAULT_BASE_URL } from "../../../baseUrl";
 
 const useEffect = jest.spyOn(React, "useEffect");
 const mockUseEffect = (): void => {
@@ -15,50 +16,60 @@ beforeEach((): void => {
 });
 
 describe("<WidgetFromBob>", (): void => {
-  it("fetches a file from the server", (done): void => {
-    const mockSuccessResponse = {};
-    const mockJsonPromise = Promise.resolve(mockSuccessResponse);
-    const mockFetchPromise = Promise.resolve({
-      json: (): Promise<{}> => mockJsonPromise
-    });
+  it.each<any>([
+    ["TestFile", `${DEFAULT_BASE_URL}/bob/TestFile`],
+    ["https://a.com/b.bob", "https://a.com/b.bob"]
+  ] as [string, string][])(
+    "fetches a file from the server",
+    (
+      inputFile: string,
+      resolvedFile: string,
+      done: jest.DoneCallback
+    ): void => {
+      const mockSuccessResponse = {};
+      const mockJsonPromise = Promise.resolve(mockSuccessResponse);
+      const mockFetchPromise = Promise.resolve({
+        json: (): Promise<{}> => mockJsonPromise
+      });
 
-    // Hack to satisfy typescript
-    interface GlobalFetch extends NodeJS.Global {
-      fetch: any;
+      // Hack to satisfy typescript
+      interface GlobalFetch extends NodeJS.Global {
+        fetch: any;
+      }
+      const globalWithFetch = global as GlobalFetch;
+
+      jest
+        .spyOn(global as GlobalFetch, "fetch")
+        .mockImplementation((): Promise<{}> => mockFetchPromise);
+
+      const wrapper = shallow(
+        <WidgetFromBob
+          containerStyling={{
+            position: "relative",
+            height: "",
+            width: "",
+            margin: "",
+            padding: "",
+            border: "",
+            minWidth: "",
+            maxWidth: ""
+          }}
+          file={inputFile}
+        />
+      );
+
+      expect(globalWithFetch.fetch).toHaveBeenCalledTimes(1);
+      expect(globalWithFetch.fetch).toHaveBeenCalledWith(resolvedFile);
+
+      process.nextTick((): void => {
+        // 6
+        expect(wrapper.type()).toEqual(Display);
+
+        globalWithFetch.fetch.mockClear(); // 7
+        done(); // 8
+      });
     }
-    const globalWithFetch = global as GlobalFetch;
-
-    jest
-      .spyOn(global as GlobalFetch, "fetch")
-      .mockImplementation((): Promise<{}> => mockFetchPromise);
-
-    const wrapper = shallow(
-      <WidgetFromBob
-        containerStyling={{
-          position: "relative",
-          height: "",
-          width: "",
-          margin: "",
-          padding: "",
-          border: "",
-          minWidth: "",
-          maxWidth: ""
-        }}
-        file="TestFile"
-      />
-    );
-
-    expect(globalWithFetch.fetch).toHaveBeenCalledTimes(1);
-    expect(globalWithFetch.fetch).toHaveBeenCalledWith("TestFile");
-
-    process.nextTick((): void => {
-      // 6
-      expect(wrapper.type()).toEqual(Display);
-
-      globalWithFetch.fetch.mockClear(); // 7
-      done(); // 8
-    });
-  });
+  );
   it("converts a simple widget", (done): void => {
     const mockSuccessResponse = `
     <widget type="label" version="2.0.0">
@@ -100,7 +111,9 @@ describe("<WidgetFromBob>", (): void => {
     );
 
     expect(globalWithFetch.fetch).toHaveBeenCalledTimes(1);
-    expect(globalWithFetch.fetch).toHaveBeenCalledWith("TestFile");
+    expect(globalWithFetch.fetch).toHaveBeenCalledWith(
+      `${DEFAULT_BASE_URL}/bob/TestFile`
+    );
 
     process.nextTick((): void => {
       // 6
@@ -158,7 +171,9 @@ describe("<WidgetFromBob>", (): void => {
     );
 
     expect(globalWithFetch.fetch).toHaveBeenCalledTimes(1);
-    expect(globalWithFetch.fetch).toHaveBeenCalledWith("TestFile");
+    expect(globalWithFetch.fetch).toHaveBeenCalledWith(
+      `${DEFAULT_BASE_URL}/bob/TestFile`
+    );
 
     process.nextTick((): void => {
       // 6

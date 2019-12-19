@@ -20,6 +20,7 @@ export const ImageComponent = (
   props: InferWidgetProps<typeof ImageProps> & Component
 ): JSX.Element => {
   const baseUrl = useContext(BaseUrlContext);
+  console.log(`base url ${baseUrl}`);
   let file = `img/${props.src}`;
   if (!file.startsWith("http")) {
     file = `${baseUrl}/${file}`;
