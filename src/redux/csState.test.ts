@@ -9,7 +9,12 @@ import {
   Unsubscribe,
   ValueChanged
 } from "./actions";
-import { vdouble, VDoubleArray, VDouble, vdoubleArray } from "../types/vtypes/vtypes";
+import {
+  vdouble,
+  VDoubleArray,
+  VDouble,
+  vdoubleArray
+} from "../types/vtypes/vtypes";
 import { AlarmSeverity, AlarmStatus, alarm } from "../types/vtypes/alarm";
 import { VString, vstring } from "../types/vtypes/string";
 

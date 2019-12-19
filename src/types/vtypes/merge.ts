@@ -10,13 +10,7 @@ import {
   venum
 } from "./vtypes";
 
-import {
-  Alarm,
-  alarmOf,
-  AlarmSeverity,
-  AlarmStatus,
-  alarm
-} from "./alarm";
+import { Alarm, alarmOf, AlarmSeverity, AlarmStatus, alarm } from "./alarm";
 
 import { vstring } from "./string";
 import { Time, timeOf } from "./time";
