@@ -28,29 +28,22 @@ export const ActionButtonComponent = (
   if (src !== undefined && !src?.startsWith("http")) {
     src = `${baseUrl}/img/${src}`;
   }
-  if (props.image !== undefined) {
-    return (
-      <button
-        className={classes.image}
-        onClick={props.onClick}
-        style={props.style}
-      >
-        <img src={src} alt={props.image}></img>
-        <br></br>
-        {props.text}
-      </button>
-    );
-  } else {
-    return (
-      <button
-        className={classes.actionbutton}
-        onClick={props.onClick}
-        style={props.style}
-      >
-        {props.text}
-      </button>
-    );
-  }
+  return (
+    <button
+      className={classes.actionbutton}
+      onClick={props.onClick}
+      style={props.style}
+    >
+      {src !== undefined ? (
+        <figure className={classes.figure}>
+          <img src={src} alt={props.image}></img>
+          <figcaption>{props.text}</figcaption>
+        </figure>
+      ) : (
+        props.text
+      )}
+    </button>
+  );
 };
 
 const ActionButtonPropType = {
