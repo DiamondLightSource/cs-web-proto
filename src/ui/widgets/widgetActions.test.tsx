@@ -7,7 +7,7 @@ import {
 } from "./widgetActions";
 import { writePv } from "../hooks/useSubscription";
 
-jest.mock("./hooks/useSubscription", (): object => {
+jest.mock("../hooks/useSubscription", (): object => {
   return {
     writePv: jest.fn()
   };

@@ -11,19 +11,19 @@ import { TooltipWrapper } from "../components/TooltipWrapper/tooltipWrapper";
 
 // Mock the useMacros hook as otherwise we'd have to provide
 // a store for it to use.
-jest.mock("../../hooks/useMacros", (): object => {
+jest.mock("../hooks/useMacros", (): object => {
   return {
     useMacros: (props: MacroProps): MacroProps => props
   };
 });
 // Mock useRules.
-jest.mock("../../hooks/useRules", (): object => {
+jest.mock("../hooks/useRules", (): object => {
   return {
     useRules: (props: RuleProps): RuleProps => props
   };
 });
 // Slightly elaborate mocking of useConnection.
-jest.mock("../../hooks/useConnection", (): object => ({
+jest.mock("../hooks/useConnection", (): object => ({
   useConnection: jest.fn()
 }));
 // This has to be done in a second step because Jest does the
