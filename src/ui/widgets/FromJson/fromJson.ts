@@ -11,7 +11,7 @@ import { widgets, registerWidget } from "../register";
 import { StringProp, InferWidgetProps } from "../propTypes";
 
 const EMPTY_WIDGET: WidgetDescription = {
-  type: "empty",
+  type: "shape",
   containerStyling: {
     position: "absolute",
     x: 0,

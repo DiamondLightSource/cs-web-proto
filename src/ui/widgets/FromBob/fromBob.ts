@@ -29,7 +29,7 @@ import { registerWidget } from "../register";
 import { StringProp, InferWidgetProps } from "../propTypes";
 
 const EMPTY_WIDGET: WidgetDescription = {
-  type: "empty",
+  type: "shape",
   position: "absolute",
   x: 0,
   y: 0,
@@ -106,8 +106,8 @@ export const WidgetFromBob = (
     action_button: ActionButton, // eslint-disable-line @typescript-eslint/camelcase
     "org.csstudio.opibuilder.widgets.ActionButton": ActionButton,
     "org.csstudio.opibuilder.widgets.BoolButton": Shape,
-    empty: Display,
-    widgetFromBob: WidgetFromBob
+    widgetFromBob: WidgetFromBob,
+    shape: Shape
   };
 
   const functionSubstitutions = {
