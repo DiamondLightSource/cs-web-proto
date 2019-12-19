@@ -13,6 +13,7 @@ import {
 import { writePv } from "../../hooks/useSubscription";
 import { PVInputComponent, PVWidget, PVWidgetPropType } from "../widget";
 import { InferWidgetProps } from "../propTypes";
+import { registerWidget } from "../register";
 
 export const SlideControlComponent = (
   props: InferWidgetProps<typeof ProgressBarProps> & PVInputComponent
@@ -105,4 +106,4 @@ export const SlideControl = (
   props: InferWidgetProps<typeof SlideControlWidgetProps>
 ): JSX.Element => <PVWidget baseWidget={SlideControlComponent} {...props} />;
 
-SlideControl.propTypes = SlideControlWidgetProps;
+registerWidget(SlideControl, SlideControlWidgetProps, "slidecontrol");

@@ -10,5 +10,6 @@ export { MenuButton } from "./MenuButton/menuButton";
 export { ProgressBar } from "./ProgressBar/progressBar";
 export { Readback } from "./Readback/readback";
 export { Shape } from "./Shape/shape";
+export { SlideControl } from "./SlideControl/slideControl";
 export { WidgetFromBob } from "./FromBob/fromBob";
 export { WidgetFromJson } from "./FromJson/fromJson";
