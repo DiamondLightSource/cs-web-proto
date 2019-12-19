@@ -14,11 +14,11 @@ import {
   VNumber,
   venum,
   VEnum
-} from "../vtypes/vtypes";
-import { VString } from "../vtypes/string";
-import { alarm, ALARM_NONE } from "../vtypes/alarm";
-import { timeNow } from "../vtypes/time";
-import { vtypeInfo, PartialVType } from "../vtypes/merge";
+} from "../types/vtypes/vtypes";
+import { VString } from "../types/vtypes/string";
+import { alarm, ALARM_NONE } from "../types/vtypes/alarm";
+import { timeNow } from "../types/vtypes/time";
+import { vtypeInfo, PartialVType } from "../types/vtypes/merge";
 
 function partialise(value: VType | undefined): PartialVType | undefined {
   if (value === undefined) {

@@ -9,9 +9,14 @@ import {
   Unsubscribe,
   ValueChanged
 } from "./actions";
-import { vdouble, VDoubleArray, VDouble, vdoubleArray } from "../vtypes/vtypes";
-import { AlarmSeverity, AlarmStatus, alarm } from "../vtypes/alarm";
-import { VString, vstring } from "../vtypes/string";
+import {
+  vdouble,
+  VDoubleArray,
+  VDouble,
+  vdoubleArray
+} from "../types/vtypes/vtypes";
+import { AlarmSeverity, AlarmStatus, alarm } from "../types/vtypes/alarm";
+import { VString, vstring } from "../types/vtypes/string";
 
 const initialState: CsState = {
   valueCache: {

@@ -8,8 +8,8 @@ import {
   MACRO_UPDATED,
   UNSUBSCRIBE
 } from "./actions";
-import { VType } from "../vtypes/vtypes";
-import { mergeVtype } from "../vtypes/merge";
+import { VType } from "../types/vtypes/vtypes";
+import { mergeVtype } from "../types/vtypes/merge";
 
 const initialState: CsState = {
   valueCache: {},

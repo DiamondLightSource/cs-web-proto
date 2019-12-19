@@ -1,5 +1,5 @@
 import { ConnectionState } from "../connection/plugin";
-import { VType } from "../vtypes/vtypes";
+import { VType } from "../types/vtypes/vtypes";
 
 export const CONNECTION_CHANGED = "connection_changed";
 export const SUBSCRIBE = "subscribe";

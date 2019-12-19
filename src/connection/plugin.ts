@@ -1,5 +1,5 @@
-import { VType } from "../vtypes/vtypes";
-import { PartialVType } from "../vtypes/merge";
+import { VType } from "../types/vtypes/vtypes";
+import { PartialVType } from "../types/vtypes/merge";
 
 export const nullConnCallback: ConnectionChangedCallback = (_p, _v): void => {};
 export const nullValueCallback: ValueChangedCallback = (_p, _v): void => {};
