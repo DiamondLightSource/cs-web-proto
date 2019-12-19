@@ -3,10 +3,11 @@
   "position": "relative",
   "children": [
     {
-      "type": "widgetFromBob",
+      "type": "embeddedDisplay",
       "position": "relative",
       "margin": "10px",
       "file": "digitelMpc.opi",
+      "filetype": "opi",
       "macroMap": {
         "device": "pva://TEST",
         "pv_name": "${pvName}",

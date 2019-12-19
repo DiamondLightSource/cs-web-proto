@@ -8,6 +8,24 @@ import { WidgetDescription } from "../createComponent";
 import { WidgetActions, WRITE_PV } from "../widgetActions";
 import { MacroMap } from "../../../redux/csState";
 
+const BOB_WIDGET_MAPPING: { [key: string]: string } = {
+  textupdate: "readback",
+  textentry: "input",
+  label: "label",
+  group: "grouping",
+  rectangle: "shape",
+  action_button: "actionbutton" // eslint-disable-line @typescript-eslint/camelcase
+};
+
+const OPI_WIDGET_MAPPING: { [key: string]: string } = {
+  "org.csstudio.opibuilder.Display": "display",
+  "org.csstudio.opibuilder.widgets.TextUpdate": "readback",
+  "org.csstudio.opibuilder.widgets.TextInput": "input",
+  "org.csstudio.opibuilder.widgets.Label": "label",
+  "org.csstudio.opibuilder.widgets.groupingContainer": "grouping",
+  "org.csstudio.opibuilder.widgets.Rectangle": "shape",
+  "org.csstudio.opibuilder.widgets.ActionButton": "actionbutton" // eslint-disable-line @typescript-eslint/camelcase
+};
 type GenericProp = string | boolean | number | MacroMap | WidgetActions;
 
 interface BobDescription {
@@ -136,7 +154,8 @@ export const bobParseActions = (
 export const bobChildToWidgetChild = (
   bobChild: BobDescription,
   functionSubstitutions?: FunctionSubstitutionInterface,
-  keySubstitutions?: { [key: string]: any }
+  keySubstitutions?: { [key: string]: any },
+  actuallyOpi?: boolean
 ): WidgetDescription => {
   // Convert a non-root widget from the bob file into a widget
   // It is passed as a JS object now
@@ -151,9 +170,24 @@ export const bobChildToWidgetChild = (
     ...remainingProps
   } = bobChild;
 
+  let type = actuallyOpi ? _attributes.typeId : _attributes.type;
+  log.debug(`opi? ${actuallyOpi}`);
+  log.debug(`type is ${type}`);
+  log.debug(_attributes);
+
   // Map the remaining props
   // Checks that there is a substitution map
   const mappedProps: { [key: string]: any } = {};
+  if (actuallyOpi) {
+    if (OPI_WIDGET_MAPPING.hasOwnProperty(type)) {
+      type = OPI_WIDGET_MAPPING[type];
+    }
+  } else {
+    if (BOB_WIDGET_MAPPING.hasOwnProperty(type)) {
+      type = BOB_WIDGET_MAPPING[type];
+    }
+  }
+
   Object.entries(remainingProps).forEach(([key, value]): void => {
     if (functionSubstitutions && functionSubstitutions[key]) {
       // Use the function substitution
@@ -181,7 +215,7 @@ export const bobChildToWidgetChild = (
   The default values can be different from each other
   This could make life a bit difficult but should be looked at later */
   const outputWidget: WidgetDescription = {
-    type: _attributes.type || _attributes.typeId,
+    type: type,
     position: "absolute",
     x: `${(x && x._text) || 0}px`,
     y: `${(y && y._text) || 0}px`,
@@ -193,7 +227,8 @@ export const bobChildToWidgetChild = (
         bobChildToWidgetChild(
           w as BobDescription,
           functionSubstitutions,
-          keySubstitutions
+          keySubstitutions,
+          actuallyOpi
         )
     )
   };
@@ -201,24 +236,41 @@ export const bobChildToWidgetChild = (
   return outputWidget;
 };
 
-export const convertBobToWidgetDescription = (
+export const bobToWidgets = (
   bobInputString: string,
-  functionSubstitutions?: {
-    [key: string]: (name: string, inputProp: object) => GenericProp;
-  },
-  keySubstitutions?: { [key: string]: string }
+  actuallyOpi?: boolean
 ): WidgetDescription => {
   // Provide a raw xml file in the bob format for conversion
   // Optionally provide a substition map for keys
+  const functionSubstitutions = {
+    macros: bobParseMacros,
+    background_color: bobParseColor, // eslint-disable-line @typescript-eslint/camelcase
+    foreground_color: bobParseColor, // eslint-disable-line @typescript-eslint/camelcase
+    precision: bobParsePrecision,
+    visible: bobParseBoolean,
+    transparent: bobParseBoolean,
+    actions: bobParseActions
+  };
+
+  const keySubstitutions = {
+    pv_name: "pvName", // eslint-disable-line @typescript-eslint/camelcase
+    macros: "macroMap",
+    opi_file: "file", // eslint-disable-line @typescript-eslint/camelcase
+    background_color: "backgroundColor", // eslint-disable-line @typescript-eslint/camelcase
+    foreground_color: "color", // eslint-disable-line @typescript-eslint/camelcase
+    // Rename style prop to make sure it isn't used directly to style components.
+    style: "bobStyle" // eslint-disable-line @typescript-eslint/camelcase
+  };
 
   // Convert it to a "compact format"
   const compactJSON = convert.xml2js(bobInputString, {
     compact: true
   }) as BobDescription;
 
-  // Add display to top of JSON to be processed
-  // Assumes top level widget is always display - valid for XML files
-  compactJSON.display._attributes = { type: "display" };
+  if (!actuallyOpi) {
+    compactJSON.display._attributes = { type: "display" };
+  }
+
   // We don't care about the position of the top-level display widget.
   // We place it at 0,0 within its container.
   compactJSON.display.x = { _text: "0" };
@@ -228,6 +280,7 @@ export const convertBobToWidgetDescription = (
   return bobChildToWidgetChild(
     compactJSON.display,
     functionSubstitutions,
-    keySubstitutions
+    keySubstitutions,
+    actuallyOpi
   );
 };

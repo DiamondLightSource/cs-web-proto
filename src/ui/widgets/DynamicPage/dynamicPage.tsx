@@ -3,12 +3,12 @@ import log from "loglevel";
 import { Route, RouteComponentProps } from "react-router-dom";
 
 import { Component, Widget, WidgetPropType } from "../widget";
-import { WidgetFromJson } from "../FromJson/fromJson"; // eslint-disable-line import/no-cycle
 import { ActionButton } from "../ActionButton/actionButton";
 import { CLOSE_PAGE } from "../widgetActions";
 import { registerWidget } from "../register";
 import { StringProp, InferWidgetProps } from "../propTypes";
 import { BaseUrlContext } from "../../../baseUrl";
+import { EmbeddedDisplay } from "../EmbeddedDisplay/embeddedDisplay";
 
 export interface DynamicParams {
   json: string;
@@ -28,8 +28,9 @@ export function DynamicPageFetch({
     log.warn(error);
   }
   return (
-    <WidgetFromJson
+    <EmbeddedDisplay
       file={file}
+      filetype="json"
       macroMap={map}
       containerStyling={{
         position: "relative",

@@ -9,8 +9,8 @@ import {
   bobParseBoolean,
   bobParseActions,
   bobChildToWidgetChild,
-  convertBobToWidgetDescription
-} from "./bobConversionUtils";
+  bobToWidgets
+} from "./bobUtils";
 import { WRITE_PV } from "../widgetActions";
 
 describe("simple macros convert", (): void => {
@@ -433,7 +433,7 @@ describe("bob conversion", (): void => {
     </display>
     `;
 
-    expect(convertBobToWidgetDescription(xmlBob)).toEqual({
+    expect(bobToWidgets(xmlBob)).toEqual({
       type: "display",
       name: "Display",
       position: "absolute",
@@ -445,7 +445,7 @@ describe("bob conversion", (): void => {
         {
           type: "testwidget",
           name: "Test Widget",
-          pv_name: "TESTPV", // eslint-disable-line @typescript-eslint/camelcase
+          pvName: "TESTPV", // eslint-disable-line @typescript-eslint/camelcase
           position: "absolute",
           x: "99px",
           y: "199px",
