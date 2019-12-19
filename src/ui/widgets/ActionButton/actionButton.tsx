@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { WidgetActions, executeActions } from "../widgetActions";
 import { PVComponent, PVWidget, PVWidgetPropType } from "../widget";
 import classes from "./actionButton.module.css";
@@ -11,6 +11,7 @@ import {
   StringPropOpt,
   InferWidgetProps
 } from "../propTypes";
+import { BaseUrlContext } from "../../../baseUrl";
 
 export interface ActionButtonProps {
   text: string;
@@ -22,6 +23,11 @@ export interface ActionButtonProps {
 export const ActionButtonComponent = (
   props: ActionButtonProps
 ): JSX.Element => {
+  const baseUrl = useContext(BaseUrlContext);
+  let src = props.image;
+  if (src !== undefined && !src?.startsWith("http")) {
+    src = `${baseUrl}/img/${src}`;
+  }
   if (props.image !== undefined) {
     return (
       <button
@@ -29,7 +35,7 @@ export const ActionButtonComponent = (
         onClick={props.onClick}
         style={props.style}
       >
-        <img src={props.image} alt={props.image}></img>
+        <img src={src} alt={props.image}></img>
         <br></br>
         {props.text}
       </button>

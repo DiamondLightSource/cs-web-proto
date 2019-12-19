@@ -12,6 +12,7 @@ import { DynamicPageWidget } from "./ui/widgets/DynamicPage/dynamicPage";
 import { Connection } from "./connection/plugin";
 import { ActionButton } from "./ui/widgets";
 import { OPEN_PAGE } from "./ui/widgets/widgetActions";
+import { BaseUrlContext } from "./baseUrl";
 
 let settings: any;
 try {
@@ -20,6 +21,8 @@ try {
 } catch (e) {
   settings = {};
 }
+
+const baseUrl = settings.baseUrl ?? "http://localhost:3000";
 
 log.setLevel("warn");
 
@@ -49,50 +52,56 @@ const App: React.FC = (): JSX.Element => {
   applyTheme(dark ? darkTheme : lightTheme);
 
   return (
-    <BrowserRouter>
-      <Provider store={store}>
-        <div className="App">
-          <button type="button" onClick={toggle}>
-            Toggle Theme
-          </button>
-          <ActionButton
-            containerStyling={{
-              position: "relative",
-              height: "30px",
-              width: "100px",
-              margin: "auto",
-              padding: "",
-              border: "",
-              minWidth: "",
-              maxWidth: ""
-            }}
-            text="Main Menu"
-            actions={{
-              executeAsOne: false,
-              actions: [
-                {
-                  type: OPEN_PAGE,
-                  openPageInfo: { location: "app", page: "menu", macros: "{}" }
-                }
-              ]
-            }}
-          />
-          <DynamicPageWidget
-            routePath="app"
-            containerStyling={{
-              position: "relative",
-              height: "",
-              width: "",
-              margin: "",
-              padding: "",
-              border: "",
-              minWidth: "",
-              maxWidth: ""
-            }}
-          />
-        </div>
-      </Provider>
-    </BrowserRouter>
+    <BaseUrlContext.Provider value={baseUrl}>
+      <BrowserRouter>
+        <Provider store={store}>
+          <div className="App">
+            <button type="button" onClick={toggle}>
+              Toggle Theme
+            </button>
+            <ActionButton
+              containerStyling={{
+                position: "relative",
+                height: "30px",
+                width: "100px",
+                margin: "auto",
+                padding: "",
+                border: "",
+                minWidth: "",
+                maxWidth: ""
+              }}
+              text="Main Menu"
+              actions={{
+                executeAsOne: false,
+                actions: [
+                  {
+                    type: OPEN_PAGE,
+                    openPageInfo: {
+                      location: "app",
+                      page: "menu",
+                      macros: "{}"
+                    }
+                  }
+                ]
+              }}
+            />
+            <DynamicPageWidget
+              routePath="app"
+              containerStyling={{
+                position: "relative",
+                height: "",
+                width: "",
+                margin: "",
+                padding: "",
+                border: "",
+                minWidth: "",
+                maxWidth: ""
+              }}
+            />
+          </div>
+        </Provider>
+      </BrowserRouter>
+    </BaseUrlContext.Provider>
   );
 };
 

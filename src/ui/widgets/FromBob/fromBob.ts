@@ -1,7 +1,7 @@
 /* Provide the same component as fromJson but converting bob files and
 providing a useful widget dictionary */
 
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import log from "loglevel";
 
 import {
@@ -27,6 +27,7 @@ import {
 import { ActionButton } from "../ActionButton/actionButton";
 import { registerWidget } from "../register";
 import { StringProp, InferWidgetProps } from "../propTypes";
+import { BaseUrlContext } from "../../../baseUrl";
 
 const EMPTY_WIDGET: WidgetDescription = {
   type: "shape",
@@ -56,9 +57,14 @@ export const WidgetFromBob = (
   const [bob, setBob] = useState<string>("");
   const [renderedFile, setFile] = useState("");
   const [currentMacros, setMacros] = useState<MacroMap>({});
-
-  // Extract props
-  const { file, macroMap } = props;
+  const baseUrl = useContext(BaseUrlContext);
+  let file: string;
+  if (!props.file.startsWith("http")) {
+    const filetype = props.file.endsWith("opi") ? "opi" : "bob";
+    file = `${baseUrl}/${filetype}/${props.file}`;
+  } else {
+    file = props.file;
+  }
 
   // Using directly from React for testing purposes
   React.useEffect((): (() => void) => {
@@ -76,7 +82,7 @@ export const WidgetFromBob = (
           if (mounted) {
             setBob(bob);
             setFile(file);
-            setMacros(macroMap as MacroMap);
+            setMacros(props.macroMap as MacroMap);
           }
         });
     }
@@ -87,8 +93,8 @@ export const WidgetFromBob = (
     };
   });
 
-  if (macroMap !== currentMacros) {
-    setMacros(macroMap as MacroMap);
+  if (props.macroMap !== currentMacros) {
+    setMacros(props.macroMap as MacroMap);
   }
 
   const widgetDict = {
@@ -171,7 +177,7 @@ export const WidgetFromBob = (
         children: [bobDescription]
       },
       widgetDict,
-      macroMap
+      props.macroMap
     );
   } catch (e) {
     log.error(`Error converting Bob into components in ${file}`);
@@ -181,7 +187,7 @@ export const WidgetFromBob = (
     component = widgetDescriptionToComponent(
       ERROR_WIDGET,
       widgetDict,
-      macroMap
+      props.macroMap
     );
   }
 

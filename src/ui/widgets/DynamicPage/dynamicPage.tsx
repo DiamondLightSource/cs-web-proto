@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import log from "loglevel";
 import { Route, RouteComponentProps } from "react-router-dom";
 
@@ -8,6 +8,7 @@ import { ActionButton } from "../ActionButton/actionButton";
 import { CLOSE_PAGE } from "../widgetActions";
 import { registerWidget } from "../register";
 import { StringProp, InferWidgetProps } from "../propTypes";
+import { BaseUrlContext } from "../../../baseUrl";
 
 export interface DynamicParams {
   json: string;
@@ -17,7 +18,8 @@ export interface DynamicParams {
 export function DynamicPageFetch({
   match
 }: RouteComponentProps<DynamicParams>): JSX.Element {
-  const file = "http://localhost:3000/json/" + match.params.json + ".json";
+  const baseUrl = useContext(BaseUrlContext);
+  const file = `${baseUrl}/json/${match.params.json}.json`;
   let map = {};
   try {
     map = match.params.macros && JSON.parse(match.params.macros);

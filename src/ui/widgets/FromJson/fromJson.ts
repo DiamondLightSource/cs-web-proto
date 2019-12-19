@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import log from "loglevel";
 
 import {
@@ -9,6 +9,7 @@ import { MacroMap } from "../../../redux/csState";
 import { WidgetPropType } from "../widget";
 import { widgets, registerWidget } from "../register";
 import { StringProp, InferWidgetProps } from "../propTypes";
+import { BaseUrlContext } from "../../../baseUrl";
 
 const EMPTY_WIDGET: WidgetDescription = {
   type: "shape",
@@ -42,9 +43,13 @@ export const WidgetFromJson = (
   const [json, setJson] = useState<WidgetDescription>(EMPTY_WIDGET);
   const [renderedFile, setFile] = useState("");
   const [currentMacros, setMacros] = useState<MacroMap>({});
-
-  // Extract props
-  const { file, macroMap } = props;
+  const baseUrl = useContext(BaseUrlContext);
+  let file: string;
+  if (!props.file.startsWith("http")) {
+    file = `${baseUrl}/json/${props.file}`;
+  } else {
+    file = props.file;
+  }
 
   // Using directly from React for testing purposes
   React.useEffect((): (() => void) => {
@@ -62,7 +67,7 @@ export const WidgetFromJson = (
           if (mounted) {
             setJson(json);
             setFile(file);
-            setMacros(macroMap as MacroMap);
+            setMacros(props.macroMap as MacroMap);
           }
         });
     }
@@ -73,8 +78,8 @@ export const WidgetFromJson = (
     };
   });
 
-  if (macroMap !== currentMacros) {
-    setMacros(macroMap as MacroMap);
+  if (props.macroMap !== currentMacros) {
+    setMacros(props.macroMap as MacroMap);
   }
 
   const widgetDict = Object.assign(
