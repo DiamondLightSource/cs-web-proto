@@ -170,10 +170,8 @@ export const bobChildToWidgetChild = (
     ...remainingProps
   } = bobChild;
 
+  // The type attribute is typeId in an opi file and type in a bob file.
   let type = actuallyOpi ? _attributes.typeId : _attributes.type;
-  log.debug(`opi? ${actuallyOpi}`);
-  log.debug(`type is ${type}`);
-  log.debug(_attributes);
 
   // Map the remaining props
   // Checks that there is a substitution map

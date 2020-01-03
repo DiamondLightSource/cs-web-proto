@@ -104,7 +104,7 @@ export const EmbeddedDisplay = (
     }
     log.info(description);
 
-    // Apply the Bob height to the top level if relative layout and none have been provided
+    // Apply the height to the top level if relative layout and none have been provided
     if (props.containerStyling.position === "relative") {
       props.containerStyling.height =
         props.containerStyling.height || description.height;
@@ -132,7 +132,7 @@ export const EmbeddedDisplay = (
       props.macroMap
     );
   } catch (e) {
-    log.error(`Error converting Bob into components in ${file}`);
+    log.error(`Error converting file ${file} into components:`);
     log.error(e);
     log.error(e.msg);
     log.error(e.object);
