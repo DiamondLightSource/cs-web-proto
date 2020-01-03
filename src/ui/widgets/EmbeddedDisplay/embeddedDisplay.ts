@@ -10,6 +10,7 @@ import {
 import { MacroMap } from "../../../redux/csState";
 import { WidgetPropType } from "../widget";
 import { bobToWidgets } from "./bobUtils";
+import { opiToWidgets } from "./opiUtils";
 import { registerWidget } from "../register";
 import { StringProp, InferWidgetProps, ChoiceProp } from "../propTypes";
 import { BaseUrlContext } from "../../../baseUrl";
@@ -98,7 +99,7 @@ export const EmbeddedDisplay = (
           description = JSON.parse(contents);
           break;
         case "opi":
-          description = bobToWidgets(contents, true);
+          description = opiToWidgets(contents);
           break;
       }
     }
