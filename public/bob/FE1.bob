@@ -26,7 +26,7 @@
   </widget>
   <widget type="textupdate" version="2.0.0">
     <name>Text Update</name>
-    <pv_name>pva://TMC43-TS-MSTAT-01:TIME</pv_name>
+    <pv_name>ca://CS-CS-MSTAT-01:TIME</pv_name>
     <y>90</y>
     <width>1270</width>
     <height>50</height>
@@ -70,7 +70,7 @@
   </widget>
   <widget type="textupdate" version="2.0.0">
     <name>Text Update_1</name>
-    <pv_name>pva://TMC43-TS-MSTAT-01:LIFETIME</pv_name>
+    <pv_name>ca://SR-DI-DCCT-01:LIFETIME</pv_name>
     <x>290</x>
     <y>150</y>
     <width>330</width>
@@ -111,7 +111,7 @@
   </widget>
   <widget type="textupdate" version="2.0.0">
     <name>Text Update_2</name>
-    <pv_name>pva://TMC43-TS-IOC-01:CURRENT</pv_name>
+    <pv_name>ca://SR-DI-DCCT-01:SIGNAL</pv_name>
     <x>900</x>
     <y>150</y>
     <width>350</width>
@@ -285,7 +285,7 @@
   </widget>
   <widget type="textupdate" version="2.0.0">
     <name>Text Update_3</name>
-    <pv_name>pva://TMC06I-MO-SERVC-01:CURRGAPD</pv_name>
+    <pv_name>ca://SR06I-MO-SERVC-01:CURRGAPD</pv_name>
     <x>140</x>
     <y>260</y>
     <width>110</width>
@@ -305,7 +305,7 @@
   </widget>
   <widget type="textupdate" version="2.0.0">
     <name>Text Update_4</name>
-    <pv_name>pva://TMC06I-MO-SERVC-21:CURRGAPD</pv_name>
+    <pv_name>ca://SR06I-MO-SERVC-21:CURRGAPD</pv_name>
     <x>250</x>
     <y>260</y>
     <width>110</width>
@@ -325,7 +325,7 @@
   </widget>
   <widget type="textupdate" version="2.0.0">
     <name>Text Update_5</name>
-    <pv_name>pva://TMC06I-MO-SERVC-01:FIELD</pv_name>
+    <pv_name>ca://SR06I-MO-SERVC-01:FIELD</pv_name>
     <x>380</x>
     <y>260</y>
     <height>40</height>
@@ -344,7 +344,7 @@
   </widget>
   <widget type="textupdate" version="2.0.0">
     <name>Text Update_6</name>
-    <pv_name>pva://TMC06I-MO-SERVC-21:FIELD</pv_name>
+    <pv_name>ca://SR06I-MO-SERVC-21:FIELD</pv_name>
     <x>480</x>
     <y>260</y>
     <height>40</height>
@@ -363,7 +363,7 @@
   </widget>
   <widget type="textupdate" version="2.0.0">
     <name>Text Update_7</name>
-    <pv_name>pva://TMC06I-PS-SHTR-01:STA</pv_name>
+    <pv_name>ca://FE06I-PS-SHTR-01:STA</pv_name>
     <x>600</x>
     <y>260</y>
     <width>150</width>
@@ -394,7 +394,7 @@
   </widget>
   <widget type="textupdate" version="2.0.0">
     <name>Text Update_9</name>
-    <pv_name>pva://TMC06I-OP-SHTR-02:STA</pv_name>
+    <pv_name>ca://FE06I-PS-SHTR-02:STA</pv_name>
     <x>770</x>
     <y>260</y>
     <width>230</width>
@@ -418,14 +418,14 @@
             </color>
           </value>
         </exp>
-        <pv_name>FE06I-PS-SHTR-02:STA</pv_name>
+        <pv_name>ca://BL06I-PS-SHTR-01:STA</pv_name>
       </rule>
     </rules>
     <border_width>1</border_width>
   </widget>
   <widget type="textupdate" version="2.0.0">
     <name>Text Update_10</name>
-    <pv_name>pva://TMC06I-BL-SHTR-01:STA</pv_name>
+    <pv_name>ca://BL06I-PS-SHTR-01:STA</pv_name>
     <x>1020</x>
     <y>260</y>
     <width>115</width>
@@ -449,14 +449,14 @@
             </color>
           </value>
         </exp>
-        <pv_name>BL06I-PS-SHTR-01:STA</pv_name>
+        <pv_name>ca://BL06J-PS-SHTR-01:STA</pv_name>
       </rule>
     </rules>
     <border_width>1</border_width>
   </widget>
   <widget type="textupdate" version="2.0.0">
     <name>Text Update_12</name>
-    <pv_name>pva://TMC06J-BL-SHTR-01:STA</pv_name>
+    <pv_name>ca://BL06J-PS-SHTR-01:STA</pv_name>
     <x>1135</x>
     <y>260</y>
     <width>115</width>
