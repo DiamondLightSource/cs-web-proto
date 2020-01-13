@@ -2,7 +2,7 @@
 // into our widget format
 
 import log from "loglevel";
-import convert from "xml-js";
+import convert, { ElementCompact } from "xml-js";
 
 import { WidgetDescription } from "../createComponent";
 import { WidgetActions, WRITE_PV } from "../widgetActions";
@@ -143,6 +143,26 @@ export const opiParseActions = (
   return processedActions;
 };
 
+export const addPrefixToPV = (pv: string, defaultPrefix: string): string => {
+  if (/[a-zA-Z0-9]+:\/\/[a-zA-Z]/.test(pv) === false) {
+    return defaultPrefix + pv;
+  } else {
+    return pv;
+  }
+};
+
+export const opiParsePv = (
+  name: string,
+  jsonProp: convert.ElementCompact
+): string => {
+  // Opi files use channel access by default
+  try {
+    return addPrefixToPV(jsonProp._text as string, "ca://"); // eslint-disable-line @typescript-eslint/camelcase
+  } catch (e) {
+    throw new Error(`Could not find PV text on property`);
+  }
+};
+
 export const OPI_FUNCTION_SUBSTITUTIONS = {
   macros: opiParseMacros,
   background_color: opiParseColor, // eslint-disable-line @typescript-eslint/camelcase
@@ -150,7 +170,8 @@ export const OPI_FUNCTION_SUBSTITUTIONS = {
   precision: opiParsePrecision,
   visible: opiParseBoolean,
   transparent: opiParseBoolean,
-  actions: opiParseActions
+  actions: opiParseActions,
+  pv_name: opiParsePv // eslint-disable-line @typescript-eslint/camelcase
 };
 
 export const OPI_KEY_SUBSTITUTIONS = {

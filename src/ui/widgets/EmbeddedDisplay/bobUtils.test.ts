@@ -31,7 +31,7 @@ describe("bob conversion", (): void => {
         {
           type: "testwidget",
           name: "Test Widget",
-          pvName: "TESTPV", // eslint-disable-line @typescript-eslint/camelcase
+          pvName: "ca://TESTPV", // eslint-disable-line @typescript-eslint/camelcase
           position: "absolute",
           x: "99px",
           y: "199px",
