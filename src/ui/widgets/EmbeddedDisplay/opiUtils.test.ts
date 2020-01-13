@@ -3,14 +3,15 @@ import {} from "enzyme";
 import convert from "xml-js";
 
 import {
-  bobParseMacros,
-  bobParseColor,
-  bobParsePrecision,
-  bobParseBoolean,
-  bobParseActions,
-  bobChildToWidgetChild,
-  convertBobToWidgetDescription
-} from "./bobConversionUtils";
+  opiParseMacros,
+  opiParseColor,
+  opiParsePrecision,
+  opiParseBoolean,
+  opiParseActions,
+  xmlChildToWidget,
+  OPI_WIDGET_MAPPING,
+  opiGetWidgetId
+} from "./opiUtils";
 import { WRITE_PV } from "../widgetActions";
 
 describe("simple macros convert", (): void => {
@@ -19,12 +20,12 @@ describe("simple macros convert", (): void => {
     compact: true
   });
   test("it collects the macro", (): void => {
-    const macros = bobParseMacros("macros", convertedXML["macros"]);
+    const macros = opiParseMacros("macros", convertedXML["macros"]);
     expect(macros).toEqual({ Test: "Value" });
   });
 
   test("it ignores when there are not macros", (): void => {
-    const macros = bobParseMacros("macros", {});
+    const macros = opiParseMacros("macros", {});
     expect(macros).toEqual({});
   });
 });
@@ -35,7 +36,7 @@ describe("color conversion", (): void => {
     compact: true
   });
   test("it converts xml color to rgb string", (): void => {
-    expect(bobParseColor("color", convertedColor)).toEqual("rgb(0, 255, 0)");
+    expect(opiParseColor("color", convertedColor)).toEqual("rgb(0, 255, 0)");
   });
 });
 
@@ -49,7 +50,7 @@ describe("precision conversion", (): void => {
   );
 
   test("it correctly gets the precision and turns it into a number", (): void => {
-    const output = bobParsePrecision("precision", convertedPrecision.precision);
+    const output = opiParsePrecision("precision", convertedPrecision.precision);
     expect(output).toBe(5);
   });
 });
@@ -72,7 +73,7 @@ describe("actions conversion", (): void => {
     compact: true
   });
   test("it correctly converts write PV actions", (): void => {
-    expect(bobParseActions("actions", compactActions.actions)).toEqual({
+    expect(opiParseActions("actions", compactActions.actions)).toEqual({
       executeAsOne: false,
       actions: [
         {
@@ -111,7 +112,7 @@ describe("actions conversion", (): void => {
     const compactActions: convert.ElementCompact = convert.xml2js(xmlActions, {
       compact: true
     });
-    expect(bobParseActions("actions", compactActions.actions)).toEqual({
+    expect(opiParseActions("actions", compactActions.actions)).toEqual({
       executeAsOne: true,
       actions: [
         {
@@ -135,10 +136,10 @@ describe("actions conversion", (): void => {
   });
 });
 
-describe("bob child conversion", (): void => {
+describe("opi child conversion", (): void => {
   test("it converts a simple widget", (): void => {
     const xmlWidget = `
-    <widget type="testwidget" version="2.0.0">
+    <widget typeId="testwidget" version="2.0.0">
       <name>Test Widget</name>
       <pv_name>TESTPV</pv_name>
       <x>99</x>
@@ -150,7 +151,9 @@ describe("bob child conversion", (): void => {
       compact: true
     });
 
-    expect(bobChildToWidgetChild(compactWidget.widget)).toEqual({
+    expect(
+      xmlChildToWidget(compactWidget.widget, opiGetWidgetId, OPI_WIDGET_MAPPING)
+    ).toEqual({
       type: "testwidget",
       name: "Test Widget",
       pv_name: "TESTPV", // eslint-disable-line @typescript-eslint/camelcase
@@ -165,7 +168,7 @@ describe("bob child conversion", (): void => {
 
   test("it converts a simple widget with key subsitutions", (): void => {
     const xmlWidget = `
-    <widget type="testwidget" version="2.0.0">
+    <widget typeId="testwidget" version="2.0.0">
       <name>Test Widget</name>
       <pv_name>TESTPV</pv_name>
       <x>99</x>
@@ -178,7 +181,13 @@ describe("bob child conversion", (): void => {
     });
 
     expect(
-      bobChildToWidgetChild(compactWidget.widget, {}, { pv_name: "pvName" }) // eslint-disable-line @typescript-eslint/camelcase
+      xmlChildToWidget(
+        compactWidget.widget,
+        opiGetWidgetId,
+        OPI_WIDGET_MAPPING,
+        {},
+        { pv_name: "pvName" } // eslint-disable-line @typescript-eslint/camelcase
+      )
     ).toEqual({
       type: "testwidget",
       name: "Test Widget",
@@ -193,12 +202,12 @@ describe("bob child conversion", (): void => {
   });
 
   const trueWidget = `
-    <widget type="testwidget" version="2.0.0">
+    <widget typeId="testwidget" version="2.0.0">
       <name>Test Widget</name>
       <true_or_false>true</true_or_false>
     </widget>`;
   const falseWidget = `
-    <widget type="testwidget" version="2.0.0">
+    <widget typeId="testwidget" version="2.0.0">
       <name>Test Widget</name>
       <true_or_false>false</true_or_false>
     </widget>`;
@@ -214,9 +223,11 @@ describe("bob child conversion", (): void => {
       });
 
       expect(
-        bobChildToWidgetChild(
+        xmlChildToWidget(
           compactWidget.widget,
-          { true_or_false: bobParseBoolean }, // eslint-disable-line @typescript-eslint/camelcase
+          opiGetWidgetId,
+          OPI_WIDGET_MAPPING,
+          { true_or_false: opiParseBoolean }, // eslint-disable-line @typescript-eslint/camelcase
           {}
         )
       ).toEqual({
@@ -234,7 +245,7 @@ describe("bob child conversion", (): void => {
   );
   test("it throws error if boolean invalid", (): void => {
     const invalidBoolWidget = `
-    <widget type="testwidget" version="2.0.0">
+    <widget typeId="testwidget" version="2.0.0">
       <name>Test Widget</name>
       <true_or_false>not-a-bool</true_or_false>
     </widget>`;
@@ -245,10 +256,12 @@ describe("bob child conversion", (): void => {
       }
     );
     expect((): void => {
-      bobChildToWidgetChild(
+      xmlChildToWidget(
         compactWidget.widget,
+        opiGetWidgetId,
+        OPI_WIDGET_MAPPING,
         {
-          true_or_false: bobParseBoolean // eslint-disable-line @typescript-eslint/camelcase
+          true_or_false: opiParseBoolean // eslint-disable-line @typescript-eslint/camelcase
         },
         {}
       );
@@ -256,7 +269,7 @@ describe("bob child conversion", (): void => {
   });
   test("it converts a simple widget with function subsitutions", (): void => {
     const xmlWidget = `
-    <widget type="testwidget" version="2.0.0">
+    <widget typeId="testwidget" version="2.0.0">
       <name>Test Widget</name>
       <pv_name>TESTPV</pv_name>
       <x>99</x>
@@ -277,11 +290,13 @@ describe("bob child conversion", (): void => {
     });
 
     expect(
-      bobChildToWidgetChild(
+      xmlChildToWidget(
         compactWidget.widget,
+        opiGetWidgetId,
+        OPI_WIDGET_MAPPING,
         {
-          background_color: bobParseColor, // eslint-disable-line @typescript-eslint/camelcase
-          foreground_color: bobParseColor // eslint-disable-line @typescript-eslint/camelcase
+          background_color: opiParseColor, // eslint-disable-line @typescript-eslint/camelcase
+          foreground_color: opiParseColor // eslint-disable-line @typescript-eslint/camelcase
         },
         {
           pv_name: "pvName", // eslint-disable-line @typescript-eslint/camelcase
@@ -306,13 +321,13 @@ describe("bob child conversion", (): void => {
 
   test("it converts a widget with a child", (): void => {
     const xmlWidget = `
-    <widget type="parent" version="2.0.0">
+    <widget typeId="parent" version="2.0.0">
         <name>Parent Widget</name>
         <x>100</x>
         <y>200</y>
         <width>300</width>
         <height>400</height>
-        <widget type="testwidget" version="2.0.0">
+        <widget typeId="testwidget" version="2.0.0">
             <name>Test Widget</name>
             <pv_name>TESTPV</pv_name>
             <x>99</x>
@@ -325,7 +340,9 @@ describe("bob child conversion", (): void => {
       compact: true
     });
 
-    expect(bobChildToWidgetChild(compactWidget.widget)).toEqual({
+    expect(
+      xmlChildToWidget(compactWidget.widget, opiGetWidgetId, OPI_WIDGET_MAPPING)
+    ).toEqual({
       type: "parent",
       name: "Parent Widget",
       position: "absolute",
@@ -351,13 +368,13 @@ describe("bob child conversion", (): void => {
 
   test("it converts a widget with multiple children", (): void => {
     const xmlWidget = `
-    <widget type="parent" version="2.0.0">
+    <widget typeId="parent" version="2.0.0">
         <name>Parent Widget</name>
         <x>100</x>
         <y>200</y>
         <width>300</width>
         <height>400</height>
-        <widget type="testwidget" version="2.0.0">
+        <widget typeId="testwidget" version="2.0.0">
             <name>Test Widget</name>
             <pv_name>TESTPV</pv_name>
             <x>99</x>
@@ -365,7 +382,7 @@ describe("bob child conversion", (): void => {
             <width>299</width>
             <height>399</height>
         </widget>
-        <widget type="testwidget" version="2.0.0">
+        <widget typeId="testwidget" version="2.0.0">
             <name>Test Widget</name>
             <pv_name>TESTPV</pv_name>
             <x>999</x>
@@ -378,7 +395,9 @@ describe("bob child conversion", (): void => {
       compact: true
     });
 
-    expect(bobChildToWidgetChild(compactWidget.widget)).toEqual({
+    expect(
+      xmlChildToWidget(compactWidget.widget, opiGetWidgetId, OPI_WIDGET_MAPPING)
+    ).toEqual({
       type: "parent",
       name: "Parent Widget",
       position: "absolute",
@@ -407,50 +426,6 @@ describe("bob child conversion", (): void => {
           y: "899px",
           width: "799px",
           height: "699px",
-          children: []
-        }
-      ]
-    });
-  });
-});
-
-describe("bob conversion", (): void => {
-  test("it converts a simple bob file", (): void => {
-    const xmlBob = `
-    <?xml version="1.0" encoding="UTF-8"?>
-    <display version="2.0.0">
-        <name>Display</name>
-        <width>200</width>
-        <height>350</height>
-        <widget type="testwidget" version="2.0.0">
-            <name>Test Widget</name>
-            <pv_name>TESTPV</pv_name>
-            <x>99</x>
-            <y>199</y>
-            <width>299</width>
-            <height>399</height>
-        </widget>
-    </display>
-    `;
-
-    expect(convertBobToWidgetDescription(xmlBob)).toEqual({
-      type: "display",
-      name: "Display",
-      position: "absolute",
-      x: "0px",
-      y: "0px",
-      width: "200px",
-      height: "350px",
-      children: [
-        {
-          type: "testwidget",
-          name: "Test Widget",
-          pv_name: "TESTPV", // eslint-disable-line @typescript-eslint/camelcase
-          position: "absolute",
-          x: "99px",
-          y: "199px",
-          width: "299px",
-          height: "399px",
           children: []
         }
       ]

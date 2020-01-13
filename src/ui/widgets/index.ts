@@ -1,6 +1,7 @@
 export { ActionButton } from "./ActionButton/actionButton";
 export { Display } from "./Display/display";
 export { DynamicPageWidget } from "./DynamicPage/dynamicPage";
+export { EmbeddedDisplay } from "./EmbeddedDisplay/embeddedDisplay";
 export { FlexContainer } from "./FlexContainer/flexContainer";
 export { GroupingContainer } from "./GroupingContainer/groupingContainer";
 export { Image } from "./Image/image";
@@ -10,5 +11,4 @@ export { MenuButton } from "./MenuButton/menuButton";
 export { ProgressBar } from "./ProgressBar/progressBar";
 export { Readback } from "./Readback/readback";
 export { Shape } from "./Shape/shape";
-export { WidgetFromBob } from "./FromBob/fromBob";
-export { WidgetFromJson } from "./FromJson/fromJson";
+export { SlideControl } from "./SlideControl/slideControl";

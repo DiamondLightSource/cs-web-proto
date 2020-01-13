@@ -29,9 +29,10 @@
               "text": "Synoptic"
             },
             {
-              "type": "widgetFromJSON",
+              "type": "embeddedDisplay",
               "position": "relative",
-              "file": "http://localhost:3000/json/synoptic.json"
+              "file": "synoptic.json",
+              "filetype": "json"
             }
           ]
         },

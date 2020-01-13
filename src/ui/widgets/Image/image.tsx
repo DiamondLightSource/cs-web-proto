@@ -1,4 +1,4 @@
-import React, { CSSProperties } from "react";
+import React, { CSSProperties, useContext } from "react";
 
 import { Component, Widget, WidgetPropType } from "../widget";
 import {
@@ -8,6 +8,7 @@ import {
   StringPropOpt
 } from "../propTypes";
 import { registerWidget } from "../register";
+import { BaseUrlContext } from "../../../baseUrl";
 
 const ImageProps = {
   src: StringProp,
@@ -18,7 +19,12 @@ const ImageProps = {
 export const ImageComponent = (
   props: InferWidgetProps<typeof ImageProps> & Component
 ): JSX.Element => {
-  let imageSize = undefined;
+  const baseUrl = useContext(BaseUrlContext);
+  let file = `img/${props.src}`;
+  if (!file.startsWith("http")) {
+    file = `${baseUrl}/${file}`;
+  }
+  let imageSize: any = undefined;
   let overflow = "auto";
   if (props.fill === true) {
     imageSize = "100%";
@@ -34,7 +40,7 @@ export const ImageComponent = (
   return (
     <div style={style}>
       <img
-        src={props.src}
+        src={file}
         alt={props.alt || undefined}
         style={{
           height: imageSize,

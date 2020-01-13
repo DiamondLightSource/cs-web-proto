@@ -1,16 +1,15 @@
 .actionbutton {
-  background-color: inherit;
+  background-color: transparent;
   display: flex;
   text-align: center;
   justify-content: center;
-}
-
-.image {
-  background-color: transparent;
-  border: none;
   cursor: pointer;
 }
 
-.image:hover {
+.actionbutton:hover {
   background-color: gray;
+}
+
+.figure {
+  margin: 0;
 }

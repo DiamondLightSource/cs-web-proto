@@ -6,6 +6,7 @@ import checkPropTypes from "check-prop-types";
 
 import { MacroMap } from "../../redux/csState";
 import { Shape } from "./Shape/shape";
+import { widgets } from "./register";
 
 export interface WidgetDescription {
   type: string;
@@ -19,7 +20,6 @@ export function widgetDescriptionToComponent(
   // from the component dictionary provided. Also passes down a macro map which
   // can be overwritten. Uses recursion to generate children.
   widgetDescription: WidgetDescription,
-  widgetDict: { [index: string]: React.FC<any> },
   existingMacroMap?: MacroMap,
   listIndex?: number
 ): JSX.Element {
@@ -49,11 +49,17 @@ export function widgetDescriptionToComponent(
     ...otherProps
   } = constProps;
 
+  const widgetDict = Object.assign(
+    {},
+    ...Object.entries(widgets).map(([k, v]): any => ({ [k]: v[0] }))
+  );
+
   let Component: React.FC<any>;
   if (widgetDict.hasOwnProperty(type)) {
     Component = widgetDict[type];
   } else {
     log.warn(`Failed to load unknown widget type ${type}`);
+    log.debug(widgetDescription);
     Component = Shape;
     backgroundColor = "magenta";
   }
@@ -126,7 +132,7 @@ export function widgetDescriptionToComponent(
   // Pass the latest macroMap down
   const ChildComponents = children.map(
     (child, index): JSX.Element =>
-      widgetDescriptionToComponent(child, widgetDict, latestMacroMap, index)
+      widgetDescriptionToComponent(child, latestMacroMap, index)
   );
   // Return the node with children as children
   // Pass any extra props and macromap
