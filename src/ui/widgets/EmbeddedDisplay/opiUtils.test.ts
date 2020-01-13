@@ -10,7 +10,9 @@ import {
   opiParseActions,
   xmlChildToWidget,
   OPI_WIDGET_MAPPING,
-  opiGetWidgetId
+  opiGetWidgetId,
+  addPrefixToPV,
+  opiParsePv
 } from "./opiUtils";
 import { WRITE_PV } from "../widgetActions";
 
@@ -133,6 +135,34 @@ describe("actions conversion", (): void => {
         }
       ]
     });
+  });
+});
+
+describe("inserts default PV prefix", (): void => {
+  test("it adds default prefix when one is not present", (): void => {
+    expect(addPrefixToPV("TEST-PV", "sim://")).toEqual("sim://TEST-PV");
+  });
+
+  test("it does not add default prefix when one is present", (): void => {
+    expect(addPrefixToPV("pva://TEST-PV", "sim://")).toEqual("pva://TEST-PV");
+  });
+
+  test("it adds ca prefix to xml without prefix", (): void => {
+    const xmlPv = `
+    <pv_name>TEST-PV</pv_name>`;
+    const compactPv: convert.ElementCompact = convert.xml2js(xmlPv, {
+      compact: true
+    });
+    expect(opiParsePv("pv_name", compactPv.pv_name)).toEqual("ca://TEST-PV");
+  });
+
+  test("it does not add ca prefix to xml with prefix", (): void => {
+    const xmlPv = `
+    <pv_name>pva://TEST-PV</pv_name>`;
+    const compactPv: convert.ElementCompact = convert.xml2js(xmlPv, {
+      compact: true
+    });
+    expect(opiParsePv("pv_name", compactPv.pv_name)).toEqual("pva://TEST-PV");
   });
 });
 
