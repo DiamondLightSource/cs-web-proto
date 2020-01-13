@@ -70,7 +70,7 @@
   </widget>
   <widget type="textupdate" version="2.0.0">
     <name>Text Update_1</name>
-    <pv_name>pva://TMC43-TS-MSTAT-01:LIFETIME</pv_name>
+    <pv_name>SR-DI-DCCT-01:LIFETIME</pv_name>
     <x>290</x>
     <y>150</y>
     <width>330</width>
@@ -83,6 +83,7 @@
       <color name="On" red="0" green="255" blue="0">
       </color>
     </background_color>
+    <precision>2</precision>
     <horizontal_alignment>1</horizontal_alignment>
     <vertical_alignment>1</vertical_alignment>
   </widget>
@@ -111,7 +112,7 @@
   </widget>
   <widget type="textupdate" version="2.0.0">
     <name>Text Update_2</name>
-    <pv_name>pva://TMC43-TS-IOC-01:CURRENT</pv_name>
+    <pv_name>SR-DI-DCCT-01:SIGNAL</pv_name>
     <x>900</x>
     <y>150</y>
     <width>350</width>
@@ -124,6 +125,7 @@
       <color name="On" red="0" green="255" blue="0">
       </color>
     </background_color>
+    <precision>2</precision>
     <horizontal_alignment>1</horizontal_alignment>
     <vertical_alignment>1</vertical_alignment>
   </widget>
@@ -305,7 +307,7 @@
   </widget>
   <widget type="textupdate" version="2.0.0">
     <name>Text Update_7</name>
-    <pv_name>ca://FE02I-PS-SHTR-01:STA</pv_name>
+    <pv_name>FE02I-PS-SHTR-01:STA</pv_name>
     <x>600</x>
     <y>260</y>
     <width>150</width>
@@ -329,45 +331,14 @@
             </color>
           </value>
         </exp>
-        <pv_name>FE06I-PS-SHTR-01:STA</pv_name>
-      </rule>
-    </rules>
-    <border_width>1</border_width>
-  </widget>
-  <widget type="textupdate" version="2.0.0">
-    <name>Text Update_9</name>
-    <pv_name>pva://TMC06I-OP-SHTR-02:STA</pv_name>
-    <x>770</x>
-    <y>260</y>
-    <width>230</width>
-    <height>40</height>
-    <font>
-      <font family="Liberation Sans" style="BOLD" size="28.0">
-      </font>
-    </font>
-    <background_color>
-      <color name="STOP" red="255" green="0" blue="0">
-      </color>
-    </background_color>
-    <precision>2</precision>
-    <horizontal_alignment>1</horizontal_alignment>
-    <vertical_alignment>1</vertical_alignment>
-    <rules>
-      <rule name="alarm" prop_id="background_color" out_exp="false">
-        <exp bool_exp="pv0==1">
-          <value>
-            <color name="On" red="0" green="255" blue="0">
-            </color>
-          </value>
-        </exp>
-        <pv_name>FE06I-PS-SHTR-02:STA</pv_name>
+        <pv_name>FE02I-PS-SHTR-01:STA</pv_name>
       </rule>
     </rules>
     <border_width>1</border_width>
   </widget>
   <widget type="textupdate" version="2.0.0">
     <name>Text Update_10</name>
-    <pv_name>pva://TMC06I-BL-SHTR-01:STA</pv_name>
+    <pv_name>BL02I-PS-SHTR-01:STA</pv_name>
     <x>1020</x>
     <y>260</y>
     <width>230</width>
@@ -391,7 +362,7 @@
             </color>
           </value>
         </exp>
-        <pv_name>BL06I-PS-SHTR-01:STA</pv_name>
+        <pv_name>BL02I-PS-SHTR-01:STA</pv_name>
       </rule>
     </rules>
     <border_width>1</border_width>
@@ -435,99 +406,6 @@
     <vertical_alignment>1</vertical_alignment>
     <border_width>1</border_width>
   </widget>
-  <widget type="textupdate" version="2.0.0">
-    <name>Text Update_15</name>
-    <pv_name>pva://TMC06I-PS-SHTR-01:STA</pv_name>
-    <x>600</x>
-    <y>300</y>
-    <width>150</width>
-    <height>40</height>
-    <font>
-      <font family="Liberation Sans" style="BOLD" size="28.0">
-      </font>
-    </font>
-    <background_color>
-      <color name="STOP" red="255" green="0" blue="0">
-      </color>
-    </background_color>
-    <precision>2</precision>
-    <horizontal_alignment>1</horizontal_alignment>
-    <vertical_alignment>1</vertical_alignment>
-    <rules>
-      <rule name="alarm" prop_id="background_color" out_exp="false">
-        <exp bool_exp="pv0==1">
-          <value>
-            <color name="On" red="0" green="255" blue="0">
-            </color>
-          </value>
-        </exp>
-        <pv_name>FE06I-PS-SHTR-01:STA</pv_name>
-      </rule>
-    </rules>
-    <border_width>1</border_width>
-  </widget>
-  <widget type="textupdate" version="2.0.0">
-    <name>Text Update_16</name>
-    <pv_name>pva://TMC06I-OP-SHTR-02:STA</pv_name>
-    <x>770</x>
-    <y>300</y>
-    <width>230</width>
-    <height>40</height>
-    <font>
-      <font family="Liberation Sans" style="BOLD" size="28.0">
-      </font>
-    </font>
-    <background_color>
-      <color name="STOP" red="255" green="0" blue="0">
-      </color>
-    </background_color>
-    <precision>2</precision>
-    <horizontal_alignment>1</horizontal_alignment>
-    <vertical_alignment>1</vertical_alignment>
-    <rules>
-      <rule name="alarm" prop_id="background_color" out_exp="false">
-        <exp bool_exp="pv0==1">
-          <value>
-            <color name="On" red="0" green="255" blue="0">
-            </color>
-          </value>
-        </exp>
-        <pv_name>FE06I-PS-SHTR-02:STA</pv_name>
-      </rule>
-    </rules>
-    <border_width>1</border_width>
-  </widget>
-  <widget type="textupdate" version="2.0.0">
-    <name>Text Update_17</name>
-    <pv_name>pva://TMC06I-BL-SHTR-01:STA</pv_name>
-    <x>1020</x>
-    <y>300</y>
-    <width>230</width>
-    <height>40</height>
-    <font>
-      <font family="Liberation Sans" style="BOLD" size="28.0">
-      </font>
-    </font>
-    <background_color>
-      <color name="STOP" red="255" green="0" blue="0">
-      </color>
-    </background_color>
-    <precision>2</precision>
-    <horizontal_alignment>1</horizontal_alignment>
-    <vertical_alignment>1</vertical_alignment>
-    <rules>
-      <rule name="alarm" prop_id="background_color" out_exp="false">
-        <exp bool_exp="pv0==1">
-          <value>
-            <color name="On" red="0" green="255" blue="0">
-            </color>
-          </value>
-        </exp>
-        <pv_name>BL06I-PS-SHTR-01:STA</pv_name>
-      </rule>
-    </rules>
-    <border_width>1</border_width>
-  </widget>
   <widget type="label" version="2.0.0">
     <name>Label_11</name>
     <text>I03</text>
@@ -565,99 +443,6 @@
     <precision>1</precision>
     <horizontal_alignment>1</horizontal_alignment>
     <vertical_alignment>1</vertical_alignment>
-    <border_width>1</border_width>
-  </widget>
-  <widget type="textupdate" version="2.0.0">
-    <name>Text Update_23</name>
-    <pv_name>pva://TMC06I-PS-SHTR-01:STA</pv_name>
-    <x>600</x>
-    <y>340</y>
-    <width>150</width>
-    <height>40</height>
-    <font>
-      <font family="Liberation Sans" style="BOLD" size="28.0">
-      </font>
-    </font>
-    <background_color>
-      <color name="STOP" red="255" green="0" blue="0">
-      </color>
-    </background_color>
-    <precision>2</precision>
-    <horizontal_alignment>1</horizontal_alignment>
-    <vertical_alignment>1</vertical_alignment>
-    <rules>
-      <rule name="alarm" prop_id="background_color" out_exp="false">
-        <exp bool_exp="pv0==1">
-          <value>
-            <color name="On" red="0" green="255" blue="0">
-            </color>
-          </value>
-        </exp>
-        <pv_name>FE06I-PS-SHTR-01:STA</pv_name>
-      </rule>
-    </rules>
-    <border_width>1</border_width>
-  </widget>
-  <widget type="textupdate" version="2.0.0">
-    <name>Text Update_24</name>
-    <pv_name>pva://TMC06I-OP-SHTR-02:STA</pv_name>
-    <x>770</x>
-    <y>340</y>
-    <width>230</width>
-    <height>40</height>
-    <font>
-      <font family="Liberation Sans" style="BOLD" size="28.0">
-      </font>
-    </font>
-    <background_color>
-      <color name="STOP" red="255" green="0" blue="0">
-      </color>
-    </background_color>
-    <precision>2</precision>
-    <horizontal_alignment>1</horizontal_alignment>
-    <vertical_alignment>1</vertical_alignment>
-    <rules>
-      <rule name="alarm" prop_id="background_color" out_exp="false">
-        <exp bool_exp="pv0==1">
-          <value>
-            <color name="On" red="0" green="255" blue="0">
-            </color>
-          </value>
-        </exp>
-        <pv_name>FE06I-PS-SHTR-02:STA</pv_name>
-      </rule>
-    </rules>
-    <border_width>1</border_width>
-  </widget>
-  <widget type="textupdate" version="2.0.0">
-    <name>Text Update_25</name>
-    <pv_name>pva://TMC06I-BL-SHTR-01:STA</pv_name>
-    <x>1020</x>
-    <y>340</y>
-    <width>230</width>
-    <height>40</height>
-    <font>
-      <font family="Liberation Sans" style="BOLD" size="28.0">
-      </font>
-    </font>
-    <background_color>
-      <color name="STOP" red="255" green="0" blue="0">
-      </color>
-    </background_color>
-    <precision>2</precision>
-    <horizontal_alignment>1</horizontal_alignment>
-    <vertical_alignment>1</vertical_alignment>
-    <rules>
-      <rule name="alarm" prop_id="background_color" out_exp="false">
-        <exp bool_exp="pv0==1">
-          <value>
-            <color name="On" red="0" green="255" blue="0">
-            </color>
-          </value>
-        </exp>
-        <pv_name>BL06I-PS-SHTR-01:STA</pv_name>
-      </rule>
-    </rules>
     <border_width>1</border_width>
   </widget>
   <widget type="label" version="2.0.0">
@@ -699,99 +484,6 @@
     <vertical_alignment>1</vertical_alignment>
     <border_width>1</border_width>
   </widget>
-  <widget type="textupdate" version="2.0.0">
-    <name>Text Update_39</name>
-    <pv_name>pva://TMC06I-PS-SHTR-01:STA</pv_name>
-    <x>600</x>
-    <y>380</y>
-    <width>150</width>
-    <height>40</height>
-    <font>
-      <font family="Liberation Sans" style="BOLD" size="28.0">
-      </font>
-    </font>
-    <background_color>
-      <color name="STOP" red="255" green="0" blue="0">
-      </color>
-    </background_color>
-    <precision>2</precision>
-    <horizontal_alignment>1</horizontal_alignment>
-    <vertical_alignment>1</vertical_alignment>
-    <rules>
-      <rule name="alarm" prop_id="background_color" out_exp="false">
-        <exp bool_exp="pv0==1">
-          <value>
-            <color name="On" red="0" green="255" blue="0">
-            </color>
-          </value>
-        </exp>
-        <pv_name>FE06I-PS-SHTR-01:STA</pv_name>
-      </rule>
-    </rules>
-    <border_width>1</border_width>
-  </widget>
-  <widget type="textupdate" version="2.0.0">
-    <name>Text Update_40</name>
-    <pv_name>pva://TMC06I-OP-SHTR-02:STA</pv_name>
-    <x>770</x>
-    <y>380</y>
-    <width>115</width>
-    <height>40</height>
-    <font>
-      <font family="Liberation Sans" style="BOLD" size="28.0">
-      </font>
-    </font>
-    <background_color>
-      <color name="STOP" red="255" green="0" blue="0">
-      </color>
-    </background_color>
-    <precision>2</precision>
-    <horizontal_alignment>1</horizontal_alignment>
-    <vertical_alignment>1</vertical_alignment>
-    <rules>
-      <rule name="alarm" prop_id="background_color" out_exp="false">
-        <exp bool_exp="pv0==1">
-          <value>
-            <color name="On" red="0" green="255" blue="0">
-            </color>
-          </value>
-        </exp>
-        <pv_name>FE06I-PS-SHTR-02:STA</pv_name>
-      </rule>
-    </rules>
-    <border_width>1</border_width>
-  </widget>
-  <widget type="textupdate" version="2.0.0">
-    <name>Text Update_41</name>
-    <pv_name>pva://TMC06I-BL-SHTR-01:STA</pv_name>
-    <x>1020</x>
-    <y>380</y>
-    <width>230</width>
-    <height>40</height>
-    <font>
-      <font family="Liberation Sans" style="BOLD" size="28.0">
-      </font>
-    </font>
-    <background_color>
-      <color name="STOP" red="255" green="0" blue="0">
-      </color>
-    </background_color>
-    <precision>2</precision>
-    <horizontal_alignment>1</horizontal_alignment>
-    <vertical_alignment>1</vertical_alignment>
-    <rules>
-      <rule name="alarm" prop_id="background_color" out_exp="false">
-        <exp bool_exp="pv0==1">
-          <value>
-            <color name="On" red="0" green="255" blue="0">
-            </color>
-          </value>
-        </exp>
-        <pv_name>BL06I-PS-SHTR-01:STA</pv_name>
-      </rule>
-    </rules>
-    <border_width>1</border_width>
-  </widget>
   <widget type="label" version="2.0.0">
     <name>Label_14</name>
     <text>J04</text>
@@ -831,68 +523,6 @@
     <vertical_alignment>1</vertical_alignment>
     <border_width>1</border_width>
   </widget>
-  <widget type="textupdate" version="2.0.0">
-    <name>Text Update_47</name>
-    <pv_name>pva://TMC06I-PS-SHTR-01:STA</pv_name>
-    <x>600</x>
-    <y>420</y>
-    <width>150</width>
-    <height>40</height>
-    <font>
-      <font family="Liberation Sans" style="BOLD" size="28.0">
-      </font>
-    </font>
-    <background_color>
-      <color name="STOP" red="255" green="0" blue="0">
-      </color>
-    </background_color>
-    <precision>2</precision>
-    <horizontal_alignment>1</horizontal_alignment>
-    <vertical_alignment>1</vertical_alignment>
-    <rules>
-      <rule name="alarm" prop_id="background_color" out_exp="false">
-        <exp bool_exp="pv0==1">
-          <value>
-            <color name="On" red="0" green="255" blue="0">
-            </color>
-          </value>
-        </exp>
-        <pv_name>FE06I-PS-SHTR-01:STA</pv_name>
-      </rule>
-    </rules>
-    <border_width>1</border_width>
-  </widget>
-  <widget type="textupdate" version="2.0.0">
-    <name>Text Update_49</name>
-    <pv_name>pva://TMC06I-BL-SHTR-01:STA</pv_name>
-    <x>1020</x>
-    <y>420</y>
-    <width>230</width>
-    <height>40</height>
-    <font>
-      <font family="Liberation Sans" style="BOLD" size="28.0">
-      </font>
-    </font>
-    <background_color>
-      <color name="STOP" red="255" green="0" blue="0">
-      </color>
-    </background_color>
-    <precision>2</precision>
-    <horizontal_alignment>1</horizontal_alignment>
-    <vertical_alignment>1</vertical_alignment>
-    <rules>
-      <rule name="alarm" prop_id="background_color" out_exp="false">
-        <exp bool_exp="pv0==1">
-          <value>
-            <color name="On" red="0" green="255" blue="0">
-            </color>
-          </value>
-        </exp>
-        <pv_name>BL06I-PS-SHTR-01:STA</pv_name>
-      </rule>
-    </rules>
-    <border_width>1</border_width>
-  </widget>
   <widget type="label" version="2.0.0">
     <name>Label_15</name>
     <text>I05</text>
@@ -930,99 +560,6 @@
     <precision>1</precision>
     <horizontal_alignment>1</horizontal_alignment>
     <vertical_alignment>1</vertical_alignment>
-    <border_width>1</border_width>
-  </widget>
-  <widget type="textupdate" version="2.0.0">
-    <name>Text Update_55</name>
-    <pv_name>pva://TMC06I-PS-SHTR-01:STA</pv_name>
-    <x>600</x>
-    <y>460</y>
-    <width>150</width>
-    <height>40</height>
-    <font>
-      <font family="Liberation Sans" style="BOLD" size="28.0">
-      </font>
-    </font>
-    <background_color>
-      <color name="STOP" red="255" green="0" blue="0">
-      </color>
-    </background_color>
-    <precision>2</precision>
-    <horizontal_alignment>1</horizontal_alignment>
-    <vertical_alignment>1</vertical_alignment>
-    <rules>
-      <rule name="alarm" prop_id="background_color" out_exp="false">
-        <exp bool_exp="pv0==1">
-          <value>
-            <color name="On" red="0" green="255" blue="0">
-            </color>
-          </value>
-        </exp>
-        <pv_name>FE06I-PS-SHTR-01:STA</pv_name>
-      </rule>
-    </rules>
-    <border_width>1</border_width>
-  </widget>
-  <widget type="textupdate" version="2.0.0">
-    <name>Text Update_56</name>
-    <pv_name>pva://TMC06I-OP-SHTR-02:STA</pv_name>
-    <x>770</x>
-    <y>460</y>
-    <width>230</width>
-    <height>40</height>
-    <font>
-      <font family="Liberation Sans" style="BOLD" size="28.0">
-      </font>
-    </font>
-    <background_color>
-      <color name="STOP" red="255" green="0" blue="0">
-      </color>
-    </background_color>
-    <precision>2</precision>
-    <horizontal_alignment>1</horizontal_alignment>
-    <vertical_alignment>1</vertical_alignment>
-    <rules>
-      <rule name="alarm" prop_id="background_color" out_exp="false">
-        <exp bool_exp="pv0==1">
-          <value>
-            <color name="On" red="0" green="255" blue="0">
-            </color>
-          </value>
-        </exp>
-        <pv_name>FE06I-PS-SHTR-02:STA</pv_name>
-      </rule>
-    </rules>
-    <border_width>1</border_width>
-  </widget>
-  <widget type="textupdate" version="2.0.0">
-    <name>Text Update_57</name>
-    <pv_name>pva://TMC06I-BL-SHTR-01:STA</pv_name>
-    <x>1020</x>
-    <y>460</y>
-    <width>230</width>
-    <height>40</height>
-    <font>
-      <font family="Liberation Sans" style="BOLD" size="28.0">
-      </font>
-    </font>
-    <background_color>
-      <color name="STOP" red="255" green="0" blue="0">
-      </color>
-    </background_color>
-    <precision>2</precision>
-    <horizontal_alignment>1</horizontal_alignment>
-    <vertical_alignment>1</vertical_alignment>
-    <rules>
-      <rule name="alarm" prop_id="background_color" out_exp="false">
-        <exp bool_exp="pv0==1">
-          <value>
-            <color name="On" red="0" green="255" blue="0">
-            </color>
-          </value>
-        </exp>
-        <pv_name>BL06I-PS-SHTR-01:STA</pv_name>
-      </rule>
-    </rules>
     <border_width>1</border_width>
   </widget>
   <widget type="label" version="2.0.0">
@@ -1103,130 +640,6 @@
     <vertical_alignment>1</vertical_alignment>
     <border_width>1</border_width>
   </widget>
-  <widget type="textupdate" version="2.0.0">
-    <name>Text Update_63</name>
-    <pv_name>pva://TMC06I-PS-SHTR-01:STA</pv_name>
-    <x>600</x>
-    <y>500</y>
-    <width>150</width>
-    <height>40</height>
-    <font>
-      <font family="Liberation Sans" style="BOLD" size="28.0">
-      </font>
-    </font>
-    <background_color>
-      <color name="STOP" red="255" green="0" blue="0">
-      </color>
-    </background_color>
-    <precision>2</precision>
-    <horizontal_alignment>1</horizontal_alignment>
-    <vertical_alignment>1</vertical_alignment>
-    <rules>
-      <rule name="alarm" prop_id="background_color" out_exp="false">
-        <exp bool_exp="pv0==1">
-          <value>
-            <color name="On" red="0" green="255" blue="0">
-            </color>
-          </value>
-        </exp>
-        <pv_name>FE06I-PS-SHTR-01:STA</pv_name>
-      </rule>
-    </rules>
-    <border_width>1</border_width>
-  </widget>
-  <widget type="textupdate" version="2.0.0">
-    <name>Text Update_64</name>
-    <pv_name>pva://TMC06I-OP-SHTR-02:STA</pv_name>
-    <x>770</x>
-    <y>500</y>
-    <width>230</width>
-    <height>40</height>
-    <font>
-      <font family="Liberation Sans" style="BOLD" size="28.0">
-      </font>
-    </font>
-    <background_color>
-      <color name="STOP" red="255" green="0" blue="0">
-      </color>
-    </background_color>
-    <precision>2</precision>
-    <horizontal_alignment>1</horizontal_alignment>
-    <vertical_alignment>1</vertical_alignment>
-    <rules>
-      <rule name="alarm" prop_id="background_color" out_exp="false">
-        <exp bool_exp="pv0==1">
-          <value>
-            <color name="On" red="0" green="255" blue="0">
-            </color>
-          </value>
-        </exp>
-        <pv_name>FE06I-PS-SHTR-02:STA</pv_name>
-      </rule>
-    </rules>
-    <border_width>1</border_width>
-  </widget>
-  <widget type="textupdate" version="2.0.0">
-    <name>Text Update_65</name>
-    <pv_name>pva://TMC06I-BL-SHTR-01:STA</pv_name>
-    <x>1020</x>
-    <y>500</y>
-    <width>115</width>
-    <height>40</height>
-    <font>
-      <font family="Liberation Sans" style="BOLD" size="28.0">
-      </font>
-    </font>
-    <background_color>
-      <color name="STOP" red="255" green="0" blue="0">
-      </color>
-    </background_color>
-    <precision>2</precision>
-    <horizontal_alignment>1</horizontal_alignment>
-    <vertical_alignment>1</vertical_alignment>
-    <rules>
-      <rule name="alarm" prop_id="background_color" out_exp="false">
-        <exp bool_exp="pv0==1">
-          <value>
-            <color name="On" red="0" green="255" blue="0">
-            </color>
-          </value>
-        </exp>
-        <pv_name>BL06I-PS-SHTR-01:STA</pv_name>
-      </rule>
-    </rules>
-    <border_width>1</border_width>
-  </widget>
-  <widget type="textupdate" version="2.0.0">
-    <name>Text Update_66</name>
-    <pv_name>pva://TMC06J-BL-SHTR-01:STA</pv_name>
-    <x>1135</x>
-    <y>500</y>
-    <width>115</width>
-    <height>40</height>
-    <font>
-      <font family="Liberation Sans" style="BOLD" size="28.0">
-      </font>
-    </font>
-    <background_color>
-      <color name="STOP" red="255" green="0" blue="0">
-      </color>
-    </background_color>
-    <precision>2</precision>
-    <horizontal_alignment>1</horizontal_alignment>
-    <vertical_alignment>1</vertical_alignment>
-    <rules>
-      <rule name="alarm" prop_id="background_color" out_exp="false">
-        <exp bool_exp="pv0==1">
-          <value>
-            <color name="On" red="0" green="255" blue="0">
-            </color>
-          </value>
-        </exp>
-        <pv_name>BL06J-PS-SHTR-01:STA</pv_name>
-      </rule>
-    </rules>
-    <border_width>1</border_width>
-  </widget>
   <widget type="label" version="2.0.0">
     <name>Label_17</name>
     <text>I07</text>
@@ -1266,99 +679,6 @@
     <vertical_alignment>1</vertical_alignment>
     <border_width>1</border_width>
   </widget>
-  <widget type="textupdate" version="2.0.0">
-    <name>Text Update_71</name>
-    <pv_name>pva://TMC06I-PS-SHTR-01:STA</pv_name>
-    <x>600</x>
-    <y>540</y>
-    <width>150</width>
-    <height>40</height>
-    <font>
-      <font family="Liberation Sans" style="BOLD" size="28.0">
-      </font>
-    </font>
-    <background_color>
-      <color name="STOP" red="255" green="0" blue="0">
-      </color>
-    </background_color>
-    <precision>2</precision>
-    <horizontal_alignment>1</horizontal_alignment>
-    <vertical_alignment>1</vertical_alignment>
-    <rules>
-      <rule name="alarm" prop_id="background_color" out_exp="false">
-        <exp bool_exp="pv0==1">
-          <value>
-            <color name="On" red="0" green="255" blue="0">
-            </color>
-          </value>
-        </exp>
-        <pv_name>FE06I-PS-SHTR-01:STA</pv_name>
-      </rule>
-    </rules>
-    <border_width>1</border_width>
-  </widget>
-  <widget type="textupdate" version="2.0.0">
-    <name>Text Update_72</name>
-    <pv_name>pva://TMC06I-OP-SHTR-02:STA</pv_name>
-    <x>770</x>
-    <y>540</y>
-    <width>230</width>
-    <height>40</height>
-    <font>
-      <font family="Liberation Sans" style="BOLD" size="28.0">
-      </font>
-    </font>
-    <background_color>
-      <color name="STOP" red="255" green="0" blue="0">
-      </color>
-    </background_color>
-    <precision>2</precision>
-    <horizontal_alignment>1</horizontal_alignment>
-    <vertical_alignment>1</vertical_alignment>
-    <rules>
-      <rule name="alarm" prop_id="background_color" out_exp="false">
-        <exp bool_exp="pv0==1">
-          <value>
-            <color name="On" red="0" green="255" blue="0">
-            </color>
-          </value>
-        </exp>
-        <pv_name>FE06I-PS-SHTR-02:STA</pv_name>
-      </rule>
-    </rules>
-    <border_width>1</border_width>
-  </widget>
-  <widget type="textupdate" version="2.0.0">
-    <name>Text Update_73</name>
-    <pv_name>pva://TMC06I-BL-SHTR-01:STA</pv_name>
-    <x>1020</x>
-    <y>540</y>
-    <width>230</width>
-    <height>40</height>
-    <font>
-      <font family="Liberation Sans" style="BOLD" size="28.0">
-      </font>
-    </font>
-    <background_color>
-      <color name="STOP" red="255" green="0" blue="0">
-      </color>
-    </background_color>
-    <precision>2</precision>
-    <horizontal_alignment>1</horizontal_alignment>
-    <vertical_alignment>1</vertical_alignment>
-    <rules>
-      <rule name="alarm" prop_id="background_color" out_exp="false">
-        <exp bool_exp="pv0==1">
-          <value>
-            <color name="On" red="0" green="255" blue="0">
-            </color>
-          </value>
-        </exp>
-        <pv_name>BL06I-PS-SHTR-01:STA</pv_name>
-      </rule>
-    </rules>
-    <border_width>1</border_width>
-  </widget>
   <widget type="label" version="2.0.0">
     <name>Label_18</name>
     <text>B07</text>
@@ -1376,99 +696,6 @@
     <transparent>false</transparent>
     <horizontal_alignment>1</horizontal_alignment>
     <vertical_alignment>1</vertical_alignment>
-    <border_width>1</border_width>
-  </widget>
-  <widget type="textupdate" version="2.0.0">
-    <name>Text Update_79</name>
-    <pv_name>pva://TMC06I-PS-SHTR-01:STA</pv_name>
-    <x>600</x>
-    <y>580</y>
-    <width>150</width>
-    <height>40</height>
-    <font>
-      <font family="Liberation Sans" style="BOLD" size="28.0">
-      </font>
-    </font>
-    <background_color>
-      <color name="STOP" red="255" green="0" blue="0">
-      </color>
-    </background_color>
-    <precision>2</precision>
-    <horizontal_alignment>1</horizontal_alignment>
-    <vertical_alignment>1</vertical_alignment>
-    <rules>
-      <rule name="alarm" prop_id="background_color" out_exp="false">
-        <exp bool_exp="pv0==1">
-          <value>
-            <color name="On" red="0" green="255" blue="0">
-            </color>
-          </value>
-        </exp>
-        <pv_name>FE06I-PS-SHTR-01:STA</pv_name>
-      </rule>
-    </rules>
-    <border_width>1</border_width>
-  </widget>
-  <widget type="textupdate" version="2.0.0">
-    <name>Text Update_80</name>
-    <pv_name>pva://TMC06I-OP-SHTR-02:STA</pv_name>
-    <x>770</x>
-    <y>580</y>
-    <width>230</width>
-    <height>40</height>
-    <font>
-      <font family="Liberation Sans" style="BOLD" size="28.0">
-      </font>
-    </font>
-    <background_color>
-      <color name="STOP" red="255" green="0" blue="0">
-      </color>
-    </background_color>
-    <precision>2</precision>
-    <horizontal_alignment>1</horizontal_alignment>
-    <vertical_alignment>1</vertical_alignment>
-    <rules>
-      <rule name="alarm" prop_id="background_color" out_exp="false">
-        <exp bool_exp="pv0==1">
-          <value>
-            <color name="On" red="0" green="255" blue="0">
-            </color>
-          </value>
-        </exp>
-        <pv_name>FE06I-PS-SHTR-02:STA</pv_name>
-      </rule>
-    </rules>
-    <border_width>1</border_width>
-  </widget>
-  <widget type="textupdate" version="2.0.0">
-    <name>Text Update_81</name>
-    <pv_name>pva://TMC06I-BL-SHTR-01:STA</pv_name>
-    <x>1020</x>
-    <y>580</y>
-    <width>230</width>
-    <height>40</height>
-    <font>
-      <font family="Liberation Sans" style="BOLD" size="28.0">
-      </font>
-    </font>
-    <background_color>
-      <color name="STOP" red="255" green="0" blue="0">
-      </color>
-    </background_color>
-    <precision>2</precision>
-    <horizontal_alignment>1</horizontal_alignment>
-    <vertical_alignment>1</vertical_alignment>
-    <rules>
-      <rule name="alarm" prop_id="background_color" out_exp="false">
-        <exp bool_exp="pv0==1">
-          <value>
-            <color name="On" red="0" green="255" blue="0">
-            </color>
-          </value>
-        </exp>
-        <pv_name>BL06I-PS-SHTR-01:STA</pv_name>
-      </rule>
-    </rules>
     <border_width>1</border_width>
   </widget>
   <widget type="label" version="2.0.0">
@@ -1510,99 +737,6 @@
     <vertical_alignment>1</vertical_alignment>
     <border_width>1</border_width>
   </widget>
-  <widget type="textupdate" version="2.0.0">
-    <name>Text Update_87</name>
-    <pv_name>pva://TMC06I-PS-SHTR-01:STA</pv_name>
-    <x>600</x>
-    <y>620</y>
-    <width>150</width>
-    <height>40</height>
-    <font>
-      <font family="Liberation Sans" style="BOLD" size="28.0">
-      </font>
-    </font>
-    <background_color>
-      <color name="STOP" red="255" green="0" blue="0">
-      </color>
-    </background_color>
-    <precision>2</precision>
-    <horizontal_alignment>1</horizontal_alignment>
-    <vertical_alignment>1</vertical_alignment>
-    <rules>
-      <rule name="alarm" prop_id="background_color" out_exp="false">
-        <exp bool_exp="pv0==1">
-          <value>
-            <color name="On" red="0" green="255" blue="0">
-            </color>
-          </value>
-        </exp>
-        <pv_name>FE06I-PS-SHTR-01:STA</pv_name>
-      </rule>
-    </rules>
-    <border_width>1</border_width>
-  </widget>
-  <widget type="textupdate" version="2.0.0">
-    <name>Text Update_88</name>
-    <pv_name>pva://TMC06I-OP-SHTR-02:STA</pv_name>
-    <x>770</x>
-    <y>620</y>
-    <width>230</width>
-    <height>40</height>
-    <font>
-      <font family="Liberation Sans" style="BOLD" size="28.0">
-      </font>
-    </font>
-    <background_color>
-      <color name="STOP" red="255" green="0" blue="0">
-      </color>
-    </background_color>
-    <precision>2</precision>
-    <horizontal_alignment>1</horizontal_alignment>
-    <vertical_alignment>1</vertical_alignment>
-    <rules>
-      <rule name="alarm" prop_id="background_color" out_exp="false">
-        <exp bool_exp="pv0==1">
-          <value>
-            <color name="On" red="0" green="255" blue="0">
-            </color>
-          </value>
-        </exp>
-        <pv_name>FE06I-PS-SHTR-02:STA</pv_name>
-      </rule>
-    </rules>
-    <border_width>1</border_width>
-  </widget>
-  <widget type="textupdate" version="2.0.0">
-    <name>Text Update_89</name>
-    <pv_name>pva://TMC06I-BL-SHTR-01:STA</pv_name>
-    <x>1020</x>
-    <y>620</y>
-    <width>230</width>
-    <height>40</height>
-    <font>
-      <font family="Liberation Sans" style="BOLD" size="28.0">
-      </font>
-    </font>
-    <background_color>
-      <color name="STOP" red="255" green="0" blue="0">
-      </color>
-    </background_color>
-    <precision>2</precision>
-    <horizontal_alignment>1</horizontal_alignment>
-    <vertical_alignment>1</vertical_alignment>
-    <rules>
-      <rule name="alarm" prop_id="background_color" out_exp="false">
-        <exp bool_exp="pv0==1">
-          <value>
-            <color name="On" red="0" green="255" blue="0">
-            </color>
-          </value>
-        </exp>
-        <pv_name>BL06I-PS-SHTR-01:STA</pv_name>
-      </rule>
-    </rules>
-    <border_width>1</border_width>
-  </widget>
   <widget type="label" version="2.0.0">
     <name>Label_20</name>
     <text>J09</text>
@@ -1640,99 +774,6 @@
     <precision>1</precision>
     <horizontal_alignment>1</horizontal_alignment>
     <vertical_alignment>1</vertical_alignment>
-    <border_width>1</border_width>
-  </widget>
-  <widget type="textupdate" version="2.0.0">
-    <name>Text Update_95</name>
-    <pv_name>pva://TMC06I-PS-SHTR-01:STA</pv_name>
-    <x>600</x>
-    <y>700</y>
-    <width>150</width>
-    <height>40</height>
-    <font>
-      <font family="Liberation Sans" style="BOLD" size="28.0">
-      </font>
-    </font>
-    <background_color>
-      <color name="STOP" red="255" green="0" blue="0">
-      </color>
-    </background_color>
-    <precision>2</precision>
-    <horizontal_alignment>1</horizontal_alignment>
-    <vertical_alignment>1</vertical_alignment>
-    <rules>
-      <rule name="alarm" prop_id="background_color" out_exp="false">
-        <exp bool_exp="pv0==1">
-          <value>
-            <color name="On" red="0" green="255" blue="0">
-            </color>
-          </value>
-        </exp>
-        <pv_name>FE06I-PS-SHTR-01:STA</pv_name>
-      </rule>
-    </rules>
-    <border_width>1</border_width>
-  </widget>
-  <widget type="textupdate" version="2.0.0">
-    <name>Text Update_96</name>
-    <pv_name>pva://TMC06I-OP-SHTR-02:STA</pv_name>
-    <x>770</x>
-    <y>700</y>
-    <width>230</width>
-    <height>40</height>
-    <font>
-      <font family="Liberation Sans" style="BOLD" size="28.0">
-      </font>
-    </font>
-    <background_color>
-      <color name="STOP" red="255" green="0" blue="0">
-      </color>
-    </background_color>
-    <precision>2</precision>
-    <horizontal_alignment>1</horizontal_alignment>
-    <vertical_alignment>1</vertical_alignment>
-    <rules>
-      <rule name="alarm" prop_id="background_color" out_exp="false">
-        <exp bool_exp="pv0==1">
-          <value>
-            <color name="On" red="0" green="255" blue="0">
-            </color>
-          </value>
-        </exp>
-        <pv_name>FE06I-PS-SHTR-02:STA</pv_name>
-      </rule>
-    </rules>
-    <border_width>1</border_width>
-  </widget>
-  <widget type="textupdate" version="2.0.0">
-    <name>Text Update_97</name>
-    <pv_name>pva://TMC06I-BL-SHTR-01:STA</pv_name>
-    <x>1020</x>
-    <y>700</y>
-    <width>230</width>
-    <height>40</height>
-    <font>
-      <font family="Liberation Sans" style="BOLD" size="28.0">
-      </font>
-    </font>
-    <background_color>
-      <color name="STOP" red="255" green="0" blue="0">
-      </color>
-    </background_color>
-    <precision>2</precision>
-    <horizontal_alignment>1</horizontal_alignment>
-    <vertical_alignment>1</vertical_alignment>
-    <rules>
-      <rule name="alarm" prop_id="background_color" out_exp="false">
-        <exp bool_exp="pv0==1">
-          <value>
-            <color name="On" red="0" green="255" blue="0">
-            </color>
-          </value>
-        </exp>
-        <pv_name>BL06I-PS-SHTR-01:STA</pv_name>
-      </rule>
-    </rules>
     <border_width>1</border_width>
   </widget>
   <widget type="label" version="2.0.0">
@@ -1794,130 +835,6 @@
     <vertical_alignment>1</vertical_alignment>
     <border_width>1</border_width>
   </widget>
-  <widget type="textupdate" version="2.0.0">
-    <name>Text Update_103</name>
-    <pv_name>pva://TMC06I-PS-SHTR-01:STA</pv_name>
-    <x>600</x>
-    <y>740</y>
-    <width>150</width>
-    <height>40</height>
-    <font>
-      <font family="Liberation Sans" style="BOLD" size="28.0">
-      </font>
-    </font>
-    <background_color>
-      <color name="STOP" red="255" green="0" blue="0">
-      </color>
-    </background_color>
-    <precision>2</precision>
-    <horizontal_alignment>1</horizontal_alignment>
-    <vertical_alignment>1</vertical_alignment>
-    <rules>
-      <rule name="alarm" prop_id="background_color" out_exp="false">
-        <exp bool_exp="pv0==1">
-          <value>
-            <color name="On" red="0" green="255" blue="0">
-            </color>
-          </value>
-        </exp>
-        <pv_name>FE06I-PS-SHTR-01:STA</pv_name>
-      </rule>
-    </rules>
-    <border_width>1</border_width>
-  </widget>
-  <widget type="textupdate" version="2.0.0">
-    <name>Text Update_104</name>
-    <pv_name>pva://TMC06I-OP-SHTR-02:STA</pv_name>
-    <x>770</x>
-    <y>740</y>
-    <width>230</width>
-    <height>40</height>
-    <font>
-      <font family="Liberation Sans" style="BOLD" size="28.0">
-      </font>
-    </font>
-    <background_color>
-      <color name="STOP" red="255" green="0" blue="0">
-      </color>
-    </background_color>
-    <precision>2</precision>
-    <horizontal_alignment>1</horizontal_alignment>
-    <vertical_alignment>1</vertical_alignment>
-    <rules>
-      <rule name="alarm" prop_id="background_color" out_exp="false">
-        <exp bool_exp="pv0==1">
-          <value>
-            <color name="On" red="0" green="255" blue="0">
-            </color>
-          </value>
-        </exp>
-        <pv_name>FE06I-PS-SHTR-02:STA</pv_name>
-      </rule>
-    </rules>
-    <border_width>1</border_width>
-  </widget>
-  <widget type="textupdate" version="2.0.0">
-    <name>Text Update_105</name>
-    <pv_name>pva://TMC06I-BL-SHTR-01:STA</pv_name>
-    <x>1020</x>
-    <y>740</y>
-    <width>115</width>
-    <height>40</height>
-    <font>
-      <font family="Liberation Sans" style="BOLD" size="28.0">
-      </font>
-    </font>
-    <background_color>
-      <color name="STOP" red="255" green="0" blue="0">
-      </color>
-    </background_color>
-    <precision>2</precision>
-    <horizontal_alignment>1</horizontal_alignment>
-    <vertical_alignment>1</vertical_alignment>
-    <rules>
-      <rule name="alarm" prop_id="background_color" out_exp="false">
-        <exp bool_exp="pv0==1">
-          <value>
-            <color name="On" red="0" green="255" blue="0">
-            </color>
-          </value>
-        </exp>
-        <pv_name>BL06I-PS-SHTR-01:STA</pv_name>
-      </rule>
-    </rules>
-    <border_width>1</border_width>
-  </widget>
-  <widget type="textupdate" version="2.0.0">
-    <name>Text Update_106</name>
-    <pv_name>pva://TMC06J-BL-SHTR-01:STA</pv_name>
-    <x>1135</x>
-    <y>740</y>
-    <width>115</width>
-    <height>40</height>
-    <font>
-      <font family="Liberation Sans" style="BOLD" size="28.0">
-      </font>
-    </font>
-    <background_color>
-      <color name="STOP" red="255" green="0" blue="0">
-      </color>
-    </background_color>
-    <precision>2</precision>
-    <horizontal_alignment>1</horizontal_alignment>
-    <vertical_alignment>1</vertical_alignment>
-    <rules>
-      <rule name="alarm" prop_id="background_color" out_exp="false">
-        <exp bool_exp="pv0==1">
-          <value>
-            <color name="On" red="0" green="255" blue="0">
-            </color>
-          </value>
-        </exp>
-        <pv_name>BL06J-PS-SHTR-01:STA</pv_name>
-      </rule>
-    </rules>
-    <border_width>1</border_width>
-  </widget>
   <widget type="label" version="2.0.0">
     <name>Label_22</name>
     <text>I11</text>
@@ -1955,99 +872,6 @@
     <precision>1</precision>
     <horizontal_alignment>1</horizontal_alignment>
     <vertical_alignment>1</vertical_alignment>
-    <border_width>1</border_width>
-  </widget>
-  <widget type="textupdate" version="2.0.0">
-    <name>Text Update_111</name>
-    <pv_name>pva://TMC06I-PS-SHTR-01:STA</pv_name>
-    <x>600</x>
-    <y>780</y>
-    <width>150</width>
-    <height>40</height>
-    <font>
-      <font family="Liberation Sans" style="BOLD" size="28.0">
-      </font>
-    </font>
-    <background_color>
-      <color name="STOP" red="255" green="0" blue="0">
-      </color>
-    </background_color>
-    <precision>2</precision>
-    <horizontal_alignment>1</horizontal_alignment>
-    <vertical_alignment>1</vertical_alignment>
-    <rules>
-      <rule name="alarm" prop_id="background_color" out_exp="false">
-        <exp bool_exp="pv0==1">
-          <value>
-            <color name="On" red="0" green="255" blue="0">
-            </color>
-          </value>
-        </exp>
-        <pv_name>FE06I-PS-SHTR-01:STA</pv_name>
-      </rule>
-    </rules>
-    <border_width>1</border_width>
-  </widget>
-  <widget type="textupdate" version="2.0.0">
-    <name>Text Update_112</name>
-    <pv_name>pva://TMC06I-OP-SHTR-02:STA</pv_name>
-    <x>770</x>
-    <y>780</y>
-    <width>230</width>
-    <height>40</height>
-    <font>
-      <font family="Liberation Sans" style="BOLD" size="28.0">
-      </font>
-    </font>
-    <background_color>
-      <color name="STOP" red="255" green="0" blue="0">
-      </color>
-    </background_color>
-    <precision>2</precision>
-    <horizontal_alignment>1</horizontal_alignment>
-    <vertical_alignment>1</vertical_alignment>
-    <rules>
-      <rule name="alarm" prop_id="background_color" out_exp="false">
-        <exp bool_exp="pv0==1">
-          <value>
-            <color name="On" red="0" green="255" blue="0">
-            </color>
-          </value>
-        </exp>
-        <pv_name>FE06I-PS-SHTR-02:STA</pv_name>
-      </rule>
-    </rules>
-    <border_width>1</border_width>
-  </widget>
-  <widget type="textupdate" version="2.0.0">
-    <name>Text Update_113</name>
-    <pv_name>pva://TMC06I-BL-SHTR-01:STA</pv_name>
-    <x>1020</x>
-    <y>780</y>
-    <width>230</width>
-    <height>40</height>
-    <font>
-      <font family="Liberation Sans" style="BOLD" size="28.0">
-      </font>
-    </font>
-    <background_color>
-      <color name="STOP" red="255" green="0" blue="0">
-      </color>
-    </background_color>
-    <precision>2</precision>
-    <horizontal_alignment>1</horizontal_alignment>
-    <vertical_alignment>1</vertical_alignment>
-    <rules>
-      <rule name="alarm" prop_id="background_color" out_exp="false">
-        <exp bool_exp="pv0==1">
-          <value>
-            <color name="On" red="0" green="255" blue="0">
-            </color>
-          </value>
-        </exp>
-        <pv_name>BL06I-PS-SHTR-01:STA</pv_name>
-      </rule>
-    </rules>
     <border_width>1</border_width>
   </widget>
   <widget type="label" version="2.0.0">
@@ -2089,99 +913,6 @@
     <vertical_alignment>1</vertical_alignment>
     <border_width>1</border_width>
   </widget>
-  <widget type="textupdate" version="2.0.0">
-    <name>Text Update_119</name>
-    <pv_name>pva://TMC06I-PS-SHTR-01:STA</pv_name>
-    <x>600</x>
-    <y>820</y>
-    <width>150</width>
-    <height>40</height>
-    <font>
-      <font family="Liberation Sans" style="BOLD" size="28.0">
-      </font>
-    </font>
-    <background_color>
-      <color name="STOP" red="255" green="0" blue="0">
-      </color>
-    </background_color>
-    <precision>2</precision>
-    <horizontal_alignment>1</horizontal_alignment>
-    <vertical_alignment>1</vertical_alignment>
-    <rules>
-      <rule name="alarm" prop_id="background_color" out_exp="false">
-        <exp bool_exp="pv0==1">
-          <value>
-            <color name="On" red="0" green="255" blue="0">
-            </color>
-          </value>
-        </exp>
-        <pv_name>FE06I-PS-SHTR-01:STA</pv_name>
-      </rule>
-    </rules>
-    <border_width>1</border_width>
-  </widget>
-  <widget type="textupdate" version="2.0.0">
-    <name>Text Update_120</name>
-    <pv_name>pva://TMC06I-OP-SHTR-02:STA</pv_name>
-    <x>770</x>
-    <y>820</y>
-    <width>230</width>
-    <height>40</height>
-    <font>
-      <font family="Liberation Sans" style="BOLD" size="28.0">
-      </font>
-    </font>
-    <background_color>
-      <color name="STOP" red="255" green="0" blue="0">
-      </color>
-    </background_color>
-    <precision>2</precision>
-    <horizontal_alignment>1</horizontal_alignment>
-    <vertical_alignment>1</vertical_alignment>
-    <rules>
-      <rule name="alarm" prop_id="background_color" out_exp="false">
-        <exp bool_exp="pv0==1">
-          <value>
-            <color name="On" red="0" green="255" blue="0">
-            </color>
-          </value>
-        </exp>
-        <pv_name>FE06I-PS-SHTR-02:STA</pv_name>
-      </rule>
-    </rules>
-    <border_width>1</border_width>
-  </widget>
-  <widget type="textupdate" version="2.0.0">
-    <name>Text Update_121</name>
-    <pv_name>pva://TMC06I-BL-SHTR-01:STA</pv_name>
-    <x>1020</x>
-    <y>820</y>
-    <width>230</width>
-    <height>40</height>
-    <font>
-      <font family="Liberation Sans" style="BOLD" size="28.0">
-      </font>
-    </font>
-    <background_color>
-      <color name="STOP" red="255" green="0" blue="0">
-      </color>
-    </background_color>
-    <precision>2</precision>
-    <horizontal_alignment>1</horizontal_alignment>
-    <vertical_alignment>1</vertical_alignment>
-    <rules>
-      <rule name="alarm" prop_id="background_color" out_exp="false">
-        <exp bool_exp="pv0==1">
-          <value>
-            <color name="On" red="0" green="255" blue="0">
-            </color>
-          </value>
-        </exp>
-        <pv_name>BL06I-PS-SHTR-01:STA</pv_name>
-      </rule>
-    </rules>
-    <border_width>1</border_width>
-  </widget>
   <widget type="label" version="2.0.0">
     <name>Label_24</name>
     <text>I12</text>
@@ -2219,99 +950,6 @@
     <precision>1</precision>
     <horizontal_alignment>1</horizontal_alignment>
     <vertical_alignment>1</vertical_alignment>
-    <border_width>1</border_width>
-  </widget>
-  <widget type="textupdate" version="2.0.0">
-    <name>Text Update_127</name>
-    <pv_name>pva://TMC06I-PS-SHTR-01:STA</pv_name>
-    <x>600</x>
-    <y>860</y>
-    <width>150</width>
-    <height>40</height>
-    <font>
-      <font family="Liberation Sans" style="BOLD" size="28.0">
-      </font>
-    </font>
-    <background_color>
-      <color name="STOP" red="255" green="0" blue="0">
-      </color>
-    </background_color>
-    <precision>2</precision>
-    <horizontal_alignment>1</horizontal_alignment>
-    <vertical_alignment>1</vertical_alignment>
-    <rules>
-      <rule name="alarm" prop_id="background_color" out_exp="false">
-        <exp bool_exp="pv0==1">
-          <value>
-            <color name="On" red="0" green="255" blue="0">
-            </color>
-          </value>
-        </exp>
-        <pv_name>FE06I-PS-SHTR-01:STA</pv_name>
-      </rule>
-    </rules>
-    <border_width>1</border_width>
-  </widget>
-  <widget type="textupdate" version="2.0.0">
-    <name>Text Update_128</name>
-    <pv_name>pva://TMC06I-OP-SHTR-02:STA</pv_name>
-    <x>770</x>
-    <y>860</y>
-    <width>230</width>
-    <height>40</height>
-    <font>
-      <font family="Liberation Sans" style="BOLD" size="28.0">
-      </font>
-    </font>
-    <background_color>
-      <color name="STOP" red="255" green="0" blue="0">
-      </color>
-    </background_color>
-    <precision>2</precision>
-    <horizontal_alignment>1</horizontal_alignment>
-    <vertical_alignment>1</vertical_alignment>
-    <rules>
-      <rule name="alarm" prop_id="background_color" out_exp="false">
-        <exp bool_exp="pv0==1">
-          <value>
-            <color name="On" red="0" green="255" blue="0">
-            </color>
-          </value>
-        </exp>
-        <pv_name>FE06I-PS-SHTR-02:STA</pv_name>
-      </rule>
-    </rules>
-    <border_width>1</border_width>
-  </widget>
-  <widget type="textupdate" version="2.0.0">
-    <name>Text Update_129</name>
-    <pv_name>pva://TMC06I-BL-SHTR-01:STA</pv_name>
-    <x>1020</x>
-    <y>860</y>
-    <width>230</width>
-    <height>40</height>
-    <font>
-      <font family="Liberation Sans" style="BOLD" size="28.0">
-      </font>
-    </font>
-    <background_color>
-      <color name="STOP" red="255" green="0" blue="0">
-      </color>
-    </background_color>
-    <precision>2</precision>
-    <horizontal_alignment>1</horizontal_alignment>
-    <vertical_alignment>1</vertical_alignment>
-    <rules>
-      <rule name="alarm" prop_id="background_color" out_exp="false">
-        <exp bool_exp="pv0==1">
-          <value>
-            <color name="On" red="0" green="255" blue="0">
-            </color>
-          </value>
-        </exp>
-        <pv_name>BL06I-PS-SHTR-01:STA</pv_name>
-      </rule>
-    </rules>
     <border_width>1</border_width>
   </widget>
   <widget type="label" version="2.0.0">
@@ -2353,68 +991,6 @@
     <vertical_alignment>1</vertical_alignment>
     <border_width>1</border_width>
   </widget>
-  <widget type="textupdate" version="2.0.0">
-    <name>Text Update_135</name>
-    <pv_name>pva://TMC06I-PS-SHTR-01:STA</pv_name>
-    <x>600</x>
-    <y>900</y>
-    <width>150</width>
-    <height>40</height>
-    <font>
-      <font family="Liberation Sans" style="BOLD" size="28.0">
-      </font>
-    </font>
-    <background_color>
-      <color name="STOP" red="255" green="0" blue="0">
-      </color>
-    </background_color>
-    <precision>2</precision>
-    <horizontal_alignment>1</horizontal_alignment>
-    <vertical_alignment>1</vertical_alignment>
-    <rules>
-      <rule name="alarm" prop_id="background_color" out_exp="false">
-        <exp bool_exp="pv0==1">
-          <value>
-            <color name="On" red="0" green="255" blue="0">
-            </color>
-          </value>
-        </exp>
-        <pv_name>FE06I-PS-SHTR-01:STA</pv_name>
-      </rule>
-    </rules>
-    <border_width>1</border_width>
-  </widget>
-  <widget type="textupdate" version="2.0.0">
-    <name>Text Update_137</name>
-    <pv_name>pva://TMC06I-BL-SHTR-01:STA</pv_name>
-    <x>1020</x>
-    <y>900</y>
-    <width>230</width>
-    <height>40</height>
-    <font>
-      <font family="Liberation Sans" style="BOLD" size="28.0">
-      </font>
-    </font>
-    <background_color>
-      <color name="STOP" red="255" green="0" blue="0">
-      </color>
-    </background_color>
-    <precision>2</precision>
-    <horizontal_alignment>1</horizontal_alignment>
-    <vertical_alignment>1</vertical_alignment>
-    <rules>
-      <rule name="alarm" prop_id="background_color" out_exp="false">
-        <exp bool_exp="pv0==1">
-          <value>
-            <color name="On" red="0" green="255" blue="0">
-            </color>
-          </value>
-        </exp>
-        <pv_name>BL06I-PS-SHTR-01:STA</pv_name>
-      </rule>
-    </rules>
-    <border_width>1</border_width>
-  </widget>
   <widget type="label" version="2.0.0">
     <name>Label_26</name>
     <text>J13</text>
@@ -2432,68 +1008,6 @@
     <transparent>false</transparent>
     <horizontal_alignment>1</horizontal_alignment>
     <vertical_alignment>1</vertical_alignment>
-    <border_width>1</border_width>
-  </widget>
-  <widget type="textupdate" version="2.0.0">
-    <name>Text Update_143</name>
-    <pv_name>pva://TMC06I-PS-SHTR-01:STA</pv_name>
-    <x>600</x>
-    <y>940</y>
-    <width>150</width>
-    <height>40</height>
-    <font>
-      <font family="Liberation Sans" style="BOLD" size="28.0">
-      </font>
-    </font>
-    <background_color>
-      <color name="STOP" red="255" green="0" blue="0">
-      </color>
-    </background_color>
-    <precision>2</precision>
-    <horizontal_alignment>1</horizontal_alignment>
-    <vertical_alignment>1</vertical_alignment>
-    <rules>
-      <rule name="alarm" prop_id="background_color" out_exp="false">
-        <exp bool_exp="pv0==1">
-          <value>
-            <color name="On" red="0" green="255" blue="0">
-            </color>
-          </value>
-        </exp>
-        <pv_name>FE06I-PS-SHTR-01:STA</pv_name>
-      </rule>
-    </rules>
-    <border_width>1</border_width>
-  </widget>
-  <widget type="textupdate" version="2.0.0">
-    <name>Text Update_145</name>
-    <pv_name>pva://TMC06I-BL-SHTR-01:STA</pv_name>
-    <x>1020</x>
-    <y>940</y>
-    <width>230</width>
-    <height>40</height>
-    <font>
-      <font family="Liberation Sans" style="BOLD" size="28.0">
-      </font>
-    </font>
-    <background_color>
-      <color name="STOP" red="255" green="0" blue="0">
-      </color>
-    </background_color>
-    <precision>2</precision>
-    <horizontal_alignment>1</horizontal_alignment>
-    <vertical_alignment>1</vertical_alignment>
-    <rules>
-      <rule name="alarm" prop_id="background_color" out_exp="false">
-        <exp bool_exp="pv0==1">
-          <value>
-            <color name="On" red="0" green="255" blue="0">
-            </color>
-          </value>
-        </exp>
-        <pv_name>BL06I-PS-SHTR-01:STA</pv_name>
-      </rule>
-    </rules>
     <border_width>1</border_width>
   </widget>
   <widget type="label" version="2.0.0">
@@ -2536,163 +1050,8 @@
     <border_width>1</border_width>
   </widget>
   <widget type="textupdate" version="2.0.0">
-    <name>Text Update_151</name>
-    <pv_name>pva://TMC06I-PS-SHTR-01:STA</pv_name>
-    <x>600</x>
-    <y>980</y>
-    <width>150</width>
-    <height>40</height>
-    <font>
-      <font family="Liberation Sans" style="BOLD" size="28.0">
-      </font>
-    </font>
-    <background_color>
-      <color name="STOP" red="255" green="0" blue="0">
-      </color>
-    </background_color>
-    <precision>2</precision>
-    <horizontal_alignment>1</horizontal_alignment>
-    <vertical_alignment>1</vertical_alignment>
-    <rules>
-      <rule name="alarm" prop_id="background_color" out_exp="false">
-        <exp bool_exp="pv0==1">
-          <value>
-            <color name="On" red="0" green="255" blue="0">
-            </color>
-          </value>
-        </exp>
-        <pv_name>FE06I-PS-SHTR-01:STA</pv_name>
-      </rule>
-    </rules>
-    <border_width>1</border_width>
-  </widget>
-  <widget type="textupdate" version="2.0.0">
-    <name>Text Update_152</name>
-    <pv_name>pva://TMC06I-OP-SHTR-02:STA</pv_name>
-    <x>770</x>
-    <y>980</y>
-    <width>230</width>
-    <height>40</height>
-    <font>
-      <font family="Liberation Sans" style="BOLD" size="28.0">
-      </font>
-    </font>
-    <background_color>
-      <color name="STOP" red="255" green="0" blue="0">
-      </color>
-    </background_color>
-    <precision>2</precision>
-    <horizontal_alignment>1</horizontal_alignment>
-    <vertical_alignment>1</vertical_alignment>
-    <rules>
-      <rule name="alarm" prop_id="background_color" out_exp="false">
-        <exp bool_exp="pv0==1">
-          <value>
-            <color name="On" red="0" green="255" blue="0">
-            </color>
-          </value>
-        </exp>
-        <pv_name>FE06I-PS-SHTR-02:STA</pv_name>
-      </rule>
-    </rules>
-    <border_width>1</border_width>
-  </widget>
-  <widget type="textupdate" version="2.0.0">
-    <name>Text Update_153</name>
-    <pv_name>pva://TMC06I-BL-SHTR-01:STA</pv_name>
-    <x>1020</x>
-    <y>980</y>
-    <width>230</width>
-    <height>40</height>
-    <font>
-      <font family="Liberation Sans" style="BOLD" size="28.0">
-      </font>
-    </font>
-    <background_color>
-      <color name="STOP" red="255" green="0" blue="0">
-      </color>
-    </background_color>
-    <precision>2</precision>
-    <horizontal_alignment>1</horizontal_alignment>
-    <vertical_alignment>1</vertical_alignment>
-    <rules>
-      <rule name="alarm" prop_id="background_color" out_exp="false">
-        <exp bool_exp="pv0==1">
-          <value>
-            <color name="On" red="0" green="255" blue="0">
-            </color>
-          </value>
-        </exp>
-        <pv_name>BL06I-PS-SHTR-01:STA</pv_name>
-      </rule>
-    </rules>
-    <border_width>1</border_width>
-  </widget>
-  <widget type="textupdate" version="2.0.0">
-    <name>Text Update_155</name>
-    <pv_name>pva://TMC06I-OP-SHTR-02:STA</pv_name>
-    <x>885</x>
-    <y>380</y>
-    <width>115</width>
-    <height>40</height>
-    <font>
-      <font family="Liberation Sans" style="BOLD" size="28.0">
-      </font>
-    </font>
-    <background_color>
-      <color name="STOP" red="255" green="0" blue="0">
-      </color>
-    </background_color>
-    <precision>2</precision>
-    <horizontal_alignment>1</horizontal_alignment>
-    <vertical_alignment>1</vertical_alignment>
-    <rules>
-      <rule name="alarm" prop_id="background_color" out_exp="false">
-        <exp bool_exp="pv0==1">
-          <value>
-            <color name="On" red="0" green="255" blue="0">
-            </color>
-          </value>
-        </exp>
-        <pv_name>FE06I-PS-SHTR-02:STA</pv_name>
-      </rule>
-    </rules>
-    <border_width>1</border_width>
-  </widget>
-  <widget type="textupdate" version="2.0.0">
-    <name>Text Update_156</name>
-    <pv_name>pva://TMC06I-OP-SHTR-02:STA</pv_name>
-    <x>885</x>
-    <y>420</y>
-    <width>115</width>
-    <height>40</height>
-    <font>
-      <font family="Liberation Sans" style="BOLD" size="28.0">
-      </font>
-    </font>
-    <background_color>
-      <color name="STOP" red="255" green="0" blue="0">
-      </color>
-    </background_color>
-    <precision>2</precision>
-    <horizontal_alignment>1</horizontal_alignment>
-    <vertical_alignment>1</vertical_alignment>
-    <rules>
-      <rule name="alarm" prop_id="background_color" out_exp="false">
-        <exp bool_exp="pv0==1">
-          <value>
-            <color name="On" red="0" green="255" blue="0">
-            </color>
-          </value>
-        </exp>
-        <pv_name>FE06I-PS-SHTR-02:STA</pv_name>
-      </rule>
-    </rules>
-    <border_width>1</border_width>
-  </widget>
-  <widget type="textupdate" version="2.0.0">
     <name>Text Update_157</name>
-    <pv_name>pva://TMC06I-OP-SHTR-02:STA</pv_name>
+    <pv_name>FE04I-PS-SHTR-02:STA</pv_name>
     <x>770</x>
     <y>420</y>
     <width>115</width>
@@ -2716,131 +1075,7 @@
             </color>
           </value>
         </exp>
-        <pv_name>FE06I-PS-SHTR-02:STA</pv_name>
-      </rule>
-    </rules>
-    <border_width>1</border_width>
-  </widget>
-  <widget type="textupdate" version="2.0.0">
-    <name>Text Update_158</name>
-    <pv_name>pva://TMC06I-OP-SHTR-02:STA</pv_name>
-    <x>885</x>
-    <y>900</y>
-    <width>115</width>
-    <height>40</height>
-    <font>
-      <font family="Liberation Sans" style="BOLD" size="28.0">
-      </font>
-    </font>
-    <background_color>
-      <color name="STOP" red="255" green="0" blue="0">
-      </color>
-    </background_color>
-    <precision>2</precision>
-    <horizontal_alignment>1</horizontal_alignment>
-    <vertical_alignment>1</vertical_alignment>
-    <rules>
-      <rule name="alarm" prop_id="background_color" out_exp="false">
-        <exp bool_exp="pv0==1">
-          <value>
-            <color name="On" red="0" green="255" blue="0">
-            </color>
-          </value>
-        </exp>
-        <pv_name>FE06I-PS-SHTR-02:STA</pv_name>
-      </rule>
-    </rules>
-    <border_width>1</border_width>
-  </widget>
-  <widget type="textupdate" version="2.0.0">
-    <name>Text Update_159</name>
-    <pv_name>pva://TMC06I-OP-SHTR-02:STA</pv_name>
-    <x>885</x>
-    <y>940</y>
-    <width>115</width>
-    <height>40</height>
-    <font>
-      <font family="Liberation Sans" style="BOLD" size="28.0">
-      </font>
-    </font>
-    <background_color>
-      <color name="STOP" red="255" green="0" blue="0">
-      </color>
-    </background_color>
-    <precision>2</precision>
-    <horizontal_alignment>1</horizontal_alignment>
-    <vertical_alignment>1</vertical_alignment>
-    <rules>
-      <rule name="alarm" prop_id="background_color" out_exp="false">
-        <exp bool_exp="pv0==1">
-          <value>
-            <color name="On" red="0" green="255" blue="0">
-            </color>
-          </value>
-        </exp>
-        <pv_name>FE06I-PS-SHTR-02:STA</pv_name>
-      </rule>
-    </rules>
-    <border_width>1</border_width>
-  </widget>
-  <widget type="textupdate" version="2.0.0">
-    <name>Text Update_160</name>
-    <pv_name>pva://TMC06I-OP-SHTR-02:STA</pv_name>
-    <x>770</x>
-    <y>940</y>
-    <width>115</width>
-    <height>40</height>
-    <font>
-      <font family="Liberation Sans" style="BOLD" size="28.0">
-      </font>
-    </font>
-    <background_color>
-      <color name="STOP" red="255" green="0" blue="0">
-      </color>
-    </background_color>
-    <precision>2</precision>
-    <horizontal_alignment>1</horizontal_alignment>
-    <vertical_alignment>1</vertical_alignment>
-    <rules>
-      <rule name="alarm" prop_id="background_color" out_exp="false">
-        <exp bool_exp="pv0==1">
-          <value>
-            <color name="On" red="0" green="255" blue="0">
-            </color>
-          </value>
-        </exp>
-        <pv_name>FE06I-PS-SHTR-02:STA</pv_name>
-      </rule>
-    </rules>
-    <border_width>1</border_width>
-  </widget>
-  <widget type="textupdate" version="2.0.0">
-    <name>Text Update_161</name>
-    <pv_name>pva://TMC06I-OP-SHTR-02:STA</pv_name>
-    <x>770</x>
-    <y>900</y>
-    <width>115</width>
-    <height>40</height>
-    <font>
-      <font family="Liberation Sans" style="BOLD" size="28.0">
-      </font>
-    </font>
-    <background_color>
-      <color name="STOP" red="255" green="0" blue="0">
-      </color>
-    </background_color>
-    <precision>2</precision>
-    <horizontal_alignment>1</horizontal_alignment>
-    <vertical_alignment>1</vertical_alignment>
-    <rules>
-      <rule name="alarm" prop_id="background_color" out_exp="false">
-        <exp bool_exp="pv0==1">
-          <value>
-            <color name="On" red="0" green="255" blue="0">
-            </color>
-          </value>
-        </exp>
-        <pv_name>FE06I-PS-SHTR-02:STA</pv_name>
+        <pv_name>FE04I-PS-SHTR-02:STA</pv_name>
       </rule>
     </rules>
     <border_width>1</border_width>
@@ -3282,99 +1517,6 @@
     <border_width>1</border_width>
   </widget>
   <widget type="textupdate" version="2.0.0">
-    <name>Text Update_171</name>
-    <pv_name>pva://TMC06I-PS-SHTR-01:STA</pv_name>
-    <x>600</x>
-    <y>660</y>
-    <width>150</width>
-    <height>40</height>
-    <font>
-      <font family="Liberation Sans" style="BOLD" size="28.0">
-      </font>
-    </font>
-    <background_color>
-      <color name="STOP" red="255" green="0" blue="0">
-      </color>
-    </background_color>
-    <precision>2</precision>
-    <horizontal_alignment>1</horizontal_alignment>
-    <vertical_alignment>1</vertical_alignment>
-    <rules>
-      <rule name="alarm" prop_id="background_color" out_exp="false">
-        <exp bool_exp="pv0==1">
-          <value>
-            <color name="On" red="0" green="255" blue="0">
-            </color>
-          </value>
-        </exp>
-        <pv_name>FE06I-PS-SHTR-01:STA</pv_name>
-      </rule>
-    </rules>
-    <border_width>1</border_width>
-  </widget>
-  <widget type="textupdate" version="2.0.0">
-    <name>Text Update_172</name>
-    <pv_name>pva://TMC06I-OP-SHTR-02:STA</pv_name>
-    <x>770</x>
-    <y>660</y>
-    <width>230</width>
-    <height>40</height>
-    <font>
-      <font family="Liberation Sans" style="BOLD" size="28.0">
-      </font>
-    </font>
-    <background_color>
-      <color name="STOP" red="255" green="0" blue="0">
-      </color>
-    </background_color>
-    <precision>2</precision>
-    <horizontal_alignment>1</horizontal_alignment>
-    <vertical_alignment>1</vertical_alignment>
-    <rules>
-      <rule name="alarm" prop_id="background_color" out_exp="false">
-        <exp bool_exp="pv0==1">
-          <value>
-            <color name="On" red="0" green="255" blue="0">
-            </color>
-          </value>
-        </exp>
-        <pv_name>FE06I-PS-SHTR-02:STA</pv_name>
-      </rule>
-    </rules>
-    <border_width>1</border_width>
-  </widget>
-  <widget type="textupdate" version="2.0.0">
-    <name>Text Update_173</name>
-    <pv_name>pva://TMC06I-BL-SHTR-01:STA</pv_name>
-    <x>1020</x>
-    <y>660</y>
-    <width>230</width>
-    <height>40</height>
-    <font>
-      <font family="Liberation Sans" style="BOLD" size="28.0">
-      </font>
-    </font>
-    <background_color>
-      <color name="STOP" red="255" green="0" blue="0">
-      </color>
-    </background_color>
-    <precision>2</precision>
-    <horizontal_alignment>1</horizontal_alignment>
-    <vertical_alignment>1</vertical_alignment>
-    <rules>
-      <rule name="alarm" prop_id="background_color" out_exp="false">
-        <exp bool_exp="pv0==1">
-          <value>
-            <color name="On" red="0" green="255" blue="0">
-            </color>
-          </value>
-        </exp>
-        <pv_name>BL06I-PS-SHTR-01:STA</pv_name>
-      </rule>
-    </rules>
-    <border_width>1</border_width>
-  </widget>
-  <widget type="textupdate" version="2.0.0">
     <name>Text Update_174</name>
     <pv_name>SR07B-MO-SERVC-01:CURRGAPD</pv_name>
     <x>140</x>
@@ -3412,6 +1554,1866 @@
     <precision>2</precision>
     <horizontal_alignment>1</horizontal_alignment>
     <vertical_alignment>1</vertical_alignment>
+    <border_width>1</border_width>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_176</name>
+    <pv_name>FE02J-PS-SHTR-01:STA</pv_name>
+    <x>600</x>
+    <y>300</y>
+    <width>150</width>
+    <height>40</height>
+    <font>
+      <font family="Liberation Sans" style="BOLD" size="28.0">
+      </font>
+    </font>
+    <background_color>
+      <color name="STOP" red="255" green="0" blue="0">
+      </color>
+    </background_color>
+    <precision>2</precision>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <rules>
+      <rule name="alarm" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0==1">
+          <value>
+            <color name="On" red="0" green="255" blue="0">
+            </color>
+          </value>
+        </exp>
+        <pv_name>FE02J-PS-SHTR-01:STA</pv_name>
+      </rule>
+    </rules>
+    <border_width>1</border_width>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_177</name>
+    <pv_name>FE03I-PS-SHTR-01:STA</pv_name>
+    <x>600</x>
+    <y>340</y>
+    <width>150</width>
+    <height>40</height>
+    <font>
+      <font family="Liberation Sans" style="BOLD" size="28.0">
+      </font>
+    </font>
+    <background_color>
+      <color name="STOP" red="255" green="0" blue="0">
+      </color>
+    </background_color>
+    <precision>2</precision>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <rules>
+      <rule name="alarm" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0==1">
+          <value>
+            <color name="On" red="0" green="255" blue="0">
+            </color>
+          </value>
+        </exp>
+        <pv_name>FE03I-PS-SHTR-01:STA</pv_name>
+      </rule>
+    </rules>
+    <border_width>1</border_width>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_178</name>
+    <pv_name>FE04I-PS-SHTR-01:STA</pv_name>
+    <x>600</x>
+    <y>380</y>
+    <width>150</width>
+    <height>40</height>
+    <font>
+      <font family="Liberation Sans" style="BOLD" size="28.0">
+      </font>
+    </font>
+    <background_color>
+      <color name="STOP" red="255" green="0" blue="0">
+      </color>
+    </background_color>
+    <precision>2</precision>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <rules>
+      <rule name="alarm" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0==1">
+          <value>
+            <color name="On" red="0" green="255" blue="0">
+            </color>
+          </value>
+        </exp>
+        <pv_name>FE04I-PS-SHTR-01:STA</pv_name>
+      </rule>
+    </rules>
+    <border_width>1</border_width>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_179</name>
+    <pv_name>FE05I-PS-SHTR-01:STA</pv_name>
+    <x>600</x>
+    <y>460</y>
+    <width>150</width>
+    <height>40</height>
+    <font>
+      <font family="Liberation Sans" style="BOLD" size="28.0">
+      </font>
+    </font>
+    <background_color>
+      <color name="STOP" red="255" green="0" blue="0">
+      </color>
+    </background_color>
+    <precision>2</precision>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <rules>
+      <rule name="alarm" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0==1">
+          <value>
+            <color name="On" red="0" green="255" blue="0">
+            </color>
+          </value>
+        </exp>
+        <pv_name>FE05I-PS-SHTR-01:STA</pv_name>
+      </rule>
+    </rules>
+    <border_width>1</border_width>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_180</name>
+    <pv_name>FE06I-PS-SHTR-01:STA</pv_name>
+    <x>600</x>
+    <y>500</y>
+    <width>150</width>
+    <height>40</height>
+    <font>
+      <font family="Liberation Sans" style="BOLD" size="28.0">
+      </font>
+    </font>
+    <background_color>
+      <color name="STOP" red="255" green="0" blue="0">
+      </color>
+    </background_color>
+    <precision>2</precision>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <rules>
+      <rule name="alarm" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0==1">
+          <value>
+            <color name="On" red="0" green="255" blue="0">
+            </color>
+          </value>
+        </exp>
+        <pv_name>FE06I-PS-SHTR-01:STA</pv_name>
+      </rule>
+    </rules>
+    <border_width>1</border_width>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_181</name>
+    <pv_name>FE07I-PS-SHTR-01:STA</pv_name>
+    <x>600</x>
+    <y>540</y>
+    <width>150</width>
+    <height>40</height>
+    <font>
+      <font family="Liberation Sans" style="BOLD" size="28.0">
+      </font>
+    </font>
+    <background_color>
+      <color name="STOP" red="255" green="0" blue="0">
+      </color>
+    </background_color>
+    <precision>2</precision>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <rules>
+      <rule name="alarm" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0==1">
+          <value>
+            <color name="On" red="0" green="255" blue="0">
+            </color>
+          </value>
+        </exp>
+        <pv_name>FE07I-PS-SHTR-01:STA</pv_name>
+      </rule>
+    </rules>
+    <border_width>1</border_width>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_182</name>
+    <pv_name>FE04I-PS-SHTR-01:STA</pv_name>
+    <x>600</x>
+    <y>420</y>
+    <width>150</width>
+    <height>40</height>
+    <font>
+      <font family="Liberation Sans" style="BOLD" size="28.0">
+      </font>
+    </font>
+    <background_color>
+      <color name="STOP" red="255" green="0" blue="0">
+      </color>
+    </background_color>
+    <precision>2</precision>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <rules>
+      <rule name="alarm" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0==1">
+          <value>
+            <color name="On" red="0" green="255" blue="0">
+            </color>
+          </value>
+        </exp>
+        <pv_name>FE04I-PS-SHTR-01:STA</pv_name>
+      </rule>
+    </rules>
+    <border_width>1</border_width>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_183</name>
+    <pv_name>FE08I-PS-SHTR-01:STA</pv_name>
+    <x>600</x>
+    <y>620</y>
+    <width>150</width>
+    <height>40</height>
+    <font>
+      <font family="Liberation Sans" style="BOLD" size="28.0">
+      </font>
+    </font>
+    <background_color>
+      <color name="STOP" red="255" green="0" blue="0">
+      </color>
+    </background_color>
+    <precision>2</precision>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <rules>
+      <rule name="alarm" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0==1">
+          <value>
+            <color name="On" red="0" green="255" blue="0">
+            </color>
+          </value>
+        </exp>
+        <pv_name>FE08I-PS-SHTR-01:STA</pv_name>
+      </rule>
+    </rules>
+    <border_width>1</border_width>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_184</name>
+    <pv_name>FE09I-PS-SHTR-01:STA</pv_name>
+    <x>600</x>
+    <y>660</y>
+    <width>150</width>
+    <height>40</height>
+    <font>
+      <font family="Liberation Sans" style="BOLD" size="28.0">
+      </font>
+    </font>
+    <background_color>
+      <color name="STOP" red="255" green="0" blue="0">
+      </color>
+    </background_color>
+    <precision>2</precision>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <rules>
+      <rule name="alarm" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0==1">
+          <value>
+            <color name="On" red="0" green="255" blue="0">
+            </color>
+          </value>
+        </exp>
+        <pv_name>FE09I-PS-SHTR-01:STA</pv_name>
+      </rule>
+    </rules>
+    <border_width>1</border_width>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_185</name>
+    <pv_name>FE09I-PS-SHTR-01:STA</pv_name>
+    <x>600</x>
+    <y>700</y>
+    <width>150</width>
+    <height>40</height>
+    <font>
+      <font family="Liberation Sans" style="BOLD" size="28.0">
+      </font>
+    </font>
+    <background_color>
+      <color name="STOP" red="255" green="0" blue="0">
+      </color>
+    </background_color>
+    <precision>2</precision>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <rules>
+      <rule name="alarm" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0==1">
+          <value>
+            <color name="On" red="0" green="255" blue="0">
+            </color>
+          </value>
+        </exp>
+        <pv_name>FE09I-PS-SHTR-01:STA</pv_name>
+      </rule>
+    </rules>
+    <border_width>1</border_width>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_186</name>
+    <pv_name>FE11I-PS-SHTR-01:STA</pv_name>
+    <x>600</x>
+    <y>780</y>
+    <width>150</width>
+    <height>40</height>
+    <font>
+      <font family="Liberation Sans" style="BOLD" size="28.0">
+      </font>
+    </font>
+    <background_color>
+      <color name="STOP" red="255" green="0" blue="0">
+      </color>
+    </background_color>
+    <precision>2</precision>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <rules>
+      <rule name="alarm" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0==1">
+          <value>
+            <color name="On" red="0" green="255" blue="0">
+            </color>
+          </value>
+        </exp>
+        <pv_name>FE11I-PS-SHTR-01:STA</pv_name>
+      </rule>
+    </rules>
+    <border_width>1</border_width>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_187</name>
+    <pv_name>FE11K-PS-SHTR-01:STA</pv_name>
+    <x>600</x>
+    <y>820</y>
+    <width>150</width>
+    <height>40</height>
+    <font>
+      <font family="Liberation Sans" style="BOLD" size="28.0">
+      </font>
+    </font>
+    <background_color>
+      <color name="STOP" red="255" green="0" blue="0">
+      </color>
+    </background_color>
+    <precision>2</precision>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <rules>
+      <rule name="alarm" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0==1">
+          <value>
+            <color name="On" red="0" green="255" blue="0">
+            </color>
+          </value>
+        </exp>
+        <pv_name>FE11K-PS-SHTR-01:STA</pv_name>
+      </rule>
+    </rules>
+    <border_width>1</border_width>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_188</name>
+    <pv_name>FE12I-PS-SHTR-01:STA</pv_name>
+    <x>600</x>
+    <y>860</y>
+    <width>150</width>
+    <height>40</height>
+    <font>
+      <font family="Liberation Sans" style="BOLD" size="28.0">
+      </font>
+    </font>
+    <background_color>
+      <color name="STOP" red="255" green="0" blue="0">
+      </color>
+    </background_color>
+    <precision>2</precision>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <rules>
+      <rule name="alarm" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0==1">
+          <value>
+            <color name="On" red="0" green="255" blue="0">
+            </color>
+          </value>
+        </exp>
+        <pv_name>FE12I-PS-SHTR-01:STA</pv_name>
+      </rule>
+    </rules>
+    <border_width>1</border_width>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_189</name>
+    <pv_name>FE10I-PS-SHTR-01:STA</pv_name>
+    <x>600</x>
+    <y>740</y>
+    <width>150</width>
+    <height>40</height>
+    <font>
+      <font family="Liberation Sans" style="BOLD" size="28.0">
+      </font>
+    </font>
+    <background_color>
+      <color name="STOP" red="255" green="0" blue="0">
+      </color>
+    </background_color>
+    <precision>2</precision>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <rules>
+      <rule name="alarm" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0==1">
+          <value>
+            <color name="On" red="0" green="255" blue="0">
+            </color>
+          </value>
+        </exp>
+        <pv_name>FE10I-PS-SHTR-01:STA</pv_name>
+      </rule>
+    </rules>
+    <border_width>1</border_width>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_190</name>
+    <pv_name>FE07B-PS-SHTR-01:STA</pv_name>
+    <x>600</x>
+    <y>580</y>
+    <width>150</width>
+    <height>40</height>
+    <font>
+      <font family="Liberation Sans" style="BOLD" size="28.0">
+      </font>
+    </font>
+    <background_color>
+      <color name="STOP" red="255" green="0" blue="0">
+      </color>
+    </background_color>
+    <precision>2</precision>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <rules>
+      <rule name="alarm" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0==1">
+          <value>
+            <color name="On" red="0" green="255" blue="0">
+            </color>
+          </value>
+        </exp>
+        <pv_name>FE07B-PS-SHTR-01:STA</pv_name>
+      </rule>
+    </rules>
+    <border_width>1</border_width>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_191</name>
+    <pv_name>FE13I-PS-SHTR-01:STA</pv_name>
+    <x>600</x>
+    <y>900</y>
+    <width>150</width>
+    <height>40</height>
+    <font>
+      <font family="Liberation Sans" style="BOLD" size="28.0">
+      </font>
+    </font>
+    <background_color>
+      <color name="STOP" red="255" green="0" blue="0">
+      </color>
+    </background_color>
+    <precision>2</precision>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <rules>
+      <rule name="alarm" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0==1">
+          <value>
+            <color name="On" red="0" green="255" blue="0">
+            </color>
+          </value>
+        </exp>
+        <pv_name>FE13I-PS-SHTR-01:STA</pv_name>
+      </rule>
+    </rules>
+    <border_width>1</border_width>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_192</name>
+    <pv_name>FE13I-PS-SHTR-01:STA</pv_name>
+    <x>600</x>
+    <y>940</y>
+    <width>150</width>
+    <height>40</height>
+    <font>
+      <font family="Liberation Sans" style="BOLD" size="28.0">
+      </font>
+    </font>
+    <background_color>
+      <color name="STOP" red="255" green="0" blue="0">
+      </color>
+    </background_color>
+    <precision>2</precision>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <rules>
+      <rule name="alarm" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0==1">
+          <value>
+            <color name="On" red="0" green="255" blue="0">
+            </color>
+          </value>
+        </exp>
+        <pv_name>FE13I-PS-SHTR-01:STA</pv_name>
+      </rule>
+    </rules>
+    <border_width>1</border_width>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_193</name>
+    <pv_name>FE14I-PS-SHTR-01:STA</pv_name>
+    <x>600</x>
+    <y>980</y>
+    <width>150</width>
+    <height>40</height>
+    <font>
+      <font family="Liberation Sans" style="BOLD" size="28.0">
+      </font>
+    </font>
+    <background_color>
+      <color name="STOP" red="255" green="0" blue="0">
+      </color>
+    </background_color>
+    <precision>2</precision>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <rules>
+      <rule name="alarm" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0==1">
+          <value>
+            <color name="On" red="0" green="255" blue="0">
+            </color>
+          </value>
+        </exp>
+        <pv_name>FE14I-PS-SHTR-01:STA</pv_name>
+      </rule>
+    </rules>
+    <border_width>1</border_width>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_195</name>
+    <pv_name>BL04J-PS-SHTR-01:STA</pv_name>
+    <x>885</x>
+    <y>420</y>
+    <width>115</width>
+    <height>40</height>
+    <font>
+      <font family="Liberation Sans" style="BOLD" size="28.0">
+      </font>
+    </font>
+    <background_color>
+      <color name="STOP" red="255" green="0" blue="0">
+      </color>
+    </background_color>
+    <precision>2</precision>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <rules>
+      <rule name="alarm" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0==1">
+          <value>
+            <color name="On" red="0" green="255" blue="0">
+            </color>
+          </value>
+        </exp>
+        <pv_name>BL04J-PS-SHTR-01:STA</pv_name>
+      </rule>
+    </rules>
+    <border_width>1</border_width>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_196</name>
+    <pv_name>FE05I-PS-SHTR-02:STA</pv_name>
+    <x>770</x>
+    <y>460</y>
+    <width>115</width>
+    <height>40</height>
+    <font>
+      <font family="Liberation Sans" style="BOLD" size="28.0">
+      </font>
+    </font>
+    <background_color>
+      <color name="STOP" red="255" green="0" blue="0">
+      </color>
+    </background_color>
+    <precision>2</precision>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <rules>
+      <rule name="alarm" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0==1">
+          <value>
+            <color name="On" red="0" green="255" blue="0">
+            </color>
+          </value>
+        </exp>
+        <pv_name>FE05I-PS-SHTR-02:STA</pv_name>
+      </rule>
+    </rules>
+    <border_width>1</border_width>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_197</name>
+    <pv_name>BL05J-PS-SHTR-01:STA</pv_name>
+    <x>885</x>
+    <y>460</y>
+    <width>115</width>
+    <height>40</height>
+    <font>
+      <font family="Liberation Sans" style="BOLD" size="28.0">
+      </font>
+    </font>
+    <background_color>
+      <color name="STOP" red="255" green="0" blue="0">
+      </color>
+    </background_color>
+    <precision>2</precision>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <rules>
+      <rule name="alarm" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0==1">
+          <value>
+            <color name="On" red="0" green="255" blue="0">
+            </color>
+          </value>
+        </exp>
+        <pv_name>BL05J-PS-SHTR-01:STA</pv_name>
+      </rule>
+    </rules>
+    <border_width>1</border_width>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_198</name>
+    <pv_name>FE13I-PS-SHTR-02:STA</pv_name>
+    <x>770</x>
+    <y>900</y>
+    <width>115</width>
+    <height>40</height>
+    <font>
+      <font family="Liberation Sans" style="BOLD" size="28.0">
+      </font>
+    </font>
+    <background_color>
+      <color name="STOP" red="255" green="0" blue="0">
+      </color>
+    </background_color>
+    <precision>2</precision>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <rules>
+      <rule name="alarm" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0==1">
+          <value>
+            <color name="On" red="0" green="255" blue="0">
+            </color>
+          </value>
+        </exp>
+        <pv_name>FE13I-PS-SHTR-02:STA</pv_name>
+      </rule>
+    </rules>
+    <border_width>1</border_width>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_199</name>
+    <pv_name>BL13I-PS-SHTR-01:STA</pv_name>
+    <x>885</x>
+    <y>900</y>
+    <width>115</width>
+    <height>40</height>
+    <font>
+      <font family="Liberation Sans" style="BOLD" size="28.0">
+      </font>
+    </font>
+    <background_color>
+      <color name="STOP" red="255" green="0" blue="0">
+      </color>
+    </background_color>
+    <precision>2</precision>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <rules>
+      <rule name="alarm" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0==1">
+          <value>
+            <color name="On" red="0" green="255" blue="0">
+            </color>
+          </value>
+        </exp>
+        <pv_name>BL13I-PS-SHTR-02:STA</pv_name>
+      </rule>
+    </rules>
+    <border_width>1</border_width>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_200</name>
+    <pv_name>FE13I-PS-SHTR-02:STA</pv_name>
+    <x>770</x>
+    <y>940</y>
+    <width>115</width>
+    <height>40</height>
+    <font>
+      <font family="Liberation Sans" style="BOLD" size="28.0">
+      </font>
+    </font>
+    <background_color>
+      <color name="STOP" red="255" green="0" blue="0">
+      </color>
+    </background_color>
+    <precision>2</precision>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <rules>
+      <rule name="alarm" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0==1">
+          <value>
+            <color name="On" red="0" green="255" blue="0">
+            </color>
+          </value>
+        </exp>
+        <pv_name>FE13I-PS-SHTR-02:STA</pv_name>
+      </rule>
+    </rules>
+    <border_width>1</border_width>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_201</name>
+    <pv_name>BL13J-PS-SHTR-01:STA</pv_name>
+    <x>885</x>
+    <y>940</y>
+    <width>115</width>
+    <height>40</height>
+    <font>
+      <font family="Liberation Sans" style="BOLD" size="28.0">
+      </font>
+    </font>
+    <background_color>
+      <color name="STOP" red="255" green="0" blue="0">
+      </color>
+    </background_color>
+    <precision>2</precision>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <rules>
+      <rule name="alarm" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0==1">
+          <value>
+            <color name="On" red="0" green="255" blue="0">
+            </color>
+          </value>
+        </exp>
+        <pv_name>BL13J-PS-SHTR-01:STA</pv_name>
+      </rule>
+    </rules>
+    <border_width>1</border_width>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_202</name>
+    <pv_name>FE02I-PS-SHTR-02:STA</pv_name>
+    <x>770</x>
+    <y>260</y>
+    <width>230</width>
+    <height>40</height>
+    <font>
+      <font family="Liberation Sans" style="BOLD" size="28.0">
+      </font>
+    </font>
+    <background_color>
+      <color name="STOP" red="255" green="0" blue="0">
+      </color>
+    </background_color>
+    <precision>2</precision>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <rules>
+      <rule name="alarm" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0==1">
+          <value>
+            <color name="On" red="0" green="255" blue="0">
+            </color>
+          </value>
+        </exp>
+        <pv_name>FE02I-PS-SHTR-02:STA</pv_name>
+      </rule>
+    </rules>
+    <border_width>1</border_width>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_219</name>
+    <pv_name>FE02J-PS-SHTR-02:STA</pv_name>
+    <x>770</x>
+    <y>300</y>
+    <width>230</width>
+    <height>40</height>
+    <font>
+      <font family="Liberation Sans" style="BOLD" size="28.0">
+      </font>
+    </font>
+    <background_color>
+      <color name="STOP" red="255" green="0" blue="0">
+      </color>
+    </background_color>
+    <precision>2</precision>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <rules>
+      <rule name="alarm" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0==1">
+          <value>
+            <color name="On" red="0" green="255" blue="0">
+            </color>
+          </value>
+        </exp>
+        <pv_name>FE02J-PS-SHTR-02:STA</pv_name>
+      </rule>
+    </rules>
+    <border_width>1</border_width>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_220</name>
+    <pv_name>FE03I-PS-SHTR-02:STA</pv_name>
+    <x>770</x>
+    <y>340</y>
+    <width>230</width>
+    <height>40</height>
+    <font>
+      <font family="Liberation Sans" style="BOLD" size="28.0">
+      </font>
+    </font>
+    <background_color>
+      <color name="STOP" red="255" green="0" blue="0">
+      </color>
+    </background_color>
+    <precision>2</precision>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <rules>
+      <rule name="alarm" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0==1">
+          <value>
+            <color name="On" red="0" green="255" blue="0">
+            </color>
+          </value>
+        </exp>
+        <pv_name>FE03I-PS-SHTR-02:STA</pv_name>
+      </rule>
+    </rules>
+    <border_width>1</border_width>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_221</name>
+    <pv_name>FE04I-PS-SHTR-02:STA</pv_name>
+    <x>770</x>
+    <y>380</y>
+    <width>230</width>
+    <height>40</height>
+    <font>
+      <font family="Liberation Sans" style="BOLD" size="28.0">
+      </font>
+    </font>
+    <background_color>
+      <color name="STOP" red="255" green="0" blue="0">
+      </color>
+    </background_color>
+    <precision>2</precision>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <rules>
+      <rule name="alarm" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0==1">
+          <value>
+            <color name="On" red="0" green="255" blue="0">
+            </color>
+          </value>
+        </exp>
+        <pv_name>FE04I-PS-SHTR-02:STA</pv_name>
+      </rule>
+    </rules>
+    <border_width>1</border_width>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_222</name>
+    <pv_name>FE06I-PS-SHTR-02:STA</pv_name>
+    <x>770</x>
+    <y>500</y>
+    <width>230</width>
+    <height>40</height>
+    <font>
+      <font family="Liberation Sans" style="BOLD" size="28.0">
+      </font>
+    </font>
+    <background_color>
+      <color name="STOP" red="255" green="0" blue="0">
+      </color>
+    </background_color>
+    <precision>2</precision>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <rules>
+      <rule name="alarm" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0==1">
+          <value>
+            <color name="On" red="0" green="255" blue="0">
+            </color>
+          </value>
+        </exp>
+        <pv_name>FE06I-PS-SHTR-02:STA</pv_name>
+      </rule>
+    </rules>
+    <border_width>1</border_width>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_223</name>
+    <pv_name>FE07I-PS-SHTR-02:STA</pv_name>
+    <x>770</x>
+    <y>540</y>
+    <width>230</width>
+    <height>40</height>
+    <font>
+      <font family="Liberation Sans" style="BOLD" size="28.0">
+      </font>
+    </font>
+    <background_color>
+      <color name="STOP" red="255" green="0" blue="0">
+      </color>
+    </background_color>
+    <precision>2</precision>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <rules>
+      <rule name="alarm" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0==1">
+          <value>
+            <color name="On" red="0" green="255" blue="0">
+            </color>
+          </value>
+        </exp>
+        <pv_name>FE07I-PS-SHTR-02:STA</pv_name>
+      </rule>
+    </rules>
+    <border_width>1</border_width>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_224</name>
+    <pv_name>FE07B-PS-SHTR-02:STA</pv_name>
+    <x>770</x>
+    <y>580</y>
+    <width>230</width>
+    <height>40</height>
+    <font>
+      <font family="Liberation Sans" style="BOLD" size="28.0">
+      </font>
+    </font>
+    <background_color>
+      <color name="STOP" red="255" green="0" blue="0">
+      </color>
+    </background_color>
+    <precision>2</precision>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <rules>
+      <rule name="alarm" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0==1">
+          <value>
+            <color name="On" red="0" green="255" blue="0">
+            </color>
+          </value>
+        </exp>
+        <pv_name>FE06I-PS-SHTR-02:STA</pv_name>
+      </rule>
+    </rules>
+    <border_width>1</border_width>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_225</name>
+    <pv_name>FE08I-PS-SHTR-02:STA</pv_name>
+    <x>770</x>
+    <y>620</y>
+    <width>230</width>
+    <height>40</height>
+    <font>
+      <font family="Liberation Sans" style="BOLD" size="28.0">
+      </font>
+    </font>
+    <background_color>
+      <color name="STOP" red="255" green="0" blue="0">
+      </color>
+    </background_color>
+    <precision>2</precision>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <rules>
+      <rule name="alarm" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0==1">
+          <value>
+            <color name="On" red="0" green="255" blue="0">
+            </color>
+          </value>
+        </exp>
+        <pv_name>FE08I-PS-SHTR-02:STA</pv_name>
+      </rule>
+    </rules>
+    <border_width>1</border_width>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_226</name>
+    <pv_name>FE09I-PS-SHTR-02:STA</pv_name>
+    <x>770</x>
+    <y>660</y>
+    <width>230</width>
+    <height>40</height>
+    <font>
+      <font family="Liberation Sans" style="BOLD" size="28.0">
+      </font>
+    </font>
+    <background_color>
+      <color name="STOP" red="255" green="0" blue="0">
+      </color>
+    </background_color>
+    <precision>2</precision>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <rules>
+      <rule name="alarm" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0==1">
+          <value>
+            <color name="On" red="0" green="255" blue="0">
+            </color>
+          </value>
+        </exp>
+        <pv_name>FE09I-PS-SHTR-02:STA</pv_name>
+      </rule>
+    </rules>
+    <border_width>1</border_width>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_227</name>
+    <pv_name>FE09I-PS-SHTR-02:STA</pv_name>
+    <x>770</x>
+    <y>700</y>
+    <width>230</width>
+    <height>40</height>
+    <font>
+      <font family="Liberation Sans" style="BOLD" size="28.0">
+      </font>
+    </font>
+    <background_color>
+      <color name="STOP" red="255" green="0" blue="0">
+      </color>
+    </background_color>
+    <precision>2</precision>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <rules>
+      <rule name="alarm" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0==1">
+          <value>
+            <color name="On" red="0" green="255" blue="0">
+            </color>
+          </value>
+        </exp>
+        <pv_name>FE09I-PS-SHTR-02:STA</pv_name>
+      </rule>
+    </rules>
+    <border_width>1</border_width>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_228</name>
+    <pv_name>FE10I-PS-SHTR-02:STA</pv_name>
+    <x>770</x>
+    <y>740</y>
+    <width>230</width>
+    <height>40</height>
+    <font>
+      <font family="Liberation Sans" style="BOLD" size="28.0">
+      </font>
+    </font>
+    <background_color>
+      <color name="STOP" red="255" green="0" blue="0">
+      </color>
+    </background_color>
+    <precision>2</precision>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <rules>
+      <rule name="alarm" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0==1">
+          <value>
+            <color name="On" red="0" green="255" blue="0">
+            </color>
+          </value>
+        </exp>
+        <pv_name>FE10I-PS-SHTR-02:STA</pv_name>
+      </rule>
+    </rules>
+    <border_width>1</border_width>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_229</name>
+    <pv_name>FE11I-PS-SHTR-02:STA</pv_name>
+    <x>770</x>
+    <y>780</y>
+    <width>230</width>
+    <height>40</height>
+    <font>
+      <font family="Liberation Sans" style="BOLD" size="28.0">
+      </font>
+    </font>
+    <background_color>
+      <color name="STOP" red="255" green="0" blue="0">
+      </color>
+    </background_color>
+    <precision>2</precision>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <rules>
+      <rule name="alarm" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0==1">
+          <value>
+            <color name="On" red="0" green="255" blue="0">
+            </color>
+          </value>
+        </exp>
+        <pv_name>FE11I-PS-SHTR-02:STA</pv_name>
+      </rule>
+    </rules>
+    <border_width>1</border_width>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_230</name>
+    <pv_name>FE11K-PS-SHTR-02:STA</pv_name>
+    <x>770</x>
+    <y>820</y>
+    <width>230</width>
+    <height>40</height>
+    <font>
+      <font family="Liberation Sans" style="BOLD" size="28.0">
+      </font>
+    </font>
+    <background_color>
+      <color name="STOP" red="255" green="0" blue="0">
+      </color>
+    </background_color>
+    <precision>2</precision>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <rules>
+      <rule name="alarm" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0==1">
+          <value>
+            <color name="On" red="0" green="255" blue="0">
+            </color>
+          </value>
+        </exp>
+        <pv_name>FE11K-PS-SHTR-02:STA</pv_name>
+      </rule>
+    </rules>
+    <border_width>1</border_width>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_231</name>
+    <pv_name>FE12I-PS-SHTR-02:STA</pv_name>
+    <x>770</x>
+    <y>860</y>
+    <width>230</width>
+    <height>40</height>
+    <font>
+      <font family="Liberation Sans" style="BOLD" size="28.0">
+      </font>
+    </font>
+    <background_color>
+      <color name="STOP" red="255" green="0" blue="0">
+      </color>
+    </background_color>
+    <precision>2</precision>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <rules>
+      <rule name="alarm" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0==1">
+          <value>
+            <color name="On" red="0" green="255" blue="0">
+            </color>
+          </value>
+        </exp>
+        <pv_name>FE12I-PS-SHTR-02:STA</pv_name>
+      </rule>
+    </rules>
+    <border_width>1</border_width>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_232</name>
+    <pv_name>FE14I-PS-SHTR-02:STA</pv_name>
+    <x>770</x>
+    <y>980</y>
+    <width>230</width>
+    <height>40</height>
+    <font>
+      <font family="Liberation Sans" style="BOLD" size="28.0">
+      </font>
+    </font>
+    <background_color>
+      <color name="STOP" red="255" green="0" blue="0">
+      </color>
+    </background_color>
+    <precision>2</precision>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <rules>
+      <rule name="alarm" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0==1">
+          <value>
+            <color name="On" red="0" green="255" blue="0">
+            </color>
+          </value>
+        </exp>
+        <pv_name>FE14I-PS-SHTR-02:STA</pv_name>
+      </rule>
+    </rules>
+    <border_width>1</border_width>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_233</name>
+    <pv_name>BL02J-PS-SHTR-01:STA</pv_name>
+    <x>1020</x>
+    <y>300</y>
+    <width>230</width>
+    <height>40</height>
+    <font>
+      <font family="Liberation Sans" style="BOLD" size="28.0">
+      </font>
+    </font>
+    <background_color>
+      <color name="STOP" red="255" green="0" blue="0">
+      </color>
+    </background_color>
+    <precision>2</precision>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <rules>
+      <rule name="alarm" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0==1">
+          <value>
+            <color name="On" red="0" green="255" blue="0">
+            </color>
+          </value>
+        </exp>
+        <pv_name>BL02J-PS-SHTR-01:STA</pv_name>
+      </rule>
+    </rules>
+    <border_width>1</border_width>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_234</name>
+    <pv_name>BL04I-PS-SHTR-01:STA</pv_name>
+    <x>1020</x>
+    <y>380</y>
+    <width>230</width>
+    <height>40</height>
+    <font>
+      <font family="Liberation Sans" style="BOLD" size="28.0">
+      </font>
+    </font>
+    <background_color>
+      <color name="STOP" red="255" green="0" blue="0">
+      </color>
+    </background_color>
+    <precision>2</precision>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <rules>
+      <rule name="alarm" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0==1">
+          <value>
+            <color name="On" red="0" green="255" blue="0">
+            </color>
+          </value>
+        </exp>
+        <pv_name>BL04I-PS-SHTR-01:STA</pv_name>
+      </rule>
+    </rules>
+    <border_width>1</border_width>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_235</name>
+    <pv_name>BL03I-PS-SHTR-01:STA</pv_name>
+    <x>1020</x>
+    <y>340</y>
+    <width>230</width>
+    <height>40</height>
+    <font>
+      <font family="Liberation Sans" style="BOLD" size="28.0">
+      </font>
+    </font>
+    <background_color>
+      <color name="STOP" red="255" green="0" blue="0">
+      </color>
+    </background_color>
+    <precision>2</precision>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <rules>
+      <rule name="alarm" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0==1">
+          <value>
+            <color name="On" red="0" green="255" blue="0">
+            </color>
+          </value>
+        </exp>
+        <pv_name>BL03I-PS-SHTR-01:STA</pv_name>
+      </rule>
+    </rules>
+    <border_width>1</border_width>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_236</name>
+    <pv_name>BL05I-PS-SHTR-01:STA</pv_name>
+    <x>1020</x>
+    <y>460</y>
+    <width>230</width>
+    <height>40</height>
+    <font>
+      <font family="Liberation Sans" style="BOLD" size="28.0">
+      </font>
+    </font>
+    <background_color>
+      <color name="STOP" red="255" green="0" blue="0">
+      </color>
+    </background_color>
+    <precision>2</precision>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <rules>
+      <rule name="alarm" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0==1">
+          <value>
+            <color name="On" red="0" green="255" blue="0">
+            </color>
+          </value>
+        </exp>
+        <pv_name>BL05I-PS-SHTR-01:STA</pv_name>
+      </rule>
+    </rules>
+    <border_width>1</border_width>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_237</name>
+    <pv_name>BL07I-PS-SHTR-01:STA</pv_name>
+    <x>1020</x>
+    <y>540</y>
+    <width>230</width>
+    <height>40</height>
+    <font>
+      <font family="Liberation Sans" style="BOLD" size="28.0">
+      </font>
+    </font>
+    <background_color>
+      <color name="STOP" red="255" green="0" blue="0">
+      </color>
+    </background_color>
+    <precision>2</precision>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <rules>
+      <rule name="alarm" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0==1">
+          <value>
+            <color name="On" red="0" green="255" blue="0">
+            </color>
+          </value>
+        </exp>
+        <pv_name>BL07I-PS-SHTR-01:STA</pv_name>
+      </rule>
+    </rules>
+    <border_width>1</border_width>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_238</name>
+    <pv_name>BL06I-PS-SHTR-01:STA</pv_name>
+    <x>1020</x>
+    <y>500</y>
+    <width>115</width>
+    <height>40</height>
+    <font>
+      <font family="Liberation Sans" style="BOLD" size="28.0">
+      </font>
+    </font>
+    <background_color>
+      <color name="STOP" red="255" green="0" blue="0">
+      </color>
+    </background_color>
+    <precision>2</precision>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <rules>
+      <rule name="alarm" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0==1">
+          <value>
+            <color name="On" red="0" green="255" blue="0">
+            </color>
+          </value>
+        </exp>
+        <pv_name>BL06I-PS-SHTR-01:STA</pv_name>
+      </rule>
+    </rules>
+    <border_width>1</border_width>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_239</name>
+    <pv_name>BL04J-PS-SHTR-02:STA</pv_name>
+    <x>1020</x>
+    <y>420</y>
+    <width>230</width>
+    <height>40</height>
+    <font>
+      <font family="Liberation Sans" style="BOLD" size="28.0">
+      </font>
+    </font>
+    <background_color>
+      <color name="STOP" red="255" green="0" blue="0">
+      </color>
+    </background_color>
+    <precision>2</precision>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <rules>
+      <rule name="alarm" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0==1">
+          <value>
+            <color name="On" red="0" green="255" blue="0">
+            </color>
+          </value>
+        </exp>
+        <pv_name>BL04J-PS-SHTR-01:STA</pv_name>
+      </rule>
+    </rules>
+    <border_width>1</border_width>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_240</name>
+    <pv_name>BL08I-PS-SHTR-01:STA</pv_name>
+    <x>1020</x>
+    <y>620</y>
+    <width>230</width>
+    <height>40</height>
+    <font>
+      <font family="Liberation Sans" style="BOLD" size="28.0">
+      </font>
+    </font>
+    <background_color>
+      <color name="STOP" red="255" green="0" blue="0">
+      </color>
+    </background_color>
+    <precision>2</precision>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <rules>
+      <rule name="alarm" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0==1">
+          <value>
+            <color name="On" red="0" green="255" blue="0">
+            </color>
+          </value>
+        </exp>
+        <pv_name>BL08I-PS-SHTR-01:STA</pv_name>
+      </rule>
+    </rules>
+    <border_width>1</border_width>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_241</name>
+    <pv_name>BL02I-PS-SHTR-01:STA</pv_name>
+    <x>1020</x>
+    <y>700</y>
+    <width>230</width>
+    <height>40</height>
+    <font>
+      <font family="Liberation Sans" style="BOLD" size="28.0">
+      </font>
+    </font>
+    <background_color>
+      <color name="STOP" red="255" green="0" blue="0">
+      </color>
+    </background_color>
+    <precision>2</precision>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <rules>
+      <rule name="alarm" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0==1">
+          <value>
+            <color name="On" red="0" green="255" blue="0">
+            </color>
+          </value>
+        </exp>
+        <pv_name>BL08I-PS-SHTR-01:STA</pv_name>
+      </rule>
+    </rules>
+    <border_width>1</border_width>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_242</name>
+    <pv_name>BL09I-PS-SHTR-01:STA</pv_name>
+    <x>1020</x>
+    <y>660</y>
+    <width>230</width>
+    <height>40</height>
+    <font>
+      <font family="Liberation Sans" style="BOLD" size="28.0">
+      </font>
+    </font>
+    <background_color>
+      <color name="STOP" red="255" green="0" blue="0">
+      </color>
+    </background_color>
+    <precision>2</precision>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <rules>
+      <rule name="alarm" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0==1">
+          <value>
+            <color name="On" red="0" green="255" blue="0">
+            </color>
+          </value>
+        </exp>
+        <pv_name>BL09I-PS-SHTR-01:STA</pv_name>
+      </rule>
+    </rules>
+    <border_width>1</border_width>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_243</name>
+    <pv_name>BL11I-PS-SHTR-01:STA</pv_name>
+    <x>1020</x>
+    <y>780</y>
+    <width>230</width>
+    <height>40</height>
+    <font>
+      <font family="Liberation Sans" style="BOLD" size="28.0">
+      </font>
+    </font>
+    <background_color>
+      <color name="STOP" red="255" green="0" blue="0">
+      </color>
+    </background_color>
+    <precision>2</precision>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <rules>
+      <rule name="alarm" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0==1">
+          <value>
+            <color name="On" red="0" green="255" blue="0">
+            </color>
+          </value>
+        </exp>
+        <pv_name>BL11I-PS-SHTR-01:STA</pv_name>
+      </rule>
+    </rules>
+    <border_width>1</border_width>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_244</name>
+    <pv_name>BL12I-PS-SHTR-01:STA</pv_name>
+    <x>1020</x>
+    <y>860</y>
+    <width>230</width>
+    <height>40</height>
+    <font>
+      <font family="Liberation Sans" style="BOLD" size="28.0">
+      </font>
+    </font>
+    <background_color>
+      <color name="STOP" red="255" green="0" blue="0">
+      </color>
+    </background_color>
+    <precision>2</precision>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <rules>
+      <rule name="alarm" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0==1">
+          <value>
+            <color name="On" red="0" green="255" blue="0">
+            </color>
+          </value>
+        </exp>
+        <pv_name>BL12I-PS-SHTR-01:STA</pv_name>
+      </rule>
+    </rules>
+    <border_width>1</border_width>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_245</name>
+    <pv_name>BL11K-PS-SHTR-01:STA</pv_name>
+    <x>1020</x>
+    <y>820</y>
+    <width>230</width>
+    <height>40</height>
+    <font>
+      <font family="Liberation Sans" style="BOLD" size="28.0">
+      </font>
+    </font>
+    <background_color>
+      <color name="STOP" red="255" green="0" blue="0">
+      </color>
+    </background_color>
+    <precision>2</precision>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <rules>
+      <rule name="alarm" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0==1">
+          <value>
+            <color name="On" red="0" green="255" blue="0">
+            </color>
+          </value>
+        </exp>
+        <pv_name>BL11K-PS-SHTR-01:STA</pv_name>
+      </rule>
+    </rules>
+    <border_width>1</border_width>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_247</name>
+    <pv_name>BL07B-PS-SHTR-01:STA</pv_name>
+    <x>1020</x>
+    <y>580</y>
+    <width>230</width>
+    <height>40</height>
+    <font>
+      <font family="Liberation Sans" style="BOLD" size="28.0">
+      </font>
+    </font>
+    <background_color>
+      <color name="STOP" red="255" green="0" blue="0">
+      </color>
+    </background_color>
+    <precision>2</precision>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <rules>
+      <rule name="alarm" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0==1">
+          <value>
+            <color name="On" red="0" green="255" blue="0">
+            </color>
+          </value>
+        </exp>
+        <pv_name>BL07B-PS-SHTR-01:STA</pv_name>
+      </rule>
+    </rules>
+    <border_width>1</border_width>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_248</name>
+    <pv_name>BL13I-PS-SHTR-01:STA</pv_name>
+    <x>1020</x>
+    <y>900</y>
+    <width>230</width>
+    <height>40</height>
+    <font>
+      <font family="Liberation Sans" style="BOLD" size="28.0">
+      </font>
+    </font>
+    <background_color>
+      <color name="STOP" red="255" green="0" blue="0">
+      </color>
+    </background_color>
+    <precision>2</precision>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <rules>
+      <rule name="alarm" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0==1">
+          <value>
+            <color name="On" red="0" green="255" blue="0">
+            </color>
+          </value>
+        </exp>
+        <pv_name>BL13I-PS-SHTR-01:STA</pv_name>
+      </rule>
+    </rules>
+    <border_width>1</border_width>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_249</name>
+    <pv_name>BL14I-PS-SHTR-01:STA</pv_name>
+    <x>1020</x>
+    <y>980</y>
+    <width>230</width>
+    <height>40</height>
+    <font>
+      <font family="Liberation Sans" style="BOLD" size="28.0">
+      </font>
+    </font>
+    <background_color>
+      <color name="STOP" red="255" green="0" blue="0">
+      </color>
+    </background_color>
+    <precision>2</precision>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <rules>
+      <rule name="alarm" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0==1">
+          <value>
+            <color name="On" red="0" green="255" blue="0">
+            </color>
+          </value>
+        </exp>
+        <pv_name>BL14I-PS-SHTR-01:STA</pv_name>
+      </rule>
+    </rules>
+    <border_width>1</border_width>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_250</name>
+    <pv_name>BL13J-PS-SHTR-01:STA</pv_name>
+    <x>1020</x>
+    <y>940</y>
+    <width>230</width>
+    <height>40</height>
+    <font>
+      <font family="Liberation Sans" style="BOLD" size="28.0">
+      </font>
+    </font>
+    <background_color>
+      <color name="STOP" red="255" green="0" blue="0">
+      </color>
+    </background_color>
+    <precision>2</precision>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <rules>
+      <rule name="alarm" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0==1">
+          <value>
+            <color name="On" red="0" green="255" blue="0">
+            </color>
+          </value>
+        </exp>
+        <pv_name>BL13J-PS-SHTR-01:STA</pv_name>
+      </rule>
+    </rules>
+    <border_width>1</border_width>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_251</name>
+    <pv_name>BL06J-PS-SHTR-01:STA</pv_name>
+    <x>1135</x>
+    <y>500</y>
+    <width>115</width>
+    <height>40</height>
+    <font>
+      <font family="Liberation Sans" style="BOLD" size="28.0">
+      </font>
+    </font>
+    <background_color>
+      <color name="STOP" red="255" green="0" blue="0">
+      </color>
+    </background_color>
+    <precision>2</precision>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <rules>
+      <rule name="alarm" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0==1">
+          <value>
+            <color name="On" red="0" green="255" blue="0">
+            </color>
+          </value>
+        </exp>
+        <pv_name>BL06J-PS-SHTR-01:STA</pv_name>
+      </rule>
+    </rules>
+    <border_width>1</border_width>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_252</name>
+    <pv_name>BL10I-PS-SHTR-01:STA</pv_name>
+    <x>1020</x>
+    <y>740</y>
+    <width>115</width>
+    <height>40</height>
+    <font>
+      <font family="Liberation Sans" style="BOLD" size="28.0">
+      </font>
+    </font>
+    <background_color>
+      <color name="STOP" red="255" green="0" blue="0">
+      </color>
+    </background_color>
+    <precision>2</precision>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <rules>
+      <rule name="alarm" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0==1">
+          <value>
+            <color name="On" red="0" green="255" blue="0">
+            </color>
+          </value>
+        </exp>
+        <pv_name>BL10I-PS-SHTR-01:STA</pv_name>
+      </rule>
+    </rules>
+    <border_width>1</border_width>
+  </widget>
+  <widget type="textupdate" version="2.0.0">
+    <name>Text Update_253</name>
+    <pv_name>BL10J-PS-SHTR-01:STA</pv_name>
+    <x>1135</x>
+    <y>740</y>
+    <width>115</width>
+    <height>40</height>
+    <font>
+      <font family="Liberation Sans" style="BOLD" size="28.0">
+      </font>
+    </font>
+    <background_color>
+      <color name="STOP" red="255" green="0" blue="0">
+      </color>
+    </background_color>
+    <precision>2</precision>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <rules>
+      <rule name="alarm" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0==1">
+          <value>
+            <color name="On" red="0" green="255" blue="0">
+            </color>
+          </value>
+        </exp>
+        <pv_name>BL10J-PS-SHTR-01:STA</pv_name>
+      </rule>
+    </rules>
     <border_width>1</border_width>
   </widget>
 </display>
