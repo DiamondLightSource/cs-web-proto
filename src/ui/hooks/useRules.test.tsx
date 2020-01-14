@@ -2,7 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { Rule, useRules, RuleProps } from "./useRules";
 import { shallow } from "enzyme";
-import { vdouble } from "../../types/vtypes/vtypes";
+import { vdouble, venum } from "../../types/vtypes/vtypes";
 
 // Mock useSubscription.
 jest.mock("./useSubscription", (): object => {
@@ -53,6 +53,39 @@ describe("useRules", (): void => {
       };
     });
     const props = { id: "id1", rules: [rule], text: "neither" };
+    const hookTester = <RuleTester {...props}></RuleTester>;
+    const hookTesterWrapper = shallow(hookTester);
+    expect(hookTesterWrapper.find("div").text()).toEqual("yes");
+  });
+
+  it("matches the index on an enum", (): void => {
+    (useSelector as jest.Mock).mockImplementation((pvName: string): any => {
+      return {
+        PV1: [
+          {
+            value: venum(1, ["this", "that"]),
+            connected: true,
+            readonly: false
+          },
+          "PV1"
+        ]
+      };
+    });
+    const props = {
+      id: "id1",
+      rules: [
+        {
+          condition: "pv1==1",
+          trueState: "yes",
+          falseState: "no",
+          substitutionMap: {
+            pv1: "PV1"
+          },
+          prop: "text"
+        }
+      ],
+      text: "neither"
+    };
     const hookTester = <RuleTester {...props}></RuleTester>;
     const hookTesterWrapper = shallow(hookTester);
     expect(hookTesterWrapper.find("div").text()).toEqual("yes");
