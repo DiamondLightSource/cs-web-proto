@@ -31,15 +31,12 @@ export interface XmlDescription {
 }
 
 interface FunctionSubstitutionInterface {
-  [key: string]: (
-    name: string,
-    jsonProp: convert.ElementCompact
-  ) => GenericProp;
+  [key: string]: (name: string, jsonProp: ElementCompact) => GenericProp;
 }
 
 export const opiParseMacros = (
   name: string,
-  jsonProp: convert.ElementCompact
+  jsonProp: ElementCompact
 ): MacroMap => {
   const macroMap: MacroMap = {};
   Object.entries(jsonProp as object).forEach(([key, value]): void => {
@@ -54,7 +51,7 @@ export interface OpiColor {
 
 export const opiParseColor = (
   name: string,
-  jsonProp: convert.ElementCompact
+  jsonProp: ElementCompact
 ): string => {
   const color = jsonProp.color as OpiColor;
   try {
@@ -66,16 +63,16 @@ export const opiParseColor = (
   }
 };
 
-export const opiParsePrecision = (
+export const opiParseNumber = (
   name: string,
-  jsonProp: convert.ElementCompact
+  jsonProp: ElementCompact
 ): number => {
   return Number(jsonProp._text);
 };
 
 export const opiParseBoolean = (
   name: string,
-  jsonProp: convert.ElementCompact
+  jsonProp: ElementCompact
 ): boolean => {
   const boolText = jsonProp._text;
   if (boolText === "false") {
@@ -89,7 +86,7 @@ export const opiParseBoolean = (
 
 export const opiParseActions = (
   name: string,
-  jsonProp: convert.ElementCompact
+  jsonProp: ElementCompact
 ): WidgetActions => {
   let actionsToProcess: any[] = [];
   if (Array.isArray(jsonProp.action)) {
@@ -151,10 +148,7 @@ export const addPrefixToPV = (pv: string, defaultPrefix: string): string => {
   }
 };
 
-export const opiParsePv = (
-  name: string,
-  jsonProp: convert.ElementCompact
-): string => {
+export const opiParsePv = (name: string, jsonProp: ElementCompact): string => {
   // Opi files use channel access by default
   try {
     return addPrefixToPV(jsonProp._text as string, "ca://"); // eslint-disable-line @typescript-eslint/camelcase
@@ -167,11 +161,12 @@ export const OPI_FUNCTION_SUBSTITUTIONS = {
   macros: opiParseMacros,
   background_color: opiParseColor, // eslint-disable-line @typescript-eslint/camelcase
   foreground_color: opiParseColor, // eslint-disable-line @typescript-eslint/camelcase
-  precision: opiParsePrecision,
+  precision: opiParseNumber,
   visible: opiParseBoolean,
   transparent: opiParseBoolean,
   actions: opiParseActions,
-  pv_name: opiParsePv // eslint-disable-line @typescript-eslint/camelcase
+  pv_name: opiParsePv, // eslint-disable-line @typescript-eslint/camelcase
+  show_units: opiParseBoolean // eslint-disable-line @typescript-eslint/camelcase
 };
 
 export const OPI_KEY_SUBSTITUTIONS = {
@@ -180,6 +175,7 @@ export const OPI_KEY_SUBSTITUTIONS = {
   opi_file: "file", // eslint-disable-line @typescript-eslint/camelcase
   background_color: "backgroundColor", // eslint-disable-line @typescript-eslint/camelcase
   foreground_color: "color", // eslint-disable-line @typescript-eslint/camelcase
+  show_units: "showUnits", // eslint-disable-line @typescript-eslint/camelcase
   // Rename style prop to make sure it isn't used directly to style components.
   style: "opiStyle" // eslint-disable-line @typescript-eslint/camelcase
 };

@@ -5,7 +5,7 @@ import convert from "xml-js";
 import {
   opiParseMacros,
   opiParseColor,
-  opiParsePrecision,
+  opiParseNumber,
   opiParseBoolean,
   opiParseActions,
   xmlChildToWidget,
@@ -42,7 +42,7 @@ describe("color conversion", (): void => {
   });
 });
 
-describe("precision conversion", (): void => {
+describe("number conversion", (): void => {
   const xmlPrecision = "<precision>5</precision>";
   const convertedPrecision: convert.ElementCompact = convert.xml2js(
     xmlPrecision,
@@ -52,7 +52,7 @@ describe("precision conversion", (): void => {
   );
 
   test("it correctly gets the precision and turns it into a number", (): void => {
-    const output = opiParsePrecision("precision", convertedPrecision.precision);
+    const output = opiParseNumber("precision", convertedPrecision.precision);
     expect(output).toBe(5);
   });
 });
