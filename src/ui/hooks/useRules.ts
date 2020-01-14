@@ -4,6 +4,7 @@ import log from "loglevel";
 import { useSubscription } from "./useSubscription";
 import { useSelector } from "react-redux";
 import { MacroMap, CsState } from "../../redux/csState";
+import { VEnum } from "../../types/vtypes/vtypes";
 
 import { evaluate } from "mathjs";
 import { PvArrayResults, pvStateSelector, pvStateComparator } from "./utils";
@@ -46,7 +47,17 @@ export function useRules(props: RuleProps): RuleProps {
     for (const [name, pv] of Object.entries(substitutionMap)) {
       const [pvState] = results[pv];
       if (pvState && pvState.value !== undefined && pvState.connected) {
-        condition = condition.replace(name, pvState.value.getValue());
+        // Special type checking to handle enums
+        // More type checking may be required in the future
+        if (pvState.value instanceof VEnum) {
+          condition = condition.replace(
+            name,
+            pvState.value.getIndex().toString()
+          );
+        } else {
+          condition = condition.replace(name, pvState.value.getValue());
+        }
+
         try {
           const state = evaluate(condition);
           const styleValue = state ? trueState : falseState;
