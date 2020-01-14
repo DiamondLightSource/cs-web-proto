@@ -2,6 +2,7 @@ import React from "react";
 import { ImageComponent } from "./image";
 import { shallow, ShallowWrapper } from "enzyme";
 import { create, ReactTestRenderer } from "react-test-renderer";
+import { DEFAULT_BASE_URL } from "../../../baseUrl";
 
 let snapshot: ReactTestRenderer;
 let wrapper: ShallowWrapper;
@@ -26,8 +27,10 @@ describe("<Image />", (): void => {
     expect(wrapper.childAt(0).type()).toEqual("img");
   });
 
-  test("it's source is passed through properly", (): void => {
-    expect(wrapper.childAt(0).prop("src")).toEqual("myimage");
+  test("its source is passed through properly", (): void => {
+    expect(wrapper.childAt(0).prop("src")).toEqual(
+      `${DEFAULT_BASE_URL}/img/myimage`
+    );
   });
 
   test("it passes alternative text through", (): void => {

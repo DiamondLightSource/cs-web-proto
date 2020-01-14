@@ -1,5 +1,5 @@
-// File to hold functions which aid the conversion of bob files
-//  into our widget format
+// File to hold functions which aid the conversion of opi files
+// into our widget format
 
 import log from "loglevel";
 import convert from "xml-js";
@@ -8,15 +8,25 @@ import { WidgetDescription } from "../createComponent";
 import { WidgetActions, WRITE_PV } from "../widgetActions";
 import { MacroMap } from "../../../redux/csState";
 
+export const OPI_WIDGET_MAPPING: { [key: string]: string } = {
+  "org.csstudio.opibuilder.Display": "display",
+  "org.csstudio.opibuilder.widgets.TextUpdate": "readback",
+  "org.csstudio.opibuilder.widgets.TextInput": "input",
+  "org.csstudio.opibuilder.widgets.Label": "label",
+  "org.csstudio.opibuilder.widgets.groupingContainer": "grouping",
+  "org.csstudio.opibuilder.widgets.Rectangle": "shape",
+  "org.csstudio.opibuilder.widgets.ActionButton": "actionbutton" // eslint-disable-line @typescript-eslint/camelcase
+};
+
 type GenericProp = string | boolean | number | MacroMap | WidgetActions;
 
-interface BobDescription {
+export interface XmlDescription {
   _attributes: { [key: string]: string };
   x?: { _text: string };
   y?: { _text: string };
   height?: { _text: string };
   width?: { _text: string };
-  widget?: BobDescription;
+  widget?: XmlDescription;
   [key: string]: any;
 }
 
@@ -27,7 +37,7 @@ interface FunctionSubstitutionInterface {
   ) => GenericProp;
 }
 
-export const bobParseMacros = (
+export const opiParseMacros = (
   name: string,
   jsonProp: convert.ElementCompact
 ): MacroMap => {
@@ -38,15 +48,15 @@ export const bobParseMacros = (
   return macroMap;
 };
 
-export interface BobColor {
+export interface OpiColor {
   _attributes: { name: string; red: string; blue: string; green: string };
 }
 
-export const bobParseColor = (
+export const opiParseColor = (
   name: string,
   jsonProp: convert.ElementCompact
 ): string => {
-  const color = jsonProp.color as BobColor;
+  const color = jsonProp.color as OpiColor;
   try {
     return `rgb(${color._attributes.red}, ${color._attributes.green}, ${color._attributes.blue})`;
   } catch (e) {
@@ -56,14 +66,14 @@ export const bobParseColor = (
   }
 };
 
-export const bobParsePrecision = (
+export const opiParsePrecision = (
   name: string,
   jsonProp: convert.ElementCompact
 ): number => {
   return Number(jsonProp._text);
 };
 
-export const bobParseBoolean = (
+export const opiParseBoolean = (
   name: string,
   jsonProp: convert.ElementCompact
 ): boolean => {
@@ -77,7 +87,7 @@ export const bobParseBoolean = (
   }
 };
 
-export const bobParseActions = (
+export const opiParseActions = (
   name: string,
   jsonProp: convert.ElementCompact
 ): WidgetActions => {
@@ -133,12 +143,45 @@ export const bobParseActions = (
   return processedActions;
 };
 
-export const bobChildToWidgetChild = (
-  bobChild: BobDescription,
+export const OPI_FUNCTION_SUBSTITUTIONS = {
+  macros: opiParseMacros,
+  background_color: opiParseColor, // eslint-disable-line @typescript-eslint/camelcase
+  foreground_color: opiParseColor, // eslint-disable-line @typescript-eslint/camelcase
+  precision: opiParsePrecision,
+  visible: opiParseBoolean,
+  transparent: opiParseBoolean,
+  actions: opiParseActions
+};
+
+export const OPI_KEY_SUBSTITUTIONS = {
+  pv_name: "pvName", // eslint-disable-line @typescript-eslint/camelcase
+  macros: "macroMap",
+  opi_file: "file", // eslint-disable-line @typescript-eslint/camelcase
+  background_color: "backgroundColor", // eslint-disable-line @typescript-eslint/camelcase
+  foreground_color: "color", // eslint-disable-line @typescript-eslint/camelcase
+  // Rename style prop to make sure it isn't used directly to style components.
+  style: "opiStyle" // eslint-disable-line @typescript-eslint/camelcase
+};
+
+export function opiGetWidgetId(xmlDescription: XmlDescription): string {
+  return xmlDescription._attributes.typeId;
+}
+
+export function opiSetWidgetId(
+  xmlDescription: XmlDescription,
+  newId: string
+): void {
+  xmlDescription._attributes.typeId = newId;
+}
+
+export const xmlChildToWidget = (
+  xmlChild: XmlDescription,
+  idGetter: (xmlChild: XmlDescription) => string,
+  widgetIds: { [key: string]: string },
   functionSubstitutions?: FunctionSubstitutionInterface,
   keySubstitutions?: { [key: string]: any }
 ): WidgetDescription => {
-  // Convert a non-root widget from the bob file into a widget
+  // Convert a non-root widget from the xml file into a widget
   // It is passed as a JS object now
   // Extract useful props
   const {
@@ -149,11 +192,17 @@ export const bobChildToWidgetChild = (
     width,
     widget = [],
     ...remainingProps
-  } = bobChild;
+  } = xmlChild;
+
+  let type = idGetter(xmlChild);
 
   // Map the remaining props
   // Checks that there is a substitution map
   const mappedProps: { [key: string]: any } = {};
+  if (widgetIds.hasOwnProperty(type)) {
+    type = widgetIds[type];
+  }
+
   Object.entries(remainingProps).forEach(([key, value]): void => {
     if (functionSubstitutions && functionSubstitutions[key]) {
       // Use the function substitution
@@ -177,11 +226,11 @@ export const bobChildToWidgetChild = (
   }
 
   // Check that the primary props were defined or use a default value
-  /* In bob files, many widgets have default values for height, width and even x and y
+  /* In opi files, many widgets have default values for height, width and even x and y
   The default values can be different from each other
   This could make life a bit difficult but should be looked at later */
   const outputWidget: WidgetDescription = {
-    type: _attributes.type || _attributes.typeId,
+    type: type,
     position: "absolute",
     x: `${(x && x._text) || 0}px`,
     y: `${(y && y._text) || 0}px`,
@@ -190,8 +239,10 @@ export const bobChildToWidgetChild = (
     ...mappedProps,
     children: widgetList.map(
       (w: any): WidgetDescription =>
-        bobChildToWidgetChild(
-          w as BobDescription,
+        xmlChildToWidget(
+          w as XmlDescription,
+          idGetter,
+          widgetIds,
           functionSubstitutions,
           keySubstitutions
         )
@@ -201,33 +252,46 @@ export const bobChildToWidgetChild = (
   return outputWidget;
 };
 
-export const convertBobToWidgetDescription = (
-  bobInputString: string,
-  functionSubstitutions?: {
-    [key: string]: (name: string, inputProp: object) => GenericProp;
-  },
-  keySubstitutions?: { [key: string]: string }
+export const xmlToWidgets = (
+  xmlString: string,
+  idGetter: (xmlChild: XmlDescription) => string,
+  idSetter: (xmlDescription: XmlDescription, newId: string) => void,
+  widgetIds: { [key: string]: string },
+  functionSubstitutions: FunctionSubstitutionInterface,
+  keySubstitutions: { [key: string]: any }
 ): WidgetDescription => {
-  // Provide a raw xml file in the bob format for conversion
+  // Provide a raw xml file in the opi format for conversion
   // Optionally provide a substition map for keys
 
   // Convert it to a "compact format"
-  const compactJSON = convert.xml2js(bobInputString, {
+  const compactJSON = convert.xml2js(xmlString, {
     compact: true
-  }) as BobDescription;
+  }) as XmlDescription;
 
-  // Add display to top of JSON to be processed
-  // Assumes top level widget is always display - valid for XML files
-  compactJSON.display._attributes = { type: "display" };
+  idSetter(compactJSON.display, "display");
+
   // We don't care about the position of the top-level display widget.
   // We place it at 0,0 within its container.
   compactJSON.display.x = { _text: "0" };
   compactJSON.display.y = { _text: "0" };
   log.debug(compactJSON);
 
-  return bobChildToWidgetChild(
+  return xmlChildToWidget(
     compactJSON.display,
+    idGetter,
+    widgetIds,
     functionSubstitutions,
     keySubstitutions
   );
 };
+
+export function opiToWidgets(opiString: string): WidgetDescription {
+  return xmlToWidgets(
+    opiString,
+    opiGetWidgetId,
+    opiSetWidgetId,
+    OPI_WIDGET_MAPPING,
+    OPI_FUNCTION_SUBSTITUTIONS,
+    OPI_KEY_SUBSTITUTIONS
+  );
+}
