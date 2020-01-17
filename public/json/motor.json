@@ -1,0 +1,186 @@
+{
+  "type": "grouping",
+  "position": "relative",
+  "height": "300px",
+  "width": "350px",
+  "margin": "10px",
+  "fontSize": "1.5em",
+  "backgroundColor": "#dddddd",
+  "name": "Motor Screen ${motor}",
+  "children": [
+    {
+      "type": "flexcontainer",
+      "position": "relative",
+      "children": [
+        {
+          "type": "label",
+          "position": "relative",
+          "width": "50%",
+          "text": "Position",
+          "backgroundColor": "transparent"
+        },
+        {
+          "type": "progressbar",
+          "position": "relative",
+          "width": "50%",
+          "pvName": "sim://sine#m${motor}",
+          "precision": 2,
+          "min": -1,
+          "max": 1,
+          "border": "1px solid #aaaaaa",
+          "fontSize": "1em"
+        },
+        {
+          "type": "label",
+          "position": "relative",
+          "width": "50%",
+          "text": "Motor Speed",
+          "margin": "5px 0px 0px 0px",
+          "backgroundColor": "transparent"
+        },
+        {
+          "type": "input",
+          "position": "relative",
+          "width": "25%",
+          "pvName": "sim://limit#m${motor}",
+          "border": "1px solid #aaaaaa",
+          "margin": "5px 0px 0px 0px",
+          "fontSize": "1em"
+        },
+        {
+          "type": "readback",
+          "position": "relative",
+          "width": "25%",
+          "pvName": "sim://limit#m${motor}",
+          "alarmBorder": true,
+          "margin": "5px 0px 0px 0px",
+          "fontSize": "1em"
+        },
+        {
+          "type": "label",
+          "position": "relative",
+          "width": "50%",
+          "text": "Motor Mode",
+          "margin": "5px 0px 0px 0px",
+          "backgroundColor": "transparent"
+        },
+        {
+          "type": "menubutton",
+          "position": "relative",
+          "width": "25%",
+          "pvName": "loc://enum#m${motor}<VEnum>(2, \"slow\", \"med\", \"fast\")",
+          "border": "1px solid #aaaaaa",
+          "margin": "5px 0px 0px 0px",
+          "fontSize": "0.75em"
+        },
+        {
+          "type": "readback",
+          "position": "relative",
+          "width": "25%",
+          "pvName": "loc://enum#m${motor}",
+          "color": "#22ee22",
+          "margin": "5px 0px 0px 0px",
+          "fontSize": "1em"
+        },
+        {
+          "type": "actionbutton",
+          "position": "relative",
+          "width": "100%",
+          "margin": "5px 0px 0px 0px",
+          "text": "SLOW",
+          "actions": {
+            "executeAsOne": true,
+            "actions": [
+              {
+                "type": "WRITE_PV",
+                "writePvInfo": {
+                  "pvName": "sim://limit#m${motor}",
+                  "value": 15
+                }
+              },
+              {
+                "type": "WRITE_PV",
+                "writePvInfo": {
+                  "pvName": "loc://enum#m${motor}",
+                  "value": "slow"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "actionbutton",
+          "position": "relative",
+          "width": "100%",
+          "margin": "5px 0px 0px 0px",
+          "text": "MEDIUM",
+          "actions": {
+            "executeAsOne": true,
+            "actions": [
+              {
+                "type": "WRITE_PV",
+                "writePvInfo": {
+                  "pvName": "sim://limit#m${motor}",
+                  "value": 50
+                }
+              },
+              {
+                "type": "WRITE_PV",
+                "writePvInfo": {
+                  "pvName": "loc://enum#m${motor}",
+                  "value": "med"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "actionbutton",
+          "position": "relative",
+          "width": "100%",
+          "margin": "5px 0px 0px 0px",
+          "text": "FAST",
+          "actions": {
+            "executeAsOne": true,
+            "actions": [
+              {
+                "type": "WRITE_PV",
+                "writePvInfo": {
+                  "pvName": "sim://limit#m${motor}",
+                  "value": 99
+                }
+              },
+              {
+                "type": "WRITE_PV",
+                "writePvInfo": {
+                  "pvName": "loc://enum#m${motor}",
+                  "value": "fast"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "actionbutton",
+          "position": "relative",
+          "width": "100%",
+          "margin": "5px 0px 0px 0px",
+          "text": "More...",
+          "actions": {
+            "executeAsOne": false,
+            "actions": [
+              {
+                "type": "OPEN_PAGE",
+                "openPageInfo": {
+                  "location": "detail",
+                  "page": "motorDetail",
+                  "macros": "{\"motor\":\"${motor}\"}"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

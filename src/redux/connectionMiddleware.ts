@@ -10,6 +10,8 @@ import {
   UNSUBSCRIBE,
   Action
 } from "./actions";
+import { VType } from "../types/vtypes/vtypes";
+import { PartialVType } from "../types/vtypes/merge";
 
 function connectionChanged(
   store: Store,
@@ -44,7 +46,7 @@ if (!queueStarted) {
 function valueChanged(
   store: Store,
   pvName: string,
-  value: object | undefined
+  value: VType | PartialVType | undefined
 ): void {
   globalStore = store;
   queue.push({
@@ -72,12 +74,12 @@ export const connectionMiddleware = (connection: Connection) => (
     case SUBSCRIBE: {
       const { pvName } = action.payload;
       // Are we already subscribed?
-      const newPvName = connection.subscribe(pvName);
+      const effectivePvName = connection.subscribe(pvName);
       action = {
         ...action,
         payload: {
           ...action.payload,
-          shortPvName: newPvName,
+          effectivePvName: effectivePvName,
           pvName: pvName
         }
       };
@@ -85,8 +87,9 @@ export const connectionMiddleware = (connection: Connection) => (
     }
     case WRITE_PV: {
       const { pvName, value } = action.payload;
-      const shortPvName = store.getState().shortPvNameMap[pvName] || pvName;
-      connection.putPv(shortPvName, value);
+      const effectivePvName =
+        store.getState().effectivePvNameMap[pvName] || pvName;
+      connection.putPv(effectivePvName, value);
       break;
     }
     case UNSUBSCRIBE: {
@@ -94,11 +97,12 @@ export const connectionMiddleware = (connection: Connection) => (
       const subs = store.getState().subscriptions;
       // Is this the last subscriber?
       // The reference will be removed in csReducer.
-      const shortPvName = store.getState().shortPvNameMap[pvName] || pvName;
+      const effectivePvName =
+        store.getState().effectivePvNameMap[pvName] || pvName;
 
       if (
-        subs[shortPvName].length === 1 &&
-        subs[shortPvName][0] === componentId
+        subs[effectivePvName].length === 1 &&
+        subs[effectivePvName][0] === componentId
       ) {
         connection.unsubscribe(pvName);
       }

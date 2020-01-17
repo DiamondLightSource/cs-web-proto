@@ -1,0 +1,36 @@
+{
+  "type": "flexcontainer",
+  "position": "relative",
+  "children": [
+    {
+      "type": "embeddedDisplay",
+      "position": "relative",
+      "margin": "10px",
+      "file": "motor.json",
+      "filetype": "json",
+      "macroMap": {
+        "motor": "1"
+      }
+    },
+    {
+      "type": "embeddedDisplay",
+      "position": "relative",
+      "margin": "10px",
+      "file": "motor.json",
+      "filetype": "json",
+      "macroMap": {
+        "motor": "2"
+      }
+    },
+    {
+      "type": "embeddedDisplay",
+      "position": "relative",
+      "margin": "10px",
+      "file": "motor.json",
+      "filetype": "json",
+      "macroMap": {
+        "motor": "3"
+      }
+    }
+  ]
+}

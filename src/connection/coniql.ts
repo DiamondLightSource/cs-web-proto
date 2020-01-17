@@ -19,12 +19,12 @@ import {
   nullConnCallback,
   nullValueCallback
 } from "./plugin";
-import { VType } from "../vtypes/vtypes";
-import { AlarmStatus, alarm } from "../vtypes/alarm";
-import { time } from "../vtypes/time";
+import { VType } from "../types/vtypes/vtypes";
+import { AlarmStatus, alarm } from "../types/vtypes/alarm";
+import { time } from "../types/vtypes/time";
 import { SubscriptionClient } from "subscriptions-transport-ws";
-import { display } from "../vtypes/display";
-import { PartialVType } from "../vtypes/merge";
+import { display } from "../types/vtypes/display";
+import { PartialVType } from "../types/vtypes/merge";
 
 export interface ConiqlStatus {
   quality: "ALARM" | "WARNING" | "VALID";
@@ -49,7 +49,8 @@ type CONIQL_TYPE = "FLOAT64" | "INT32" | "INT64";
 const VTYPE_CLASSES = {
   FLOAT64: "VDouble",
   INT32: "VInt",
-  INT64: "VLong"
+  INT64: "VLong",
+  String: "VString"
 };
 
 const ARRAY_TYPES = {
@@ -65,9 +66,9 @@ function coniqlToPartialVtype(
   meta: any,
   status: ConiqlStatus
 ): PartialVType {
-  let result: PartialVType = {};
+  const result: PartialVType = {};
   if (value != null) {
-    result["value"] = value;
+    result.value = value;
   }
   if (value && value.numberType) {
     const bd = base64js.toByteArray(value.base64);
@@ -101,6 +102,10 @@ function coniqlToPartialVtype(
           units
         );
       }
+    } else if (meta.__typename === "EnumMeta") {
+      result.type = "VEnum";
+      result.choices = meta.choices;
+      result.index = value;
     } else {
       result.type = VTYPE_CLASSES[meta.type as CONIQL_TYPE];
     }
@@ -151,6 +156,10 @@ const PV_SUBSCRIPTION = gql`
             precision
             form
           }
+        }
+        ... on EnumMeta {
+          array
+          choices
         }
       }
       status {
@@ -240,7 +249,7 @@ export class ConiqlPlugin implements Connection {
               isReadonly: !meta.mutable
             });
           }
-          let pvtype = coniqlToPartialVtype(value, time, meta, status);
+          const pvtype = coniqlToPartialVtype(value, time, meta, status);
           this.onValueUpdate(pvName, pvtype);
         },
         error: (err): void => {

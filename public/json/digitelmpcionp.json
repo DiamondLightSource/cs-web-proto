@@ -1,0 +1,18 @@
+{
+  "type": "flexcontainer",
+  "position": "relative",
+  "children": [
+    {
+      "type": "embeddedDisplay",
+      "filetype": "opi",
+      "position": "relative",
+      "margin": "10px",
+      "file": "digitelMpcIonp.opi",
+      "macroMap": {
+        "device": "pva://TEST",
+        "pv_name": "${pvName}",
+        "pv_value": "${pvValue}"
+      }
+    }
+  ]
+}

@@ -1,0 +1,184 @@
+{
+  "type": "display",
+  "position": "relative",
+  "width": "600px",
+  "height": "210px",
+  "margin": "10px",
+  "border": "dashed 3px red",
+  "children": [
+    {
+      "type": "actionbutton",
+      "pvName": "sim://limit#1",
+      "text": "Motor 1",
+      "image": "DCM-base.png",
+      "position": "absolute",
+      "x": "0px",
+      "y": "0px",
+      "width": "100px",
+      "height": "100px",
+      "actions": {
+        "executeAsOne": false,
+        "actions": [
+          {
+            "type": "OPEN_PAGE",
+            "openPageInfo": {
+              "location": "embed",
+              "page": "motor",
+              "description": "Motor 1 Info",
+              "macros": "{\"motor\":\"1\"}"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "actionbutton",
+      "pvName": "sim://limit#1",
+      "text": "Motor 2",
+      "image": "DCM-base.png",
+      "position": "absolute",
+      "x": "150px",
+      "y": "0px",
+      "width": "100px",
+      "height": "100px",
+      "actions": {
+        "executeAsOne": false,
+        "actions": [
+          {
+            "type": "OPEN_PAGE",
+            "openPageInfo": {
+              "location": "embed",
+              "page": "motor",
+              "description": "Motor 2 Info",
+              "macros": "{\"motor\":\"2\"}"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "shape",
+      "position": "absolute",
+      "x": "250px",
+      "y": "50px",
+      "width": "100px",
+      "height": "100px",
+      "shapeWidth": "100px",
+      "shapeHeight": "5px",
+      "shapeRadius": "0",
+      "backgroundColor": "red"
+    },
+    {
+      "type": "shape",
+      "position": "absolute",
+      "x": "100px",
+      "y": "0px",
+      "width": "50px",
+      "height": "100px",
+      "shapeWidth": "50px",
+      "shapeHeight": "100px",
+      "shapeRadius": "50%",
+      "backgroundColor": "green"
+    },
+    {
+      "type": "actionbutton",
+      "pvName": "sim://limit#1",
+      "text": "Motor 3",
+      "image": "DCM-base.png",
+      "position": "absolute",
+      "x": "350px",
+      "y": "0px",
+      "width": "100px",
+      "height": "100px",
+      "actions": {
+        "executeAsOne": false,
+        "actions": [
+          {
+            "type": "OPEN_PAGE",
+            "openPageInfo": {
+              "location": "embed",
+              "page": "motor",
+              "description": "Motor 3 Info",
+              "macros": "{\"motor\":\"3\"}"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "actionbutton",
+      "pvName": "sim://limit#1",
+      "text": "Digitel MPC",
+      "image": "ionp.svg",
+      "position": "absolute",
+      "x": "450px",
+      "y": "0px",
+      "width": "100px",
+      "height": "100px",
+      "actions": {
+        "executeAsOne": false,
+        "actions": [
+          {
+            "type": "OPEN_PAGE",
+            "openPageInfo": {
+              "location": "embed",
+              "page": "digitelmpc",
+              "description": "Digitel MPC Sim",
+              "macros": "{}"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "actionbutton",
+      "pvName": "sim://limit#1",
+      "text": "Digitel MPC Ionp",
+      "image": "ionp.svg",
+      "position": "absolute",
+      "x": "450px",
+      "y": "100px",
+      "width": "100px",
+      "height": "100px",
+      "actions": {
+        "executeAsOne": false,
+        "actions": [
+          {
+            "type": "OPEN_PAGE",
+
+            "openPageInfo": {
+              "location": "embed",
+              "page": "digitelmpcionp",
+              "description": "Digitel MPC Ionp Sim",
+              "macros": "{}"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "actionbutton",
+      "text": "Motor Summary Screen",
+      "position": "absolute",
+      "x": "20px",
+      "y": "125px",
+      "width": "200px",
+      "height": "40px",
+      "backgroundColor": "#aaaaaa",
+      "actions": {
+        "executeAsOne": false,
+        "actions": [
+          {
+            "type": "OPEN_PAGE",
+            "openPageInfo": {
+              "location": "embed",
+              "page": "motorSummary",
+              "macros": "{}",
+              "description": "Motor Summary Screen"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

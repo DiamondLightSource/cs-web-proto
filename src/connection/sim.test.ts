@@ -1,6 +1,6 @@
 import { SimulatorPlugin } from "./sim";
-import { VType, vdouble, VDouble, VEnum } from "../vtypes/vtypes";
-import { mergeVtype, PartialVType } from "../vtypes/merge";
+import { VType, vdouble, VDouble, VEnum } from "../types/vtypes/vtypes";
+import { mergeVtype, PartialVType } from "../types/vtypes/merge";
 import { nullConnCallback, nullValueCallback } from "./plugin";
 
 let simulator: SimulatorPlugin;
@@ -41,7 +41,7 @@ const assertValue = (
 };
 
 it("test local values", (done): void => {
-  var zeroDone = false;
+  let zeroDone = false;
   getValue("loc://location", (value: VType): void => {
     if (!zeroDone) {
       expect(value.getValue()).toEqual(0.0);
@@ -102,7 +102,7 @@ it("test enum", (): void => {
 });
 
 it("test receive updates", (done): void => {
-  let values = [];
+  const values = [];
   simulator = new SimulatorPlugin(50);
   setTimeout((): void => {
     expect(values.length).toBeGreaterThan(15);
@@ -332,9 +332,9 @@ class StagedCallbacks {
 }
 
 it("unsubscribe stops updates for simulated values", (done): void => {
-  var callbacks = new StagedCallbacks();
+  const callbacks = new StagedCallbacks();
   simulator = new SimulatorPlugin(50);
-  var client = new ConnectionClient(simulator, "sim://sine");
+  const client = new ConnectionClient(simulator, "sim://sine");
 
   const callback = (data: { value: VType; name: string }): void => {
     if (client.subscribed) {
@@ -357,8 +357,8 @@ it("unsubscribe stops updates for simulated values", (done): void => {
 });
 
 it("unsubscribe stops updates, but maintains value", (done): void => {
-  var callbacks = new StagedCallbacks();
-  var client = new ConnectionClient(simulator, "loc://name");
+  const callbacks = new StagedCallbacks();
+  const client = new ConnectionClient(simulator, "loc://name");
 
   const callback = (data: { value: VType; name: string }): void => {
     if (client.subscribed) {

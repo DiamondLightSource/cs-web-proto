@@ -1,0 +1,139 @@
+{
+  "type": "flexcontainer",
+  "position": "relative",
+  "margin": "auto",
+  "children": [
+    {
+      "type": "label",
+      "position": "relative",
+      "width": "100%",
+      "text": "Motor ${motor} Detail Panel",
+      "fontSize": "2em",
+      "fontWeight": "bold",
+      "margin": "0px 0px 10px 0px",
+      "backgroundColor": "transparent"
+    },
+    {
+      "type": "label",
+      "position": "relative",
+      "width": "30%",
+      "text": "Position",
+      "textAlign": "left",
+      "backgroundColor": "transparent"
+    },
+    {
+      "type": "progressbar",
+      "position": "relative",
+      "width": "50%",
+      "pvName": "sim://sine#m${motor}",
+      "precision": 2,
+      "min": -1,
+      "max": 1,
+      "border": "1px solid #aaaaaa",
+      "fontSize": "1em"
+    },
+    {
+      "type": "label",
+      "position": "relative",
+      "width": "30%",
+      "text": "Motor Speed",
+      "margin": "5px 0px 0px 0px",
+      "backgroundColor": "transparent"
+    },
+    {
+      "type": "input",
+      "position": "relative",
+      "width": "25%",
+      "pvName": "sim://limit#m${motor}",
+      "border": "1px solid #aaaaaa",
+      "margin": "5px 0px 0px 0px",
+      "fontSize": "1em"
+    },
+    {
+      "type": "readback",
+      "position": "relative",
+      "width": "25%",
+      "pvName": "sim://limit#m${motor}",
+      "alarmBorder": true,
+      "margin": "5px 0px 0px 0px",
+      "fontSize": "1em"
+    },
+    {
+      "type": "label",
+      "position": "relative",
+      "width": "30%",
+      "text": "Motor Mode",
+      "margin": "5px 0px 0px 0px",
+      "backgroundColor": "transparent"
+    },
+    {
+      "type": "menubutton",
+      "position": "relative",
+      "width": "25%",
+      "pvName": "loc://enum#m${motor}<VEnum>(2, \"slow\", \"med\", \"fast\")",
+      "border": "1px solid #aaaaaa",
+      "margin": "5px 0px 0px 0px",
+      "fontSize": "0.75em"
+    },
+    {
+      "type": "readback",
+      "position": "relative",
+      "width": "25%",
+      "pvName": "loc://enum#m${motor}",
+      "color": "#22ee22",
+      "margin": "5px 0px 0px 0px",
+      "fontSize": "1em"
+    },
+    {
+      "type": "label",
+      "position": "relative",
+      "width": "30%",
+      "text": "Motor Name",
+      "margin": "5px 0px 0px 0px",
+      "backgroundColor": "transparent"
+    },
+    {
+      "type": "readback",
+      "position": "relative",
+      "width": "55%",
+      "pvName": "loc://name#m${motor}",
+      "alarmBorder": true,
+      "margin": "5px 0px 0px 0px",
+      "fontSize": "1em"
+    },
+    {
+      "type": "label",
+      "position": "relative",
+      "width": "30%",
+      "text": "Current Status",
+      "margin": "5px 0px 0px 0px",
+      "backgroundColor": "transparent"
+    },
+    {
+      "type": "readback",
+      "position": "relative",
+      "width": "55%",
+      "pvName": "loc://status#m${motor}",
+      "alarmBorder": true,
+      "margin": "5px 0px 0px 0px",
+      "fontSize": "1em"
+    },
+    {
+      "type": "label",
+      "position": "relative",
+      "width": "30%",
+      "text": "Another Detail",
+      "margin": "5px 0px 0px 0px",
+      "backgroundColor": "transparent"
+    },
+    {
+      "type": "readback",
+      "position": "relative",
+      "width": "55%",
+      "pvName": "loc://detail#m${motor}",
+      "alarmBorder": true,
+      "margin": "5px 0px 0px 0px",
+      "fontSize": "1em"
+    }
+  ]
+}

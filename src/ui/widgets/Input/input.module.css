@@ -1,0 +1,12 @@
+.Input {
+  box-sizing: border-box;
+  height: 100%;
+  width: 100%;
+  min-width: 0;
+  display: flex;
+  text-align: center;
+}
+
+.Input.Readonly {
+  cursor: not-allowed;
+}
