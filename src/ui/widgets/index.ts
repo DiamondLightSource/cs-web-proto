@@ -10,5 +10,6 @@ export { Label } from "./Label/label";
 export { MenuButton } from "./MenuButton/menuButton";
 export { ProgressBar } from "./ProgressBar/progressBar";
 export { Readback } from "./Readback/readback";
+export { HookedReadback } from "./HookedReadback/hookedReadback";
 export { Shape } from "./Shape/shape";
 export { SlideControl } from "./SlideControl/slideControl";

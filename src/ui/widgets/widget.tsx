@@ -196,30 +196,30 @@ const DEFAULT_TOOLTIP = "${pvName}\n${pvValue}";
 
 export const PVWidget = (props: PVWidgetComponent): JSX.Element => {
   const [id] = useId();
-  const tooltip = props.tooltip === undefined ? DEFAULT_TOOLTIP : props.tooltip;
-  const idProps = { ...props, id: id, tooltip: tooltip };
+  // const tooltip = props.tooltip === undefined ? DEFAULT_TOOLTIP : props.tooltip;
+  // const idProps = { ...props, id: id, tooltip: tooltip };
 
   // Apply macros.
-  const macroProps = useMacros(idProps) as PVWidgetComponent & { id: string };
-  // Then rules
-  const ruleProps = useRules(macroProps) as PVWidgetComponent & { id: string };
+  // const macroProps = useMacros(idProps) as PVWidgetComponent & { id: string };
+  // // Then rules
+  // const ruleProps = useRules(macroProps) as PVWidgetComponent & { id: string };
   const [effectivePvName, connected, readonly, latestValue] = useConnection(
     id,
-    ruleProps.pvName
+    props.pvName
   );
-  const connectedProps = {
-    ...ruleProps,
-    pvName: effectivePvName,
-    connected: connected,
-    readonly: readonly,
-    value: latestValue
-  };
-  const resolvedTooltip = resolveTooltip(connectedProps);
-  connectedProps.resolvedTooltip = resolvedTooltip;
+  // const connectedProps = {
+  //   ...props,
+  //   pvName: effectivePvName,
+  //   connected: connected,
+  //   readonly: readonly,
+  //   value: latestValue
+  // };
+  // const resolvedTooltip = resolveTooltip(connectedProps);
+  // connectedProps.resolvedTooltip = resolvedTooltip;
 
   // Give containers access to everything apart from the containerStyling
   // Assume flexible position if not provided with anything
-  const { containerStyling, ...containerProps } = connectedProps;
+  const { containerStyling, ...containerProps } = props;
 
   // Manipulate for absolute styling
   // Put x and y back in as left and top respectively
@@ -227,29 +227,48 @@ export const PVWidget = (props: PVWidgetComponent): JSX.Element => {
   const mappedContainerStyling = { top: y, left: x, ...containerStyling };
 
   // Extract remaining parameters
-  const {
-    baseWidget,
-    widgetStyling = {},
-    alarmBorder = false,
-    ...baseWidgetProps
-  } = containerProps;
+  // const {
+  //   baseWidget,
+  //   widgetStyling = {},
+  //   alarmBorder = false,
+  //   ...baseWidgetProps
+  // } = containerProps;
 
-  const components = [];
+  // const components = [];
 
-  if (props.actions && props.actions.actions.length > 0) {
-    components.push(MenuWrapper);
-  }
-  if (alarmBorder) {
-    components.push(AlarmBorder);
-  }
-  components.push(TooltipWrapper);
-  components.push(baseWidget);
+  // if (props.actions && props.actions.actions.length > 0) {
+  //   components.push(MenuWrapper);
+  // }
+  // if (alarmBorder) {
+  //   components.push(AlarmBorder);
+  // }
+  // components.push(TooltipWrapper);
+  // components.push(baseWidget);
 
   return recursiveWrapping(
-    components,
+    [containerProps.baseWidget],
     mappedContainerStyling,
-    widgetStyling,
+    {},
     containerProps,
-    baseWidgetProps
+    {
+      effectivePvName: effectivePvName,
+      value: latestValue,
+      connected: connected,
+      readonly: readonly,
+      ...containerProps
+    }
   );
+  // const Component = containerProps.baseWidget;
+  // return (
+  //   <Component
+  //     style={{ ...mappedContainerStyling }}
+  //     {...{
+  //       effectivePvName: effectivePvName,
+  //       value: latestValue,
+  //       connected: connected,
+  //       readonly: readonly,
+  //       ...containerProps
+  //     }}
+  //   />
+  // );
 };
