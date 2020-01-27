@@ -64,7 +64,7 @@ export const TooltipWrapper = (props: {
   };
   const popoverStyle = { height: "100%", width: "100%" };
 
-  if (resolvedTooltip) {
+  if (popoverOpen && resolvedTooltip) {
     return (
       <div style={style}>
         <Popover
