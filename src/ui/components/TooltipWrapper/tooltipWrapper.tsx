@@ -20,10 +20,10 @@ export const TooltipWrapper = (props: {
   resolvedTooltip?: string;
 }): JSX.Element => {
   const [popoverOpen, setPopoverOpen] = useState(false);
-  const { pvName, style = {} } = props;
+  const { pvName, style = {}, resolvedTooltip = null } = props;
 
   let activeClasses = "";
-  if (props.resolvedTooltip) {
+  if (resolvedTooltip) {
     activeClasses += ` ${classes.TooltipAvailable}`;
   }
 
@@ -43,24 +43,41 @@ export const TooltipWrapper = (props: {
     }
   };
 
-  if (props.resolvedTooltip) {
+  /* The following elements were separated from the popover element
+  for clarity and performance
+  
+  In particular, the popover position was found to be causing inefficient
+  renders when it was previously in a list of preferred positions, i.e ["top"]
+  rather than "top". As we only have one preferred position, this works
+  fine for us. If you change it, be sure to measure the performance impact.
+  
+  The other functions and objects were separated as good practice to
+  prevent React seeing them as new functions/objects on renders which
+  can often be an issue with anonymous functions/object
+  */
+  const popoverPosition = "top";
+  function onClickOutside(): void {
+    setPopoverOpen(false);
+  }
+  const popoverContent = (): JSX.Element => {
+    return <div className={classes.Tooltip}>{resolvedTooltip}</div>;
+  };
+  const popoverStyle = { height: "100%", width: "100%" };
+
+  if (resolvedTooltip) {
     return (
       <div style={style}>
         <Popover
           isOpen={popoverOpen}
-          position={["top"]}
-          onClickOutside={(): void => setPopoverOpen(false)}
-          content={(): JSX.Element => {
-            return (
-              <div className={classes.Tooltip}>{props.resolvedTooltip}</div>
-            );
-          }}
+          position={popoverPosition}
+          onClickOutside={onClickOutside}
+          content={popoverContent}
         >
           <div
             onMouseDown={mouseDown}
             onMouseUp={mouseUp}
             className={activeClasses}
-            style={{ height: "100%", width: "100%" }}
+            style={popoverStyle}
           >
             {props.children}
           </div>
