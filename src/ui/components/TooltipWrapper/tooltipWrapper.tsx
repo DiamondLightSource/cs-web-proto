@@ -43,24 +43,27 @@ export const TooltipWrapper = (props: {
     }
   };
 
+  const popoverPosition = "top";
+  const onClickOutside = (): void => setPopoverOpen(false);
+  const popoverContent = (): JSX.Element => {
+    return <div className={classes.Tooltip}>{props.resolvedTooltip}</div>;
+  };
+  const popoverStyle = { height: "100%", width: "100%" };
+
   if (props.resolvedTooltip) {
     return (
       <div style={style}>
         <Popover
           isOpen={popoverOpen}
-          position={"top"}
-          onClickOutside={(): void => setPopoverOpen(false)}
-          content={(): JSX.Element => {
-            return (
-              <div className={classes.Tooltip}>{props.resolvedTooltip}</div>
-            );
-          }}
+          position={popoverPosition}
+          onClickOutside={onClickOutside}
+          content={popoverContent}
         >
           <div
             onMouseDown={mouseDown}
             onMouseUp={mouseUp}
             className={activeClasses}
-            style={{ height: "100%", width: "100%" }}
+            style={popoverStyle}
           >
             {props.children}
           </div>
