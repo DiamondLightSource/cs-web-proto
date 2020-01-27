@@ -20,11 +20,14 @@ import { alarm, ALARM_NONE } from "../types/vtypes/alarm";
 import { timeNow } from "../types/vtypes/time";
 import { vtypeInfo, PartialVType } from "../types/vtypes/merge";
 
-function partialise(value: VType | undefined): PartialVType | undefined {
+function partialise(
+  value: VType | undefined,
+  type?: string
+): PartialVType | undefined {
   if (value === undefined) {
     return undefined;
   } else {
-    return vtypeInfo(value, {});
+    return vtypeInfo(value, { type: type });
   }
 }
 
@@ -42,6 +45,7 @@ abstract class SimPv {
   public pvName: string;
   protected updateRate?: number;
   abstract getValue(): VType | undefined;
+  public type: string | undefined;
   public constructor(
     pvName: string,
     onConnectionUpdate: ConnectionChangedCallback,
@@ -71,7 +75,7 @@ abstract class SimPv {
 
   public publish(): void {
     if (this.subscribed) {
-      this.onValueUpdate(this.pvName, partialise(this.getValue()));
+      this.onValueUpdate(this.pvName, partialise(this.getValue(), this.type));
     }
   }
 
@@ -93,6 +97,7 @@ abstract class SimPv {
 }
 
 class SinePv extends SimPv {
+  type = "VDouble";
   public constructor(...args: SimArgs) {
     super(...args);
     setInterval(this.publish.bind(this), this.updateRate);
@@ -107,6 +112,7 @@ class SinePv extends SimPv {
 }
 
 class RampPv extends SimPv {
+  type = "VDouble";
   // Goes from 0-99 on a loop
   public constructor(...args: SimArgs) {
     super(...args);
@@ -122,6 +128,7 @@ class RampPv extends SimPv {
 }
 
 class RandomPv extends SimPv {
+  type = "VDouble";
   public constructor(...args: SimArgs) {
     super(...args);
     this.maybeSetInterval(this.publish.bind(this));
@@ -132,6 +139,7 @@ class RandomPv extends SimPv {
 }
 
 class Disconnector extends SimPv {
+  type = "VDouble";
   public constructor(...args: SimArgs) {
     super(...args);
     this.publish();
@@ -148,6 +156,7 @@ class Disconnector extends SimPv {
 }
 
 class SimEnumPv extends SimPv {
+  type = "VEnum";
   private value: VEnum = venum(
     0,
     ["one", "two", "three", "four"],
@@ -175,6 +184,7 @@ class SimEnumPv extends SimPv {
 }
 
 class EnumPv extends SimPv {
+  type = "VEnum";
   private value: VEnum = venum(
     0,
     ["zero", "one", "two", "three", "four", "five"],
@@ -235,6 +245,7 @@ class EnumPv extends SimPv {
 }
 
 class LocalPv extends SimPv {
+  type = "VString";
   private value: VType | undefined;
   public constructor(...args: SimArgs) {
     super(...args);
@@ -257,6 +268,7 @@ class LocalPv extends SimPv {
 }
 
 class LimitData extends SimPv {
+  type = "VDouble";
   private value: VType;
   // Class to provide PV value along with Alarm and Timestamp data
   // Initial limits will be 10, 20, 80 and 90 - with expected range between 0 and 100
