@@ -48,7 +48,7 @@ export const TooltipWrapper = (props: {
       <div style={style}>
         <Popover
           isOpen={popoverOpen}
-          position={["top"]}
+          position={"top"}
           onClickOutside={(): void => setPopoverOpen(false)}
           content={(): JSX.Element => {
             return (
