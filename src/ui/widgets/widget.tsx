@@ -151,6 +151,41 @@ const recursiveWrapping = (
   }
 };
 
+const WrappedComponents = (props: {
+  components: React.FC<any>[];
+  containerStyling: object;
+  widgetStyling: WidgetStyling | null;
+  containerProps: any & { id: string };
+  widgetProps: any;
+}): JSX.Element => {
+  /* Add connection to PV and the recursively wrap widgets */
+
+  const [effectivePvName, connected, readonly, latestValue] = useConnection(
+    props.containerProps.id,
+    props.containerProps.pvName
+  );
+
+  return recursiveWrapping(
+    props.components,
+    props.containerStyling,
+    props.widgetStyling,
+    {
+      ...props.containerProps,
+      pvName: effectivePvName,
+      connected: connected,
+      readonly: readonly,
+      value: latestValue
+    },
+    {
+      ...props.widgetProps,
+      pvName: effectivePvName,
+      connected: connected,
+      readonly: readonly,
+      value: latestValue
+    }
+  );
+};
+
 export const Widget = (props: WidgetComponent): JSX.Element => {
   // Generic widget component
   const [id] = useId();
@@ -203,21 +238,10 @@ export const PVWidget = (props: PVWidgetComponent): JSX.Element => {
   const macroProps = useMacros(idProps) as PVWidgetComponent & { id: string };
   // Then rules
   const ruleProps = useRules(macroProps) as PVWidgetComponent & { id: string };
-  const [effectivePvName, connected, readonly, latestValue] = useConnection(
-    id,
-    ruleProps.pvName
-  );
-  const connectedProps = {
-    ...ruleProps,
-    pvName: effectivePvName,
-    connected: connected,
-    readonly: readonly,
-    value: latestValue
-  };
 
   // Give containers access to everything apart from the containerStyling
   // Assume flexible position if not provided with anything
-  const { containerStyling, ...containerProps } = connectedProps;
+  const { containerStyling, ...containerProps } = ruleProps;
 
   // Manipulate for absolute styling
   // Put x and y back in as left and top respectively
@@ -243,11 +267,13 @@ export const PVWidget = (props: PVWidgetComponent): JSX.Element => {
   components.push(TooltipWrapper);
   components.push(baseWidget);
 
-  return recursiveWrapping(
-    components,
-    mappedContainerStyling,
-    widgetStyling,
-    containerProps,
-    baseWidgetProps
+  return (
+    <WrappedComponents
+      components={components}
+      containerStyling={mappedContainerStyling}
+      widgetStyling={widgetStyling}
+      containerProps={containerProps}
+      widgetProps={baseWidgetProps}
+    />
   );
 };
