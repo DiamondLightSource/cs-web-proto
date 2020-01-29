@@ -214,8 +214,6 @@ export const PVWidget = (props: PVWidgetComponent): JSX.Element => {
     readonly: readonly,
     value: latestValue
   };
-  const resolvedTooltip = resolveTooltip(connectedProps);
-  connectedProps.resolvedTooltip = resolvedTooltip;
 
   // Give containers access to everything apart from the containerStyling
   // Assume flexible position if not provided with anything
