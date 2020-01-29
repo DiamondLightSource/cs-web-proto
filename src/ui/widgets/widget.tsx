@@ -23,6 +23,7 @@ import {
   MacrosProp,
   MacrosPropOpt
 } from "./propTypes";
+import { VType } from "../../types/vtypes/vtypes";
 
 // Useful types for components which will later be turned into widgets
 // Required to define stateless component
@@ -122,7 +123,13 @@ const recursiveWrapping = (
   containerStyling: object,
   widgetStyling: WidgetStyling | null,
   containerProps: object,
-  widgetProps: object
+  widgetProps: object,
+  pvProps?: {
+    pvName: string;
+    connected: boolean;
+    readonly: boolean;
+    value?: VType;
+  }
 ): JSX.Element => {
   const [Component, ...remainingComponents] = components;
   if (components.length === 1) {
@@ -130,7 +137,7 @@ const recursiveWrapping = (
     return (
       <Component
         style={{ ...containerStyling, ...widgetStyling }}
-        {...widgetProps}
+        {...{ ...widgetProps, ...pvProps }}
       />
     );
   }
@@ -138,13 +145,17 @@ const recursiveWrapping = (
   // and pass on an empty object, otherwise wrap and move down
   else {
     return (
-      <Component style={containerStyling} {...containerProps}>
+      <Component
+        style={containerStyling}
+        {...{ ...containerProps, ...pvProps }}
+      >
         {recursiveWrapping(
           remainingComponents,
           { height: "100%", width: "100%" },
           widgetStyling,
           containerProps,
-          widgetProps
+          widgetProps,
+          pvProps
         )}
       </Component>
     );
@@ -169,15 +180,9 @@ const WrappedComponents = (props: {
     props.components,
     props.containerStyling,
     props.widgetStyling,
+    props.containerProps,
+    props.widgetProps,
     {
-      ...props.containerProps,
-      pvName: effectivePvName,
-      connected: connected,
-      readonly: readonly,
-      value: latestValue
-    },
-    {
-      ...props.widgetProps,
       pvName: effectivePvName,
       connected: connected,
       readonly: readonly,
