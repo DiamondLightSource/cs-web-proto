@@ -25,7 +25,7 @@ export const HookedReadbackComponent = (
 ): JSX.Element => {
   const { connected, value, precision, showUnits = false } = props;
   let { style } = props;
-  const alarm = alarmOf(value);
+  // const alarm = alarmOf(value);
   const display = displayOf(value);
   let displayedValue;
   if (!value) {
