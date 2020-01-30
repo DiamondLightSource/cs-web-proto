@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import { TooltipWrapper } from "../components/TooltipWrapper/tooltipWrapper";
-import { AlarmBorder } from "../components/AlarmBorder/alarmBorder";
+// import { AlarmBorder } from "../components/AlarmBorder/alarmBorder";
 import { MenuWrapper } from "../components/MenuWrapper/menuWrapper";
 import { PvState } from "../../redux/csState";
 import { useMacros } from "../hooks/useMacros";
@@ -192,7 +192,7 @@ export const Widget = (props: WidgetComponent): JSX.Element => {
   );
 };
 // eslint-disable-next-line no-template-curly-in-string
-const DEFAULT_TOOLTIP = "${pvName}\n${pvValue}";
+// const DEFAULT_TOOLTIP = "${pvName}\n${pvValue}";
 
 export const PVWidget = (props: PVWidgetComponent): JSX.Element => {
   const [id] = useId();
