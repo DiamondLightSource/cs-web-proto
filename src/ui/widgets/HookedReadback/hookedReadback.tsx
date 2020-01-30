@@ -67,13 +67,12 @@ export const HookedReadbackComponent = (
     };
   }
 
+  const className = `Readback ${classes.HookedReadback} ${getClass(
+    alarm.getSeverity()
+  )}`;
+
   return (
-    <div
-      className={`Readback ${classes.HookedReadback} ${getClass(
-        alarm.getSeverity()
-      )}`}
-      style={style}
-    >
+    <div className={className} style={style}>
       {displayedValue}
     </div>
   );
@@ -91,12 +90,14 @@ export const HookedReadback = (
   // Ignoring effectivePvName as not used by readback
   const [, connected, readonly, latestValue] = useConnection(id, props.pvName);
 
+  const style = { ...props.containerStyling, ...props.widgetStyling };
+
   return (
     <HookedReadbackComponent
       value={latestValue}
       connected={connected}
       readonly={readonly}
-      style={{ ...props.containerStyling, ...props.widgetStyling }}
+      style={style}
     />
   );
 };
