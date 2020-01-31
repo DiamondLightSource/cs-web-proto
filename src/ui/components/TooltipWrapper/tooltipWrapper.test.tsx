@@ -1,11 +1,10 @@
 import React from "react";
 import { mount, ReactWrapper } from "enzyme";
 import copyToClipboard from "clipboard-copy";
+import Popover from "react-tiny-popover";
 
 import { TooltipWrapper } from "./tooltipWrapper";
-import Popover from "react-tiny-popover";
 import { vstring } from "../../../types/vtypes/string";
-import { resolveTooltip } from "../../widgets/tooltip";
 
 jest.mock("clipboard-copy", () => {
   return jest.fn((a: string) => Promise.resolve());
