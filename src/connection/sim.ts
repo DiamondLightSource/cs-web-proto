@@ -16,7 +16,12 @@ import {
   VEnum
 } from "../types/vtypes/vtypes";
 import { VString } from "../types/vtypes/string";
-import { alarm, ALARM_NONE } from "../types/vtypes/alarm";
+import {
+  alarm,
+  ALARM_NONE,
+  AlarmSeverity,
+  AlarmStatus
+} from "../types/vtypes/alarm";
 import { timeNow } from "../types/vtypes/time";
 import { vtypeInfo, PartialVType } from "../types/vtypes/merge";
 
@@ -121,9 +126,15 @@ class RampPv extends SimPv {
 
   public getValue(): VType | undefined {
     const d = new Date();
-    return vdouble(
-      (d.getSeconds() % 10) * 10 + Math.floor(d.getMilliseconds() / 100)
-    );
+    const val =
+      (d.getSeconds() % 10) * 10 + Math.floor(d.getMilliseconds() / 100);
+    let rampAlarm = ALARM_NONE;
+    if (val > 90 || val < 10) {
+      rampAlarm = alarm(AlarmSeverity.MAJOR, AlarmStatus.NONE, "");
+    } else if (val > 80 || val < 20) {
+      rampAlarm = alarm(AlarmSeverity.MINOR, AlarmStatus.NONE, "");
+    }
+    return vdouble(val, rampAlarm);
   }
 }
 
