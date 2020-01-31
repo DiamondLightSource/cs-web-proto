@@ -1,12 +1,25 @@
 import React from "react";
-import { shallow, ShallowWrapper } from "enzyme";
+import { mount, ReactWrapper } from "enzyme";
+import copyToClipboard from "clipboard-copy";
 
 import { TooltipWrapper } from "./tooltipWrapper";
 import Popover from "react-tiny-popover";
 import { vstring } from "../../../types/vtypes/string";
+import { resolveTooltip } from "../../widgets/tooltip";
 
-let wrapper: ShallowWrapper;
-let wrappedElement: ShallowWrapper;
+jest.mock("clipboard-copy", () => {
+  return jest.fn((a: string) => Promise.resolve());
+});
+(copyToClipboard as jest.Mock).mockImplementation(() => Promise.resolve());
+
+jest.mock("../../widgets/tooltip", () => {
+  return {
+    resolveTooltip: jest.fn((props: any) => props.resolvedTooltip)
+  };
+});
+
+let wrapper: ReactWrapper;
+let wrappedElement: ReactWrapper;
 
 beforeEach((): void => {
   const tooltipWrapper = (
@@ -20,12 +33,13 @@ beforeEach((): void => {
       Testing Tooltip Wrapper
     </TooltipWrapper>
   );
-  wrapper = shallow(tooltipWrapper);
+  wrapper = mount(tooltipWrapper);
   wrappedElement = wrapper.childAt(0);
 });
 
 describe("TooltipWrapper", (): void => {
-  test("it contains a Popover", (): void => {
+  test("it contains a Popover after mouse down click", (): void => {
+    wrapper.simulate("mouseDown", { button: 1 });
     const popover = wrapper.find(Popover);
     expect(popover.name()).toEqual("Popover");
   });
