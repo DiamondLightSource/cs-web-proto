@@ -99,8 +99,9 @@ export const Widget = (
 ): JSX.Element => {
   const [id] = useId();
   let tooltip = props.tooltip;
-  if ("pvName" in props) {
-    tooltip = props.tooltip ?? DEFAULT_TOOLTIP;
+  // Set default tooltip only for PV-enabled widgets.
+  if ("pvName" in props && !props.tooltip) {
+    tooltip = DEFAULT_TOOLTIP;
   }
   const idProps = { ...props, id: id, tooltip: tooltip };
 
@@ -137,13 +138,23 @@ export const Widget = (
   components.push(TooltipWrapper);
   components.push(baseWidget);
 
-  return (
-    <ConnectingComponent
-      components={components}
-      containerStyling={mappedContainerStyling}
-      widgetStyling={widgetStyling}
-      containerProps={containerProps}
-      widgetProps={baseWidgetProps}
-    />
-  );
+  if ("pvName" in props) {
+    return (
+      <ConnectingComponent
+        components={components}
+        containerStyling={mappedContainerStyling}
+        widgetStyling={widgetStyling}
+        containerProps={containerProps}
+        widgetProps={baseWidgetProps}
+      />
+    );
+  } else {
+    return recursiveWrapping(
+      components,
+      mappedContainerStyling,
+      widgetStyling,
+      containerProps,
+      baseWidgetProps
+    );
+  }
 };
