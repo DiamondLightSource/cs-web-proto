@@ -138,23 +138,15 @@ export const Widget = (
   components.push(TooltipWrapper);
   components.push(baseWidget);
 
-  if ("pvName" in props) {
-    return (
-      <ConnectingComponent
-        components={components}
-        containerStyling={mappedContainerStyling}
-        widgetStyling={widgetStyling}
-        containerProps={containerProps}
-        widgetProps={baseWidgetProps}
-      />
-    );
-  } else {
-    return recursiveWrapping(
-      components,
-      mappedContainerStyling,
-      widgetStyling,
-      containerProps,
-      baseWidgetProps
-    );
-  }
+  // We could select the ConnectingComponent only if there is a PV
+  // to which to connect, if we felt that would be more efficient.
+  return (
+    <ConnectingComponent
+      components={components}
+      containerStyling={mappedContainerStyling}
+      widgetStyling={widgetStyling}
+      containerProps={containerProps}
+      widgetProps={baseWidgetProps}
+    />
+  );
 };
