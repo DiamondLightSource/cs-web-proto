@@ -1,13 +1,13 @@
 import React from "react";
 import { mount } from "enzyme";
 
-import { Widget, PVWidget } from "./widget";
+import { Widget } from "./widget";
 import { LabelComponent } from "./Label/label";
 import { MacroProps } from "../hooks/useMacros";
 import { vdouble } from "../../types/vtypes/vtypes";
 import { useConnection } from "../hooks/useConnection";
-import { RuleProps } from "../hooks/useRules";
 import { TooltipWrapper } from "../components/TooltipWrapper/tooltipWrapper";
+import { AnyProps } from "./widgetProps";
 
 // Mock the useMacros hook as otherwise we'd have to provide
 // a store for it to use.
@@ -19,7 +19,7 @@ jest.mock("../hooks/useMacros", (): object => {
 // Mock useRules.
 jest.mock("../hooks/useRules", (): object => {
   return {
-    useRules: (props: RuleProps): RuleProps => props
+    useRules: (props: AnyProps): AnyProps => props
   };
 });
 // Slightly elaborate mocking of useConnection.
@@ -76,7 +76,7 @@ describe("<Widget />", (): void => {
 
   test("it has TooltipWrapper", (): void => {
     const component = mount(
-      <PVWidget
+      <Widget
         pvName="pv"
         baseWidget={TestLabel}
         containerStyling={{ position: "relative" }}
@@ -92,7 +92,7 @@ describe("<Widget />", (): void => {
 
   test("it has alarmborder", (): void => {
     const component = mount(
-      <PVWidget
+      <Widget
         pvName="pv"
         baseWidget={TestLabel}
         containerStyling={{ position: "relative" }}
@@ -109,7 +109,7 @@ describe("<Widget />", (): void => {
 
   test("it has alarmborder and TooltipWrapper", (): void => {
     const component = mount(
-      <PVWidget
+      <Widget
         pvName="pv"
         baseWidget={TestLabel}
         containerStyling={{ position: "relative" }}

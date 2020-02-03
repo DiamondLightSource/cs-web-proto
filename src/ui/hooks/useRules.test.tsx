@@ -1,8 +1,9 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { Rule, useRules, RuleProps } from "./useRules";
+import { Rule, useRules } from "./useRules";
 import { shallow } from "enzyme";
 import { vdouble } from "../../types/vtypes/vtypes";
+import { AnyProps } from "../widgets/widgetProps";
 
 // Mock useSubscription.
 jest.mock("./useSubscription", (): object => {
@@ -23,8 +24,8 @@ jest.mock("react-redux", (): object => {
     PV1: [{ value: vdouble(2), connected: true, readonly: false }, "PV1"]
   };
 });
-const RuleTester = (props: RuleProps): JSX.Element => {
-  const ruleProps = useRules(props);
+const RuleTester = (props: { id: string; rules: Rule[] }): JSX.Element => {
+  const ruleProps = useRules(props as AnyProps);
   return <div>{ruleProps.text}</div>;
 };
 
