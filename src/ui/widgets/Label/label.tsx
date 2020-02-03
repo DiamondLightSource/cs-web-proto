@@ -1,7 +1,8 @@
 import React from "react";
 
 import classes from "./label.module.css";
-import { Component, Widget, WidgetPropType } from "../widget";
+import { Widget } from "../widget";
+import { Component, WidgetPropType } from "../widgetProps";
 import { registerWidget } from "../register";
 import { BoolPropOpt, StringOrNumProp, InferWidgetProps } from "../propTypes";
 

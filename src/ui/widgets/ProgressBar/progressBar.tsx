@@ -2,7 +2,8 @@ import React from "react";
 
 import classes from "./progressBar.module.css";
 import { vtypeOrUndefinedToNumber } from "../../../types/vtypes/utils";
-import { PVComponent, PVWidget, PVWidgetPropType } from "../widget";
+import { Widget } from "../widget";
+import { PVComponent, PVWidgetPropType } from "../widgetProps";
 import { registerWidget } from "../register";
 import {
   FloatPropOpt,
@@ -87,6 +88,6 @@ const ProgressBarWidgetProps = {
 
 export const ProgressBar = (
   props: InferWidgetProps<typeof ProgressBarWidgetProps>
-): JSX.Element => <PVWidget baseWidget={ProgressBarComponent} {...props} />;
+): JSX.Element => <Widget baseWidget={ProgressBarComponent} {...props} />;
 
 registerWidget(ProgressBar, ProgressBarWidgetProps, "progressbar");

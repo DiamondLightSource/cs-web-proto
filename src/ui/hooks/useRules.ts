@@ -1,4 +1,3 @@
-import React from "react";
 import log from "loglevel";
 
 import { useSubscription } from "./useSubscription";
@@ -7,6 +6,7 @@ import { MacroMap, CsState } from "../../redux/csState";
 
 import { evaluate } from "mathjs";
 import { PvArrayResults, pvStateSelector, pvStateComparator } from "./utils";
+import { AnyProps } from "../widgets/widgetProps";
 
 export interface Rule {
   condition: string;
@@ -16,13 +16,8 @@ export interface Rule {
   prop: string;
 }
 
-export interface RuleProps extends React.PropsWithChildren<any> {
-  id: string;
-  rules?: Rule[];
-}
-
-export function useRules(props: RuleProps): RuleProps {
-  const newProps: RuleProps = { ...props };
+export function useRules(props: AnyProps): AnyProps {
+  const newProps: AnyProps = { ...props };
   const rules = props.rules === undefined ? [] : props.rules;
   let pvs: string[] = [];
   for (const rule of rules) {
@@ -49,8 +44,8 @@ export function useRules(props: RuleProps): RuleProps {
         condition = condition.replace(name, pvState.value.getValue());
         try {
           const state = evaluate(condition);
-          const styleValue = state ? trueState : falseState;
-          newProps[prop] = styleValue;
+          const updatedValue = state ? trueState : falseState;
+          newProps[prop] = updatedValue;
         } catch (error) {
           log.warn(`Failed to evaluate rule ${condition}: ${error}`);
         }

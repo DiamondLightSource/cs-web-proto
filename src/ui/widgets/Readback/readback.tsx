@@ -1,6 +1,7 @@
 import React from "react";
 
-import { PVComponent, PVWidget, PVWidgetPropType } from "../widget";
+import { Widget } from "../widget";
+import { PVComponent, PVWidgetPropType } from "../widgetProps";
 
 import classes from "./readback.module.css";
 import { alarmOf, AlarmSeverity } from "../../../types/vtypes/alarm";
@@ -77,6 +78,6 @@ const ReadbackWidgetProps = {
 
 export const Readback = (
   props: InferWidgetProps<typeof ReadbackWidgetProps>
-): JSX.Element => <PVWidget baseWidget={ReadbackComponent} {...props} />;
+): JSX.Element => <Widget baseWidget={ReadbackComponent} {...props} />;
 
 registerWidget(Readback, ReadbackWidgetProps, "readback");

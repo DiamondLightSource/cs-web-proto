@@ -1,7 +1,8 @@
 import React from "react";
 
 import classes from "./flexContainer.module.css";
-import { Component, Widget, WidgetPropType } from "../widget";
+import { Widget } from "../widget";
+import { Component, WidgetPropType } from "../widgetProps";
 import { registerWidget } from "../register";
 import { ChildrenPropOpt, ChoicePropOpt, InferWidgetProps } from "../propTypes";
 

@@ -3,7 +3,8 @@ import React, { useState } from "react";
 import classes from "./input.module.css";
 import { writePv } from "../../hooks/useSubscription";
 import { vtypeToString, stringToVtype } from "../../../types/vtypes/utils";
-import { PVInputComponent, PVWidget, PVWidgetPropType } from "../widget";
+import { Widget } from "../widget";
+import { PVInputComponent, PVWidgetPropType } from "../widgetProps";
 import { registerWidget } from "../register";
 import { InferWidgetProps } from "../propTypes";
 
@@ -87,6 +88,6 @@ export const SmartInputComponent = (props: PVInputComponent): JSX.Element => {
 
 export const Input = (
   props: InferWidgetProps<typeof PVWidgetPropType>
-): JSX.Element => <PVWidget baseWidget={SmartInputComponent} {...props} />;
+): JSX.Element => <Widget baseWidget={SmartInputComponent} {...props} />;
 
 registerWidget(Input, PVWidgetPropType, "input");

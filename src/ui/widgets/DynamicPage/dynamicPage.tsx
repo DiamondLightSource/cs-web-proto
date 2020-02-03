@@ -2,7 +2,8 @@ import React, { useContext } from "react";
 import log from "loglevel";
 import { Route, RouteComponentProps } from "react-router-dom";
 
-import { Component, Widget, WidgetPropType } from "../widget";
+import { Widget } from "../widget";
+import { Component, WidgetPropType } from "../widgetProps";
 import { ActionButton } from "../ActionButton/actionButton";
 import { CLOSE_PAGE } from "../widgetActions";
 import { registerWidget } from "../register";

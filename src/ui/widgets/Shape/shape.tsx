@@ -1,5 +1,6 @@
 import React from "react";
-import { Component, Widget, WidgetPropType } from "../widget";
+import { Widget } from "../widget";
+import { Component, WidgetPropType } from "../widgetProps";
 import { registerWidget } from "../register";
 import { BoolPropOpt, StringPropOpt, InferWidgetProps } from "../propTypes";
 

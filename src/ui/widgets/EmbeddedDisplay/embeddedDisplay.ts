@@ -8,7 +8,7 @@ import {
   widgetDescriptionToComponent
 } from "../createComponent";
 import { MacroMap } from "../../../redux/csState";
-import { WidgetPropType } from "../widget";
+import { WidgetPropType } from "../widgetProps";
 import { bobToWidgets } from "./bobUtils";
 import { opiToWidgets } from "./opiUtils";
 import { registerWidget } from "../register";

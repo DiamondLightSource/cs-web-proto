@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { WidgetActions, executeActions } from "../widgetActions";
-import { PVComponent, PVWidget, PVWidgetPropType } from "../widget";
+import { Widget } from "../widget";
+import { PVComponent, PVWidgetPropType } from "../widgetProps";
 import classes from "./actionButton.module.css";
 import { useHistory } from "react-router-dom";
 import { registerWidget } from "../register";
@@ -80,6 +81,6 @@ export const ActionButtonWidget = (
 
 export const ActionButton = (
   props: InferWidgetProps<typeof ActionButtonProps>
-): JSX.Element => <PVWidget baseWidget={ActionButtonWidget} {...props} />;
+): JSX.Element => <Widget baseWidget={ActionButtonWidget} {...props} />;
 
 registerWidget(ActionButton, ActionButtonProps, "actionbutton");
