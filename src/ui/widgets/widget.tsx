@@ -7,7 +7,6 @@ import { useMacros } from "../hooks/useMacros";
 import { useConnection } from "../hooks/useConnection";
 import { useId } from "react-id-generator";
 import { useRules } from "../hooks/useRules";
-import { resolveTooltip } from "./tooltip";
 
 import {
   WidgetStyling,
@@ -53,6 +52,45 @@ const recursiveWrapping = (
   }
 };
 
+/* Separate this component because the connection to the primary
+   PV is likely to be the main source of updates. React can re-render
+   this component but need not re-render Widget every time.
+*/
+const ConnectingComponent = (props: {
+  components: React.FC<any>[];
+  containerStyling: object;
+  widgetStyling: WidgetStyling | null;
+  containerProps: any & { id: string };
+  widgetProps: any;
+}): JSX.Element => {
+  /* Add connection to PV and then recursively wrap widgets */
+
+  const [effectivePvName, connected, readonly, latestValue] = useConnection(
+    props.containerProps.id,
+    props.containerProps.pvName
+  );
+
+  return recursiveWrapping(
+    props.components,
+    props.containerStyling,
+    props.widgetStyling,
+    {
+      ...props.containerProps,
+      pvName: effectivePvName,
+      connected: connected,
+      readonly: readonly,
+      value: latestValue
+    },
+    {
+      ...props.widgetProps,
+      pvName: effectivePvName,
+      connected: connected,
+      readonly: readonly,
+      value: latestValue
+    }
+  );
+};
+
 // eslint-disable-next-line no-template-curly-in-string
 const DEFAULT_TOOLTIP = "${pvName}\n${pvValue}";
 
@@ -69,25 +107,11 @@ export const Widget = (
   // Apply macros.
   const macroProps: AnyProps = useMacros(idProps);
   // Then rules
-  const ruleProps: AnyProps = useRules(macroProps);
-  // Connection hook must always be called even if pvName undefined.
-  const [effectivePvName, connected, readonly, latestValue] = useConnection(
-    id,
-    ruleProps.pvName
-  );
-  const connectedProps = ruleProps;
-  if ("pvName" in props) {
-    connectedProps.pvName = effectivePvName;
-    connectedProps.connected = connected;
-    connectedProps.readonly = readonly;
-    connectedProps.value = latestValue;
-  }
-  const resolvedTooltip = resolveTooltip(connectedProps);
-  connectedProps.resolvedTooltip = resolvedTooltip;
+  const ruleProps = useRules(macroProps) as PVWidgetComponent & { id: string };
 
   // Give containers access to everything apart from the containerStyling
   // Assume flexible position if not provided with anything
-  const { containerStyling, ...containerProps } = connectedProps;
+  const { containerStyling, ...containerProps } = ruleProps;
 
   // Manipulate for absolute styling
   // Put x and y back in as left and top respectively
@@ -113,11 +137,13 @@ export const Widget = (
   components.push(TooltipWrapper);
   components.push(baseWidget);
 
-  return recursiveWrapping(
-    components,
-    mappedContainerStyling,
-    widgetStyling,
-    containerProps,
-    baseWidgetProps
+  return (
+    <ConnectingComponent
+      components={components}
+      containerStyling={mappedContainerStyling}
+      widgetStyling={widgetStyling}
+      containerProps={containerProps}
+      widgetProps={baseWidgetProps}
+    />
   );
 };

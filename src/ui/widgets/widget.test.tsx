@@ -59,7 +59,6 @@ describe("<Widget />", (): void => {
     // div child of TooltipWrapper
     const c2 = c1.childAt(0);
     expect(c2.children()).toHaveLength(1);
-    console.log(c2);
     expect(c2.type()).toEqual("div");
     // TestLabel
     const c3 = c2.childAt(0);
@@ -72,7 +71,7 @@ describe("<Widget />", (): void => {
     const c5 = c4.childAt(0);
     expect(c5.type()).toEqual("div");
     // No further children
-    expect(c5.children()).toHaveLength(0);
+    expect(c5.text()).toEqual("Test");
   });
 
   test("it has TooltipWrapper", (): void => {
@@ -83,7 +82,12 @@ describe("<Widget />", (): void => {
         containerStyling={{ position: "relative" }}
       />
     );
-    expect(component.childAt(0).name()).toEqual("TooltipWrapper");
+    expect(
+      component
+        .childAt(0)
+        .childAt(0)
+        .name()
+    ).toEqual("TooltipWrapper");
   });
 
   test("it has alarmborder", (): void => {
@@ -95,7 +99,12 @@ describe("<Widget />", (): void => {
         alarmBorder={true}
       />
     );
-    expect(component.childAt(0).name()).toEqual("AlarmBorder");
+    expect(
+      component
+        .childAt(0)
+        .childAt(0)
+        .name()
+    ).toEqual("AlarmBorder");
   });
 
   test("it has alarmborder and TooltipWrapper", (): void => {
@@ -107,9 +116,14 @@ describe("<Widget />", (): void => {
         alarmBorder={true}
       />
     );
-    expect(component.childAt(0).name()).toEqual("AlarmBorder");
+    expect(
+      component
+        .childAt(0)
+        .childAt(0)
+        .name()
+    ).toEqual("AlarmBorder");
     // Alarm children div
-    const c1 = component.childAt(0);
+    const c1 = component.childAt(0).childAt(0);
     // Copy wrapper
     const c2 = c1.childAt(0);
     expect(c2.childAt(0).name()).toEqual("TooltipWrapper");
