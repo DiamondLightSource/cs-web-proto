@@ -56,7 +56,7 @@ const recursiveWrapping = (
    PV is likely to be the main source of updates. React can re-render
    this component but need not re-render Widget every time.
 */
-const ConnectingComponent = (props: {
+export const ConnectingComponent = (props: {
   components: React.FC<any>[];
   containerStyling: object;
   widgetStyling: WidgetStyling | null;

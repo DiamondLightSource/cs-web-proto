@@ -1,7 +1,7 @@
 import React from "react";
 import { mount } from "enzyme";
 
-import { Widget } from "./widget";
+import { Widget, ConnectingComponent } from "./widget";
 import { LabelComponent } from "./Label/label";
 import { MacroProps } from "../hooks/useMacros";
 import { vdouble } from "../../types/vtypes/vtypes";
@@ -52,26 +52,29 @@ describe("<Widget />", (): void => {
   test("it has one child all the way down", (): void => {
     // Widget
     expect(component.children()).toHaveLength(1);
-    // TooltipWrapper
+    // ConnectingComponent
     const c1 = component.childAt(0);
-    expect(c1.type()).toEqual(TooltipWrapper);
+    expect(c1.type()).toEqual(ConnectingComponent);
     expect(c1.children()).toHaveLength(1);
-    // div child of TooltipWrapper
+    // TooltipWrapper
     const c2 = c1.childAt(0);
     expect(c2.children()).toHaveLength(1);
-    expect(c2.type()).toEqual("div");
-    // TestLabel
+    expect(c2.type()).toEqual(TooltipWrapper);
+    // div child of TooltipWrapper
     const c3 = c2.childAt(0);
-    expect(c3.type()).toEqual(TestLabel);
+    expect(c3.type()).toEqual("div");
     expect(c3.children()).toHaveLength(1);
-    // LabelComponent
+    // TestLabel
     const c4 = c3.childAt(0);
-    expect(c4.type()).toEqual(LabelComponent);
-    // Finally the Label div
+    expect(c4.type()).toEqual(TestLabel);
+    // LabelComponent
     const c5 = c4.childAt(0);
-    expect(c5.type()).toEqual("div");
+    expect(c5.type()).toEqual(LabelComponent);
+    // Finally the Label div
+    const c6 = c5.childAt(0);
+    expect(c6.type()).toEqual("div");
     // No further children
-    expect(c5.text()).toEqual("Test");
+    expect(c6.text()).toEqual("Test");
   });
 
   test("it has TooltipWrapper", (): void => {
