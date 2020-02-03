@@ -8,6 +8,7 @@ import copyToClipboard from "clipboard-copy";
 import Popover from "react-tiny-popover";
 
 import { VType } from "../../../types/vtypes/vtypes";
+import { resolveTooltip } from "../../widgets/tooltip";
 import classes from "./tooltipWrapper.module.css";
 
 export const TooltipWrapper = (props: {
@@ -20,7 +21,9 @@ export const TooltipWrapper = (props: {
   resolvedTooltip?: string;
 }): JSX.Element => {
   const [popoverOpen, setPopoverOpen] = useState(false);
-  const { pvName, style = {}, resolvedTooltip = null } = props;
+  const { pvName, style = {} } = props;
+
+  const resolvedTooltip = resolveTooltip(props);
 
   let activeClasses = "";
   if (resolvedTooltip) {
@@ -64,7 +67,7 @@ export const TooltipWrapper = (props: {
   };
   const popoverStyle = { height: "100%", width: "100%" };
 
-  if (resolvedTooltip) {
+  if (popoverOpen && resolvedTooltip) {
     return (
       <div style={style}>
         <Popover
