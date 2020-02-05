@@ -6,35 +6,34 @@ import { MacroMap, CsState } from "../../redux/csState";
 export interface MacroProps extends React.PropsWithChildren<any> {
   macroMap?: MacroMap;
   pvName?: string;
+  rawPvName?: string;
 }
 
-function rescursiveResolve(props: object, macroMap: MacroMap): any {
-  const resolvedProps: any = {};
+/*
+ * Resolve macros in place for all strings in the props object, recursing
+ * into any arrays and objects.
+ * Do not descend into child components as this is called for each widget.
+ */
+function rescursiveResolve(props: any, macroMap: MacroMap): void {
   if (props === null) {
-    return null;
+    return;
   }
   for (const [prop, value] of Object.entries(props)) {
     // Don't descend into child components.
-    if (prop === "children") {
-      resolvedProps[prop] = value;
-    } else {
+    if (prop !== "children") {
       if (typeof value === "object") {
         if (Array.isArray(value)) {
-          const newArray = value.map((member: object): object =>
+          value.forEach((member: object): void =>
             rescursiveResolve(member, macroMap)
           );
-          resolvedProps[prop] = newArray;
         } else {
-          resolvedProps[prop] = rescursiveResolve(value, macroMap);
+          rescursiveResolve(value, macroMap);
         }
       } else if (typeof value === "string") {
-        resolvedProps[prop] = resolveMacros(value, macroMap);
-      } else {
-        resolvedProps[prop] = value;
+        props[prop] = resolveMacros(value, macroMap);
       }
     }
   }
-  return resolvedProps;
 }
 
 export function useMacros<P extends MacroProps>(props: P): P {
@@ -46,7 +45,7 @@ export function useMacros<P extends MacroProps>(props: P): P {
     allMacros = { ...allMacros, ...props.macroMap };
   }
   const rawPvName = props.pvName;
-  const resolvedProps: any = rescursiveResolve(props, allMacros);
-  resolvedProps.rawPvName = rawPvName;
-  return resolvedProps;
+  rescursiveResolve(props, allMacros);
+  props.rawPvName = rawPvName;
+  return props;
 }
