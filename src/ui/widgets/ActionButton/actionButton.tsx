@@ -37,7 +37,8 @@ export const ActionButtonComponent = (
         height: "100%",
         width: "100%",
         textAlign: "center",
-        backgroundColor: props.backgroundColor
+        backgroundColor: props.backgroundColor,
+        color: props.foregroundColor
       }}
     >
       {src !== undefined ? (
