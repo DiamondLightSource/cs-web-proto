@@ -41,11 +41,6 @@ export function widgetDescriptionToComponent(
     border = undefined,
     minWidth = undefined,
     maxWidth = undefined,
-    color = undefined,
-    font = undefined,
-    fontSize = undefined,
-    fontWeight = undefined,
-    textAlign = undefined,
     ...otherProps
   } = constProps;
 
@@ -93,15 +88,6 @@ export function widgetDescriptionToComponent(
     maxWidth: maxWidth
   });
 
-  const widgetStyling = filterUndefinedOut({
-    color: color,
-    font: font,
-    fontSize: fontSize,
-    fontWeight: fontWeight,
-    textAlign: textAlign,
-    backgroundColor: backgroundColor
-  });
-
   // Perform checking on propTypes
   const widgetInfo = { containerStyling: containerStyling, ...otherProps };
   const error: string | undefined = checkPropTypes(
@@ -141,8 +127,8 @@ export function widgetDescriptionToComponent(
       // If this component has siblings, use its index in the array as a key.
       key={listIndex}
       containerStyling={containerStyling}
-      widgetStyling={widgetStyling}
       macroMap={latestMacroMap}
+      backgroundColor={backgroundColor}
       {...otherProps}
     >
       {ChildComponents}

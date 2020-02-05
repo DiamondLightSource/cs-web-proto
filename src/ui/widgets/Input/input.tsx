@@ -80,7 +80,6 @@ export const SmartInputComponent = (props: PVInputComponent): JSX.Element => {
       onChange={onChange}
       onBlur={onBlur}
       onClick={onClick}
-      style={props.style}
     />
   );
 };

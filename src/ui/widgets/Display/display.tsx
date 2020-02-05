@@ -1,24 +1,30 @@
 import React from "react";
 
-import { Component, Widget, WidgetPropType } from "../widget";
+import { Widget, WidgetPropType } from "../widget";
 import { registerWidget } from "../register";
-import { ChoicePropOpt, ChildrenPropOpt, InferWidgetProps } from "../propTypes";
+import {
+  ChoicePropOpt,
+  ChildrenPropOpt,
+  InferWidgetProps,
+  StringPropOpt
+} from "../propTypes";
 
 const DisplayProps = {
   children: ChildrenPropOpt,
-  overflow: ChoicePropOpt(["scroll", "hidden", "auto", "visible"])
+  overflow: ChoicePropOpt(["scroll", "hidden", "auto", "visible"]),
+  backgroundColor: StringPropOpt
 };
 
 // Generic display widget to put other things inside
 const DisplayComponent = (
-  props: InferWidgetProps<typeof DisplayProps> & Component
+  props: InferWidgetProps<typeof DisplayProps>
 ): JSX.Element => (
   <div
     style={{
       position: "relative",
       boxSizing: "border-box",
       overflow: props.overflow,
-      ...props.style
+      backgroundColor: props.backgroundColor
     }}
   >
     {props.children}

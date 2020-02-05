@@ -1,5 +1,5 @@
 import React from "react";
-import { Component, Widget, WidgetPropType } from "../widget";
+import { Widget, WidgetPropType } from "../widget";
 import { registerWidget } from "../register";
 import { BoolPropOpt, StringPropOpt, InferWidgetProps } from "../propTypes";
 
@@ -12,10 +12,9 @@ const ShapeProps = {
 };
 
 export const ShapeComponent = (
-  props: InferWidgetProps<typeof ShapeProps> & Component
+  props: InferWidgetProps<typeof ShapeProps>
 ): JSX.Element => {
   const newStyle: any = {
-    ...props.style,
     width: props.shapeWidth ? props.shapeWidth : "100%",
     height: props.shapeHeight ? props.shapeHeight : "100%",
     borderRadius: props.shapeRadius ? props.shapeRadius : "",

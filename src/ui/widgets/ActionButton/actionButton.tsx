@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { WidgetActions, executeActions } from "../widgetActions";
-import { PVComponent, PVWidget, PVWidgetPropType } from "../widget";
+import { PVWidget, PVWidgetPropType } from "../widget";
 import classes from "./actionButton.module.css";
 import { useHistory } from "react-router-dom";
 import { registerWidget } from "../register";
@@ -16,8 +16,9 @@ import { BaseUrlContext } from "../../../baseUrl";
 export interface ActionButtonProps {
   text: string;
   onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
-  style?: {};
   image?: string;
+  backgroundColor?: string;
+  foregroundColor?: string;
 }
 
 export const ActionButtonComponent = (
@@ -32,7 +33,12 @@ export const ActionButtonComponent = (
     <button
       className={classes.actionbutton}
       onClick={props.onClick}
-      style={props.style}
+      style={{
+        height: "100%",
+        width: "100%",
+        textAlign: "center",
+        backgroundColor: props.backgroundColor
+      }}
     >
       {src !== undefined ? (
         <figure className={classes.figure}>
@@ -49,8 +55,10 @@ export const ActionButtonComponent = (
 const ActionButtonPropType = {
   text: StringProp,
   actions: ActionsPropType,
-  style: ObjectPropOpt,
-  image: StringPropOpt
+  positionStyle: ObjectPropOpt,
+  image: StringPropOpt,
+  backgroundColor: StringPropOpt,
+  foregroundColor: StringPropOpt
 };
 
 const ActionButtonProps = {
@@ -60,7 +68,7 @@ const ActionButtonProps = {
 
 // Menu button which also knows how to write to a PV
 export const ActionButtonWidget = (
-  props: InferWidgetProps<typeof ActionButtonPropType> & PVComponent
+  props: InferWidgetProps<typeof ActionButtonPropType>
 ): JSX.Element => {
   // Function to send the value on to the PV
   const history = useHistory();
@@ -71,9 +79,10 @@ export const ActionButtonWidget = (
   return (
     <ActionButtonComponent
       text={props.text}
-      style={props.style}
       onClick={onClick}
       image={props.image}
+      backgroundColor={props.backgroundColor}
+      foregroundColor={props.foregroundColor}
     />
   );
 };

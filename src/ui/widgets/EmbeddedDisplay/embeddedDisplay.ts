@@ -126,7 +126,6 @@ export const EmbeddedDisplay = (
       {
         type: "display",
         containerStyling: props.containerStyling,
-        widgetStyling: props.widgetStyling,
         overflow: overflow,
         children: [description]
       },

@@ -1,7 +1,7 @@
 import React from "react";
 
 import classes from "./flexContainer.module.css";
-import { Component, Widget, WidgetPropType } from "../widget";
+import { Widget, WidgetPropType } from "../widget";
 import { registerWidget } from "../register";
 import { ChildrenPropOpt, ChoicePropOpt, InferWidgetProps } from "../propTypes";
 
@@ -11,18 +11,14 @@ const FlexProps = {
 };
 
 export const FlexContainerComponent = (
-  props: InferWidgetProps<typeof FlexProps> & Component
+  props: InferWidgetProps<typeof FlexProps>
 ): JSX.Element => {
   const classNames = [classes.FlexContainer];
   const { flexFlow = null } = props;
   if (flexFlow !== null) {
     classNames.push(classes[flexFlow]);
   }
-  return (
-    <div className={classNames.join(" ")} style={props.style}>
-      {props.children}
-    </div>
-  );
+  return <div className={classNames.join(" ")}>{props.children}</div>;
 };
 
 const FlexWidgetProps = {

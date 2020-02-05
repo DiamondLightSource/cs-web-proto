@@ -26,7 +26,6 @@ export const SlideControlComponent = (
     max = 100,
     /* TODO: Implement vertical style and allow absolute positioning */
     //vertical = false,
-    style = {},
     precision = undefined
   } = props;
 
@@ -51,7 +50,7 @@ export const SlideControlComponent = (
   }
 
   return (
-    <div style={style}>
+    <div>
       <div
         style={{
           display: "block",
@@ -90,7 +89,6 @@ export const SlideControlComponent = (
           onChange={onChange}
           onMouseDown={onMouseDown}
           onMouseUp={onMouseUp}
-          style={props.style}
         ></input>
       </div>
     </div>
