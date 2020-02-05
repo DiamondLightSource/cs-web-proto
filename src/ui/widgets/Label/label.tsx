@@ -1,7 +1,7 @@
 import React from "react";
 
 import classes from "./label.module.css";
-import { Component, Widget, WidgetPropType } from "../widget";
+import { Widget, WidgetPropType } from "../widget";
 import { registerWidget } from "../register";
 import { BoolPropOpt, StringOrNumProp, InferWidgetProps } from "../propTypes";
 
@@ -12,9 +12,9 @@ const LabelProps = {
 };
 
 export const LabelComponent = (
-  props: InferWidgetProps<typeof LabelProps> & Component
+  props: InferWidgetProps<typeof LabelProps>
 ): JSX.Element => {
-  const style: any = { ...props.style };
+  const style: any = {};
   if (props.visible !== undefined && !props.visible) {
     style["visibility"] = "hidden";
   }

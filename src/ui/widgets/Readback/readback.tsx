@@ -34,7 +34,6 @@ export const ReadbackComponent = (
   props: ReadbackComponentProps
 ): JSX.Element => {
   const { connected, value, precision, showUnits = false } = props;
-  let { style } = props;
   const alarm = alarmOf(value);
   const display = displayOf(value);
   let displayedValue;
@@ -43,7 +42,11 @@ export const ReadbackComponent = (
   } else {
     displayedValue = vtypeToString(value, precision);
   }
-  style = { backgroundColor: "#383838", ...props.style };
+  let style: any = {
+    backgroundColor: "#383838",
+    height: "100%",
+    width: "100%"
+  };
 
   // Add units if there are any and show units is true
   if (showUnits === true && display.getUnit() !== "") {

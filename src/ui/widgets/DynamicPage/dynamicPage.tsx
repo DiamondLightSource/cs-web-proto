@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import log from "loglevel";
 import { Route, RouteComponentProps } from "react-router-dom";
 
-import { Component, Widget, WidgetPropType } from "../widget";
+import { Widget, WidgetPropType } from "../widget";
 import { ActionButton } from "../ActionButton/actionButton";
 import { CLOSE_PAGE } from "../widgetActions";
 import { registerWidget } from "../register";
@@ -52,9 +52,9 @@ const DynamicPageProps = {
 
 // Generic display widget to put other things inside
 const DynamicPageComponent = (
-  props: InferWidgetProps<typeof DynamicPageProps> & Component
+  props: InferWidgetProps<typeof DynamicPageProps>
 ): JSX.Element => (
-  <div style={props.style}>
+  <div>
     <Route
       path={`*/${props.routePath}/:json/:macros`}
       render={(routeProps): JSX.Element => (
@@ -86,12 +86,8 @@ const DynamicPageComponent = (
                   minWidth: "",
                   maxWidth: ""
                 }}
-                widgetStyling={{
-                  textAlign: "center",
-                  fontWeight: "bold",
-                  backgroundColor: "#ff3333",
-                  color: "#ffffff"
-                }}
+                backgroundColor="#ff3333"
+                foregroundColor="#ffffff"
                 actions={{
                   executeAsOne: false,
                   actions: [

@@ -52,8 +52,7 @@ export const ProgressBarComponent = (
     onStyle = {
       ...barColor,
       width: "100%",
-      height: `${onPercent}%`,
-      ...props.style
+      height: `${onPercent}%`
     };
   } else {
     onStyle = {
@@ -72,7 +71,7 @@ export const ProgressBarComponent = (
       : numValue.toString();
 
   return (
-    <div className={classes.bar} style={{ ...props.style }}>
+    <div className={classes.bar}>
       <div className={classes.off} style={offStyle} />
       <div className={classes.on} style={onStyle} />
       <div className={classes.label}>{valueText.toString()}</div>

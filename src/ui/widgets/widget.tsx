@@ -19,18 +19,13 @@ import {
   InferWidgetProps,
   StringProp,
   StringOrNumPropOpt,
-  ChoicePropOpt,
   MacrosProp,
   MacrosPropOpt
 } from "./propTypes";
 
 // Useful types for components which will later be turned into widgets
 // Required to define stateless component
-export interface Component {
-  style?: object;
-}
-
-export type PVComponent = Component & PvState;
+export type PVComponent = PvState;
 export type PVInputComponent = PVComponent & { pvName: string };
 
 const RulesPropType = PropTypes.shape({
@@ -58,18 +53,7 @@ const FlexibleContainerProps = {
   ...ContainerFeaturesPropType
 };
 
-const WidgetStylingPropType = {
-  font: StringPropOpt,
-  fontSize: StringOrNumPropOpt,
-  fontWeight: StringOrNumPropOpt,
-  textAlign: ChoicePropOpt(["center", "left", "right", "justify"]),
-  backgroundColor: StringPropOpt,
-  color: StringPropOpt
-};
-type WidgetStyling = InferWidgetProps<typeof WidgetStylingPropType>;
-
 const CommonWidgetProps = {
-  widgetStyling: PropTypes.shape(WidgetStylingPropType),
   macroMap: MacrosPropOpt,
   rules: PropTypes.arrayOf(RulesPropType),
   actions: ActionsPropType,
@@ -120,19 +104,13 @@ type PVWidgetComponent = PVWidgetProps & { baseWidget: React.FC<any> };
 const recursiveWrapping = (
   components: React.FC<any>[],
   containerStyling: object,
-  widgetStyling: WidgetStyling | null,
   containerProps: object,
   widgetProps: object
 ): JSX.Element => {
   const [Component, ...remainingComponents] = components;
   if (components.length === 1) {
     // Return the base widget
-    return (
-      <Component
-        style={{ ...containerStyling, ...widgetStyling }}
-        {...widgetProps}
-      />
-    );
+    return <Component style={{ ...containerStyling }} {...widgetProps} />;
   }
   // If container styling is not empty, use it on the wrapper widget
   // and pass on an empty object, otherwise wrap and move down
@@ -142,7 +120,6 @@ const recursiveWrapping = (
         {recursiveWrapping(
           remainingComponents,
           { height: "100%", width: "100%" },
-          widgetStyling,
           containerProps,
           widgetProps
         )}
@@ -154,7 +131,6 @@ const recursiveWrapping = (
 const WrappedComponents = (props: {
   components: React.FC<any>[];
   containerStyling: object;
-  widgetStyling: WidgetStyling | null;
   containerProps: any & { id: string };
   widgetProps: any;
 }): JSX.Element => {
@@ -168,7 +144,6 @@ const WrappedComponents = (props: {
   return recursiveWrapping(
     props.components,
     props.containerStyling,
-    props.widgetStyling,
     {
       ...props.containerProps,
       pvName: effectivePvName,
@@ -208,7 +183,7 @@ export const Widget = (props: WidgetComponent): JSX.Element => {
   const mappedContainerStyling = { top: y, left: x, ...containerStyling };
 
   // Extract remaining parameters
-  const { baseWidget, widgetStyling = {}, ...baseWidgetProps } = containerProps;
+  const { baseWidget, ...baseWidgetProps } = containerProps;
 
   // Put appropriate components on the list of components to be wrapped
   const components = [];
@@ -221,7 +196,6 @@ export const Widget = (props: WidgetComponent): JSX.Element => {
   return recursiveWrapping(
     components,
     mappedContainerStyling,
-    widgetStyling,
     containerProps,
     baseWidgetProps
   );
@@ -251,7 +225,6 @@ export const PVWidget = (props: PVWidgetComponent): JSX.Element => {
   // Extract remaining parameters
   const {
     baseWidget,
-    widgetStyling = {},
     alarmBorder = false,
     ...baseWidgetProps
   } = containerProps;
@@ -271,7 +244,6 @@ export const PVWidget = (props: PVWidgetComponent): JSX.Element => {
     <WrappedComponents
       components={components}
       containerStyling={mappedContainerStyling}
-      widgetStyling={widgetStyling}
       containerProps={containerProps}
       widgetProps={baseWidgetProps}
     />

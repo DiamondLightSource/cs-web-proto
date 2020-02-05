@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Component, Widget, WidgetPropType } from "../widget";
+import { Widget, WidgetPropType } from "../widget";
 import { registerWidget } from "../register";
 import { StringProp, ChildrenPropOpt, InferWidgetProps } from "../propTypes";
 
@@ -11,15 +11,14 @@ const GroupingContainerProps = {
 
 // Generic display widget to put other things inside
 export const GroupingContainerComponent = (
-  props: InferWidgetProps<typeof GroupingContainerProps> & Component
+  props: InferWidgetProps<typeof GroupingContainerProps>
 ): JSX.Element => (
   // Uses an inner margin for children similar to Phoebus
   // This prevents the title being overwritten
   // Could be changed or perhaps customisable as a prop
   <fieldset
     style={{
-      boxSizing: "border-box",
-      ...props.style
+      boxSizing: "border-box"
     }}
   >
     <legend>{props.name}</legend>

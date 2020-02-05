@@ -1,6 +1,6 @@
 import React, { CSSProperties, useContext } from "react";
 
-import { Component, Widget, WidgetPropType } from "../widget";
+import { Widget, WidgetPropType } from "../widget";
 import {
   InferWidgetProps,
   StringProp,
@@ -17,7 +17,7 @@ const ImageProps = {
 };
 
 export const ImageComponent = (
-  props: InferWidgetProps<typeof ImageProps> & Component
+  props: InferWidgetProps<typeof ImageProps>
 ): JSX.Element => {
   const baseUrl = useContext(BaseUrlContext);
   let file = `img/${props.src}`;
@@ -33,8 +33,7 @@ export const ImageComponent = (
 
   const style: CSSProperties = {
     overflow: overflow,
-    textAlign: "left",
-    ...props.style
+    textAlign: "left"
   };
 
   return (
