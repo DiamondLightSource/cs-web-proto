@@ -2,6 +2,22 @@ export class Color {
   private r: number;
   private g: number;
   private b: number;
+  private a: number;
+
+  public static WHITE = new Color(255, 255, 255);
+  public static RED = new Color(255, 0, 0);
+  public static GREEN = new Color(0, 255, 0);
+  public static BLUE = new Color(0, 0, 255);
+  public static PURPLE = new Color(127, 0, 127);
+  public static TRANSPARENT = new Color(0, 0, 0, 0);
+  public static namedColors: { [key: string]: Color } = {
+    white: Color.WHITE,
+    red: Color.RED,
+    green: Color.GREEN,
+    blue: Color.BLUE,
+    purple: Color.PURPLE,
+    transparent: Color.TRANSPARENT
+  };
 
   public static parse(cssColor: string): Color {
     let r = 0;
@@ -21,12 +37,14 @@ export class Color {
         g = parseInt(parts[2]);
         b = parseInt(parts[3]);
       }
+    } else if (cssColor in Color.namedColors) {
+      return Color.namedColors[cssColor];
     }
 
     return new Color(r, g, b);
   }
 
-  public constructor(r: number, g: number, b: number) {
+  public constructor(r: number, g: number, b: number, a = 255) {
     if (r < 0 || r > 255) {
       throw new Error(`r value ${r} out of range`);
     } else if (g < 0 || g > 255) {
@@ -38,12 +56,10 @@ export class Color {
     this.r = r;
     this.g = g;
     this.b = b;
+    this.a = a;
   }
 
-  public rgbString(): string {
-    return `rgb(${this.r}, ${this.g}, ${this.b})`;
+  public rgbaString(): string {
+    return `rgba(${this.r}, ${this.g}, ${this.b}, ${this.a})`;
   }
 }
-
-export const WHITE = new Color(255, 255, 255);
-export const RED = new Color(255, 0, 0);

@@ -8,12 +8,15 @@ import {
   widgetDescriptionToComponent
 } from "../createComponent";
 import { MacroMap } from "../../../redux/csState";
-import { WidgetPropType } from "../widget";
+import { WidgetPropType } from "../widgetProps";
 import { bobToWidgets } from "./bobUtils";
 import { opiToWidgets } from "./opiUtils";
 import { registerWidget } from "../register";
 import { StringProp, InferWidgetProps, ChoiceProp } from "../propTypes";
 import { BaseUrlContext } from "../../../baseUrl";
+import { jsonToWidgets } from "./jsonUtils";
+import { Font, FontStyle } from "../../../types/font";
+import { Color } from "../../../types/color";
 
 const EMPTY_WIDGET: WidgetDescription = {
   type: "shape",
@@ -27,8 +30,8 @@ const EMPTY_WIDGET: WidgetDescription = {
 const ERROR_WIDGET: WidgetDescription = {
   type: "label",
   position: "relative",
-  fontWeight: "bold",
-  backgroundColor: "red",
+  font: new Font(FontStyle.Bold, 16),
+  backgroundColor: Color.RED,
   text: "Error"
 };
 
@@ -86,46 +89,43 @@ export const EmbeddedDisplay = (
 
   let component: JSX.Element;
   try {
-    let description;
-    if (contents === "") {
-      description = EMPTY_WIDGET;
-    } else {
+    let description = EMPTY_WIDGET;
+    if (contents !== "") {
       // Convert the contents to widget description style object
       switch (props.filetype) {
         case "bob":
           description = bobToWidgets(contents);
           break;
         case "json":
-          description = JSON.parse(contents);
+          description = jsonToWidgets(contents);
           break;
         case "opi":
           description = opiToWidgets(contents);
           break;
       }
     }
-    log.info(description);
 
     // Apply the height to the top level if relative layout and none have been provided
-    if (props.containerStyling.position === "relative") {
-      props.containerStyling.height =
-        props.containerStyling.height || description.height;
-      props.containerStyling.width =
-        props.containerStyling.width || description.width;
+    if (props.positionStyle.position === "relative") {
+      props.positionStyle.height =
+        props.positionStyle.height || description.height;
+      props.positionStyle.width =
+        props.positionStyle.width || description.width;
     }
 
     // Overflow set to scroll only if needed
     // If height or width is defined and is smaller than Bob
     const overflow =
-      props.containerStyling.position === "absolute" &&
-      (description.height > (props.containerStyling.height || 0) ||
-        description.width > (props.containerStyling.width || 0))
+      props.positionStyle.position === "absolute" &&
+      (description.height > (props.positionStyle.height || 0) ||
+        description.width > (props.positionStyle.width || 0))
         ? "scroll"
         : "visible";
 
     component = widgetDescriptionToComponent(
       {
         type: "display",
-        containerStyling: props.containerStyling,
+        positionStyle: props.positionStyle,
         overflow: overflow,
         children: [description]
       },

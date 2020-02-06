@@ -5,7 +5,10 @@ import { shallow } from "enzyme";
 import { Display } from "../Display/display";
 import { Label } from "../Label/label";
 import { DEFAULT_BASE_URL } from "../../../baseUrl";
-
+interface GlobalFetch extends NodeJS.Global {
+  fetch: any;
+}
+const globalWithFetch = global as GlobalFetch;
 const useEffect = jest.spyOn(React, "useEffect");
 const mockUseEffect = (): void => {
   useEffect.mockImplementationOnce((f): any => f());
@@ -13,6 +16,8 @@ const mockUseEffect = (): void => {
 
 beforeEach((): void => {
   mockUseEffect();
+  // Ensure the fetch() function mock is always cleared.
+  jest.spyOn(globalWithFetch, "fetch").mockClear();
 });
 
 describe("<EmbeddedDisplay>", (): void => {
@@ -34,20 +39,13 @@ describe("<EmbeddedDisplay>", (): void => {
       const mockFetchPromise = Promise.resolve({
         json: (): Promise<{}> => mockJsonPromise
       });
-
-      // Hack to satisfy typescript
-      interface GlobalFetch extends NodeJS.Global {
-        fetch: any;
-      }
-      const globalWithFetch = global as GlobalFetch;
-
       jest
-        .spyOn(global as GlobalFetch, "fetch")
+        .spyOn(globalWithFetch, "fetch")
         .mockImplementation((): Promise<{}> => mockFetchPromise);
 
       const wrapper = shallow(
         <EmbeddedDisplay
-          containerStyling={{
+          positionStyle={{
             position: "relative",
             height: "",
             width: "",
@@ -66,15 +64,12 @@ describe("<EmbeddedDisplay>", (): void => {
       expect(globalWithFetch.fetch).toHaveBeenCalledWith(resolvedFile);
 
       process.nextTick((): void => {
-        // 6
         expect(wrapper.type()).toEqual(Display);
-
-        globalWithFetch.fetch.mockClear(); // 7
-        done(); // 8
+        done();
       });
     }
   );
-  it("converts a simple widget", (done): void => {
+  it("returns an error label when embedding a widget only", (done): void => {
     const mockSuccessResponse = `
     <widget type="label" version="2.0.0">
         <name>Label</name>
@@ -88,19 +83,13 @@ describe("<EmbeddedDisplay>", (): void => {
       text: (): Promise<{}> => mockTextPromise
     });
 
-    // Hack to satisfy typescript
-    interface GlobalFetch extends NodeJS.Global {
-      fetch: any;
-    }
-    const globalWithFetch = global as GlobalFetch;
-
     jest
-      .spyOn(global as GlobalFetch, "fetch")
+      .spyOn(globalWithFetch, "fetch")
       .mockImplementation((): Promise<{}> => mockFetchPromise);
 
     const wrapper = shallow(
       <EmbeddedDisplay
-        containerStyling={{
+        positionStyle={{
           position: "relative",
           height: "",
           width: "",
@@ -121,11 +110,9 @@ describe("<EmbeddedDisplay>", (): void => {
     );
 
     process.nextTick((): void => {
-      // 6
       expect(wrapper.type()).toEqual(Label);
-
-      globalWithFetch.fetch.mockClear(); // 7
-      done(); // 8
+      expect(wrapper.props().text).toEqual("Error");
+      done();
     });
   });
 
@@ -149,19 +136,13 @@ describe("<EmbeddedDisplay>", (): void => {
       text: (): Promise<{}> => mockTextPromise
     });
 
-    // Hack to satisfy typescript
-    interface GlobalFetch extends NodeJS.Global {
-      fetch: any;
-    }
-    const globalWithFetch = global as GlobalFetch;
-
     jest
-      .spyOn(global as GlobalFetch, "fetch")
+      .spyOn(globalWithFetch, "fetch")
       .mockImplementation((): Promise<{}> => mockFetchPromise);
 
     const wrapper = shallow(
       <EmbeddedDisplay
-        containerStyling={{
+        positionStyle={{
           position: "relative",
           height: "",
           width: "",
@@ -182,7 +163,6 @@ describe("<EmbeddedDisplay>", (): void => {
     );
 
     process.nextTick((): void => {
-      // 6
       expect(wrapper.type()).toEqual(Display);
       expect(wrapper.childAt(0).type()).toEqual(Display);
       expect(
@@ -191,9 +171,7 @@ describe("<EmbeddedDisplay>", (): void => {
           .childAt(0)
           .type()
       ).toEqual(Label);
-
-      globalWithFetch.fetch.mockClear(); // 7
-      done(); // 8
+      done();
     });
   });
 
@@ -205,19 +183,13 @@ describe("<EmbeddedDisplay>", (): void => {
       text: (): Promise<{}> => mockJsonPromise
     });
 
-    // Hack to satisfy typescript
-    interface GlobalFetch extends NodeJS.Global {
-      fetch: any;
-    }
-    const globalWithFetch = global as GlobalFetch;
-
     jest
-      .spyOn(global as GlobalFetch, "fetch")
+      .spyOn(globalWithFetch, "fetch")
       .mockImplementation((): Promise<{}> => mockFetchPromise);
 
     const wrapper = shallow(
       <EmbeddedDisplay
-        containerStyling={{
+        positionStyle={{
           position: "relative",
           height: "",
           width: "",
@@ -238,7 +210,6 @@ describe("<EmbeddedDisplay>", (): void => {
     );
 
     process.nextTick((): void => {
-      // 6
       expect(wrapper.type()).toEqual(Display);
       // Why the nesting?
       expect(
@@ -247,9 +218,7 @@ describe("<EmbeddedDisplay>", (): void => {
           .childAt(0)
           .type()
       ).toEqual(Label);
-
-      globalWithFetch.fetch.mockClear(); // 7
-      done(); // 8
+      done();
     });
   });
 });

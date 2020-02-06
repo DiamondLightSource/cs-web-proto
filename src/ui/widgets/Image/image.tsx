@@ -1,6 +1,7 @@
 import React, { CSSProperties, useContext } from "react";
 
-import { Widget, WidgetPropType } from "../widget";
+import { Widget } from "../widget";
+import { WidgetPropType } from "../widgetProps";
 import {
   InferWidgetProps,
   StringProp,

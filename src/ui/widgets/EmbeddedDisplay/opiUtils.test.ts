@@ -13,6 +13,7 @@ import {
   opiGetWidgetId
 } from "./opiUtils";
 import { WRITE_PV } from "../widgetActions";
+import { Color } from "../../../types/color";
 
 describe("simple macros convert", (): void => {
   const xmlInput = "<macros><Test>Value</Test></macros>";
@@ -36,7 +37,7 @@ describe("color conversion", (): void => {
     compact: true
   });
   test("it converts xml color to rgb string", (): void => {
-    expect(opiParseColor("color", convertedColor)).toEqual("rgb(0, 255, 0)");
+    expect(opiParseColor("color", convertedColor)).toEqual(Color.GREEN);
   });
 });
 
@@ -313,8 +314,8 @@ describe("opi child conversion", (): void => {
       y: "199px",
       width: "299px",
       height: "399px",
-      color: "rgb(0, 255, 0)",
-      backgroundColor: "rgb(128, 128, 128)",
+      color: Color.GREEN,
+      backgroundColor: new Color(128, 128, 128),
       children: []
     });
   });

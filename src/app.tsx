@@ -24,7 +24,7 @@ try {
 
 const baseUrl = settings.baseUrl ?? "http://localhost:3000";
 
-log.setLevel("warn");
+log.setLevel("info");
 
 function applyTheme(theme: any): void {
   Object.keys(theme).forEach(function(key): void {
@@ -44,6 +44,7 @@ const App: React.FC = (): JSX.Element => {
   if (settings.coniqlSocket !== undefined) {
     const coniql = new ConiqlPlugin(settings.coniqlSocket);
     plugins.unshift(["pva://", coniql]);
+    plugins.unshift(["ca://", coniql]);
   }
   const plugin = new ConnectionForwarder(plugins);
   initialiseStore(plugin);
@@ -60,7 +61,7 @@ const App: React.FC = (): JSX.Element => {
               Toggle Theme
             </button>
             <ActionButton
-              containerStyling={{
+              positionStyle={{
                 position: "relative",
                 height: "30px",
                 width: "100px",
@@ -87,7 +88,7 @@ const App: React.FC = (): JSX.Element => {
             />
             <DynamicPageWidget
               routePath="app"
-              containerStyling={{
+              positionStyle={{
                 position: "relative",
                 height: "",
                 width: "",

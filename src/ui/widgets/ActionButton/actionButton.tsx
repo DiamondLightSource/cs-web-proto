@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { WidgetActions, executeActions } from "../widgetActions";
-import { PVWidget, PVWidgetPropType } from "../widget";
+import { Widget } from "../widget";
+import { PVWidgetPropType } from "../widgetProps";
 import classes from "./actionButton.module.css";
 import { useHistory } from "react-router-dom";
 import { registerWidget } from "../register";
@@ -9,16 +10,21 @@ import {
   StringProp,
   ObjectPropOpt,
   StringPropOpt,
-  InferWidgetProps
+  InferWidgetProps,
+  ColorPropOpt,
+  FontPropOpt
 } from "../propTypes";
 import { BaseUrlContext } from "../../../baseUrl";
+import { Color } from "../../../types/color";
+import { Font } from "../../../types/font";
 
 export interface ActionButtonProps {
   text: string;
   onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
   image?: string;
-  backgroundColor?: string;
-  foregroundColor?: string;
+  backgroundColor?: Color;
+  foregroundColor?: Color;
+  font?: Font;
 }
 
 export const ActionButtonComponent = (
@@ -34,11 +40,9 @@ export const ActionButtonComponent = (
       className={classes.actionbutton}
       onClick={props.onClick}
       style={{
-        height: "100%",
-        width: "100%",
-        textAlign: "center",
-        backgroundColor: props.backgroundColor,
-        color: props.foregroundColor
+        backgroundColor: props.backgroundColor?.rgbaString(),
+        color: props.foregroundColor?.rgbaString(),
+        ...props.font?.asStyle()
       }}
     >
       {src !== undefined ? (
@@ -58,8 +62,9 @@ const ActionButtonPropType = {
   actions: ActionsPropType,
   positionStyle: ObjectPropOpt,
   image: StringPropOpt,
-  backgroundColor: StringPropOpt,
-  foregroundColor: StringPropOpt
+  backgroundColor: ColorPropOpt,
+  foregroundColor: ColorPropOpt,
+  font: FontPropOpt
 };
 
 const ActionButtonProps = {
@@ -84,12 +89,13 @@ export const ActionButtonWidget = (
       image={props.image}
       backgroundColor={props.backgroundColor}
       foregroundColor={props.foregroundColor}
+      font={props.font}
     />
   );
 };
 
 export const ActionButton = (
   props: InferWidgetProps<typeof ActionButtonProps>
-): JSX.Element => <PVWidget baseWidget={ActionButtonWidget} {...props} />;
+): JSX.Element => <Widget baseWidget={ActionButtonWidget} {...props} />;
 
 registerWidget(ActionButton, ActionButtonProps, "actionbutton");

@@ -1,4 +1,6 @@
 import PropTypes, { InferProps } from "prop-types";
+import { Color } from "../../types/color";
+import { Font } from "../../types/font";
 
 export type ExcludeNulls<T> = {
   [P in keyof T]: Exclude<T[P], null>;
@@ -26,9 +28,15 @@ export const ChildrenPropOpt = PropTypes.node;
 export const ObjectProp = PropTypes.object.isRequired;
 export const ObjectPropOpt = PropTypes.object;
 
-export const MacrosPropOpt = PropTypes.objectOf(PropTypes.string.isRequired);
+export const ColorProp = PropTypes.instanceOf(Color).isRequired;
+export const ColorPropOpt = PropTypes.instanceOf(Color);
+
+export const FontProp = PropTypes.instanceOf(Font).isRequired;
+export const FontPropOpt = PropTypes.instanceOf(Font);
+
 export const MacrosProp = PropTypes.objectOf(PropTypes.string.isRequired)
   .isRequired;
+export const MacrosPropOpt = PropTypes.objectOf(PropTypes.string.isRequired);
 
 export const StringOrNumPropOpt = PropTypes.oneOfType([
   PropTypes.string,

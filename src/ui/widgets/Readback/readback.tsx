@@ -1,39 +1,73 @@
 import React from "react";
 
-import { PVComponent, PVWidget, PVWidgetPropType } from "../widget";
+import { Widget } from "../widget";
+import { PVComponent, PVWidgetPropType } from "../widgetProps";
 
 import classes from "./readback.module.css";
 import { alarmOf, AlarmSeverity } from "../../../types/vtypes/alarm";
 import { displayOf } from "../../../types/vtypes/display";
 import { vtypeToString } from "../../../types/vtypes/utils";
-import { IntPropOpt, BoolPropOpt, InferWidgetProps } from "../propTypes";
+import {
+  IntPropOpt,
+  BoolPropOpt,
+  InferWidgetProps,
+  ChoicePropOpt,
+  FontPropOpt,
+  ColorPropOpt
+} from "../propTypes";
 import { registerWidget } from "../register";
+import { LabelComponent } from "../Label/label";
 
 const ReadbackProps = {
   precision: IntPropOpt,
-  showUnits: BoolPropOpt
+  showUnits: BoolPropOpt,
+  fgAlarmSensitive: BoolPropOpt,
+  textAlign: ChoicePropOpt(["left", "center", "right"]),
+  transparent: BoolPropOpt,
+  font: FontPropOpt,
+  foregroundColor: ColorPropOpt,
+  backgroundColor: ColorPropOpt
 };
 
 // Needs to be exported for testing
 export type ReadbackComponentProps = InferWidgetProps<typeof ReadbackProps> &
   PVComponent;
 
-function getClass(alarmSeverity: any): string {
-  switch (alarmSeverity) {
-    case AlarmSeverity.MINOR: {
-      return classes.Minor;
-    }
-    case AlarmSeverity.MAJOR: {
-      return classes.Major;
+function getClass(connected: boolean, alarmSeverity: AlarmSeverity): string {
+  let cls = classes.Readback;
+  if (!connected) {
+    cls += ` ${classes.Disconnected}`;
+  } else {
+    switch (alarmSeverity) {
+      case AlarmSeverity.MINOR: {
+        cls += ` ${classes.Minor}`;
+        break;
+      }
+      case AlarmSeverity.MAJOR: {
+        cls += ` ${classes.Major}`;
+        break;
+      }
     }
   }
-  return classes.Readback;
+  return cls;
 }
 
 export const ReadbackComponent = (
   props: ReadbackComponentProps
 ): JSX.Element => {
-  const { connected, value, precision, showUnits = false } = props;
+  const {
+    connected,
+    value,
+    precision,
+    font,
+    foregroundColor,
+    backgroundColor,
+    fgAlarmSensitive = false,
+    transparent = false,
+    textAlign = "center",
+    showUnits = false
+  } = props;
+  // Decide what to display.
   const alarm = alarmOf(value);
   const display = displayOf(value);
   let displayedValue;
@@ -42,34 +76,29 @@ export const ReadbackComponent = (
   } else {
     displayedValue = vtypeToString(value, precision);
   }
-  let style: any = {
-    backgroundColor: "#383838",
-    height: "100%",
-    width: "100%"
-  };
 
   // Add units if there are any and show units is true
   if (showUnits === true && display.getUnit() !== "") {
     displayedValue = displayedValue + ` ${display.getUnit()}`;
   }
 
-  // Change text color depending on connection state
-  if (!connected) {
-    style = {
-      ...style,
-      color: "#ffffff"
-    };
+  // Handle foreground alarm sensitivity.
+  let className = classes.Readback;
+  if (fgAlarmSensitive) {
+    className = getClass(connected, alarm.getSeverity());
   }
 
+  // Use a LabelComponent to display it.
   return (
-    <div
-      className={`Readback ${classes.Readback} ${getClass(
-        alarm.getSeverity()
-      )}`}
-      style={style}
-    >
-      {displayedValue}
-    </div>
+    <LabelComponent
+      className={className}
+      text={displayedValue}
+      transparent={transparent}
+      textAlign={textAlign}
+      font={font}
+      foregroundColor={foregroundColor}
+      backgroundColor={backgroundColor}
+    ></LabelComponent>
   );
 };
 
@@ -80,6 +109,6 @@ const ReadbackWidgetProps = {
 
 export const Readback = (
   props: InferWidgetProps<typeof ReadbackWidgetProps>
-): JSX.Element => <PVWidget baseWidget={ReadbackComponent} {...props} />;
+): JSX.Element => <Widget baseWidget={ReadbackComponent} {...props} />;
 
 registerWidget(Readback, ReadbackWidgetProps, "readback");

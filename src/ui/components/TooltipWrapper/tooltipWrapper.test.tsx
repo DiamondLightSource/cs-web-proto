@@ -11,12 +11,6 @@ jest.mock("clipboard-copy", () => {
 });
 (copyToClipboard as jest.Mock).mockImplementation(() => Promise.resolve());
 
-jest.mock("../../widgets/tooltip", () => {
-  return {
-    resolveTooltip: jest.fn((props: any) => props.resolvedTooltip)
-  };
-});
-
 let wrapper: ReactWrapper;
 let wrappedElement: ReactWrapper;
 
@@ -25,7 +19,7 @@ beforeEach((): void => {
     <TooltipWrapper
       pvName="pv"
       // eslint-disable-next-line no-template-curly-in-string
-      resolvedTooltip="${pvName}"
+      tooltip="${pvName}"
       connected={true}
       value={vstring("hello")}
     >
@@ -48,7 +42,7 @@ describe("TooltipWrapper", (): void => {
   });
 
   test("it renders text", (): void => {
-    expect(wrappedElement.childAt(0).text()).toEqual("Testing Tooltip Wrapper");
+    expect(wrappedElement.text()).toEqual("Testing Tooltip Wrapper");
   });
 
   // How do we test the popover content? It renders on the

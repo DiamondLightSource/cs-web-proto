@@ -3,9 +3,11 @@ import React, { useState } from "react";
 import classes from "./input.module.css";
 import { writePv } from "../../hooks/useSubscription";
 import { vtypeToString, stringToVtype } from "../../../types/vtypes/utils";
-import { PVInputComponent, PVWidget, PVWidgetPropType } from "../widget";
+import { Widget } from "../widget";
+import { PVInputComponent, PVWidgetPropType } from "../widgetProps";
 import { registerWidget } from "../register";
-import { InferWidgetProps } from "../propTypes";
+import { InferWidgetProps, FontPropOpt } from "../propTypes";
+import { Font } from "../../../types/font";
 
 export interface InputProps {
   pvName: string;
@@ -15,7 +17,7 @@ export interface InputProps {
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onBlur: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onClick: (event: React.MouseEvent<HTMLInputElement>) => void;
-  style?: object;
+  font?: Font;
 }
 
 export const InputComponent: React.FC<InputProps> = (
@@ -34,13 +36,15 @@ export const InputComponent: React.FC<InputProps> = (
       onBlur={props.onBlur}
       onClick={props.onClick}
       className={allClasses}
-      style={props.style}
+      style={props.font?.asStyle()}
       readOnly={props.readonly}
     />
   );
 };
 
-export const SmartInputComponent = (props: PVInputComponent): JSX.Element => {
+export const SmartInputComponent = (
+  props: PVInputComponent & { font: Font }
+): JSX.Element => {
   const [inputValue, setInputValue] = useState("");
   const [editing, setEditing] = useState(false);
   function onKeyDown(event: React.KeyboardEvent<HTMLInputElement>): void {
@@ -80,12 +84,18 @@ export const SmartInputComponent = (props: PVInputComponent): JSX.Element => {
       onChange={onChange}
       onBlur={onBlur}
       onClick={onClick}
+      font={props.font}
     />
   );
 };
 
+const InputWidgetProps = {
+  ...PVWidgetPropType,
+  font: FontPropOpt
+};
+
 export const Input = (
-  props: InferWidgetProps<typeof PVWidgetPropType>
-): JSX.Element => <PVWidget baseWidget={SmartInputComponent} {...props} />;
+  props: InferWidgetProps<typeof InputWidgetProps>
+): JSX.Element => <Widget baseWidget={SmartInputComponent} {...props} />;
 
 registerWidget(Input, PVWidgetPropType, "input");

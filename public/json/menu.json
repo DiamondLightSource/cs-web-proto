@@ -1,8 +1,6 @@
 {
   "type": "flexcontainer",
   "position": "relative",
-  "height": "100%",
-  "width": "100%",
   "children": [
     {
       "type": "actionbutton",
@@ -12,7 +10,9 @@
       "height": "200px",
       "margin": "10px",
       "backgroundColor": "#4da6ff",
-      "fontSize": "3rem",
+      "font": {
+        "size": 30
+      },
       "actions": {
         "executeAsOne": false,
         "actions": [
@@ -35,7 +35,9 @@
       "height": "200px",
       "margin": "10px",
       "backgroundColor": "#ffa64d",
-      "fontSize": "3rem",
+      "font": {
+        "size": 30
+      },
       "actions": {
         "executeAsOne": false,
         "actions": [
@@ -58,7 +60,9 @@
       "height": "200px",
       "margin": "10px",
       "backgroundColor": "#4dffa6",
-      "fontSize": "3rem",
+      "font": {
+        "size": 30
+      },
       "actions": {
         "executeAsOne": false,
         "actions": [

@@ -7,6 +7,9 @@ import convert from "xml-js";
 import { WidgetDescription } from "../createComponent";
 import { WidgetActions, WRITE_PV } from "../widgetActions";
 import { MacroMap } from "../../../redux/csState";
+import { Color } from "../../../types/color";
+import { Font, FontStyle } from "../../../types/font";
+import { GenericProp } from "../../../types/props";
 
 export const OPI_WIDGET_MAPPING: { [key: string]: string } = {
   "org.csstudio.opibuilder.Display": "display",
@@ -17,8 +20,6 @@ export const OPI_WIDGET_MAPPING: { [key: string]: string } = {
   "org.csstudio.opibuilder.widgets.Rectangle": "shape",
   "org.csstudio.opibuilder.widgets.ActionButton": "actionbutton" // eslint-disable-line @typescript-eslint/camelcase
 };
-
-type GenericProp = string | boolean | number | MacroMap | WidgetActions;
 
 export interface XmlDescription {
   _attributes: { [key: string]: string };
@@ -55,14 +56,18 @@ export interface OpiColor {
 export const opiParseColor = (
   name: string,
   jsonProp: convert.ElementCompact
-): string => {
+): Color => {
   const color = jsonProp.color as OpiColor;
   try {
-    return `rgb(${color._attributes.red}, ${color._attributes.green}, ${color._attributes.blue})`;
+    return new Color(
+      parseInt(color._attributes.red),
+      parseInt(color._attributes.green),
+      parseInt(color._attributes.blue)
+    );
   } catch (e) {
     log.error(`Could not convert color object ${name}`);
     log.error(color);
-    return "";
+    return Color.WHITE;
   }
 };
 
@@ -143,6 +148,23 @@ export const opiParseActions = (
   return processedActions;
 };
 
+function opiParseFont(name: string, jsonProp: convert.ElementCompact): Font {
+  const opiStyles: { [key: number]: FontStyle } = {
+    0: FontStyle.Regular,
+    1: FontStyle.Bold,
+    2: FontStyle.Italic,
+    3: FontStyle.BoldItalic
+  };
+  let fontAttributes;
+  if (jsonProp.hasOwnProperty("fontdata")) {
+    fontAttributes = jsonProp["fontdata"]._attributes;
+  } else {
+    fontAttributes = jsonProp["opifont.name"]._attributes;
+  }
+  const { fontName, height, style } = fontAttributes;
+  return new Font(opiStyles[style], height, fontName);
+}
+
 export const OPI_FUNCTION_SUBSTITUTIONS = {
   macros: opiParseMacros,
   background_color: opiParseColor, // eslint-disable-line @typescript-eslint/camelcase
@@ -150,7 +172,8 @@ export const OPI_FUNCTION_SUBSTITUTIONS = {
   precision: opiParsePrecision,
   visible: opiParseBoolean,
   transparent: opiParseBoolean,
-  actions: opiParseActions
+  actions: opiParseActions,
+  font: opiParseFont
 };
 
 export const OPI_KEY_SUBSTITUTIONS = {
@@ -158,7 +181,7 @@ export const OPI_KEY_SUBSTITUTIONS = {
   macros: "macroMap",
   opi_file: "file", // eslint-disable-line @typescript-eslint/camelcase
   background_color: "backgroundColor", // eslint-disable-line @typescript-eslint/camelcase
-  foreground_color: "color", // eslint-disable-line @typescript-eslint/camelcase
+  foreground_color: "foregroundColor", // eslint-disable-line @typescript-eslint/camelcase
   // Rename style prop to make sure it isn't used directly to style components.
   style: "opiStyle" // eslint-disable-line @typescript-eslint/camelcase
 };
