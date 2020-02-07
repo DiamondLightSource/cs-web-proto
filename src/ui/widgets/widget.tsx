@@ -2,13 +2,15 @@ import React from "react";
 import log from "loglevel";
 
 import { TooltipWrapper } from "../components/TooltipWrapper/tooltipWrapper";
-import { AlarmBorder } from "../components/AlarmBorder/alarmBorder";
 import { MenuWrapper } from "../components/MenuWrapper/menuWrapper";
 import { useMacros } from "../hooks/useMacros";
 import { useConnection } from "../hooks/useConnection";
 import { useId } from "react-id-generator";
 import { useRules } from "../hooks/useRules";
 import { PVWidgetComponent, WidgetComponent, AnyProps } from "./widgetProps";
+import { Border, BorderStyle } from "../../types/border";
+import { alarmOf, AlarmSeverity } from "../../types/vtypes/alarm";
+import { Color } from "../../types/color";
 
 // Function to recursively wrap a given set of widgets
 const recursiveWrapping = (
@@ -47,6 +49,7 @@ export const ConnectingComponent = (props: {
   containerStyling: object;
   containerProps: any & { id: string };
   widgetProps: any;
+  alarmBorder: boolean;
 }): JSX.Element => {
   /* Add connection to PV and then recursively wrap widgets */
 
@@ -54,6 +57,24 @@ export const ConnectingComponent = (props: {
     props.containerProps.id,
     props.containerProps.pvName
   );
+
+  if (props.alarmBorder) {
+    const severity = alarmOf(latestValue).getSeverity();
+    const colors: { [key in AlarmSeverity]: Color } = {
+      [AlarmSeverity.NONE]: Color.BLACK,
+      [AlarmSeverity.MINOR]: Color.YELLOW,
+      [AlarmSeverity.MAJOR]: Color.RED,
+      [AlarmSeverity.INVALID]: Color.WHITE,
+      [AlarmSeverity.UNDEFINED]: Color.WHITE
+    };
+    if (severity !== AlarmSeverity.NONE) {
+      props.widgetProps.border = new Border(
+        BorderStyle.Line,
+        colors[severity],
+        2
+      );
+    }
+  }
 
   return recursiveWrapping(
     props.components,
@@ -122,9 +143,6 @@ export const Widget = (
   if (props.actions && props.actions.actions.length > 0) {
     components.push(MenuWrapper);
   }
-  if (alarmBorder) {
-    components.push(AlarmBorder);
-  }
   components.push(TooltipWrapper);
   components.push(baseWidget);
 
@@ -132,6 +150,7 @@ export const Widget = (
   // to which to connect, if we felt that would be more efficient.
   return (
     <ConnectingComponent
+      alarmBorder={alarmBorder}
       components={components}
       containerStyling={mappedContainerStyling}
       containerProps={containerProps}

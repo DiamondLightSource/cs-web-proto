@@ -36,7 +36,6 @@ export function widgetDescriptionToComponent(
     width = undefined,
     margin = undefined,
     padding = undefined,
-    border = undefined,
     minWidth = undefined,
     maxWidth = undefined,
     ...otherProps
@@ -66,7 +65,6 @@ export function widgetDescriptionToComponent(
     width: width,
     margin: margin,
     padding: padding,
-    border: border,
     minWidth: minWidth,
     maxWidth: maxWidth
   });

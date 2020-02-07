@@ -13,7 +13,8 @@ import {
   InferWidgetProps,
   ChoicePropOpt,
   FontPropOpt,
-  ColorPropOpt
+  ColorPropOpt,
+  BorderPropOpt
 } from "../propTypes";
 import { registerWidget } from "../register";
 import { LabelComponent } from "../Label/label";
@@ -26,7 +27,8 @@ const ReadbackProps = {
   transparent: BoolPropOpt,
   font: FontPropOpt,
   foregroundColor: ColorPropOpt,
-  backgroundColor: ColorPropOpt
+  backgroundColor: ColorPropOpt,
+  border: BorderPropOpt
 };
 
 // Needs to be exported for testing
@@ -62,6 +64,7 @@ export const ReadbackComponent = (
     font,
     foregroundColor,
     backgroundColor,
+    border,
     fgAlarmSensitive = false,
     transparent = false,
     textAlign = "center",
@@ -98,6 +101,7 @@ export const ReadbackComponent = (
       font={font}
       foregroundColor={foregroundColor}
       backgroundColor={backgroundColor}
+      border={border}
     ></LabelComponent>
   );
 };

@@ -89,43 +89,4 @@ describe("<Widget />", (): void => {
         .name()
     ).toEqual("TooltipWrapper");
   });
-
-  test("it has alarmborder", (): void => {
-    const component = mount(
-      <Widget
-        pvName="pv"
-        baseWidget={TestLabel}
-        positionStyle={{ position: "relative" }}
-        alarmBorder={true}
-      />
-    );
-    expect(
-      component
-        .childAt(0)
-        .childAt(0)
-        .name()
-    ).toEqual("AlarmBorder");
-  });
-
-  test("it has alarmborder and TooltipWrapper", (): void => {
-    const component = mount(
-      <Widget
-        pvName="pv"
-        baseWidget={TestLabel}
-        positionStyle={{ position: "relative" }}
-        alarmBorder={true}
-      />
-    );
-    expect(
-      component
-        .childAt(0)
-        .childAt(0)
-        .name()
-    ).toEqual("AlarmBorder");
-    // Alarm children div
-    const c1 = component.childAt(0).childAt(0);
-    // Copy wrapper
-    const c2 = c1.childAt(0);
-    expect(c2.childAt(0).name()).toEqual("TooltipWrapper");
-  });
 });

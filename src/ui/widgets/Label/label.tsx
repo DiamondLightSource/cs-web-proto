@@ -11,7 +11,8 @@ import {
   StringPropOpt,
   ChoicePropOpt,
   FontPropOpt,
-  ColorPropOpt
+  ColorPropOpt,
+  BorderPropOpt
 } from "../propTypes";
 
 const LabelProps = {
@@ -22,7 +23,8 @@ const LabelProps = {
   textAlign: ChoicePropOpt(["left", "center", "right"]),
   font: FontPropOpt,
   foregroundColor: ColorPropOpt,
-  backgroundColor: ColorPropOpt
+  backgroundColor: ColorPropOpt,
+  border: BorderPropOpt
 };
 
 const LabelWidgetProps = {
@@ -37,7 +39,7 @@ export const LabelComponent = (
 ): JSX.Element => {
   const { visible = true, transparent = false, textAlign = "center" } = props;
   const className = props.className ?? `Label ${classes.Label}`;
-  const style: any = { ...props.font?.asStyle() };
+  const style: any = { ...props.font?.asStyle(), ...props.border?.asStyle() };
   if (!visible) {
     style["visibility"] = "hidden";
   }

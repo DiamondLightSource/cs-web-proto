@@ -4,6 +4,7 @@
   "width": "90%",
   "maxWidth": "600px",
   "margin": "auto",
+  "backgroundColor": "rgb(166, 166, 166)",
   "children": [
     {
       "type": "flexcontainer",
@@ -15,6 +16,11 @@
           "width": "100%",
           "backgroundColor": "transparent",
           "text": "this should change",
+          "border": {
+            "style": "line",
+            "width": "2",
+            "color": "red"
+          },
           "font": {
             "size": 20,
             "typeface": "Times New Roman",
@@ -60,7 +66,7 @@
           "position": "relative",
           "width": "45%",
           "margin": "2%",
-          "pvName": "loc://pv1",
+          "pvName": "ca://SR12A-PC-S2D-06:L5ERRSTATE",
           "tooltip": "Custom tooltip:\n${pvName}\n${pvValue}",
           "precision": 3,
           "alarmBorder": true,

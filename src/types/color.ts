@@ -5,16 +5,20 @@ export class Color {
   private a: number;
 
   public static WHITE = new Color(255, 255, 255);
+  public static BLACK = new Color(0, 0, 0);
   public static RED = new Color(255, 0, 0);
   public static GREEN = new Color(0, 255, 0);
   public static BLUE = new Color(0, 0, 255);
+  public static YELLOW = new Color(255, 255, 0);
   public static PURPLE = new Color(127, 0, 127);
   public static TRANSPARENT = new Color(0, 0, 0, 0);
   public static namedColors: { [key: string]: Color } = {
     white: Color.WHITE,
+    black: Color.BLACK,
     red: Color.RED,
     green: Color.GREEN,
     blue: Color.BLUE,
+    yellow: Color.YELLOW,
     purple: Color.PURPLE,
     transparent: Color.TRANSPARENT
   };

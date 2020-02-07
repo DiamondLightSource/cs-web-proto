@@ -3,6 +3,7 @@ import { Color } from "../../../types/color";
 import { Font, FontStyle } from "../../../types/font";
 import { Rule } from "../../../types/rules";
 import { GenericProp } from "../../../types/props";
+import { Border, BorderStyle } from "../../../types/border";
 
 export interface JsonDescription {
   type: string;
@@ -15,6 +16,19 @@ export interface JsonDescription {
 }
 function jsonParseColor(name: string, jsonColor: string): Color {
   return Color.parse(jsonColor);
+}
+
+function jsonParseBorder(name: string, jsonBorder: any): Border {
+  const styles: { [key: string]: BorderStyle } = {
+    none: BorderStyle.None,
+    line: BorderStyle.Line,
+    groupbox: BorderStyle.GroupBox
+  };
+  return new Border(
+    styles[jsonBorder.style?.toLowerCase()],
+    jsonParseColor("border color", jsonBorder.color),
+    jsonBorder.width
+  );
 }
 
 function jsonParseFont(name: string, jsonFont: any): Font {
@@ -52,7 +66,8 @@ export const JSON_FUNCTION_SUBSTITUTIONS: {
   color: jsonParseColor,
   backgroundColor: jsonParseColor,
   font: jsonParseFont,
-  rules: jsonParseRules
+  rules: jsonParseRules,
+  border: jsonParseBorder
 };
 
 function jsonChildToWidget(widget: JsonDescription): WidgetDescription {
