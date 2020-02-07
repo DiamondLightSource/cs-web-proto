@@ -78,7 +78,7 @@ export const ReadbackComponent = (
   }
 
   // Add units if there are any and show units is true
-  if (showUnits === true && display.getUnit() !== "") {
+  if (showUnits && display && display?.getUnit) {
     displayedValue = displayedValue + ` ${display.getUnit()}`;
   }
 

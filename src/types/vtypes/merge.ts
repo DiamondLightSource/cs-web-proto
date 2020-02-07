@@ -17,6 +17,8 @@ import { Time, timeOf } from "./time";
 import { Display, displayOf } from "./display";
 
 const VNumbers: { [index: string]: VNumberBuilder } = {
+  IVLong: vdouble,
+  VLong: vdouble,
   IVInt: vdouble,
   VInt: vdouble,
   IVDouble: vdouble,

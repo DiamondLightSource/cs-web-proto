@@ -172,6 +172,7 @@ export const OPI_FUNCTION_SUBSTITUTIONS = {
   precision: opiParsePrecision,
   visible: opiParseBoolean,
   transparent: opiParseBoolean,
+  show_units: opiParseBoolean, // eslint-disable-line @typescript-eslint/camelcase
   actions: opiParseActions,
   font: opiParseFont
 };
@@ -182,6 +183,7 @@ export const OPI_KEY_SUBSTITUTIONS = {
   opi_file: "file", // eslint-disable-line @typescript-eslint/camelcase
   background_color: "backgroundColor", // eslint-disable-line @typescript-eslint/camelcase
   foreground_color: "foregroundColor", // eslint-disable-line @typescript-eslint/camelcase
+  show_units: "showUnits", // eslint-disable-line @typescript-eslint/camelcase
   // Rename style prop to make sure it isn't used directly to style components.
   style: "opiStyle" // eslint-disable-line @typescript-eslint/camelcase
 };
