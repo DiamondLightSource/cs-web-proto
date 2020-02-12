@@ -1,8 +1,7 @@
 import { WidgetDescription } from "../createComponent";
 import { Color } from "../../../types/color";
 import { Font, FontStyle } from "../../../types/font";
-import { Rule } from "../../../types/rules";
-import { GenericProp } from "../../../types/props";
+import { GenericProp, Rule } from "../../../types/props";
 import { Border, BorderStyle } from "../../../types/border";
 
 export interface JsonDescription {

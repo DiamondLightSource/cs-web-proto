@@ -4,7 +4,7 @@ import { useRules } from "./useRules";
 import { shallow } from "enzyme";
 import { vdouble } from "../../types/vtypes/vtypes";
 import { AnyProps } from "../widgets/widgetProps";
-import { Rule } from "../../types/rules";
+import { Rule } from "../../types/props";
 
 // Mock useSubscription.
 jest.mock("./useSubscription", (): object => {
