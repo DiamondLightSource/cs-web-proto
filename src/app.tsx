@@ -13,6 +13,7 @@ import { Connection } from "./connection/plugin";
 import { ActionButton } from "./ui/widgets";
 import { OPEN_PAGE } from "./ui/widgets/widgetActions";
 import { BaseUrlContext } from "./baseUrl";
+import { start } from "repl";
 
 let settings: any;
 try {
@@ -24,7 +25,7 @@ try {
 
 const baseUrl = settings.baseUrl ?? "http://localhost:3000";
 
-log.setLevel("warn");
+log.setLevel("info");
 
 function applyTheme(theme: any): void {
   Object.keys(theme).forEach(function(key): void {
@@ -32,6 +33,15 @@ function applyTheme(theme: any): void {
     document.documentElement.style.setProperty(key, value);
   });
 }
+
+const SIMULATION_TIME = 1000;
+
+const recorded_timings = {
+  startTime: 0,
+  actualDur: 0,
+  baseDur: 0,
+  reconciliation: 0
+};
 
 function onRenderCallback(
   id: string,
@@ -43,18 +53,33 @@ function onRenderCallback(
   interactions: any
 ) {
   const reconciliationTime = commitTime - startTime;
-  console.table({
-    phase,
-    actualDuration,
-    baseDuration,
-    startTime,
-    commitTime,
-    reconciliationTime
-  });
+
+  if (
+    recorded_timings.startTime === 0 ||
+    startTime > recorded_timings.startTime + SIMULATION_TIME / 2
+  ) {
+    // Add final timings
+    recorded_timings.actualDur += actualDuration;
+    recorded_timings.baseDur += baseDuration;
+    recorded_timings.reconciliation += reconciliationTime;
+    // Produce a csv friendly output
+    log.info(`actualDuration,baseDuration,reconciliation
+  ${recorded_timings.actualDur},${recorded_timings.baseDur},${recorded_timings.reconciliation}`);
+    // Reset timings
+    recorded_timings.startTime = startTime;
+    recorded_timings.actualDur = 0;
+    recorded_timings.baseDur = 0;
+    recorded_timings.reconciliation = 0;
+  } else {
+    // Add timings
+    recorded_timings.actualDur += actualDuration;
+    recorded_timings.baseDur += baseDuration;
+    recorded_timings.reconciliation += reconciliationTime;
+  }
 }
 
 const App: React.FC = (): JSX.Element => {
-  const simulator = new SimulatorPlugin(5000);
+  const simulator = new SimulatorPlugin(SIMULATION_TIME);
   const fallbackPlugin = simulator;
   const plugins: [string, Connection][] = [
     ["sim://", simulator],
