@@ -1,12 +1,14 @@
 import log from "loglevel";
 import {
-  VALUE_CHANGED,
   Action,
+  VALUE_CHANGED,
+  VALUES_CHANGED,
   SUBSCRIBE,
   WRITE_PV,
   CONNECTION_CHANGED,
   MACRO_UPDATED,
-  UNSUBSCRIBE
+  UNSUBSCRIBE,
+  ValueChanged
 } from "./actions";
 import { VType } from "../types/vtypes/vtypes";
 import { mergeVtype } from "../types/vtypes/merge";
@@ -49,12 +51,31 @@ export interface CsState {
   subscriptions: Subscriptions;
 }
 
+function updateValueCache(
+  oldValueCache: ValueCache,
+  newValueCache: ValueCache,
+  action: any
+): void {
+  const { pvName, value } = action.payload;
+  const pvState = oldValueCache[pvName];
+  let newValue: VType | undefined;
+  if (value instanceof VType) {
+    newValue = value;
+  } else {
+    newValue = mergeVtype(pvState.value, value);
+  }
+  const newPvState = Object.assign({}, pvState, {
+    value: newValue
+  });
+  newValueCache[action.payload.pvName] = newPvState;
+}
+
 export function csReducer(state = initialState, action: Action): CsState {
   log.debug(action);
   switch (action.type) {
     case VALUE_CHANGED: {
       const newValueCache: ValueCache = { ...state.valueCache };
-      const { pvName, value } = action.payload;
+      const { pvName, value } = (action as ValueChanged).payload;
       const pvState = state.valueCache[pvName];
       let newValue: VType | undefined;
       if (value instanceof VType) {
@@ -65,7 +86,14 @@ export function csReducer(state = initialState, action: Action): CsState {
       const newPvState = Object.assign({}, pvState, {
         value: newValue
       });
-      newValueCache[action.payload.pvName] = newPvState;
+      newValueCache[(action as ValueChanged).payload.pvName] = newPvState;
+      return { ...state, valueCache: newValueCache };
+    }
+    case VALUES_CHANGED: {
+      const newValueCache: ValueCache = { ...state.valueCache };
+      for (const changedAction of action.payload) {
+        updateValueCache(state.valueCache, newValueCache, changedAction);
+      }
       return { ...state, valueCache: newValueCache };
     }
     case CONNECTION_CHANGED: {
