@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Profiler } from "react";
 import "./app.css";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
@@ -33,8 +33,28 @@ function applyTheme(theme: any): void {
   });
 }
 
+function onRenderCallback(
+  id: string,
+  phase: "mount" | "update",
+  actualDuration: number,
+  baseDuration: number,
+  startTime: number,
+  commitTime: number,
+  interactions: any
+) {
+  const reconciliationTime = commitTime - startTime;
+  console.table({
+    phase,
+    actualDuration,
+    baseDuration,
+    startTime,
+    commitTime,
+    reconciliationTime
+  });
+}
+
 const App: React.FC = (): JSX.Element => {
-  const simulator = new SimulatorPlugin(100);
+  const simulator = new SimulatorPlugin(5000);
   const fallbackPlugin = simulator;
   const plugins: [string, Connection][] = [
     ["sim://", simulator],
@@ -85,19 +105,21 @@ const App: React.FC = (): JSX.Element => {
                 ]
               }}
             />
-            <DynamicPageWidget
-              routePath="app"
-              containerStyling={{
-                position: "relative",
-                height: "",
-                width: "",
-                margin: "",
-                padding: "",
-                border: "",
-                minWidth: "",
-                maxWidth: ""
-              }}
-            />
+            <Profiler id="Dynamic Page Profiler" onRender={onRenderCallback}>
+              <DynamicPageWidget
+                routePath="app"
+                containerStyling={{
+                  position: "relative",
+                  height: "",
+                  width: "",
+                  margin: "",
+                  padding: "",
+                  border: "",
+                  minWidth: "",
+                  maxWidth: ""
+                }}
+              />
+            </Profiler>
           </div>
         </Provider>
       </BrowserRouter>
