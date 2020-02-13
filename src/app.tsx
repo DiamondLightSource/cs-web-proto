@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Profiler } from "react";
 import "./app.css";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
@@ -33,8 +33,52 @@ function applyTheme(theme: any): void {
   });
 }
 
+const SIMULATION_TIME = 1000;
+
+const recordedTimings = {
+  startTime: 0,
+  actualDur: 0,
+  baseDur: 0,
+  reconciliation: 0
+};
+
+function onRenderCallback(
+  id: string,
+  phase: "mount" | "update",
+  actualDuration: number,
+  baseDuration: number,
+  startTime: number,
+  commitTime: number,
+  interactions: any
+): void {
+  const reconciliationTime = commitTime - startTime;
+
+  if (
+    recordedTimings.startTime === 0 ||
+    startTime > recordedTimings.startTime + SIMULATION_TIME / 2
+  ) {
+    // Add final timings
+    recordedTimings.actualDur += actualDuration;
+    recordedTimings.baseDur += baseDuration;
+    recordedTimings.reconciliation += reconciliationTime;
+    // Produce a csv friendly output
+    log.info(`actualDuration,baseDuration,reconciliation
+  ${recordedTimings.actualDur},${recordedTimings.baseDur},${recordedTimings.reconciliation}`);
+    // Reset timings
+    recordedTimings.startTime = startTime;
+    recordedTimings.actualDur = 0;
+    recordedTimings.baseDur = 0;
+    recordedTimings.reconciliation = 0;
+  } else {
+    // Add timings
+    recordedTimings.actualDur += actualDuration;
+    recordedTimings.baseDur += baseDuration;
+    recordedTimings.reconciliation += reconciliationTime;
+  }
+}
+
 const App: React.FC = (): JSX.Element => {
-  const simulator = new SimulatorPlugin(100);
+  const simulator = new SimulatorPlugin(SIMULATION_TIME);
   const fallbackPlugin = simulator;
   const plugins: [string, Connection][] = [
     ["sim://", simulator],
@@ -86,19 +130,21 @@ const App: React.FC = (): JSX.Element => {
                 ]
               }}
             />
-            <DynamicPageWidget
-              routePath="app"
-              positionStyle={{
-                position: "relative",
-                height: "",
-                width: "",
-                margin: "",
-                padding: "",
-                border: "",
-                minWidth: "",
-                maxWidth: ""
-              }}
-            />
+            <Profiler id="Dynamic Page Profiler" onRender={onRenderCallback}>
+              <DynamicPageWidget
+                routePath="app"
+                positionStyle={{
+                  position: "relative",
+                  height: "",
+                  width: "",
+                  margin: "",
+                  padding: "",
+                  border: "",
+                  minWidth: "",
+                  maxWidth: ""
+                }}
+              />
+            </Profiler>
           </div>
         </Provider>
       </BrowserRouter>
