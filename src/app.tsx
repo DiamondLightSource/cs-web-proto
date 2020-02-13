@@ -13,7 +13,6 @@ import { Connection } from "./connection/plugin";
 import { ActionButton } from "./ui/widgets";
 import { OPEN_PAGE } from "./ui/widgets/widgetActions";
 import { BaseUrlContext } from "./baseUrl";
-import { start } from "repl";
 
 let settings: any;
 try {
@@ -36,7 +35,7 @@ function applyTheme(theme: any): void {
 
 const SIMULATION_TIME = 1000;
 
-const recorded_timings = {
+const recordedTimings = {
   startTime: 0,
   actualDur: 0,
   baseDur: 0,
@@ -51,30 +50,30 @@ function onRenderCallback(
   startTime: number,
   commitTime: number,
   interactions: any
-) {
+): void {
   const reconciliationTime = commitTime - startTime;
 
   if (
-    recorded_timings.startTime === 0 ||
-    startTime > recorded_timings.startTime + SIMULATION_TIME / 2
+    recordedTimings.startTime === 0 ||
+    startTime > recordedTimings.startTime + SIMULATION_TIME / 2
   ) {
     // Add final timings
-    recorded_timings.actualDur += actualDuration;
-    recorded_timings.baseDur += baseDuration;
-    recorded_timings.reconciliation += reconciliationTime;
+    recordedTimings.actualDur += actualDuration;
+    recordedTimings.baseDur += baseDuration;
+    recordedTimings.reconciliation += reconciliationTime;
     // Produce a csv friendly output
     log.info(`actualDuration,baseDuration,reconciliation
-  ${recorded_timings.actualDur},${recorded_timings.baseDur},${recorded_timings.reconciliation}`);
+  ${recordedTimings.actualDur},${recordedTimings.baseDur},${recordedTimings.reconciliation}`);
     // Reset timings
-    recorded_timings.startTime = startTime;
-    recorded_timings.actualDur = 0;
-    recorded_timings.baseDur = 0;
-    recorded_timings.reconciliation = 0;
+    recordedTimings.startTime = startTime;
+    recordedTimings.actualDur = 0;
+    recordedTimings.baseDur = 0;
+    recordedTimings.reconciliation = 0;
   } else {
     // Add timings
-    recorded_timings.actualDur += actualDuration;
-    recorded_timings.baseDur += baseDuration;
-    recorded_timings.reconciliation += reconciliationTime;
+    recordedTimings.actualDur += actualDuration;
+    recordedTimings.baseDur += baseDuration;
+    recordedTimings.reconciliation += reconciliationTime;
   }
 }
 
