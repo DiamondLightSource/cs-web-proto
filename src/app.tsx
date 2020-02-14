@@ -13,6 +13,7 @@ import { Connection } from "./connection/plugin";
 import { ActionButton } from "./ui/widgets";
 import { OPEN_PAGE } from "./ui/widgets/widgetActions";
 import { BaseUrlContext } from "./baseUrl";
+import { onRenderCallback } from "./profilerCallback";
 
 let settings: any;
 try {
@@ -23,6 +24,7 @@ try {
 }
 
 const baseUrl = settings.baseUrl ?? "http://localhost:3000";
+const SIMULATION_TIME = settings.simulationTime ?? 100;
 
 log.setLevel("info");
 
@@ -31,50 +33,6 @@ function applyTheme(theme: any): void {
     const value = theme[key];
     document.documentElement.style.setProperty(key, value);
   });
-}
-
-const SIMULATION_TIME = 1000;
-
-const recordedTimings = {
-  startTime: 0,
-  actualDur: 0,
-  baseDur: 0,
-  reconciliation: 0
-};
-
-function onRenderCallback(
-  id: string,
-  phase: "mount" | "update",
-  actualDuration: number,
-  baseDuration: number,
-  startTime: number,
-  commitTime: number,
-  interactions: any
-): void {
-  const reconciliationTime = commitTime - startTime;
-
-  if (
-    recordedTimings.startTime === 0 ||
-    startTime > recordedTimings.startTime + SIMULATION_TIME / 2
-  ) {
-    // Add final timings
-    recordedTimings.actualDur += actualDuration;
-    recordedTimings.baseDur += baseDuration;
-    recordedTimings.reconciliation += reconciliationTime;
-    // Produce a csv friendly output
-    log.info(`actualDuration,baseDuration,reconciliation
-  ${recordedTimings.actualDur},${recordedTimings.baseDur},${recordedTimings.reconciliation}`);
-    // Reset timings
-    recordedTimings.startTime = startTime;
-    recordedTimings.actualDur = 0;
-    recordedTimings.baseDur = 0;
-    recordedTimings.reconciliation = 0;
-  } else {
-    // Add timings
-    recordedTimings.actualDur += actualDuration;
-    recordedTimings.baseDur += baseDuration;
-    recordedTimings.reconciliation += reconciliationTime;
-  }
 }
 
 const App: React.FC = (): JSX.Element => {
