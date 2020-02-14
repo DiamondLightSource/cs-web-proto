@@ -1,0 +1,8 @@
+{
+  "ci": {
+    "collect": {
+      "startServerCommand": "serve -s build -l 3000",
+      "url": ["http://localhost:3000/app/performance/{}/"]
+    }
+  }
+}
