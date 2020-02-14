@@ -1,10 +1,12 @@
 import { ConnectionState } from "../connection/plugin";
 import { VType } from "../types/vtypes/vtypes";
+import { PartialVType } from "../types/vtypes/merge";
 
 export const CONNECTION_CHANGED = "connection_changed";
 export const SUBSCRIBE = "subscribe";
 export const UNSUBSCRIBE = "unsubscribe";
 export const VALUE_CHANGED = "value_changed";
+export const VALUES_CHANGED = "values_changed";
 export const WRITE_PV = "write_pv";
 export const MACRO_UPDATED = "macro_updated";
 
@@ -46,8 +48,18 @@ export interface ValueChanged {
   type: typeof VALUE_CHANGED;
   payload: {
     pvName: string;
-    value: VType;
+    value: VType | PartialVType | undefined;
   };
+}
+
+export interface ValuesChanged {
+  type: typeof VALUES_CHANGED;
+  payload: [
+    {
+      pvName: string;
+      value: VType | PartialVType | undefined;
+    }
+  ];
 }
 
 export interface WritePv {
@@ -71,5 +83,6 @@ export type Action =
   | Subscribe
   | Unsubscribe
   | ValueChanged
+  | ValuesChanged
   | WritePv
   | MacroUpdated;
