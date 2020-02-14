@@ -14,7 +14,7 @@ script:
   - npm run coveralls
   - npm run lint
   - npx tsc
-  - npm run build
+  - CI=false npm run build
 
 after_success:
   - lhci autorun --upload.target=temporary-public-storage # run lighthouse CI against your static site
