@@ -1,3 +1,4 @@
-export const coniqlSocket = "localhost:1000";
-export const simulationTime = 100;
-export const profilerEnabled = true;
+export const coniqlSocket = "localhost:1000"; // Address of Coniql server
+export baseUrl = "http://localhost:3000" // Base URL to look at to get screen files
+export const simulationTime = 100; // Change the time between sim PV updates (ms)
+export const profilerEnabled = true; // Enable the profiler component
