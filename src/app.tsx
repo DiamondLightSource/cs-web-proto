@@ -46,7 +46,7 @@ const App: React.FC = (): JSX.Element => {
     plugins.unshift(["pva://", coniql]);
   }
   const plugin = new ConnectionForwarder(plugins);
-  initialiseStore(plugin);
+  initialiseStore(plugin, 100);
   const store = getStore();
   const { toggle, dark } = React.useContext(ThemeContext);
   applyTheme(dark ? darkTheme : lightTheme);
