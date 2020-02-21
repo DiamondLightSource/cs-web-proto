@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Profiler } from "react";
 import "./app.css";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
@@ -13,6 +13,7 @@ import { Connection } from "./connection/plugin";
 import { ActionButton } from "./ui/widgets";
 import { OPEN_PAGE } from "./ui/widgets/widgetActions";
 import { BaseUrlContext } from "./baseUrl";
+import { onRenderCallback } from "./profilerCallback";
 
 let settings: any;
 try {
@@ -23,8 +24,9 @@ try {
 }
 
 const baseUrl = settings.baseUrl ?? "http://localhost:3000";
+const SIMULATION_TIME = settings.simulationTime ?? 100;
 
-log.setLevel("warn");
+log.setLevel("info");
 
 function applyTheme(theme: any): void {
   Object.keys(theme).forEach(function(key): void {
@@ -34,7 +36,7 @@ function applyTheme(theme: any): void {
 }
 
 const App: React.FC = (): JSX.Element => {
-  const simulator = new SimulatorPlugin(100);
+  const simulator = new SimulatorPlugin(SIMULATION_TIME);
   const fallbackPlugin = simulator;
   const plugins: [string, Connection][] = [
     ["sim://", simulator],
@@ -85,19 +87,21 @@ const App: React.FC = (): JSX.Element => {
                 ]
               }}
             />
-            <DynamicPageWidget
-              routePath="app"
-              containerStyling={{
-                position: "relative",
-                height: "",
-                width: "",
-                margin: "",
-                padding: "",
-                border: "",
-                minWidth: "",
-                maxWidth: ""
-              }}
-            />
+            <Profiler id="Dynamic Page Profiler" onRender={onRenderCallback}>
+              <DynamicPageWidget
+                routePath="app"
+                containerStyling={{
+                  position: "relative",
+                  height: "",
+                  width: "",
+                  margin: "",
+                  padding: "",
+                  border: "",
+                  minWidth: "",
+                  maxWidth: ""
+                }}
+              />
+            </Profiler>
           </div>
         </Provider>
       </BrowserRouter>
