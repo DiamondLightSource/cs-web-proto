@@ -25,6 +25,7 @@ try {
 
 const baseUrl = settings.baseUrl ?? "http://localhost:3000";
 const SIMULATION_TIME = settings.simulationTime ?? 100;
+const THROTTLE_PERIOD = settings.throttlePeriod ?? 100;
 
 log.setLevel("info");
 
@@ -48,7 +49,7 @@ const App: React.FC = (): JSX.Element => {
     plugins.unshift(["pva://", coniql]);
   }
   const plugin = new ConnectionForwarder(plugins);
-  initialiseStore(plugin, 100);
+  initialiseStore(plugin, THROTTLE_PERIOD);
   const store = getStore();
   const { toggle, dark } = React.useContext(ThemeContext);
   applyTheme(dark ? darkTheme : lightTheme);
