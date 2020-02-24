@@ -1,4 +1,5 @@
 import { VALUE_CHANGED, Action, VALUES_CHANGED } from "./actions";
+import { MiddlewareAPI, Dispatch } from "redux";
 
 export class UpdateThrottle {
   private queue: Action[];
@@ -27,16 +28,19 @@ export class UpdateThrottle {
     this.ready = true;
   }
 
-  public clearQueue(store: any): void {
+  public clearQueue(store: MiddlewareAPI): void {
     store.dispatch({ type: VALUES_CHANGED, payload: [...this.queue] });
     this.queue.length = 0;
     this.ready = false;
   }
 }
 
-export const throttleMiddleware = (updater: UpdateThrottle) => (store: any) => (
-  next: any
-) => (action: any): any => {
+export const throttleMiddleware = (updater: UpdateThrottle) => (
+  store: MiddlewareAPI
+  // next(action) returns the action, but in the case of a value being cached,
+  // we don't call next(action) so return undefined.
+  // this makes the return value 'Action | undefined'
+) => (next: Dispatch<Action>) => (action: Action): Action | undefined => {
   if (action.type === VALUE_CHANGED) {
     updater.queueUpdate(action);
     if (updater.ready) {
