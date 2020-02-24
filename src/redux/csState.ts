@@ -7,7 +7,8 @@ import {
   WRITE_PV,
   CONNECTION_CHANGED,
   MACRO_UPDATED,
-  UNSUBSCRIBE
+  UNSUBSCRIBE,
+  ValueChanged
 } from "./actions";
 import { VType } from "../types/vtypes/vtypes";
 import { mergeVtype } from "../types/vtypes/merge";
@@ -53,7 +54,7 @@ export interface CsState {
 function updateValueCache(
   oldValueCache: ValueCache,
   newValueCache: ValueCache,
-  action: any
+  action: ValueChanged
 ): void {
   const { pvName, value } = action.payload;
   const pvState = oldValueCache[pvName];

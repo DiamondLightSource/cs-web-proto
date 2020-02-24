@@ -54,12 +54,7 @@ export interface ValueChanged {
 
 export interface ValuesChanged {
   type: typeof VALUES_CHANGED;
-  payload: [
-    {
-      pvName: string;
-      value: VType | PartialVType | undefined;
-    }
-  ];
+  payload: ValueChanged[];
 }
 
 export interface WritePv {
