@@ -1,15 +1,16 @@
-import { Store } from "redux";
+import { MiddlewareAPI, Dispatch } from "redux";
 import { Connection, ConnectionState } from "../connection/plugin";
 import {
   CONNECTION_CHANGED,
   SUBSCRIBE,
   WRITE_PV,
   VALUE_CHANGED,
-  UNSUBSCRIBE
+  UNSUBSCRIBE,
+  Action
 } from "./actions";
 
 function connectionChanged(
-  store: Store,
+  store: MiddlewareAPI,
   pvName: string,
   value: ConnectionState
 ): void {
@@ -20,7 +21,7 @@ function connectionChanged(
 }
 
 function valueChanged(
-  store: Store,
+  store: MiddlewareAPI,
   pvName: string,
   value: object | undefined
 ): void {
@@ -35,8 +36,8 @@ function valueChanged(
 // (x:any): any => (y:any): any => (z:any): any is perverse
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const connectionMiddleware = (connection: Connection) => (
-  store: any
-) => (next: any): any => (action: any): any => {
+  store: MiddlewareAPI
+) => (next: Dispatch<Action>): any => (action: Action): Action => {
   if (!connection.isConnected()) {
     connection.connect(
       // Partial function application.

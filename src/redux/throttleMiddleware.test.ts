@@ -1,10 +1,16 @@
 import { UpdateThrottle, throttleMiddleware } from "./throttleMiddleware";
-import { VALUE_CHANGED, CONNECTION_CHANGED, VALUES_CHANGED } from "./actions";
+import {
+  VALUE_CHANGED,
+  CONNECTION_CHANGED,
+  VALUES_CHANGED,
+  ValueChanged,
+  ConnectionChanged
+} from "./actions";
 import { vdouble } from "../types/vtypes/vtypes";
 
 // Mock setInterval.
 jest.useFakeTimers();
-const mockStore = { dispatch: jest.fn() };
+const mockStore = { dispatch: jest.fn(), getState: jest.fn() };
 
 describe("UpdateThrottle", (): void => {
   beforeEach((): void => {
@@ -43,7 +49,7 @@ describe("throttleMidddlware", (): void => {
     const mockNext = jest.fn();
     // actionHandler takes an action
     const actionHandler = nextHandler(mockNext);
-    const valueAction = {
+    const valueAction: ValueChanged = {
       type: VALUE_CHANGED,
       payload: { pvName: "pv", value: vdouble(0) }
     };
@@ -60,9 +66,9 @@ describe("throttleMidddlware", (): void => {
     const mockNext = jest.fn();
     // actionHandler takes an action
     const actionHandler = nextHandler(mockNext);
-    const connectionAction = {
+    const connectionAction: ConnectionChanged = {
       type: CONNECTION_CHANGED,
-      payload: { pvName: "pv", value: vdouble(0) }
+      payload: { pvName: "pv", value: { isReadonly: false, isConnected: true } }
     };
     actionHandler(connectionAction);
     expect(mockStore.dispatch).toHaveBeenCalledTimes(0);
