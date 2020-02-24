@@ -7,7 +7,9 @@ import {
   ConnectionChanged,
   Subscribe,
   Unsubscribe,
-  ValueChanged
+  ValueChanged,
+  ValuesChanged,
+  VALUES_CHANGED
 } from "./actions";
 import {
   vdouble,
@@ -31,6 +33,21 @@ const initialState: CsState = {
   subscriptions: {},
   effectivePvNameMap: {}
 };
+
+describe("VALUES_CHANGED", (): void => {
+  test("csReducer honours latest of multiple value updates", (): void => {
+    const action: ValuesChanged = {
+      type: VALUES_CHANGED,
+      payload: [
+        { type: VALUE_CHANGED, payload: { pvName: "PV", value: vdouble(1) } },
+        { type: VALUE_CHANGED, payload: { pvName: "PV", value: vdouble(2) } }
+      ]
+    };
+    const newState = csReducer(initialState, action);
+    // expect the latter value to
+    expect((newState.valueCache["PV"].value as VDouble).getValue()).toEqual(2);
+  });
+});
 
 describe("VALUE_CHANGED", (): void => {
   test("csReducer handles value update", (): void => {
