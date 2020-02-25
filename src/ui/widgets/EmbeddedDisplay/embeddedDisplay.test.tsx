@@ -51,7 +51,6 @@ describe("<EmbeddedDisplay>", (): void => {
             width: "",
             margin: "",
             padding: "",
-            border: "",
             minWidth: "",
             maxWidth: ""
           }}
@@ -95,7 +94,6 @@ describe("<EmbeddedDisplay>", (): void => {
           width: "",
           margin: "",
           padding: "",
-          border: "",
           minWidth: "",
           maxWidth: ""
         }}
@@ -148,7 +146,6 @@ describe("<EmbeddedDisplay>", (): void => {
           width: "",
           margin: "",
           padding: "",
-          border: "",
           minWidth: "",
           maxWidth: ""
         }}
@@ -195,7 +192,6 @@ describe("<EmbeddedDisplay>", (): void => {
           width: "",
           margin: "",
           padding: "",
-          border: "",
           minWidth: "",
           maxWidth: ""
         }}

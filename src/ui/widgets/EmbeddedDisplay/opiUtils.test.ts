@@ -32,7 +32,7 @@ describe("simple macros convert", (): void => {
 });
 
 describe("color conversion", (): void => {
-  const xmlColor = '<color name="On" red="0" green="255" blue="0"></color>';
+  const xmlColor = '<color name="On" red="0" green="128" blue="0"></color>';
   const convertedColor = convert.xml2js(xmlColor, {
     compact: true
   });
@@ -277,7 +277,7 @@ describe("opi child conversion", (): void => {
       <y>199</y>
       <width>299</width>
       <foreground_color>
-        <color name="On" red="0" green="255" blue="0">
+        <color name="On" red="0" green="128" blue="0">
         </color>
       </foreground_color>
       <background_color>
