@@ -40,7 +40,6 @@ export function DynamicPageFetch({
         width: "",
         margin: "",
         padding: "",
-        border: "",
         minWidth: "",
         maxWidth: ""
       }}
@@ -84,7 +83,6 @@ const DynamicPageComponent = (
                   width: "",
                   margin: "",
                   padding: "",
-                  border: "",
                   minWidth: "",
                   maxWidth: ""
                 }}

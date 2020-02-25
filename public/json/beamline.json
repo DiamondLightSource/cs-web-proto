@@ -2,19 +2,31 @@
   "type": "display",
   "position": "relative",
   "overflow": "auto",
-  "border": "solid 3px red",
+  "border": {
+    "style": "line",
+    "width": 3,
+    "color": "red"
+  },
   "children": [
     {
       "type": "flexcontainer",
       "position": "relative",
       "overflow": "auto",
-      "border": "solid 3px green",
+      "border": {
+        "style": "line",
+        "width": 3,
+        "color": "green"
+      },
       "children": [
         {
           "type": "display",
           "position": "relative",
           "width": "100%",
-          "border": "solid 3px blue",
+          "border": {
+            "style": "line",
+            "width": 2,
+            "color": "blue"
+          },
           "backgroundColor": "#cccccc",
           "overflow": "auto",
           "children": [
@@ -42,7 +54,11 @@
           "type": "display",
           "position": "relative",
           "width": "75%",
-          "border": "solid 3px pink",
+          "border": {
+            "style": "line",
+            "width": 3,
+            "color": "pink"
+          },
           "backgroundColor": "#cccccc",
           "overflow": "auto",
           "macroMap": {
@@ -72,7 +88,11 @@
           "type": "display",
           "position": "relative",
           "width": "25%",
-          "border": "solid 3px orange",
+          "border": {
+            "style": "line",
+            "width": 3,
+            "color": "orange"
+          },
           "backgroundColor": "#cccccc",
           "overflow": "auto",
           "children": [

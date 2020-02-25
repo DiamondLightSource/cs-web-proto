@@ -62,7 +62,6 @@ export function ChoiceProp(options: string[]): PropTypes.Validator<string> {
 export const ContainerFeaturesPropType = {
   margin: StringPropOpt,
   padding: StringPropOpt,
-  border: StringPropOpt,
   minWidth: StringPropOpt,
   maxWidth: StringPropOpt
 };

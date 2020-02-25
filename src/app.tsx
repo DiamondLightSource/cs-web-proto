@@ -69,7 +69,6 @@ const App: React.FC = (): JSX.Element => {
                 width: "100px",
                 margin: "auto",
                 padding: "",
-                border: "",
                 minWidth: "",
                 maxWidth: ""
               }}
@@ -97,7 +96,6 @@ const App: React.FC = (): JSX.Element => {
                   width: "",
                   margin: "",
                   padding: "",
-                  border: "",
                   minWidth: "",
                   maxWidth: ""
                 }}

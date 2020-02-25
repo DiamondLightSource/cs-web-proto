@@ -27,7 +27,11 @@
           "precision": 2,
           "min": -1,
           "max": 1,
-          "border": "1px solid #aaaaaa",
+          "border": {
+            "style": "line",
+            "width": 1,
+            "color": "#aaaaaa"
+          },
           "font": {
             "size": 20,
             "style": "bold"
@@ -50,7 +54,11 @@
           "position": "relative",
           "width": "25%",
           "pvName": "sim://limit#m${motor}",
-          "border": "1px solid #aaaaaa",
+          "border": {
+            "style": "line",
+            "width": 1,
+            "color": "#aaaaaa"
+          },
           "margin": "5px 0px 0px 0px",
           "font": {
             "size": 16,
@@ -82,7 +90,11 @@
           "position": "relative",
           "width": "25%",
           "pvName": "loc://enum#m${motor}<VEnum>(2, \"slow\", \"med\", \"fast\")",
-          "border": "1px solid #aaaaaa",
+          "border": {
+            "style": "line",
+            "width": 1,
+            "color": "#aaaaaa"
+          },
           "margin": "5px 0px 0px 0px",
           "fontSize": "0.75em"
         },

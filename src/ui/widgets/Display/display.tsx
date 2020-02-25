@@ -7,13 +7,15 @@ import {
   ChoicePropOpt,
   ChildrenPropOpt,
   InferWidgetProps,
-  ColorPropOpt
+  ColorPropOpt,
+  BorderPropOpt
 } from "../propTypes";
 
 const DisplayProps = {
   children: ChildrenPropOpt,
   overflow: ChoicePropOpt(["scroll", "hidden", "auto", "visible"]),
-  backgroundColor: ColorPropOpt
+  backgroundColor: ColorPropOpt,
+  border: BorderPropOpt
 };
 
 // Generic display widget to put other things inside
@@ -23,9 +25,10 @@ const DisplayComponent = (
   <div
     style={{
       position: "relative",
-      boxSizing: "border-box",
+      height: "100%",
       overflow: props.overflow,
-      backgroundColor: props.backgroundColor?.rgbaString()
+      backgroundColor: props.backgroundColor?.rgbaString(),
+      ...props.border?.asStyle()
     }}
   >
     {props.children}

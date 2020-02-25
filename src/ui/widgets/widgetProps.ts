@@ -10,7 +10,8 @@ import {
   InferWidgetProps,
   StringProp,
   StringOrNumPropOpt,
-  MacrosPropOpt
+  MacrosPropOpt,
+  BorderPropOpt
 } from "./propTypes";
 
 import { VType } from "../../types/vtypes/vtypes";
@@ -56,7 +57,8 @@ const CommonWidgetProps = {
   actions: ActionsPropType,
   tooltip: StringPropOpt,
   resolvedTooltip: StringPropOpt,
-  menuWrapper: BoolPropOpt
+  menuWrapper: BoolPropOpt,
+  border: BorderPropOpt
 };
 
 const AbsoluteComponentPropType = {

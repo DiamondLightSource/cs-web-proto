@@ -126,6 +126,7 @@ export const EmbeddedDisplay = (
       {
         type: "display",
         positionStyle: props.positionStyle,
+        border: props.border,
         overflow: overflow,
         children: [description]
       },
