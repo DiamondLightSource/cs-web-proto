@@ -7,21 +7,23 @@ export class Color {
   public static WHITE = new Color(255, 255, 255);
   public static BLACK = new Color(0, 0, 0);
   public static RED = new Color(255, 0, 0);
-  public static GREEN = new Color(0, 255, 0);
+  public static GREEN = new Color(0, 128, 0);
   public static BLUE = new Color(0, 0, 255);
   public static YELLOW = new Color(255, 255, 0);
   public static PURPLE = new Color(127, 0, 127);
+  public static PINK = new Color(255, 192, 203);
+  public static ORANGE = new Color(255, 165, 0);
   public static TRANSPARENT = new Color(0, 0, 0, 0);
-  public static namedColors: { [key: string]: Color } = {
-    white: Color.WHITE,
-    black: Color.BLACK,
-    red: Color.RED,
-    green: Color.GREEN,
-    blue: Color.BLUE,
-    yellow: Color.YELLOW,
-    purple: Color.PURPLE,
-    transparent: Color.TRANSPARENT
-  };
+
+  public static fromName(cssColorName: string): string {
+    const ctx = document.createElement("canvas").getContext("2d");
+    if (ctx) {
+      ctx.fillStyle = cssColorName;
+      return ctx.fillStyle;
+    } else {
+      return "#000000";
+    }
+  }
 
   public static parse(cssColor: string): Color {
     let r = 0;
@@ -29,11 +31,11 @@ export class Color {
     let b = 0;
     if (cssColor.startsWith("#")) {
       let intRep = parseInt(cssColor.slice(1), 16);
-      r = Math.floor(intRep % 256);
+      b = Math.floor(intRep % 256);
       intRep /= 256;
       g = Math.floor(intRep % 256);
       intRep /= 256;
-      b = Math.floor(intRep);
+      r = Math.floor(intRep);
     } else if (cssColor.startsWith("rgb")) {
       const parts = cssColor.match(/rgb\((.*), (.*), (.*)\)/);
       if (parts !== null) {
@@ -41,8 +43,10 @@ export class Color {
         g = parseInt(parts[2]);
         b = parseInt(parts[3]);
       }
-    } else if (cssColor in Color.namedColors) {
-      return Color.namedColors[cssColor];
+    } else if (cssColor === "transparent") {
+      return Color.TRANSPARENT;
+    } else {
+      return this.parse(this.fromName(cssColor));
     }
 
     return new Color(r, g, b);
