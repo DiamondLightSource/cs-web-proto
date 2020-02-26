@@ -258,7 +258,7 @@ class EnumPv extends SimPv {
 class WaveformPV extends SimPv {
   type = "VDoubleArray";
   private topValue = 100;
-  private size = 1;
+  private size = 10;
   private newValue: number;
   private wave: [number];
   public constructor(...args: SimArgs) {
