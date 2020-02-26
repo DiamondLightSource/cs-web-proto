@@ -1,6 +1,6 @@
 // Should this be require enzyme ?
 import {} from "enzyme";
-import convert from "xml-js";
+import { xml2js, ElementCompact } from "xml-js";
 
 import {
   opiParseMacros,
@@ -17,7 +17,7 @@ import { Color } from "../../../types/color";
 
 describe("simple macros convert", (): void => {
   const xmlInput = "<macros><Test>Value</Test></macros>";
-  const convertedXML: convert.ElementCompact = convert.xml2js(xmlInput, {
+  const convertedXML: ElementCompact = xml2js(xmlInput, {
     compact: true
   });
   test("it collects the macro", (): void => {
@@ -33,7 +33,7 @@ describe("simple macros convert", (): void => {
 
 describe("color conversion", (): void => {
   const xmlColor = '<color name="On" red="0" green="128" blue="0"></color>';
-  const convertedColor = convert.xml2js(xmlColor, {
+  const convertedColor = xml2js(xmlColor, {
     compact: true
   });
   test("it converts xml color to rgb string", (): void => {
@@ -43,12 +43,9 @@ describe("color conversion", (): void => {
 
 describe("precision conversion", (): void => {
   const xmlPrecision = "<precision>5</precision>";
-  const convertedPrecision: convert.ElementCompact = convert.xml2js(
-    xmlPrecision,
-    {
-      compact: true
-    }
-  );
+  const convertedPrecision: ElementCompact = xml2js(xmlPrecision, {
+    compact: true
+  });
 
   test("it correctly gets the precision and turns it into a number", (): void => {
     const output = opiParsePrecision("precision", convertedPrecision.precision);
@@ -70,7 +67,7 @@ describe("actions conversion", (): void => {
     <description>Write pv2 to Testing</description>
   </action>
 </actions>`;
-  const compactActions: convert.ElementCompact = convert.xml2js(xmlActions, {
+  const compactActions: ElementCompact = xml2js(xmlActions, {
     compact: true
   });
   test("it correctly converts write PV actions", (): void => {
@@ -110,7 +107,7 @@ describe("actions conversion", (): void => {
         <description>Write pv2 to Testing</description>
       </action>
     </actions>`;
-    const compactActions: convert.ElementCompact = convert.xml2js(xmlActions, {
+    const compactActions: ElementCompact = xml2js(xmlActions, {
       compact: true
     });
     expect(opiParseActions("actions", compactActions.actions)).toEqual({
@@ -148,7 +145,7 @@ describe("opi child conversion", (): void => {
       <width>299</width>
       <height>399</height>
     </widget>`;
-    const compactWidget: convert.ElementCompact = convert.xml2js(xmlWidget, {
+    const compactWidget: ElementCompact = xml2js(xmlWidget, {
       compact: true
     });
 
@@ -177,7 +174,7 @@ describe("opi child conversion", (): void => {
       <width>299</width>
       <height>399</height>
     </widget>`;
-    const compactWidget: convert.ElementCompact = convert.xml2js(xmlWidget, {
+    const compactWidget: ElementCompact = xml2js(xmlWidget, {
       compact: true
     });
 
@@ -219,7 +216,7 @@ describe("opi child conversion", (): void => {
   ])(
     "it converts a simple widget with %s boolean prop",
     (expected, widgetXml): void => {
-      const compactWidget: convert.ElementCompact = convert.xml2js(widgetXml, {
+      const compactWidget: ElementCompact = xml2js(widgetXml, {
         compact: true
       });
 
@@ -250,12 +247,9 @@ describe("opi child conversion", (): void => {
       <name>Test Widget</name>
       <true_or_false>not-a-bool</true_or_false>
     </widget>`;
-    const compactWidget: convert.ElementCompact = convert.xml2js(
-      invalidBoolWidget,
-      {
-        compact: true
-      }
-    );
+    const compactWidget: ElementCompact = xml2js(invalidBoolWidget, {
+      compact: true
+    });
     expect((): void => {
       xmlChildToWidget(
         compactWidget.widget,
@@ -286,7 +280,7 @@ describe("opi child conversion", (): void => {
       </background_color>
       <height>399</height>
     </widget>`;
-    const compactWidget: convert.ElementCompact = convert.xml2js(xmlWidget, {
+    const compactWidget: ElementCompact = xml2js(xmlWidget, {
       compact: true
     });
 
@@ -337,7 +331,7 @@ describe("opi child conversion", (): void => {
             <height>399</height>
         </widget>
     </widget>`;
-    const compactWidget: convert.ElementCompact = convert.xml2js(xmlWidget, {
+    const compactWidget: ElementCompact = xml2js(xmlWidget, {
       compact: true
     });
 
@@ -392,7 +386,7 @@ describe("opi child conversion", (): void => {
             <height>699</height>
         </widget>
     </widget>`;
-    const compactWidget: convert.ElementCompact = convert.xml2js(xmlWidget, {
+    const compactWidget: ElementCompact = xml2js(xmlWidget, {
       compact: true
     });
 

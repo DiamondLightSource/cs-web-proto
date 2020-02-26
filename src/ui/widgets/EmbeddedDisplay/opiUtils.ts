@@ -2,7 +2,7 @@
 // into our widget format
 
 import log from "loglevel";
-import convert from "xml-js";
+import { xml2js, ElementCompact } from "xml-js";
 
 import { WidgetDescription } from "../createComponent";
 import { WidgetActions, WRITE_PV } from "../widgetActions";
@@ -32,15 +32,12 @@ export interface XmlDescription {
 }
 
 interface FunctionSubstitutionInterface {
-  [key: string]: (
-    name: string,
-    jsonProp: convert.ElementCompact
-  ) => GenericProp;
+  [key: string]: (name: string, jsonProp: ElementCompact) => GenericProp;
 }
 
 export const opiParseMacros = (
   name: string,
-  jsonProp: convert.ElementCompact
+  jsonProp: ElementCompact
 ): MacroMap => {
   const macroMap: MacroMap = {};
   Object.entries(jsonProp as object).forEach(([key, value]): void => {
@@ -55,7 +52,7 @@ export interface OpiColor {
 
 export const opiParseColor = (
   name: string,
-  jsonProp: convert.ElementCompact
+  jsonProp: ElementCompact
 ): Color => {
   const color = jsonProp.color as OpiColor;
   try {
@@ -73,14 +70,14 @@ export const opiParseColor = (
 
 export const opiParsePrecision = (
   name: string,
-  jsonProp: convert.ElementCompact
+  jsonProp: ElementCompact
 ): number => {
   return Number(jsonProp._text);
 };
 
 export const opiParseBoolean = (
   name: string,
-  jsonProp: convert.ElementCompact
+  jsonProp: ElementCompact
 ): boolean => {
   const boolText = jsonProp._text;
   if (boolText === "false") {
@@ -94,7 +91,7 @@ export const opiParseBoolean = (
 
 export const opiParseActions = (
   name: string,
-  jsonProp: convert.ElementCompact
+  jsonProp: ElementCompact
 ): WidgetActions => {
   let actionsToProcess: any[] = [];
   if (Array.isArray(jsonProp.action)) {
@@ -148,7 +145,7 @@ export const opiParseActions = (
   return processedActions;
 };
 
-function opiParseFont(name: string, jsonProp: convert.ElementCompact): Font {
+function opiParseFont(name: string, jsonProp: ElementCompact): Font {
   const opiStyles: { [key: number]: FontStyle } = {
     0: FontStyle.Regular,
     1: FontStyle.Bold,
@@ -289,7 +286,7 @@ export const xmlToWidgets = (
   // Optionally provide a substition map for keys
 
   // Convert it to a "compact format"
-  const compactJSON = convert.xml2js(xmlString, {
+  const compactJSON = xml2js(xmlString, {
     compact: true
   }) as XmlDescription;
 
