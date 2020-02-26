@@ -9,7 +9,7 @@ import { WidgetActions, WRITE_PV } from "../widgetActions";
 import { MacroMap } from "../../../redux/csState";
 import { Color } from "../../../types/color";
 import { Font, FontStyle } from "../../../types/font";
-import { GenericProp } from "../../../types/props";
+import { GenericProp, Rule } from "../../../types/props";
 
 export const OPI_WIDGET_MAPPING: { [key: string]: string } = {
   "org.csstudio.opibuilder.Display": "display",
@@ -44,6 +44,63 @@ export const opiParseMacros = (
     macroMap[key] = value["_text"];
   });
   return macroMap;
+};
+
+const toArray = (element?: ElementCompact): ElementCompact[] => {
+  let array = [];
+  if (Array.isArray(element)) {
+    array = element;
+  } else if (element) {
+    array = [element];
+  }
+  return array;
+};
+
+export const opiParseRules = (
+  name: string,
+  jsonProp: ElementCompact
+): Rule[] => {
+  const ruleArray = toArray(jsonProp.rule);
+  const rules = ruleArray.map((ruleElement: ElementCompact) => {
+    const name = ruleElement._attributes?.name as string;
+    const xmlProp = ruleElement._attributes?.prop_id as string;
+    // Change the prop from the rule to the prop used in our JSON format.
+    let jsonProp = xmlProp;
+    if (OPI_KEY_SUBSTITUTIONS.hasOwnProperty(xmlProp)) {
+      jsonProp = OPI_KEY_SUBSTITUTIONS[xmlProp];
+    }
+
+    const outExp = ruleElement._attributes?.out_exp === "true";
+    const pvArray = toArray(ruleElement.pv);
+    const pvs = pvArray.map((pv: ElementCompact) => {
+      return {
+        pvName: pv._text as string,
+        trigger: pv._attributes?.trig === "true"
+      };
+    });
+    const expArray = toArray(ruleElement.exp);
+    const expressions = expArray.map((expression: ElementCompact) => {
+      const value = expression.value;
+      let convertedValue = value;
+      if (OPI_FUNCTION_SUBSTITUTIONS.hasOwnProperty(xmlProp)) {
+        convertedValue = OPI_FUNCTION_SUBSTITUTIONS[xmlProp](xmlProp, value);
+      }
+
+      return {
+        boolExp: expression._attributes?.bool_exp as string,
+        value: value,
+        convertedValue: convertedValue
+      };
+    });
+    return {
+      name: name,
+      prop: jsonProp,
+      outExp: outExp,
+      expressions: expressions,
+      pvs: pvs
+    };
+  });
+  return rules;
 };
 
 export interface OpiColor {
@@ -162,7 +219,9 @@ function opiParseFont(name: string, jsonProp: ElementCompact): Font {
   return new Font(opiStyles[style], height, fontName);
 }
 
-export const OPI_FUNCTION_SUBSTITUTIONS = {
+export const OPI_FUNCTION_SUBSTITUTIONS: {
+  [key: string]: (name: string, value: any) => GenericProp;
+} = {
   macros: opiParseMacros,
   background_color: opiParseColor, // eslint-disable-line @typescript-eslint/camelcase
   foreground_color: opiParseColor, // eslint-disable-line @typescript-eslint/camelcase
@@ -171,10 +230,11 @@ export const OPI_FUNCTION_SUBSTITUTIONS = {
   transparent: opiParseBoolean,
   show_units: opiParseBoolean, // eslint-disable-line @typescript-eslint/camelcase
   actions: opiParseActions,
-  font: opiParseFont
+  font: opiParseFont,
+  rules: opiParseRules
 };
 
-export const OPI_KEY_SUBSTITUTIONS = {
+export const OPI_KEY_SUBSTITUTIONS: { [key: string]: string } = {
   pv_name: "pvName", // eslint-disable-line @typescript-eslint/camelcase
   macros: "macroMap",
   opi_file: "file", // eslint-disable-line @typescript-eslint/camelcase

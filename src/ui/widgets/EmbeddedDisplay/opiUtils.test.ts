@@ -10,7 +10,8 @@ import {
   opiParseActions,
   xmlChildToWidget,
   OPI_WIDGET_MAPPING,
-  opiGetWidgetId
+  opiGetWidgetId,
+  opiParseRules
 } from "./opiUtils";
 import { WRITE_PV } from "../widgetActions";
 import { Color } from "../../../types/color";
@@ -28,6 +29,64 @@ describe("simple macros convert", (): void => {
   test("it ignores when there are not macros", (): void => {
     const macros = opiParseMacros("macros", {});
     expect(macros).toEqual({});
+  });
+});
+
+describe("rules conversion", (): void => {
+  const xmlRules = `
+    <rules>
+      <rule name="OnOffBackgroundRule" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0 == 1">
+          <value>
+            <color name="Black" red="0" green="0" blue="0" />
+          </value>
+        </exp>
+        <exp bool_exp="true">
+          <value>
+            <color name="Red" red="255" green="0" blue="0" />
+          </value>
+        </exp>
+        <pv trig="true">PV1</pv>
+      </rule>
+    </rules>
+`;
+  const compactRules: ElementCompact = xml2js(xmlRules, {
+    compact: true
+  });
+  test("it correctly converts rules", (): void => {
+    expect(opiParseRules("rules", compactRules.rules)).toEqual([
+      {
+        name: "OnOffBackgroundRule",
+        prop: "backgroundColor",
+        outExp: false,
+        pvs: [
+          {
+            pvName: "PV1",
+            trigger: true
+          }
+        ],
+        expressions: [
+          {
+            boolExp: "pv0 == 1",
+            value: {
+              color: {
+                _attributes: { red: "0", green: "0", blue: "0", name: "Black" }
+              }
+            },
+            convertedValue: Color.BLACK
+          },
+          {
+            boolExp: "true",
+            value: {
+              color: {
+                _attributes: { red: "255", green: "0", blue: "0", name: "Red" }
+              }
+            },
+            convertedValue: Color.RED
+          }
+        ]
+      }
+    ]);
   });
 });
 

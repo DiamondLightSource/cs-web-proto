@@ -44,7 +44,6 @@ export function useRules(props: AnyProps): AnyProps {
     const { name, pvs, prop, outExp, expressions } = rule;
     const pvVars: { [pvName: string]: number | string } = {};
     for (let i = 0; i < pvs.length; i++) {
-      console.log(results);
       // Set up variables that might be used.
       const pvResults = results[pvs[i].pvName][0];
       if (pvResults) {
