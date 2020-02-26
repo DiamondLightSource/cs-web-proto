@@ -29,7 +29,9 @@ export const vtypeToString = (
 export function vtypeToNumber(vtype: VType): number {
   const value = vtype.getValue();
   let numericValue;
-  if (typeof value === "number") {
+  if (vtype instanceof VEnum) {
+    return vtype.getIndex();
+  } else if (typeof value === "number") {
     numericValue = value;
   } else if (typeof value === "string") {
     numericValue = parseFloat(value);
