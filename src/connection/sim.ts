@@ -24,6 +24,7 @@ import {
 } from "../types/vtypes/alarm";
 import { timeNow } from "../types/vtypes/time";
 import { vtypeInfo, PartialVType } from "../types/vtypes/merge";
+import { ThemeContext } from "../themeContext";
 
 function partialise(
   value: VType | undefined,
@@ -255,6 +256,37 @@ class EnumPv extends SimPv {
   }
 }
 
+class WaveformPV extends SimPv {
+  type = "VDoubleArray";
+  private topValue: number = 100;
+  private size: number = 10;
+  private newValue: number;
+  private wave: [number];
+  public constructor(...args: SimArgs) {
+    super(...args);
+    setInterval(this.publish.bind(this), this.updateRate);
+    this.wave = [0];
+    for (let count = 1; count < this.size; count++) {
+      this.wave.push(count);
+    }
+    this.newValue = this.size;
+  }
+
+  public getValue(): VType | undefined {
+    // Get rid of the first element
+    this.wave.shift();
+    // Put the new number on the end
+    this.wave.push(this.newValue);
+    // Iterate the new number
+    this.newValue++;
+    // Reset it when too big
+    if (this.newValue >= this.topValue) {
+      this.newValue = 0;
+    }
+    return vdoubleArray(this.wave, [this.size]);
+  }
+}
+
 class LocalPv extends SimPv {
   type = "VString";
   private value: VType | undefined;
@@ -462,6 +494,9 @@ export class SimulatorPlugin implements Connection {
     } else if (nameInfo.protocol === "sim://ramp") {
       initial = undefined;
       cls = RampPv;
+    } else if (nameInfo.protocol === "sim://waveform") {
+      initial = undefined;
+      cls = WaveformPV;
     } else {
       return { simulator: undefined, initialValue: undefined };
     }
