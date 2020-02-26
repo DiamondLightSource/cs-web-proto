@@ -24,7 +24,6 @@ import {
 } from "../types/vtypes/alarm";
 import { timeNow } from "../types/vtypes/time";
 import { vtypeInfo, PartialVType } from "../types/vtypes/merge";
-import { ThemeContext } from "../themeContext";
 
 function partialise(
   value: VType | undefined,
@@ -258,8 +257,8 @@ class EnumPv extends SimPv {
 
 class WaveformPV extends SimPv {
   type = "VDoubleArray";
-  private topValue: number = 100;
-  private size: number = 10;
+  private topValue = 100;
+  private size = 10;
   private newValue: number;
   private wave: [number];
   public constructor(...args: SimArgs) {
