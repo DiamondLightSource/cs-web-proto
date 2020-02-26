@@ -21,6 +21,8 @@ function jsonParseBorder(name: string, jsonBorder: any): Border {
   const styles: { [key: string]: BorderStyle } = {
     none: BorderStyle.None,
     line: BorderStyle.Line,
+    dashed: BorderStyle.Dashed,
+    dotted: BorderStyle.Dotted,
     groupbox: BorderStyle.GroupBox
   };
   return new Border(

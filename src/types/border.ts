@@ -3,12 +3,16 @@ import { Color } from "./color";
 export enum BorderStyle {
   None,
   Line,
+  Dashed,
+  Dotted,
   GroupBox
 }
 
 const CssBorders: { [key in BorderStyle]: string } = {
   [BorderStyle.None]: "none",
   [BorderStyle.Line]: "solid",
+  [BorderStyle.Dashed]: "dashed",
+  [BorderStyle.Dotted]: "dotted",
   [BorderStyle.GroupBox]: "ridge"
 };
 
