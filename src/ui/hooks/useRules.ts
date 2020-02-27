@@ -66,23 +66,28 @@ export function useRules(props: AnyProps): AnyProps {
         log.debug(`Values ${Object.values(pvVars)}`);
         // eslint-disable-next-line no-new-func
         const f = Function(...Object.keys(pvVars), "return " + exp.boolExp);
-        log.debug(`result ${f(...Object.values(pvVars))}`);
-        if (f(...Object.values(pvVars))) {
-          log.debug("matched");
+        // Evaluate the expression.
+        const result = f(...Object.values(pvVars));
+        log.debug(`result ${result}`);
+        if (result) {
+          // Not 'output expression': set the prop to the provided value.
+          log.debug("Expression matched");
           if (!outExp) {
             newProps[prop] = exp.convertedValue;
-            log.debug("after");
+            log.debug("Output value");
             log.debug(newProps);
           } else {
+            // 'Output expression' - evaluate 'value' and set the prop to the result.
             // eslint-disable-next-line no-new-func
             const f = Function(...Object.keys(pvVars), "return " + exp.value);
             newProps[prop] = f(...Object.values(pvVars));
-            log.debug("after");
-            log.debug(newProps);
+            log.debug("Output expression");
           }
+          log.debug("Props after rule evaluation:");
+          log.debug(newProps);
           break;
         } else {
-          log.debug("nope");
+          log.debug("Expression did not match");
         }
       }
     } catch (error) {

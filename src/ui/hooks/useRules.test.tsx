@@ -22,7 +22,7 @@ jest.mock("react-redux", (): object => {
 // mocking before we have access to other imports (vdouble).
 (useSelector as jest.Mock).mockImplementation((pvName: string): any => {
   return {
-    PV1: [{ value: vdouble(2), connected: true, readonly: false }, "PV1"]
+    PV1: [{ value: vdouble(0), connected: true, readonly: false }, "PV1"]
   };
 });
 const RuleTester = (props: { id: string; rules: Rule[] }): JSX.Element => {
@@ -49,12 +49,29 @@ const rule: Rule = {
   ]
 };
 
+const outExpRule: Rule = {
+  name: "outexprule",
+  prop: "text",
+  outExp: true,
+  pvs: [{ pvName: "PV1", trigger: true }],
+  expressions: [
+    {
+      boolExp: "pv0 > 1",
+      value: "pvStr0"
+    },
+    {
+      boolExp: "true",
+      value: '"no"'
+    }
+  ]
+};
+
 describe("useRules", (): void => {
   it("does't change prop with simple rule", (): void => {
     const props = { id: "id1", rules: [rule], text: "neither" };
     const hookTester = <RuleTester {...props}></RuleTester>;
     const hookTesterWrapper = shallow(hookTester);
-    expect(hookTesterWrapper.find("div").text()).toEqual("yes");
+    expect(hookTesterWrapper.find("div").text()).toEqual("no");
   });
   it("changes prop with simple rule", (): void => {
     // Awkward way of choosing return value for mocked function?
@@ -67,5 +84,30 @@ describe("useRules", (): void => {
     const hookTester = <RuleTester {...props}></RuleTester>;
     const hookTesterWrapper = shallow(hookTester);
     expect(hookTesterWrapper.find("div").text()).toEqual("yes");
+  });
+
+  it("uses output expression string", (): void => {
+    // Awkward way of choosing return value for mocked function?
+    (useSelector as jest.Mock).mockImplementation((pvName: string): any => {
+      return {
+        PV1: [{ value: vdouble(0), connected: true, readonly: false }, "PV"]
+      };
+    });
+    const props = { id: "id1", rules: [outExpRule], text: "neither" };
+    const hookTester = <RuleTester {...props}></RuleTester>;
+    const hookTesterWrapper = shallow(hookTester);
+    expect(hookTesterWrapper.find("div").text()).toEqual("no");
+  });
+  it("uses output expression pvStr0", (): void => {
+    // Awkward way of choosing return value for mocked function?
+    (useSelector as jest.Mock).mockImplementation((pvName: string): any => {
+      return {
+        PV1: [{ value: vdouble(2), connected: true, readonly: false }, "PV"]
+      };
+    });
+    const props = { id: "id1", rules: [outExpRule], text: "neither" };
+    const hookTester = <RuleTester {...props}></RuleTester>;
+    const hookTesterWrapper = shallow(hookTester);
+    expect(hookTesterWrapper.find("div").text()).toEqual("2");
   });
 });
