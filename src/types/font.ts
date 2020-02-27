@@ -24,8 +24,14 @@ export class Font {
   }
 
   public asStyle(): object {
-    const fontWeight = this.style === FontStyle.Bold ? "bold" : "normal";
-    const fontStyle = this.style === FontStyle.Italic ? "italic" : "normal";
+    const fontWeight =
+      this.style === FontStyle.Bold || this.style === FontStyle.BoldItalic
+        ? "bold"
+        : "normal";
+    const fontStyle =
+      this.style === FontStyle.Italic || this.style === FontStyle.BoldItalic
+        ? "italic"
+        : "normal";
     return {
       fontFamily: this.typeface,
       fontSize: `${this.size / 10}rem`,
