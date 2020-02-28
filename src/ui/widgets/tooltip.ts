@@ -5,7 +5,7 @@ import { alarmOf } from "../../types/vtypes/alarm";
 import { vtypeToString } from "../../types/vtypes/utils";
 import { VType } from "../../types/vtypes/vtypes";
 
-function tooltipValue(connected: boolean, value: VType): any {
+function tooltipValue(connected: boolean, value: VType): string {
   const time = timeOf(value);
   const alarm = alarmOf(value);
   let displayValue = "";

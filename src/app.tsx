@@ -47,6 +47,7 @@ const App: React.FC = (): JSX.Element => {
   if (settings.coniqlSocket !== undefined) {
     const coniql = new ConiqlPlugin(settings.coniqlSocket);
     plugins.unshift(["pva://", coniql]);
+    plugins.unshift(["ca://", coniql]);
   }
   const plugin = new ConnectionForwarder(plugins);
   initialiseStore(plugin, THROTTLE_PERIOD);
@@ -63,13 +64,12 @@ const App: React.FC = (): JSX.Element => {
               Toggle Theme
             </button>
             <ActionButton
-              containerStyling={{
+              positionStyle={{
                 position: "relative",
                 height: "30px",
                 width: "100px",
                 margin: "auto",
                 padding: "",
-                border: "",
                 minWidth: "",
                 maxWidth: ""
               }}
@@ -91,13 +91,12 @@ const App: React.FC = (): JSX.Element => {
             <Profiler id="Dynamic Page Profiler" onRender={onRenderCallback}>
               <DynamicPageWidget
                 routePath="app"
-                containerStyling={{
+                positionStyle={{
                   position: "relative",
                   height: "",
                   width: "",
                   margin: "",
                   padding: "",
-                  border: "",
                   minWidth: "",
                   maxWidth: ""
                 }}

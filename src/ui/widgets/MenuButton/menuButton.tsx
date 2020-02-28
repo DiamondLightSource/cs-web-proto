@@ -3,7 +3,8 @@ import { writePv } from "../../hooks/useSubscription";
 
 import { VType, VEnum } from "../../../types/vtypes/vtypes";
 import { vtypeToString, stringToVtype } from "../../../types/vtypes/utils";
-import { PVWidget, PVWidgetPropType } from "../widget";
+import { Widget } from "../widget";
+import { PVWidgetPropType } from "../widgetProps";
 import { registerWidget } from "../register";
 import { InferWidgetProps } from "../propTypes";
 
@@ -100,6 +101,6 @@ export const SmartMenuButton = (props: {
 
 export const MenuButton = (
   props: InferWidgetProps<typeof PVWidgetPropType>
-): JSX.Element => <PVWidget baseWidget={SmartMenuButton} {...props} />;
+): JSX.Element => <Widget baseWidget={SmartMenuButton} {...props} />;
 
 registerWidget(MenuButton, PVWidgetPropType, "menubutton");

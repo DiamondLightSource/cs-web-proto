@@ -2,11 +2,14 @@
 // into our widget format
 
 import log from "loglevel";
-import convert from "xml-js";
+import { xml2js, ElementCompact } from "xml-js";
 
 import { WidgetDescription } from "../createComponent";
 import { WidgetActions, WRITE_PV } from "../widgetActions";
 import { MacroMap } from "../../../redux/csState";
+import { Color } from "../../../types/color";
+import { Font, FontStyle } from "../../../types/font";
+import { GenericProp, Rule } from "../../../types/props";
 
 export const OPI_WIDGET_MAPPING: { [key: string]: string } = {
   "org.csstudio.opibuilder.Display": "display",
@@ -17,8 +20,6 @@ export const OPI_WIDGET_MAPPING: { [key: string]: string } = {
   "org.csstudio.opibuilder.widgets.Rectangle": "shape",
   "org.csstudio.opibuilder.widgets.ActionButton": "actionbutton" // eslint-disable-line @typescript-eslint/camelcase
 };
-
-type GenericProp = string | boolean | number | MacroMap | WidgetActions;
 
 export interface XmlDescription {
   _attributes: { [key: string]: string };
@@ -31,15 +32,12 @@ export interface XmlDescription {
 }
 
 interface FunctionSubstitutionInterface {
-  [key: string]: (
-    name: string,
-    jsonProp: convert.ElementCompact
-  ) => GenericProp;
+  [key: string]: (name: string, jsonProp: ElementCompact) => GenericProp;
 }
 
 export const opiParseMacros = (
   name: string,
-  jsonProp: convert.ElementCompact
+  jsonProp: ElementCompact
 ): MacroMap => {
   const macroMap: MacroMap = {};
   Object.entries(jsonProp as object).forEach(([key, value]): void => {
@@ -48,34 +46,95 @@ export const opiParseMacros = (
   return macroMap;
 };
 
+const toArray = (element?: ElementCompact): ElementCompact[] => {
+  let array = [];
+  if (Array.isArray(element)) {
+    array = element;
+  } else if (element) {
+    array = [element];
+  }
+  return array;
+};
+
+export const opiParseRules = (
+  name: string,
+  jsonProp: ElementCompact
+): Rule[] => {
+  const ruleArray = toArray(jsonProp.rule);
+  const rules = ruleArray.map((ruleElement: ElementCompact) => {
+    const name = ruleElement._attributes?.name as string;
+    const xmlProp = ruleElement._attributes?.prop_id as string;
+    // Change the prop from the rule to the prop used in our JSON format.
+    let jsonProp = xmlProp;
+    if (OPI_KEY_SUBSTITUTIONS.hasOwnProperty(xmlProp)) {
+      jsonProp = OPI_KEY_SUBSTITUTIONS[xmlProp];
+    }
+
+    const outExp = ruleElement._attributes?.out_exp === "true";
+    const pvArray = toArray(ruleElement.pv);
+    const pvs = pvArray.map((pv: ElementCompact) => {
+      return {
+        pvName: pv._text as string,
+        trigger: pv._attributes?.trig === "true"
+      };
+    });
+    const expArray = toArray(ruleElement.exp);
+    const expressions = expArray.map((expression: ElementCompact) => {
+      const value = expression.value;
+      let convertedValue = value;
+      if (OPI_FUNCTION_SUBSTITUTIONS.hasOwnProperty(xmlProp)) {
+        convertedValue = OPI_FUNCTION_SUBSTITUTIONS[xmlProp](xmlProp, value);
+      }
+
+      return {
+        boolExp: expression._attributes?.bool_exp as string,
+        value: value,
+        convertedValue: convertedValue
+      };
+    });
+    return {
+      name: name,
+      prop: jsonProp,
+      outExp: outExp,
+      expressions: expressions,
+      pvs: pvs
+    };
+  });
+  return rules;
+};
+
 export interface OpiColor {
   _attributes: { name: string; red: string; blue: string; green: string };
 }
 
 export const opiParseColor = (
   name: string,
-  jsonProp: convert.ElementCompact
-): string => {
+  jsonProp: ElementCompact
+): Color => {
   const color = jsonProp.color as OpiColor;
   try {
-    return `rgb(${color._attributes.red}, ${color._attributes.green}, ${color._attributes.blue})`;
+    return new Color(
+      parseInt(color._attributes.red),
+      parseInt(color._attributes.green),
+      parseInt(color._attributes.blue)
+    );
   } catch (e) {
     log.error(`Could not convert color object ${name}`);
     log.error(color);
-    return "";
+    return Color.WHITE;
   }
 };
 
 export const opiParsePrecision = (
   name: string,
-  jsonProp: convert.ElementCompact
+  jsonProp: ElementCompact
 ): number => {
   return Number(jsonProp._text);
 };
 
 export const opiParseBoolean = (
   name: string,
-  jsonProp: convert.ElementCompact
+  jsonProp: ElementCompact
 ): boolean => {
   const boolText = jsonProp._text;
   if (boolText === "false") {
@@ -89,7 +148,7 @@ export const opiParseBoolean = (
 
 export const opiParseActions = (
   name: string,
-  jsonProp: convert.ElementCompact
+  jsonProp: ElementCompact
 ): WidgetActions => {
   let actionsToProcess: any[] = [];
   if (Array.isArray(jsonProp.action)) {
@@ -143,22 +202,45 @@ export const opiParseActions = (
   return processedActions;
 };
 
-export const OPI_FUNCTION_SUBSTITUTIONS = {
+function opiParseFont(name: string, jsonProp: ElementCompact): Font {
+  const opiStyles: { [key: number]: FontStyle } = {
+    0: FontStyle.Regular,
+    1: FontStyle.Bold,
+    2: FontStyle.Italic,
+    3: FontStyle.BoldItalic
+  };
+  let fontAttributes;
+  if (jsonProp.hasOwnProperty("fontdata")) {
+    fontAttributes = jsonProp["fontdata"]._attributes;
+  } else {
+    fontAttributes = jsonProp["opifont.name"]._attributes;
+  }
+  const { fontName, height, style } = fontAttributes;
+  return new Font(height, opiStyles[style], fontName);
+}
+
+export const OPI_FUNCTION_SUBSTITUTIONS: {
+  [key: string]: (name: string, value: any) => GenericProp;
+} = {
   macros: opiParseMacros,
   background_color: opiParseColor, // eslint-disable-line @typescript-eslint/camelcase
   foreground_color: opiParseColor, // eslint-disable-line @typescript-eslint/camelcase
   precision: opiParsePrecision,
   visible: opiParseBoolean,
   transparent: opiParseBoolean,
-  actions: opiParseActions
+  show_units: opiParseBoolean, // eslint-disable-line @typescript-eslint/camelcase
+  actions: opiParseActions,
+  font: opiParseFont,
+  rules: opiParseRules
 };
 
-export const OPI_KEY_SUBSTITUTIONS = {
+export const OPI_KEY_SUBSTITUTIONS: { [key: string]: string } = {
   pv_name: "pvName", // eslint-disable-line @typescript-eslint/camelcase
   macros: "macroMap",
   opi_file: "file", // eslint-disable-line @typescript-eslint/camelcase
   background_color: "backgroundColor", // eslint-disable-line @typescript-eslint/camelcase
-  foreground_color: "color", // eslint-disable-line @typescript-eslint/camelcase
+  foreground_color: "foregroundColor", // eslint-disable-line @typescript-eslint/camelcase
+  show_units: "showUnits", // eslint-disable-line @typescript-eslint/camelcase
   // Rename style prop to make sure it isn't used directly to style components.
   style: "opiStyle" // eslint-disable-line @typescript-eslint/camelcase
 };
@@ -264,7 +346,7 @@ export const xmlToWidgets = (
   // Optionally provide a substition map for keys
 
   // Convert it to a "compact format"
-  const compactJSON = convert.xml2js(xmlString, {
+  const compactJSON = xml2js(xmlString, {
     compact: true
   }) as XmlDescription;
 

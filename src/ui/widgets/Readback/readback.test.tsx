@@ -4,6 +4,7 @@ import { configure, shallow, ShallowWrapper } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import { stringToVtype } from "../../../types/vtypes/utils";
 import { create, ReactTestRenderer } from "react-test-renderer";
+import { LabelComponent } from "../Label/label";
 
 configure({ adapter: new Adapter() });
 
@@ -28,12 +29,8 @@ describe("<Readback />", (): void => {
     expect(snapshot.toJSON()).toMatchSnapshot();
   });
 
-  test("it renders a basic element", (): void => {
-    const readback = wrapper.find("div");
-    expect(readback.get(0).type).toEqual("div");
-  });
-
   test("it applies precision to numbers", (): void => {
-    expect(wrapper.text()).toEqual("3.14");
+    const labelComponent = wrapper.find(LabelComponent);
+    expect(labelComponent.props().text).toEqual("3.14");
   });
 });

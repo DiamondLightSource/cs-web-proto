@@ -7,6 +7,8 @@ import checkPropTypes from "check-prop-types";
 import { MacroMap } from "../../redux/csState";
 import { Shape } from "./Shape/shape";
 import { widgets } from "./register";
+import { filterUndefinedOut } from "../../types/utils";
+import { Color } from "../../types/color";
 
 export interface WidgetDescription {
   type: string;
@@ -23,10 +25,6 @@ export function widgetDescriptionToComponent(
   existingMacroMap?: MacroMap,
   listIndex?: number
 ): JSX.Element {
-  // Extract known properties and leave everything else in otherProps.
-  // It's awkward to split this destructuring into separate let and const.
-  // eslint-disable-next-line prefer-const
-  let { backgroundColor, ...constProps } = widgetDescription;
   const {
     type,
     children = [],
@@ -38,11 +36,10 @@ export function widgetDescriptionToComponent(
     width = undefined,
     margin = undefined,
     padding = undefined,
-    border = undefined,
     minWidth = undefined,
     maxWidth = undefined,
     ...otherProps
-  } = constProps;
+  } = widgetDescription;
 
   const widgetDict = Object.assign(
     {},
@@ -56,26 +53,11 @@ export function widgetDescriptionToComponent(
     log.warn(`Failed to load unknown widget type ${type}`);
     log.debug(widgetDescription);
     Component = Shape;
-    backgroundColor = "magenta";
+    otherProps.backgroundColor = Color.PURPLE;
   }
 
-  function filterUndefinedOut(input: {
-    [index: string]: any;
-  }): { [index: string]: any } {
-    const output: { [index: string]: any } = {};
-    let key;
-
-    for (key in input) {
-      if (input.hasOwnProperty(key) && input[key] !== undefined) {
-        output[key] = input[key];
-      }
-    }
-
-    return output;
-  }
-
-  // Group props into container and widget
-  const containerStyling = filterUndefinedOut({
+  // Extract positioning information into object.
+  const positionStyle = filterUndefinedOut({
     position: position,
     x: x,
     y: y,
@@ -83,13 +65,12 @@ export function widgetDescriptionToComponent(
     width: width,
     margin: margin,
     padding: padding,
-    border: border,
     minWidth: minWidth,
     maxWidth: maxWidth
   });
 
   // Perform checking on propTypes
-  const widgetInfo = { containerStyling: containerStyling, ...otherProps };
+  const widgetInfo = { positionStyle: positionStyle, ...otherProps };
   const error: string | undefined = checkPropTypes(
     Component.propTypes,
     widgetInfo,
@@ -104,7 +85,7 @@ export function widgetDescriptionToComponent(
       msg: error,
       object: {
         type: type,
-        containerStyling: containerStyling,
+        positionStyle: positionStyle,
         ...otherProps
       }
     };
@@ -126,9 +107,8 @@ export function widgetDescriptionToComponent(
     <Component
       // If this component has siblings, use its index in the array as a key.
       key={listIndex}
-      containerStyling={containerStyling}
+      positionStyle={positionStyle}
       macroMap={latestMacroMap}
-      backgroundColor={backgroundColor}
       {...otherProps}
     >
       {ChildComponents}

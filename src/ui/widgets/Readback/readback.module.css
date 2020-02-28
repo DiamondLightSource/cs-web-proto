@@ -1,16 +1,20 @@
 .Readback {
-  text-align: center;
   font-size: 1rem;
-  padding: 3px;
+  padding: 0;
   overflow: hidden;
   text-overflow: ellipsis;
-  background-color: "#383838";
-  color: "#00bb00";
+  background-color: #383838;
+  color: #00bb00;
   font: 14px helvetica, sans-serif;
   display: flex;
   justify-content: center;
   align-items: center;
-  box-sizing: border-box;
+  height: 100%;
+  width: 100%;
+}
+
+.Readback.Disconnected {
+  color: #ffffff;
 }
 
 .Readback.Minor {

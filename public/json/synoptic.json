@@ -4,7 +4,11 @@
   "width": "600px",
   "height": "210px",
   "margin": "10px",
-  "border": "dashed 3px red",
+  "border": {
+    "style": "dotted",
+    "width": 3,
+    "color": "red"
+  },
   "children": [
     {
       "type": "actionbutton",

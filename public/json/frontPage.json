@@ -13,27 +13,39 @@
           "type": "label",
           "position": "relative",
           "width": "100%",
-          "fontWeight": "bold",
           "backgroundColor": "transparent",
-          "text": "",
+          "text": "Background changes colour based on PV below",
+          "border": {
+            "style": "line",
+            "width": 2,
+            "color": "red"
+          },
+          "font": {
+            "size": 20,
+            "typeface": "Times New Roman",
+            "style": "italic"
+          },
           "rules": [
             {
-              "condition": "pv1>=0",
-              "trueState": "Positive ⬇⬇⬇",
-              "falseState": "Negative ⬇⬇⬇",
-              "substitutionMap": {
-                "pv1": "loc://pv1"
-              },
-              "prop": "text"
-            },
-            {
-              "condition": "pv1>=100",
-              "trueState": false,
-              "falseState": true,
-              "substitutionMap": {
-                "pv1": "loc://pv1"
-              },
-              "prop": "visible"
+              "name": "posneg",
+              "prop": "backgroundColor",
+              "outExp": false,
+              "pvs": [
+                {
+                  "pvName": "loc://pv1",
+                  "trigger": true
+                }
+              ],
+              "expressions": [
+                {
+                  "boolExp": "pv0 > 0",
+                  "value": "red"
+                },
+                {
+                  "boolExp": "pv0 < 0",
+                  "value": "purple"
+                }
+              ]
             }
           ]
         },
@@ -95,7 +107,9 @@
           "type": "label",
           "position": "relative",
           "width": "100%",
-          "fontWeight": "bold",
+          "font": {
+            "style": "bold"
+          },
           "backgroundColor": "transparent",
           "text": "Alarm PV - Happy between 20 and 80"
         },
@@ -103,7 +117,6 @@
           "type": "input",
           "position": "relative",
           "width": "50%",
-          "height": "2em",
           "margin": "5px 0 0 0",
           "pvName": "sim://limit#metapv1"
         },
@@ -133,7 +146,9 @@
           "type": "label",
           "position": "relative",
           "width": "100%",
-          "fontWeight": "bold",
+          "font": {
+            "style": "bold"
+          },
           "backgroundColor": "transparent",
           "text": "Sim Enum"
         },
@@ -166,7 +181,9 @@
           "type": "label",
           "position": "relative",
           "width": "100%",
-          "fontWeight": "bold",
+          "font": {
+            "style": "bold"
+          },
           "backgroundColor": "transparent",
           "text": "Local Enum - [un deux trois]"
         },
@@ -205,7 +222,9 @@
           "type": "label",
           "position": "relative",
           "width": "100%",
-          "fontWeight": "bold",
+          "font": {
+            "style": "bold"
+          },
           "backgroundColor": "transparent",
           "text": "Local initialization"
         },

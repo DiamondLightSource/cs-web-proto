@@ -1,18 +1,21 @@
 import React from "react";
 
-import { Widget, WidgetPropType } from "../widget";
+import { Widget } from "../widget";
+import { WidgetPropType } from "../widgetProps";
 import { registerWidget } from "../register";
 import {
   ChoicePropOpt,
   ChildrenPropOpt,
   InferWidgetProps,
-  StringPropOpt
+  ColorPropOpt,
+  BorderPropOpt
 } from "../propTypes";
 
 const DisplayProps = {
   children: ChildrenPropOpt,
   overflow: ChoicePropOpt(["scroll", "hidden", "auto", "visible"]),
-  backgroundColor: StringPropOpt
+  backgroundColor: ColorPropOpt,
+  border: BorderPropOpt
 };
 
 // Generic display widget to put other things inside
@@ -22,9 +25,10 @@ const DisplayComponent = (
   <div
     style={{
       position: "relative",
-      boxSizing: "border-box",
+      height: "100%",
       overflow: props.overflow,
-      backgroundColor: props.backgroundColor
+      backgroundColor: props.backgroundColor?.rgbaString(),
+      ...props.border?.asStyle()
     }}
   >
     {props.children}

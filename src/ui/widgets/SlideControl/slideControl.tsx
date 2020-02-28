@@ -11,7 +11,8 @@ import {
   ProgressBarProps
 } from "../ProgressBar/progressBar";
 import { writePv } from "../../hooks/useSubscription";
-import { PVInputComponent, PVWidget, PVWidgetPropType } from "../widget";
+import { Widget } from "../widget";
+import { PVInputComponent, PVWidgetPropType } from "../widgetProps";
 import { InferWidgetProps } from "../propTypes";
 import { registerWidget } from "../register";
 
@@ -102,6 +103,6 @@ const SlideControlWidgetProps = {
 
 export const SlideControl = (
   props: InferWidgetProps<typeof SlideControlWidgetProps>
-): JSX.Element => <PVWidget baseWidget={SlideControlComponent} {...props} />;
+): JSX.Element => <Widget baseWidget={SlideControlComponent} {...props} />;
 
 registerWidget(SlideControl, SlideControlWidgetProps, "slidecontrol");

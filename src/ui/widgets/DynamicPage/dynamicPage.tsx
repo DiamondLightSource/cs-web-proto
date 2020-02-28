@@ -2,13 +2,15 @@ import React, { useContext } from "react";
 import log from "loglevel";
 import { Route, RouteComponentProps } from "react-router-dom";
 
-import { Widget, WidgetPropType } from "../widget";
+import { Widget } from "../widget";
+import { WidgetPropType } from "../widgetProps";
 import { ActionButton } from "../ActionButton/actionButton";
 import { CLOSE_PAGE } from "../widgetActions";
 import { registerWidget } from "../register";
 import { StringProp, InferWidgetProps } from "../propTypes";
 import { BaseUrlContext } from "../../../baseUrl";
 import { EmbeddedDisplay } from "../EmbeddedDisplay/embeddedDisplay";
+import { Color } from "../../../types/color";
 
 export interface DynamicParams {
   json: string;
@@ -32,13 +34,12 @@ export function DynamicPageFetch({
       file={file}
       filetype="json"
       macroMap={map}
-      containerStyling={{
+      positionStyle={{
         position: "relative",
         height: "",
         width: "",
         margin: "",
         padding: "",
-        border: "",
         minWidth: "",
         maxWidth: ""
       }}
@@ -54,7 +55,7 @@ const DynamicPageProps = {
 const DynamicPageComponent = (
   props: InferWidgetProps<typeof DynamicPageProps>
 ): JSX.Element => (
-  <div>
+  <div style={{ width: "100%", height: "100%" }}>
     <Route
       path={`*/${props.routePath}/:json/:macros`}
       render={(routeProps): JSX.Element => (
@@ -76,18 +77,17 @@ const DynamicPageComponent = (
               }}
             >
               <ActionButton
-                containerStyling={{
+                positionStyle={{
                   position: "relative",
                   height: "",
                   width: "",
                   margin: "",
                   padding: "",
-                  border: "",
                   minWidth: "",
                   maxWidth: ""
                 }}
-                backgroundColor="#ff3333"
-                foregroundColor="#ffffff"
+                backgroundColor={Color.parse("#ff3333")}
+                foregroundColor={Color.parse("#ffffff")}
                 actions={{
                   executeAsOne: false,
                   actions: [

@@ -1,6 +1,7 @@
 import React from "react";
 
-import { Widget, WidgetPropType } from "../widget";
+import { Widget } from "../widget";
+import { WidgetPropType } from "../widgetProps";
 import { registerWidget } from "../register";
 import { StringProp, ChildrenPropOpt, InferWidgetProps } from "../propTypes";
 
@@ -16,11 +17,7 @@ export const GroupingContainerComponent = (
   // Uses an inner margin for children similar to Phoebus
   // This prevents the title being overwritten
   // Could be changed or perhaps customisable as a prop
-  <fieldset
-    style={{
-      boxSizing: "border-box"
-    }}
-  >
+  <fieldset>
     <legend>{props.name}</legend>
     <div style={{ position: "relative", height: "100%", width: "100%" }}>
       {props.children}

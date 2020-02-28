@@ -19,7 +19,6 @@ describe("<Image />", (): void => {
   });
 
   test("it renders a basic element", (): void => {
-    console.log(wrapper.debug());
     expect(wrapper.type()).toEqual("div");
   });
 

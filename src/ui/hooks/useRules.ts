@@ -1,60 +1,97 @@
-import React from "react";
 import log from "loglevel";
 
 import { useSubscription } from "./useSubscription";
 import { useSelector } from "react-redux";
-import { MacroMap, CsState } from "../../redux/csState";
+import { CsState } from "../../redux/csState";
 
-import { evaluate } from "mathjs";
 import { PvArrayResults, pvStateSelector, pvStateComparator } from "./utils";
+import { AnyProps } from "../widgets/widgetProps";
+import { vtypeToString, vtypeToNumber } from "../../types/vtypes/utils";
+import { AlarmSeverity } from "../../types/vtypes/alarm";
+import { Scalar } from "../../types/vtypes/vtypes";
 
-export interface Rule {
-  condition: string;
-  trueState: string | boolean;
-  falseState: string | boolean;
-  substitutionMap: MacroMap;
-  prop: string;
-}
+// See https://stackoverflow.com/questions/54542318/using-an-enum-as-a-dictionary-key
+type EnumDictionary<T extends string | symbol | number, U> = {
+  [K in T]: U;
+};
 
-export interface RuleProps extends React.PropsWithChildren<any> {
-  id: string;
-  rules?: Rule[];
-}
+const INT_SEVERITIES: EnumDictionary<AlarmSeverity, number> = {
+  [AlarmSeverity.NONE]: 0,
+  [AlarmSeverity.MINOR]: 1,
+  [AlarmSeverity.MAJOR]: 2,
+  [AlarmSeverity.INVALID]: -1,
+  [AlarmSeverity.UNDEFINED]: -1
+};
 
-export function useRules(props: RuleProps): RuleProps {
-  const newProps: RuleProps = { ...props };
+export function useRules(props: AnyProps): AnyProps {
+  const newProps: AnyProps = { ...props };
   const rules = props.rules === undefined ? [] : props.rules;
-  let pvs: string[] = [];
+  const allPvs: string[] = [];
   for (const rule of rules) {
-    pvs.push(...Object.values(rule.substitutionMap));
+    for (const pv of rule.pvs) {
+      allPvs.push(pv.pvName);
+    }
   }
   // Subscribe to all PVs.
-  useSubscription(props.id, pvs);
+  useSubscription(props.id, allPvs);
   // Get results from all PVs.
   const results = useSelector(
-    (state: CsState): PvArrayResults => pvStateSelector(pvs, state),
+    (state: CsState): PvArrayResults => pvStateSelector(allPvs, state),
     pvStateComparator
   );
 
   for (const rule of rules) {
-    let { condition } = rule;
-    const { trueState, falseState, substitutionMap, prop } = rule;
-    if (condition !== undefined && substitutionMap !== undefined) {
-      pvs = Object.values(substitutionMap);
-    }
-
-    for (const [name, pv] of Object.entries(substitutionMap)) {
-      const [pvState] = results[pv];
-      if (pvState && pvState.value !== undefined && pvState.connected) {
-        condition = condition.replace(name, pvState.value.getValue());
-        try {
-          const state = evaluate(condition);
-          const styleValue = state ? trueState : falseState;
-          newProps[prop] = styleValue;
-        } catch (error) {
-          log.warn(`Failed to evaluate rule ${condition}: ${error}`);
+    const { name, pvs, prop, outExp, expressions } = rule;
+    const pvVars: { [pvName: string]: number | string } = {};
+    for (let i = 0; i < pvs.length; i++) {
+      // Set up variables that might be used.
+      const pvResults = results[pvs[i].pvName][0];
+      if (pvResults) {
+        const val = results[pvs[i].pvName][0].value;
+        if (val) {
+          pvVars["pv" + i] = vtypeToNumber(val);
+          pvVars["pvStr" + i] = vtypeToString(val);
+          pvVars["pvInt" + i] = vtypeToNumber(val);
+          if (val instanceof Scalar) {
+            pvVars["pvSev" + i] = INT_SEVERITIES[val.getAlarm().getSeverity()];
+          }
         }
       }
+    }
+
+    try {
+      for (const exp of expressions) {
+        log.debug(`Evaluating expression ${exp.boolExp}`);
+        log.debug(`Keys ${Object.keys(pvVars)}`);
+        log.debug(`Values ${Object.values(pvVars)}`);
+        // eslint-disable-next-line no-new-func
+        const f = Function(...Object.keys(pvVars), "return " + exp.boolExp);
+        // Evaluate the expression.
+        const result = f(...Object.values(pvVars));
+        log.debug(`result ${result}`);
+        if (result) {
+          // Not 'output expression': set the prop to the provided value.
+          log.debug("Expression matched");
+          if (!outExp) {
+            newProps[prop] = exp.convertedValue;
+            log.debug("Output value");
+            log.debug(newProps);
+          } else {
+            // 'Output expression' - evaluate 'value' and set the prop to the result.
+            // eslint-disable-next-line no-new-func
+            const f = Function(...Object.keys(pvVars), "return " + exp.value);
+            newProps[prop] = f(...Object.values(pvVars));
+            log.debug("Output expression");
+          }
+          log.debug("Props after rule evaluation:");
+          log.debug(newProps);
+          break;
+        } else {
+          log.debug("Expression did not match");
+        }
+      }
+    } catch (error) {
+      log.warn(`Failed to evaluate rule ${name}: ${error}`);
     }
   }
   return newProps;

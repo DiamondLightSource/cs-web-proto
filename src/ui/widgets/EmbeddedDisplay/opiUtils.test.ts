@@ -1,6 +1,6 @@
 // Should this be require enzyme ?
 import {} from "enzyme";
-import convert from "xml-js";
+import { xml2js, ElementCompact } from "xml-js";
 
 import {
   opiParseMacros,
@@ -10,13 +10,15 @@ import {
   opiParseActions,
   xmlChildToWidget,
   OPI_WIDGET_MAPPING,
-  opiGetWidgetId
+  opiGetWidgetId,
+  opiParseRules
 } from "./opiUtils";
 import { WRITE_PV } from "../widgetActions";
+import { Color } from "../../../types/color";
 
 describe("simple macros convert", (): void => {
   const xmlInput = "<macros><Test>Value</Test></macros>";
-  const convertedXML: convert.ElementCompact = convert.xml2js(xmlInput, {
+  const convertedXML: ElementCompact = xml2js(xmlInput, {
     compact: true
   });
   test("it collects the macro", (): void => {
@@ -30,24 +32,79 @@ describe("simple macros convert", (): void => {
   });
 });
 
+describe("rules conversion", (): void => {
+  const xmlRules = `
+    <rules>
+      <rule name="OnOffBackgroundRule" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0 == 1">
+          <value>
+            <color name="Black" red="0" green="0" blue="0" />
+          </value>
+        </exp>
+        <exp bool_exp="true">
+          <value>
+            <color name="Red" red="255" green="0" blue="0" />
+          </value>
+        </exp>
+        <pv trig="true">PV1</pv>
+      </rule>
+    </rules>
+`;
+  const compactRules: ElementCompact = xml2js(xmlRules, {
+    compact: true
+  });
+  test("it correctly converts rules", (): void => {
+    expect(opiParseRules("rules", compactRules.rules)).toEqual([
+      {
+        name: "OnOffBackgroundRule",
+        prop: "backgroundColor",
+        outExp: false,
+        pvs: [
+          {
+            pvName: "PV1",
+            trigger: true
+          }
+        ],
+        expressions: [
+          {
+            boolExp: "pv0 == 1",
+            value: {
+              color: {
+                _attributes: { red: "0", green: "0", blue: "0", name: "Black" }
+              }
+            },
+            convertedValue: Color.BLACK
+          },
+          {
+            boolExp: "true",
+            value: {
+              color: {
+                _attributes: { red: "255", green: "0", blue: "0", name: "Red" }
+              }
+            },
+            convertedValue: Color.RED
+          }
+        ]
+      }
+    ]);
+  });
+});
+
 describe("color conversion", (): void => {
-  const xmlColor = '<color name="On" red="0" green="255" blue="0"></color>';
-  const convertedColor = convert.xml2js(xmlColor, {
+  const xmlColor = '<color name="On" red="0" green="128" blue="0"></color>';
+  const convertedColor = xml2js(xmlColor, {
     compact: true
   });
   test("it converts xml color to rgb string", (): void => {
-    expect(opiParseColor("color", convertedColor)).toEqual("rgb(0, 255, 0)");
+    expect(opiParseColor("color", convertedColor)).toEqual(Color.GREEN);
   });
 });
 
 describe("precision conversion", (): void => {
   const xmlPrecision = "<precision>5</precision>";
-  const convertedPrecision: convert.ElementCompact = convert.xml2js(
-    xmlPrecision,
-    {
-      compact: true
-    }
-  );
+  const convertedPrecision: ElementCompact = xml2js(xmlPrecision, {
+    compact: true
+  });
 
   test("it correctly gets the precision and turns it into a number", (): void => {
     const output = opiParsePrecision("precision", convertedPrecision.precision);
@@ -69,7 +126,7 @@ describe("actions conversion", (): void => {
     <description>Write pv2 to Testing</description>
   </action>
 </actions>`;
-  const compactActions: convert.ElementCompact = convert.xml2js(xmlActions, {
+  const compactActions: ElementCompact = xml2js(xmlActions, {
     compact: true
   });
   test("it correctly converts write PV actions", (): void => {
@@ -109,7 +166,7 @@ describe("actions conversion", (): void => {
         <description>Write pv2 to Testing</description>
       </action>
     </actions>`;
-    const compactActions: convert.ElementCompact = convert.xml2js(xmlActions, {
+    const compactActions: ElementCompact = xml2js(xmlActions, {
       compact: true
     });
     expect(opiParseActions("actions", compactActions.actions)).toEqual({
@@ -147,7 +204,7 @@ describe("opi child conversion", (): void => {
       <width>299</width>
       <height>399</height>
     </widget>`;
-    const compactWidget: convert.ElementCompact = convert.xml2js(xmlWidget, {
+    const compactWidget: ElementCompact = xml2js(xmlWidget, {
       compact: true
     });
 
@@ -176,7 +233,7 @@ describe("opi child conversion", (): void => {
       <width>299</width>
       <height>399</height>
     </widget>`;
-    const compactWidget: convert.ElementCompact = convert.xml2js(xmlWidget, {
+    const compactWidget: ElementCompact = xml2js(xmlWidget, {
       compact: true
     });
 
@@ -218,7 +275,7 @@ describe("opi child conversion", (): void => {
   ])(
     "it converts a simple widget with %s boolean prop",
     (expected, widgetXml): void => {
-      const compactWidget: convert.ElementCompact = convert.xml2js(widgetXml, {
+      const compactWidget: ElementCompact = xml2js(widgetXml, {
         compact: true
       });
 
@@ -249,12 +306,9 @@ describe("opi child conversion", (): void => {
       <name>Test Widget</name>
       <true_or_false>not-a-bool</true_or_false>
     </widget>`;
-    const compactWidget: convert.ElementCompact = convert.xml2js(
-      invalidBoolWidget,
-      {
-        compact: true
-      }
-    );
+    const compactWidget: ElementCompact = xml2js(invalidBoolWidget, {
+      compact: true
+    });
     expect((): void => {
       xmlChildToWidget(
         compactWidget.widget,
@@ -276,7 +330,7 @@ describe("opi child conversion", (): void => {
       <y>199</y>
       <width>299</width>
       <foreground_color>
-        <color name="On" red="0" green="255" blue="0">
+        <color name="On" red="0" green="128" blue="0">
         </color>
       </foreground_color>
       <background_color>
@@ -285,7 +339,7 @@ describe("opi child conversion", (): void => {
       </background_color>
       <height>399</height>
     </widget>`;
-    const compactWidget: convert.ElementCompact = convert.xml2js(xmlWidget, {
+    const compactWidget: ElementCompact = xml2js(xmlWidget, {
       compact: true
     });
 
@@ -313,8 +367,8 @@ describe("opi child conversion", (): void => {
       y: "199px",
       width: "299px",
       height: "399px",
-      color: "rgb(0, 255, 0)",
-      backgroundColor: "rgb(128, 128, 128)",
+      color: Color.GREEN,
+      backgroundColor: new Color(128, 128, 128),
       children: []
     });
   });
@@ -336,7 +390,7 @@ describe("opi child conversion", (): void => {
             <height>399</height>
         </widget>
     </widget>`;
-    const compactWidget: convert.ElementCompact = convert.xml2js(xmlWidget, {
+    const compactWidget: ElementCompact = xml2js(xmlWidget, {
       compact: true
     });
 
@@ -391,7 +445,7 @@ describe("opi child conversion", (): void => {
             <height>699</height>
         </widget>
     </widget>`;
-    const compactWidget: convert.ElementCompact = convert.xml2js(xmlWidget, {
+    const compactWidget: ElementCompact = xml2js(xmlWidget, {
       compact: true
     });
 

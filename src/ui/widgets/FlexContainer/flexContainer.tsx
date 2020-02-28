@@ -1,13 +1,20 @@
 import React from "react";
 
 import classes from "./flexContainer.module.css";
-import { Widget, WidgetPropType } from "../widget";
+import { Widget } from "../widget";
+import { WidgetPropType } from "../widgetProps";
 import { registerWidget } from "../register";
-import { ChildrenPropOpt, ChoicePropOpt, InferWidgetProps } from "../propTypes";
+import {
+  ChildrenPropOpt,
+  ChoicePropOpt,
+  InferWidgetProps,
+  BorderPropOpt
+} from "../propTypes";
 
 const FlexProps = {
   flexFlow: ChoicePropOpt(["rowWrap", "column", "row", "columnWrap"]),
-  children: ChildrenPropOpt
+  children: ChildrenPropOpt,
+  border: BorderPropOpt
 };
 
 export const FlexContainerComponent = (
@@ -18,7 +25,14 @@ export const FlexContainerComponent = (
   if (flexFlow !== null) {
     classNames.push(classes[flexFlow]);
   }
-  return <div className={classNames.join(" ")}>{props.children}</div>;
+  return (
+    <div
+      className={classNames.join(" ")}
+      style={{ ...props.border?.asStyle() }}
+    >
+      {props.children}
+    </div>
+  );
 };
 
 const FlexWidgetProps = {

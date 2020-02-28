@@ -2,14 +2,16 @@ import React from "react";
 
 import classes from "./progressBar.module.css";
 import { vtypeOrUndefinedToNumber } from "../../../types/vtypes/utils";
-import { PVComponent, PVWidget, PVWidgetPropType } from "../widget";
+import { Widget } from "../widget";
+import { PVComponent, PVWidgetPropType } from "../widgetProps";
 import { registerWidget } from "../register";
 import {
   FloatPropOpt,
   BoolPropOpt,
   StringPropOpt,
   IntPropOpt,
-  InferWidgetProps
+  InferWidgetProps,
+  FontPropOpt
 } from "../propTypes";
 
 export const ProgressBarProps = {
@@ -17,7 +19,8 @@ export const ProgressBarProps = {
   max: FloatPropOpt,
   vertical: BoolPropOpt,
   color: StringPropOpt,
-  precision: IntPropOpt
+  precision: IntPropOpt,
+  font: FontPropOpt
 };
 
 export const ProgressBarComponent = (
@@ -27,6 +30,7 @@ export const ProgressBarComponent = (
     value,
     min = 0,
     max = 100,
+    font,
     vertical = false,
     color = "#00aa00",
     precision = undefined
@@ -74,7 +78,9 @@ export const ProgressBarComponent = (
     <div className={classes.bar}>
       <div className={classes.off} style={offStyle} />
       <div className={classes.on} style={onStyle} />
-      <div className={classes.label}>{valueText.toString()}</div>
+      <div className={classes.label} style={{ ...font?.asStyle() }}>
+        {valueText.toString()}
+      </div>
     </div>
   );
 };
@@ -86,6 +92,6 @@ const ProgressBarWidgetProps = {
 
 export const ProgressBar = (
   props: InferWidgetProps<typeof ProgressBarWidgetProps>
-): JSX.Element => <PVWidget baseWidget={ProgressBarComponent} {...props} />;
+): JSX.Element => <Widget baseWidget={ProgressBarComponent} {...props} />;
 
 registerWidget(ProgressBar, ProgressBarWidgetProps, "progressbar");
