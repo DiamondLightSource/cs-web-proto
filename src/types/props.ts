@@ -21,7 +21,7 @@ interface Expression {
   convertedValue?: GenericProp;
 }
 
-interface PV {
+interface RulePV {
   pvName: string;
   trigger: boolean;
 }
@@ -30,6 +30,6 @@ export interface Rule {
   name: string;
   prop: string;
   outExp: boolean;
-  pvs: PV[];
+  pvs: RulePV[];
   expressions: Expression[];
 }
