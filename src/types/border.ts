@@ -19,6 +19,8 @@ const CssBorders: { [key in BorderStyle]: string } = {
 export class Border {
   private style: BorderStyle;
   private color: Color;
+  // This will render a border width in pixels. I expect that we will revisit this
+  // at some later point, possibly to allow or fix to rems.
   private width: number;
 
   public constructor(style: BorderStyle, color: Color, width: number) {
