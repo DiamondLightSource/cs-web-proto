@@ -4,7 +4,6 @@
   "width": "90%",
   "maxWidth": "600px",
   "margin": "auto",
-  "backgroundColor": "rgb(166, 166, 166)",
   "children": [
     {
       "type": "flexcontainer",
@@ -15,7 +14,7 @@
           "position": "relative",
           "width": "100%",
           "backgroundColor": "transparent",
-          "text": "this should change",
+          "text": "Background changes colour based on PV below",
           "border": {
             "style": "line",
             "width": "2",
@@ -66,46 +65,195 @@
           "position": "relative",
           "width": "45%",
           "margin": "2%",
-          "pvName": "ca://SR12A-PC-S2D-06:L5ERRSTATE",
-          "tooltip": "Custom tooltip:\n${pvName}\n${pvValue}",
-          "precision": 3,
-          "alarmBorder": true,
-          "textAlign": "center",
-          "actions": {
-            "executeAsOne": false,
-            "actions": [
-              {
-                "type": "OPEN_WEBPAGE",
-                "openWebpageInfo": {
-                  "url": "https://www.bbc.co.uk",
-                  "description": "BBC"
-                }
-              }
-            ]
+          "pvName": "loc://pv1",
+          "tooltip": "Custom tooltip:\n${pvName}\n${pvValue}"
+        },
+        {
+          "type": "input",
+          "position": "relative",
+          "width": "45%",
+          "margin": "2%",
+          "pvName": "loc://pv2"
+        },
+        {
+          "type": "readback",
+          "position": "relative",
+          "width": "45%",
+          "margin": "2%",
+          "pvName": "loc://pv2"
+        },
+        {
+          "type": "readback",
+          "position": "relative",
+          "width": "45%",
+          "margin": "2%",
+          "pvName": "sim://sine"
+        },
+        {
+          "type": "readback",
+          "position": "relative",
+          "width": "45%",
+          "margin": "2%",
+          "pvName": "sim://sine",
+          "precision": 3
+        }
+      ]
+    },
+    {
+      "type": "flexcontainer",
+      "position": "relative",
+      "children": [
+        {
+          "type": "label",
+          "position": "relative",
+          "width": "100%",
+          "font": {
+            "style": "bold"
           },
-          "rules": [
-            {
-              "name": "posneg",
-              "prop": "textAlign",
-              "outExp": false,
-              "pvs": [
-                {
-                  "pvName": "loc://pv1",
-                  "trigger": true
-                }
-              ],
-              "expressions": [
-                {
-                  "boolExp": "pv0 > 0",
-                  "value": "left"
-                },
-                {
-                  "boolExp": "pv0 < 0",
-                  "value": "right"
-                }
-              ]
-            }
-          ]
+          "backgroundColor": "transparent",
+          "text": "Alarm PV - Happy between 20 and 80"
+        },
+        {
+          "type": "input",
+          "position": "relative",
+          "width": "50%",
+          "margin": "5px 0 0 0",
+          "pvName": "sim://limit#metapv1"
+        },
+        {
+          "type": "readback",
+          "position": "relative",
+          "width": "50%",
+          "margin": "5px 0 0 0",
+          "pvName": "sim://limit#metapv1"
+        },
+        {
+          "type": "readback",
+          "position": "relative",
+          "width": "100%",
+          "margin": "5px 0 0 0",
+          "pvName": "sim://limit#metapv1",
+          "alarmBorder": true
+        }
+      ]
+    },
+    {
+      "type": "display",
+      "position": "relative",
+      "margin": "20px 0 0 0",
+      "children": [
+        {
+          "type": "label",
+          "position": "relative",
+          "width": "100%",
+          "font": {
+            "style": "bold"
+          },
+          "backgroundColor": "transparent",
+          "text": "Sim Enum"
+        },
+        {
+          "type": "menubutton",
+          "position": "relative",
+          "margin": "5px 0 0 0",
+          "pvName": "sim://enum"
+        },
+        {
+          "type": "input",
+          "position": "relative",
+          "margin": "5px 0 0 0",
+          "pvName": "sim://enum"
+        },
+        {
+          "type": "readback",
+          "position": "relative",
+          "margin": "5px 0 0 0",
+          "pvName": "sim://enum"
+        }
+      ]
+    },
+    {
+      "type": "display",
+      "position": "relative",
+      "margin": "20px 0 0 0",
+      "children": [
+        {
+          "type": "label",
+          "position": "relative",
+          "width": "100%",
+          "font": {
+            "style": "bold"
+          },
+          "backgroundColor": "transparent",
+          "text": "Local Enum - [un deux trois]"
+        },
+        {
+          "type": "menubutton",
+          "position": "relative",
+          "margin": "5px 0 0 0",
+          "pvName": "loc://enum1<VEnum>(2, \"un\", \"deux\", \"trois\")"
+        },
+        {
+          "type": "input",
+          "position": "relative",
+          "margin": "5px 0 0 0",
+          "pvName": "loc://enum1<VEnum>(2, \"un\", \"deux\", \"trois\")"
+        },
+        {
+          "type": "readback",
+          "position": "relative",
+          "margin": "5px 0 0 0",
+          "pvName": "loc://enum1"
+        },
+        {
+          "type": "readback",
+          "position": "relative",
+          "margin": "5px 0 0 0",
+          "pvName": "enum://bad"
+        }
+      ]
+    },
+    {
+      "type": "display",
+      "position": "relative",
+      "margin": "20px 0 0 0",
+      "children": [
+        {
+          "type": "label",
+          "position": "relative",
+          "width": "100%",
+          "font": {
+            "style": "bold"
+          },
+          "backgroundColor": "transparent",
+          "text": "Local initialization"
+        },
+        {
+          "type": "readback",
+          "position": "relative",
+          "margin": "5px 0 30px 0",
+          "pvName": "loc://test(1.1)"
+        }
+      ]
+    },
+    {
+      "type": "grouping",
+      "position": "relative",
+      "margin": "20px 0 0 0",
+      "name": "Slide Control",
+      "children": [
+        {
+          "type": "label",
+          "position": "relative",
+          "text": "In a grouping container...",
+          "textAlign": "left",
+          "backgroundColor": "transparent"
+        },
+        {
+          "type": "slidecontrol",
+          "position": "relative",
+          "pvName": "sim://limit#progressPV",
+          "alarmBorder": true
         }
       ]
     }
