@@ -6,19 +6,19 @@ export enum FontStyle {
 }
 
 export class Font {
+  private size: number;
+  private style: FontStyle;
   private typeface: string;
   private name?: string;
-  private style: FontStyle;
-  private size: number;
 
   public constructor(
-    style: FontStyle,
     size: number,
+    style?: FontStyle,
     typeface?: string,
     name?: string
   ) {
-    this.typeface = typeface ? typeface : "Liberation sans";
-    this.style = style;
+    this.typeface = typeface ?? "Liberation sans";
+    this.style = style ?? FontStyle.Regular;
     this.size = size;
     this.name = name;
   }

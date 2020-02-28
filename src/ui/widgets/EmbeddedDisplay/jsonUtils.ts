@@ -13,11 +13,25 @@ export interface JsonDescription {
   children: JsonDescription[];
   [key: string]: any;
 }
+
+interface JsonBorder {
+  style: string;
+  color: string;
+  width: number;
+}
+
+interface JsonFont {
+  typeface: string;
+  size: number;
+  style?: string;
+  name?: string;
+}
+
 function jsonParseColor(name: string, jsonColor: string): Color {
   return Color.parse(jsonColor);
 }
 
-function jsonParseBorder(name: string, jsonBorder: any): Border {
+function jsonParseBorder(name: string, jsonBorder: JsonBorder): Border {
   const styles: { [key: string]: BorderStyle } = {
     none: BorderStyle.None,
     line: BorderStyle.Line,
@@ -26,21 +40,21 @@ function jsonParseBorder(name: string, jsonBorder: any): Border {
     groupbox: BorderStyle.GroupBox
   };
   return new Border(
-    styles[jsonBorder.style?.toLowerCase()],
+    styles[jsonBorder.style.toLowerCase()],
     jsonParseColor("border color", jsonBorder.color),
     jsonBorder.width
   );
 }
 
-function jsonParseFont(name: string, jsonFont: any): Font {
+function jsonParseFont(name: string, jsonFont: JsonFont): Font {
   const styles: { [key: string]: FontStyle } = {
     italic: FontStyle.Italic,
     bold: FontStyle.Bold,
     "bold italic": FontStyle.BoldItalic
   };
   return new Font(
-    styles[jsonFont.style?.toLowerCase()],
     jsonFont.size,
+    jsonFont.style ? styles[jsonFont.style] : undefined,
     jsonFont.typeface
   );
 }

@@ -216,7 +216,7 @@ function opiParseFont(name: string, jsonProp: ElementCompact): Font {
     fontAttributes = jsonProp["opifont.name"]._attributes;
   }
   const { fontName, height, style } = fontAttributes;
-  return new Font(opiStyles[style], height, fontName);
+  return new Font(height, opiStyles[style], fontName);
 }
 
 export const OPI_FUNCTION_SUBSTITUTIONS: {
