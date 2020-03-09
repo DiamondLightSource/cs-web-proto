@@ -10,7 +10,8 @@ import {
   InferWidgetProps,
   ChildrenPropOpt,
   FontPropOpt,
-  BorderPropOpt
+  BorderPropOpt,
+  ColorPropOpt
 } from "../propTypes";
 
 const DropDownContainerProps = {
@@ -18,6 +19,8 @@ const DropDownContainerProps = {
   open: BoolPropOpt,
   font: FontPropOpt,
   border: BorderPropOpt,
+  foregroundColor: ColorPropOpt,
+  backgroundColor: ColorPropOpt,
   children: ChildrenPropOpt
 };
 
@@ -32,7 +35,12 @@ export const DropDownComponent = (
   <details
     className={classes.Detail}
     open={props.open ?? false}
-    style={{ ...props.font?.asStyle(), ...props.border?.asStyle() }}
+    style={{
+      ...props.font?.asStyle(),
+      ...props.border?.asStyle(),
+      color: props.foregroundColor?.rgbaString() ?? "",
+      backgroundColor: props.backgroundColor?.rgbaString() ?? ""
+    }}
   >
     <summary className={classes.Summary}>{props.title}</summary>
     <div
