@@ -237,6 +237,53 @@
       ]
     },
     {
+      "type": "dropdown",
+      "position": "relative",
+      "margin": "20px 0 0 0",
+      "title": "Drop Down Section",
+      "children": [
+        {
+          "type": "flexcontainer",
+          "position": "relative",
+          "children": [
+            {
+              "type": "input",
+              "position": "relative",
+              "width": "45%",
+              "margin": "2%",
+              "macroMap": {
+                "COLOUR": "purple"
+              },
+              "color": "${COLOUR}",
+              "pvName": "loc://pv1"
+            },
+            {
+              "type": "readback",
+              "position": "relative",
+              "width": "45%",
+              "margin": "2%",
+              "pvName": "loc://pv1",
+              "tooltip": "Custom tooltip:\n${pvName}\n${pvValue}"
+            },
+            {
+              "type": "input",
+              "position": "relative",
+              "width": "45%",
+              "margin": "2%",
+              "pvName": "loc://pv2"
+            },
+            {
+              "type": "readback",
+              "position": "relative",
+              "width": "45%",
+              "margin": "2%",
+              "pvName": "loc://pv2"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "type": "grouping",
       "position": "relative",
       "margin": "20px 0 0 0",
