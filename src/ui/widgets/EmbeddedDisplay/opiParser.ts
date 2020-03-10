@@ -1,5 +1,5 @@
 import { WidgetDescription } from "../createComponent";
-import { GenericProp, Rule } from "../../../types/props";
+import { GenericProp, Rule, Expression } from "../../../types/props";
 import { ElementCompact } from "xml-js";
 import { widgets } from "../register";
 import { WidgetActions, WRITE_PV } from "../widgetActions";
@@ -8,6 +8,8 @@ import { MacroMap } from "../../../redux/csState";
 import { Color } from "../../../types/color";
 import { FontStyle, Font } from "../../../types/font";
 import { Label } from "../Label/label";
+import { StringOrNumProp } from "../propTypes";
+import { Border, BorderStyle } from "../../../types/border";
 
 const OPI_WIDGET_MAPPING: { [key: string]: any } = {
   "org.csstudio.opibuilder.Display": "display",
@@ -134,15 +136,10 @@ function opiParseActions(jsonProp: ElementCompact): WidgetActions {
 }
 
 export const opiParseRules = (jsonProp: ElementCompact): Rule[] => {
-  const ruleArray = toArray(jsonProp.rule);
+  const ruleArray = toArray(jsonProp.rules.rule);
   const rules = ruleArray.map((ruleElement: ElementCompact) => {
     const name = ruleElement._attributes?.name as string;
     const xmlProp = ruleElement._attributes?.prop_id as string;
-    // Change the prop from the rule to the prop used in our JSON format.
-    let jsonProp = xmlProp;
-    if (OPI_KEY_SUBSTITUTIONS.hasOwnProperty(xmlProp)) {
-      jsonProp = OPI_KEY_SUBSTITUTIONS[xmlProp];
-    }
 
     const outExp = ruleElement._attributes?.out_exp === "true";
     const pvArray = toArray(ruleElement.pv);
@@ -155,20 +152,14 @@ export const opiParseRules = (jsonProp: ElementCompact): Rule[] => {
     const expArray = toArray(ruleElement.exp);
     const expressions = expArray.map((expression: ElementCompact) => {
       const value = expression.value;
-      let convertedValue = value;
-      if (OPI_FUNCTION_SUBSTITUTIONS.hasOwnProperty(xmlProp)) {
-        convertedValue = OPI_FUNCTION_SUBSTITUTIONS[xmlProp](xmlProp, value);
-      }
-
       return {
         boolExp: expression._attributes?.bool_exp as string,
-        value: value,
-        convertedValue: convertedValue
+        value: value
       };
     });
     return {
       name: name,
-      prop: jsonProp,
+      prop: xmlProp,
       outExp: outExp,
       expressions: expressions,
       pvs: pvs
@@ -177,57 +168,91 @@ export const opiParseRules = (jsonProp: ElementCompact): Rule[] => {
   return rules;
 };
 
-function opiParseType(value: ElementCompact): GenericProp {
-  console.log("opiParseType");
-  const typeid = value.typeId;
-  /* This mapping hard-coded? */
-  if (OPI_WIDGET_MAPPING.hasOwnProperty(typeid)) {
-    return widgets[OPI_WIDGET_MAPPING[typeid]][0];
-  } else {
-    return value.typeId;
-  }
-}
-
 function opiParseNumber(jsonProp: ElementCompact): number {
   return Number(jsonProp._text);
 }
 
+function opiParseBorder(props: any): Border {
+  const borderStyles: { [key: number]: BorderStyle } = {
+    0: BorderStyle.None
+  };
+  const style = borderStyles[opiParseNumber(props.border_style)];
+  const width = opiParseNumber(props.border_width);
+  const color = opiParseColor(props.border_color);
+  return new Border(style, color, width);
+}
+
+function opiParseHeight(props: any): number {
+  return opiParseNumber(props.height);
+}
+function opiParseWidth(props: any): number {
+  return opiParseNumber(props.width);
+}
+function opiParseX(props: any): number {
+  return opiParseNumber(props.x);
+}
+function opiParseY(props: any): number {
+  return opiParseNumber(props.y);
+}
+function opiParseForegroundColor(props: any): Color {
+  return opiParseColor(props.foreground_color);
+}
+function opiParseBackgroundColor(props: any): Color {
+  return opiParseColor(props.background_color);
+}
+function opiParsePrecision(props: any): number {
+  return opiParseNumber(props.precision);
+}
+function opiParseVisible(props: any): boolean {
+  return opiParseBoolean(props.visible);
+}
+function opiParseShowUnits(props: any): boolean {
+  return opiParseBoolean(props.show_units);
+}
+
 type DEFAULT_PARSERS = {
-  [key: string]: [string, (value: any) => GenericProp];
+  [key: string]: (value: any) => GenericProp;
 };
 
 export const OPI_DEFAULT_PARSERS: DEFAULT_PARSERS = {
-  height: ["height", opiParseNumber],
-  width: ["width", opiParseNumber],
-  x: ["x", opiParseNumber],
-  y: ["y", opiParseNumber],
-  macros: ["macros", opiParseMacros],
-  background_color: ["backgroundColor", opiParseColor], // eslint-disable-line @typescript-eslint/camelcase
-  foreground_color: ["foregroundColor", opiParseColor], // eslint-disable-line @typescript-eslint/camelcase
-  precision: ["precision", opiParseNumber],
-  visible: ["visible", opiParseBoolean],
-  transparent: ["transparent", opiParseBoolean],
-  show_units: ["showUnits", opiParseBoolean], // eslint-disable-line @typescript-eslint/camelcase
-  actions: ["actions", opiParseActions],
-  font: ["font", opiParseFont],
-  rules: ["rules", opiParseRules],
-  _attributes: ["type", opiParseType]
+  height: opiParseHeight,
+  width: opiParseWidth,
+  x: opiParseX,
+  y: opiParseY,
+  macros: opiParseMacros,
+  backgroundColor: opiParseBackgroundColor,
+  foregroundColor: opiParseForegroundColor,
+  precision: opiParsePrecision,
+  visible: opiParseVisible,
+  transparent: opiParseVisible,
+  showUnits: opiParseShowUnits,
+  actions: opiParseActions,
+  font: opiParseFont,
+  rules: opiParseRules,
+  border: opiParseBorder
 };
 
 /* Take an object representing a widget and return our widget description. */
 export function genericParser(
   widget: any,
   targetWidget: any,
-  widgetMap: { [key: string]: string },
   defaultParsers: DEFAULT_PARSERS
 ): WidgetDescription {
-  const newProps: any = {};
-  for (const prop of Object.keys(widget)) {
+  const newProps: any = { type: targetWidget };
+  const allProps = {
+    x: StringOrNumProp,
+    y: StringOrNumProp,
+    height: StringOrNumProp,
+    width: StringOrNumProp,
+    /* Warning for using prop-types at runtime here. */
+    ...targetWidget.propTypes
+  };
+  for (const prop of Object.keys(allProps)) {
     if (defaultParsers.hasOwnProperty(prop)) {
       console.log(`default parser for ${prop}`);
-      const [propName, propParser] = defaultParsers[prop];
+      const propParser = defaultParsers[prop];
       try {
-        newProps[propName] = propParser(widget[prop]);
+        newProps[prop] = propParser(widget);
       } catch (e) {
         log.error(`Could not convert prop ${prop}:`);
         log.error(widget[prop]);
@@ -235,10 +260,21 @@ export function genericParser(
       }
     }
   }
+  /* convert rule values? */
+  newProps.rules?.forEach((rule: Rule) => {
+    rule.expressions.forEach((expression: Expression) => {
+      /* We need to map the prop? */
+      if (defaultParsers.hasOwnProperty(rule.prop)) {
+        const convertedValue = defaultParsers[rule.prop](widget);
+        expression.convertedValue = convertedValue;
+      }
+      /* We need the type of the prop in order to parse */
+    });
+  });
   return newProps;
 }
 
-export function opiParser(widget: any): any {
+export function parseOpiWidget(widget: any): any {
   const props = widget.widget;
   console.log("opiParseType");
   const typeid = props._attributes.typeId;
@@ -247,12 +283,8 @@ export function opiParser(widget: any): any {
   if (OPI_WIDGET_MAPPING.hasOwnProperty(typeid)) {
     targetWidget = widgets[OPI_WIDGET_MAPPING[typeid]][0];
   } else {
+    /* What should we do in case of failure? */
     return Label;
   }
-  return genericParser(
-    props,
-    targetWidget,
-    OPI_WIDGET_MAPPING,
-    OPI_DEFAULT_PARSERS
-  );
+  return genericParser(props, targetWidget, OPI_DEFAULT_PARSERS);
 }

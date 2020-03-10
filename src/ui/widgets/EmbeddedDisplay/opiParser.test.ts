@@ -1,9 +1,11 @@
-import { opiParser } from "./opiParser";
+import { parseOpiWidget } from "./opiParser";
 import { xml2js } from "xml-js";
 import { Color } from "../../../types/color";
 import { Label } from "..";
+import { Border } from "../../../types/border";
+import { Rule } from "../../../types/props";
 
-describe("opi parser", (): void => {
+describe("opi widget parser", (): void => {
   const labelString = `
   <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
     <actions hook="false" hook_all="false" />
@@ -56,19 +58,31 @@ describe("opi parser", (): void => {
     <y>20</y>
   </widget>`;
 
-  const widget = xml2js(labelString, { compact: true });
+  const element = xml2js(labelString, { compact: true });
 
   it("parses a label widget", (): void => {
-    const x = opiParser(widget);
-    console.log(x);
-    expect(x.type).toEqual(Label);
+    const widget = parseOpiWidget(element);
+    console.log(widget);
+    expect(widget.type).toEqual(Label);
     // Boolean type
-    expect(x.visible).toEqual(true);
+    expect(widget.visible).toEqual(true);
     // Number type
-    expect(x.height).toEqual(20);
+    expect(widget.height).toEqual(20);
     // Color type
-    expect(x.foregroundColor).toEqual(Color.BLACK);
+    expect(widget.foregroundColor).toEqual(Color.BLACK);
     // Unrecognised property not passed on.
-    expect(x.wuid).toEqual(undefined);
+    expect(widget.wuid).toEqual(undefined);
+    // No border
+    expect(widget.border).toEqual(Border.NONE);
+    // No actions
+    expect(widget.actions.actions.length).toEqual(0);
+    // One rule
+    expect(widget.rules.length).toEqual(1);
+    const rule: Rule = widget.rules[0];
+    expect(rule.name).toEqual("Rule");
+    expect(rule.prop).toEqual("text");
+    expect(rule.outExp).toEqual(true);
+    expect(rule.pvs[0].pvName).toEqual("loc://test");
+    expect(rule.pvs[0].trigger).toEqual(true);
   });
 });

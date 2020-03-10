@@ -15,7 +15,7 @@ export type GenericProp =
   | MacroMap
   | WidgetActions;
 
-interface Expression {
+export interface Expression {
   boolExp: string;
   value: string;
   convertedValue?: GenericProp;
