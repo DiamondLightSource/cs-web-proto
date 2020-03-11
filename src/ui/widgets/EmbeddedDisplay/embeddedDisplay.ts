@@ -10,13 +10,13 @@ import {
 import { MacroMap } from "../../../redux/csState";
 import { WidgetPropType } from "../widgetProps";
 import { bobToWidgets } from "./bobUtils";
-import { opiToWidgets } from "./opiUtils";
 import { registerWidget } from "../register";
 import { StringProp, InferWidgetProps, ChoiceProp } from "../propTypes";
 import { BaseUrlContext } from "../../../baseUrl";
 import { jsonToWidgets } from "./jsonUtils";
 import { Font, FontStyle } from "../../../types/font";
 import { Color } from "../../../types/color";
+import { parseOpi } from "./opiParser";
 
 const EMPTY_WIDGET: WidgetDescription = {
   type: "shape",
@@ -100,10 +100,11 @@ export const EmbeddedDisplay = (
           description = jsonToWidgets(contents);
           break;
         case "opi":
-          description = opiToWidgets(contents);
+          description = parseOpi(contents);
           break;
       }
     }
+    console.log(description);
 
     // Apply the height to the top level if relative layout and none have been provided
     if (props.positionStyle.position === "relative") {
