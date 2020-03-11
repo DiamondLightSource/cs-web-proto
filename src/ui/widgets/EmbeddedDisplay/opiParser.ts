@@ -194,8 +194,12 @@ function opiParseBorder(props: any): Border {
   console.log(props.border_style);
   const style = borderStyles[opiParseNumber(props.border_style)];
   const width = opiParseNumber(props.border_width);
-  const color = opiParseColor(props.border_color);
-  return new Border(style, color, width);
+  const borderColor = opiParseColor(props.border_color);
+  /* Line color can override border for certain widgets. */
+  const lineColor = opiParseColor(props.line_color);
+  const actualColor = width < 2 && lineColor ? lineColor : borderColor;
+  const actualStyle = width < 2 && lineColor ? BorderStyle.Line : style;
+  return new Border(actualStyle, actualColor, width);
 }
 
 function opiParseType(props: any): string {
