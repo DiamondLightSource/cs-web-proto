@@ -2,14 +2,22 @@ import React from "react";
 import { Widget } from "../widget";
 import { WidgetPropType } from "../widgetProps";
 import { registerWidget } from "../register";
-import { BoolPropOpt, StringPropOpt, InferWidgetProps } from "../propTypes";
+import {
+  BoolPropOpt,
+  StringPropOpt,
+  InferWidgetProps,
+  BorderPropOpt,
+  ColorPropOpt
+} from "../propTypes";
 
 const ShapeProps = {
   shapeWidth: StringPropOpt,
   shapeHeight: StringPropOpt,
   shapeRadius: StringPropOpt,
   shapeTransform: StringPropOpt,
-  transparent: BoolPropOpt
+  transparent: BoolPropOpt,
+  backgroundColor: ColorPropOpt,
+  border: BorderPropOpt
 };
 
 export const ShapeComponent = (
@@ -19,9 +27,10 @@ export const ShapeComponent = (
     width: props.shapeWidth ? props.shapeWidth : "100%",
     height: props.shapeHeight ? props.shapeHeight : "100%",
     borderRadius: props.shapeRadius ? props.shapeRadius : "",
-    transform: props.shapeTransform ? props.shapeTransform : ""
+    transform: props.shapeTransform ? props.shapeTransform : "",
+    ...props.border?.asStyle()
   };
-
+  newStyle["backgroundColor"] = props.backgroundColor?.rgbaString();
   if (props.transparent !== undefined && props.transparent) {
     newStyle["backgroundColor"] = "transparent";
   }
