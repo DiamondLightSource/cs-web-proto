@@ -112,15 +112,12 @@ export const Widget = (
 
   // Apply macros.
   log.debug("id");
-  log.debug((idProps as any).cc);
   const macroProps: AnyProps = useMacros(idProps);
   // Then rules
   log.debug("macros");
-  log.debug((macroProps as any).cc);
   const ruleProps = useRules(macroProps) as PVWidgetComponent & { id: string };
   log.debug(`ruleProps ${ruleProps}`);
   log.debug(ruleProps);
-  log.debug((ruleProps as any).cc);
 
   // Give containers access to everything apart from the positionStyle
   // Assume flexible position if not provided with anything

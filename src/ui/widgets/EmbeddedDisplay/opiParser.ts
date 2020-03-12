@@ -22,9 +22,6 @@ const OPI_WIDGET_MAPPING: { [key: string]: any } = {
 };
 
 function opiParseString(jsonProp: ElementCompact): string {
-  console.log(jsonProp._text);
-  console.log(typeof jsonProp._text);
-
   if (typeof jsonProp._text === "string") {
     return jsonProp._text;
   } else {
@@ -200,7 +197,6 @@ function opiParseBorder(props: any): Border {
   const borderStyles: { [key: number]: BorderStyle } = {
     0: BorderStyle.None
   };
-  console.log(props.border_style);
   const style = borderStyles[opiParseNumber(props.border_style)];
   const width = opiParseNumber(props.border_width);
   const borderColor = opiParseColor(props.border_color);
@@ -339,7 +335,6 @@ export function parseOpiWidget(props: any): WidgetDescription {
   /* Patch up local PVs? */
   /* Child widgets */
   const childWidgets = toArray(props.widget);
-  console.log(childWidgets);
   widgetDescription.children = childWidgets.map((child: any) => {
     return parseOpiWidget(child);
   });
