@@ -1,9 +1,9 @@
-import { parseOpiWidget } from "./opiParser";
 import { xml2js, ElementCompact } from "xml-js";
 import { Color } from "../../../types/color";
 import { Border } from "../../../types/border";
 import { Rule } from "../../../types/props";
 import { Label } from "..";
+import { parseWidget } from "./parser";
 
 describe("opi widget parser", (): void => {
   const labelString = `
@@ -53,7 +53,7 @@ describe("opi widget parser", (): void => {
   const label = Label;
 
   it("parses a label widget", (): void => {
-    const widget = parseOpiWidget(element.widget);
+    const widget = parseWidget(element.widget);
     console.log(widget);
     expect(widget.type).toEqual("label");
     // Boolean type
@@ -91,7 +91,7 @@ describe("opi widget parser", (): void => {
 
   const ruleElement: ElementCompact = xml2js(ruleString, { compact: true });
   it("parses a widget with a rule", (): void => {
-    const widget = parseOpiWidget(ruleElement.widget);
+    const widget = parseWidget(ruleElement.widget);
     expect(widget.rules.length).toEqual(1);
     const rule: Rule = widget.rules[0];
     expect(rule.name).toEqual("Rule");
@@ -112,7 +112,7 @@ describe("opi widget parser", (): void => {
 
   const childElement: ElementCompact = xml2js(childString, { compact: true });
   it("parses a widget with a child widget", (): void => {
-    const widget = parseOpiWidget(childElement.widget);
+    const widget = parseWidget(childElement.widget);
     expect(widget.children?.length).toEqual(1);
   });
 
@@ -128,7 +128,7 @@ describe("opi widget parser", (): void => {
 
   const actionElement: ElementCompact = xml2js(actionString, { compact: true });
   it("parses a widget with an action", (): void => {
-    const widget = parseOpiWidget(actionElement.widget);
+    const widget = parseWidget(actionElement.widget);
     console.log(widget);
     expect(widget.actions.actions.length).toEqual(1);
     const action = widget.actions.actions[0];
@@ -173,7 +173,7 @@ $(pv_value)</tooltip>
 
   const inputElement: ElementCompact = xml2js(inputString, { compact: true });
   it("parses an input widget", (): void => {
-    const widget = parseOpiWidget(inputElement.widget);
+    const widget = parseWidget(inputElement.widget);
     expect(widget.textAlign).toEqual("right");
     // Adds ca:// prefix.
     expect(widget.pvName).toEqual("ca://SR-CS-RFFB-01:RFSTEP");

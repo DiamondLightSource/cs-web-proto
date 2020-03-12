@@ -17,6 +17,7 @@ import { jsonToWidgets } from "./jsonUtils";
 import { Font, FontStyle } from "../../../types/font";
 import { Color } from "../../../types/color";
 import { parseOpi } from "./opiParser";
+import { parseJson } from "./jsonParser";
 
 const EMPTY_WIDGET: WidgetDescription = {
   type: "shape",
@@ -97,7 +98,7 @@ export const EmbeddedDisplay = (
           description = bobToWidgets(contents);
           break;
         case "json":
-          description = jsonToWidgets(contents);
+          description = parseJson(contents);
           break;
         case "opi":
           description = parseOpi(contents);
