@@ -8,7 +8,6 @@ import { registerWidget } from "../register";
 import {
   ActionsPropType,
   StringProp,
-  ObjectPropOpt,
   StringPropOpt,
   InferWidgetProps,
   ColorPropOpt,
@@ -60,7 +59,6 @@ export const ActionButtonComponent = (
 const ActionButtonPropType = {
   text: StringProp,
   actions: ActionsPropType,
-  positionStyle: ObjectPropOpt,
   image: StringPropOpt,
   backgroundColor: ColorPropOpt,
   foregroundColor: ColorPropOpt,

@@ -11,6 +11,7 @@ import { StringProp, InferWidgetProps } from "../propTypes";
 import { BaseUrlContext } from "../../../baseUrl";
 import { EmbeddedDisplay } from "../EmbeddedDisplay/embeddedDisplay";
 import { Color } from "../../../types/color";
+import { RelativePosition } from "../../../types/position";
 
 export interface DynamicParams {
   json: string;
@@ -34,15 +35,7 @@ export function DynamicPageFetch({
       file={file}
       filetype="json"
       macroMap={map}
-      positionStyle={{
-        position: "relative",
-        height: "",
-        width: "",
-        margin: "",
-        padding: "",
-        minWidth: "",
-        maxWidth: ""
-      }}
+      position={new RelativePosition()}
     />
   );
 }
@@ -77,15 +70,7 @@ const DynamicPageComponent = (
               }}
             >
               <ActionButton
-                positionStyle={{
-                  position: "relative",
-                  height: "",
-                  width: "",
-                  margin: "",
-                  padding: "",
-                  minWidth: "",
-                  maxWidth: ""
-                }}
+                position={new RelativePosition()}
                 backgroundColor={Color.parse("#ff3333")}
                 foregroundColor={Color.parse("#ffffff")}
                 actions={{

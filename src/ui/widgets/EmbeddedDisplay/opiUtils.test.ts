@@ -15,6 +15,7 @@ import {
 } from "./opiUtils";
 import { WRITE_PV } from "../widgetActions";
 import { Color } from "../../../types/color";
+import { AbsolutePosition } from "../../../types/position";
 
 describe("simple macros convert", (): void => {
   const xmlInput = "<macros><Test>Value</Test></macros>";
@@ -214,11 +215,7 @@ describe("opi child conversion", (): void => {
       type: "testwidget",
       name: "Test Widget",
       pv_name: "TESTPV", // eslint-disable-line @typescript-eslint/camelcase
-      position: "absolute",
-      x: "99px",
-      y: "199px",
-      width: "299px",
-      height: "399px",
+      position: new AbsolutePosition("99px", "199px", "299px", "399px"),
       children: []
     });
   });
@@ -249,11 +246,7 @@ describe("opi child conversion", (): void => {
       type: "testwidget",
       name: "Test Widget",
       pvName: "TESTPV",
-      position: "absolute",
-      x: "99px",
-      y: "199px",
-      width: "299px",
-      height: "399px",
+      position: new AbsolutePosition("99px", "199px", "299px", "399px"),
       children: []
     });
   });
@@ -290,11 +283,7 @@ describe("opi child conversion", (): void => {
       ).toEqual({
         type: "testwidget",
         name: "Test Widget",
-        x: "0px",
-        y: "0px",
-        width: "0px",
-        height: "0px",
-        position: "absolute",
+        position: new AbsolutePosition("0px", "0px", "0px", "0px"),
         true_or_false: expected, // eslint-disable-line @typescript-eslint/camelcase
         children: []
       });
@@ -362,11 +351,7 @@ describe("opi child conversion", (): void => {
       type: "testwidget",
       name: "Test Widget",
       pvName: "TESTPV",
-      position: "absolute",
-      x: "99px",
-      y: "199px",
-      width: "299px",
-      height: "399px",
+      position: new AbsolutePosition("99px", "199px", "299px", "399px"),
       color: Color.GREEN,
       backgroundColor: new Color(128, 128, 128),
       children: []
@@ -399,21 +384,13 @@ describe("opi child conversion", (): void => {
     ).toEqual({
       type: "parent",
       name: "Parent Widget",
-      position: "absolute",
-      x: "100px",
-      y: "200px",
-      width: "300px",
-      height: "400px",
+      position: new AbsolutePosition("100px", "200px", "300px", "400px"),
       children: [
         {
           type: "testwidget",
           name: "Test Widget",
           pv_name: "TESTPV", // eslint-disable-line @typescript-eslint/camelcase
-          position: "absolute",
-          x: "99px",
-          y: "199px",
-          width: "299px",
-          height: "399px",
+          position: new AbsolutePosition("99px", "199px", "299px", "399px"),
           children: []
         }
       ]
@@ -454,32 +431,20 @@ describe("opi child conversion", (): void => {
     ).toEqual({
       type: "parent",
       name: "Parent Widget",
-      position: "absolute",
-      x: "100px",
-      y: "200px",
-      width: "300px",
-      height: "400px",
+      position: new AbsolutePosition("100px", "200px", "300px", "400px"),
       children: [
         {
           type: "testwidget",
           name: "Test Widget",
           pv_name: "TESTPV", // eslint-disable-line @typescript-eslint/camelcase
-          position: "absolute",
-          x: "99px",
-          y: "199px",
-          width: "299px",
-          height: "399px",
+          position: new AbsolutePosition("99px", "199px", "299px", "399px"),
           children: []
         },
         {
           type: "testwidget",
           name: "Test Widget",
           pv_name: "TESTPV", // eslint-disable-line @typescript-eslint/camelcase
-          position: "absolute",
-          x: "999px",
-          y: "899px",
-          width: "799px",
-          height: "699px",
+          position: new AbsolutePosition("999px", "899px", "799px", "699px"),
           children: []
         }
       ]

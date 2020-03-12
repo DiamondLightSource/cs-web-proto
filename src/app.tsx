@@ -14,6 +14,7 @@ import { ActionButton } from "./ui/widgets";
 import { OPEN_PAGE } from "./ui/widgets/widgetActions";
 import { BaseUrlContext } from "./baseUrl";
 import { onRenderCallback } from "./profilerCallback";
+import { RelativePosition } from "./types/position";
 
 let settings: any;
 try {
@@ -64,15 +65,7 @@ const App: React.FC = (): JSX.Element => {
               Toggle Theme
             </button>
             <ActionButton
-              positionStyle={{
-                position: "relative",
-                height: "30px",
-                width: "100px",
-                margin: "auto",
-                padding: "",
-                minWidth: "",
-                maxWidth: ""
-              }}
+              position={new RelativePosition("30px", "100px", "auto")}
               text="Main Menu"
               actions={{
                 executeAsOne: false,
@@ -91,15 +84,7 @@ const App: React.FC = (): JSX.Element => {
             <Profiler id="Dynamic Page Profiler" onRender={onRenderCallback}>
               <DynamicPageWidget
                 routePath="app"
-                positionStyle={{
-                  position: "relative",
-                  height: "",
-                  width: "",
-                  margin: "",
-                  padding: "",
-                  minWidth: "",
-                  maxWidth: ""
-                }}
+                position={new RelativePosition("", "", "auto")}
               />
             </Profiler>
           </div>
