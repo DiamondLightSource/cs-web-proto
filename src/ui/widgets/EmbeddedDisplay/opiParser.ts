@@ -1,7 +1,7 @@
 import { WidgetDescription } from "../createComponent";
 import { GenericProp, Rule, Expression } from "../../../types/props";
 import { ElementCompact, xml2js } from "xml-js";
-import { widgets } from "../register";
+import { REGISTERED_WIDGETS } from "../register";
 import { WidgetActions, WRITE_PV, OPEN_WEBPAGE } from "../widgetActions";
 import log from "loglevel";
 import { MacroMap } from "../../../redux/csState";
@@ -304,9 +304,9 @@ export function parseOpiWidget(props: any): WidgetDescription {
   const typeid = opiParseType(props);
   let targetWidget;
   try {
-    targetWidget = widgets[typeid][0];
+    targetWidget = REGISTERED_WIDGETS[typeid][0];
   } catch {
-    targetWidget = widgets["shape"][0];
+    targetWidget = REGISTERED_WIDGETS["shape"][0];
   }
   const widgetDescription = genericParser(
     props,

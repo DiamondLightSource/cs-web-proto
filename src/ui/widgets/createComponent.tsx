@@ -6,7 +6,7 @@ import checkPropTypes from "check-prop-types";
 
 import { MacroMap } from "../../redux/csState";
 import { Shape } from "./Shape/shape";
-import { widgets } from "./register";
+import { REGISTERED_WIDGETS } from "./register";
 import { filterUndefinedOut } from "../../types/utils";
 import { Color } from "../../types/color";
 
@@ -43,7 +43,7 @@ export function widgetDescriptionToComponent(
 
   const widgetDict = Object.assign(
     {},
-    ...Object.entries(widgets).map(([k, v]): any => ({ [k]: v[0] }))
+    ...Object.entries(REGISTERED_WIDGETS).map(([k, v]): any => ({ [k]: v[0] }))
   );
 
   let Component: React.FC<any>;
