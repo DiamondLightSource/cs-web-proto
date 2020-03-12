@@ -43,7 +43,15 @@ export const LabelComponent = (
   if (!visible) {
     style["visibility"] = "hidden";
   }
-  style["justifyContent"] = textAlign;
+  // Since display is "flex", use "flex-start" and "flex-end" to align
+  // the content.
+  let alignment = "center";
+  if (textAlign === "left") {
+    alignment = "flex-start";
+  } else if (textAlign === "right") {
+    alignment = "flex-end";
+  }
+  style["justifyContent"] = alignment;
   style["color"] = props.foregroundColor?.rgbaString();
   style["backgroundColor"] = props.backgroundColor?.rgbaString();
   // Transparent prop overrides backgroundColor.

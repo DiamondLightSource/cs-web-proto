@@ -2,7 +2,7 @@ import { WidgetDescription } from "../createComponent";
 import { GenericProp, Rule, Expression } from "../../../types/props";
 import { ElementCompact, xml2js } from "xml-js";
 import { widgets } from "../register";
-import { WidgetActions, WRITE_PV } from "../widgetActions";
+import { WidgetActions, WRITE_PV, OPEN_WEBPAGE } from "../widgetActions";
 import log from "loglevel";
 import { MacroMap } from "../../../redux/csState";
 import { Color } from "../../../types/color";
@@ -63,8 +63,6 @@ export function opiParseFont(jsonProp: ElementCompact): Font {
     2: FontStyle.Italic,
     3: FontStyle.BoldItalic
   };
-  console.log("opiParseFont");
-  console.log(jsonProp);
   let fontAttributes;
   if (jsonProp.hasOwnProperty("fontdata")) {
     fontAttributes = jsonProp["fontdata"]._attributes;
@@ -94,25 +92,10 @@ const toArray = (element?: ElementCompact): ElementCompact[] => {
 };
 
 function opiParseActions(jsonProp: ElementCompact): WidgetActions {
-  let actionsToProcess: any[] = [];
-  if (Array.isArray(jsonProp.action)) {
-    actionsToProcess = jsonProp.action;
-  } else if (jsonProp.action !== undefined) {
-    actionsToProcess = [jsonProp.action];
-  }
-
-  // Object of available actions
-  const availableActions: { [key: string]: any } = {
-    write_pv: WRITE_PV, // eslint-disable-line @typescript-eslint/camelcase
-    WRITE_PV: WRITE_PV
-  };
+  const actionsToProcess = toArray(jsonProp.action);
 
   // Extract information about whether to execute all actions at once
-  const executeAsOne =
-    (jsonProp._attributes !== undefined &&
-      jsonProp._attributes.execute_as_one) === "true"
-      ? true
-      : false;
+  const executeAsOne = jsonProp._attributes?.execute_as_one === "true";
 
   // Turn into an array of Actions
   const processedActions: WidgetActions = {
@@ -122,15 +105,23 @@ function opiParseActions(jsonProp: ElementCompact): WidgetActions {
 
   actionsToProcess.forEach((action): void => {
     log.debug(action);
+    const type = action._attributes?.type;
     try {
-      const type: string = availableActions[action._attributes.type];
       if (type === WRITE_PV) {
-        // Not all actions have descriptions so ret
         processedActions.actions.push({
           type: WRITE_PV,
           writePvInfo: {
-            pvName: action.pv_name._text,
+            pvName: opiParsePvName(action.pv_name),
             value: action.value._text,
+            description:
+              (action.description && action.description._text) || undefined
+          }
+        });
+      } else if (type === OPEN_WEBPAGE) {
+        processedActions.actions.push({
+          type: OPEN_WEBPAGE,
+          openWebpageInfo: {
+            url: action.hyperlink._text,
             description:
               (action.description && action.description._text) || undefined
           }
@@ -138,7 +129,7 @@ function opiParseActions(jsonProp: ElementCompact): WidgetActions {
       }
     } catch (e) {
       log.error(
-        `Could not find action ${action._attributes.type} in available actions to convert`
+        `Could not find action of type ${type} in available actions to convert`
       );
     }
   });
@@ -156,7 +147,7 @@ export const opiParseRules = (jsonProp: ElementCompact): Rule[] => {
     const pvArray = toArray(ruleElement.pv);
     const pvs = pvArray.map((pv: ElementCompact) => {
       return {
-        pvName: pv._text as string,
+        pvName: opiParsePvName(pv),
         trigger: pv._attributes?.trig === "true"
       };
     });
@@ -187,6 +178,24 @@ function opiParsePixels(jsonProp: ElementCompact): string {
   return `${opiParseNumber(jsonProp)}px`;
 }
 
+function opiParsePvName(jsonProp: ElementCompact): string {
+  const rawPv = opiParseString(jsonProp);
+  if (rawPv.includes("://")) {
+    return rawPv;
+  } else {
+    return `ca://${opiParseString(jsonProp)}`;
+  }
+}
+
+function opiParseHorizonalAlignment(jsonProp: ElementCompact): string {
+  const alignments: { [key: number]: string } = {
+    0: "left",
+    1: "center",
+    2: "right"
+  };
+  return alignments[opiParseNumber(jsonProp)];
+}
+
 function opiParseBorder(props: any): Border {
   const borderStyles: { [key: number]: BorderStyle } = {
     0: BorderStyle.None
@@ -196,7 +205,10 @@ function opiParseBorder(props: any): Border {
   const width = opiParseNumber(props.border_width);
   const borderColor = opiParseColor(props.border_color);
   /* Line color can override border for certain widgets. */
-  const lineColor = opiParseColor(props.line_color);
+  let lineColor;
+  try {
+    lineColor = opiParseColor(props.line_color);
+  } catch {}
   const actualColor = width < 2 && lineColor ? lineColor : borderColor;
   const actualStyle = width < 2 && lineColor ? BorderStyle.Line : style;
   return new Border(actualStyle, actualColor, width);
@@ -217,7 +229,8 @@ export const SIMPLE_PARSERS: ParserDict = {
   y: ["y", opiParsePixels],
   text: ["text", opiParseString],
   name: ["name", opiParseString],
-  pvName: ["name", opiParseString],
+  textAlign: ["horizontal_alignment", opiParseHorizonalAlignment],
+  pvName: ["pv_name", opiParsePvName],
   backgroundColor: ["background_color", opiParseColor],
   foregroundColor: ["foreground_color", opiParseColor],
   precision: ["precision", opiParseNumber],
@@ -225,7 +238,8 @@ export const SIMPLE_PARSERS: ParserDict = {
   showUnits: ["show_units", opiParseBoolean],
   transparent: ["transparent", opiParseBoolean],
   font: ["font", opiParseFont],
-  macros: ["macros", opiParseMacros]
+  macros: ["macros", opiParseMacros],
+  actions: ["actions", opiParseActions]
 };
 
 type ComplexParserDict = {
@@ -234,7 +248,6 @@ type ComplexParserDict = {
 
 export const COMPLEX_PARSERS: ComplexParserDict = {
   type: opiParseType,
-  actions: opiParseActions,
   rules: opiParseRules,
   border: opiParseBorder
 };
@@ -258,14 +271,14 @@ export function genericParser(
   };
   /* First, parse our props if we know how to. */
   for (const prop of Object.keys(allProps)) {
-    console.log(`prop ${prop}`);
+    log.debug(`Trying to parse prop ${prop}`);
     if (simpleParsers.hasOwnProperty(prop)) {
-      console.log(`simple parser for ${prop}`);
+      log.debug(`simple parser for ${prop}`);
       const [opiPropName, propParser] = simpleParsers[prop];
       try {
         if (widget.hasOwnProperty(opiPropName)) {
           newProps[prop] = propParser(widget[opiPropName]);
-          console.log(`result ${newProps[prop]}`);
+          log.debug(`result ${newProps[prop]}`);
         }
       } catch (e) {
         log.error(`Could not convert prop ${prop}:`);
@@ -275,14 +288,13 @@ export function genericParser(
     }
     /* More complex props need access to the entire widget. */
     if (complexParsers.hasOwnProperty(prop)) {
-      console.log(`complex parser for ${prop}`);
+      log.debug(`complex parser for ${prop}`);
       const propParser = complexParsers[prop];
       try {
         newProps[prop] = propParser(widget);
-        console.log(`result ${newProps[prop]}`);
+        log.debug(`result ${newProps[prop]}`);
       } catch (e) {
         log.error(`Could not convert prop ${prop}:`);
-        log.error(widget[prop]);
         log.error(e);
       }
     }

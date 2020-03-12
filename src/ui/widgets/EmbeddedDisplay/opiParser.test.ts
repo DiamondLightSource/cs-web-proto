@@ -3,7 +3,7 @@ import { xml2js, ElementCompact } from "xml-js";
 import { Color } from "../../../types/color";
 import { Border } from "../../../types/border";
 import { Rule } from "../../../types/props";
-import { Label } from "../Label/label";
+import { Label } from "..";
 
 describe("opi widget parser", (): void => {
   const labelString = `
@@ -113,6 +113,69 @@ describe("opi widget parser", (): void => {
   const childElement: ElementCompact = xml2js(childString, { compact: true });
   it("parses a widget with a child widget", (): void => {
     const widget = parseOpiWidget(childElement.widget);
-    expect(widget.children.length).toEqual(1);
+    expect(widget.children?.length).toEqual(1);
+  });
+
+  const actionString = `
+  <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
+    <actions hook="false" hook_all="false">
+      <action type="OPEN_WEBPAGE">
+        <hyperlink>https://confluence.diamond.ac.uk/x/ZVhRBQ</hyperlink>
+        <description>Launch Help</description>
+      </action>
+    </actions>
+  </widget>`;
+
+  const actionElement: ElementCompact = xml2js(actionString, { compact: true });
+  it("parses a widget with an action", (): void => {
+    const widget = parseOpiWidget(actionElement.widget);
+    console.log(widget);
+    expect(widget.actions.actions.length).toEqual(1);
+    const action = widget.actions.actions[0];
+    expect(action.type).toEqual("OPEN_WEBPAGE");
+    expect(action.openWebpageInfo.url).toEqual(
+      "https://confluence.diamond.ac.uk/x/ZVhRBQ"
+    );
+    expect(action.openWebpageInfo.description).toEqual("Launch Help");
+  });
+  const inputString = `
+  <widget typeId="org.csstudio.opibuilder.widgets.TextInput" version="2.0.0">
+    <confirm_message></confirm_message>
+    <horizontal_alignment>2</horizontal_alignment>
+    <limits_from_pv>false</limits_from_pv>
+    <maximum>1.7976931348623157E308</maximum>
+    <minimum>-1.7976931348623157E308</minimum>
+    <multiline_input>false</multiline_input>
+    <name>EDM TextInput</name>
+    <precision>0</precision>
+    <precision_from_pv>true</precision_from_pv>
+    <pv_name>SR-CS-RFFB-01:RFSTEP</pv_name>
+    <pv_value />
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <selector_type>0</selector_type>
+    <show_units>false</show_units>
+    <style>0</style>
+    <text></text>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <transparent>true</transparent>
+    <visible>true</visible>
+    <widget_type>Text Input</widget_type>
+    <width>114</width>
+    <wuid>-7ec79ac:158f319c58c:-7c7e</wuid>
+    <x>197</x>
+    <y>228</y>
+  </widget>`;
+
+  const inputElement: ElementCompact = xml2js(inputString, { compact: true });
+  it("parses an input widget", (): void => {
+    const widget = parseOpiWidget(inputElement.widget);
+    expect(widget.textAlign).toEqual("right");
+    // Adds ca:// prefix.
+    expect(widget.pvName).toEqual("ca://SR-CS-RFFB-01:RFSTEP");
   });
 });
