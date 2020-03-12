@@ -51,7 +51,7 @@ export const ActionButtonComponent = (
           <figcaption>{props.text}</figcaption>
         </figure>
       ) : (
-        props.text
+        <span>{props.text}</span>
       )}
     </button>
   );
