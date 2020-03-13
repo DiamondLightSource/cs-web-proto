@@ -5,6 +5,7 @@ import { shallow } from "enzyme";
 import { Display } from "../Display/display";
 import { Label } from "../Label/label";
 import { DEFAULT_BASE_URL } from "../../../baseUrl";
+import { RelativePosition } from "../../../types/position";
 interface GlobalFetch extends NodeJS.Global {
   fetch: any;
 }
@@ -45,15 +46,7 @@ describe("<EmbeddedDisplay>", (): void => {
 
       const wrapper = shallow(
         <EmbeddedDisplay
-          positionStyle={{
-            position: "relative",
-            height: "",
-            width: "",
-            margin: "",
-            padding: "",
-            minWidth: "",
-            maxWidth: ""
-          }}
+          position={new RelativePosition()}
           file={inputFile}
           filetype={filetype}
         />
@@ -88,15 +81,7 @@ describe("<EmbeddedDisplay>", (): void => {
 
     const wrapper = shallow(
       <EmbeddedDisplay
-        positionStyle={{
-          position: "relative",
-          height: "",
-          width: "",
-          margin: "",
-          padding: "",
-          minWidth: "",
-          maxWidth: ""
-        }}
+        position={new RelativePosition()}
         file="TestFile"
         filetype="bob"
       />
@@ -140,15 +125,7 @@ describe("<EmbeddedDisplay>", (): void => {
 
     const wrapper = shallow(
       <EmbeddedDisplay
-        positionStyle={{
-          position: "relative",
-          height: "",
-          width: "",
-          margin: "",
-          padding: "",
-          minWidth: "",
-          maxWidth: ""
-        }}
+        position={new RelativePosition()}
         file="TestFile"
         filetype="bob"
       />
@@ -186,15 +163,7 @@ describe("<EmbeddedDisplay>", (): void => {
 
     const wrapper = shallow(
       <EmbeddedDisplay
-        positionStyle={{
-          position: "relative",
-          height: "",
-          width: "",
-          margin: "",
-          padding: "",
-          minWidth: "",
-          maxWidth: ""
-        }}
+        position={new RelativePosition()}
         file="TestFile"
         filetype="json"
       />

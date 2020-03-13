@@ -31,7 +31,7 @@ export class Border {
     this.width = width;
   }
 
-  public asStyle(): object {
+  public css(): object {
     return {
       borderStyle: CssBorders[this.style],
       borderWidth: `${this.width}px`,

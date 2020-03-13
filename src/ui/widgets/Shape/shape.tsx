@@ -28,7 +28,7 @@ export const ShapeComponent = (
     height: props.shapeHeight ? props.shapeHeight : "100%",
     borderRadius: props.shapeRadius ? props.shapeRadius : "",
     transform: props.shapeTransform ? props.shapeTransform : "",
-    ...props.border?.asStyle()
+    ...props.border?.css()
   };
   newStyle["backgroundColor"] = props.backgroundColor?.rgbaString();
   if (props.transparent !== undefined && props.transparent) {

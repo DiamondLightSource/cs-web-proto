@@ -8,6 +8,7 @@ import { vdouble } from "../../types/vtypes/vtypes";
 import { useConnection } from "../hooks/useConnection";
 import { TooltipWrapper } from "../components/TooltipWrapper/tooltipWrapper";
 import { AnyProps } from "./widgetProps";
+import { RelativePosition } from "../../types/position";
 
 // Mock the useMacros hook as otherwise we'd have to provide
 // a store for it to use.
@@ -39,7 +40,7 @@ const TestLabel = (): JSX.Element => {
 
 describe("<Widget />", (): void => {
   const component = mount(
-    <Widget baseWidget={TestLabel} positionStyle={{ position: "relative" }} />
+    <Widget baseWidget={TestLabel} position={new RelativePosition()} />
   );
 
   test("it retains label text", (): void => {
@@ -79,7 +80,7 @@ describe("<Widget />", (): void => {
       <Widget
         pvName="pv"
         baseWidget={TestLabel}
-        positionStyle={{ position: "relative" }}
+        position={new RelativePosition()}
       />
     );
     expect(

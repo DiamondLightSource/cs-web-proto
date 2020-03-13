@@ -36,7 +36,7 @@ export const InputComponent: React.FC<InputProps> = (
 ): JSX.Element => {
   let allClasses = `Input ${classes.Input}`;
   const style: CSSProperties = {
-    ...props.font?.asStyle()
+    ...props.font?.css()
   };
   if (props.textAlign) {
     style.textAlign = props.textAlign;

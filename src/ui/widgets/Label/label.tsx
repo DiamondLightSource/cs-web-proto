@@ -39,7 +39,7 @@ export const LabelComponent = (
 ): JSX.Element => {
   const { visible = true, transparent = false, textAlign = "center" } = props;
   const className = props.className ?? `Label ${classes.Label}`;
-  const style: any = { ...props.font?.asStyle(), ...props.border?.asStyle() };
+  const style: any = { ...props.font?.css(), ...props.border?.css() };
   if (!visible) {
     style["visibility"] = "hidden";
   }

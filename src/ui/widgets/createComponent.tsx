@@ -7,7 +7,6 @@ import checkPropTypes from "check-prop-types";
 import { MacroMap } from "../../redux/csState";
 import { Shape } from "./Shape/shape";
 import { REGISTERED_WIDGETS } from "./register";
-import { filterUndefinedOut } from "../../types/utils";
 import { Color } from "../../types/color";
 
 export interface WidgetDescription {
@@ -29,15 +28,6 @@ export function widgetDescriptionToComponent(
     type,
     children = [],
     macroMap = {},
-    position = undefined,
-    x = undefined,
-    y = undefined,
-    height = undefined,
-    width = undefined,
-    margin = undefined,
-    padding = undefined,
-    minWidth = undefined,
-    maxWidth = undefined,
     ...otherProps
   } = widgetDescription;
 
@@ -56,24 +46,10 @@ export function widgetDescriptionToComponent(
     otherProps.backgroundColor = Color.PURPLE;
   }
 
-  // Extract positioning information into object.
-  const positionStyle = filterUndefinedOut({
-    position: position,
-    x: x,
-    y: y,
-    height: height,
-    width: width,
-    margin: margin,
-    padding: padding,
-    minWidth: minWidth,
-    maxWidth: maxWidth
-  });
-
   // Perform checking on propTypes
-  const widgetInfo = { positionStyle: positionStyle, ...otherProps };
   const error: string | undefined = checkPropTypes(
     Component.propTypes,
-    widgetInfo,
+    otherProps,
     "widget description",
     Component.name,
     (): void => {
@@ -85,7 +61,7 @@ export function widgetDescriptionToComponent(
       msg: error,
       object: {
         type: type,
-        positionStyle: positionStyle,
+        position: widgetDescription.position,
         ...otherProps
       }
     };
@@ -107,7 +83,7 @@ export function widgetDescriptionToComponent(
     <Component
       // If this component has siblings, use its index in the array as a key.
       key={listIndex}
-      positionStyle={positionStyle}
+      position={widgetDescription.position}
       macroMap={latestMacroMap}
       {...otherProps}
     >

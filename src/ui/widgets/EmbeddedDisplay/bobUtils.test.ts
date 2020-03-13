@@ -1,4 +1,5 @@
 import { bobToWidgets } from "./bobUtils";
+import { AbsolutePosition } from "../../../types/position";
 
 describe("bob conversion", (): void => {
   test("it converts a simple bob file", (): void => {
@@ -22,21 +23,13 @@ describe("bob conversion", (): void => {
     expect(bobToWidgets(xmlBob)).toEqual({
       type: "display",
       name: "Display",
-      position: "absolute",
-      x: "0px",
-      y: "0px",
-      width: "200px",
-      height: "350px",
+      position: new AbsolutePosition("0px", "0px", "200px", "350px"),
       children: [
         {
           type: "testwidget",
           name: "Test Widget",
-          pvName: "TESTPV", // eslint-disable-line @typescript-eslint/camelcase
-          position: "absolute",
-          x: "99px",
-          y: "199px",
-          width: "299px",
-          height: "399px",
+          pvName: "TESTPV",
+          position: new AbsolutePosition("99px", "199px", "299px", "399px"),
           children: []
         }
       ]

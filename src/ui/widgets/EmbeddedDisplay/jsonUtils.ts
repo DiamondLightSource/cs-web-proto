@@ -3,6 +3,7 @@ import { Color } from "../../../types/color";
 import { Font, FontStyle } from "../../../types/font";
 import { GenericProp, Rule } from "../../../types/props";
 import { Border, BorderStyle } from "../../../types/border";
+import { AbsolutePosition, RelativePosition } from "../../../types/position";
 
 export interface JsonDescription {
   type: string;
@@ -86,7 +87,19 @@ export const JSON_FUNCTION_SUBSTITUTIONS: {
 };
 
 function jsonChildToWidget(widget: JsonDescription): WidgetDescription {
-  const { type, position, x, y, height, width, children = [] } = widget;
+  const {
+    type,
+    position,
+    x,
+    y,
+    height,
+    width,
+    margin,
+    padding,
+    maxWidth,
+    minWidth,
+    children = []
+  } = widget;
   const mappedProps: { [key: string]: any } = {};
   Object.entries(widget).forEach(([key, value]): void => {
     if (JSON_FUNCTION_SUBSTITUTIONS.hasOwnProperty(key)) {
@@ -95,14 +108,33 @@ function jsonChildToWidget(widget: JsonDescription): WidgetDescription {
     mappedProps[key] = value;
   });
 
+  let positionObject;
+  if (position === "absolute") {
+    positionObject = new AbsolutePosition(
+      x,
+      y,
+      width,
+      height,
+      margin,
+      padding,
+      minWidth,
+      maxWidth
+    );
+  } else {
+    positionObject = new RelativePosition(
+      width,
+      height,
+      margin,
+      padding,
+      minWidth,
+      maxWidth
+    );
+  }
+
   return {
-    type: type,
-    position: position,
-    x: x ? `${x}px` : undefined,
-    y: y ? `${y}px` : undefined,
-    height: height ? `${height}px` : undefined,
-    width: width ? `${width}px` : undefined,
     ...mappedProps,
+    type: type,
+    position: positionObject,
     children: children.map((child: any) => jsonChildToWidget(child))
   };
 }

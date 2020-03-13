@@ -24,7 +24,7 @@ export const GroupingContainerComponent = (
     position: "relative",
     height: "100%",
     width: "100%",
-    ...props.border?.asStyle()
+    ...props.border?.css()
   };
   return <div style={style}>{props.children}</div>;
 };
