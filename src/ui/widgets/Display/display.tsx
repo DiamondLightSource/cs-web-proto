@@ -28,7 +28,7 @@ const DisplayComponent = (
       height: "100%",
       overflow: props.overflow,
       backgroundColor: props.backgroundColor?.rgbaString(),
-      ...props.border?.asStyle()
+      ...props.border?.css()
     }}
   >
     {props.children}

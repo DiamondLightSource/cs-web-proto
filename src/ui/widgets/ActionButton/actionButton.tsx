@@ -41,7 +41,7 @@ export const ActionButtonComponent = (
       style={{
         backgroundColor: props.backgroundColor?.rgbaString(),
         color: props.foregroundColor?.rgbaString(),
-        ...props.font?.asStyle()
+        ...props.font?.css()
       }}
     >
       {src !== undefined ? (

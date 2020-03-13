@@ -65,7 +65,7 @@ const App: React.FC = (): JSX.Element => {
               Toggle Theme
             </button>
             <ActionButton
-              position={new RelativePosition("30px", "100px", "auto")}
+              position={new RelativePosition("100px", "30px", "auto")}
               text="Main Menu"
               actions={{
                 executeAsOne: false,
@@ -84,7 +84,7 @@ const App: React.FC = (): JSX.Element => {
             <Profiler id="Dynamic Page Profiler" onRender={onRenderCallback}>
               <DynamicPageWidget
                 routePath="app"
-                position={new RelativePosition("", "", "auto")}
+                position={new RelativePosition()}
               />
             </Profiler>
           </div>
