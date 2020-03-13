@@ -1,7 +1,7 @@
 import log from "loglevel";
 import { GenericProp } from "../../../types/props";
 import { WidgetDescription } from "../createComponent";
-import { StringProp, StringOrNumProp } from "../propTypes";
+import { StringProp, PositionProp } from "../propTypes";
 import { ElementCompact } from "xml-js";
 
 export function toArray(element?: ElementCompact): ElementCompact[] {
@@ -34,11 +34,7 @@ export function genericParser(
   const newProps: any = { type: targetWidget };
   const allProps = {
     type: StringProp,
-    position: StringProp,
-    x: StringOrNumProp,
-    y: StringOrNumProp,
-    height: StringOrNumProp,
-    width: StringOrNumProp,
+    position: PositionProp,
     /* Warning for using prop-types at runtime here. */
     ...targetWidget.propTypes
   };

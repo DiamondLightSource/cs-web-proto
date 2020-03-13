@@ -1,59 +1,60 @@
-import { xml2js, ElementCompact } from "xml-js";
 import { Color } from "../../../types/color";
 import { Border } from "../../../types/border";
 import { Rule } from "../../../types/props";
 import { Label } from "..";
-import { parseWidget } from "./parser";
+import { parseOpi } from "./opiParser";
+import { AbsolutePosition } from "../../../types/position";
 
 describe("opi widget parser", (): void => {
   const labelString = `
-  <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
-    <actions hook="false" hook_all="false" />
-    <auto_size>false</auto_size>
-    <background_color>
-      <color name="Canvas" red="200" green="200" blue="200" />
-    </background_color>
-    <border_color>
-      <color name="Black" red="0" green="0" blue="0" />
-    </border_color>
-    <border_style>0</border_style>
-    <border_width>0</border_width>
-    <enabled>true</enabled>
-    <font>
-      <opifont.name fontName="Liberation Sans" height="15" style="0" pixels="true">Default</opifont.name>
-    </font>
-    <foreground_color>
-      <color name="Text: FG" red="0" green="0" blue="0" />
-    </foreground_color>
-    <height>20</height>
-    <horizontal_alignment>1</horizontal_alignment>
-    <name>Label</name>
-    <rules />
-    <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
-      <keep_wh_ratio>false</keep_wh_ratio>
-    </scale_options>
-    <scripts />
-    <text>Hello</text>
-    <tooltip></tooltip>
-    <transparent>true</transparent>
-    <vertical_alignment>1</vertical_alignment>
-    <visible>true</visible>
-    <widget_type>Label</widget_type>
-    <width>120</width>
-    <wrap_words>false</wrap_words>
-    <wuid>7f37486f:17080909483:-5484</wuid>
-    <x>370</x>
-    <y>20</y>
-  </widget>`;
+  <display typeId="org.csstudio.opibuilder.Display" version="1.0.0">
+    <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
+      <actions hook="false" hook_all="false" />
+      <auto_size>false</auto_size>
+      <background_color>
+        <color name="Canvas" red="200" green="200" blue="200" />
+      </background_color>
+      <border_color>
+        <color name="Black" red="0" green="0" blue="0" />
+      </border_color>
+      <border_style>0</border_style>
+      <border_width>0</border_width>
+      <enabled>true</enabled>
+      <font>
+        <opifont.name fontName="Liberation Sans" height="15" style="0" pixels="true">Default</opifont.name>
+      </font>
+      <foreground_color>
+        <color name="Text: FG" red="0" green="0" blue="0" />
+      </foreground_color>
+      <height>20</height>
+      <horizontal_alignment>1</horizontal_alignment>
+      <name>Label</name>
+      <rules />
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <scripts />
+      <text>Hello</text>
+      <tooltip></tooltip>
+      <transparent>true</transparent>
+      <vertical_alignment>1</vertical_alignment>
+      <visible>true</visible>
+      <widget_type>Label</widget_type>
+      <width>120</width>
+      <wrap_words>false</wrap_words>
+      <wuid>7f37486f:17080909483:-5484</wuid>
+      <x>370</x>
+      <y>20</y>
+    </widget>
+  </display>`;
 
-  const element: ElementCompact = xml2js(labelString, { compact: true });
   /* We need to import widgets to register them... */
   const label = Label;
 
   it("parses a label widget", (): void => {
-    const widget = parseWidget(element.widget);
+    const widget = parseOpi(labelString).children[0];
     console.log(widget);
     expect(widget.type).toEqual("label");
     // Boolean type
@@ -61,7 +62,9 @@ describe("opi widget parser", (): void => {
     // String type
     expect(widget.text).toEqual("Hello");
     // Position type
-    expect(widget.height).toEqual("20px");
+    expect(widget.position).toEqual(
+      new AbsolutePosition("370px", "20px", "120px", "20px")
+    );
     // Color type
     expect(widget.foregroundColor).toEqual(Color.BLACK);
     // Unrecognised property not passed on.
@@ -75,23 +78,24 @@ describe("opi widget parser", (): void => {
   });
 
   const ruleString = `
-  <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
-    <rules>
-      <rule name="Rule" prop_id="text" out_exp="true">
-        <exp bool_exp="pv0&gt;5">
-          <value>pv0</value>
-        </exp>
-        <exp bool_exp="true">
-          <value>"nope"</value>
-        </exp>
-        <pv trig="true">loc://test</pv>
-      </rule>
-    </rules>
-  </widget>`;
+  <display typeId="org.csstudio.opibuilder.Display" version="1.0.0">
+    <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
+      <rules>
+        <rule name="Rule" prop_id="text" out_exp="true">
+          <exp bool_exp="pv0&gt;5">
+            <value>pv0</value>
+          </exp>
+          <exp bool_exp="true">
+            <value>"nope"</value>
+          </exp>
+          <pv trig="true">loc://test</pv>
+        </rule>
+      </rules>
+    </widget>
+  </display>`;
 
-  const ruleElement: ElementCompact = xml2js(ruleString, { compact: true });
   it("parses a widget with a rule", (): void => {
-    const widget = parseWidget(ruleElement.widget);
+    const widget = parseOpi(ruleString).children[0];
     expect(widget.rules.length).toEqual(1);
     const rule: Rule = widget.rules[0];
     expect(rule.name).toEqual("Rule");
@@ -103,32 +107,34 @@ describe("opi widget parser", (): void => {
     expect(rule.expressions[0].convertedValue).toEqual("pv0");
   });
   const childString = `
-  <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
-    <text>hello</text>
+  <display typeId="org.csstudio.opibuilder.Display" version="1.0.0">
     <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
-      <text>bye</text>
+      <text>hello</text>
+      <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
+        <text>bye</text>
+      </widget>
     </widget>
-  </widget>`;
+  </display>`;
 
-  const childElement: ElementCompact = xml2js(childString, { compact: true });
   it("parses a widget with a child widget", (): void => {
-    const widget = parseWidget(childElement.widget);
+    const widget = parseOpi(childString).children[0];
     expect(widget.children?.length).toEqual(1);
   });
 
   const actionString = `
-  <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
-    <actions hook="false" hook_all="false">
-      <action type="OPEN_WEBPAGE">
-        <hyperlink>https://confluence.diamond.ac.uk/x/ZVhRBQ</hyperlink>
-        <description>Launch Help</description>
-      </action>
-    </actions>
-  </widget>`;
+  <display typeId="org.csstudio.opibuilder.Display" version="1.0.0">
+    <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
+      <actions hook="false" hook_all="false">
+        <action type="OPEN_WEBPAGE">
+          <hyperlink>https://confluence.diamond.ac.uk/x/ZVhRBQ</hyperlink>
+          <description>Launch Help</description>
+        </action>
+      </actions>
+    </widget>
+  </display>`;
 
-  const actionElement: ElementCompact = xml2js(actionString, { compact: true });
   it("parses a widget with an action", (): void => {
-    const widget = parseWidget(actionElement.widget);
+    const widget = parseOpi(actionString).children[0];
     console.log(widget);
     expect(widget.actions.actions.length).toEqual(1);
     const action = widget.actions.actions[0];
@@ -139,41 +145,42 @@ describe("opi widget parser", (): void => {
     expect(action.openWebpageInfo.description).toEqual("Launch Help");
   });
   const inputString = `
-  <widget typeId="org.csstudio.opibuilder.widgets.TextInput" version="2.0.0">
-    <confirm_message></confirm_message>
-    <horizontal_alignment>2</horizontal_alignment>
-    <limits_from_pv>false</limits_from_pv>
-    <maximum>1.7976931348623157E308</maximum>
-    <minimum>-1.7976931348623157E308</minimum>
-    <multiline_input>false</multiline_input>
-    <name>EDM TextInput</name>
-    <precision>0</precision>
-    <precision_from_pv>true</precision_from_pv>
-    <pv_name>SR-CS-RFFB-01:RFSTEP</pv_name>
-    <pv_value />
-    <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
-      <keep_wh_ratio>false</keep_wh_ratio>
-    </scale_options>
-    <selector_type>0</selector_type>
-    <show_units>false</show_units>
-    <style>0</style>
-    <text></text>
-    <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-    <transparent>true</transparent>
-    <visible>true</visible>
-    <widget_type>Text Input</widget_type>
-    <width>114</width>
-    <wuid>-7ec79ac:158f319c58c:-7c7e</wuid>
-    <x>197</x>
-    <y>228</y>
-  </widget>`;
+  <display typeId="org.csstudio.opibuilder.Display" version="1.0.0">
+    <widget typeId="org.csstudio.opibuilder.widgets.TextInput" version="2.0.0">
+      <confirm_message></confirm_message>
+      <horizontal_alignment>2</horizontal_alignment>
+      <limits_from_pv>false</limits_from_pv>
+      <maximum>1.7976931348623157E308</maximum>
+      <minimum>-1.7976931348623157E308</minimum>
+      <multiline_input>false</multiline_input>
+      <name>EDM TextInput</name>
+      <precision>0</precision>
+      <precision_from_pv>true</precision_from_pv>
+      <pv_name>SR-CS-RFFB-01:RFSTEP</pv_name>
+      <pv_value />
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <selector_type>0</selector_type>
+      <show_units>false</show_units>
+      <style>0</style>
+      <text></text>
+      <tooltip>$(pv_name)
+  $(pv_value)</tooltip>
+      <transparent>true</transparent>
+      <visible>true</visible>
+      <widget_type>Text Input</widget_type>
+      <width>114</width>
+      <wuid>-7ec79ac:158f319c58c:-7c7e</wuid>
+      <x>197</x>
+      <y>228</y>
+    </widget>
+  </display>`;
 
-  const inputElement: ElementCompact = xml2js(inputString, { compact: true });
   it("parses an input widget", (): void => {
-    const widget = parseWidget(inputElement.widget);
+    const widget = parseOpi(inputString).children[0];
     expect(widget.textAlign).toEqual("right");
     // Adds ca:// prefix.
     expect(widget.pvName).toEqual("ca://SR-CS-RFFB-01:RFSTEP");

@@ -1,6 +1,7 @@
 import { Label } from "..";
 import { parseJson } from "./jsonParser";
 import log from "loglevel";
+import { RelativePosition } from "../../../types/position";
 
 describe("json widget parser", (): void => {
   const displayString = `{
@@ -23,6 +24,6 @@ describe("json widget parser", (): void => {
     console.log(widget);
     expect(widget.type).toEqual("display");
     // Boolean type
-    expect(widget.position).toEqual("relative");
+    expect(widget.position).toEqual(new RelativePosition());
   });
 });

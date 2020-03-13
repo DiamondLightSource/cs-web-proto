@@ -2,8 +2,13 @@ import { REGISTERED_WIDGETS } from "../register";
 import { Rule } from "../../../types/props";
 import { Font, FontStyle } from "../../../types/font";
 import { Color } from "../../../types/color";
-import { parseWidget, ParserDict } from "./parser";
+import { parseWidget, ParserDict, ComplexParserDict } from "./parser";
 import { Border, BorderStyle } from "../../../types/border";
+import {
+  Position,
+  AbsolutePosition,
+  RelativePosition
+} from "../../../types/position";
 
 interface JsonBorder {
   style: string;
@@ -18,11 +23,27 @@ interface JsonFont {
   name?: string;
 }
 
-function jsonParsePosition(prop: number | string): string | undefined {
-  if (typeof prop === "string") {
-    return prop;
+function jsonParsePosition(props: any): Position {
+  if (props.position === "absolute") {
+    return new AbsolutePosition(
+      props.x,
+      props.y,
+      props.width,
+      props.height,
+      props.margin,
+      props.padding,
+      props.minWidth,
+      props.maxWidth
+    );
   } else {
-    return prop ? `${prop}px` : undefined;
+    return new RelativePosition(
+      props.width,
+      props.height,
+      props.margin,
+      props.padding,
+      props.minWidth,
+      props.maxWidth
+    );
   }
 }
 
@@ -77,14 +98,15 @@ function jsonParseRules(jsonRules: Rule[]): Rule[] {
 
 export const SIMPLE_PARSERS: ParserDict = {
   type: ["type", jsonNoParse],
-  position: ["position", jsonNoParse],
-  margin: ["margin", jsonNoParse],
-  height: ["height", jsonParsePosition],
-  width: ["width", jsonParsePosition],
-  x: ["x", jsonParsePosition],
-  y: ["y", jsonParsePosition],
   text: ["text", jsonNoParse],
   name: ["name", jsonNoParse],
+  file: ["file", jsonNoParse],
+  filetype: ["filetype", jsonNoParse],
+  image: ["image", jsonNoParse],
+  shapeRadius: ["shapeRadius", jsonNoParse],
+  shapeWidth: ["shapeWidth", jsonNoParse],
+  shapeHeight: ["shapeHeight", jsonNoParse],
+  routePath: ["routePath", jsonNoParse],
   textAlign: ["horizontalAlignment", jsonNoParse],
   pvName: ["pvName", jsonNoParse],
   backgroundColor: ["backgroundColor", jsonParseColor],
@@ -94,10 +116,14 @@ export const SIMPLE_PARSERS: ParserDict = {
   showUnits: ["showUnits", jsonNoParse],
   transparent: ["transparent", jsonNoParse],
   font: ["font", jsonParseFont],
-  macros: ["macros", jsonNoParse],
+  macroMap: ["macroMap", jsonNoParse],
   actions: ["actions", jsonNoParse],
   rules: ["rules", jsonParseRules],
   border: ["border", jsonParseBorder]
+};
+
+export const COMPLEX_PARSERS: ComplexParserDict = {
+  position: jsonParsePosition
 };
 
 function jsonGetTargetWidget(props: any): React.FC {
@@ -119,7 +145,7 @@ export function parseJson(jsonString: string): any {
     jsonGetTargetWidget,
     "children",
     SIMPLE_PARSERS,
-    {},
+    COMPLEX_PARSERS,
     []
   );
 }

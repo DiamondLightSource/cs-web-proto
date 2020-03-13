@@ -6,6 +6,7 @@ import { MacroMap } from "../../../redux/csState";
 import { Color } from "../../../types/color";
 import { FontStyle, Font } from "../../../types/font";
 import { Border, BorderStyle } from "../../../types/border";
+import { Position, AbsolutePosition } from "../../../types/position";
 import { XmlDescription } from "./opiUtils";
 import {
   ComplexParserDict,
@@ -211,6 +212,15 @@ function opiParseType(props: any): string {
   return OPI_WIDGET_MAPPING[props._attributes.typeId];
 }
 
+function opiParsePosition(props: any): Position {
+  return new AbsolutePosition(
+    `${opiParseNumber(props.x)}px`,
+    `${opiParseNumber(props.y)}px`,
+    `${opiParseNumber(props.width)}px`,
+    `${opiParseNumber(props.height)}px`
+  );
+}
+
 function opiGetTargetWidget(props: any): React.FC {
   const typeid = opiParseType(props);
   let targetWidget;
@@ -238,12 +248,13 @@ export const SIMPLE_PARSERS: ParserDict = {
   showUnits: ["show_units", opiParseBoolean],
   transparent: ["transparent", opiParseBoolean],
   font: ["font", opiParseFont],
-  macros: ["macros", opiParseMacros],
+  macroMap: ["macros", opiParseMacros],
   actions: ["actions", opiParseActions]
 };
 
 export const COMPLEX_PARSERS: ComplexParserDict = {
   type: opiParseType,
+  position: opiParsePosition,
   rules: opiParseRules,
   border: opiParseBorder
 };
@@ -269,11 +280,7 @@ function opiPatchRules(widgetDescription: WidgetDescription): void {
   });
 }
 
-function opiPatchPosition(widgetDescription: WidgetDescription): void {
-  widgetDescription.position = "absolute";
-}
-
-export const PATCHERS: PatchFunction[] = [opiPatchRules, opiPatchPosition];
+export const PATCHERS: PatchFunction[] = [opiPatchRules];
 
 export function parseOpi(xmlString: string): any {
   // Convert it to a "compact format"

@@ -3,6 +3,7 @@ import { Font } from "./font";
 import { MacroMap } from "../redux/csState";
 import { WidgetActions } from "../ui/widgets/widgetActions";
 import { Border } from "./border";
+import { Position } from "./position";
 
 export type GenericProp =
   | string
@@ -11,6 +12,7 @@ export type GenericProp =
   | Color
   | Font
   | Border
+  | Position
   | Rule[]
   | MacroMap
   | WidgetActions;
