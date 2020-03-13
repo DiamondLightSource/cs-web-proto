@@ -112,7 +112,7 @@
     {
       "type": "actionbutton",
       "pvName": "sim://limit#1",
-      "text": "RFFB",
+      "text": "RFFB OPI",
       "position": "absolute",
       "x": "450px",
       "y": "0px",
@@ -127,6 +127,31 @@
               "location": "embed",
               "page": "rffb",
               "description": "Open RFFB",
+              "macros": "{}"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "actionbutton",
+      "pvName": "sim://limit#1",
+      "text": "basic.bob",
+      "position": "absolute",
+      "x": "350px",
+      "y": "100px",
+      "width": "100px",
+      "height": "100px",
+      "actions": {
+        "executeAsOne": false,
+        "actions": [
+          {
+            "type": "OPEN_PAGE",
+
+            "openPageInfo": {
+              "location": "embed",
+              "page": "basic",
+              "description": "Open basic.bob",
               "macros": "{}"
             }
           }

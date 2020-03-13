@@ -9,7 +9,6 @@ import {
 } from "../createComponent";
 import { MacroMap } from "../../../redux/csState";
 import { WidgetPropType } from "../widgetProps";
-import { bobToWidgets } from "./bobUtils";
 import { registerWidget } from "../register";
 import { StringProp, InferWidgetProps, ChoiceProp } from "../propTypes";
 import { BaseUrlContext } from "../../../baseUrl";
@@ -18,6 +17,7 @@ import { Color } from "../../../types/color";
 import { parseOpi } from "./opiParser";
 import { parseJson } from "./jsonParser";
 import { RelativePosition, AbsolutePosition } from "../../../types/position";
+import { parseBob } from "./bobParser";
 
 const EMPTY_WIDGET: WidgetDescription = {
   type: "shape",
@@ -91,7 +91,7 @@ export const EmbeddedDisplay = (
       // Convert the contents to widget description style object
       switch (props.filetype) {
         case "bob":
-          description = bobToWidgets(contents);
+          description = parseBob(contents);
           break;
         case "json":
           description = parseJson(contents);

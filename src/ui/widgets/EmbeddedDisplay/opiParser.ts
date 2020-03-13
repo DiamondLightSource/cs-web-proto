@@ -169,10 +169,6 @@ function opiParseNumber(jsonProp: ElementCompact): number {
   return Number(jsonProp._text);
 }
 
-function opiParsePixels(jsonProp: ElementCompact): string {
-  return `${opiParseNumber(jsonProp)}px`;
-}
-
 function opiParsePvName(jsonProp: ElementCompact): string {
   const rawPv = opiParseString(jsonProp);
   if (rawPv.includes("://")) {
@@ -232,11 +228,7 @@ function opiGetTargetWidget(props: any): React.FC {
   return targetWidget;
 }
 
-export const SIMPLE_PARSERS: ParserDict = {
-  height: ["height", opiParsePixels],
-  width: ["width", opiParsePixels],
-  x: ["x", opiParsePixels],
-  y: ["y", opiParsePixels],
+export const OPI_SIMPLE_PARSERS: ParserDict = {
   text: ["text", opiParseString],
   name: ["name", opiParseString],
   textAlign: ["horizontal_alignment", opiParseHorizonalAlignment],
@@ -252,7 +244,7 @@ export const SIMPLE_PARSERS: ParserDict = {
   actions: ["actions", opiParseActions]
 };
 
-export const COMPLEX_PARSERS: ComplexParserDict = {
+export const OPI_COMPLEX_PARSERS: ComplexParserDict = {
   type: opiParseType,
   position: opiParsePosition,
   rules: opiParseRules,
@@ -263,7 +255,7 @@ function opiPatchRules(widgetDescription: WidgetDescription): void {
   /* Re-index simple parsers so we can find the correct one
      for the opi prop. */
   const opiPropParsers: ParserDict = {};
-  Object.entries(SIMPLE_PARSERS).forEach(([jsonProp, vals]) => {
+  Object.entries(OPI_SIMPLE_PARSERS).forEach(([jsonProp, vals]) => {
     opiPropParsers[vals[0]] = [jsonProp, vals[1]];
   });
   /* Patch up the rules by converting the prop to our name
@@ -297,8 +289,8 @@ export function parseOpi(xmlString: string): any {
     compactJSON.display,
     opiGetTargetWidget,
     "widget",
-    SIMPLE_PARSERS,
-    COMPLEX_PARSERS,
+    OPI_SIMPLE_PARSERS,
+    OPI_COMPLEX_PARSERS,
     PATCHERS
   );
 }
