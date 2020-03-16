@@ -11,27 +11,28 @@ import { PVWidgetComponent, WidgetComponent, AnyProps } from "./widgetProps";
 import { Border, BorderStyle } from "../../types/border";
 import { alarmOf, AlarmSeverity } from "../../types/vtypes/alarm";
 import { Color } from "../../types/color";
+import { Position, RelativePosition } from "../../types/position";
 
 // Function to recursively wrap a given set of widgets
 const recursiveWrapping = (
   components: React.FC<any>[],
-  positionStyle: object,
+  position: Position,
   containerProps: object,
   widgetProps: object
 ): JSX.Element => {
   const [Component, ...remainingComponents] = components;
   if (components.length === 1) {
     // Return the base widget
-    return <Component style={{ ...positionStyle }} {...widgetProps} />;
+    return <Component style={{ ...position.css() }} {...widgetProps} />;
   }
   // If container styling is not empty, use it on the wrapper widget
   // and pass on an empty object, otherwise wrap and move down
   else {
     return (
-      <Component style={positionStyle} {...containerProps}>
+      <Component style={position.css()} {...containerProps}>
         {recursiveWrapping(
           remainingComponents,
-          { height: "100%", width: "100%" },
+          new RelativePosition("100%", "100%"),
           containerProps,
           widgetProps
         )}
@@ -46,7 +47,7 @@ const recursiveWrapping = (
 */
 export const ConnectingComponent = (props: {
   components: React.FC<any>[];
-  containerStyling: object;
+  containerStyling: Position;
   containerProps: any & { id: string };
   widgetProps: any;
   alarmBorder: boolean;
@@ -122,14 +123,7 @@ export const Widget = (
   log.debug(ruleProps);
   log.debug((ruleProps as any).cc);
 
-  // Give containers access to everything apart from the positionStyle
-  // Assume flexible position if not provided with anything
-  const { positionStyle, ...containerProps } = ruleProps;
-
-  // Manipulate for absolute styling
-  // Put x and y back in as left and top respectively
-  const { x = null, y = null } = { ...positionStyle };
-  const mappedContainerStyling = { top: y, left: x, ...positionStyle };
+  const { position, ...containerProps } = ruleProps;
 
   // Extract remaining parameters
   const {
@@ -152,7 +146,7 @@ export const Widget = (
     <ConnectingComponent
       alarmBorder={alarmBorder}
       components={components}
-      containerStyling={mappedContainerStyling}
+      containerStyling={position}
       containerProps={containerProps}
       widgetProps={baseWidgetProps}
     />

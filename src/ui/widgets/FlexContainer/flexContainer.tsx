@@ -26,10 +26,7 @@ export const FlexContainerComponent = (
     classNames.push(classes[flexFlow]);
   }
   return (
-    <div
-      className={classNames.join(" ")}
-      style={{ ...props.border?.asStyle() }}
-    >
+    <div className={classNames.join(" ")} style={{ ...props.border?.css() }}>
       {props.children}
     </div>
   );

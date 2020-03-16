@@ -78,7 +78,7 @@ export const ProgressBarComponent = (
     <div className={classes.bar}>
       <div className={classes.off} style={offStyle} />
       <div className={classes.on} style={onStyle} />
-      <div className={classes.label} style={{ ...font?.asStyle() }}>
+      <div className={classes.label} style={{ ...font?.css() }}>
         {valueText.toString()}
       </div>
     </div>

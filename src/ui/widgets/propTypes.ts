@@ -2,6 +2,7 @@ import PropTypes, { InferProps } from "prop-types";
 import { Color } from "../../types/color";
 import { Font } from "../../types/font";
 import { Border } from "../../types/border";
+import { RelativePosition, AbsolutePosition } from "../../types/position";
 
 export type ExcludeNulls<T> = {
   [P in keyof T]: Exclude<T[P], null>;
@@ -37,6 +38,11 @@ export const FontPropOpt = PropTypes.instanceOf(Font);
 
 export const BorderProp = PropTypes.instanceOf(Border).isRequired;
 export const BorderPropOpt = PropTypes.instanceOf(Border);
+
+export const PositionProp = PropTypes.oneOfType([
+  PropTypes.instanceOf(AbsolutePosition),
+  PropTypes.instanceOf(RelativePosition)
+]).isRequired;
 
 export const MacrosProp = PropTypes.objectOf(PropTypes.string.isRequired)
   .isRequired;

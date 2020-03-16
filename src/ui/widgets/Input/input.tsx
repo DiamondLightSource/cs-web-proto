@@ -36,7 +36,7 @@ export const InputComponent: React.FC<InputProps> = (
       onBlur={props.onBlur}
       onClick={props.onClick}
       className={allClasses}
-      style={props.font?.asStyle()}
+      style={props.font?.css()}
       readOnly={props.readonly}
     />
   );

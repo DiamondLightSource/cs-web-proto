@@ -17,19 +17,16 @@ import { BaseUrlContext } from "../../../baseUrl";
 import { jsonToWidgets } from "./jsonUtils";
 import { Font, FontStyle } from "../../../types/font";
 import { Color } from "../../../types/color";
+import { RelativePosition, AbsolutePosition } from "../../../types/position";
 
 const EMPTY_WIDGET: WidgetDescription = {
   type: "shape",
-  position: "absolute",
-  x: 0,
-  y: 0,
-  width: 0,
-  height: 0
+  position: new AbsolutePosition("0", "0", "0", "0")
 };
 
 const ERROR_WIDGET: WidgetDescription = {
   type: "label",
-  position: "relative",
+  position: new RelativePosition(),
   font: new Font(FontStyle.Bold, 16),
   backgroundColor: Color.RED,
   text: "Error"
@@ -104,28 +101,28 @@ export const EmbeddedDisplay = (
           break;
       }
     }
+    console.log("embedded display");
+    console.log(description);
 
     // Apply the height to the top level if relative layout and none have been provided
-    if (props.positionStyle.position === "relative") {
-      props.positionStyle.height =
-        props.positionStyle.height || description.height;
-      props.positionStyle.width =
-        props.positionStyle.width || description.width;
+    if (props.position instanceof RelativePosition) {
+      props.position.height = props.position.height || description.height;
+      props.position.width = props.position.width || description.width;
     }
 
     // Overflow set to scroll only if needed
     // If height or width is defined and is smaller than Bob
     const overflow =
-      props.positionStyle.position === "absolute" &&
-      (description.height > (props.positionStyle.height || 0) ||
-        description.width > (props.positionStyle.width || 0))
+      props.position instanceof AbsolutePosition &&
+      (description.height > (props.position.height || 0) ||
+        description.width > (props.position.width || 0))
         ? "scroll"
         : "visible";
 
     component = widgetDescriptionToComponent(
       {
         type: "display",
-        positionStyle: props.positionStyle,
+        position: props.position,
         border: props.border,
         overflow: overflow,
         children: [description]

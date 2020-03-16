@@ -8,7 +8,6 @@ import { registerWidget } from "../register";
 import {
   ActionsPropType,
   StringProp,
-  ObjectPropOpt,
   StringPropOpt,
   InferWidgetProps,
   ColorPropOpt,
@@ -42,7 +41,7 @@ export const ActionButtonComponent = (
       style={{
         backgroundColor: props.backgroundColor?.rgbaString(),
         color: props.foregroundColor?.rgbaString(),
-        ...props.font?.asStyle()
+        ...props.font?.css()
       }}
     >
       {src !== undefined ? (
@@ -60,7 +59,6 @@ export const ActionButtonComponent = (
 const ActionButtonPropType = {
   text: StringProp,
   actions: ActionsPropType,
-  positionStyle: ObjectPropOpt,
   image: StringPropOpt,
   backgroundColor: ColorPropOpt,
   foregroundColor: ColorPropOpt,

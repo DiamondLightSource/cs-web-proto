@@ -1,17 +1,15 @@
 import PropTypes from "prop-types";
 import { PvState } from "../../redux/csState";
 import {
-  ContainerFeaturesPropType,
-  ActionsPropType,
-  StringOrNumProp,
   StringPropOpt,
   BoolProp,
   BoolPropOpt,
   InferWidgetProps,
   StringProp,
-  StringOrNumPropOpt,
   MacrosPropOpt,
-  BorderPropOpt
+  BorderPropOpt,
+  PositionProp,
+  ActionsPropType
 } from "./propTypes";
 
 import { VType } from "../../types/vtypes/vtypes";
@@ -35,23 +33,8 @@ const RulesPropType = PropTypes.shape({
   expressions: PropTypes.arrayOf(RuleExpressions).isRequired
 });
 
-const AbsoluteContainerProps = {
-  position: PropTypes.oneOf(["absolute"]).isRequired,
-  x: StringOrNumProp,
-  y: StringOrNumProp,
-  height: StringOrNumProp,
-  width: StringOrNumProp,
-  ...ContainerFeaturesPropType
-};
-
-const FlexibleContainerProps = {
-  position: PropTypes.oneOf(["relative"]).isRequired,
-  height: StringOrNumPropOpt,
-  width: StringOrNumPropOpt,
-  ...ContainerFeaturesPropType
-};
-
-const CommonWidgetProps = {
+export const WidgetPropType = {
+  position: PositionProp,
   macroMap: MacrosPropOpt,
   rules: PropTypes.arrayOf(RulesPropType.isRequired),
   actions: ActionsPropType,
@@ -61,30 +44,12 @@ const CommonWidgetProps = {
   border: BorderPropOpt
 };
 
-const AbsoluteComponentPropType = {
-  positionStyle: PropTypes.shape(AbsoluteContainerProps).isRequired,
-  ...CommonWidgetProps
-};
-type AbsoluteType = InferWidgetProps<typeof AbsoluteComponentPropType>;
+type WidgetProps = InferWidgetProps<typeof WidgetPropType>;
 
-const FlexibleComponentPropType = {
-  positionStyle: PropTypes.shape(FlexibleContainerProps).isRequired,
-  ...CommonWidgetProps
-};
-type FlexibleType = InferWidgetProps<typeof FlexibleComponentPropType>;
-
-// PropTypes object for a widget which can be expanded
-export const WidgetPropType = {
-  positionStyle: PropTypes.oneOfType([
-    PropTypes.exact(AbsoluteContainerProps),
-    PropTypes.exact(FlexibleContainerProps)
-  ]).isRequired,
-  ...CommonWidgetProps
-};
-// Allows for either absolute or flexible positioning
-export type WidgetProps = AbsoluteType | FlexibleType;
 // Internal type for creating widgets
-export type WidgetComponent = WidgetProps & { baseWidget: React.FC<any> };
+export type WidgetComponent = WidgetProps & {
+  baseWidget: React.FC<any>;
+};
 
 // Internal prop types object for properties which are not in a standard widget
 const PVExtras = {

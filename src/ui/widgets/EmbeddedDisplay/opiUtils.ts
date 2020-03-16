@@ -10,6 +10,7 @@ import { MacroMap } from "../../../redux/csState";
 import { Color } from "../../../types/color";
 import { Font, FontStyle } from "../../../types/font";
 import { GenericProp, Rule } from "../../../types/props";
+import { AbsolutePosition } from "../../../types/position";
 
 export const OPI_WIDGET_MAPPING: { [key: string]: string } = {
   "org.csstudio.opibuilder.Display": "display",
@@ -313,11 +314,12 @@ export const xmlChildToWidget = (
   This could make life a bit difficult but should be looked at later */
   const outputWidget: WidgetDescription = {
     type: type,
-    position: "absolute",
-    x: `${(x && x._text) || 0}px`,
-    y: `${(y && y._text) || 0}px`,
-    height: `${(height && height._text) || 0}px`,
-    width: `${(width && width._text) || 0}px`,
+    position: new AbsolutePosition(
+      `${(x && x._text) || 0}px`,
+      `${(y && y._text) || 0}px`,
+      `${(width && width._text) || 0}px`,
+      `${(height && height._text) || 0}px`
+    ),
     ...mappedProps,
     children: widgetList.map(
       (w: any): WidgetDescription =>

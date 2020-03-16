@@ -23,7 +23,7 @@ export class Font {
     this.name = name;
   }
 
-  public asStyle(): object {
+  public css(): object {
     const fontWeight =
       this.style === FontStyle.Bold || this.style === FontStyle.BoldItalic
         ? "bold"
