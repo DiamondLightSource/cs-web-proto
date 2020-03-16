@@ -2,16 +2,16 @@
 
 exports[`<Input Input /> it matches the snapshot 1`] = `
 <input
-  className="Input Input"
+  className="Input Input Readonly"
   onBlur={[Function]}
   onChange={[Function]}
   onClick={[Function]}
   onKeyDown={[Function]}
-  readOnly={false}
+  readOnly={true}
   style={
     Object {
-      "backgroundColor": undefined,
-      "color": undefined,
+      "backgroundColor": "transparent",
+      "color": "rgba(0, 0, 0, 255)",
     }
   }
   type="text"
