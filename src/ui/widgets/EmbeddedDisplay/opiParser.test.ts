@@ -52,7 +52,6 @@ describe("opi widget parser", (): void => {
 
   /* We need to import widgets to register them... */
   const label = Label;
-
   it("parses a label widget", (): void => {
     const widget = parseOpi(labelString).children[0];
     console.log(widget);
@@ -185,4 +184,26 @@ describe("opi widget parser", (): void => {
     // Adds ca:// prefix.
     expect(widget.pvName).toEqual("ca://SR-CS-RFFB-01:RFSTEP");
   });
+
+  const invalidString = `
+  <display typeId="org.csstudio.opibuilder.Display" version="1.0.0">
+    <widget typeId="org.csstudio.opibuilder.widgets.TextInput" version="2.0.0">
+      <text />
+    </widget>
+  </display>`;
+  it("doesn't parse an invalid string", (): void => {
+    const widget = parseOpi(invalidString).children[0];
+    expect(widget.text).toBeUndefined();
+  })
+  const invalidBool = `
+  <display typeId="org.csstudio.opibuilder.Display" version="1.0.0">
+    <widget typeId="org.csstudio.opibuilder.widgets.TextInput" version="2.0.0">
+      <text />
+      <show_units>not-a-bool</show_units>
+    </widget>
+  </display>`;
+  it("doesn't parse an invalid bool", (): void => {
+    const widget = parseOpi(invalidBool).children[0];
+    expect(widget.showUnits).toBeUndefined();
+  })
 });
