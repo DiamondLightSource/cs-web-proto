@@ -34,6 +34,7 @@ describe("opi widget parser", (): void => {
   </display>`;
 
   /* We need to import widgets to register them... */
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const label = Label;
 
   it("parses a label widget", (): void => {

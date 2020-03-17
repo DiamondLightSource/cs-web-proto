@@ -35,7 +35,8 @@ export function genericParser(
   const allProps = {
     type: StringProp,
     position: PositionProp,
-    /* Warning for using prop-types at runtime here. */
+    /* We will need another way of using prop-types at runtime here. */
+    // eslint-disable-next-line react/forbid-foreign-prop-types
     ...targetWidget.propTypes
   };
   /* First, parse our props if we know how to. */

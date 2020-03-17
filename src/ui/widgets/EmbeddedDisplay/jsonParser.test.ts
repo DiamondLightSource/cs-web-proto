@@ -16,6 +16,7 @@ describe("json widget parser", (): void => {
 }`;
 
   /* We need to import widgets to register them... */
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const label = Label;
 
   it("parses a display widget", (): void => {
