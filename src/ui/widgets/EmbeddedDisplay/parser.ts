@@ -4,6 +4,13 @@ import { WidgetDescription } from "../createComponent";
 import { StringProp, PositionProp } from "../propTypes";
 import { ElementCompact } from "xml-js";
 
+function isEmpty(obj: any): boolean {
+  for (const prop in obj) {
+    if (obj.hasOwnProperty(prop)) return false;
+  }
+
+  return true;
+}
 export function toArray(element?: ElementCompact): ElementCompact[] {
   let array = [];
   if (Array.isArray(element)) {
@@ -49,13 +56,16 @@ export function genericParser(
       log.debug(`simple parser for ${prop}`);
       const [opiPropName, propParser] = simpleParsers[prop];
       try {
-        if (widget.hasOwnProperty(opiPropName)) {
+        if (
+          widget.hasOwnProperty(opiPropName) &&
+          !isEmpty(widget[opiPropName])
+        ) {
           newProps[prop] = propParser(widget[opiPropName]);
           log.debug(`result ${newProps[prop]}`);
         }
       } catch (e) {
-        log.error(`Could not convert prop ${prop}:`);
-        log.error(widget[prop]);
+        log.error(`Could not convert simple prop ${prop}:`);
+        log.error(widget[opiPropName]);
         log.error(e);
       }
     } else if (complexParsers.hasOwnProperty(prop)) {
@@ -66,7 +76,7 @@ export function genericParser(
         newProps[prop] = propParser(widget);
         log.debug(`result ${newProps[prop]}`);
       } catch (e) {
-        log.error(`Could not convert prop ${prop}:`);
+        log.error(`Could not convert complex prop ${prop}:`);
         log.error(e);
       }
     } else if (passThrough) {

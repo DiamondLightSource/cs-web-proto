@@ -200,14 +200,19 @@ function opiParseBorder(props: any): Border {
   const borderStyles: { [key: number]: BorderStyle } = {
     0: BorderStyle.None
   };
-  const style = borderStyles[opiParseNumber(props.border_style)];
-  const width = opiParseNumber(props.border_width);
-  const borderColor = opiParseColor(props.border_color);
+  let style = BorderStyle.None;
+  let width = 0;
+  let borderColor = Color.BLACK;
   /* Line color can override border for certain widgets. */
   let lineColor;
   try {
+    style = borderStyles[opiParseNumber(props.border_style)];
+    width = opiParseNumber(props.border_width);
+    borderColor = opiParseColor(props.border_color);
     lineColor = opiParseColor(props.line_color);
-  } catch {}
+  } catch {
+    // If we can't parse these, assume the defaults.
+  }
   const actualColor = width < 2 && lineColor ? lineColor : borderColor;
   const actualStyle = width < 2 && lineColor ? BorderStyle.Line : style;
   return new Border(actualStyle, actualColor, width);

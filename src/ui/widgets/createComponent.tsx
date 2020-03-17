@@ -1,5 +1,3 @@
-/* eslint react/forbid-foreign-prop-types: 0, no-throw-literal: 0 */
-
 import React from "react";
 import log from "loglevel";
 import checkPropTypes from "check-prop-types";
@@ -14,6 +12,16 @@ export interface WidgetDescription {
   // All other component properties
   [x: string]: any;
   children?: WidgetDescription[];
+}
+
+class PropCheckFailed extends Error {
+  public details: object;
+  constructor(msg: string, details: object) {
+    super(msg);
+    // Set the prototype explicitly.
+    Object.setPrototypeOf(this, PropCheckFailed.prototype);
+    this.details = details;
+  }
 }
 
 export function widgetDescriptionToComponent(
@@ -40,7 +48,7 @@ export function widgetDescriptionToComponent(
   if (widgetDict.hasOwnProperty(type)) {
     Component = widgetDict[type];
   } else {
-    log.warn(`Failed to load unknown widget type ${type}`);
+    log.warn(`Failed to load unknown widget type ${type}:`);
     console.log(widgetDescription);
     Component = Shape;
     otherProps.backgroundColor = Color.PURPLE;
@@ -48,6 +56,8 @@ export function widgetDescriptionToComponent(
 
   // Perform checking on propTypes
   const error: string | undefined = checkPropTypes(
+    /* We will need another way of using prop-types at runtime. */
+    // eslint-disable-next-line react/forbid-foreign-prop-types
     Component.propTypes,
     otherProps,
     "widget description",
@@ -57,14 +67,11 @@ export function widgetDescriptionToComponent(
     }
   );
   if (error !== undefined) {
-    throw {
-      msg: error,
-      object: {
-        type: type,
-        position: widgetDescription.position,
-        ...otherProps
-      }
-    };
+    throw new PropCheckFailed(error, {
+      type: type,
+      position: widgetDescription.position,
+      ...otherProps
+    });
   }
 
   // Collect macroMap passed into function and overwrite/add any

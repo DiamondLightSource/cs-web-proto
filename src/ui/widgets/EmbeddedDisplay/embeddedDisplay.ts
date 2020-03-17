@@ -101,7 +101,7 @@ export const EmbeddedDisplay = (
           break;
       }
     }
-    console.log(description);
+    log.debug(description);
 
     // Apply the height to the top level if relative layout and none have been provided
     if (props.position instanceof RelativePosition) {
@@ -132,7 +132,7 @@ export const EmbeddedDisplay = (
     log.error(`Error converting file ${file} into components:`);
     log.error(e);
     log.error(e.msg);
-    log.error(e.object);
+    log.error(e.details);
     component = widgetDescriptionToComponent(ERROR_WIDGET, props.macroMap);
   }
 

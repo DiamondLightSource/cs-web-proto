@@ -1,6 +1,5 @@
 import { Label } from "..";
 import { parseJson } from "./jsonParser";
-import log from "loglevel";
 import { RelativePosition } from "../../../types/position";
 import { Font, FontStyle } from "../../../types/font";
 import { Border, BorderStyle } from "../../../types/border";
@@ -27,7 +26,6 @@ describe("json widget parser", (): void => {
   const label = Label;
 
   it("parses a display widget", (): void => {
-    log.setLevel("debug");
     const widget = parseJson(displayString);
     expect(widget.type).toEqual("display");
     // Position type
