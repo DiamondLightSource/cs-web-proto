@@ -3,6 +3,8 @@ import { parseJson } from "./jsonParser";
 import log from "loglevel";
 import { RelativePosition } from "../../../types/position";
 import { Font, FontStyle } from "../../../types/font";
+import { Border, BorderStyle } from "../../../types/border";
+import { Color } from "../../../types/color";
 
 describe("json widget parser", (): void => {
   const displayString = `{
@@ -50,5 +52,58 @@ describe("json widget parser", (): void => {
     const widget = parseJson(fontLabelString).children[0];
     expect(widget.font).toEqual(new Font(13, FontStyle.Bold));
     expect(widget.position).toEqual(new RelativePosition());
+  });
+  const ruleString = `{
+    "type": "display",
+    "rules": [
+      {
+        "name": "border rule",
+        "prop": "border",
+        "outExp": false,
+        "pvs": [
+          {
+            "pvName": "loc://rulepv",
+            "trigger": true
+          }
+        ],
+        "expressions": [
+          {
+            "boolExp": "pv0 > 0",
+            "value": {
+              "style": "line",
+              "width": 1,
+              "color": "red"
+            }
+          }
+        ]
+      }
+    ]
+  }`;
+  it("handles a rule on a display widget", (): void => {
+    const widget = parseJson(ruleString);
+    const rule = {
+      name: "border rule",
+      prop: "border",
+      outExp: false,
+      pvs: [
+        {
+          pvName: "loc://rulepv",
+          trigger: true
+        }
+      ],
+      expressions: [
+        {
+          boolExp: "pv0 > 0",
+          value: {
+            style: "line",
+            width: 1,
+            color: "red"
+          },
+          // Color parsing doesn't work in tests: see color.test.ts.
+          convertedValue: new Border(BorderStyle.Line, Color.BLACK, 1)
+        }
+      ]
+    };
+    expect(widget.rules[0]).toEqual(rule);
   });
 });

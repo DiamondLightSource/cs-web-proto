@@ -83,9 +83,7 @@ export function parseWidget(
   childrenName: string,
   simpleParsers: ParserDict,
   complexParsers: ComplexParserDict,
-
   passThrough: boolean,
-
   patchFunctions: PatchFunction[]
 ): WidgetDescription {
   const targetWidget = getTargetWidget(props);
