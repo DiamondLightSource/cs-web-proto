@@ -106,8 +106,6 @@ export const COMPLEX_PARSERS: ComplexParserDict = {
 
 function jsonGetTargetWidget(props: any): React.FC {
   const typeid = props.type;
-  console.log("jgtw");
-  console.log(typeid);
   let targetWidget;
   try {
     targetWidget = REGISTERED_WIDGETS[typeid][0];

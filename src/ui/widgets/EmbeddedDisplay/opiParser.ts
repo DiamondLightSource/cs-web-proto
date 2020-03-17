@@ -7,7 +7,6 @@ import { Color } from "../../../types/color";
 import { FontStyle, Font } from "../../../types/font";
 import { Border, BorderStyle } from "../../../types/border";
 import { Position, AbsolutePosition } from "../../../types/position";
-import { XmlDescription } from "./opiUtils";
 import {
   ComplexParserDict,
   ParserDict,
@@ -17,6 +16,16 @@ import {
 } from "./parser";
 import { REGISTERED_WIDGETS } from "../register";
 import { WidgetDescription } from "../createComponent";
+
+export interface XmlDescription {
+  _attributes: { [key: string]: string };
+  x?: { _text: string };
+  y?: { _text: string };
+  height?: { _text: string };
+  width?: { _text: string };
+  widget?: XmlDescription;
+  [key: string]: any;
+}
 
 const OPI_WIDGET_MAPPING: { [key: string]: any } = {
   "org.csstudio.opibuilder.Display": "display",

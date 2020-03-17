@@ -2,6 +2,7 @@ import { Label } from "..";
 import { parseJson } from "./jsonParser";
 import log from "loglevel";
 import { RelativePosition } from "../../../types/position";
+import { Font, FontStyle } from "../../../types/font";
 
 describe("json widget parser", (): void => {
   const displayString = `{
@@ -12,6 +13,10 @@ describe("json widget parser", (): void => {
     "style": "line",
     "width": 3,
     "color": "red"
+  },
+  "font": {
+    "size": "13",
+    "style": "bold"
   }
 }`;
 
@@ -22,9 +27,28 @@ describe("json widget parser", (): void => {
   it("parses a display widget", (): void => {
     log.setLevel("debug");
     const widget = parseJson(displayString);
-    console.log(widget);
     expect(widget.type).toEqual("display");
-    // Boolean type
+    // Position type
+    expect(widget.position).toEqual(new RelativePosition());
+    // Font type not present on Display widget.
+    expect(widget.font).toBeUndefined();
+  });
+
+  const fontLabelString = `{
+    "type": "display",
+    "children": [
+      {
+        "type": "label",
+        "font": {
+          "size": 13,
+          "style": "bold"
+        }
+      }
+    ]
+  }`;
+  it("handles font and position on a label widget", (): void => {
+    const widget = parseJson(fontLabelString).children[0];
+    expect(widget.font).toEqual(new Font(13, FontStyle.Bold));
     expect(widget.position).toEqual(new RelativePosition());
   });
 });

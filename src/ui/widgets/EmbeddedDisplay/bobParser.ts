@@ -1,7 +1,11 @@
 import { REGISTERED_WIDGETS } from "../register";
 import { ComplexParserDict, parseWidget } from "./parser";
-import { OPI_COMPLEX_PARSERS, PATCHERS, OPI_SIMPLE_PARSERS } from "./opiParser";
-import { XmlDescription } from "./opiUtils";
+import {
+  XmlDescription,
+  OPI_COMPLEX_PARSERS,
+  PATCHERS,
+  OPI_SIMPLE_PARSERS
+} from "./opiParser";
 import { xml2js, ElementCompact } from "xml-js";
 import log from "loglevel";
 import { Position, AbsolutePosition } from "../../../types/position";
