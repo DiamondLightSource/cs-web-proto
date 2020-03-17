@@ -291,6 +291,7 @@ export function parseOpi(xmlString: string): any {
     "widget",
     OPI_SIMPLE_PARSERS,
     OPI_COMPLEX_PARSERS,
+    false,
     PATCHERS
   );
 }

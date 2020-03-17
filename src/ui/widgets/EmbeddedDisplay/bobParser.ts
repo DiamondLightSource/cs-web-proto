@@ -72,6 +72,7 @@ export function parseBob(xmlString: string): any {
     "widget",
     OPI_SIMPLE_PARSERS,
     BOB_COMPLEX_PARSERS,
+    false,
     PATCHERS
   );
 }

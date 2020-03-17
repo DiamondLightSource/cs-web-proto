@@ -47,10 +47,6 @@ function jsonParsePosition(props: any): Position {
   }
 }
 
-function jsonNoParse(jsonObject: any): any {
-  return jsonObject;
-}
-
 function jsonParseColor(jsonColor: string): Color {
   return Color.parse(jsonColor);
 }
@@ -97,27 +93,9 @@ function jsonParseRules(jsonRules: Rule[]): Rule[] {
 }
 
 export const SIMPLE_PARSERS: ParserDict = {
-  type: ["type", jsonNoParse],
-  text: ["text", jsonNoParse],
-  name: ["name", jsonNoParse],
-  file: ["file", jsonNoParse],
-  filetype: ["filetype", jsonNoParse],
-  image: ["image", jsonNoParse],
-  shapeRadius: ["shapeRadius", jsonNoParse],
-  shapeWidth: ["shapeWidth", jsonNoParse],
-  shapeHeight: ["shapeHeight", jsonNoParse],
-  routePath: ["routePath", jsonNoParse],
-  textAlign: ["horizontalAlignment", jsonNoParse],
-  pvName: ["pvName", jsonNoParse],
   backgroundColor: ["backgroundColor", jsonParseColor],
   foregroundColor: ["foregroundColor", jsonParseColor],
-  precision: ["precision", jsonNoParse],
-  visible: ["visible", jsonNoParse],
-  showUnits: ["showUnits", jsonNoParse],
-  transparent: ["transparent", jsonNoParse],
   font: ["font", jsonParseFont],
-  macroMap: ["macroMap", jsonNoParse],
-  actions: ["actions", jsonNoParse],
   rules: ["rules", jsonParseRules],
   border: ["border", jsonParseBorder]
 };
@@ -146,6 +124,7 @@ export function parseJson(jsonString: string): any {
     "children",
     SIMPLE_PARSERS,
     COMPLEX_PARSERS,
+    true,
     []
   );
 }

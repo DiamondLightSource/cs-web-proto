@@ -29,7 +29,10 @@ export function genericParser(
   widget: any,
   targetWidget: React.FC,
   simpleParsers: ParserDict,
-  complexParsers: ComplexParserDict
+  complexParsers: ComplexParserDict,
+  // Whether props with no registered function should be passed through
+  // with no parsing.
+  passThrough: boolean
 ): WidgetDescription {
   const newProps: any = { type: targetWidget };
   const allProps = {
@@ -55,9 +58,8 @@ export function genericParser(
         log.error(widget[prop]);
         log.error(e);
       }
-    }
-    /* More complex props need access to the entire widget. */
-    if (complexParsers.hasOwnProperty(prop)) {
+    } else if (complexParsers.hasOwnProperty(prop)) {
+      /* More complex props need access to the entire widget. */
       log.debug(`complex parser for ${prop}`);
       const propParser = complexParsers[prop];
       try {
@@ -67,6 +69,8 @@ export function genericParser(
         log.error(`Could not convert prop ${prop}:`);
         log.error(e);
       }
+    } else if (passThrough) {
+      newProps[prop] = widget[prop];
     }
   }
 
@@ -79,6 +83,9 @@ export function parseWidget(
   childrenName: string,
   simpleParsers: ParserDict,
   complexParsers: ComplexParserDict,
+
+  passThrough: boolean,
+
   patchFunctions: PatchFunction[]
 ): WidgetDescription {
   const targetWidget = getTargetWidget(props);
@@ -86,7 +93,8 @@ export function parseWidget(
     props,
     targetWidget,
     simpleParsers,
-    complexParsers
+    complexParsers,
+    passThrough
   );
   // Execute patch functions.
   for (const patcher of patchFunctions) {
@@ -101,6 +109,7 @@ export function parseWidget(
       childrenName,
       simpleParsers,
       complexParsers,
+      passThrough,
       patchFunctions
     );
   });
