@@ -9,6 +9,7 @@ import {
   AbsolutePosition,
   RelativePosition
 } from "../../../types/position";
+import { PV } from "../../../types/pv";
 
 interface JsonBorder {
   style: string;
@@ -23,6 +24,9 @@ interface JsonFont {
   name?: string;
 }
 
+function jsonParsePvName(pvName: string): PV {
+  return PV.parse(pvName);
+}
 function jsonParsePosition(props: any): Position {
   if (props.position === "absolute") {
     return new AbsolutePosition(
@@ -81,6 +85,9 @@ function jsonParseFont(jsonFont: JsonFont): Font {
 
 function jsonParseRules(jsonRules: Rule[]): Rule[] {
   for (const jsonRule of jsonRules) {
+    for (const pv of jsonRule.pvs) {
+      pv.pvName = jsonParsePvName((pv.pvName as unknown) as string);
+    }
     for (const exp of jsonRule.expressions) {
       if (SIMPLE_PARSERS.hasOwnProperty(jsonRule.prop)) {
         exp.convertedValue = SIMPLE_PARSERS[jsonRule.prop][1](exp.value);
@@ -93,6 +100,7 @@ function jsonParseRules(jsonRules: Rule[]): Rule[] {
 }
 
 export const SIMPLE_PARSERS: ParserDict = {
+  pvName: ["pvName", jsonParsePvName],
   backgroundColor: ["backgroundColor", jsonParseColor],
   foregroundColor: ["foregroundColor", jsonParseColor],
   font: ["font", jsonParseFont],

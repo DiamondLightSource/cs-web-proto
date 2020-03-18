@@ -2,11 +2,12 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { resolveMacros } from "../../types/macros";
 import { MacroMap, CsState } from "../../redux/csState";
+import { PV } from "../../types/pv";
 
 export interface MacroProps extends React.PropsWithChildren<any> {
   macroMap?: MacroMap;
-  pvName?: string;
-  rawPvName?: string;
+  pvName?: PV;
+  rawPvName?: PV;
 }
 
 /*

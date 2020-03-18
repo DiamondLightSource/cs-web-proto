@@ -29,7 +29,7 @@ export function useRules(props: AnyProps): AnyProps {
   const allPvs: string[] = [];
   for (const rule of rules) {
     for (const pv of rule.pvs) {
-      allPvs.push(pv.pvName);
+      allPvs.push(pv.pvName.qualifiedName());
     }
   }
   // Subscribe to all PVs.
@@ -45,9 +45,9 @@ export function useRules(props: AnyProps): AnyProps {
     const pvVars: { [pvName: string]: number | string } = {};
     for (let i = 0; i < pvs.length; i++) {
       // Set up variables that might be used.
-      const pvResults = results[pvs[i].pvName][0];
+      const pvResults = results[pvs[i].pvName.qualifiedName()][0];
       if (pvResults) {
-        const val = results[pvs[i].pvName][0].value;
+        const val = results[pvs[i].pvName.qualifiedName()][0].value;
         if (val) {
           pvVars["pv" + i] = vtypeToNumber(val);
           pvVars["pvStr" + i] = vtypeToString(val);

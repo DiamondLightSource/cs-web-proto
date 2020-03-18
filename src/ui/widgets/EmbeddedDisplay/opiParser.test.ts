@@ -102,7 +102,7 @@ describe("opi widget parser", (): void => {
     expect(rule.name).toEqual("Rule");
     expect(rule.prop).toEqual("text");
     expect(rule.outExp).toEqual(true);
-    expect(rule.pvs[0].pvName).toEqual("loc://test");
+    expect(rule.pvs[0].pvName.qualifiedName()).toEqual("loc://test");
     expect(rule.pvs[0].trigger).toEqual(true);
     expect(rule.expressions[0].value).toEqual({ _text: "pv0" });
     expect(rule.expressions[0].convertedValue).toEqual("pv0");
@@ -184,7 +184,7 @@ describe("opi widget parser", (): void => {
     const widget = parseOpi(inputString).children[0];
     expect(widget.textAlign).toEqual("right");
     // Adds ca:// prefix.
-    expect(widget.pvName).toEqual("ca://SR-CS-RFFB-01:RFSTEP");
+    expect(widget.pvName.qualifiedName()).toEqual("ca://SR-CS-RFFB-01:RFSTEP");
   });
 
   const invalidString = `

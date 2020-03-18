@@ -56,7 +56,7 @@ export const ConnectingComponent = (props: {
 
   const [effectivePvName, connected, readonly, latestValue] = useConnection(
     props.containerProps.id,
-    props.containerProps.pvName
+    props.containerProps.pvName?.qualifiedName()
   );
 
   if (props.alarmBorder) {

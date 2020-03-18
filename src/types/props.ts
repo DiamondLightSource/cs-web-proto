@@ -4,11 +4,13 @@ import { MacroMap } from "../redux/csState";
 import { WidgetActions } from "../ui/widgets/widgetActions";
 import { Border } from "./border";
 import { Position } from "./position";
+import { PV } from "./pv";
 
 export type GenericProp =
   | string
   | boolean
   | number
+  | PV
   | Color
   | Font
   | Border
@@ -24,7 +26,7 @@ export interface Expression {
 }
 
 interface RulePV {
-  pvName: string;
+  pvName: PV;
   trigger: boolean;
 }
 

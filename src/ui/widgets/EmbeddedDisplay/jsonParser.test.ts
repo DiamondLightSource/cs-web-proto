@@ -4,6 +4,7 @@ import { RelativePosition, AbsolutePosition } from "../../../types/position";
 import { Font, FontStyle } from "../../../types/font";
 import { Border, BorderStyle } from "../../../types/border";
 import { Color } from "../../../types/color";
+import { PV } from "../../../types/pv";
 
 describe("json widget parser", (): void => {
   const displayString = `{
@@ -92,7 +93,7 @@ describe("json widget parser", (): void => {
       outExp: false,
       pvs: [
         {
-          pvName: "loc://rulepv",
+          pvName: PV.parse("loc://rulepv"),
           trigger: true
         }
       ],

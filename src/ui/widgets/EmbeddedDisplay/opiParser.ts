@@ -16,6 +16,7 @@ import {
 } from "./parser";
 import { REGISTERED_WIDGETS } from "../register";
 import { WidgetDescription } from "../createComponent";
+import { PV } from "../../../types/pv";
 
 export interface XmlDescription {
   _attributes: { [key: string]: string };
@@ -115,7 +116,7 @@ function opiParseActions(jsonProp: ElementCompact): WidgetActions {
         processedActions.actions.push({
           type: WRITE_PV,
           writePvInfo: {
-            pvName: opiParsePvName(action.pv_name),
+            pvName: opiParsePvName(action.pv_name).qualifiedName(),
             value: action.value._text,
             description:
               (action.description && action.description._text) || undefined
@@ -178,13 +179,9 @@ function opiParseNumber(jsonProp: ElementCompact): number {
   return Number(jsonProp._text);
 }
 
-function opiParsePvName(jsonProp: ElementCompact): string {
+function opiParsePvName(jsonProp: ElementCompact): PV {
   const rawPv = opiParseString(jsonProp);
-  if (rawPv.includes("://")) {
-    return rawPv;
-  } else {
-    return `ca://${opiParseString(jsonProp)}`;
-  }
+  return PV.parse(rawPv);
 }
 
 function opiParseHorizonalAlignment(jsonProp: ElementCompact): string {

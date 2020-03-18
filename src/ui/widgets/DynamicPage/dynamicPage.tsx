@@ -85,7 +85,6 @@ const DynamicPageComponent = (
                     }
                   ]
                 }}
-                pvName=""
                 text="X"
               />
             </div>

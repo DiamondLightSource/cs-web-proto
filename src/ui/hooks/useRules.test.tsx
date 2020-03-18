@@ -5,6 +5,7 @@ import { shallow } from "enzyme";
 import { vdouble } from "../../types/vtypes/vtypes";
 import { AnyProps } from "../widgets/widgetProps";
 import { Rule } from "../../types/props";
+import { PV } from "../../types/pv";
 
 // Mock useSubscription.
 jest.mock("./useSubscription", (): object => {
@@ -22,7 +23,7 @@ jest.mock("react-redux", (): object => {
 // mocking before we have access to other imports (vdouble).
 (useSelector as jest.Mock).mockImplementation((pvName: string): any => {
   return {
-    PV1: [{ value: vdouble(0), connected: true, readonly: false }, "PV1"]
+    "ca://PV1": [{ value: vdouble(0), connected: true, readonly: false }, "PV1"]
   };
 });
 const RuleTester = (props: { id: string; rules: Rule[] }): JSX.Element => {
@@ -34,7 +35,7 @@ const rule: Rule = {
   name: "rule",
   prop: "text",
   outExp: false,
-  pvs: [{ pvName: "PV1", trigger: true }],
+  pvs: [{ pvName: new PV("PV1"), trigger: true }],
   expressions: [
     {
       boolExp: "pv0 > 1",
@@ -53,7 +54,7 @@ const outExpRule: Rule = {
   name: "outexprule",
   prop: "text",
   outExp: true,
-  pvs: [{ pvName: "PV1", trigger: true }],
+  pvs: [{ pvName: new PV("PV1"), trigger: true }],
   expressions: [
     {
       boolExp: "pv0 > 1",
@@ -77,7 +78,10 @@ describe("useRules", (): void => {
     // Awkward way of choosing return value for mocked function?
     (useSelector as jest.Mock).mockImplementation((pvName: string): any => {
       return {
-        PV1: [{ value: vdouble(2), connected: true, readonly: false }, "PV"]
+        "ca://PV1": [
+          { value: vdouble(2), connected: true, readonly: false },
+          "PV"
+        ]
       };
     });
     const props = { id: "id1", rules: [rule], text: "neither" };
@@ -90,7 +94,10 @@ describe("useRules", (): void => {
     // Awkward way of choosing return value for mocked function?
     (useSelector as jest.Mock).mockImplementation((pvName: string): any => {
       return {
-        PV1: [{ value: vdouble(0), connected: true, readonly: false }, "PV"]
+        "ca://PV1": [
+          { value: vdouble(0), connected: true, readonly: false },
+          "PV"
+        ]
       };
     });
     const props = { id: "id1", rules: [outExpRule], text: "neither" };
@@ -102,7 +109,10 @@ describe("useRules", (): void => {
     // Awkward way of choosing return value for mocked function?
     (useSelector as jest.Mock).mockImplementation((pvName: string): any => {
       return {
-        PV1: [{ value: vdouble(2), connected: true, readonly: false }, "PV"]
+        "ca://PV1": [
+          { value: vdouble(2), connected: true, readonly: false },
+          "PV"
+        ]
       };
     });
     const props = { id: "id1", rules: [outExpRule], text: "neither" };
