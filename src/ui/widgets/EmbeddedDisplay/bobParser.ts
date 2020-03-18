@@ -1,14 +1,20 @@
 import { REGISTERED_WIDGETS } from "../register";
-import { ComplexParserDict, parseWidget } from "./parser";
+import { ComplexParserDict, parseWidget, ParserDict } from "./parser";
 import {
   XmlDescription,
   OPI_COMPLEX_PARSERS,
   PATCHERS,
-  OPI_SIMPLE_PARSERS
+  OPI_SIMPLE_PARSERS,
+  opiParseRules,
+  opiParsePvName,
+  opiParseActions
 } from "./opiParser";
 import { xml2js, ElementCompact } from "xml-js";
 import log from "loglevel";
 import { Position, AbsolutePosition } from "../../../types/position";
+import { PV } from "../../../types/pv";
+import { Rule } from "../../../types/props";
+import { WidgetActions } from "../widgetActions";
 
 const BOB_WIDGET_MAPPING: { [key: string]: any } = {
   display: "display",
@@ -58,7 +64,7 @@ const BOB_COMPLEX_PARSERS: ComplexParserDict = {
   position: bobParsePosition
 };
 
-export function parseBob(xmlString: string): any {
+export function parseBob(xmlString: string, defaultProtocol: string): any {
   // Convert it to a "compact format"
   const compactJSON = xml2js(xmlString, {
     compact: true
@@ -70,12 +76,34 @@ export function parseBob(xmlString: string): any {
   compactJSON.display._attributes.type = "display";
   log.debug(compactJSON);
 
+  const simpleParsers: ParserDict = {
+    ...OPI_SIMPLE_PARSERS,
+    pvName: [
+      "pvName",
+      (pvName: ElementCompact): PV => opiParsePvName(pvName, defaultProtocol)
+    ],
+    rules: [
+      "rules",
+      (rules: Rule[]): Rule[] => opiParseRules(rules, defaultProtocol)
+    ],
+    actions: [
+      "actions",
+      (actions: ElementCompact): WidgetActions =>
+        opiParseActions(actions, defaultProtocol)
+    ]
+  };
+
+  const complexParsers = {
+    ...BOB_COMPLEX_PARSERS,
+    rules: (rules: Rule[]): Rule[] => opiParseRules(rules, defaultProtocol)
+  };
+
   return parseWidget(
     compactJSON.display,
     bobGetTargetWidget,
     "widget",
-    OPI_SIMPLE_PARSERS,
-    BOB_COMPLEX_PARSERS,
+    simpleParsers,
+    complexParsers,
     false,
     PATCHERS
   );

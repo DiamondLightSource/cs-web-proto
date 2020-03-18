@@ -51,6 +51,7 @@ describe("<EmbeddedDisplay>", (): void => {
           position={new RelativePosition()}
           file={inputFile}
           filetype={filetype}
+          defaultProtocol="ca"
         />
       );
 
@@ -86,6 +87,7 @@ describe("<EmbeddedDisplay>", (): void => {
         position={new RelativePosition()}
         file="TestFile"
         filetype="bob"
+        defaultProtocol="ca"
       />
     );
 
@@ -130,6 +132,7 @@ describe("<EmbeddedDisplay>", (): void => {
         position={new RelativePosition()}
         file="TestFile"
         filetype="bob"
+        defaultProtocol="ca"
       />
     );
 
@@ -168,6 +171,7 @@ describe("<EmbeddedDisplay>", (): void => {
         position={new RelativePosition()}
         file="TestFile"
         filetype="json"
+        defaultProtocol="ca"
       />
     );
 

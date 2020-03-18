@@ -22,6 +22,7 @@ function isEmpty(obj: any): boolean {
     if (obj.hasOwnProperty(prop)) return false;
   }
 
+  console.log("isempty returning true");
   return true;
 }
 export function toArray(element?: ElementCompact): ElementCompact[] {

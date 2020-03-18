@@ -35,7 +35,8 @@ const ERROR_WIDGET: WidgetDescription = {
 const EmbeddedDisplayProps = {
   ...WidgetPropType,
   file: StringProp,
-  filetype: ChoiceProp(["json", "bob", "opi"])
+  filetype: ChoiceProp(["json", "bob", "opi"]),
+  defaultProtocol: StringProp
 };
 
 export const EmbeddedDisplay = (
@@ -91,13 +92,13 @@ export const EmbeddedDisplay = (
       // Convert the contents to widget description style object
       switch (props.filetype) {
         case "bob":
-          description = parseBob(contents);
+          description = parseBob(contents, props.defaultProtocol);
           break;
         case "json":
-          description = parseJson(contents);
+          description = parseJson(contents, props.defaultProtocol);
           break;
         case "opi":
-          description = parseOpi(contents);
+          description = parseOpi(contents, props.defaultProtocol);
           break;
       }
     }

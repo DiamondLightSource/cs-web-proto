@@ -10,12 +10,12 @@ export class PV {
     }
   }
 
-  public static parse(pvName: string): PV {
+  public static parse(pvName: string, defaultProtocol?: string): PV {
     if (pvName.includes(PV.DELIMITER)) {
       const parts = pvName.split(PV.DELIMITER);
       return new PV(parts[1], parts[0]);
     } else {
-      return new PV(pvName);
+      return new PV(pvName, defaultProtocol);
     }
   }
 

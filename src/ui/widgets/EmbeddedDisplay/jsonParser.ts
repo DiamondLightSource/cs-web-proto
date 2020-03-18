@@ -24,8 +24,8 @@ interface JsonFont {
   name?: string;
 }
 
-function jsonParsePvName(pvName: string): PV {
-  return PV.parse(pvName);
+function jsonParsePvName(pvName: string, defaultProtocol: string): PV {
+  return PV.parse(pvName, defaultProtocol);
 }
 function jsonParsePosition(props: any): Position {
   if (props.position === "absolute") {
@@ -83,10 +83,15 @@ function jsonParseFont(jsonFont: JsonFont): Font {
   );
 }
 
-function jsonParseRules(jsonRules: Rule[]): Rule[] {
+function jsonParseRules(jsonRules: Rule[], defaultProtocol: string): Rule[] {
   for (const jsonRule of jsonRules) {
     for (const pv of jsonRule.pvs) {
-      pv.pvName = jsonParsePvName((pv.pvName as unknown) as string);
+      pv.pvName = jsonParsePvName(
+        // Typing: allow pvName to be a string so that we can use the same type
+        // (Rule) for the unparsed as the parsed rule.
+        (pv.pvName as unknown) as string,
+        defaultProtocol
+      );
     }
     for (const exp of jsonRule.expressions) {
       if (SIMPLE_PARSERS.hasOwnProperty(jsonRule.prop)) {
@@ -100,11 +105,9 @@ function jsonParseRules(jsonRules: Rule[]): Rule[] {
 }
 
 export const SIMPLE_PARSERS: ParserDict = {
-  pvName: ["pvName", jsonParsePvName],
   backgroundColor: ["backgroundColor", jsonParseColor],
   foregroundColor: ["foregroundColor", jsonParseColor],
   font: ["font", jsonParseFont],
-  rules: ["rules", jsonParseRules],
   border: ["border", jsonParseBorder]
 };
 
@@ -123,12 +126,23 @@ function jsonGetTargetWidget(props: any): React.FC {
   return targetWidget;
 }
 
-export function parseJson(jsonString: string): any {
+export function parseJson(jsonString: string, defaultProtocol: string): any {
+  const simpleParsers: ParserDict = {
+    ...SIMPLE_PARSERS,
+    pvName: [
+      "pvName",
+      (pvName: string): PV => jsonParsePvName(pvName, defaultProtocol)
+    ],
+    rules: [
+      "rules",
+      (rules: Rule[]): Rule[] => jsonParseRules(rules, defaultProtocol)
+    ]
+  };
   return parseWidget(
     JSON.parse(jsonString),
     jsonGetTargetWidget,
     "children",
-    SIMPLE_PARSERS,
+    simpleParsers,
     COMPLEX_PARSERS,
     true,
     []

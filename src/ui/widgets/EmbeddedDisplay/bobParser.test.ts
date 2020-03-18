@@ -38,7 +38,7 @@ describe("opi widget parser", (): void => {
   const label = Label;
 
   it("parses a label widget", (): void => {
-    const widget = parseBob(labelString).children[0];
+    const widget = parseBob(labelString, "ca").children[0];
     console.log(widget);
     expect(widget.type).toEqual("label");
     // Boolean type

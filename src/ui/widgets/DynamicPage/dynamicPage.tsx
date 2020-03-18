@@ -36,6 +36,7 @@ export function DynamicPageFetch({
       filetype="json"
       macroMap={map}
       position={new RelativePosition()}
+      defaultProtocol="ca"
     />
   );
 }

@@ -96,7 +96,10 @@ function opiParseMacros(jsonProp: ElementCompact): MacroMap {
   return macroMap;
 }
 
-function opiParseActions(jsonProp: ElementCompact): WidgetActions {
+export function opiParseActions(
+  jsonProp: ElementCompact,
+  defaultProtocol: string
+): WidgetActions {
   const actionsToProcess = toArray(jsonProp.action);
 
   // Extract information about whether to execute all actions at once
@@ -116,7 +119,10 @@ function opiParseActions(jsonProp: ElementCompact): WidgetActions {
         processedActions.actions.push({
           type: WRITE_PV,
           writePvInfo: {
-            pvName: opiParsePvName(action.pv_name).qualifiedName(),
+            pvName: opiParsePvName(
+              action.pv_name,
+              defaultProtocol
+            ).qualifiedName(),
             value: action.value._text,
             description:
               (action.description && action.description._text) || undefined
@@ -142,7 +148,10 @@ function opiParseActions(jsonProp: ElementCompact): WidgetActions {
   return processedActions;
 }
 
-export const opiParseRules = (jsonProp: ElementCompact): Rule[] => {
+export const opiParseRules = (
+  jsonProp: ElementCompact,
+  defaultProtocol: string
+): Rule[] => {
   const ruleArray = toArray(jsonProp.rules.rule);
   const rules = ruleArray.map((ruleElement: ElementCompact) => {
     const name = ruleElement._attributes?.name as string;
@@ -152,7 +161,7 @@ export const opiParseRules = (jsonProp: ElementCompact): Rule[] => {
     const pvArray = toArray(ruleElement.pv);
     const pvs = pvArray.map((pv: ElementCompact) => {
       return {
-        pvName: opiParsePvName(pv),
+        pvName: opiParsePvName(pv, defaultProtocol),
         trigger: pv._attributes?.trig === "true"
       };
     });
@@ -179,9 +188,12 @@ function opiParseNumber(jsonProp: ElementCompact): number {
   return Number(jsonProp._text);
 }
 
-function opiParsePvName(jsonProp: ElementCompact): PV {
+export function opiParsePvName(
+  jsonProp: ElementCompact,
+  defaultProtocol: string
+): PV {
   const rawPv = opiParseString(jsonProp);
-  return PV.parse(rawPv);
+  return PV.parse(rawPv, defaultProtocol);
 }
 
 function opiParseHorizonalAlignment(jsonProp: ElementCompact): string {
@@ -243,7 +255,6 @@ export const OPI_SIMPLE_PARSERS: ParserDict = {
   text: ["text", opiParseString],
   name: ["name", opiParseString],
   textAlign: ["horizontal_alignment", opiParseHorizonalAlignment],
-  pvName: ["pv_name", opiParsePvName],
   backgroundColor: ["background_color", opiParseColor],
   foregroundColor: ["foreground_color", opiParseColor],
   precision: ["precision", opiParseNumber],
@@ -251,14 +262,12 @@ export const OPI_SIMPLE_PARSERS: ParserDict = {
   showUnits: ["show_units", opiParseBoolean],
   transparent: ["transparent", opiParseBoolean],
   font: ["font", opiParseFont],
-  macroMap: ["macros", opiParseMacros],
-  actions: ["actions", opiParseActions]
+  macroMap: ["macros", opiParseMacros]
 };
 
 export const OPI_COMPLEX_PARSERS: ComplexParserDict = {
   type: opiParseType,
   position: opiParsePosition,
-  rules: opiParseRules,
   border: opiParseBorder
 };
 
@@ -285,7 +294,7 @@ function opiPatchRules(widgetDescription: WidgetDescription): void {
 
 export const PATCHERS: PatchFunction[] = [opiPatchRules];
 
-export function parseOpi(xmlString: string): any {
+export function parseOpi(xmlString: string, defaultProtocol: string): any {
   // Convert it to a "compact format"
   const compactJSON = xml2js(xmlString, {
     compact: true
@@ -296,12 +305,32 @@ export function parseOpi(xmlString: string): any {
   compactJSON.display.y = { _text: "0" };
   log.debug(compactJSON);
 
+  const simpleParsers: ParserDict = {
+    ...OPI_SIMPLE_PARSERS,
+    pvName: [
+      "pv_name",
+      (pvName: ElementCompact): PV => opiParsePvName(pvName, defaultProtocol)
+    ],
+    actions: [
+      "actions",
+      (actions: ElementCompact): WidgetActions =>
+        opiParseActions(actions, defaultProtocol)
+    ]
+  };
+
+  const complexParsers = {
+    ...OPI_COMPLEX_PARSERS,
+    rules: (rules: Rule[]): Rule[] => opiParseRules(rules, defaultProtocol)
+  };
+
+  console.log(compactJSON.display);
+
   return parseWidget(
     compactJSON.display,
     opiGetTargetWidget,
     "widget",
-    OPI_SIMPLE_PARSERS,
-    OPI_COMPLEX_PARSERS,
+    simpleParsers,
+    complexParsers,
     false,
     PATCHERS
   );

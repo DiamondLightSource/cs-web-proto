@@ -27,7 +27,7 @@ describe("json widget parser", (): void => {
   const label = Label;
 
   it("parses a display widget", (): void => {
-    const widget = parseJson(displayString);
+    const widget = parseJson(displayString, "ca");
     expect(widget.type).toEqual("display");
     // Position type
     expect(widget.position).toEqual(new RelativePosition());
@@ -53,7 +53,7 @@ describe("json widget parser", (): void => {
     ]
   }`;
   it("handles font and position on a label widget", (): void => {
-    const widget = parseJson(fontLabelString).children[0];
+    const widget = parseJson(fontLabelString, "ca").children[0];
     expect(widget.font).toEqual(new Font(13, FontStyle.Bold));
     expect(widget.position).toEqual(
       new AbsolutePosition("10", "20", "30", "40")
@@ -86,7 +86,7 @@ describe("json widget parser", (): void => {
     ]
   }`;
   it("handles a rule on a display widget", (): void => {
-    const widget = parseJson(ruleString);
+    const widget = parseJson(ruleString, "ca");
     const rule = {
       name: "border rule",
       prop: "border",
