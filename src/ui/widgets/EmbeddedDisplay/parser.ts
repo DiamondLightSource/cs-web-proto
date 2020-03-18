@@ -1,3 +1,16 @@
+/* The intention of this file is to provide a generic parsing mechanism
+   that can be used for different filetypes by calling parseWidget with
+   appropriate arguments.
+
+   Limitations:
+    - rules can only apply to props that have 'simple' parsers
+
+   Possible enhancements:
+    - be able to register new parsing functions for particular widgets
+    - allow 'complex' parsers to be able to return multiple props
+    - more precise TypeScript types
+*/
+
 import log from "loglevel";
 import { GenericProp } from "../../../types/props";
 import { WidgetDescription } from "../createComponent";
