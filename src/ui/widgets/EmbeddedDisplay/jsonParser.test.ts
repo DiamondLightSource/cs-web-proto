@@ -1,6 +1,6 @@
 import { Label } from "..";
 import { parseJson } from "./jsonParser";
-import { RelativePosition } from "../../../types/position";
+import { RelativePosition, AbsolutePosition } from "../../../types/position";
 import { Font, FontStyle } from "../../../types/font";
 import { Border, BorderStyle } from "../../../types/border";
 import { Color } from "../../../types/color";
@@ -39,6 +39,11 @@ describe("json widget parser", (): void => {
     "children": [
       {
         "type": "label",
+        "position": "absolute",
+        "x": "10",
+        "y": "20",
+        "width": "30",
+        "height": "40",
         "font": {
           "size": 13,
           "style": "bold"
@@ -49,7 +54,9 @@ describe("json widget parser", (): void => {
   it("handles font and position on a label widget", (): void => {
     const widget = parseJson(fontLabelString).children[0];
     expect(widget.font).toEqual(new Font(13, FontStyle.Bold));
-    expect(widget.position).toEqual(new RelativePosition());
+    expect(widget.position).toEqual(
+      new AbsolutePosition("10", "20", "30", "40")
+    );
   });
   const ruleString = `{
     "type": "display",

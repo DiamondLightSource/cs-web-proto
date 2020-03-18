@@ -26,7 +26,9 @@ describe("<EmbeddedDisplay>", (): void => {
     ["TestFile", `${DEFAULT_BASE_URL}/bob/TestFile`, "bob"],
     ["https://a.com/b.bob", "https://a.com/b.bob", "bob"],
     ["TestFile", `${DEFAULT_BASE_URL}/json/TestFile`, "json"],
-    ["https://a.com/b.json", "https://a.com/b.json", "json"]
+    ["https://a.com/b.json", "https://a.com/b.json", "json"],
+    ["TestFile", `${DEFAULT_BASE_URL}/opi/TestFile`, "opi"],
+    ["https://a.com/b.opi", "https://a.com/b.opi", "opi"]
   ] as [string, string, string][])(
     "fetches a file from the server",
     (
