@@ -23,7 +23,7 @@ function connectionChanged(
 function valueChanged(
   store: MiddlewareAPI,
   pvName: string,
-  value: object | undefined
+  value?: object
 ): void {
   store.dispatch({
     type: VALUE_CHANGED,
@@ -41,8 +41,10 @@ export const connectionMiddleware = (connection: Connection) => (
   if (!connection.isConnected()) {
     connection.connect(
       // Partial function application.
-      connectionChanged.bind(null, store),
-      valueChanged.bind(null, store)
+      (pvName: string, value: ConnectionState): void =>
+        connectionChanged(store, pvName, value),
+      (pvName: string, value?: object): void =>
+        valueChanged(store, pvName, value)
     );
   }
 
