@@ -57,7 +57,6 @@ describe("opi widget parser", (): void => {
   const label = Label;
   it("parses a label widget", (): void => {
     const widget = parseOpi(labelString, "ca").children[0];
-    console.log(widget);
     expect(widget.type).toEqual("label");
     // Boolean type
     expect(widget.visible).toEqual(true);
@@ -137,7 +136,6 @@ describe("opi widget parser", (): void => {
 
   it("parses a widget with an action", (): void => {
     const widget = parseOpi(actionString, "ca").children[0];
-    console.log(widget);
     expect(widget.actions.actions.length).toEqual(1);
     const action = widget.actions.actions[0];
     expect(action.type).toEqual("OPEN_WEBPAGE");

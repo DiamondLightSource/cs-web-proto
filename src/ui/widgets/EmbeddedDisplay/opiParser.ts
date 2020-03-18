@@ -323,7 +323,7 @@ export function parseOpi(xmlString: string, defaultProtocol: string): any {
     rules: (rules: Rule[]): Rule[] => opiParseRules(rules, defaultProtocol)
   };
 
-  console.log(compactJSON.display);
+  log.debug(compactJSON.display);
 
   return parseWidget(
     compactJSON.display,

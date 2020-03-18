@@ -49,7 +49,7 @@ export function widgetDescriptionToComponent(
     Component = widgetDict[type];
   } else {
     log.warn(`Failed to load unknown widget type ${type}:`);
-    console.log(widgetDescription);
+    log.warn(widgetDescription);
     Component = Shape;
     otherProps.backgroundColor = Color.PURPLE;
   }
