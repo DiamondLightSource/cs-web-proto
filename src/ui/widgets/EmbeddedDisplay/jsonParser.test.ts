@@ -97,8 +97,7 @@ describe("json widget parser", (): void => {
             width: 1,
             color: "red"
           },
-          // Color parsing doesn't work in tests: see color.test.ts.
-          convertedValue: new Border(BorderStyle.Line, Color.BLACK, 1)
+          convertedValue: new Border(BorderStyle.Line, Color.RED, 1)
         }
       ]
     };
