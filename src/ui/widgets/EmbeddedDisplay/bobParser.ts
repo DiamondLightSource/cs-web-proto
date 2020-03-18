@@ -79,7 +79,7 @@ export function parseBob(xmlString: string, defaultProtocol: string): any {
   const simpleParsers: ParserDict = {
     ...OPI_SIMPLE_PARSERS,
     pvName: [
-      "pvName",
+      "pv_name",
       (pvName: ElementCompact): PV => opiParsePvName(pvName, defaultProtocol)
     ],
     rules: [

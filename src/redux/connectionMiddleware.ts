@@ -31,10 +31,6 @@ function valueChanged(
   });
 }
 
-/* Cheating with the types here. */
-// eslint doesn't deal with currying very well:
-// (x:any): any => (y:any): any => (z:any): any is perverse
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const connectionMiddleware = (connection: Connection) => (
   store: MiddlewareAPI
 ) => (next: Dispatch<Action>): any => (action: Action): Action => {

@@ -2,6 +2,7 @@ import { Color } from "../../../types/color";
 import { Label } from "..";
 import { AbsolutePosition } from "../../../types/position";
 import { parseBob } from "./bobParser";
+import { PV } from "../../../types/pv";
 
 describe("opi widget parser", (): void => {
   const labelString = `
@@ -53,5 +54,21 @@ describe("opi widget parser", (): void => {
     expect(widget.foregroundColor).toEqual(Color.RED);
     // Unrecognised property not passed on.
     expect(widget.not_a_property).toEqual(undefined);
+  });
+
+  const readbackString = `
+  <display version="2.0.0">
+    <widget type="textupdate" version="2.0.0">
+      <name>Text Update</name>
+      <pv_name>abc</pv_name>
+      <x>12</x>
+      <y>62</y>
+      <width>140</width>
+      <height>50</height>
+    </widget>
+  </display>`;
+  it("parses a readback widget", (): void => {
+    const widget = parseBob(readbackString, "xxx").children[0];
+    expect(widget.pvName).toEqual(PV.parse("xxx://abc"));
   });
 });
