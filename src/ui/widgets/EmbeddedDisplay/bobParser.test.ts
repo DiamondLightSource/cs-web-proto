@@ -11,6 +11,8 @@ describe("opi widget parser", (): void => {
   <macros>
     <a>b</a>
   </macros>
+  <x>0</x>
+  <y>0</y>
   <width>300</width>
   <height>300</height>
   <widget type="label" version="2.0.0">
@@ -57,6 +59,10 @@ describe("opi widget parser", (): void => {
 
   const readbackString = `
   <display version="2.0.0">
+    <x>0</x>
+    <y>0</y>
+    <width>300</width>
+    <height>300</height>
     <widget type="textupdate" version="2.0.0">
       <name>Text Update</name>
       <pv_name>abc</pv_name>
@@ -69,5 +75,18 @@ describe("opi widget parser", (): void => {
   it("parses a readback widget", (): void => {
     const widget = parseBob(readbackString, "xxx").children[0];
     expect(widget.pvName).toEqual(PV.parse("xxx://abc"));
+  });
+
+  const noXString = `
+  <display version="2.0.0">
+    <y>0</y>
+    <width>300</width>
+    <height>300</height>
+  </display>`;
+  it("parses a readback widget", (): void => {
+    const display = parseBob(noXString, "xxx");
+    console.log(display);
+    // Is this correct?
+    expect(display.x).toEqual(undefined);
   });
 });

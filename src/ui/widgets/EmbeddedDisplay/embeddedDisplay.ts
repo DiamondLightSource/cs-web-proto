@@ -27,10 +27,17 @@ const EMPTY_WIDGET: WidgetDescription = {
 const ERROR_WIDGET: WidgetDescription = {
   type: "label",
   position: new RelativePosition(),
-  font: new Font(FontStyle.Bold, 16),
+  font: new Font(16, FontStyle.Bold),
   backgroundColor: Color.RED,
   text: "Error"
 };
+
+function errorWidget(message: string): WidgetDescription {
+  return {
+    ...ERROR_WIDGET,
+    text: message
+  };
+}
 
 const EmbeddedDisplayProps = {
   ...WidgetPropType,
@@ -130,11 +137,15 @@ export const EmbeddedDisplay = (
       props.macroMap
     );
   } catch (e) {
-    log.error(`Error converting file ${file} into components:`);
+    const message = `Error converting file ${file} into components.`;
+    log.error(message);
     log.error(e);
     log.error(e.msg);
     log.error(e.details);
-    component = widgetDescriptionToComponent(ERROR_WIDGET, props.macroMap);
+    component = widgetDescriptionToComponent(
+      errorWidget(message),
+      props.macroMap
+    );
   }
 
   return component;

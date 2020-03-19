@@ -98,7 +98,7 @@ describe("<EmbeddedDisplay>", (): void => {
 
     process.nextTick((): void => {
       expect(wrapper.type()).toEqual(Label);
-      expect(wrapper.props().text).toEqual("Error");
+      expect(wrapper.props().text).toContain("Error");
       done();
     });
   });

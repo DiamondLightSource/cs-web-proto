@@ -3,18 +3,23 @@ import { ComplexParserDict, parseWidget, ParserDict } from "./parser";
 import {
   XmlDescription,
   OPI_COMPLEX_PARSERS,
-  PATCHERS,
   OPI_SIMPLE_PARSERS,
+  OPI_PATCHERS,
   opiParseRules,
   opiParsePvName,
   opiParseActions
 } from "./opiParser";
 import { xml2js, ElementCompact } from "xml-js";
 import log from "loglevel";
-import { Position, AbsolutePosition } from "../../../types/position";
+import {
+  Position,
+  AbsolutePosition,
+  RelativePosition
+} from "../../../types/position";
 import { PV } from "../../../types/pv";
 import { Rule } from "../../../types/props";
 import { WidgetActions } from "../widgetActions";
+import { Font, FontStyle } from "../../../types/font";
 
 const BOB_WIDGET_MAPPING: { [key: string]: any } = {
   display: "display",
@@ -47,6 +52,18 @@ function bobParsePosition(props: any): Position {
   );
 }
 
+export function bobParseFont(jsonProp: ElementCompact): Font {
+  const opiStyles: { [key: number]: FontStyle } = {
+    0: FontStyle.Regular,
+    1: FontStyle.Bold,
+    2: FontStyle.Italic,
+    3: FontStyle.BoldItalic
+  };
+  const fontAttributes = jsonProp["font"]._attributes;
+  const { family, size, style } = fontAttributes;
+  return new Font(Number(size), opiStyles[style], family);
+}
+
 function bobGetTargetWidget(props: any): React.FC {
   const typeid = bobParseType(props);
   let targetWidget;
@@ -69,10 +86,6 @@ export function parseBob(xmlString: string, defaultProtocol: string): any {
   const compactJSON = xml2js(xmlString, {
     compact: true
   }) as XmlDescription;
-  // We don't care about the position of the top-level display widget.
-  // We place it at 0,0 within its container.
-  compactJSON.display.x = { _text: "0" };
-  compactJSON.display.y = { _text: "0" };
   compactJSON.display._attributes.type = "display";
   log.debug(compactJSON);
 
@@ -82,6 +95,7 @@ export function parseBob(xmlString: string, defaultProtocol: string): any {
       "pv_name",
       (pvName: ElementCompact): PV => opiParsePvName(pvName, defaultProtocol)
     ],
+    font: ["font", bobParseFont],
     rules: [
       "rules",
       (rules: Rule[]): Rule[] => opiParseRules(rules, defaultProtocol)
@@ -98,13 +112,20 @@ export function parseBob(xmlString: string, defaultProtocol: string): any {
     rules: (rules: Rule[]): Rule[] => opiParseRules(rules, defaultProtocol)
   };
 
-  return parseWidget(
+  const displayWidget = parseWidget(
     compactJSON.display,
     bobGetTargetWidget,
     "widget",
     simpleParsers,
     complexParsers,
     false,
-    PATCHERS
+    OPI_PATCHERS
   );
+
+  displayWidget.position = new RelativePosition(
+    displayWidget.position.width,
+    displayWidget.position.height
+  );
+
+  return displayWidget;
 }

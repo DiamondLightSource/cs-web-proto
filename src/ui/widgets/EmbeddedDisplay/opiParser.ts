@@ -6,7 +6,11 @@ import { MacroMap } from "../../../redux/csState";
 import { Color } from "../../../types/color";
 import { FontStyle, Font } from "../../../types/font";
 import { Border, BorderStyle } from "../../../types/border";
-import { Position, AbsolutePosition } from "../../../types/position";
+import {
+  Position,
+  AbsolutePosition,
+  RelativePosition
+} from "../../../types/position";
 import {
   ComplexParserDict,
   ParserDict,
@@ -292,7 +296,7 @@ function opiPatchRules(widgetDescription: WidgetDescription): void {
   });
 }
 
-export const PATCHERS: PatchFunction[] = [opiPatchRules];
+export const OPI_PATCHERS: PatchFunction[] = [opiPatchRules];
 
 export function parseOpi(xmlString: string, defaultProtocol: string): any {
   // Convert it to a "compact format"
@@ -325,13 +329,19 @@ export function parseOpi(xmlString: string, defaultProtocol: string): any {
 
   log.debug(compactJSON.display);
 
-  return parseWidget(
+  const displayWidget = parseWidget(
     compactJSON.display,
     opiGetTargetWidget,
     "widget",
     simpleParsers,
     complexParsers,
     false,
-    PATCHERS
+    OPI_PATCHERS
   );
+
+  displayWidget.position = new RelativePosition(
+    displayWidget.position.width,
+    displayWidget.position.width
+  );
+  return displayWidget;
 }

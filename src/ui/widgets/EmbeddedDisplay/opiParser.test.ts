@@ -9,6 +9,10 @@ import log from "loglevel";
 describe("opi widget parser", (): void => {
   const labelString = `
   <display typeId="org.csstudio.opibuilder.Display" version="1.0.0">
+    <x>0</x>
+    <y>0</y>
+    <height>20</height>
+    <width>20</width>
     <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
       <actions hook="false" hook_all="false" />
       <auto_size>false</auto_size>
@@ -80,6 +84,10 @@ describe("opi widget parser", (): void => {
 
   const ruleString = `
   <display typeId="org.csstudio.opibuilder.Display" version="1.0.0">
+    <x>0</x>
+    <y>0</y>
+    <height>20</height>
+    <width>20</width>
     <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
       <rules>
         <rule name="Rule" prop_id="text" out_exp="true">
@@ -109,6 +117,10 @@ describe("opi widget parser", (): void => {
   });
   const childString = `
   <display typeId="org.csstudio.opibuilder.Display" version="1.0.0">
+    <x>0</x>
+    <y>0</y>
+    <height>20</height>
+    <width>20</width>
     <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
       <text>hello</text>
       <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
@@ -124,6 +136,10 @@ describe("opi widget parser", (): void => {
 
   const actionString = `
   <display typeId="org.csstudio.opibuilder.Display" version="1.0.0">
+    <x>0</x>
+    <y>0</y>
+    <height>20</height>
+    <width>20</width>
     <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
       <actions hook="false" hook_all="false">
         <action type="OPEN_WEBPAGE">
@@ -146,6 +162,10 @@ describe("opi widget parser", (): void => {
   });
   const inputString = `
   <display typeId="org.csstudio.opibuilder.Display" version="1.0.0">
+    <x>0</x>
+    <y>0</y>
+    <height>20</height>
+    <width>20</width>
     <widget typeId="org.csstudio.opibuilder.widgets.TextInput" version="2.0.0">
       <confirm_message></confirm_message>
       <horizontal_alignment>2</horizontal_alignment>
@@ -189,6 +209,10 @@ describe("opi widget parser", (): void => {
 
   const invalidString = `
   <display typeId="org.csstudio.opibuilder.Display" version="1.0.0">
+    <x>0</x>
+    <y>0</y>
+    <height>20</height>
+    <width>20</width>
     <widget typeId="org.csstudio.opibuilder.widgets.TextInput" version="2.0.0">
       <text />
     </widget>
@@ -199,6 +223,10 @@ describe("opi widget parser", (): void => {
   });
   const invalidBool = `
   <display typeId="org.csstudio.opibuilder.Display" version="1.0.0">
+    <x>0</x>
+    <y>0</y>
+    <height>20</height>
+    <width>20</width>
     <widget typeId="org.csstudio.opibuilder.widgets.TextInput" version="2.0.0">
       <text />
       <show_units>not-a-bool</show_units>
