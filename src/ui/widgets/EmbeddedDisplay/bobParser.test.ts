@@ -83,7 +83,7 @@ describe("opi widget parser", (): void => {
     <width>300</width>
     <height>300</height>
   </display>`;
-  it("parses a readback widget", (): void => {
+  it("handles a missing dimension", (): void => {
     const display = parseBob(noXString, "xxx");
     console.log(display);
     // Is this correct?

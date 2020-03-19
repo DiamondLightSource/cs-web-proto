@@ -32,7 +32,12 @@ const BOB_WIDGET_MAPPING: { [key: string]: any } = {
 };
 
 function bobParseType(props: any): string {
-  return BOB_WIDGET_MAPPING[props._attributes.type];
+  const typeId = props._attributes.type;
+  if (BOB_WIDGET_MAPPING.hasOwnProperty(typeId)) {
+    return BOB_WIDGET_MAPPING[typeId];
+  } else {
+    return typeId;
+  }
 }
 
 export function bobParseNumber(jsonProp: ElementCompact): number | undefined {

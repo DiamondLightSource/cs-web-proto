@@ -232,7 +232,12 @@ function opiParseBorder(props: any): Border {
 }
 
 function opiParseType(props: any): string {
-  return OPI_WIDGET_MAPPING[props._attributes.typeId];
+  const typeId = props._attributes.typeId;
+  if (OPI_WIDGET_MAPPING.hasOwnProperty(typeId)) {
+    return OPI_WIDGET_MAPPING[typeId];
+  } else {
+    return typeId;
+  }
 }
 
 function opiParsePosition(props: any): Position {
@@ -341,7 +346,7 @@ export function parseOpi(xmlString: string, defaultProtocol: string): any {
 
   displayWidget.position = new RelativePosition(
     displayWidget.position.width,
-    displayWidget.position.width
+    displayWidget.position.height
   );
   return displayWidget;
 }
