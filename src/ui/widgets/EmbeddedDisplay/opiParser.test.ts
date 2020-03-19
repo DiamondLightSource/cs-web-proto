@@ -3,10 +3,23 @@ import { Border } from "../../../types/border";
 import { Rule } from "../../../types/props";
 import { Label } from "..";
 import { parseOpi } from "./opiParser";
-import { AbsolutePosition } from "../../../types/position";
+import { AbsolutePosition, RelativePosition } from "../../../types/position";
 import log from "loglevel";
 
 describe("opi widget parser", (): void => {
+  const displayString = `
+  <display typeId="org.csstudio.opibuilder.Display" version="1.0.0">
+    <x>10</x>
+    <y>20</y>
+    <width>30</width>
+    <height>40</height>
+  </display>`;
+  it("parses a display widget", (): void => {
+    const displayWidget = parseOpi(displayString, "ca");
+    expect(displayWidget.position).toEqual(
+      new RelativePosition("30px", "40px")
+    );
+  });
   const labelString = `
   <display typeId="org.csstudio.opibuilder.Display" version="1.0.0">
     <x>0</x>

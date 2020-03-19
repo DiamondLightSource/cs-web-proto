@@ -232,16 +232,27 @@ function opiParseBorder(props: any): Border {
 }
 
 function opiParseType(props: any): string {
-  return OPI_WIDGET_MAPPING[props._attributes.typeId];
+  const typeId = props._attributes.typeId;
+  if (OPI_WIDGET_MAPPING.hasOwnProperty(typeId)) {
+    return OPI_WIDGET_MAPPING[typeId];
+  } else {
+    return typeId;
+  }
 }
 
 function opiParsePosition(props: any): Position {
-  return new AbsolutePosition(
-    `${opiParseNumber(props.x)}px`,
-    `${opiParseNumber(props.y)}px`,
-    `${opiParseNumber(props.width)}px`,
-    `${opiParseNumber(props.height)}px`
-  );
+  const { x, y, width, height } = props;
+  try {
+    return new AbsolutePosition(
+      `${opiParseNumber(x)}px`,
+      `${opiParseNumber(y)}px`,
+      `${opiParseNumber(width)}px`,
+      `${opiParseNumber(height)}px`
+    );
+  } catch (error) {
+    const msg = `Failed to parse position (${x},${y},${width},${height}): ${error}`;
+    throw new Error(msg);
+  }
 }
 
 function opiGetTargetWidget(props: any): React.FC {
@@ -341,7 +352,7 @@ export function parseOpi(xmlString: string, defaultProtocol: string): any {
 
   displayWidget.position = new RelativePosition(
     displayWidget.position.width,
-    displayWidget.position.width
+    displayWidget.position.height
   );
   return displayWidget;
 }
