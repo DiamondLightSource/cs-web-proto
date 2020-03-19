@@ -33,7 +33,8 @@ export class Font {
         ? "italic"
         : "normal";
     return {
-      fontFamily: this.typeface,
+      // Fall back to sans-serif.
+      fontFamily: `${this.typeface},sans-serif`,
       fontSize: `${this.size / 10}rem`,
       fontWeight: fontWeight,
       fontStyle: fontStyle
