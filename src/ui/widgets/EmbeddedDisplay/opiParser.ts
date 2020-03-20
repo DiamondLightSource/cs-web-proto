@@ -66,7 +66,7 @@ export interface OpiColor {
   _attributes: { name: string; red: string; blue: string; green: string };
 }
 
-function opiParseColor(jsonProp: ElementCompact): Color {
+export function opiParseColor(jsonProp: ElementCompact): Color {
   const color = jsonProp.color as OpiColor;
   return new Color(
     parseInt(color._attributes.red),

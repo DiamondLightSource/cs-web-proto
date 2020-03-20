@@ -7,7 +7,8 @@ import {
   OPI_PATCHERS,
   opiParseRules,
   opiParsePvName,
-  opiParseActions
+  opiParseActions,
+  opiParseColor
 } from "./opiParser";
 import { xml2js, ElementCompact } from "xml-js";
 import log from "loglevel";
@@ -20,6 +21,8 @@ import { PV } from "../../../types/pv";
 import { Rule } from "../../../types/props";
 import { WidgetActions } from "../widgetActions";
 import { Font, FontStyle } from "../../../types/font";
+import { Border, BorderStyle } from "../../../types/border";
+import { Color } from "../../../types/color";
 
 const BOB_WIDGET_MAPPING: { [key: string]: any } = {
   display: "display",
@@ -69,6 +72,22 @@ export function bobParseFont(jsonProp: ElementCompact): Font {
   return new Font(Number(size), opiStyles[style], family);
 }
 
+function bobParseBorder(props: any): Border {
+  let width: number | undefined = 0;
+  let borderColor = Color.BLACK;
+  try {
+    width = bobParseNumber(props.border_width);
+    borderColor = opiParseColor(props.border_color);
+  } catch {
+    // Default to width 0 -> no border
+  }
+  if (width) {
+    return new Border(BorderStyle.Line, borderColor, width);
+  } else {
+    return Border.NONE;
+  }
+}
+
 function bobGetTargetWidget(props: any): React.FC {
   const typeid = bobParseType(props);
   let targetWidget;
@@ -83,7 +102,8 @@ function bobGetTargetWidget(props: any): React.FC {
 const BOB_COMPLEX_PARSERS: ComplexParserDict = {
   ...OPI_COMPLEX_PARSERS,
   type: bobParseType,
-  position: bobParsePosition
+  position: bobParsePosition,
+  border: bobParseBorder
 };
 
 export function parseBob(xmlString: string, defaultProtocol: string): any {
