@@ -5,4 +5,8 @@ describe("PV", (): void => {
     const pv = PV.parse("loc://test", "ca");
     expect(pv).toEqual(new PV("test", "loc"));
   });
+  it("ignores protocol if name contains one", (): void => {
+    const pv = new PV("loc://test", "ca");
+    expect(pv.qualifiedName()).toEqual("loc://test");
+  });
 });

@@ -20,6 +20,12 @@ export class PV {
   }
 
   public qualifiedName(): string {
-    return `${this.protocol}${PV.DELIMITER}${this.name}`;
+    // This can happen if the name is substituted by a macro
+    // after the PV object has been created.
+    if (this.name.includes(PV.DELIMITER)) {
+      return this.name;
+    } else {
+      return `${this.protocol}${PV.DELIMITER}${this.name}`;
+    }
   }
 }
