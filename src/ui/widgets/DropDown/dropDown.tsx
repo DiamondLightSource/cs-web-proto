@@ -7,6 +7,7 @@ import { registerWidget } from "../register";
 import {
   BoolPropOpt,
   StringProp,
+  StringOrNumPropOpt,
   InferWidgetProps,
   ChildrenPropOpt,
   FontPropOpt,
@@ -19,6 +20,7 @@ const DropDownContainerProps = {
   open: BoolPropOpt,
   font: FontPropOpt,
   border: BorderPropOpt,
+  minHeight: StringOrNumPropOpt,
   foregroundColor: ColorPropOpt,
   backgroundColor: ColorPropOpt,
   children: ChildrenPropOpt
@@ -39,7 +41,8 @@ export const DropDownComponent = (
       ...props.font?.asStyle(),
       ...props.border?.asStyle(),
       color: props.foregroundColor?.rgbaString() ?? "",
-      backgroundColor: props.backgroundColor?.rgbaString() ?? ""
+      backgroundColor: props.backgroundColor?.rgbaString() ?? "",
+      minHeight: props.minHeight ?? ""
     }}
   >
     <summary className={classes.Summary}>{props.title}</summary>
