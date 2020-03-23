@@ -38,8 +38,8 @@ export const DropDownComponent = (
     className={classes.Detail}
     open={props.open ?? false}
     style={{
-      ...props.font?.asStyle(),
-      ...props.border?.asStyle(),
+      ...props.font?.css(),
+      ...props.border?.css(),
       color: props.foregroundColor?.rgbaString() ?? "",
       backgroundColor: props.backgroundColor?.rgbaString() ?? "",
       minHeight: props.minHeight ?? ""
