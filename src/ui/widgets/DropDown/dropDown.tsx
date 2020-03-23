@@ -38,14 +38,15 @@ export const DropDownComponent = (
     className={classes.Detail}
     open={props.open ?? false}
     style={{
-      ...props.font?.css(),
       ...props.border?.css(),
       color: props.foregroundColor?.rgbaString() ?? "",
       backgroundColor: props.backgroundColor?.rgbaString() ?? "",
       minHeight: props.minHeight ?? ""
     }}
   >
-    <summary className={classes.Summary}>{props.title}</summary>
+    <summary className={classes.Summary} style={{ ...props.font?.css() }}>
+      {props.title}
+    </summary>
     <div
       className={classes.Children}
       style={{ position: "relative", height: "100%", width: "100%" }}
