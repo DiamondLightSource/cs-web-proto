@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import log from "loglevel";
+import { Transition, SwitchTransition } from "react-transition-group";
 
 import classes from "./slideshow.module.css";
 import { Widget } from "../widget";
@@ -37,6 +38,19 @@ export const SlideshowComponent = (
     }
   };
 
+  const duration = 300;
+
+  const defaultStyle = {
+    transition: `opacity 5s ease-out`
+  };
+
+  const transitionStyles = {
+    entering: { opacity: 1 },
+    entered: { opacity: 1 },
+    exiting: { opacity: 0 },
+    exited: { opacity: 0 }
+  };
+
   const [childIndex, setChildIndex] = useState(0);
 
   log.warn(`Slideshow Index: ${childIndex}`);
@@ -70,6 +84,7 @@ export const SlideshowComponent = (
       >
         ◀
       </button>
+
       <div
         style={{
           position: "relative",
@@ -78,11 +93,37 @@ export const SlideshowComponent = (
           maxHeight: props.maxHeight ?? "",
           display: "flex",
           flexGrow: 1,
-          overflow: props.overflow ?? ""
+          overflow: props.overflow ?? "",
+          ...defaultStyle,
+          ...transitionStyles
         }}
       >
-        {props.children?.[childIndex]}
+        <Transition
+          in={childIndex == 1}
+          timeout={1000}
+          mountOnEnter
+          unmountOnExit
+        >
+          {state => {
+            console.log(state);
+
+            return (
+              <div
+                style={{
+                  height: "50px",
+                  width: "50px",
+                  backgroundColor: "red",
+                  transition: "opacity 1s ease-out",
+                  opacity: state === "exiting" ? 0 : 1
+                }}
+              >
+                {props.children?.[childIndex]}
+              </div>
+            );
+          }}
+        </Transition>
       </div>
+
       <button
         style={{
           position: "relative",
