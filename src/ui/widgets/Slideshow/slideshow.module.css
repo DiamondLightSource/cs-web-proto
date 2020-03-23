@@ -1,8 +1,8 @@
 .Slideshow {
-  left: 0%;
-  top: 0%;
-  width: 100%;
-  height: 100%;
   display: flex;
-  min-height: 3rem;
+  flex-flow: row;
+  justify-content: space-around;
+  align-items: center;
+  height: 100%;
+  width: 100%;
 }

@@ -6,10 +6,17 @@ import classes from "./slideshow.module.css";
 import { Widget } from "../widget";
 import { WidgetPropType } from "../widgetProps";
 import { registerWidget } from "../register";
-import { ChildrenPropOpt, InferWidgetProps } from "../propTypes";
+import {
+  ChoicePropOpt,
+  InferWidgetProps,
+  StringOrNumPropOpt
+} from "../propTypes";
 
 const SlideshowProps = {
-  children: PropTypes.arrayOf(PropTypes.element)
+  children: PropTypes.arrayOf(PropTypes.element),
+  overflow: ChoicePropOpt(["scroll", "hidden", "auto", "visible"]),
+  maxHeight: StringOrNumPropOpt,
+  maxWidth: StringOrNumPropOpt
 };
 
 export const SlideshowComponent = (
@@ -36,32 +43,24 @@ export const SlideshowComponent = (
   //   log.warn(props.children);
 
   return (
-    <div className={classes.Slideshow}>
+    <div
+      className={classes.Slideshow}
+      style={{
+        maxWidth: props.maxWidth ?? "",
+        maxHeight: props.maxHeight ?? ""
+      }}
+    >
       <button
         style={{
-          position: "absolute",
-          right: "0px",
-          top: "10%",
+          position: "relative",
           height: "80%",
-          width: "8%",
+          width: "10%",
+          maxWidth: "3rem",
+          maxHeight: "5rem",
           textAlign: "center",
-          overflow: "hidden"
-        }}
-        onClick={() =>
-          setChildIndex(nextChildIndex(childIndex, props.children?.length ?? 0))
-        }
-      >
-        ▶
-      </button>
-      <button
-        style={{
-          position: "absolute",
-          left: "0px",
-          top: "10%",
-          height: "80%",
-          width: "8%",
-          textAlign: "center",
-          overflow: "hidden"
+          overflow: "hidden",
+          margin: "0.5rem",
+          flexGrow: 0
         }}
         onClick={() =>
           setChildIndex(
@@ -73,15 +72,35 @@ export const SlideshowComponent = (
       </button>
       <div
         style={{
-          position: "absolute",
-          left: "10%",
+          position: "relative",
           width: "80%",
           height: "100%",
-          display: "flex"
+          maxHeight: props.maxHeight ?? "",
+          display: "flex",
+          flexGrow: 1,
+          overflow: props.overflow ?? ""
         }}
       >
         {props.children?.[childIndex]}
       </div>
+      <button
+        style={{
+          position: "relative",
+          height: "80%",
+          width: "10%",
+          maxWidth: "3rem",
+          maxHeight: "5rem",
+          textAlign: "center",
+          overflow: "hidden",
+          margin: "0.5rem",
+          flexGrow: 0
+        }}
+        onClick={() =>
+          setChildIndex(nextChildIndex(childIndex, props.children?.length ?? 0))
+        }
+      >
+        ▶
+      </button>
     </div>
   );
 };
