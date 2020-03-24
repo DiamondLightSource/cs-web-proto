@@ -1,5 +1,5 @@
-import React, { useState, ReactChildren, ReactElement } from "react";
-import PropTypes, { ReactElementLike } from "prop-types";
+import React, { useState, ReactElement } from "react";
+import PropTypes from "prop-types";
 import log from "loglevel";
 import { CSSTransition, SwitchTransition } from "react-transition-group";
 
@@ -28,7 +28,7 @@ const SwitchableWidget = (props: {
   index: number;
   children: [ReactElement];
   transition: { readonly [key: string]: string };
-}) => {
+}): JSX.Element => {
   return (
     <SwitchTransition mode="out-in">
       <CSSTransition
@@ -88,7 +88,7 @@ export const SlideshowComponent = (
           margin: "0.5rem",
           flexGrow: 0
         }}
-        onClick={() => {
+        onClick={(): void => {
           setTransition(slideLeftTransition);
           setChildIndex(
             previousChildIndex(childIndex, props.children?.length ?? 0)
@@ -124,7 +124,7 @@ export const SlideshowComponent = (
           margin: "0.5rem",
           flexGrow: 0
         }}
-        onClick={() => {
+        onClick={(): void => {
           setTransition(slideRightTransition);
           setChildIndex(
             nextChildIndex(childIndex, props.children?.length ?? 0)
