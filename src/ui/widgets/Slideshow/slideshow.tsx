@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, ReactChildren } from "react";
 import PropTypes from "prop-types";
 import log from "loglevel";
-import { Transition, SwitchTransition } from "react-transition-group";
+import { CSSTransition, SwitchTransition } from "react-transition-group";
 
 import classes from "./slideshow.module.css";
 import { Widget } from "../widget";
@@ -12,6 +12,8 @@ import {
   InferWidgetProps,
   StringOrNumPropOpt
 } from "../propTypes";
+
+import "./styles.css";
 
 const SlideshowProps = {
   children: PropTypes.arrayOf(PropTypes.element),
@@ -38,23 +40,26 @@ export const SlideshowComponent = (
     }
   };
 
-  const duration = 300;
-
-  const defaultStyle = {
-    transition: `opacity 5s ease-out`
-  };
-
-  const transitionStyles = {
-    entering: { opacity: 1 },
-    entered: { opacity: 1 },
-    exiting: { opacity: 0 },
-    exited: { opacity: 0 }
-  };
-
   const [childIndex, setChildIndex] = useState(0);
 
   log.warn(`Slideshow Index: ${childIndex}`);
   //   log.warn(props.children);
+
+  const SwitchableText = (props: { index: number; children: any }) => {
+    return (
+      <SwitchTransition mode="out-in">
+        <CSSTransition
+          classNames="alert"
+          key={props.index}
+          timeout={1000}
+          unmountOnExit
+          mountOnEnter
+        >
+          {props.children[props.index]}
+        </CSSTransition>
+      </SwitchTransition>
+    );
+  };
 
   return (
     <div
@@ -85,44 +90,11 @@ export const SlideshowComponent = (
         ◀
       </button>
 
-      <div
-        style={{
-          position: "relative",
-          width: "80%",
-          height: "100%",
-          maxHeight: props.maxHeight ?? "",
-          display: "flex",
-          flexGrow: 1,
-          overflow: props.overflow ?? "",
-          ...defaultStyle,
-          ...transitionStyles
-        }}
-      >
-        <Transition
-          in={childIndex == 1}
-          timeout={1000}
-          mountOnEnter
-          unmountOnExit
-        >
-          {state => {
-            console.log(state);
-
-            return (
-              <div
-                style={{
-                  height: "50px",
-                  width: "50px",
-                  backgroundColor: "red",
-                  transition: "opacity 1s ease-out",
-                  opacity: state === "exiting" ? 0 : 1
-                }}
-              >
-                {props.children?.[childIndex]}
-              </div>
-            );
-          }}
-        </Transition>
-      </div>
+      <SwitchableText index={childIndex}>
+        <h1>This</h1>
+        <h1>Is</h1>
+        <h1>Great</h1>
+      </SwitchableText>
 
       <button
         style={{

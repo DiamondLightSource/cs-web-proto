@@ -23,37 +23,33 @@
     {
       "type": "slideshow",
       "position": "relative",
-      "height": "400px",
+      "height": "300px",
       "overflow": "auto",
       "margin": "20px 0 0 0",
       "children": [
         {
-          "type": "readback",
+          "type": "label",
           "position": "relative",
-          "pvName": "loc://pv1",
-          "width": "100%"
+          "height": "200px",
+          "width": "200px",
+          "backgroundColor": "red",
+          "text": "Child 0"
         },
         {
-          "type": "readback",
+          "type": "label",
           "position": "relative",
-          "pvName": "loc://pv2",
-          "width": "100%"
+          "height": "200px",
+          "width": "200px",
+          "backgroundColor": "blue",
+          "text": "Child 1"
         },
         {
-          "type": "readback",
+          "type": "label",
           "position": "relative",
-          "pvName": "loc://pv3",
-          "width": "100%"
-        },
-        {
-          "type": "embeddedDisplay",
-          "file": "frontPage.json",
-          "filetype": "json"
-        },
-        {
-          "type": "embeddedDisplay",
-          "file": "performance.json",
-          "filetype": "json"
+          "height": "200px",
+          "width": "200px",
+          "backgroundColor": "blue",
+          "text": "Child 2"
         }
       ]
     }
