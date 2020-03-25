@@ -1,6 +1,6 @@
 import { Color } from "./color";
 import { Font } from "./font";
-import { MacroMap } from "../redux/csState";
+import { MacroMap } from "./macros";
 import { WidgetActions } from "../ui/widgets/widgetActions";
 import { Border } from "./border";
 import { Position } from "./position";

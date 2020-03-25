@@ -3,19 +3,17 @@ import {
   StringPropOpt,
   BoolPropOpt,
   InferWidgetProps,
-  MacrosPropOpt,
   BorderPropOpt,
   PositionProp,
   ActionsPropType,
-  PvPropOpt,
-  RulesPropOpt
+  RulesPropOpt,
+  PvPropOpt
 } from "./propTypes";
 
 import { VType } from "../../types/vtypes/vtypes";
 
 export const WidgetPropType = {
   position: PositionProp,
-  macroMap: MacrosPropOpt,
   rules: RulesPropOpt,
   actions: ActionsPropType,
   tooltip: StringPropOpt,

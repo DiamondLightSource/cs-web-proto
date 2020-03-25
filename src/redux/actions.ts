@@ -8,7 +8,6 @@ export const UNSUBSCRIBE = "unsubscribe";
 export const VALUE_CHANGED = "value_changed";
 export const VALUES_CHANGED = "values_changed";
 export const WRITE_PV = "write_pv";
-export const MACRO_UPDATED = "macro_updated";
 
 /* The never type in the constructor ensures that TypeScript
    won't allow this error to be created. This is useful in
@@ -65,19 +64,10 @@ export interface WritePv {
   };
 }
 
-export interface MacroUpdated {
-  type: typeof MACRO_UPDATED;
-  payload: {
-    key: string;
-    value: string;
-  };
-}
-
 export type Action =
   | ConnectionChanged
   | Subscribe
   | Unsubscribe
   | ValueChanged
   | ValuesChanged
-  | WritePv
-  | MacroUpdated;
+  | WritePv;

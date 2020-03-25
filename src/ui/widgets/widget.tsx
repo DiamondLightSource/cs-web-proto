@@ -112,10 +112,9 @@ export const Widget = (
   const idProps = { ...props, id: id, tooltip: tooltip };
 
   // Apply macros.
-  log.debug("id");
+  log.debug(`Widget id ${id}`);
   const macroProps: AnyProps = useMacros(idProps);
   // Then rules
-  log.debug("macros");
   const ruleProps = useRules(macroProps) as PVWidgetComponent & { id: string };
   log.debug(`ruleProps ${ruleProps}`);
   log.debug(ruleProps);

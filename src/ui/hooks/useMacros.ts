@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useSelector } from "react-redux";
-import { resolveMacros } from "../../types/macros";
-import { MacroMap, CsState } from "../../redux/csState";
+import { MacroMap, resolveMacros, MacroContext } from "../../types/macros";
+import { CsState } from "../../redux/csState";
 import { PV } from "../../types/pv";
 
 export interface MacroProps extends React.PropsWithChildren<any> {
@@ -15,7 +15,7 @@ export interface MacroProps extends React.PropsWithChildren<any> {
  * into any arrays and objects.
  * Do not descend into child components as this is called for each widget.
  */
-function rescursiveResolve(props: any, macroMap: MacroMap): void {
+function rescursiveResolve(props: MacroProps, macroMap: MacroMap): void {
   if (props === null) {
     return;
   }
@@ -24,9 +24,15 @@ function rescursiveResolve(props: any, macroMap: MacroMap): void {
     if (prop !== "children") {
       if (typeof value === "object") {
         if (Array.isArray(value)) {
-          value.forEach((member: object): void =>
-            rescursiveResolve(member, macroMap)
-          );
+          const newArray = value.map((member: any): any => {
+            if (typeof member === "object") {
+              rescursiveResolve(member, macroMap);
+            } else if (typeof member === "string") {
+              return resolveMacros(member, macroMap);
+            }
+            return member;
+          });
+          props[prop] = newArray;
         } else {
           rescursiveResolve(value, macroMap);
         }
@@ -38,13 +44,14 @@ function rescursiveResolve(props: any, macroMap: MacroMap): void {
 }
 
 export function useMacros<P extends MacroProps>(props: P): P {
+  const displayMacros = useContext(MacroContext).macros;
   const globalMacros = useSelector(
     (state: CsState): MacroMap => state.macroMap
   );
-  let allMacros = { ...globalMacros };
-  if (props.macroMap) {
-    allMacros = { ...allMacros, ...props.macroMap };
-  }
+  const allMacros = {
+    ...globalMacros, // lower priority
+    ...displayMacros // higher priority
+  };
   const rawPvName = props.pvName;
   rescursiveResolve(props, allMacros);
   props.rawPvName = rawPvName;

@@ -6,12 +6,12 @@ import {
   SUBSCRIBE,
   WRITE_PV,
   CONNECTION_CHANGED,
-  MACRO_UPDATED,
   UNSUBSCRIBE,
   ValueChanged
 } from "./actions";
 import { VType } from "../types/vtypes/vtypes";
 import { mergeVtype } from "../types/vtypes/merge";
+import { MacroMap } from "../types/macros";
 
 const initialState: CsState = {
   valueCache: {},
@@ -32,11 +32,6 @@ export interface FullPvState extends PvState {
 
 export interface ValueCache {
   [key: string]: FullPvState;
-}
-
-/* A simple dictionary from key to value. */
-export interface MacroMap {
-  [key: string]: string;
 }
 
 export interface Subscriptions {
@@ -96,11 +91,6 @@ export function csReducer(state = initialState, action: Action): CsState {
       };
       newValueCache[action.payload.pvName] = newPvState;
       return { ...state, valueCache: newValueCache };
-    }
-    case MACRO_UPDATED: {
-      const newMacroMap: MacroMap = { ...state.macroMap };
-      newMacroMap[action.payload.key] = action.payload.value;
-      return { ...state, macroMap: newMacroMap };
     }
     case SUBSCRIBE: {
       const { componentId, effectivePvName } = action.payload;

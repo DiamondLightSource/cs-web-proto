@@ -8,6 +8,7 @@ export { Image } from "./Image/image";
 export { Input } from "./Input/input";
 export { Label } from "./Label/label";
 export { MenuButton } from "./MenuButton/menuButton";
+export { MenuMux } from "./MenuMux/menuMux";
 export { ProgressBar } from "./ProgressBar/progressBar";
 export { Readback } from "./Readback/readback";
 export { Shape } from "./Shape/shape";
