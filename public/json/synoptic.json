@@ -26,10 +26,13 @@
           {
             "type": "OPEN_PAGE",
             "openPageInfo": {
-              "location": "embed",
-              "page": "motor",
-              "description": "Motor 1 Info",
-              "macros": "{\"motor\":\"1\"}"
+              "page": "embed",
+              "pageDescription": {
+                "filename": "motor",
+                "filetype": "json",
+                "description": "Motor 1 Info",
+                "macros": { "motor": "1" }
+              }
             }
           }
         ]
@@ -51,10 +54,13 @@
           {
             "type": "OPEN_PAGE",
             "openPageInfo": {
-              "location": "embed",
-              "page": "motor",
-              "description": "Motor 2 Info",
-              "macros": "{\"motor\":\"2\"}"
+              "page": "embed",
+              "pageDescription": {
+                "filename": "motor",
+                "filetype": "json",
+                "description": "Motor 2 Info",
+                "macros": { "motor": "2" }
+              }
             }
           }
         ]
@@ -100,10 +106,13 @@
           {
             "type": "OPEN_PAGE",
             "openPageInfo": {
-              "location": "embed",
-              "page": "motor",
-              "description": "Motor 3 Info",
-              "macros": "{\"motor\":\"3\"}"
+              "page": "embed",
+              "pageDescription": {
+                "filename": "motor",
+                "filetype": "json",
+                "description": "Motor 3 Info",
+                "macros": { "motor": "3" }
+              }
             }
           }
         ]
@@ -125,10 +134,13 @@
           {
             "type": "OPEN_PAGE",
             "openPageInfo": {
-              "location": "embed",
-              "page": "digitelmpc",
-              "description": "Digitel MPC Sim",
-              "macros": "{}"
+              "page": "embed",
+              "pageDescription": {
+                "filename": "digitelmpc",
+                "filetype": "json",
+                "description": "Digitel MPC Sim",
+                "macros": {}
+              }
             }
           }
         ]
@@ -149,12 +161,14 @@
         "actions": [
           {
             "type": "OPEN_PAGE",
-
             "openPageInfo": {
-              "location": "embed",
-              "page": "digitelmpcionp",
-              "description": "Digitel MPC Ionp Sim",
-              "macros": "{}"
+              "page": "embed",
+              "pageDescription": {
+                "filename": "digitelmpcionp",
+                "filetype": "json",
+                "description": "Digitel MPC Ionp Sim",
+                "macros": {}
+              }
             }
           }
         ]
@@ -175,10 +189,13 @@
           {
             "type": "OPEN_PAGE",
             "openPageInfo": {
-              "location": "embed",
-              "page": "motorSummary",
-              "macros": "{}",
-              "description": "Motor Summary Screen"
+              "page": "embed",
+              "pageDescription": {
+                "filename": "motorSummary",
+                "filetype": "json",
+                "macros": {},
+                "description": "Motor Summary Screen"
+              }
             }
           }
         ]

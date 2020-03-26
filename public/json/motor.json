@@ -197,9 +197,14 @@
               {
                 "type": "OPEN_PAGE",
                 "openPageInfo": {
-                  "location": "detail",
-                  "page": "motorDetail",
-                  "macros": "{\"motor\":\"${motor}\"}"
+                  "page": "detail",
+                  "pageDescription": {
+                    "filename": "motorDetail",
+                    "filetype": "json",
+                    "macros": {
+                      "motor": "${motor}"
+                    }
+                  }
                 }
               }
             ]
