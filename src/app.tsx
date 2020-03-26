@@ -73,9 +73,12 @@ const App: React.FC = (): JSX.Element => {
                   {
                     type: OPEN_PAGE,
                     openPageInfo: {
-                      location: "app",
-                      page: "menu",
-                      macros: "{}"
+                      page: "app",
+                      pageDescription: {
+                        filename: "menu",
+                        filetype: "json",
+                        macros: {}
+                      }
                     }
                   }
                 ]

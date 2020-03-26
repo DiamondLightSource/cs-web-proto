@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import log from "loglevel";
-import { Route, RouteComponentProps } from "react-router-dom";
+import { Route } from "react-router-dom";
+import { History } from "history";
 
 import { Widget } from "../widget";
 import { WidgetPropType } from "../widgetProps";
@@ -12,29 +13,34 @@ import { BaseUrlContext } from "../../../baseUrl";
 import { EmbeddedDisplay } from "../EmbeddedDisplay/embeddedDisplay";
 import { Color } from "../../../types/color";
 import { RelativePosition } from "../../../types/position";
+import { getUrlInfoFromHistory, UrlPageDescription } from "../urlControl";
 
-export interface DynamicParams {
-  json: string;
-  macros?: string;
-}
-
-export function DynamicPageFetch({
-  match
-}: RouteComponentProps<DynamicParams>): JSX.Element {
+export function DynamicPageFetch(props: {
+  history: History;
+  routePath: string;
+}): JSX.Element {
   const baseUrl = useContext(BaseUrlContext);
-  const file = `${baseUrl}/json/${match.params.json}.json`;
-  let map = {};
+  const currentUrlInfo = getUrlInfoFromHistory(props.history);
+  let pageDesc: UrlPageDescription;
+  let file = "";
+  let macros = {};
   try {
-    map = match.params.macros && JSON.parse(match.params.macros);
+    pageDesc = currentUrlInfo[props.routePath];
+    file = `${baseUrl}/json/${pageDesc.filename}.json`;
+    macros = pageDesc.macros ?? {};
+    // const file = `${baseUrl}/json/${match.params.json}.json`;
+    // let map = {};
   } catch (error) {
-    log.warn(match.params.json);
+    log.warn(currentUrlInfo);
     log.warn(error);
+    return <div></div>;
   }
+
   return (
     <EmbeddedDisplay
       file={file}
       filetype="json"
-      macroMap={map}
+      macroMap={macros}
       position={new RelativePosition()}
     />
   );
@@ -50,7 +56,6 @@ const DynamicPageComponent = (
 ): JSX.Element => (
   <div style={{ width: "100%", height: "100%" }}>
     <Route
-      path={`*/${props.routePath}/:json/:macros`}
       render={(routeProps): JSX.Element => (
         <div>
           <div
@@ -79,7 +84,7 @@ const DynamicPageComponent = (
                     {
                       type: CLOSE_PAGE,
                       closePageInfo: {
-                        location: props.routePath,
+                        page: props.routePath,
                         description: "Close"
                       }
                     }
@@ -90,7 +95,7 @@ const DynamicPageComponent = (
               />
             </div>
           </div>
-          <DynamicPageFetch {...routeProps} />
+          <DynamicPageFetch {...routeProps} routePath={props.routePath} />
         </div>
       )}
     />

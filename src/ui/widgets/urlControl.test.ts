@@ -21,17 +21,17 @@ const mockInfo: UrlInfo = {
   page1: {
     filename: "page1",
     filetype: "json",
-    macroMap: {}
+    macros: {}
   },
   page2: {
     filename: "page2",
     filetype: "bob",
-    macroMap: {}
+    macros: {}
   },
   page3: {
     filename: "page3",
     filetype: "opi",
-    macroMap: {
+    macros: {
       device: "example device"
     }
   }
@@ -46,7 +46,7 @@ describe("interaction with history", (): void => {
     const desc: UrlPageDescription = {
       filename: "file",
       filetype: "json",
-      macroMap: {
+      macros: {
         device: "example device"
       }
     };
@@ -66,7 +66,7 @@ describe("interaction with history", (): void => {
     const desc: UrlPageDescription = {
       filename: "file",
       filetype: "json",
-      macroMap: {
+      macros: {
         device: "example device"
       }
     };
@@ -80,7 +80,7 @@ describe("interaction with history", (): void => {
     const desc: UrlPageDescription = {
       filename: "file",
       filetype: "json",
-      macroMap: {
+      macros: {
         device: "example device"
       }
     };
@@ -99,7 +99,7 @@ describe("modifying UrlInfo object", (): void => {
     const desc: UrlPageDescription = {
       filename: "page4",
       filetype: "json",
-      macroMap: {}
+      macros: {}
     };
     const info = updatePageDesciption(mockInfo, "page4", desc);
     expect(info.page4).toStrictEqual(desc);
@@ -108,7 +108,7 @@ describe("modifying UrlInfo object", (): void => {
     const desc: UrlPageDescription = {
       filename: "page4",
       filetype: "json",
-      macroMap: {}
+      macros: {}
     };
     const info = updatePageDesciption(mockInfo, "page1", desc);
     expect(info.page1).toStrictEqual(desc);

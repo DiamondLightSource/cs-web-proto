@@ -5,8 +5,8 @@ import { History } from "history";
 
 export interface UrlPageDescription {
   filename: string;
-  filetype?: "json" | "opi" | "bob";
-  macroMap: MacroMap;
+  filetype: "json" | "opi" | "bob";
+  macros: MacroMap;
 }
 
 export interface UrlInfo {
