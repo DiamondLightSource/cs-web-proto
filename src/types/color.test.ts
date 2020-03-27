@@ -1,11 +1,10 @@
 import { Color } from "./color";
 
 describe("Color", (): void => {
-  // This test fails because we can't create elements in testing.
   it.each<[string, Color]>([
-    ["green", Color.BLACK],
-    ["red", Color.BLACK]
-  ])("fails to parse color names correctly", (name, expectedColor): void => {
+    ["green", Color.GREEN],
+    ["red", Color.RED]
+  ])("parses color names correctly", (name, expectedColor): void => {
     expect(Color.parse(name)).toEqual(expectedColor);
   });
 

@@ -56,7 +56,7 @@ export const ConnectingComponent = (props: {
 
   const [effectivePvName, connected, readonly, latestValue] = useConnection(
     props.containerProps.id,
-    props.containerProps.pvName
+    props.containerProps.pvName?.qualifiedName()
   );
 
   if (props.alarmBorder) {
@@ -113,15 +113,12 @@ export const Widget = (
 
   // Apply macros.
   log.debug("id");
-  log.debug((idProps as any).cc);
   const macroProps: AnyProps = useMacros(idProps);
   // Then rules
   log.debug("macros");
-  log.debug((macroProps as any).cc);
   const ruleProps = useRules(macroProps) as PVWidgetComponent & { id: string };
   log.debug(`ruleProps ${ruleProps}`);
   log.debug(ruleProps);
-  log.debug((ruleProps as any).cc);
 
   const { position, ...containerProps } = ruleProps;
 

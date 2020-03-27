@@ -8,7 +8,7 @@ import { WidgetPropType } from "../widgetProps";
 import { ActionButton } from "../ActionButton/actionButton";
 import { CLOSE_PAGE } from "../widgetActions";
 import { registerWidget } from "../register";
-import { StringProp, InferWidgetProps } from "../propTypes";
+import { StringProp, InferWidgetProps, StringPropOpt } from "../propTypes";
 import { BaseUrlContext } from "../../../baseUrl";
 import { EmbeddedDisplay } from "../EmbeddedDisplay/embeddedDisplay";
 import { Color } from "../../../types/color";
@@ -18,6 +18,7 @@ import { getUrlInfoFromHistory, UrlPageDescription } from "../urlControl";
 export function DynamicPageFetch(props: {
   history: History;
   routePath: string;
+  defaultProtocol?: string;
 }): JSX.Element {
   const baseUrl = useContext(BaseUrlContext);
   const currentUrlInfo = getUrlInfoFromHistory(props.history);
@@ -42,65 +43,74 @@ export function DynamicPageFetch(props: {
       filetype="json"
       macroMap={macros}
       position={new RelativePosition()}
+      defaultProtocol={props.defaultProtocol ?? "ca"}
     />
   );
 }
 
 const DynamicPageProps = {
-  routePath: StringProp
+  routePath: StringProp,
+  defaultProtocol: StringPropOpt
 };
 
 // Generic display widget to put other things inside
 const DynamicPageComponent = (
   props: InferWidgetProps<typeof DynamicPageProps>
-): JSX.Element => (
-  <div style={{ width: "100%", height: "100%" }}>
-    <Route
-      render={(routeProps): JSX.Element => (
-        <div>
-          <div
-            style={{
-              position: "relative",
-              height: "30px"
-            }}
-          >
+): JSX.Element => {
+  const { routePath, defaultProtocol } = props;
+  return (
+    <div style={{ width: "100%", height: "100%" }}>
+      <Route
+        render={(routeProps): JSX.Element => (
+          <div>
             <div
               style={{
-                position: "absolute",
-                right: "5px",
-                top: "5px",
-                width: "40px",
-                height: "20px",
-                backgroundColor: "green"
+                position: "relative",
+                height: "30px"
               }}
             >
-              <ActionButton
-                position={new RelativePosition()}
-                backgroundColor={Color.parse("#ff3333")}
-                foregroundColor={Color.parse("#ffffff")}
-                actions={{
-                  executeAsOne: false,
-                  actions: [
-                    {
-                      type: CLOSE_PAGE,
-                      closePageInfo: {
-                        page: props.routePath,
-                        description: "Close"
-                      }
-                    }
-                  ]
+              {" "}
+              <div
+                style={{
+                  position: "absolute",
+                  right: "5px",
+                  top: "5px",
+                  width: "40px",
+                  height: "20px",
+                  backgroundColor: "green"
                 }}
-                pvName=""
-                text="X"
-              />
+              >
+                <ActionButton
+                  position={new RelativePosition()}
+                  backgroundColor={Color.parse("#ff3333")}
+                  foregroundColor={Color.parse("#ffffff")}
+                  actions={{
+                    executeAsOne: false,
+                    actions: [
+                      {
+                        type: CLOSE_PAGE,
+                        closePageInfo: {
+                          page: props.routePath,
+                          description: "Close"
+                        }
+                      }
+                    ]
+                  }}
+                  text="X"
+                />
+              </div>
             </div>
+            <DynamicPageFetch
+              {...routeProps}
+              routePath={routePath}
+              defaultProtocol={defaultProtocol}
+            />
           </div>
-          <DynamicPageFetch {...routeProps} routePath={props.routePath} />
-        </div>
-      )}
-    />
-  </div>
-);
+        )}
+      />
+    </div>
+  );
+};
 
 const DynamicPageWidgetProps = {
   ...DynamicPageProps,

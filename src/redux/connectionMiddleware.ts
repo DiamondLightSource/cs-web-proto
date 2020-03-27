@@ -23,7 +23,7 @@ function connectionChanged(
 function valueChanged(
   store: MiddlewareAPI,
   pvName: string,
-  value: object | undefined
+  value?: object
 ): void {
   store.dispatch({
     type: VALUE_CHANGED,
@@ -31,18 +31,16 @@ function valueChanged(
   });
 }
 
-/* Cheating with the types here. */
-// eslint doesn't deal with currying very well:
-// (x:any): any => (y:any): any => (z:any): any is perverse
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const connectionMiddleware = (connection: Connection) => (
   store: MiddlewareAPI
 ) => (next: Dispatch<Action>): any => (action: Action): Action => {
   if (!connection.isConnected()) {
     connection.connect(
       // Partial function application.
-      connectionChanged.bind(null, store),
-      valueChanged.bind(null, store)
+      (pvName: string, value: ConnectionState): void =>
+        connectionChanged(store, pvName, value),
+      (pvName: string, value?: object): void =>
+        valueChanged(store, pvName, value)
     );
   }
 

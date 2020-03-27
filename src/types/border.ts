@@ -17,6 +17,8 @@ const CssBorders: { [key in BorderStyle]: string } = {
 };
 
 export class Border {
+  public static NONE = new Border(BorderStyle.None, Color.BLACK, 0);
+
   private style: BorderStyle;
   private color: Color;
   // This will render a border width in pixels. I expect that we will revisit this

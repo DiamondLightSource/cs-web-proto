@@ -9,6 +9,7 @@ import { useConnection } from "../hooks/useConnection";
 import { TooltipWrapper } from "../components/TooltipWrapper/tooltipWrapper";
 import { AnyProps } from "./widgetProps";
 import { RelativePosition } from "../../types/position";
+import { PV } from "../../types/pv";
 
 // Mock the useMacros hook as otherwise we'd have to provide
 // a store for it to use.
@@ -78,7 +79,7 @@ describe("<Widget />", (): void => {
   test("it has TooltipWrapper", (): void => {
     const component = mount(
       <Widget
-        pvName="pv"
+        pvName={new PV("pv")}
         baseWidget={TestLabel}
         position={new RelativePosition()}
       />

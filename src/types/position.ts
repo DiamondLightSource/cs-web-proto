@@ -2,6 +2,10 @@ import { CSSProperties } from "react";
 
 export type Position = AbsolutePosition | RelativePosition;
 
+function invalidSize(size?: string): boolean {
+  return size === "" || size === undefined;
+}
+
 export class AbsolutePosition {
   public x: string;
   public y: string;
@@ -22,6 +26,16 @@ export class AbsolutePosition {
     minWidth = "",
     maxWidth = ""
   ) {
+    if (
+      invalidSize(x) ||
+      invalidSize(y) ||
+      invalidSize(width) ||
+      invalidSize(height)
+    ) {
+      throw new Error(
+        `Invalid AbsolutePosition (${x},${y},${width},${height})`
+      );
+    }
     this.x = x;
     this.y = y;
     this.width = width;

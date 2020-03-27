@@ -5,7 +5,7 @@ describe("Font", (): void => {
     const font = new Font(10, FontStyle.Regular, "sans");
     const fontStyle = font.css();
     expect(fontStyle).toEqual({
-      fontFamily: "sans",
+      fontFamily: "sans,sans-serif",
       fontSize: "1rem",
       fontWeight: "normal",
       fontStyle: "normal"
@@ -15,7 +15,7 @@ describe("Font", (): void => {
     const font = new Font(16, FontStyle.BoldItalic);
     const fontStyle = font.css();
     expect(fontStyle).toEqual({
-      fontFamily: "Liberation sans",
+      fontFamily: "Liberation sans,sans-serif",
       fontSize: "1.6rem",
       fontWeight: "bold",
       fontStyle: "italic"

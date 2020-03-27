@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.com/dls-controls/cs-web-proto.svg?branch=master)](https://travis-ci.com/dls-controls/cs-web-proto)
+[![Coverage Status](https://coveralls.io/repos/github/dls-controls/cs-web-proto/badge.svg?branch=master)](https://coveralls.io/github/dls-controls/cs-web-proto?branch=master)
+
 # CS Web Proto
 
 This project aims to be able to display control system data on web pages.
@@ -53,8 +56,8 @@ This application can use data that come from external sources. These settings wi
 
 One needn't set connection information if you don't need any external sources of data; you could just use simulated and local process variables. However, if you want to connect to an external source of data:
 
-* Copying `src/settings.ts.template` to `src/settings.ts`
-* Editing `src/settings.ts` to contain the correct connection information
+- Copying `src/settings.ts.template` to `src/settings.ts`
+- Editing `src/settings.ts` to contain the correct connection information
 
 ## Debugging
 
