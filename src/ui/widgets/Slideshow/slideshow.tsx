@@ -16,7 +16,7 @@ import {
   BorderPropOpt
 } from "../propTypes";
 
-const SlideshowProps = {
+export const SlideshowProps = {
   children: PropTypes.arrayOf(PropTypes.element),
   overflow: ChoicePropOpt(["scroll", "hidden", "auto", "visible"]),
   maxHeight: StringOrNumPropOpt,
@@ -24,7 +24,7 @@ const SlideshowProps = {
   border: BorderPropOpt
 };
 
-const SwitchableWidget = (props: {
+export const SwitchableWidget = (props: {
   index: number;
   children: [ReactElement];
   transition: { readonly [key: string]: string };
@@ -65,7 +65,7 @@ export const SlideshowComponent = (
   const [childIndex, setChildIndex] = useState(0);
   const [transition, setTransition] = useState(slideRightTransition);
 
-  log.warn(`Slideshow Index: ${childIndex}`);
+  log.debug(`Slideshow Index: ${childIndex}`);
 
   return (
     <div
@@ -77,6 +77,7 @@ export const SlideshowComponent = (
       }}
     >
       <button
+        id="prev-button"
         style={{
           position: "relative",
           height: "80%",
@@ -113,6 +114,7 @@ export const SlideshowComponent = (
         </SwitchableWidget>
       </div>
       <button
+        id="next-button"
         style={{
           position: "relative",
           height: "80%",
@@ -125,6 +127,7 @@ export const SlideshowComponent = (
           flexGrow: 0
         }}
         onClick={(): void => {
+          console.log("Next button");
           setTransition(slideRightTransition);
           setChildIndex(
             nextChildIndex(childIndex, props.children?.length ?? 0)
@@ -137,7 +140,7 @@ export const SlideshowComponent = (
   );
 };
 
-const SlideshowWidgetProps = {
+export const SlideshowWidgetProps = {
   ...SlideshowComponent,
   ...WidgetPropType
 };
