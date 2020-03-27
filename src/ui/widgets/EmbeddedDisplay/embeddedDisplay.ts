@@ -9,15 +9,15 @@ import {
 } from "../createComponent";
 import { MacroMap } from "../../../redux/csState";
 import { WidgetPropType } from "../widgetProps";
-import { bobToWidgets } from "./bobUtils";
-import { opiToWidgets } from "./opiUtils";
 import { registerWidget } from "../register";
 import { StringProp, InferWidgetProps, ChoiceProp } from "../propTypes";
 import { BaseUrlContext } from "../../../baseUrl";
-import { jsonToWidgets } from "./jsonUtils";
 import { Font, FontStyle } from "../../../types/font";
 import { Color } from "../../../types/color";
+import { parseOpi } from "./opiParser";
+import { parseJson } from "./jsonParser";
 import { RelativePosition, AbsolutePosition } from "../../../types/position";
+import { parseBob } from "./bobParser";
 
 const EMPTY_WIDGET: WidgetDescription = {
   type: "shape",
@@ -27,15 +27,23 @@ const EMPTY_WIDGET: WidgetDescription = {
 const ERROR_WIDGET: WidgetDescription = {
   type: "label",
   position: new RelativePosition(),
-  font: new Font(FontStyle.Bold, 16),
+  font: new Font(16, FontStyle.Bold),
   backgroundColor: Color.RED,
   text: "Error"
 };
 
+function errorWidget(message: string): WidgetDescription {
+  return {
+    ...ERROR_WIDGET,
+    text: message
+  };
+}
+
 const EmbeddedDisplayProps = {
   ...WidgetPropType,
   file: StringProp,
-  filetype: ChoiceProp(["json", "bob", "opi"])
+  filetype: ChoiceProp(["json", "bob", "opi"]),
+  defaultProtocol: StringProp
 };
 
 export const EmbeddedDisplay = (
@@ -91,18 +99,17 @@ export const EmbeddedDisplay = (
       // Convert the contents to widget description style object
       switch (props.filetype) {
         case "bob":
-          description = bobToWidgets(contents);
+          description = parseBob(contents, props.defaultProtocol);
           break;
         case "json":
-          description = jsonToWidgets(contents);
+          description = parseJson(contents, props.defaultProtocol);
           break;
         case "opi":
-          description = opiToWidgets(contents);
+          description = parseOpi(contents, props.defaultProtocol);
           break;
       }
     }
-    console.log("embedded display");
-    console.log(description);
+    log.debug(description);
 
     // Apply the height to the top level if relative layout and none have been provided
     if (props.position instanceof RelativePosition) {
@@ -130,11 +137,15 @@ export const EmbeddedDisplay = (
       props.macroMap
     );
   } catch (e) {
-    log.error(`Error converting file ${file} into components:`);
+    const message = `Error converting file ${file} into components.`;
+    log.error(message);
     log.error(e);
     log.error(e.msg);
-    log.error(e.object);
-    component = widgetDescriptionToComponent(ERROR_WIDGET, props.macroMap);
+    log.error(e.details);
+    component = widgetDescriptionToComponent(
+      errorWidget(message),
+      props.macroMap
+    );
   }
 
   return component;

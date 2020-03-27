@@ -112,8 +112,7 @@
     {
       "type": "actionbutton",
       "pvName": "sim://limit#1",
-      "text": "Digitel MPC",
-      "image": "ionp.svg",
+      "text": "RFFB OPI",
       "position": "absolute",
       "x": "450px",
       "y": "0px",
@@ -126,8 +125,33 @@
             "type": "OPEN_PAGE",
             "openPageInfo": {
               "location": "embed",
-              "page": "digitelmpc",
-              "description": "Digitel MPC Sim",
+              "page": "rffb",
+              "description": "Open RFFB",
+              "macros": "{}"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "actionbutton",
+      "pvName": "sim://limit#1",
+      "text": "basic.bob",
+      "position": "absolute",
+      "x": "350px",
+      "y": "100px",
+      "width": "100px",
+      "height": "100px",
+      "actions": {
+        "executeAsOne": false,
+        "actions": [
+          {
+            "type": "OPEN_PAGE",
+
+            "openPageInfo": {
+              "location": "embed",
+              "page": "basic",
+              "description": "Open basic.bob",
               "macros": "{}"
             }
           }

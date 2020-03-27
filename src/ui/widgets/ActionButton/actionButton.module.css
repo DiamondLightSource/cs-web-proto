@@ -1,11 +1,17 @@
 .actionbutton {
   background-color: transparent;
   display: flex;
-  text-align: center;
+  align-items: center;
   justify-content: center;
   cursor: pointer;
   height: 100%;
   width: 100%;
+  text-overflow: ellipsis;
+}
+
+.actionbutton span {
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .actionbutton:hover {

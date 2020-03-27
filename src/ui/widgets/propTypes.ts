@@ -3,6 +3,7 @@ import { Color } from "../../types/color";
 import { Font } from "../../types/font";
 import { Border } from "../../types/border";
 import { RelativePosition, AbsolutePosition } from "../../types/position";
+import { PV } from "../../types/pv";
 
 export type ExcludeNulls<T> = {
   [P in keyof T]: Exclude<T[P], null>;
@@ -21,8 +22,8 @@ export const FloatPropOpt = PropTypes.number;
 export const BoolProp = PropTypes.bool.isRequired;
 export const BoolPropOpt = PropTypes.bool;
 
-export const PvProp = PropTypes.string.isRequired;
-export const PvPropOpt = PropTypes.string;
+export const PvProp = PropTypes.instanceOf(PV).isRequired;
+export const PvPropOpt = PropTypes.instanceOf(PV);
 
 export const ChildrenProp = PropTypes.node.isRequired;
 export const ChildrenPropOpt = PropTypes.node;
@@ -47,6 +48,28 @@ export const PositionProp = PropTypes.oneOfType([
 export const MacrosProp = PropTypes.objectOf(PropTypes.string.isRequired)
   .isRequired;
 export const MacrosPropOpt = PropTypes.objectOf(PropTypes.string.isRequired);
+
+const RulePvs = PropTypes.shape({
+  pvName: PvProp,
+  trigger: BoolProp
+}).isRequired;
+
+const RuleExpressions = PropTypes.shape({
+  boolExp: StringProp,
+  value: PropTypes.any,
+  convertedValue: PropTypes.any
+}).isRequired;
+
+export const RulePropType = PropTypes.shape({
+  name: StringProp,
+  prop: StringProp,
+  outExp: BoolProp,
+  pvs: PropTypes.arrayOf(RulePvs).isRequired,
+  expressions: PropTypes.arrayOf(RuleExpressions).isRequired
+});
+
+export const RulesProp = PropTypes.arrayOf(RulePropType.isRequired).isRequired;
+export const RulesPropOpt = PropTypes.arrayOf(RulePropType.isRequired);
 
 export const StringOrNumPropOpt = PropTypes.oneOfType([
   PropTypes.string,

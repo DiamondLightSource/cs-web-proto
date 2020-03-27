@@ -3,6 +3,7 @@ import { InputComponent, InputProps } from "./input";
 import { configure, shallow, ShallowWrapper } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import { create, ReactTestRenderer } from "react-test-renderer";
+import { Color } from "../../../types/color";
 
 configure({ adapter: new Adapter() });
 
@@ -17,11 +18,14 @@ beforeEach((): void => {
     <InputComponent
       pvName="pv"
       value="hello"
+      readonly={true}
+      transparent={true}
+      foregroundColor={Color.BLACK}
+      backgroundColor={Color.GREEN}
       onKeyDown={mock}
       onChange={mock}
       onBlur={mock}
       onClick={mock}
-      readonly={false}
     />
   );
   wrapper = shallow(input);

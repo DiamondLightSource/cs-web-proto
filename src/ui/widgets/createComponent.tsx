@@ -1,12 +1,10 @@
-/* eslint react/forbid-foreign-prop-types: 0, no-throw-literal: 0 */
-
 import React from "react";
 import log from "loglevel";
 import checkPropTypes from "check-prop-types";
 
 import { MacroMap } from "../../redux/csState";
 import { Shape } from "./Shape/shape";
-import { widgets } from "./register";
+import { REGISTERED_WIDGETS } from "./register";
 import { Color } from "../../types/color";
 
 export interface WidgetDescription {
@@ -14,6 +12,16 @@ export interface WidgetDescription {
   // All other component properties
   [x: string]: any;
   children?: WidgetDescription[];
+}
+
+class PropCheckFailed extends Error {
+  public details: object;
+  constructor(msg: string, details: object) {
+    super(msg);
+    // Set the prototype explicitly.
+    Object.setPrototypeOf(this, PropCheckFailed.prototype);
+    this.details = details;
+  }
 }
 
 export function widgetDescriptionToComponent(
@@ -33,21 +41,23 @@ export function widgetDescriptionToComponent(
 
   const widgetDict = Object.assign(
     {},
-    ...Object.entries(widgets).map(([k, v]): any => ({ [k]: v[0] }))
+    ...Object.entries(REGISTERED_WIDGETS).map(([k, v]): any => ({ [k]: v[0] }))
   );
 
   let Component: React.FC<any>;
   if (widgetDict.hasOwnProperty(type)) {
     Component = widgetDict[type];
   } else {
-    log.warn(`Failed to load unknown widget type ${type}`);
-    log.debug(widgetDescription);
+    log.warn(`Failed to load unknown widget type ${type}:`);
+    log.warn(widgetDescription);
     Component = Shape;
     otherProps.backgroundColor = Color.PURPLE;
   }
 
   // Perform checking on propTypes
   const error: string | undefined = checkPropTypes(
+    /* We will need another way of using prop-types at runtime. */
+    // eslint-disable-next-line react/forbid-foreign-prop-types
     Component.propTypes,
     otherProps,
     "widget description",
@@ -57,14 +67,11 @@ export function widgetDescriptionToComponent(
     }
   );
   if (error !== undefined) {
-    throw {
-      msg: error,
-      object: {
-        type: type,
-        position: widgetDescription.position,
-        ...otherProps
-      }
-    };
+    throw new PropCheckFailed(error, {
+      type: type,
+      position: widgetDescription.position,
+      ...otherProps
+    });
   }
 
   // Collect macroMap passed into function and overwrite/add any

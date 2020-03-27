@@ -17,20 +17,8 @@ describe("<GroupingContainerComponent />", (): void => {
     expect(snapshot.toJSON()).toMatchSnapshot();
   });
 
-  test("it is a fieldset HTML object", (): void => {
-    expect(wrapper.type()).toEqual("fieldset");
-  });
-
-  test("it has a legend element", (): void => {
-    expect(wrapper.childAt(0).type()).toEqual("legend");
-  });
-
-  test("name props is text of legend", (): void => {
-    expect(wrapper.childAt(0).text()).toEqual("Test");
-  });
-
-  test("it has a div for other children", (): void => {
-    expect(wrapper.childAt(1).type()).toEqual("div");
+  test("it is a div HTML object", (): void => {
+    expect(wrapper.type()).toEqual("div");
   });
 
   test("it renders child div with text", (): void => {
@@ -41,11 +29,6 @@ describe("<GroupingContainerComponent />", (): void => {
       </GroupingContainerComponent>
     );
     const wrapperWithChild = shallow(groupingWithChild);
-    expect(
-      wrapperWithChild
-        .childAt(1)
-        .childAt(0)
-        .text()
-    ).toEqual(childText);
+    expect(wrapperWithChild.childAt(0).text()).toEqual(childText);
   });
 });

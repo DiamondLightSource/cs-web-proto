@@ -26,7 +26,9 @@ describe("<EmbeddedDisplay>", (): void => {
     ["TestFile", `${DEFAULT_BASE_URL}/bob/TestFile`, "bob"],
     ["https://a.com/b.bob", "https://a.com/b.bob", "bob"],
     ["TestFile", `${DEFAULT_BASE_URL}/json/TestFile`, "json"],
-    ["https://a.com/b.json", "https://a.com/b.json", "json"]
+    ["https://a.com/b.json", "https://a.com/b.json", "json"],
+    ["TestFile", `${DEFAULT_BASE_URL}/opi/TestFile`, "opi"],
+    ["https://a.com/b.opi", "https://a.com/b.opi", "opi"]
   ] as [string, string, string][])(
     "fetches a file from the server",
     (
@@ -49,6 +51,7 @@ describe("<EmbeddedDisplay>", (): void => {
           position={new RelativePosition()}
           file={inputFile}
           filetype={filetype}
+          defaultProtocol="ca"
         />
       );
 
@@ -84,6 +87,7 @@ describe("<EmbeddedDisplay>", (): void => {
         position={new RelativePosition()}
         file="TestFile"
         filetype="bob"
+        defaultProtocol="ca"
       />
     );
 
@@ -94,7 +98,7 @@ describe("<EmbeddedDisplay>", (): void => {
 
     process.nextTick((): void => {
       expect(wrapper.type()).toEqual(Label);
-      expect(wrapper.props().text).toEqual("Error");
+      expect(wrapper.props().text).toContain("Error");
       done();
     });
   });
@@ -128,6 +132,7 @@ describe("<EmbeddedDisplay>", (): void => {
         position={new RelativePosition()}
         file="TestFile"
         filetype="bob"
+        defaultProtocol="ca"
       />
     );
 
@@ -166,6 +171,7 @@ describe("<EmbeddedDisplay>", (): void => {
         position={new RelativePosition()}
         file="TestFile"
         filetype="json"
+        defaultProtocol="ca"
       />
     );
 

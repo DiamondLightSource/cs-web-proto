@@ -3,26 +3,30 @@ import { Font } from "./font";
 import { MacroMap } from "../redux/csState";
 import { WidgetActions } from "../ui/widgets/widgetActions";
 import { Border } from "./border";
+import { Position } from "./position";
+import { PV } from "./pv";
 
 export type GenericProp =
   | string
   | boolean
   | number
+  | PV
   | Color
   | Font
   | Border
+  | Position
   | Rule[]
   | MacroMap
   | WidgetActions;
 
-interface Expression {
+export interface Expression {
   boolExp: string;
   value: string;
   convertedValue?: GenericProp;
 }
 
 interface RulePV {
-  pvName: string;
+  pvName: PV;
   trigger: boolean;
 }
 

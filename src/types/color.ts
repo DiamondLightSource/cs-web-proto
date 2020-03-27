@@ -1,3 +1,5 @@
+import { createCanvas } from "canvas";
+import log from "loglevel";
 export class Color {
   private r: number;
   private g: number;
@@ -15,12 +17,20 @@ export class Color {
   public static ORANGE = new Color(255, 165, 0);
   public static TRANSPARENT = new Color(0, 0, 0, 0);
 
+  // Use the browser to compute colours from names.
   public static fromName(cssColorName: string): string {
-    const ctx = document.createElement("canvas").getContext("2d");
+    let ctx = document.createElement("canvas").getContext("2d");
+    if (!ctx) {
+      // Fall back to the canvas npm package.
+      ctx = createCanvas(100, 100).getContext("2d");
+    }
     if (ctx) {
       ctx.fillStyle = cssColorName;
       return ctx.fillStyle;
     } else {
+      log.warn(
+        `Failed to parse color name ${cssColorName} using canvas element.`
+      );
       return "#000000";
     }
   }
