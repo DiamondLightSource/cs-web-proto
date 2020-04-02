@@ -14,16 +14,20 @@ export const Editor = (
   props: InferWidgetProps<typeof EditorProps>
 ): JSX.Element => {
   const [inputJson, setInputJson] = useState(
-    JSON.stringify({
-      type: "label",
-      position: "relative",
-      width: "100%",
-      font: {
-        style: "bold"
+    JSON.stringify(
+      {
+        type: "label",
+        position: "relative",
+        width: "100%",
+        font: {
+          style: "bold"
+        },
+        backgroundColor: "transparent",
+        text: "Preview goes here"
       },
-      backgroundColor: "transparent",
-      text: "Preview goes here"
-    })
+      null,
+      "  "
+    )
   );
   const [preview, setPreview] = useState(<div>Your preview goes here!</div>);
   const [consoleText, setConsoleText] = useState("Console output");
@@ -36,6 +40,7 @@ export const Editor = (
       setConsoleText(e.message);
     }
     setConsoleText("JSON Parsed Correctly");
+    setInputJson(JSON.stringify(JSON.parse(inputJson), null, "  "));
     try {
       const previewWidgetDesc = parseJson(inputJson, "pva");
       const previewWidget = widgetDescriptionToComponent(previewWidgetDesc);
@@ -65,7 +70,7 @@ export const Editor = (
           flexFlow: "column"
         }}
       >
-        <input
+        <textarea
           style={{ height: "65%", width: "100%", verticalAlign: "top" }}
           value={inputJson}
           onChange={(event): void => setInputJson(event.target.value)}
