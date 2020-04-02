@@ -14,3 +14,4 @@ export { Shape } from "./Shape/shape";
 export { SlideControl } from "./SlideControl/slideControl";
 export { DropDown } from "./DropDown/dropDown";
 export { Slideshow } from "./Slideshow/slideshow";
+export { Editor } from "./Editor/editor";
