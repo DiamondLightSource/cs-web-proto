@@ -15,7 +15,6 @@ import { OPEN_PAGE } from "./ui/widgets/widgetActions";
 import { BaseUrlContext } from "./baseUrl";
 import { onRenderCallback } from "./profilerCallback";
 import { RelativePosition } from "./types/position";
-import Drawer from "@material-ui/core/Drawer";
 
 let settings: any;
 try {
@@ -82,9 +81,6 @@ const App: React.FC = (): JSX.Element => {
                 ],
               }}
             />
-            <Drawer anchor={"left"} open={true}>
-              <div style={{ width: "500px" }}>This is in the drawer</div>
-            </Drawer>
             <Profiler id="Dynamic Page Profiler" onRender={onRenderCallback}>
               <DynamicPageWidget
                 routePath="app"
