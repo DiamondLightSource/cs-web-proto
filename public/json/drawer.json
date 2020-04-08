@@ -1,0 +1,167 @@
+{
+  "type": "flexcontainer",
+  "position": "relative",
+  "backgroundColor": "#012265",
+  "children": [
+    {
+      "type": "image",
+      "position": "relative",
+      "width": "100%",
+      "src": "Diamond_logo_col.jpg",
+      "fill": true,
+      "margin": "2% 10% 2% 10%",
+      "backgroundColor": "white"
+    },
+    {
+      "type": "flexcontainer",
+      "position": "relative",
+      "width": "100%",
+      "height": "100%",
+      "backgroundColor": "#012265",
+      "children": [
+        {
+          "type": "actionbutton",
+          "text": "Beamline Synoptic",
+          "position": "relative",
+          "width": "100%",
+          "height": "4rem",
+          "margin": "1% 5% 1% 5%",
+          "foregroundColor": "#012265",
+          "backgroundColor": "#ffcf00",
+          "font": {
+            "size": "25"
+          },
+          "border": {
+            "style": "none",
+            "color": "#ffcf00",
+            "width": 1
+          },
+          "actions": {
+            "executeAsOne": false,
+            "actions": [
+              {
+                "type": "OPEN_PAGE",
+                "openPageInfo": {
+                  "location": "app",
+                  "page": "beamline",
+                  "macros": "{}"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "actionbutton",
+          "text": "Mobile Layout",
+          "position": "relative",
+          "width": "100%",
+          "height": "4rem",
+          "margin": "1% 5% 1% 5%",
+          "foregroundColor": "#012265",
+          "backgroundColor": "#ffcf00",
+          "font": {
+            "size": "25"
+          },
+          "border": {
+            "style": "none",
+            "color": "#ffcf00",
+            "width": 1
+          },
+          "actions": {
+            "executeAsOne": false,
+            "actions": [
+              {
+                "type": "OPEN_PAGE",
+                "openPageInfo": {
+                  "location": "app",
+                  "page": "frontPage",
+                  "macros": "{}"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "dropdown",
+          "position": "relative",
+          "width": "100%",
+          "margin": "1% 5% 1% 5%",
+          "foregroundColor": "#ffcf00",
+          "title": "Performance Screens",
+          "font": {
+            "size": "25"
+          },
+          "border": {
+            "style": "solid",
+            "color": "#ffcf00",
+            "width": 2
+          },
+          "children": [
+            {
+              "type": "actionbutton",
+              "text": "Same PVs",
+              "position": "relative",
+              "width": "100%",
+              "height": "4rem",
+              "margin": "1% 0% 1% 0%",
+              "foregroundColor": "#012265",
+              "backgroundColor": "#ffcf00",
+              "font": {
+                "size": "25"
+              },
+              "border": {
+                "style": "none",
+                "color": "#ffcf00",
+                "width": 1
+              },
+              "actions": {
+                "executeAsOne": false,
+                "actions": [
+                  {
+                    "type": "OPEN_PAGE",
+                    "openPageInfo": {
+                      "location": "app",
+                      "page": "performance",
+                      "macros": "{}"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "type": "actionbutton",
+              "text": "Different PVs",
+              "position": "relative",
+              "width": "100%",
+              "height": "4rem",
+              "margin": "1% 0% 1% 0%",
+              "foregroundColor": "#012265",
+              "backgroundColor": "#ffcf00",
+              "font": {
+                "size": "25"
+              },
+              "border": {
+                "style": "none",
+                "color": "#ffcf00",
+                "width": 1
+              },
+              "actions": {
+                "executeAsOne": false,
+                "actions": [
+                  {
+                    "type": "OPEN_PAGE",
+                    "openPageInfo": {
+                      "location": "app",
+                      "page": "performanceDifferentPVs",
+                      "macros": "{}"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

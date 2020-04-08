@@ -3,22 +3,6 @@
   "position": "relative",
   "children": [
     {
-      "type": "drawer",
-      "position": "absolute",
-      "x": "10px",
-      "y": "10px",
-      "height": "30px",
-      "width": "50px",
-      "children": [
-        {
-          "type": "label",
-          "position": "relative",
-          "width": "100%",
-          "text": "Hi I'm in the drawer"
-        }
-      ]
-    },
-    {
       "type": "actionbutton",
       "text": "Beamline Synoptic",
       "position": "relative",
@@ -92,6 +76,35 @@
           }
         ]
       }
+    },
+    {
+      "type": "drawer",
+      "position": "absolute",
+      "x": "10px",
+      "y": "10px",
+      "height": "4rem",
+      "width": "5rem",
+      "font": {
+        "size": "20",
+        "style": "bold"
+      },
+      "foregroundColor": "#ffcf00",
+      "backgroundColor": "#012265",
+      "border": {
+        "style": "none",
+        "width": 0,
+        "color": ""
+      },
+      "children": [
+        {
+          "type": "embeddedDisplay",
+          "position": "relative",
+          "width": "100%",
+          "file": "drawer.json",
+          "filetype": "json",
+          "defaultProtocol": "pva"
+        }
+      ]
     }
   ]
 }

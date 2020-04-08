@@ -6,7 +6,7 @@ import {
   InferWidgetProps,
   StringProp,
   BoolPropOpt,
-  StringPropOpt
+  StringPropOpt,
 } from "../propTypes";
 import { registerWidget } from "../register";
 import { BaseUrlContext } from "../../../baseUrl";
@@ -14,7 +14,7 @@ import { BaseUrlContext } from "../../../baseUrl";
 const ImageProps = {
   src: StringProp,
   alt: StringPropOpt,
-  fill: BoolPropOpt
+  fill: BoolPropOpt,
 };
 
 export const ImageComponent = (
@@ -34,7 +34,7 @@ export const ImageComponent = (
 
   const style: CSSProperties = {
     overflow: overflow,
-    textAlign: "left"
+    textAlign: "left",
   };
 
   return (
@@ -44,7 +44,7 @@ export const ImageComponent = (
         alt={props.alt || undefined}
         style={{
           height: imageSize,
-          width: imageSize
+          width: imageSize,
         }}
       />
     </div>
@@ -53,7 +53,7 @@ export const ImageComponent = (
 
 const ImageWidgetProps = {
   ...ImageProps,
-  ...WidgetPropType
+  ...WidgetPropType,
 };
 
 export const Image = (
