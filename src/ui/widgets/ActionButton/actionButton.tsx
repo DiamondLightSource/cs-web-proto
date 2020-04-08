@@ -12,7 +12,7 @@ import {
   InferWidgetProps,
   ColorPropOpt,
   FontPropOpt,
-  BorderPropOpt,
+  BorderPropOpt
 } from "../propTypes";
 import { BaseUrlContext } from "../../../baseUrl";
 import { Color } from "../../../types/color";
@@ -45,7 +45,7 @@ export const ActionButtonComponent = (
         backgroundColor: props.backgroundColor?.rgbaString(),
         color: props.foregroundColor?.rgbaString(),
         ...props.font?.css(),
-        ...props.border?.css(),
+        ...props.border?.css()
       }}
     >
       {src !== undefined ? (
@@ -67,12 +67,12 @@ const ActionButtonPropType = {
   backgroundColor: ColorPropOpt,
   foregroundColor: ColorPropOpt,
   font: FontPropOpt,
-  border: BorderPropOpt,
+  border: BorderPropOpt
 };
 
 const ActionButtonProps = {
   ...ActionButtonPropType,
-  ...PVWidgetPropType,
+  ...PVWidgetPropType
 };
 
 // Menu button which also knows how to write to a PV

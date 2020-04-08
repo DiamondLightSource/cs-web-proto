@@ -8,15 +8,8 @@ import { lightTheme, darkTheme, ThemeContext } from "./themeContext";
 import { SimulatorPlugin } from "./connection/sim";
 import { ConiqlPlugin } from "./connection/coniql";
 import { ConnectionForwarder } from "./connection/forwarder";
-import { DynamicPageWidget } from "./ui/widgets/DynamicPage/dynamicPage";
 import { Connection } from "./connection/plugin";
-import {
-  ActionButton,
-  DrawerWidget,
-  Label,
-  EmbeddedDisplay,
-} from "./ui/widgets";
-import { OPEN_PAGE } from "./ui/widgets/widgetActions";
+import { EmbeddedDisplay } from "./ui/widgets";
 import { BaseUrlContext } from "./baseUrl";
 import { onRenderCallback } from "./profilerCallback";
 import { RelativePosition } from "./types/position";
@@ -48,7 +41,7 @@ const App: React.FC = (): JSX.Element => {
   const plugins: [string, Connection][] = [
     ["sim://", simulator],
     ["loc://", simulator],
-    ["", fallbackPlugin],
+    ["", fallbackPlugin]
   ];
   if (settings.coniqlSocket !== undefined) {
     const coniql = new ConiqlPlugin(settings.coniqlSocket);
