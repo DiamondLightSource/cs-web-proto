@@ -10,11 +10,12 @@ import { ConiqlPlugin } from "./connection/coniql";
 import { ConnectionForwarder } from "./connection/forwarder";
 import { DynamicPageWidget } from "./ui/widgets/DynamicPage/dynamicPage";
 import { Connection } from "./connection/plugin";
-import { ActionButton } from "./ui/widgets";
+import { ActionButton, DrawerWidget, Label } from "./ui/widgets";
 import { OPEN_PAGE } from "./ui/widgets/widgetActions";
 import { BaseUrlContext } from "./baseUrl";
 import { onRenderCallback } from "./profilerCallback";
 import { RelativePosition } from "./types/position";
+import Drawer from "@material-ui/core/Drawer";
 
 let settings: any;
 try {
@@ -43,7 +44,7 @@ const App: React.FC = (): JSX.Element => {
   const plugins: [string, Connection][] = [
     ["sim://", simulator],
     ["loc://", simulator],
-    ["", fallbackPlugin]
+    ["", fallbackPlugin],
   ];
   if (settings.coniqlSocket !== undefined) {
     const coniql = new ConiqlPlugin(settings.coniqlSocket);
@@ -75,12 +76,15 @@ const App: React.FC = (): JSX.Element => {
                     openPageInfo: {
                       location: "app",
                       page: "menu",
-                      macros: "{}"
-                    }
-                  }
-                ]
+                      macros: "{}",
+                    },
+                  },
+                ],
               }}
             />
+            <Drawer anchor={"left"} open={true}>
+              <div style={{ width: "500px" }}>This is in the drawer</div>
+            </Drawer>
             <Profiler id="Dynamic Page Profiler" onRender={onRenderCallback}>
               <DynamicPageWidget
                 routePath="app"
