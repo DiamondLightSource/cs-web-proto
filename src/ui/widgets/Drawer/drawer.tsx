@@ -12,6 +12,8 @@ import {
   StringOrNumPropOpt,
   FontPropOpt,
   StringPropOpt,
+  ColorPropOpt,
+  BorderPropOpt,
 } from "../propTypes";
 
 export const DrawerProps = {
@@ -19,6 +21,9 @@ export const DrawerProps = {
   drawerWidth: StringOrNumPropOpt,
   drawerMaxWidth: StringOrNumPropOpt,
   font: FontPropOpt,
+  foregroundColor: ColorPropOpt,
+  backgroundColor: ColorPropOpt,
+  border: BorderPropOpt,
   text: StringPropOpt,
   children: PropTypes.arrayOf(PropTypes.element),
 };
@@ -35,7 +40,14 @@ export const DrawerComponent = (
     <React.Fragment>
       <button
         onClick={() => setDrawOpen(true)}
-        style={{ height: "100%", width: "100%", ...props.font?.css() }}
+        style={{
+          height: "100%",
+          width: "100%",
+          ...props.font?.css(),
+          ...props.border?.css(),
+          color: props.foregroundColor?.rgbaString(),
+          backgroundColor: props.backgroundColor?.rgbaString(),
+        }}
       >
         {props.text ?? "\u2630"}
       </button>
