@@ -15,6 +15,7 @@ interface JsonBorder {
   style: string;
   color: string;
   width: number;
+  radius?: number;
 }
 
 interface JsonFont {
@@ -66,7 +67,8 @@ function jsonParseBorder(jsonBorder: JsonBorder): Border {
   return new Border(
     styles[jsonBorder.style.toLowerCase()],
     jsonParseColor(jsonBorder.color),
-    jsonBorder.width
+    jsonBorder.width,
+    jsonBorder.radius
   );
 }
 

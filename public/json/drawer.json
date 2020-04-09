@@ -18,14 +18,57 @@
       "width": "100%",
       "height": "100%",
       "backgroundColor": "#012265",
+      "border": {
+        "style": "line",
+        "color": "#ffcf00",
+        "width": 3
+      },
       "children": [
+        {
+          "type": "shape",
+          "position": "relative",
+          "height": "3vh",
+          "width": "100%",
+          "shapeColor": "#012265"
+        },
+        {
+          "type": "actionbutton",
+          "text": "\u2302 Home",
+          "position": "relative",
+          "width": "100%",
+          "height": "4rem",
+          "margin": "1% 5% 1% 5%",
+          "foregroundColor": "#012265",
+          "backgroundColor": "#ffcf00",
+          "font": {
+            "size": "25"
+          },
+          "border": {
+            "style": "none",
+            "color": "#ffcf00",
+            "width": 1
+          },
+          "actions": {
+            "executeAsOne": false,
+            "actions": [
+              {
+                "type": "OPEN_PAGE",
+                "openPageInfo": {
+                  "location": "app",
+                  "page": "beamline",
+                  "macros": "{}"
+                }
+              }
+            ]
+          }
+        },
         {
           "type": "actionbutton",
           "text": "Beamline Synoptic",
           "position": "relative",
           "width": "100%",
           "height": "4rem",
-          "margin": "5% 5% 1% 5%",
+          "margin": "1% 5% 1% 5%",
           "foregroundColor": "#012265",
           "backgroundColor": "#ffcf00",
           "font": {
@@ -172,6 +215,13 @@
               }
             }
           ]
+        },
+        {
+          "type": "shape",
+          "position": "relative",
+          "height": "3vh",
+          "width": "100%",
+          "shapeColor": "#012265"
         }
       ]
     }

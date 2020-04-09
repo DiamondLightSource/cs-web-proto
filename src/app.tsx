@@ -58,7 +58,7 @@ const App: React.FC = (): JSX.Element => {
     <BaseUrlContext.Provider value={baseUrl}>
       <BrowserRouter>
         <Switch>
-          <Redirect exact from="/" to="/app/menu/{}/" />
+          <Redirect exact from="/" to="/app/home/{}/" />
           <Provider store={store}>
             <div className="App">
               <button type="button" onClick={toggle}>
