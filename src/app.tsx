@@ -1,7 +1,7 @@
 import React, { Profiler } from "react";
 import "./app.css";
 import { Provider } from "react-redux";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, Redirect, Switch } from "react-router-dom";
 import { getStore, initialiseStore } from "./redux/store";
 import log from "loglevel";
 import { lightTheme, darkTheme, ThemeContext } from "./themeContext";
@@ -57,25 +57,28 @@ const App: React.FC = (): JSX.Element => {
   return (
     <BaseUrlContext.Provider value={baseUrl}>
       <BrowserRouter>
-        <Provider store={store}>
-          <div className="App">
-            <button type="button" onClick={toggle}>
-              Toggle Theme
-            </button>
-            <Profiler id="Dynamic Page Profiler" onRender={onRenderCallback}>
-              {/* <DynamicPageWidget
+        <Switch>
+          <Redirect exact from="/" to="/app/menu/{}/" />
+          <Provider store={store}>
+            <div className="App">
+              <button type="button" onClick={toggle}>
+                Toggle Theme
+              </button>
+              <Profiler id="Dynamic Page Profiler" onRender={onRenderCallback}>
+                {/* <DynamicPageWidget
                 routePath="app"
                 position={new RelativePosition()}
               /> */}
-              <EmbeddedDisplay
-                position={new RelativePosition()}
-                file="app.json"
-                filetype="json"
-                defaultProtocol="pva"
-              />
-            </Profiler>
-          </div>
-        </Provider>
+                <EmbeddedDisplay
+                  position={new RelativePosition()}
+                  file="app.json"
+                  filetype="json"
+                  defaultProtocol="pva"
+                />
+              </Profiler>
+            </div>
+          </Provider>
+        </Switch>
       </BrowserRouter>
     </BaseUrlContext.Provider>
   );
