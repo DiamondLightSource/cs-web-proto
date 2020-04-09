@@ -8,10 +8,8 @@ import { lightTheme, darkTheme, ThemeContext } from "./themeContext";
 import { SimulatorPlugin } from "./connection/sim";
 import { ConiqlPlugin } from "./connection/coniql";
 import { ConnectionForwarder } from "./connection/forwarder";
-import { DynamicPageWidget } from "./ui/widgets/DynamicPage/dynamicPage";
 import { Connection } from "./connection/plugin";
-import { ActionButton } from "./ui/widgets";
-import { OPEN_PAGE } from "./ui/widgets/widgetActions";
+import { EmbeddedDisplay } from "./ui/widgets";
 import { BaseUrlContext } from "./baseUrl";
 import { onRenderCallback } from "./profilerCallback";
 import { RelativePosition } from "./types/position";
@@ -64,27 +62,16 @@ const App: React.FC = (): JSX.Element => {
             <button type="button" onClick={toggle}>
               Toggle Theme
             </button>
-            <ActionButton
-              position={new RelativePosition("100px", "30px", "auto")}
-              text="Main Menu"
-              actions={{
-                executeAsOne: false,
-                actions: [
-                  {
-                    type: OPEN_PAGE,
-                    openPageInfo: {
-                      location: "app",
-                      page: "menu",
-                      macros: "{}"
-                    }
-                  }
-                ]
-              }}
-            />
             <Profiler id="Dynamic Page Profiler" onRender={onRenderCallback}>
-              <DynamicPageWidget
+              {/* <DynamicPageWidget
                 routePath="app"
                 position={new RelativePosition()}
+              /> */}
+              <EmbeddedDisplay
+                position={new RelativePosition()}
+                file="app.json"
+                filetype="json"
+                defaultProtocol="pva"
               />
             </Profiler>
           </div>
