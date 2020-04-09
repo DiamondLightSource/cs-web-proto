@@ -13,7 +13,8 @@ import {
   ChoicePropOpt,
   InferWidgetProps,
   StringOrNumPropOpt,
-  BorderPropOpt
+  BorderPropOpt,
+  ColorPropOpt
 } from "../propTypes";
 
 export const SlideshowProps = {
@@ -21,7 +22,8 @@ export const SlideshowProps = {
   overflow: ChoicePropOpt(["scroll", "hidden", "auto", "visible"]),
   maxHeight: StringOrNumPropOpt,
   maxWidth: StringOrNumPropOpt,
-  border: BorderPropOpt
+  border: BorderPropOpt,
+  backgroundColor: ColorPropOpt
 };
 
 export const SwitchableWidget = (props: {
@@ -73,7 +75,8 @@ export const SlideshowComponent = (
       style={{
         maxWidth: props.maxWidth ?? "",
         maxHeight: props.maxHeight ?? "",
-        ...(props.border?.css() ?? "")
+        ...props.border?.css(),
+        backgroundColor: props.backgroundColor?.rgbaString()
       }}
     >
       <button
@@ -141,7 +144,7 @@ export const SlideshowComponent = (
 };
 
 export const SlideshowWidgetProps = {
-  ...SlideshowComponent,
+  ...SlideshowProps,
   ...WidgetPropType
 };
 
