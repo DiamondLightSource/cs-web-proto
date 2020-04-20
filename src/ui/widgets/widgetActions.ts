@@ -3,6 +3,14 @@ import { valueToVtype } from "../../types/vtypes/utils";
 import { History } from "history";
 import log from "loglevel";
 
+import {
+  UrlPageDescription,
+  putUrlInfoToHistory,
+  updatePageDesciption,
+  removePageDescription,
+  getUrlInfoFromHistory
+} from "./urlControl";
+
 export const OPEN_PAGE = "OPEN_PAGE";
 export const CLOSE_PAGE = "CLOSE_PAGE";
 export const OPEN_WEBPAGE = "OPEN_WEBPAGE";
@@ -18,8 +26,7 @@ export interface OpenPage {
   type: typeof OPEN_PAGE;
   openPageInfo: {
     page: string;
-    location: string;
-    macros: string;
+    pageDescription: UrlPageDescription;
     description: string;
   };
 }
@@ -27,7 +34,7 @@ export interface OpenPage {
 export interface ClosePage {
   type: typeof CLOSE_PAGE;
   closePageInfo: {
-    location: string;
+    page: string;
     description: string;
   };
 }
@@ -87,7 +94,7 @@ export const getActionDescription = (action: WidgetAction): string => {
       if (action.closePageInfo.description) {
         return action.closePageInfo.description;
       } else {
-        return `Open ${action.closePageInfo.location}`;
+        return `Open ${action.closePageInfo.page}`;
       }
     default:
       throw new InvalidAction(action);
@@ -96,42 +103,21 @@ export const getActionDescription = (action: WidgetAction): string => {
 
 export const openPage = (action: OpenPage, history: History): void => {
   //Find current browser path: currentPath
-  let currentPath = "";
-  if (history.location.pathname !== undefined)
-    currentPath = history.location.pathname;
-  const { location, page, macros } = action.openPageInfo;
-
-  //New page component in action.location
-  const newPathComponent = location + "/" + page + "/" + macros + "/";
-
-  //Find existing component in same location
-  const matcher = new RegExp(location + "/[^/]*/[^/]*/");
-  const groups = matcher.exec(currentPath);
-  if (groups !== null && groups[0] !== undefined) {
-    //Swap component in location
-    currentPath = currentPath.replace(groups[0], newPathComponent);
-  } else {
-    //Append component in location
-    currentPath = currentPath + newPathComponent;
-  }
-  history.push(currentPath);
+  const currentUrlInfo = getUrlInfoFromHistory(history);
+  const { page, pageDescription } = action.openPageInfo;
+  const newUrlInfo = updatePageDesciption(
+    currentUrlInfo,
+    page,
+    pageDescription
+  );
+  putUrlInfoToHistory(history, newUrlInfo);
 };
 
 export const closePage = (action: ClosePage, history: History): void => {
-  const { location } = action.closePageInfo;
-  //Find current browser path: currentPath
-  let currentPath = "";
-  if (history.location.pathname !== undefined)
-    currentPath = history.location.pathname;
-
-  //Find any existing component in action location
-  const matcher = new RegExp(location + "/[^/]*/[^/]*/");
-  const groups = matcher.exec(currentPath);
-  if (groups !== null && groups[0] !== undefined) {
-    //Remove component in location
-    currentPath = currentPath.replace(groups[0], "");
-  }
-  history.push(currentPath);
+  const currentUrlInfo = getUrlInfoFromHistory(history);
+  const { page } = action.closePageInfo;
+  const newUrlInfo = removePageDescription(currentUrlInfo, page);
+  putUrlInfoToHistory(history, newUrlInfo);
 };
 
 export const executeAction = (

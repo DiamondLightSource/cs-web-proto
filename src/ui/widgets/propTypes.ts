@@ -107,8 +107,11 @@ const OpenPagePropType = PropTypes.shape({
   type: StringProp,
   openPageInfo: PropTypes.shape({
     page: StringProp,
-    location: StringProp,
-    macros: StringProp,
+    pageDescription: PropTypes.shape({
+      filename: PropTypes.string,
+      filetype: PropTypes.oneOf(["bob", "opi", "json"]),
+      macros: MacrosProp
+    }),
     description: StringPropOpt
   }).isRequired
 });
@@ -116,7 +119,7 @@ const OpenPagePropType = PropTypes.shape({
 const ClosePagePropType = PropTypes.shape({
   type: StringProp,
   closePageInfo: PropTypes.shape({
-    location: StringProp,
+    page: StringProp,
     description: StringPropOpt
   }).isRequired
 });
