@@ -3,33 +3,41 @@
   "position": "relative",
   "width": "100%",
   "height": "100%",
-  "minWidth": "800px",
-  "maxWidth": "1200px",
+  "maxWidth": "800px",
   "margin": "auto",
-  "backgroundColor": "white",
+  "backgroundColor": "#012265",
   "children": [
     {
       "type": "label",
       "position": "relative",
-      "backgroundColor": "white",
-      "color": "black",
-      "fontSize": "3rem",
-      "fontWeight": "bold",
+      "foregroundColor": "#ffcf00",
+      "backgroundColor": "#012265",
+      "font": {
+        "size": "30",
+        "weight": "bold"
+      },
       "text": "ID & Front End Status"
     },
     {
       "type": "readback",
       "position": "relative",
-      "fontSize": "1.5rem",
-      "backgroundColor": "white",
-      "color": "black",
+      "font": {
+        "size": "20"
+      },
+      "foregroundColor": "#ffcf00",
+      "backgroundColor": "#012265",
+      "border": {
+        "style": "line",
+        "color": "#ffcf00",
+        "width": 1
+      },
+      "padding": "1%",
       "pvName": "ca://CS-CS-MSTAT-01:TIME"
     },
     {
       "type": "flexcontainer",
       "position": "relative",
       "width": "100%",
-      "backgroundColor": "white",
       "children": [
         {
           "type": "flexcontainer",
@@ -37,28 +45,35 @@
           "width": "48%",
           "margin": "1%",
           "minWidth": "300px",
-          "backgroundColor": "white",
           "children": [
             {
               "type": "label",
               "position": "relative",
-              "width": "50%",
-              "fontSize": "1.5rem",
-              "fontWeight": "bold",
-              "backgroundColor": "white",
+              "width": "45%",
+              "font": {
+                "size": "20",
+                "weight": "bold"
+              },
+              "foregroundColor": "#ffcf00",
+              "backgroundColor": "#012265",
               "textAlign": "right",
               "text": "Lifetime"
             },
             {
               "type": "readback",
               "position": "relative",
-              "width": "50%",
-              "fontSize": "1.5rem",
-              "color": "black",
+              "width": "45%",
+              "font": {
+                "size": "20"
+              },
+              "border": {
+                "style": "line",
+                "color": "#ffcf00",
+                "width": 2
+              },
               "backgroundColor": "white",
               "showUnits": true,
               "precision": 2,
-              "textAlign": "left",
               "pvName": "ca://SR-DI-DCCT-01:LIFETIME"
             }
           ]
@@ -69,29 +84,63 @@
           "width": "48%",
           "margin": "1%",
           "minWidth": "300px",
-          "backgroundColor": "white",
           "children": [
             {
               "type": "label",
               "position": "relative",
-              "width": "50%",
-              "fontSize": "1.5rem",
-              "fontWeight": "bold",
-              "backgroundColor": "white",
+              "width": "45%",
+              "font": {
+                "size": "20",
+                "weight": "bold"
+              },
+              "foregroundColor": "#ffcf00",
+              "backgroundColor": "#012265",
               "text": "Current"
             },
             {
               "type": "readback",
               "position": "relative",
-              "width": "50%",
-              "fontSize": "1.5rem",
-              "color": "black",
+              "width": "45%",
+              "font": {
+                "size": "20"
+              },
+              "border": {
+                "style": "line",
+                "color": "#ffcf00",
+                "width": 2
+              },
               "backgroundColor": "white",
               "showUnits": true,
               "precision": 2,
               "pvName": "ca://SR-DI-DCCT-01:SIGNAL"
             }
           ]
+        }
+      ]
+    },
+    {
+      "type": "slideshow",
+      "position": "relative",
+      "width": "100%",
+      "maxWidth": "600px",
+      "margin": "auto",
+      "children": [
+        {
+          "type": "embeddedDisplay",
+          "position": "relative",
+          "width": "100%",
+          "file": "frontEndStatus.json",
+          "filetype": "json",
+          "defaultProtocol": "ca",
+          "margin": "5% 0 0 0",
+          "macroMap": {
+            "Beamline": "I02",
+            "GAP": "SR02I-MO-SERVC-01:CURRGAPD",
+            "FIELD": "SR02I-MO-SERVC-01:FIELD",
+            "PORT": "FE02I-PS-SHTR-01:STA",
+            "OPTICS": "FE02I-PS-SHTR-02:STA",
+            "EXPTL": "BL02I-PS-SHTR-01:STA"
+          }
         }
       ]
     },
