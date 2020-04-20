@@ -72,7 +72,7 @@
           },
           "foregroundColor": "#ffcf00",
           "backgroundColor": "#012265",
-          "precision": 1,
+          "precision": 2,
           "pvName": "${FIELD}"
         },
         {
@@ -108,14 +108,14 @@
               "outExp": false,
               "pvs": [
                 {
-                  "pvName": "${EXPTL}",
+                  "pvName": "${PORT}",
                   "trigger": true
                 }
               ],
               "expressions": [
                 {
                   "boolExp": "pv0 == 1",
-                  "value": "green"
+                  "value": "#00cc00"
                 }
               ]
             }
@@ -154,14 +154,14 @@
               "outExp": false,
               "pvs": [
                 {
-                  "pvName": "${EXPTL}",
+                  "pvName": "${OPTICS}",
                   "trigger": true
                 }
               ],
               "expressions": [
                 {
                   "boolExp": "pv0 == 1",
-                  "value": "green"
+                  "value": "#00cc00"
                 }
               ]
             }
@@ -207,7 +207,7 @@
               "expressions": [
                 {
                   "boolExp": "pv0 == 1",
-                  "value": "green"
+                  "value": "#00cc00"
                 }
               ]
             }

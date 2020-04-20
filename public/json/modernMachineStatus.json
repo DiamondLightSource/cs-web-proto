@@ -141,350 +141,159 @@
             "OPTICS": "FE02I-PS-SHTR-02:STA",
             "EXPTL": "BL02I-PS-SHTR-01:STA"
           }
-        }
-      ]
-    },
-    {
-      "type": "display",
-      "position": "relative",
-      "children": [
-        {
-          "type": "flexcontainer",
-          "position": "relative",
-          "width": "100%",
-          "backgroundColor": "white",
-          "children": [
-            {
-              "type": "label",
-              "position": "relative",
-              "width": "10%",
-              "fontSize": "1.5rem",
-              "fontWeight": "bold",
-              "backgroundColor": "white",
-              "text": "B/L"
-            },
-            {
-              "type": "label",
-              "position": "relative",
-              "width": "18%",
-              "fontSize": "1.5rem",
-              "fontWeight": "bold",
-              "backgroundColor": "white",
-              "text": "Gap"
-            },
-            {
-              "type": "label",
-              "position": "relative",
-              "width": "18%",
-              "fontSize": "1.5rem",
-              "fontWeight": "bold",
-              "backgroundColor": "white",
-              "text": "Field"
-            },
-            {
-              "type": "label",
-              "position": "relative",
-              "width": "18%",
-              "fontSize": "1.5rem",
-              "fontWeight": "bold",
-              "backgroundColor": "white",
-              "text": "Port"
-            },
-            {
-              "type": "label",
-              "position": "relative",
-              "width": "18%",
-              "fontSize": "1.5rem",
-              "fontWeight": "bold",
-              "backgroundColor": "white",
-              "text": "Optics"
-            },
-            {
-              "type": "label",
-              "position": "relative",
-              "width": "18%",
-              "fontSize": "1.5rem",
-              "fontWeight": "bold",
-              "backgroundColor": "white",
-              "text": "Exptl"
-            }
-          ]
         },
         {
-          "type": "flexcontainer",
+          "type": "embeddedDisplay",
           "position": "relative",
           "width": "100%",
-          "backgroundColor": "white",
-          "children": [
-            {
-              "type": "label",
-              "position": "relative",
-              "width": "10%",
-              "fontSize": "1.5rem",
-              "fontWeight": "bold",
-              "backgroundColor": "white",
-              "text": "I02"
-            },
-            {
-              "type": "readback",
-              "position": "relative",
-              "width": "18%",
-              "fontSize": "1.5rem",
-              "fontWeight": "bold",
-              "backgroundColor": "white",
-              "precision": 1,
-              "color": "black",
-              "pvName": "ca://SR02I-MO-SERVC-01:CURRGAPD"
-            },
-            {
-              "type": "readback",
-              "position": "relative",
-              "width": "18%",
-              "fontSize": "1.5rem",
-              "fontWeight": "bold",
-              "backgroundColor": "white",
-              "precision": 2,
-              "color": "black",
-              "pvName": "ca://SR02I-MO-SERVC-01:FIELD"
-            },
-            {
-              "type": "readback",
-              "position": "relative",
-              "width": "18%",
-              "fontSize": "1.5rem",
-              "fontWeight": "bold",
-              "backgroundColor": "white",
-              "color": "black",
-              "pvName": "ca://FE02I-PS-SHTR-01:STA"
-            },
-            {
-              "type": "readback",
-              "position": "relative",
-              "width": "18%",
-              "fontSize": "1.5rem",
-              "fontWeight": "bold",
-              "backgroundColor": "white",
-              "color": "black",
-              "pvName": "ca://FE02I-PS-SHTR-02:STA"
-            },
-            {
-              "type": "readback",
-              "position": "relative",
-              "width": "18%",
-              "fontSize": "1.5rem",
-              "fontWeight": "bold",
-              "backgroundColor": "white",
-              "color": "black",
-              "pvName": "ca://BL02I-PS-SHTR-01:STA"
-            }
-          ]
+          "file": "frontEndStatus.json",
+          "filetype": "json",
+          "defaultProtocol": "ca",
+          "margin": "5% 0 0 0",
+          "macroMap": {
+            "Beamline": "J02",
+            "GAP": "SR02J-MO-SERVC-01:CURRGAPD",
+            "FIELD": "SR02J-MO-SERVC-01:FIELD",
+            "PORT": "FE02J-PS-SHTR-01:STA",
+            "OPTICS": "FE02J-PS-SHTR-02:STA",
+            "EXPTL": "BL02J-PS-SHTR-01:STA"
+          }
         },
         {
-          "type": "flexcontainer",
+          "type": "embeddedDisplay",
           "position": "relative",
           "width": "100%",
-          "backgroundColor": "white",
-          "children": [
-            {
-              "type": "label",
-              "position": "relative",
-              "width": "10%",
-              "fontSize": "1.5rem",
-              "fontWeight": "bold",
-              "backgroundColor": "white",
-              "text": "J02"
-            },
-            {
-              "type": "readback",
-              "position": "relative",
-              "width": "18%",
-              "fontSize": "1.5rem",
-              "fontWeight": "bold",
-              "backgroundColor": "white",
-              "precision": 1,
-              "color": "black",
-              "pvName": "ca://SR02J-MO-SERVC-01:CURRGAPD"
-            },
-            {
-              "type": "readback",
-              "position": "relative",
-              "width": "18%",
-              "fontSize": "1.5rem",
-              "fontWeight": "bold",
-              "backgroundColor": "white",
-              "precision": 2,
-              "color": "black",
-              "pvName": "ca://SR02J-MO-SERVC-01:FIELD"
-            },
-            {
-              "type": "readback",
-              "position": "relative",
-              "width": "18%",
-              "fontSize": "1.5rem",
-              "fontWeight": "bold",
-              "backgroundColor": "white",
-              "color": "black",
-              "pvName": "ca://FE02J-PS-SHTR-01:STA"
-            },
-            {
-              "type": "readback",
-              "position": "relative",
-              "width": "18%",
-              "fontSize": "1.5rem",
-              "fontWeight": "bold",
-              "backgroundColor": "white",
-              "color": "black",
-              "pvName": "ca://FE02J-PS-SHTR-02:STA"
-            },
-            {
-              "type": "readback",
-              "position": "relative",
-              "width": "18%",
-              "fontSize": "1.5rem",
-              "fontWeight": "bold",
-              "backgroundColor": "white",
-              "color": "black",
-              "pvName": "ca://BL02J-PS-SHTR-01:STA"
-            }
-          ]
+          "file": "frontEndStatus.json",
+          "filetype": "json",
+          "defaultProtocol": "ca",
+          "margin": "5% 0 0 0",
+          "macroMap": {
+            "Beamline": "I03",
+            "GAP": "SR03I-MO-SERVC-01:CURRGAPD",
+            "FIELD": "SR03I-MO-SERVC-01:FIELD",
+            "PORT": "FE03I-PS-SHTR-01:STA",
+            "OPTICS": "FE03I-PS-SHTR-02:STA",
+            "EXPTL": "BL03I-PS-SHTR-01:STA"
+          }
         },
         {
-          "type": "flexcontainer",
+          "type": "embeddedDisplay",
           "position": "relative",
           "width": "100%",
-          "backgroundColor": "white",
-          "children": [
-            {
-              "type": "label",
-              "position": "relative",
-              "width": "10%",
-              "fontSize": "1.5rem",
-              "fontWeight": "bold",
-              "backgroundColor": "white",
-              "text": "I03"
-            },
-            {
-              "type": "readback",
-              "position": "relative",
-              "width": "18%",
-              "fontSize": "1.5rem",
-              "fontWeight": "bold",
-              "backgroundColor": "white",
-              "precision": 1,
-              "color": "black",
-              "pvName": "ca://SR03I-MO-SERVC-01:CURRGAPD"
-            },
-            {
-              "type": "readback",
-              "position": "relative",
-              "width": "18%",
-              "fontSize": "1.5rem",
-              "fontWeight": "bold",
-              "backgroundColor": "white",
-              "precision": 2,
-              "color": "black",
-              "pvName": "ca://SR03I-MO-SERVC-01:FIELD"
-            },
-            {
-              "type": "readback",
-              "position": "relative",
-              "width": "18%",
-              "fontSize": "1.5rem",
-              "fontWeight": "bold",
-              "backgroundColor": "white",
-              "color": "black",
-              "pvName": "ca://FE03I-PS-SHTR-01:STA"
-            },
-            {
-              "type": "readback",
-              "position": "relative",
-              "width": "18%",
-              "fontSize": "1.5rem",
-              "fontWeight": "bold",
-              "backgroundColor": "white",
-              "color": "black",
-              "pvName": "ca://FE03I-PS-SHTR-02:STA"
-            },
-            {
-              "type": "readback",
-              "position": "relative",
-              "width": "18%",
-              "fontSize": "1.5rem",
-              "fontWeight": "bold",
-              "backgroundColor": "white",
-              "color": "black",
-              "pvName": "ca://BL03I-PS-SHTR-01:STA"
-            }
-          ]
+          "file": "frontEndStatus.json",
+          "filetype": "json",
+          "defaultProtocol": "ca",
+          "margin": "5% 0 0 0",
+          "macroMap": {
+            "Beamline": "I04",
+            "GAP": "SR04I-MO-SERVC-01:CURRGAPD",
+            "FIELD": "SR04I-MO-SERVC-01:FIELD",
+            "PORT": "FE04I-PS-SHTR-01:STA",
+            "OPTICS": "FE04I-PS-SHTR-02:STA",
+            "EXPTL": "BL04I-PS-SHTR-01:STA"
+          }
         },
         {
-          "type": "flexcontainer",
+          "type": "embeddedDisplay",
           "position": "relative",
           "width": "100%",
-          "backgroundColor": "white",
-          "children": [
-            {
-              "type": "label",
-              "position": "relative",
-              "width": "10%",
-              "fontSize": "1.5rem",
-              "fontWeight": "bold",
-              "backgroundColor": "white",
-              "text": "I04"
-            },
-            {
-              "type": "readback",
-              "position": "relative",
-              "width": "18%",
-              "fontSize": "1.5rem",
-              "fontWeight": "bold",
-              "backgroundColor": "white",
-              "precision": 1,
-              "color": "black",
-              "pvName": "ca://SR04I-MO-SERVC-01:CURRGAPD"
-            },
-            {
-              "type": "readback",
-              "position": "relative",
-              "width": "18%",
-              "fontSize": "1.5rem",
-              "fontWeight": "bold",
-              "backgroundColor": "white",
-              "precision": 2,
-              "color": "black",
-              "pvName": "ca://SR04I-MO-SERVC-01:FIELD"
-            },
-            {
-              "type": "readback",
-              "position": "relative",
-              "width": "18%",
-              "fontSize": "1.5rem",
-              "fontWeight": "bold",
-              "backgroundColor": "white",
-              "color": "black",
-              "pvName": "ca://FE04I-PS-SHTR-01:STA"
-            },
-            {
-              "type": "readback",
-              "position": "relative",
-              "width": "18%",
-              "fontSize": "1.5rem",
-              "fontWeight": "bold",
-              "backgroundColor": "white",
-              "color": "black",
-              "pvName": "ca://FE04I-PS-SHTR-02:STA"
-            },
-            {
-              "type": "readback",
-              "position": "relative",
-              "width": "18%",
-              "fontSize": "1.5rem",
-              "fontWeight": "bold",
-              "backgroundColor": "white",
-              "color": "black",
-              "pvName": "ca://BL04I-PS-SHTR-01:STA"
-            }
-          ]
+          "file": "frontEndStatus.json",
+          "filetype": "json",
+          "defaultProtocol": "ca",
+          "margin": "5% 0 0 0",
+          "macroMap": {
+            "Beamline": "J04",
+            "GAP": "SR04J-MO-SERVC-01:CURRGAPD",
+            "FIELD": "SR044-MO-SERVC-01:FIELD",
+            "PORT": "FE04I-PS-SHTR-01:STA",
+            "OPTICS": "BL04J-PS-SHTR-01:STA",
+            "EXPTL": "BL04J-PS-SHTR-01:STA"
+          }
+        },
+        {
+          "type": "embeddedDisplay",
+          "position": "relative",
+          "width": "100%",
+          "file": "frontEndStatus.json",
+          "filetype": "json",
+          "defaultProtocol": "ca",
+          "margin": "5% 0 0 0",
+          "macroMap": {
+            "Beamline": "I05",
+            "GAP": "SR06I-MO-SERVC-01:CURRGAPD",
+            "FIELD": "SR06I-MO-SERVC-01:FIELD",
+            "PORT": "FE06I-PS-SHTR-01:STA",
+            "OPTICS": "FE06I-PS-SHTR-02:STA",
+            "EXPTL": "BL06I-PS-SHTR-01:STA"
+          }
+        },
+        {
+          "type": "embeddedDisplay",
+          "position": "relative",
+          "width": "100%",
+          "file": "frontEndStatus.json",
+          "filetype": "json",
+          "defaultProtocol": "ca",
+          "margin": "5% 0 0 0",
+          "macroMap": {
+            "Beamline": "I06",
+            "GAP": "SR06I-MO-SERVC-01:CURRGAPD",
+            "FIELD": "SR06I-MO-SERVC-01:FIELD",
+            "PORT": "FE06I-PS-SHTR-01:STA",
+            "OPTICS": "FE06I-PS-SHTR-02:STA",
+            "EXPTL": "BL06I-PS-SHTR-01:STA"
+          }
+        },
+        {
+          "type": "embeddedDisplay",
+          "position": "relative",
+          "width": "100%",
+          "file": "frontEndStatus.json",
+          "filetype": "json",
+          "defaultProtocol": "ca",
+          "margin": "5% 0 0 0",
+          "macroMap": {
+            "Beamline": "I07",
+            "GAP": "SR07I-MO-SERVC-01:CURRGAPD",
+            "FIELD": "SR07I-MO-SERVC-01:FIELD",
+            "PORT": "FE07I-PS-SHTR-01:STA",
+            "OPTICS": "FE07I-PS-SHTR-02:STA",
+            "EXPTL": "BL07I-PS-SHTR-01:STA"
+          }
+        },
+        {
+          "type": "embeddedDisplay",
+          "position": "relative",
+          "width": "100%",
+          "file": "frontEndStatus.json",
+          "filetype": "json",
+          "defaultProtocol": "ca",
+          "margin": "5% 0 0 0",
+          "macroMap": {
+            "Beamline": "I08",
+            "GAP": "SR08I-MO-SERVC-01:CURRGAPD",
+            "FIELD": "SR08I-MO-SERVC-01:FIELD",
+            "PORT": "FE08I-PS-SHTR-01:STA",
+            "OPTICS": "FE08I-PS-SHTR-02:STA",
+            "EXPTL": "BL08I-PS-SHTR-01:STA"
+          }
+        },
+        {
+          "type": "embeddedDisplay",
+          "position": "relative",
+          "width": "100%",
+          "file": "frontEndStatus.json",
+          "filetype": "json",
+          "defaultProtocol": "ca",
+          "margin": "5% 0 0 0",
+          "macroMap": {
+            "Beamline": "I09",
+            "GAP": "SR09I-MO-SERVC-01:CURRGAPD",
+            "FIELD": "SR09I-MO-SERVC-01:FIELD",
+            "PORT": "FE09I-PS-SHTR-01:STA",
+            "OPTICS": "FE09I-PS-SHTR-02:STA",
+            "EXPTL": "BL09I-PS-SHTR-01:STA"
+          }
         }
       ]
     }
