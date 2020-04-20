@@ -58,7 +58,22 @@ const App: React.FC = (): JSX.Element => {
     <BaseUrlContext.Provider value={baseUrl}>
       <BrowserRouter>
         <Switch>
-          <Redirect exact from="/" to="/app/home/{}/" />
+          <Redirect
+            exact
+            from="/"
+            to={
+              "/" +
+              encodeURIComponent(
+                JSON.stringify({
+                  app: {
+                    filename: "home",
+                    filetype: "json",
+                    macros: {}
+                  }
+                })
+              )
+            }
+          />
           <Provider store={store}>
             <div className="App">
               <button type="button" onClick={toggle}>
