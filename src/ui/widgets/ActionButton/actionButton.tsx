@@ -11,11 +11,13 @@ import {
   StringPropOpt,
   InferWidgetProps,
   ColorPropOpt,
-  FontPropOpt
+  FontPropOpt,
+  BorderPropOpt
 } from "../propTypes";
 import { BaseUrlContext } from "../../../baseUrl";
 import { Color } from "../../../types/color";
 import { Font } from "../../../types/font";
+import { Border } from "../../../types/border";
 
 export interface ActionButtonProps {
   text: string;
@@ -23,6 +25,7 @@ export interface ActionButtonProps {
   image?: string;
   backgroundColor?: Color;
   foregroundColor?: Color;
+  border?: Border;
   font?: Font;
 }
 
@@ -41,7 +44,8 @@ export const ActionButtonComponent = (
       style={{
         backgroundColor: props.backgroundColor?.rgbaString(),
         color: props.foregroundColor?.rgbaString(),
-        ...props.font?.css()
+        ...props.font?.css(),
+        ...props.border?.css()
       }}
     >
       {src !== undefined ? (
@@ -62,7 +66,8 @@ const ActionButtonPropType = {
   image: StringPropOpt,
   backgroundColor: ColorPropOpt,
   foregroundColor: ColorPropOpt,
-  font: FontPropOpt
+  font: FontPropOpt,
+  border: BorderPropOpt
 };
 
 const ActionButtonProps = {
@@ -88,6 +93,7 @@ export const ActionButtonWidget = (
       backgroundColor={props.backgroundColor}
       foregroundColor={props.foregroundColor}
       font={props.font}
+      border={props.border}
     />
   );
 };

@@ -1,0 +1,68 @@
+{
+  "type": "display",
+  "position": "relative",
+  "width": "90%",
+  "maxWidth": "1000px",
+  "margin": "auto",
+  "children": [
+    {
+      "type": "input",
+      "position": "relative",
+      "pvName": "loc://pv1"
+    },
+    {
+      "type": "input",
+      "position": "relative",
+      "pvName": "loc://pv2"
+    },
+    {
+      "type": "input",
+      "position": "relative",
+      "pvName": "loc://pv3"
+    },
+    {
+      "type": "slideshow",
+      "position": "relative",
+      "height": "300px",
+      "overflow": "auto",
+      "margin": "20px 0 0 0",
+      "border": {
+        "style": "line",
+        "width": 3,
+        "color": "black"
+      },
+      "children": [
+        {
+          "type": "readback",
+          "position": "relative",
+          "width": "100%",
+          "pvName": "loc://pv1"
+        },
+        {
+          "type": "readback",
+          "position": "relative",
+          "width": "100%",
+          "pvName": "loc://pv2"
+        },
+        {
+          "type": "readback",
+          "position": "relative",
+          "width": "100%",
+          "pvName": "loc://pv3"
+        },
+        {
+          "type": "embeddedDisplay",
+          "file": "frontPage.json",
+          "filetype": "json",
+          "defaultProtocol": "ca"
+        },
+        {
+          "type": "embeddedDisplay",
+          "file": "performance.json",
+          "filetype": "json",
+          "defaultProtocol": "ca"
+        }
+      ]
+    }
+  ]
+}

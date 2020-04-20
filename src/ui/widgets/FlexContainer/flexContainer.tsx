@@ -8,12 +8,14 @@ import {
   ChildrenPropOpt,
   ChoicePropOpt,
   InferWidgetProps,
-  BorderPropOpt
+  BorderPropOpt,
+  ColorPropOpt
 } from "../propTypes";
 
 const FlexProps = {
   flexFlow: ChoicePropOpt(["rowWrap", "column", "row", "columnWrap"]),
   children: ChildrenPropOpt,
+  backgroundColor: ColorPropOpt,
   border: BorderPropOpt
 };
 
@@ -26,7 +28,13 @@ export const FlexContainerComponent = (
     classNames.push(classes[flexFlow]);
   }
   return (
-    <div className={classNames.join(" ")} style={{ ...props.border?.css() }}>
+    <div
+      className={classNames.join(" ")}
+      style={{
+        ...props.border?.css(),
+        backgroundColor: props.backgroundColor?.rgbaString()
+      }}
+    >
       {props.children}
     </div>
   );
