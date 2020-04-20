@@ -35,7 +35,7 @@ export class Border {
     this.style = style;
     this.color = color;
     this.width = width;
-    this.radius = radius;
+    this.radius = radius ?? 0;
   }
 
   public css(): object {
@@ -43,7 +43,7 @@ export class Border {
       borderStyle: CssBorders[this.style],
       borderWidth: `${this.width}px`,
       borderColor: this.color.rgbaString(),
-      borderRadius: `${this.radius ?? 0}px`
+      borderRadius: `${this.radius}px`
     };
   }
 }

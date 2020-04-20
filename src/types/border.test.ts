@@ -7,7 +7,8 @@ describe("Border", () => {
     expect(border.css()).toEqual({
       borderStyle: "solid",
       borderWidth: "1px",
-      borderColor: "rgba(255, 0, 0, 255)"
+      borderColor: "rgba(255, 0, 0, 255)",
+      borderRadius: "0px"
     });
   });
 });
