@@ -22,6 +22,7 @@ export const SlideshowProps = {
   overflow: ChoicePropOpt(["scroll", "hidden", "auto", "visible"]),
   maxHeight: StringOrNumPropOpt,
   maxWidth: StringOrNumPropOpt,
+  minHeight: StringOrNumPropOpt,
   border: BorderPropOpt,
   backgroundColor: ColorPropOpt
 };
@@ -75,6 +76,7 @@ export const SlideshowComponent = (
       style={{
         maxWidth: props.maxWidth ?? "",
         maxHeight: props.maxHeight ?? "",
+        minHeight: props.minHeight ?? "",
         ...props.border?.css(),
         backgroundColor: props.backgroundColor?.rgbaString()
       }}

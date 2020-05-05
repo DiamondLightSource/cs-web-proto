@@ -15,6 +15,7 @@ export class AbsolutePosition {
   public padding: string;
   public minWidth: string;
   public maxWidth: string;
+  public minHeight: string;
 
   public constructor(
     x: string,
@@ -24,7 +25,8 @@ export class AbsolutePosition {
     margin = "",
     padding = "",
     minWidth = "",
-    maxWidth = ""
+    maxWidth = "",
+    minHeight = ""
   ) {
     if (
       invalidSize(x) ||
@@ -44,6 +46,7 @@ export class AbsolutePosition {
     this.padding = padding;
     this.minWidth = minWidth;
     this.maxWidth = maxWidth;
+    this.minHeight = minHeight;
   }
 
   public css(): CSSProperties {
@@ -56,7 +59,8 @@ export class AbsolutePosition {
       margin: this.margin,
       padding: this.padding,
       minWidth: this.minWidth,
-      maxWidth: this.maxWidth
+      maxWidth: this.maxWidth,
+      minHeight: this.minHeight
     };
   }
 }
@@ -68,6 +72,7 @@ export class RelativePosition {
   public padding: string;
   public minWidth: string;
   public maxWidth: string;
+  public minHeight: string;
 
   public constructor(
     width = "",
@@ -75,7 +80,8 @@ export class RelativePosition {
     margin = "",
     padding = "",
     minWidth = "",
-    maxWidth = ""
+    maxWidth = "",
+    minHeight = ""
   ) {
     this.width = width;
     this.height = height;
@@ -83,6 +89,7 @@ export class RelativePosition {
     this.padding = padding;
     this.minWidth = minWidth;
     this.maxWidth = maxWidth;
+    this.minHeight = minHeight;
   }
 
   public css(): CSSProperties {
@@ -93,7 +100,8 @@ export class RelativePosition {
       margin: this.margin,
       padding: this.padding,
       minWidth: this.minWidth,
-      maxWidth: this.maxWidth
+      maxWidth: this.maxWidth,
+      minHeight: this.minHeight
     };
   }
 }

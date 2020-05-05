@@ -38,7 +38,8 @@ function jsonParsePosition(props: any): Position {
       props.margin,
       props.padding,
       props.minWidth,
-      props.maxWidth
+      props.maxWidth,
+      props.minHeight
     );
   } else {
     return new RelativePosition(
@@ -47,7 +48,8 @@ function jsonParsePosition(props: any): Position {
       props.margin,
       props.padding,
       props.minWidth,
-      props.maxWidth
+      props.maxWidth,
+      props.minHeight
     );
   }
 }

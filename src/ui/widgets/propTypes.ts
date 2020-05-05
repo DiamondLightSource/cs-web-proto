@@ -92,7 +92,8 @@ export const ContainerFeaturesPropType = {
   margin: StringPropOpt,
   padding: StringPropOpt,
   minWidth: StringPropOpt,
-  maxWidth: StringPropOpt
+  maxWidth: StringPropOpt,
+  minHeight: StringPropOpt
 };
 
 const OpenWebpagePropType = PropTypes.shape({
