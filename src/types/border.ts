@@ -1,3 +1,4 @@
+import { CSSProperties } from "react";
 import { Color } from "./color";
 
 export enum BorderStyle {
@@ -38,7 +39,7 @@ export class Border {
     this.radius = radius ?? 0;
   }
 
-  public css(): object {
+  public css(): CSSProperties {
     return {
       borderStyle: CssBorders[this.style],
       borderWidth: `${this.width}px`,
