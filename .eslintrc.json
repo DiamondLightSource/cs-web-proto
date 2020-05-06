@@ -22,12 +22,16 @@
   "plugins": ["react", "@typescript-eslint", "prettier", "unicorn"],
   "rules": {
     "@typescript-eslint/no-explicit-any": 0,
-    "@typescript-eslint/no-empty-function": ["error", { "allow": ["arrowFunctions"] }],
+    "@typescript-eslint/no-empty-function": [
+      "error",
+      { "allow": ["arrowFunctions"] }
+    ],
     "import/no-cycle": "error",
     "prettier/prettier": [
       "error",
       {
-        "singleQuote": false
+        "singleQuote": false,
+        "trailingComma": "none"
       }
     ],
     "unicorn/filename-case": [
