@@ -132,7 +132,8 @@ export const EmbeddedDisplay = (
         position: props.position,
         border: props.border,
         overflow: overflow,
-        children: [description]
+        children: [description],
+        highlight: props.highlight
       },
       props.macroMap
     );

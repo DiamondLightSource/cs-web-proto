@@ -1,6 +1,6 @@
-import React, { CSSProperties } from "react";
+import React from "react";
 
-import { Widget } from "../widget";
+import { Widget, commonCss } from "../widget";
 import { WidgetPropType } from "../widgetProps";
 import { registerWidget } from "../register";
 import {
@@ -20,12 +20,7 @@ const GroupingContainerProps = {
 export const GroupingContainerComponent = (
   props: InferWidgetProps<typeof GroupingContainerProps>
 ): JSX.Element => {
-  const style: CSSProperties = {
-    position: "relative",
-    height: "100%",
-    width: "100%",
-    ...props.border?.css()
-  };
+  const style = commonCss(props);
   return <div style={style}>{props.children}</div>;
 };
 

@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Widget } from "../widget";
+import { Widget, commonCss } from "../widget";
 import { WidgetPropType } from "../widgetProps";
 import { registerWidget } from "../register";
 import {
@@ -21,19 +21,13 @@ const DisplayProps = {
 // Generic display widget to put other things inside
 const DisplayComponent = (
   props: InferWidgetProps<typeof DisplayProps>
-): JSX.Element => (
-  <div
-    style={{
-      position: "relative",
-      height: "100%",
-      overflow: props.overflow,
-      backgroundColor: props.backgroundColor?.rgbaString(),
-      ...props.border?.css()
-    }}
-  >
-    {props.children}
-  </div>
-);
+): JSX.Element => {
+  const style = commonCss(props);
+  style["position"] = "relative";
+  style["overflow"] = props.overflow;
+  style["height"] = "100%";
+  return <div style={style}>{props.children}</div>;
+};
 
 const DisplayWidgetProps = {
   ...DisplayProps,
