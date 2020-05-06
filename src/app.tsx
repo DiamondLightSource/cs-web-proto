@@ -80,10 +80,6 @@ const App: React.FC = (): JSX.Element => {
                 Toggle Theme
               </button>
               <Profiler id="Dynamic Page Profiler" onRender={onRenderCallback}>
-                {/* <DynamicPageWidget
-                routePath="app"
-                position={new RelativePosition()}
-              /> */}
                 <EmbeddedDisplay
                   position={new RelativePosition()}
                   file="app.json"
