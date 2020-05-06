@@ -1,7 +1,14 @@
 {
   "type": "flexcontainer",
   "position": "relative",
+  "maxWidth": "400px",
   "margin": "auto",
+  "border": {
+    "style": "line",
+    "width": "3",
+    "color": "#999999",
+    "radius": 10
+  },
   "children": [
     {
       "type": "label",
@@ -20,7 +27,7 @@
       "position": "relative",
       "width": "30%",
       "text": "Position",
-      "textAlign": "left",
+      "margin": "5px 0px 0px 0px",
       "backgroundColor": "transparent"
     },
     {
@@ -81,7 +88,6 @@
       "position": "relative",
       "width": "25%",
       "pvName": "loc://enum#m${motor}<VEnum>(2, \"slow\", \"med\", \"fast\")",
-      "border": "1px solid #aaaaaa",
       "border": {
         "style": "line",
         "width": 1,
@@ -149,6 +155,13 @@
       "alarmBorder": true,
       "margin": "5px 0px 0px 0px",
       "fontSize": "1em"
+    },
+    {
+      "type": "shape",
+      "position": "relative",
+      "height": "10vh",
+      "width": "100%",
+      "transparent": true
     }
   ]
 }

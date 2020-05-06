@@ -15,6 +15,7 @@ import { Widget } from "../widget";
 import { PVInputComponent, PVWidgetPropType } from "../widgetProps";
 import { InferWidgetProps } from "../propTypes";
 import { registerWidget } from "../register";
+import { vdouble } from "../../../types/vtypes/vtypes";
 
 export const SlideControlComponent = (
   props: InferWidgetProps<typeof ProgressBarProps> & PVInputComponent
@@ -64,7 +65,7 @@ export const SlideControlComponent = (
       >
         <ProgressBarComponent
           connected={connected}
-          value={value}
+          value={vdouble(parseFloat(inputValue))}
           min={min}
           max={max}
           precision={precision}

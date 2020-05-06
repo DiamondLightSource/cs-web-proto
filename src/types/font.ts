@@ -1,3 +1,5 @@
+import { CSSProperties } from "react";
+
 export enum FontStyle {
   Regular,
   Bold,
@@ -6,13 +8,14 @@ export enum FontStyle {
 }
 
 export class Font {
-  private size: number;
+  // If no number is provided inherit from CSS.
+  private size?: number;
   private style: FontStyle;
   private typeface: string;
   private name?: string;
 
   public constructor(
-    size: number,
+    size?: number,
     style?: FontStyle,
     typeface?: string,
     name?: string
@@ -23,7 +26,8 @@ export class Font {
     this.name = name;
   }
 
-  public css(): object {
+  public css(): CSSProperties {
+    const fontSize = this.size ? `${this.size / 10}rem` : undefined;
     const fontWeight =
       this.style === FontStyle.Bold || this.style === FontStyle.BoldItalic
         ? "bold"
@@ -32,12 +36,15 @@ export class Font {
       this.style === FontStyle.Italic || this.style === FontStyle.BoldItalic
         ? "italic"
         : "normal";
-    return {
+    const style: CSSProperties = {
       // Fall back to sans-serif.
       fontFamily: `${this.typeface},sans-serif`,
-      fontSize: `${this.size / 10}rem`,
       fontWeight: fontWeight,
       fontStyle: fontStyle
     };
+    if (fontSize) {
+      style.fontSize = fontSize;
+    }
+    return style;
   }
 }

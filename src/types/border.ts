@@ -1,3 +1,4 @@
+import { CSSProperties } from "react";
 import { Color } from "./color";
 
 export enum BorderStyle {
@@ -17,25 +18,33 @@ const CssBorders: { [key in BorderStyle]: string } = {
 };
 
 export class Border {
-  public static NONE = new Border(BorderStyle.None, Color.BLACK, 0);
+  public static NONE = new Border(BorderStyle.None, Color.BLACK, 0, 0);
 
   private style: BorderStyle;
   private color: Color;
   // This will render a border width in pixels. I expect that we will revisit this
   // at some later point, possibly to allow or fix to rems.
   private width: number;
+  private radius?: number;
 
-  public constructor(style: BorderStyle, color: Color, width: number) {
+  public constructor(
+    style: BorderStyle,
+    color: Color,
+    width: number,
+    radius?: number
+  ) {
     this.style = style;
     this.color = color;
     this.width = width;
+    this.radius = radius ?? 0;
   }
 
-  public css(): object {
+  public css(): CSSProperties {
     return {
       borderStyle: CssBorders[this.style],
       borderWidth: `${this.width}px`,
-      borderColor: this.color.rgbaString()
+      borderColor: this.color.rgbaString(),
+      borderRadius: `${this.radius}px`
     };
   }
 }

@@ -15,6 +15,7 @@ interface JsonBorder {
   style: string;
   color: string;
   width: number;
+  radius?: number;
 }
 
 interface JsonFont {
@@ -37,7 +38,8 @@ function jsonParsePosition(props: any): Position {
       props.margin,
       props.padding,
       props.minWidth,
-      props.maxWidth
+      props.maxWidth,
+      props.minHeight
     );
   } else {
     return new RelativePosition(
@@ -46,7 +48,8 @@ function jsonParsePosition(props: any): Position {
       props.margin,
       props.padding,
       props.minWidth,
-      props.maxWidth
+      props.maxWidth,
+      props.minHeight
     );
   }
 }
@@ -66,7 +69,8 @@ function jsonParseBorder(jsonBorder: JsonBorder): Border {
   return new Border(
     styles[jsonBorder.style.toLowerCase()],
     jsonParseColor(jsonBorder.color),
-    jsonBorder.width
+    jsonBorder.width,
+    jsonBorder.radius
   );
 }
 
