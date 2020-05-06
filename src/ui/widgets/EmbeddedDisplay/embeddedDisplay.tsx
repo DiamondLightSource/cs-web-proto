@@ -1,6 +1,6 @@
 /* A component to load files directly. */
 
-import React, { useState, useContext } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import log from "loglevel";
 
 import {
@@ -67,7 +67,7 @@ export const EmbeddedDisplay = (
   }
 
   // Using directly from React for testing purposes
-  React.useEffect((): (() => void) => {
+  useEffect((): (() => void) => {
     // Will be set on the first render
     let mounted = true;
     if (file !== renderedFile) {

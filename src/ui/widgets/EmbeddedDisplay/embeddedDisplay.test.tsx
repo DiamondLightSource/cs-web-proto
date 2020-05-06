@@ -1,4 +1,4 @@
-import React from "react";
+import React, * as ReactAll from "react";
 import { EmbeddedDisplay } from "./embeddedDisplay";
 import { shallow } from "enzyme";
 
@@ -11,13 +11,9 @@ interface GlobalFetch extends NodeJS.Global {
   fetch: any;
 }
 const globalWithFetch = global as GlobalFetch;
-const useEffect = jest.spyOn(React, "useEffect");
-const mockUseEffect = (): void => {
-  useEffect.mockImplementationOnce((f): any => f());
-};
+jest.spyOn(ReactAll, "useEffect").mockImplementation((f): any => f());
 
 beforeEach((): void => {
-  mockUseEffect();
   // Ensure the fetch() function mock is always cleared.
   jest.spyOn(globalWithFetch, "fetch").mockClear();
 });
