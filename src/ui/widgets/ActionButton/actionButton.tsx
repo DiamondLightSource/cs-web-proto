@@ -18,6 +18,7 @@ import { BaseUrlContext } from "../../../baseUrl";
 import { Color } from "../../../types/color";
 import { Font } from "../../../types/font";
 import { Border } from "../../../types/border";
+import { MacroContext } from "../../../types/macros";
 
 export interface ActionButtonProps {
   text: string;
@@ -81,9 +82,10 @@ export const ActionButtonWidget = (
 ): JSX.Element => {
   // Function to send the value on to the PV
   const history = useHistory();
+  const parentMacros = useContext(MacroContext).macros;
   function onClick(event: React.MouseEvent<HTMLButtonElement>): void {
     if (props.actions !== undefined)
-      executeActions(props.actions as WidgetActions, history);
+      executeActions(props.actions as WidgetActions, history, parentMacros);
   }
   return (
     <ActionButtonComponent

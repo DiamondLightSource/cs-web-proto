@@ -10,6 +10,7 @@ import {
   removePageDescription,
   getUrlInfoFromHistory
 } from "./urlControl";
+import { MacroMap } from "../../types/macros";
 
 export const OPEN_PAGE = "OPEN_PAGE";
 export const CLOSE_PAGE = "CLOSE_PAGE";
@@ -101,10 +102,18 @@ export const getActionDescription = (action: WidgetAction): string => {
   }
 };
 
-export const openPage = (action: OpenPage, history: History): void => {
+export const openPage = (
+  action: OpenPage,
+  history: History,
+  parentMacros?: MacroMap
+): void => {
   //Find current browser path: currentPath
   const currentUrlInfo = getUrlInfoFromHistory(history);
   const { page, pageDescription } = action.openPageInfo;
+  pageDescription.macros = {
+    ...(parentMacros ?? {}),
+    ...pageDescription.macros
+  };
   const newUrlInfo = updatePageDesciption(
     currentUrlInfo,
     page,
@@ -122,12 +131,13 @@ export const closePage = (action: ClosePage, history: History): void => {
 
 export const executeAction = (
   action: WidgetAction,
-  history?: History
+  history?: History,
+  parentMacros?: MacroMap
 ): void => {
   switch (action.type) {
     case OPEN_PAGE:
       if (history) {
-        openPage(action, history);
+        openPage(action, history, parentMacros);
       } else {
         log.error("Tried to open a page but no history object passed");
       }
@@ -155,7 +165,8 @@ export const executeAction = (
 
 export const executeActions = (
   actions: WidgetActions,
-  history?: History
+  history?: History,
+  parentMacros?: MacroMap
 ): void => {
   if (actions.actions.length > 0) {
     let toExecute: WidgetAction[] = [];
@@ -166,7 +177,7 @@ export const executeActions = (
     }
     for (const action of toExecute) {
       log.debug(`executing an action: ${getActionDescription(action)}`);
-      executeAction(action, history);
+      executeAction(action, history, parentMacros);
     }
   }
 };
