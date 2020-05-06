@@ -19,6 +19,8 @@ function rescursiveResolve(props: MacroProps, macroMap: MacroMap): void {
   if (props === null) {
     return;
   }
+  // Allow substitutions of the widget's props as well as macros.
+  macroMap = { ...props, ...macroMap };
   for (const [prop, value] of Object.entries(props)) {
     // Don't descend into child components.
     if (prop !== "children") {

@@ -40,7 +40,9 @@ function interpolate(
     substitutions[missing] = "${" + missing + "}";
   }
 
-  return str.replace(/\$[{(](.*?)[})]/g, (x, g): string => substitutions[g]);
+  return str.replace(/\$[{(](.*?)[})]/g, (x, g): string =>
+    substitutions[g].toString()
+  );
 }
 
 export function resolveMacros(
