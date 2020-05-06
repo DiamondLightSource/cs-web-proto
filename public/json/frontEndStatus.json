@@ -1,0 +1,219 @@
+{
+  "type": "display",
+  "width": "100%",
+  "backgroundColor": "#012265",
+  "children": [
+    {
+      "type": "label",
+      "position": "relative",
+      "font": {
+        "size": "25",
+        "weight": "bold"
+      },
+      "foregroundColor": "#ffcf00",
+      "backgroundColor": "#012265",
+      "text": "${Beamline}"
+    },
+    {
+      "type": "flexcontainer",
+      "position": "relative",
+      "width": "100%",
+      "maxWidth": "400px",
+      "margin": "auto",
+      "children": [
+        {
+          "type": "label",
+          "position": "relative",
+          "width": "50%",
+          "margin": "2% 0 0 0",
+          "font": {
+            "size": "20",
+            "weight": "bold"
+          },
+          "foregroundColor": "#ffcf00",
+          "backgroundColor": "#012265",
+          "text": "Gap"
+        },
+        {
+          "type": "readback",
+          "position": "relative",
+          "width": "50%",
+          "margin": "2% 0 0 0",
+          "font": {
+            "size": "20",
+            "weight": "bold"
+          },
+          "foregroundColor": "#ffcf00",
+          "backgroundColor": "#012265",
+          "precision": 1,
+          "pvName": "${GAP}"
+        },
+        {
+          "type": "label",
+          "position": "relative",
+          "width": "50%",
+          "margin": "2% 0 0 0",
+          "font": {
+            "size": "20",
+            "weight": "bold"
+          },
+          "foregroundColor": "#ffcf00",
+          "backgroundColor": "#012265",
+          "text": "Field"
+        },
+        {
+          "type": "readback",
+          "position": "relative",
+          "width": "50%",
+          "margin": "2% 0 0 0",
+          "font": {
+            "size": "20",
+            "weight": "bold"
+          },
+          "foregroundColor": "#ffcf00",
+          "backgroundColor": "#012265",
+          "precision": 2,
+          "pvName": "${FIELD}"
+        },
+        {
+          "type": "label",
+          "position": "relative",
+          "width": "50%",
+          "margin": "2% 0 0 0",
+          "font": {
+            "size": "20",
+            "weight": "bold"
+          },
+          "foregroundColor": "#ffcf00",
+          "backgroundColor": "#012265",
+          "text": "Port"
+        },
+        {
+          "type": "readback",
+          "position": "relative",
+          "width": "50%",
+          "margin": "2% 0 0 0",
+          "font": {
+            "size": "20",
+            "weight": "bold"
+          },
+          "foregroundColor": "white",
+          "backgroundColor": "red",
+          "precision": 1,
+          "pvName": "${PORT}",
+          "rules": [
+            {
+              "name": "open",
+              "prop": "backgroundColor",
+              "outExp": false,
+              "pvs": [
+                {
+                  "pvName": "${PORT}",
+                  "trigger": true
+                }
+              ],
+              "expressions": [
+                {
+                  "boolExp": "pv0 == 1",
+                  "value": "#00cc00"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "label",
+          "position": "relative",
+          "width": "50%",
+          "margin": "2% 0 0 0",
+          "font": {
+            "size": "20",
+            "weight": "bold"
+          },
+          "foregroundColor": "#ffcf00",
+          "backgroundColor": "#012265",
+          "text": "Optics"
+        },
+        {
+          "type": "readback",
+          "position": "relative",
+          "width": "50%",
+          "margin": "2% 0 0 0",
+          "font": {
+            "size": "20",
+            "weight": "bold"
+          },
+          "foregroundColor": "white",
+          "backgroundColor": "red",
+          "precision": 1,
+          "pvName": "${OPTICS}",
+          "rules": [
+            {
+              "name": "open",
+              "prop": "backgroundColor",
+              "outExp": false,
+              "pvs": [
+                {
+                  "pvName": "${OPTICS}",
+                  "trigger": true
+                }
+              ],
+              "expressions": [
+                {
+                  "boolExp": "pv0 == 1",
+                  "value": "#00cc00"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "label",
+          "position": "relative",
+          "width": "50%",
+          "margin": "2% 0 5% 0",
+          "font": {
+            "size": "20",
+            "weight": "bold"
+          },
+          "foregroundColor": "#ffcf00",
+          "backgroundColor": "#012265",
+          "text": "Experimental"
+        },
+        {
+          "type": "readback",
+          "position": "relative",
+          "width": "50%",
+          "margin": "2% 0 5% 0",
+          "font": {
+            "size": "20",
+            "weight": "bold"
+          },
+          "foregroundColor": "white",
+          "backgroundColor": "red",
+          "precision": 1,
+          "pvName": "${EXPTL}",
+          "rules": [
+            {
+              "name": "open",
+              "prop": "backgroundColor",
+              "outExp": false,
+              "pvs": [
+                {
+                  "pvName": "${EXPTL}",
+                  "trigger": true
+                }
+              ],
+              "expressions": [
+                {
+                  "boolExp": "pv0 == 1",
+                  "value": "#00cc00"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

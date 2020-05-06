@@ -49,7 +49,7 @@
             "openPageInfo": {
               "page": "app",
               "pageDescription": {
-                "filename": "frontPage",
+                "filename": "mobileDemo",
                 "filetype": "json",
                 "macros": {}
               }
@@ -87,33 +87,50 @@
       }
     },
     {
-      "type": "drawer",
-      "position": "absolute",
-      "x": "10px",
-      "y": "10px",
-      "height": "4rem",
-      "width": "5rem",
-      "font": {
-        "size": "20",
-        "style": "bold"
-      },
-      "foregroundColor": "#ffcf00",
-      "backgroundColor": "#012265",
-      "border": {
-        "style": "none",
-        "width": 0,
-        "color": ""
-      },
-      "children": [
-        {
-          "type": "embeddedDisplay",
-          "position": "relative",
-          "width": "100%",
-          "file": "drawer.json",
-          "filetype": "json",
-          "defaultProtocol": "pva"
-        }
-      ]
+      "type": "actionbutton",
+      "text": "Machine Status",
+      "position": "relative",
+      "width": "300px",
+      "height": "200px",
+      "margin": "10px",
+      "backgroundColor": "#e580ff",
+      "fontSize": "3rem",
+      "actions": {
+        "executeAsOne": false,
+        "actions": [
+          {
+            "type": "OPEN_PAGE",
+            "openPageInfo": {
+              "location": "app",
+              "page": "machineStatus",
+              "macros": "{}"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "actionbutton",
+      "text": "Modern Machine Status",
+      "position": "relative",
+      "width": "300px",
+      "height": "200px",
+      "margin": "10px",
+      "backgroundColor": "#ff7070",
+      "fontSize": "3rem",
+      "actions": {
+        "executeAsOne": false,
+        "actions": [
+          {
+            "type": "OPEN_PAGE",
+            "openPageInfo": {
+              "location": "app",
+              "page": "modernMachineStatus",
+              "macros": "{}"
+            }
+          }
+        ]
+      }
     }
   ]
 }
