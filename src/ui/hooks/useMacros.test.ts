@@ -1,6 +1,7 @@
 /* eslint no-template-curly-in-string: 0 */
 import { useMacros } from "./useMacros";
 import { MacroMap, MacroContextType } from "../../types/macros";
+import { PV } from "../../types/pv";
 
 // Mock useSelector to return a 'global' macro map.
 jest.mock("react-redux", (): object => {
@@ -38,6 +39,11 @@ describe("useMacros", (): void => {
     const resolvedProps = useMacros(props);
     expect(resolvedProps.prop).toEqual("Eb");
   });
+  it("does not modify props", (): void => {
+    const props = { prop: "${C}b" };
+    useMacros(props);
+    expect(props.prop).toEqual("${C}b");
+  });
   it("resolves global macros", (): void => {
     const props = { prop: "${A}b" };
     const resolvedProps = useMacros(props);
@@ -62,6 +68,11 @@ describe("useMacros", (): void => {
     const props = { actions: actionsProp };
     const resolvedProps = useMacros(props);
     expect(resolvedProps.actions.actions[0].pvName).toEqual("E:SUFFIX");
+  });
+  it("resolves macros in PV object", (): void => {
+    const props = { pvName: new PV("PREFIX:${C}", "xxx") };
+    const resolvedProps = useMacros(props);
+    expect(resolvedProps.pvName.qualifiedName()).toEqual("xxx://PREFIX:E");
   });
   it("returns empty array for empty array", (): void => {
     const props = { arrayProp: [] };

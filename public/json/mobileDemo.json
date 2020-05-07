@@ -32,7 +32,7 @@
               "outExp": false,
               "pvs": [
                 {
-                  "pvName": "loc://pv1",
+                  "pvName": "loc://pv1(0)",
                   "trigger": true
                 }
               ],
@@ -73,7 +73,7 @@
           "position": "relative",
           "width": "45%",
           "margin": "2%",
-          "pvName": "loc://pv2"
+          "pvName": "loc://pv2(1)"
         },
         {
           "type": "readback",
@@ -247,37 +247,39 @@
           "position": "relative",
           "children": [
             {
-              "type": "input",
+              "type": "label",
               "position": "relative",
               "width": "45%",
-              "margin": "2%",
-              "macroMap": {
-                "COLOUR": "purple"
+              "margin": "1%",
+              "transparent": true,
+              "text": "Choose PV to show:"
+            },
+            {
+              "type": "menumux",
+              "position": "relative",
+              "width": "45%",
+              "margin": "1%",
+              "values": {
+                "loc://pv1": "1",
+                "loc://pv2": "2"
               },
-              "color": "${COLOUR}",
-              "pvName": "loc://pv1"
+              "symbol": "suffix",
+              "tooltip": "This menumux widget changes symbol \"${symbol}\""
+            },
+            {
+              "type": "label",
+              "position": "relative",
+              "width": "45%",
+              "margin": "1%",
+              "transparent": true,
+              "text": "SelectedPV: loc://pv${suffix}"
             },
             {
               "type": "readback",
               "position": "relative",
               "width": "45%",
-              "margin": "2%",
-              "pvName": "loc://pv1",
-              "tooltip": "Custom tooltip:\n${pvName}\n${pvValue}"
-            },
-            {
-              "type": "input",
-              "position": "relative",
-              "width": "45%",
-              "margin": "2%",
-              "pvName": "loc://pv2"
-            },
-            {
-              "type": "readback",
-              "position": "relative",
-              "width": "45%",
-              "margin": "2%",
-              "pvName": "loc://pv2"
+              "margin": "1%",
+              "pvName": "loc://pv${suffix}"
             }
           ]
         }

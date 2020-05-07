@@ -11,7 +11,7 @@ export interface MacroProps extends React.PropsWithChildren<any> {
 }
 
 /*
- * Resolve macros in place for all strings in the props object, recursing
+ * Return a copy of the props object with resolved macros, recursing
  * into any arrays and objects.
  * Do not descend into child components as this is called for each widget.
  */
@@ -19,30 +19,41 @@ function rescursiveResolve(props: MacroProps, macroMap: MacroMap): void {
   if (props === null) {
     return;
   }
+  // Shallow clone of props with the same prototype.
+  const resolvedProps = Object.assign(
+    Object.create(Object.getPrototypeOf(props)),
+    props
+  );
   // Allow substitutions of the widget's props as well as macros.
   macroMap = { ...props, ...macroMap };
+  // console.log(macroMap);
   for (const [prop, value] of Object.entries(props)) {
     // Don't descend into child components.
-    if (prop !== "children") {
+    if (prop === "children") {
+      resolvedProps[prop] = value;
+    } else {
       if (typeof value === "object") {
         if (Array.isArray(value)) {
           const newArray = value.map((member: any): any => {
             if (typeof member === "object") {
-              rescursiveResolve(member, macroMap);
+              return rescursiveResolve(member, macroMap);
             } else if (typeof member === "string") {
               return resolveMacros(member, macroMap);
             }
             return member;
           });
-          props[prop] = newArray;
+          resolvedProps[prop] = newArray;
         } else {
-          rescursiveResolve(value, macroMap);
+          resolvedProps[prop] = rescursiveResolve(value, macroMap);
         }
       } else if (typeof value === "string") {
-        props[prop] = resolveMacros(value, macroMap);
+        resolvedProps[prop] = resolveMacros(value, macroMap);
+      } else {
+        resolvedProps[prop] = value;
       }
     }
   }
+  return resolvedProps;
 }
 
 export function useMacros<P extends MacroProps>(props: P): P {
@@ -55,7 +66,7 @@ export function useMacros<P extends MacroProps>(props: P): P {
     ...displayMacros // higher priority
   };
   const rawPvName = props.pvName;
-  rescursiveResolve(props, allMacros);
-  props.rawPvName = rawPvName;
-  return props;
+  const newProps: any = rescursiveResolve(props, allMacros);
+  newProps.rawPvName = rawPvName;
+  return newProps;
 }
