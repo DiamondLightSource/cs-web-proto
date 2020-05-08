@@ -61,18 +61,21 @@ describe("useMacros", (): void => {
   });
   it("resolves macros in nested object", (): void => {
     const props = { prop: { subprop: "${C}b" } };
-    const resolvedProps = useMacros(props);
+    // Use any type as prop.subprop is not actually a valid prop
+    // and useMacros returns AnyProps.
+    const resolvedProps: any = useMacros(props);
     expect(resolvedProps.prop.subprop).toEqual("Eb");
   });
   it("resolves macros in actions", (): void => {
     const props = { actions: actionsProp };
     const resolvedProps = useMacros(props);
-    expect(resolvedProps.actions.actions[0].pvName).toEqual("E:SUFFIX");
+    const action: any = resolvedProps?.actions?.actions[0];
+    expect(action.pvName).toEqual("E:SUFFIX");
   });
   it("resolves macros in PV object", (): void => {
     const props = { pvName: new PV("PREFIX:${C}", "xxx") };
     const resolvedProps = useMacros(props);
-    expect(resolvedProps.pvName.qualifiedName()).toEqual("xxx://PREFIX:E");
+    expect(resolvedProps?.pvName?.qualifiedName()).toEqual("xxx://PREFIX:E");
   });
   it("returns empty array for empty array", (): void => {
     const props = { arrayProp: [] };

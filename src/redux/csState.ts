@@ -15,7 +15,7 @@ import { MacroMap } from "../types/macros";
 
 const initialState: CsState = {
   valueCache: {},
-  macroMap: { SUFFIX: "1" },
+  globalMacros: { SUFFIX: "1" },
   effectivePvNameMap: {},
   subscriptions: {}
 };
@@ -42,7 +42,7 @@ export interface Subscriptions {
 export interface CsState {
   valueCache: ValueCache;
   effectivePvNameMap: { [pvName: string]: string };
-  macroMap: MacroMap;
+  globalMacros: MacroMap;
   subscriptions: Subscriptions;
 }
 

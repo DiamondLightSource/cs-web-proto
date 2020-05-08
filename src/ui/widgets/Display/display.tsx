@@ -41,9 +41,9 @@ export const DisplayComponent = (
       setDisplayMacros({ ...displayMacros, [key]: value });
     },
     macros: {
-      ...inheritedMacros,
-      DID: props.id,
-      ...displayMacros
+      ...inheritedMacros, // lower priority
+      ...displayMacros, // higher priority
+      DID: props.id // highest priority
     }
   };
   return (
