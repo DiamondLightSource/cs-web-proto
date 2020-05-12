@@ -3,19 +3,18 @@ import {
   StringPropOpt,
   BoolPropOpt,
   InferWidgetProps,
-  MacrosPropOpt,
   BorderPropOpt,
   PositionProp,
   ActionsPropType,
-  PvPropOpt,
-  RulesPropOpt
+  RulesPropOpt,
+  PvPropOpt
 } from "./propTypes";
 
 import { VType } from "../../types/vtypes/vtypes";
+import { GenericProp } from "../../types/props";
 
 export const WidgetPropType = {
   position: PositionProp,
-  macroMap: MacrosPropOpt,
   rules: RulesPropOpt,
   actions: ActionsPropType,
   tooltip: StringPropOpt,
@@ -48,8 +47,9 @@ export type AnyProps = PVWidgetComponent & {
   connected?: boolean;
   readonly?: boolean;
   value?: VType;
-  // This should be removed when typing is improved.
-  [x: string]: any;
+} & {
+  // All other props with valid types.
+  [x: string]: GenericProp;
 };
 
 export interface Component {

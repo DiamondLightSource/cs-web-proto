@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useContext } from "react";
 
 import { Widget } from "../widget";
 import { WidgetPropType } from "../widgetProps";
@@ -8,32 +8,60 @@ import {
   ChildrenPropOpt,
   InferWidgetProps,
   ColorPropOpt,
-  BorderPropOpt
+  BorderPropOpt,
+  MacrosPropOpt
 } from "../propTypes";
+import {
+  MacroMap,
+  MacroContext,
+  MacroContextType
+} from "../../../types/macros";
 
 const DisplayProps = {
   children: ChildrenPropOpt,
   overflow: ChoicePropOpt(["scroll", "hidden", "auto", "visible"]),
   backgroundColor: ColorPropOpt,
-  border: BorderPropOpt
+  border: BorderPropOpt,
+  macros: MacrosPropOpt
 };
 
 // Generic display widget to put other things inside
-const DisplayComponent = (
-  props: InferWidgetProps<typeof DisplayProps>
-): JSX.Element => (
-  <div
-    style={{
-      position: "relative",
-      height: "100%",
-      overflow: props.overflow,
-      backgroundColor: props.backgroundColor?.rgbaString(),
-      ...props.border?.css()
-    }}
-  >
-    {props.children}
-  </div>
-);
+export const DisplayComponent = (
+  props: InferWidgetProps<typeof DisplayProps> & { id: string }
+): JSX.Element => {
+  // Macros specific to this display. Children of this component
+  // can set macros by using the updateMacro function on the
+  // context.
+  const inheritedMacros: MacroMap = useContext(MacroContext).macros;
+  const [displayMacros, setDisplayMacros] = useState<MacroMap>(
+    props.macros ?? {}
+  );
+  const displayMacroContext: MacroContextType = {
+    updateMacro: (key: string, value: string): void => {
+      setDisplayMacros({ ...displayMacros, [key]: value });
+    },
+    macros: {
+      ...inheritedMacros, // lower priority
+      ...displayMacros, // higher priority
+      DID: props.id // highest priority
+    }
+  };
+  return (
+    <MacroContext.Provider value={displayMacroContext}>
+      <div
+        style={{
+          position: "relative",
+          height: "100%",
+          overflow: props.overflow,
+          backgroundColor: props.backgroundColor?.rgbaString(),
+          ...props.border?.css()
+        }}
+      >
+        {props.children}
+      </div>
+    </MacroContext.Provider>
+  );
+};
 
 const DisplayWidgetProps = {
   ...DisplayProps,

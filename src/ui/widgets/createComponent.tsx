@@ -2,10 +2,9 @@ import React from "react";
 import log from "loglevel";
 import checkPropTypes from "check-prop-types";
 
-import { MacroMap } from "../../redux/csState";
+import { Color } from "../../types/color";
 import { Shape } from "./Shape/shape";
 import { REGISTERED_WIDGETS } from "./register";
-import { Color } from "../../types/color";
 
 export interface WidgetDescription {
   type: string;
@@ -26,18 +25,11 @@ class PropCheckFailed extends Error {
 
 export function widgetDescriptionToComponent(
   // Converts a JS object matching a position description into React component
-  // from the component dictionary provided. Also passes down a macro map which
-  // can be overwritten. Uses recursion to generate children.
+  // from the component dictionary provided. Uses recursion to generate children.
   widgetDescription: WidgetDescription,
-  existingMacroMap?: MacroMap,
   listIndex?: number
 ): JSX.Element {
-  const {
-    type,
-    children = [],
-    macroMap = {},
-    ...otherProps
-  } = widgetDescription;
+  const { type, children = [], ...otherProps } = widgetDescription;
 
   const widgetDict = Object.assign(
     {},
@@ -74,24 +66,16 @@ export function widgetDescriptionToComponent(
     });
   }
 
-  // Collect macroMap passed into function and overwrite/add any
-  // new values from the object macroMap
-  const latestMacroMap = { ...existingMacroMap, ...macroMap };
-
   // Create all children components - recursive
-  // Pass the latest macroMap down
   const ChildComponents = children.map(
-    (child, index): JSX.Element =>
-      widgetDescriptionToComponent(child, latestMacroMap, index)
+    (child, index): JSX.Element => widgetDescriptionToComponent(child, index)
   );
   // Return the node with children as children
-  // Pass any extra props and macromap
   return (
     <Component
       // If this component has siblings, use its index in the array as a key.
       key={listIndex}
       position={widgetDescription.position}
-      macroMap={latestMacroMap}
       {...otherProps}
     >
       {ChildComponents}

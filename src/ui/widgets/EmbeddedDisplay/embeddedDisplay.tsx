@@ -1,22 +1,27 @@
 /* A component to load files directly. */
 
-import React, { useState, useContext } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import log from "loglevel";
 
 import {
   WidgetDescription,
   widgetDescriptionToComponent
 } from "../createComponent";
-import { MacroMap } from "../../../redux/csState";
+import { Color } from "../../../types/color";
+import { Font, FontStyle } from "../../../types/font";
+import { MacroContext, MacroContextType } from "../../../types/macros";
+import { RelativePosition, AbsolutePosition } from "../../../types/position";
 import { WidgetPropType } from "../widgetProps";
 import { registerWidget } from "../register";
-import { StringProp, InferWidgetProps, ChoiceProp } from "../propTypes";
+import {
+  StringProp,
+  InferWidgetProps,
+  ChoiceProp,
+  MacrosPropOpt
+} from "../propTypes";
 import { BaseUrlContext } from "../../../baseUrl";
-import { Font, FontStyle } from "../../../types/font";
-import { Color } from "../../../types/color";
 import { parseOpi } from "./opiParser";
 import { parseJson } from "./jsonParser";
-import { RelativePosition, AbsolutePosition } from "../../../types/position";
 import { parseBob } from "./bobParser";
 
 const EMPTY_WIDGET: WidgetDescription = {
@@ -43,7 +48,8 @@ const EmbeddedDisplayProps = {
   ...WidgetPropType,
   file: StringProp,
   filetype: ChoiceProp(["json", "bob", "opi"]),
-  defaultProtocol: StringProp
+  defaultProtocol: StringProp,
+  macros: MacrosPropOpt
 };
 
 export const EmbeddedDisplay = (
@@ -51,7 +57,6 @@ export const EmbeddedDisplay = (
 ): JSX.Element => {
   const [contents, setContents] = useState<string>("");
   const [renderedFile, setFile] = useState("");
-  const [currentMacros, setMacros] = useState<MacroMap>({});
   const baseUrl = useContext(BaseUrlContext);
 
   let file: string;
@@ -62,7 +67,7 @@ export const EmbeddedDisplay = (
   }
 
   // Using directly from React for testing purposes
-  React.useEffect((): (() => void) => {
+  useEffect((): (() => void) => {
     // Will be set on the first render
     let mounted = true;
     if (file !== renderedFile) {
@@ -77,7 +82,6 @@ export const EmbeddedDisplay = (
           if (mounted) {
             setContents(text);
             setFile(file);
-            setMacros(props.macroMap as MacroMap);
           }
         });
     }
@@ -87,10 +91,6 @@ export const EmbeddedDisplay = (
       mounted = false;
     };
   });
-
-  if (props.macroMap !== currentMacros) {
-    setMacros(props.macroMap as MacroMap);
-  }
 
   let component: JSX.Element;
   try {
@@ -126,29 +126,39 @@ export const EmbeddedDisplay = (
         ? "scroll"
         : "visible";
 
-    component = widgetDescriptionToComponent(
-      {
-        type: "display",
-        position: props.position,
-        border: props.border,
-        overflow: overflow,
-        children: [description]
-      },
-      props.macroMap
-    );
+    component = widgetDescriptionToComponent({
+      type: "display",
+      position: props.position,
+      border: props.border,
+      overflow: overflow,
+      children: [description]
+    });
   } catch (e) {
     const message = `Error converting file ${file} into components.`;
     log.error(message);
     log.error(e);
     log.error(e.msg);
     log.error(e.details);
-    component = widgetDescriptionToComponent(
-      errorWidget(message),
-      props.macroMap
-    );
+    component = widgetDescriptionToComponent(errorWidget(message));
   }
 
-  return component;
+  // Include and override parent macros with those from the prop.
+  const parentMacros = useContext(MacroContext).macros;
+  const embeddedDisplayMacros = props.macros ?? {};
+  const embeddedDisplayMacroContext: MacroContextType = {
+    // Currently not allowing changing the macros of an embedded display.
+    updateMacro: (key: string, value: string): void => {},
+    macros: {
+      ...parentMacros, // lower priority
+      ...embeddedDisplayMacros // higher priority
+    }
+  };
+
+  return (
+    <MacroContext.Provider value={embeddedDisplayMacroContext}>
+      {component}
+    </MacroContext.Provider>
+  );
 };
 
 registerWidget(EmbeddedDisplay, EmbeddedDisplayProps, "embeddedDisplay");

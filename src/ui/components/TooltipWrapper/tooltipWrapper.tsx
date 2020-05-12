@@ -13,7 +13,6 @@ import classes from "./tooltipWrapper.module.css";
 
 export const TooltipWrapper = (props: {
   pvName: string;
-  rawPvName?: string;
   connected: boolean;
   value?: VType;
   children: ReactNode;

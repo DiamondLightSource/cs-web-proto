@@ -7,7 +7,7 @@ import { useMacros } from "../hooks/useMacros";
 import { useConnection } from "../hooks/useConnection";
 import { useId } from "react-id-generator";
 import { useRules } from "../hooks/useRules";
-import { PVWidgetComponent, WidgetComponent, AnyProps } from "./widgetProps";
+import { PVWidgetComponent, WidgetComponent } from "./widgetProps";
 import { Border, BorderStyle } from "../../types/border";
 import { alarmOf, AlarmSeverity } from "../../types/vtypes/alarm";
 import { Color } from "../../types/color";
@@ -112,10 +112,9 @@ export const Widget = (
   const idProps = { ...props, id: id, tooltip: tooltip };
 
   // Apply macros.
-  log.debug("id");
-  const macroProps: AnyProps = useMacros(idProps);
+  log.debug(`Widget id ${id}`);
+  const macroProps = useMacros(idProps);
   // Then rules
-  log.debug("macros");
   const ruleProps = useRules(macroProps) as PVWidgetComponent & { id: string };
   log.debug(`ruleProps ${ruleProps}`);
   log.debug(ruleProps);

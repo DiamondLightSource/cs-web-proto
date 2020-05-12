@@ -63,6 +63,10 @@ export class AbsolutePosition {
       minHeight: this.minHeight
     };
   }
+
+  public toString(): string {
+    return `AbsolutePosition (${this.x},${this.y},${this.width},${this.height})`;
+  }
 }
 
 export class RelativePosition {
@@ -103,5 +107,9 @@ export class RelativePosition {
       maxWidth: this.maxWidth,
       minHeight: this.minHeight
     };
+  }
+
+  public toString(): string {
+    return `RelativePosition (${this.width},${this.height})`;
   }
 }

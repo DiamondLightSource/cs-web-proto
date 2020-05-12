@@ -1,5 +1,4 @@
-import { resolveMacros } from "../../types/macros";
-import { MacroMap } from "../../redux/csState";
+import { MacroMap, resolveMacros } from "../../types/macros";
 import { timeOf } from "../../types/vtypes/time";
 import { alarmOf } from "../../types/vtypes/alarm";
 import { vtypeToString } from "../../types/vtypes/utils";

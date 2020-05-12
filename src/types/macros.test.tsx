@@ -1,6 +1,5 @@
 /* eslint no-template-curly-in-string: 0 */
-import { MacroMap } from "../redux/csState";
-import { resolveMacros } from "./macros";
+import { MacroMap, resolveMacros } from "./macros";
 
 const macroMap: MacroMap = {
   A: "B",

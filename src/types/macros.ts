@@ -1,4 +1,24 @@
-import { MacroMap } from "../redux/csState";
+import React from "react";
+
+/* A simple dictionary from key to value. */
+export interface MacroMap {
+  [key: string]: string;
+}
+
+/* The MacroContext, used for providing macros to children of
+   container widgets.
+
+   Descendants can update the macros of the nearest provider using
+   the updateMacro() function.
+*/
+export interface MacroContextType {
+  macros: MacroMap;
+  updateMacro: (key: string, value: string) => void;
+}
+export const MacroContext = React.createContext<MacroContextType>({
+  macros: {},
+  updateMacro: (key: string, value: string) => {}
+});
 
 function interpolate(
   str: string,
@@ -20,7 +40,9 @@ function interpolate(
     substitutions[missing] = "${" + missing + "}";
   }
 
-  return str.replace(/\$[{(](.*?)[})]/g, (x, g): string => substitutions[g]);
+  return str.replace(/\$[{(](.*?)[})]/g, (x, g): string =>
+    substitutions[g].toString()
+  );
 }
 
 export function resolveMacros(

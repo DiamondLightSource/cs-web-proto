@@ -1,7 +1,7 @@
 // File with useful functions for manipulating the path
 
-import { MacroMap } from "../../redux/csState";
 import { History } from "history";
+import { MacroMap } from "../../types/macros";
 
 export interface UrlPageDescription {
   filename: string;
