@@ -1,21 +1,20 @@
-import React, { useState, ReactElement } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
-import log from "loglevel";
 
 import { Widget } from "../widget";
 import { WidgetPropType } from "../widgetProps";
 import { registerWidget } from "../register";
 import {
-  ChoicePropOpt,
   InferWidgetProps,
   StringOrNumPropOpt,
   BorderPropOpt,
   ColorPropOpt,
-  StringProp,
   MacrosProp
 } from "../propTypes";
 import { EmbeddedDisplay } from "../EmbeddedDisplay/embeddedDisplay";
 import { RelativePosition } from "../../../types/position";
+
+import classes from "./navigationTabs.module.css";
 
 export const NavigationTabsProps = {
   tabs: PropTypes.objectOf(
@@ -41,30 +40,35 @@ export const NavigationTabsComponent = (
 
   console.log(childIndex);
 
-  const children = Object.values(props.tabs).map((child) => (
+  const children = Object.values(props.tabs).map((child, index) => (
     <EmbeddedDisplay
       position={new RelativePosition()}
       file={child?.filename || ""}
       filetype={child?.filetype || "json"}
       defaultProtocol="pva"
       macros={child?.macros}
+      key={index}
     />
   ));
 
   return (
     <div>
-      {Object.keys(props.tabs).map(
-        (key, index): JSX.Element => (
-          <button
-            onClick={(): void => {
-              setIndex(index);
-            }}
-            key={index}
-          >
-            {key}
-          </button>
-        )
-      )}
+      <div className={classes.Bar}>
+        {Object.keys(props.tabs).map(
+          (key, index): JSX.Element => (
+            <button
+              onClick={(): void => {
+                setIndex(index);
+              }}
+              className={classes.Button}
+              style={index === childIndex ? { borderStyle: "inset" } : {}}
+              key={index}
+            >
+              {key}
+            </button>
+          )
+        )}
+      </div>
       {children[childIndex]}
     </div>
   );
