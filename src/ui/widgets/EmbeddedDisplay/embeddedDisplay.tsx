@@ -38,7 +38,7 @@ const ERROR_WIDGET: WidgetDescription = {
   text: "Error"
 };
 
-function errorWidget(message: string): WidgetDescription {
+export function errorWidget(message: string): WidgetDescription {
   return {
     ...ERROR_WIDGET,
     text: message
