@@ -1,3 +1,4 @@
+import log from "loglevel";
 import { MiddlewareAPI, Dispatch } from "redux";
 import { Connection, ConnectionState } from "../connection/plugin";
 import {
@@ -25,6 +26,8 @@ function valueChanged(
   pvName: string,
   value?: object
 ): void {
+  log.info("value changed");
+  log.info(value);
   store.dispatch({
     type: VALUE_CHANGED,
     payload: { pvName: pvName, value: value }

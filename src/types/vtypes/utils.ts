@@ -10,6 +10,7 @@ export const vtypeToString = (
   precision?: number
 ): string => {
   if (vtype instanceof VNumber) {
+    console.log(vtype);
     if (precision) {
       return vtype.getValue().toFixed(precision);
     } else {

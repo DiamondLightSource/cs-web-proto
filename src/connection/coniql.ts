@@ -63,17 +63,27 @@ const ARRAY_TYPES = {
 function coniqlToPartialVtype(
   value: any,
   timeVal: ConiqlTime,
-  meta: any,
-  status: ConiqlStatus
+  status: ConiqlStatus,
+  display: any
 ): PartialVType {
   const result: PartialVType = {};
   if (value != null) {
-    result.value = value;
+    if (value.float) {
+      result.value = value.float;
+      result.type = VTYPE_CLASSES["FLOAT64"];
+    } else if (value.string) {
+      result.value = value.string;
+      result.type = VTYPE_CLASSES["String"];
+    }
+    result.array = false;
   }
-  if (value && value.numberType) {
-    const bd = base64js.toByteArray(value.base64);
-    const array = new ARRAY_TYPES[value.numberType as CONIQL_TYPE](bd.buffer);
+  if (value && value.base64Array) {
+    const bd = base64js.toByteArray(value.base64Array.base64);
+    const array = new ARRAY_TYPES[value.base64Array.numberType as CONIQL_TYPE](
+      bd.buffer
+    );
     result.value = array;
+    result.array = true;
   }
   if (timeVal) {
     result.time = time(
@@ -82,33 +92,10 @@ function coniqlToPartialVtype(
       false
     );
   }
-  if (meta) {
-    result.array = meta.array;
-    if (meta.__typename === "NumberMeta") {
-      result.type = VTYPE_CLASSES[meta.numberType as CONIQL_TYPE];
-      if (meta.display) {
-        const {
-          controlRange,
-          displayRange,
-          alarmRange,
-          warningRange,
-          units
-        } = meta.display;
-        result.display = display(
-          displayRange,
-          alarmRange,
-          warningRange,
-          controlRange,
-          units
-        );
-      }
-    } else if (meta.__typename === "EnumMeta") {
-      result.type = "VEnum";
-      result.choices = meta.choices;
-      result.index = value;
-    } else {
-      result.type = VTYPE_CLASSES[meta.type as CONIQL_TYPE];
-    }
+  if (display) {
+    // some stuff here!
+    console.log(`display`);
+    console.log(display);
   }
   if (status) {
     result.alarm = alarm(ALARMS[status.quality], AlarmStatus.NONE, "");
@@ -117,55 +104,30 @@ function coniqlToPartialVtype(
 }
 
 const PV_SUBSCRIPTION = gql`
-  subscription sub1($pvName: String!) {
+  subscription sub1($pvName: ID!) {
     subscribeChannel(id: $pvName) {
-      value
+      id
       time {
         seconds
         nanoseconds
         userTag
       }
-      meta {
-        __typename
-        array
-        ... on ObjectMeta {
-          array
-          type
-        }
-        ... on NumberMeta {
-          array
+      value {
+        string
+        float
+        base64Array {
           numberType
-          display {
-            controlRange {
-              min
-              max
-            }
-            displayRange {
-              min
-              max
-            }
-            alarmRange {
-              min
-              max
-            }
-            warningRange {
-              min
-              max
-            }
-            units
-            precision
-            form
-          }
-        }
-        ... on EnumMeta {
-          array
-          choices
+          base64
         }
       }
       status {
         quality
         message
         mutable
+      }
+      display {
+        units
+        form
       }
     }
   }
@@ -186,7 +148,7 @@ export class ConiqlPlugin implements Connection {
     });
 
     const cache = new InMemoryCache({ fragmentMatcher });
-    this.wsClient = new SubscriptionClient(`ws://${socket}/subscriptions`, {
+    this.wsClient = new SubscriptionClient(`ws://${socket}/ws`, {
       reconnect: true
     });
     this.wsClient.onReconnecting((): void => {
@@ -241,15 +203,16 @@ export class ConiqlPlugin implements Connection {
       })
       .subscribe({
         next: (data): void => {
-          log.trace("data", data);
-          const { value, time, meta, status } = data.data.subscribeChannel;
-          if (meta) {
+          log.info("data", data);
+          const { value, time, status, display } = data.data.subscribeChannel;
+          console.log(`status? ${status}`);
+          if (status) {
             this.onConnectionUpdate(pvName, {
               isConnected: true,
-              isReadonly: !meta.mutable
+              isReadonly: !status.mutable
             });
           }
-          const pvtype = coniqlToPartialVtype(value, time, meta, status);
+          const pvtype = coniqlToPartialVtype(value, time, status, display);
           this.onValueUpdate(pvName, pvtype);
         },
         error: (err): void => {
