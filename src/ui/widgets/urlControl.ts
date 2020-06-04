@@ -52,6 +52,7 @@ export function updateTabDesciption(
   page: string,
   desc: UrlPageDescription
 ): UrlInfo {
+  // Using pattern found at https://redux.js.org/recipes/structuring-reducers/immutable-update-patterns
   return { ...info, [tab]: { ...info[tab], [page]: desc } };
 }
 
