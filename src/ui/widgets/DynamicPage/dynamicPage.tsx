@@ -31,7 +31,7 @@ export function DynamicPageFetch(props: {
   let file = "";
   let macros = {};
   try {
-    pageDesc = currentUrlInfo[props.routePath];
+    pageDesc = currentUrlInfo[props.routePath] as UrlPageDescription;
     file = `${baseUrl}/json/${pageDesc.filename}.json`;
     macros = pageDesc.macros ?? {};
   } catch (error) {
