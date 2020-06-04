@@ -4,7 +4,9 @@ import {
   UrlInfo,
   UrlPageDescription,
   updatePageDesciption,
-  removePageDescription
+  removePageDescription,
+  updateTabDesciption,
+  removeTabDescription
 } from "./urlControl";
 import { History } from "history";
 
@@ -33,6 +35,13 @@ const mockInfo: UrlInfo = {
     filetype: "opi",
     macros: {
       device: "example device"
+    }
+  },
+  tabs: {
+    tabOne: {
+      filename: "one",
+      filetype: "json",
+      macros: {}
     }
   }
 };
@@ -116,5 +125,59 @@ describe("modifying UrlInfo object", (): void => {
   it("removes an existing page description", (): void => {
     const info = removePageDescription(mockInfo, "page2");
     expect(info.page2).toBeUndefined();
+  });
+
+  it("adds a new tab container with page description", (): void => {
+    const newTab: UrlPageDescription = {
+      filename: "two",
+      filetype: "json",
+      macros: {}
+    };
+    const info = updateTabDesciption(mockInfo, "tabs_two", "tabTwo", newTab);
+    expect(info.tabs_two).toStrictEqual({ tabTwo: newTab });
+  });
+  it("adds a new tab to an existing container", (): void => {
+    const newTab: UrlPageDescription = {
+      filename: "two",
+      filetype: "json",
+      macros: {}
+    };
+    const info = updateTabDesciption(mockInfo, "tabs", "tabTwo", newTab);
+    expect(info.tabs).toStrictEqual({
+      tabOne: {
+        filename: "one",
+        filetype: "json",
+        macros: {}
+      },
+      tabTwo: newTab
+    });
+  });
+  it("updates an existing tab in an existing container", (): void => {
+    const newTab: UrlPageDescription = {
+      filename: "two",
+      filetype: "json",
+      macros: {}
+    };
+    const info = updateTabDesciption(mockInfo, "tabs", "tabOne", newTab);
+    expect(info.tabs).toStrictEqual({ tabOne: newTab });
+  });
+  it("removes an existing tab in an existing container", (): void => {
+    const info = removeTabDescription(mockInfo, "tabs", "tabOne");
+    expect(info.tabs).toStrictEqual({});
+  });
+  it("Adds a new tab and removes an old one", (): void => {
+    const newTab: UrlPageDescription = {
+      filename: "two",
+      filetype: "json",
+      macros: {}
+    };
+    const addedTabInfo = updateTabDesciption(
+      mockInfo,
+      "tabs",
+      "tabTwo",
+      newTab
+    );
+    const removedTabInfo = removeTabDescription(addedTabInfo, "tabs", "tabOne");
+    expect(removedTabInfo.tabs).toStrictEqual({ tabTwo: newTab });
   });
 });

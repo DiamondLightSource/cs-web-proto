@@ -10,7 +10,7 @@ export interface UrlPageDescription {
 }
 
 export interface UrlInfo {
-  [key: string]: UrlPageDescription;
+  [key: string]: UrlPageDescription | UrlInfo;
 }
 
 // Functions for getting/putting url from/to history object
@@ -44,4 +44,24 @@ export function updatePageDesciption(
 export function removePageDescription(info: UrlInfo, page: string): UrlInfo {
   const { [page]: value, ...remainingInfo } = info;
   return remainingInfo;
+}
+
+export function updateTabDesciption(
+  info: UrlInfo,
+  tab: string,
+  page: string,
+  desc: UrlPageDescription
+): UrlInfo {
+  return { ...info, [tab]: { ...info[tab], [page]: desc } };
+}
+
+// Remove a page
+export function removeTabDescription(
+  info: UrlInfo,
+  tab: string,
+  page: string
+): UrlInfo {
+  const tabInfo = info[tab] as UrlInfo;
+  const { [page]: value, ...remainingInfo } = tabInfo;
+  return { ...info, [tab]: remainingInfo };
 }
