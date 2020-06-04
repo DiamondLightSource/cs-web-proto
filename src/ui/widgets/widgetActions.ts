@@ -14,6 +14,8 @@ import { DType } from "../../types/dtypes";
 
 export const OPEN_PAGE = "OPEN_PAGE";
 export const CLOSE_PAGE = "CLOSE_PAGE";
+export const OPEN_TAB = "OPEN_TAB";
+export const CLOSE_TAB = "CLOSE_TAB";
 export const OPEN_WEBPAGE = "OPEN_WEBPAGE";
 export const WRITE_PV = "WRITE_PV";
 
@@ -35,6 +37,25 @@ export interface OpenPage {
 export interface ClosePage {
   type: typeof CLOSE_PAGE;
   closePageInfo: {
+    page: string;
+    description: string;
+  };
+}
+
+export interface OpenTab {
+  type: typeof OPEN_TAB;
+  openTabInfo: {
+    tab: string;
+    page: string;
+    pageDescription: UrlPageDescription;
+    description: string;
+  };
+}
+
+export interface CloseTab {
+  type: typeof CLOSE_TAB;
+  closePageInfo: {
+    tab: string;
     page: string;
     description: string;
   };
