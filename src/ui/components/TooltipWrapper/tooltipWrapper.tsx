@@ -7,14 +7,14 @@ import React, { ReactNode, useState } from "react";
 import copyToClipboard from "clipboard-copy";
 import Popover from "react-tiny-popover";
 
-import { VType } from "../../../types/vtypes/vtypes";
 import { resolveTooltip } from "../../widgets/tooltip";
 import classes from "./tooltipWrapper.module.css";
+import { DType } from "../../../types/dtypes";
 
 export const TooltipWrapper = (props: {
   pvName: string;
   connected: boolean;
-  value?: VType;
+  value?: DType;
   children: ReactNode;
   style?: object;
   tooltip?: string;

@@ -9,7 +9,6 @@ import {
   UNSUBSCRIBE,
   ValueChanged
 } from "./actions";
-import { VType } from "../types/vtypes/vtypes";
 import { MacroMap } from "../types/macros";
 import { mergeDtype } from "../types/mergeD";
 import { DType } from "../types/dtypes";
@@ -54,7 +53,7 @@ function updateValueCache(
 ): void {
   const { pvName, value } = action.payload;
   const pvState = oldValueCache[pvName];
-  let newValue = mergeDtype(pvState.value, value);
+  const newValue = mergeDtype(pvState.value, value);
   const newPvState = Object.assign({}, pvState, {
     value: newValue
   });

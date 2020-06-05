@@ -7,14 +7,7 @@ import {
   nullConnCallback,
   nullValueCallback
 } from "./plugin";
-import {
-  vdouble,
-  vdoubleArray,
-  VNumber,
-  venum,
-  VEnum
-} from "../types/vtypes/vtypes";
-import { VString } from "../types/vtypes/string";
+import { vdouble, vdoubleArray, VNumber, venum } from "../types/vtypes/vtypes";
 import {
   alarm,
   ALARM_NONE,
@@ -100,7 +93,7 @@ class SinePv extends SimPv {
     const val = Math.sin(
       new Date().getSeconds() + new Date().getMilliseconds() * 0.001
     );
-    return new DType(undefined, val);
+    return new DType({ doubleValue: val });
   }
 }
 
@@ -119,7 +112,7 @@ class SineArrayPv extends SimPv {
     if (this.val.length > 100) {
       this.val.shift();
     }
-    return new DType(undefined, undefined, this.val);
+    return new DType({ arrayValue: this.val });
   }
 }
 
@@ -142,7 +135,7 @@ class RampPv extends SimPv {
     } else if (val > 80 || val < 20) {
       rampAlarm = alarm(AlarmSeverity.MINOR, AlarmStatus.NONE, "");
     }
-    return new DType(undefined, val, undefined, rampAlarm);
+    return new DType({ doubleValue: val }, rampAlarm);
   }
 }
 
@@ -153,7 +146,7 @@ class RandomPv extends SimPv {
     this.maybeSetInterval(this.publish.bind(this));
   }
   public getValue(): DType {
-    return new DType(undefined, Math.random());
+    return new DType({ doubleValue: Math.random() });
   }
 }
 
@@ -170,7 +163,7 @@ class Disconnector extends SimPv {
   }
 
   public getValue(): DType {
-    return new DType(undefined, Math.random());
+    return new DType({ doubleValue: Math.random() });
   }
 }
 
@@ -271,7 +264,7 @@ class LocalPv extends SimPv {
   public constructor(...args: SimArgs) {
     super(...args);
     this.publishConnection();
-    this.value = new DType();
+    this.value = new DType({});
   }
 
   public getConnection(): ConnectionState {
@@ -296,7 +289,7 @@ class LimitData extends SimPv {
 
   public constructor(...args: SimArgs) {
     super(...args);
-    this.value = new DType(undefined, 50);
+    this.value = new DType({ doubleValue: 50 });
     this.publishConnection();
   }
 
@@ -311,9 +304,7 @@ class LimitData extends SimPv {
       const v = value.getValue();
       alarmSeverity = v < 10 ? 2 : v > 90 ? 2 : v < 20 ? 1 : v > 80 ? 1 : 0;
       this.value = new DType(
-        undefined,
-        value.getValue(),
-        undefined,
+        { doubleValue: value.getValue() },
         alarm(alarmSeverity, 0, ""),
         timeNow()
       );

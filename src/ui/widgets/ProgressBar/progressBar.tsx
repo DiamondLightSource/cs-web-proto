@@ -1,7 +1,6 @@
 import React from "react";
 
 import classes from "./progressBar.module.css";
-import { vtypeOrUndefinedToNumber } from "../../../types/vtypes/utils";
 import { Widget } from "../widget";
 import { PVComponent, PVWidgetPropType } from "../widgetProps";
 import { registerWidget } from "../register";

@@ -64,7 +64,11 @@ function coniqlToDtype(
   display: any
 ): DType {
   // TODO handle time, alarm, display
-  return new DType(value.string, value.float, value.base64Array);
+  return new DType({
+    stringValue: value.string,
+    doubleValue: value.float,
+    arrayValue: value.base64Array
+  });
 }
 
 const PV_SUBSCRIPTION = gql`

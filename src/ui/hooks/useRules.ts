@@ -6,7 +6,6 @@ import { CsState } from "../../redux/csState";
 
 import { PvArrayResults, pvStateSelector, pvStateComparator } from "./utils";
 import { AnyProps } from "../widgets/widgetProps";
-import { vtypeToString, vtypeToNumber } from "../../types/vtypes/utils";
 import { AlarmSeverity } from "../../types/vtypes/alarm";
 import { Scalar } from "../../types/vtypes/vtypes";
 import { PVType } from "../../connection/plugin";

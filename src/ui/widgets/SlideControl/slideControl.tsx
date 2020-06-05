@@ -4,7 +4,7 @@
 import React, { useState } from "react";
 
 import classes from "./slideControl.module.css";
-import { vtypeToString, stringToVtype } from "../../../types/vtypes/utils";
+import { stringToVtype } from "../../../types/vtypes/utils";
 
 import {
   ProgressBarComponent,
@@ -15,7 +15,6 @@ import { Widget } from "../widget";
 import { PVInputComponent, PVWidgetPropType } from "../widgetProps";
 import { InferWidgetProps } from "../propTypes";
 import { registerWidget } from "../register";
-import { vdouble } from "../../../types/vtypes/vtypes";
 import { DType } from "../../../types/dtypes";
 
 export const SlideControlComponent = (
@@ -66,7 +65,7 @@ export const SlideControlComponent = (
       >
         <ProgressBarComponent
           connected={connected}
-          value={new DType(undefined, parseFloat(inputValue))}
+          value={new DType({ doubleValue: parseFloat(inputValue) })}
           min={min}
           max={max}
           precision={precision}
