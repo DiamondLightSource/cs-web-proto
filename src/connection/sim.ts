@@ -90,8 +90,6 @@ class SinePv extends SimPv {
   }
 }
 
-<<<<<<< HEAD
-=======
 class SineArrayPv extends SimPv {
   type = "VDoubleArray";
   val: number[] = [];
@@ -105,11 +103,10 @@ class SineArrayPv extends SimPv {
     if (this.val.length > 100) {
       this.val.shift();
     }
-    return new DType({ arrayValue: this.val });
+    return new DType({ arrayValue: Float64Array.from(this.val) });
   }
 }
 
->>>>>>> First version with dtypes.
 class RampPv extends SimPv {
   type = "VDouble";
   // Goes from 0-99 on a loop

@@ -21,7 +21,7 @@ import {
   PVType
 } from "./plugin";
 import { SubscriptionClient } from "subscriptions-transport-ws";
-import { DType } from "../types/dtypes";
+import { DType, DTime } from "../types/dtypes";
 
 export interface ConiqlStatus {
   quality: "ALARM" | "WARNING" | "VALID";
@@ -29,32 +29,29 @@ export interface ConiqlStatus {
   mutable: boolean;
 }
 
-export interface ConiqlTime {
-  seconds: number;
-  nanoseconds: number;
-  userTag: number;
-}
-
-const ALARMS = {
-  ALARM: 2,
-  WARNING: 1,
-  VALID: 0
-};
-
-type CONIQL_TYPE = "FLOAT64" | "INT32" | "INT64";
-
-const VTYPE_CLASSES = {
-  FLOAT64: "VDouble",
-  INT32: "VInt",
-  INT64: "VLong",
-  String: "VString"
-};
+type CONIQL_TYPE =
+  | "INT8"
+  | "UINT8"
+  | "INT16"
+  | "UINT16"
+  | "INT32"
+  | "UINT32"
+  | "INT32"
+  | "INT64"
+  | "FLOAT32"
+  | "FLOAT64";
 
 const ARRAY_TYPES = {
-  FLOAT64: Float64Array,
+  INT8: Int8Array,
+  UINT8: Uint8Array,
+  INT16: Int16Array,
+  UINT16: Uint16Array,
   INT32: Int32Array,
-  // I don't know why I can't use BigInt64Array.
-  INT64: Int32Array
+  UINT32: Uint32Array,
+  INT64: BigInt64Array,
+  UINT64: BigUint64Array,
+  FLOAT32: Float32Array,
+  FLOAT64: Float64Array
 };
 
 function coniqlToDtype(
@@ -64,11 +61,24 @@ function coniqlToDtype(
   display: any
 ): DType {
   // TODO handle time, alarm, display
-  return new DType({
-    stringValue: value.string,
-    doubleValue: value.float,
-    arrayValue: value.base64Array
-  });
+  let array = undefined;
+  if (value.base64Array) {
+    console.log(value.base64Array.base64);
+    const bd = base64js.toByteArray(value.base64Array.base64);
+    array = new ARRAY_TYPES[value.base64Array.numberType as CONIQL_TYPE](
+      bd.buffer
+    );
+  }
+  console.log(array);
+  return new DType(
+    {
+      stringValue: value.string,
+      doubleValue: value.float,
+      arrayValue: array
+    },
+    undefined, // TODO alarm
+    new DTime(timeVal)
+  );
 }
 
 const PV_SUBSCRIPTION = gql`

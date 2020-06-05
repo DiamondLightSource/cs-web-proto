@@ -13,10 +13,23 @@ export function dtimeNow(): DTime {
   return new DTime(new Date());
 }
 
+type NumberArray =
+  | Int8Array
+  | Uint8Array
+  | Int16Array
+  | Uint16Array
+  | Int32Array
+  | Uint32Array
+  | BigInt64Array
+  | BigUint64Array
+  | Float32Array
+  | Float64Array;
+
 interface DTypeValue {
   stringValue?: string;
   doubleValue?: number;
-  arrayValue?: number[];
+  arrayValue?: NumberArray;
+  stringArray?: string[];
 }
 
 export class DType {
@@ -56,6 +69,14 @@ export class DType {
       return this.value.doubleValue;
     } else {
       return NaN;
+    }
+  }
+
+  public getArrayValue(): NumberArray {
+    if (this.value.arrayValue) {
+      return this.value.arrayValue;
+    } else {
+      return Float64Array.from([]);
     }
   }
 

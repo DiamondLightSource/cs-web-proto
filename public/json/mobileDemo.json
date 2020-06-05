@@ -10,7 +10,6 @@
       "position": "relative",
       "children": [
         {
-<<<<<<< HEAD
           "type": "label",
           "position": "relative",
           "width": "100%",
@@ -51,6 +50,15 @@
           ]
         },
         {
+          "type": "plot",
+          "position": "relative",
+          "width": 640,
+          "height": 480,
+          "margin": "2%",
+          "pvName": "csim://sinewave",
+          "mode": 2
+        },
+        {
           "type": "input",
           "position": "relative",
           "width": "45%",
@@ -62,14 +70,277 @@
           "pvName": "loc://pv1"
         },
         {
-=======
->>>>>>> First working version.
           "type": "readback",
           "position": "relative",
           "width": "45%",
           "margin": "2%",
-          "pvName": "csim://sine",
+          "pvName": "loc://pv1",
           "tooltip": "Custom tooltip:\n${pvName}\n${pvValue}"
+        },
+        {
+          "type": "input",
+          "position": "relative",
+          "width": "45%",
+          "margin": "2%",
+          "pvName": "loc://pv2(1)"
+        },
+        {
+          "type": "readback",
+          "position": "relative",
+          "width": "45%",
+          "margin": "2%",
+          "pvName": "loc://pv2"
+        },
+        {
+          "type": "readback",
+          "position": "relative",
+          "width": "45%",
+          "margin": "2%",
+          "pvName": "sim://sine"
+        },
+        {
+          "type": "readback",
+          "position": "relative",
+          "width": "45%",
+          "margin": "2%",
+          "pvName": "sim://sine",
+          "precision": 3
+        }
+      ]
+    },
+    {
+      "type": "flexcontainer",
+      "position": "relative",
+      "children": [
+        {
+          "type": "label",
+          "position": "relative",
+          "width": "100%",
+          "font": {
+            "style": "bold"
+          },
+          "backgroundColor": "transparent",
+          "text": "Alarm PV - Happy between 20 and 80"
+        },
+        {
+          "type": "input",
+          "position": "relative",
+          "width": "50%",
+          "margin": "5px 0 0 0",
+          "pvName": "sim://limit#metapv1"
+        },
+        {
+          "type": "readback",
+          "position": "relative",
+          "width": "50%",
+          "margin": "5px 0 0 0",
+          "pvName": "sim://limit#metapv1"
+        },
+        {
+          "type": "readback",
+          "position": "relative",
+          "width": "100%",
+          "margin": "5px 0 0 0",
+          "pvName": "sim://limit#metapv1",
+          "alarmBorder": true
+        }
+      ]
+    },
+    {
+      "type": "display",
+      "position": "relative",
+      "margin": "20px 0 0 0",
+      "children": [
+        {
+          "type": "label",
+          "position": "relative",
+          "width": "100%",
+          "font": {
+            "style": "bold"
+          },
+          "backgroundColor": "transparent",
+          "text": "Sim Enum"
+        },
+        {
+          "type": "menubutton",
+          "position": "relative",
+          "margin": "5px 0 0 0",
+          "pvName": "sim://enum"
+        },
+        {
+          "type": "input",
+          "position": "relative",
+          "margin": "5px 0 0 0",
+          "pvName": "sim://enum"
+        },
+        {
+          "type": "readback",
+          "position": "relative",
+          "margin": "5px 0 0 0",
+          "pvName": "sim://enum"
+        }
+      ]
+    },
+    {
+      "type": "display",
+      "position": "relative",
+      "margin": "20px 0 0 0",
+      "children": [
+        {
+          "type": "label",
+          "position": "relative",
+          "width": "100%",
+          "font": {
+            "style": "bold"
+          },
+          "backgroundColor": "transparent",
+          "text": "Local Enum - [un deux trois]"
+        },
+        {
+          "type": "menubutton",
+          "position": "relative",
+          "margin": "5px 0 0 0",
+          "pvName": "loc://enum1<VEnum>(2, \"un\", \"deux\", \"trois\")"
+        },
+        {
+          "type": "input",
+          "position": "relative",
+          "margin": "5px 0 0 0",
+          "pvName": "loc://enum1<VEnum>(2, \"un\", \"deux\", \"trois\")"
+        },
+        {
+          "type": "readback",
+          "position": "relative",
+          "margin": "5px 0 0 0",
+          "pvName": "loc://enum1"
+        },
+        {
+          "type": "readback",
+          "position": "relative",
+          "margin": "5px 0 0 0",
+          "pvName": "enum://bad"
+        }
+      ]
+    },
+    {
+      "type": "display",
+      "position": "relative",
+      "margin": "20px 0 0 0",
+      "children": [
+        {
+          "type": "label",
+          "position": "relative",
+          "width": "100%",
+          "font": {
+            "style": "bold"
+          },
+          "backgroundColor": "transparent",
+          "text": "Local initialization"
+        },
+        {
+          "type": "readback",
+          "position": "relative",
+          "margin": "5px 0 30px 0",
+          "pvName": "loc://test(1.1)"
+        }
+      ]
+    },
+    {
+      "type": "dropdown",
+      "position": "relative",
+      "margin": "20px 0 0 0",
+      "title": "Drop Down Section",
+      "children": [
+        {
+          "type": "flexcontainer",
+          "position": "relative",
+          "children": [
+            {
+              "type": "label",
+              "position": "relative",
+              "width": "45%",
+              "margin": "1%",
+              "transparent": true,
+              "text": "Choose PV to show:"
+            },
+            {
+              "type": "menumux",
+              "position": "relative",
+              "width": "45%",
+              "margin": "1%",
+              "values": {
+                "loc://pv1": "1",
+                "loc://pv2": "2"
+              },
+              "symbol": "suffix",
+              "tooltip": "This menumux widget changes symbol \"${symbol}\""
+            },
+            {
+              "type": "label",
+              "position": "relative",
+              "width": "45%",
+              "margin": "1%",
+              "transparent": true,
+              "text": "SelectedPV: loc://pv${suffix}"
+            },
+            {
+              "type": "readback",
+              "position": "relative",
+              "width": "45%",
+              "margin": "1%",
+              "pvName": "loc://pv${suffix}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "grouping",
+      "position": "relative",
+      "margin": "20px 0 0 0",
+      "name": "Slide Control",
+      "children": [
+        {
+          "type": "label",
+          "position": "relative",
+          "text": "In a grouping container...",
+          "textAlign": "left",
+          "backgroundColor": "transparent"
+        },
+        {
+          "type": "slidecontrol",
+          "position": "relative",
+          "pvName": "sim://limit#progressPV",
+          "alarmBorder": true
+        }
+      ]
+    },
+    {
+      "type": "slideshow",
+      "position": "relative",
+      "margin": "20px 0 0 0",
+      "height": "50px",
+      "children": [
+        {
+          "type": "label",
+          "position": "relative",
+          "width": "100%",
+          "text": "Widget 1",
+          "height": "100%"
+        },
+        {
+          "type": "label",
+          "position": "relative",
+          "width": "100%",
+          "text": "Widget 2",
+          "height": "100%"
+        },
+        {
+          "type": "label",
+          "position": "relative",
+          "width": "100%",
+          "text": "Widget 3",
+          "height": "100%"
         }
       ]
     }
