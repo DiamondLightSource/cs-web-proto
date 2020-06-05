@@ -1,12 +1,5 @@
 import { DType } from "../types/dtypes";
 
-export enum PVTypeOld {
-  DOUBLE,
-  STRING,
-  STRINGNUM,
-  ARRAY
-}
-
 export interface PVType {
   double?: boolean;
   string?: boolean;

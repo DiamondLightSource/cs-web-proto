@@ -17,7 +17,7 @@ import {
   VDouble,
   vdoubleArray
 } from "../types/vtypes/vtypes";
-import { AlarmSeverity, AlarmStatus, alarm } from "../types/vtypes/alarm";
+import { AlarmSeverity, AlarmStatus, alarm } from "../types/alarm";
 import { VString, vstring } from "../types/vtypes/string";
 
 const initialState: CsState = {

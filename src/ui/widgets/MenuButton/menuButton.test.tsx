@@ -3,10 +3,8 @@ import { MenuButtonComponent, MenuButtonProps } from "./menuButton";
 import { configure, shallow, ShallowWrapper } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import { create, ReactTestRenderer } from "react-test-renderer";
-import { venum, vdouble } from "../../../types/vtypes/vtypes";
-import { vstring } from "../../../types/vtypes/string";
-import { ALARM_NONE } from "../../../types/vtypes/alarm";
-import { timeNow } from "../../../types/vtypes/time";
+import { ALARM_NONE } from "../../../types/alarm";
+import { dtimeNow } from "../../../types/dtypes";
 
 configure({ adapter: new Adapter() });
 
@@ -26,7 +24,7 @@ beforeEach((): void => {
         0,
         ["zero", "one", "two", "three", "four", "five"],
         ALARM_NONE,
-        timeNow()
+        dtimeNow()
       )}
       readonly={false}
       onChange={mock}

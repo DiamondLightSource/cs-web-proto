@@ -7,15 +7,8 @@ import {
   nullConnCallback,
   nullValueCallback
 } from "./plugin";
-import { vdouble, vdoubleArray, VNumber, venum } from "../types/vtypes/vtypes";
-import {
-  alarm,
-  ALARM_NONE,
-  AlarmSeverity,
-  AlarmStatus
-} from "../types/vtypes/alarm";
-import { timeNow } from "../types/vtypes/time";
-import { DType } from "../types/dtypes";
+import { alarm, ALARM_NONE, AlarmSeverity, AlarmStatus } from "../types/alarm";
+import { DType, dtimeNow } from "../types/dtypes";
 
 type SimArgs = [
   string,
@@ -300,18 +293,14 @@ class LimitData extends SimPv {
   public updateValue(value: DType): void {
     // Set alarm status
     let alarmSeverity = 0;
-    if (value instanceof VNumber) {
-      const v = value.getValue();
-      alarmSeverity = v < 10 ? 2 : v > 90 ? 2 : v < 20 ? 1 : v > 80 ? 1 : 0;
-      this.value = new DType(
-        { doubleValue: value.getValue() },
-        alarm(alarmSeverity, 0, ""),
-        timeNow()
-      );
-      this.publish();
-    } else {
-      throw new Error(`Value (${value}) is not of ValueType`);
-    }
+    const v = value.getDoubleValue();
+    alarmSeverity = v < 10 ? 2 : v > 90 ? 2 : v < 20 ? 1 : v > 80 ? 1 : 0;
+    this.value = new DType(
+      { doubleValue: value.getDoubleValue() },
+      alarm(alarmSeverity, 0, ""),
+      dtimeNow()
+    );
+    this.publish();
   }
 
   public getValue(): DType {
@@ -397,17 +386,19 @@ export class SimulatorPlugin implements Connection {
         initial = JSON.parse("[" + groups[3] + "]");
         keyName = "loc://" + groups[1];
 
+        /*
         if (typeName === "VEnum") {
           initial = venum(
             initial[0] - 1,
             initial.slice(1),
             ALARM_NONE,
-            timeNow()
+            dtimeNow()
           );
-        } else if (initial.length === 1) {
-          initial = vdouble(initial[0]);
+          */
+        if (initial.length === 1) {
+          initial = new DType({ doubleValue: initial[0] });
         } else {
-          initial = vdoubleArray(initial, initial.length);
+          initial = new DType({ arrayValue: initial });
         }
       } else {
         initial = undefined;
@@ -447,7 +438,7 @@ export class SimulatorPlugin implements Connection {
       if (nameInfo.initialValue !== undefined) {
         initial = nameInfo.initialValue;
       } else {
-        initial = vdouble(0);
+        initial = new DType({ doubleValue: 0 });
       }
     } else if (nameInfo.protocol === "sim://disconnector") {
       cls = Disconnector;

@@ -1,5 +1,4 @@
 import { writePv } from "../hooks/useSubscription";
-import { valueToVtype } from "../../types/vtypes/utils";
 import { History } from "history";
 import log from "loglevel";
 
@@ -11,6 +10,7 @@ import {
   getUrlInfoFromHistory
 } from "./urlControl";
 import { MacroMap } from "../../types/macros";
+import { valueToDtype } from "../../types/dtypes";
 
 export const OPEN_PAGE = "OPEN_PAGE";
 export const CLOSE_PAGE = "CLOSE_PAGE";
@@ -155,7 +155,7 @@ export const executeAction = (
     case WRITE_PV:
       writePv(
         action.writePvInfo.pvName,
-        valueToVtype(action.writePvInfo.value)
+        valueToDtype(action.writePvInfo.value)
       );
       break;
     default:

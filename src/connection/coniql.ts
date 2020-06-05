@@ -59,7 +59,7 @@ const ARRAY_TYPES = {
 
 function coniqlToDtype(
   value: any,
-  timeVal: ConiqlTime,
+  timeVal: Date,
   status: ConiqlStatus,
   display: any
 ): DType {
@@ -76,9 +76,7 @@ const PV_SUBSCRIPTION = gql`
     subscribeChannel(id: $pvName) {
       id
       time {
-        seconds
-        nanoseconds
-        userTag
+        datetime
       }
       value {
         string
@@ -180,7 +178,7 @@ export class ConiqlPlugin implements Connection {
               isReadonly: !status.mutable
             });
           }
-          const pvtype = coniqlToDtype(value, time, status, display);
+          const pvtype = coniqlToDtype(value, time.datetime, status, display);
           this.onValueUpdate(pvName, pvtype);
         },
         error: (err): void => {

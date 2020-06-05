@@ -1,6 +1,17 @@
-import { Alarm, ALARM_NONE } from "./vtypes/alarm";
-import { Time, timeNow } from "./vtypes/time";
-import { Display, DISPLAY_NONE } from "./vtypes/display";
+import { Alarm, ALARM_NONE } from "./alarm";
+import { Display, DISPLAY_NONE } from "./display";
+
+export class DTime {
+  public datetime: Date;
+
+  public constructor(datetime: Date) {
+    this.datetime = datetime;
+  }
+}
+
+export function dtimeNow(): DTime {
+  return new DTime(new Date());
+}
 
 interface DTypeValue {
   stringValue?: string;
@@ -10,20 +21,20 @@ interface DTypeValue {
 
 export class DType {
   public value: DTypeValue;
-  public time: Time;
+  public time: DTime;
   public alarm?: Alarm;
   public display?: Display;
 
   public constructor(
     value: DTypeValue,
     alarm?: Alarm,
-    time?: Time,
+    time?: DTime,
     display?: Display
   ) {
     // TODO check for no value.
     this.value = value;
     this.alarm = alarm;
-    this.time = time ?? timeNow();
+    this.time = time ?? dtimeNow();
     this.display = display;
   }
 
@@ -51,7 +62,7 @@ export class DType {
   public getAlarm(): Alarm {
     return this.alarm ?? ALARM_NONE;
   }
-  public getTime(): Time {
+  public getTime(): DTime {
     return this.time;
   }
   public getDisplay(): Display | undefined {
@@ -63,10 +74,27 @@ export class DType {
   }
 }
 
-export const dtypeToString = (dtype?: DType): string => {
+export function dtypeToString(dtype?: DType): string {
   if (dtype) {
     return dtype.getStringValue();
   } else {
     return "";
   }
-};
+}
+
+export function valueToDtype(
+  value: any,
+  alarm = ALARM_NONE,
+  time = dtimeNow(),
+  display = DISPLAY_NONE
+): DType {
+  const dvalue: DTypeValue = {};
+  if (typeof value === "string") {
+    dvalue.stringValue = value;
+  } else if (typeof value === "number") {
+    dvalue.doubleValue = value;
+  } else {
+    dvalue.doubleValue = 0;
+  }
+  return new DType(dvalue, alarm, time, display);
+}

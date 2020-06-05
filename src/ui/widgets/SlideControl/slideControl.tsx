@@ -4,7 +4,6 @@
 import React, { useState } from "react";
 
 import classes from "./slideControl.module.css";
-import { stringToVtype } from "../../../types/vtypes/utils";
 
 import {
   ProgressBarComponent,
@@ -43,7 +42,7 @@ export const SlideControlComponent = (
   }
   function onMouseUp(event: React.MouseEvent<HTMLInputElement>): void {
     setEditing(false);
-    writePv(pvName, stringToVtype(event.currentTarget.value));
+    writePv(pvName, new DType({ stringValue: event.currentTarget.value }));
   }
 
   const stringValue = value?.getStringValue() || "";

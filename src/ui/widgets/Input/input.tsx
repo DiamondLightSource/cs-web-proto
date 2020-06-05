@@ -2,7 +2,6 @@ import React, { useState, CSSProperties } from "react";
 
 import classes from "./input.module.css";
 import { writePv } from "../../hooks/useSubscription";
-import { stringToVtype } from "../../../types/vtypes/utils";
 import { Widget } from "../widget";
 import { PVInputComponent, PVWidgetPropType } from "../widgetProps";
 import { registerWidget } from "../register";
@@ -15,7 +14,7 @@ import {
 } from "../propTypes";
 import { Font } from "../../../types/font";
 import { Color } from "../../../types/color";
-import { dtypeToString } from "../../../types/dtypes";
+import { dtypeToString, DType } from "../../../types/dtypes";
 
 export interface InputProps {
   pvName: string;
@@ -79,7 +78,10 @@ export const SmartInputComponent = (
   const [editing, setEditing] = useState(false);
   function onKeyDown(event: React.KeyboardEvent<HTMLInputElement>): void {
     if (event.key === "Enter") {
-      writePv(props.pvName, stringToVtype(event.currentTarget.value));
+      writePv(
+        props.pvName,
+        new DType({ stringValue: event.currentTarget.value })
+      );
       setInputValue("");
       setEditing(false);
       event.currentTarget.blur();

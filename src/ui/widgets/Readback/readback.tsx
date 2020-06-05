@@ -4,8 +4,8 @@ import { Widget } from "../widget";
 import { PVComponent, PVWidgetPropType } from "../widgetProps";
 
 import classes from "./readback.module.css";
-import { alarmOf, AlarmSeverity } from "../../../types/vtypes/alarm";
-import { displayOf } from "../../../types/vtypes/display";
+import { alarmOf, AlarmSeverity } from "../../../types/alarm";
+import { displayOf } from "../../../types/display";
 import {
   IntPropOpt,
   BoolPropOpt,

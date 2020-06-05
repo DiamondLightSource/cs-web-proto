@@ -6,8 +6,7 @@ import { CsState } from "../../redux/csState";
 
 import { PvArrayResults, pvStateSelector, pvStateComparator } from "./utils";
 import { AnyProps } from "../widgets/widgetProps";
-import { AlarmSeverity } from "../../types/vtypes/alarm";
-import { Scalar } from "../../types/vtypes/vtypes";
+import { AlarmSeverity } from "../../types/alarm";
 import { PVType } from "../../connection/plugin";
 
 // See https://stackoverflow.com/questions/54542318/using-an-enum-as-a-dictionary-key
@@ -54,10 +53,8 @@ export function useRules(props: AnyProps): AnyProps {
           pvVars["pv" + i] = val.getDoubleValue();
           pvVars["pvStr" + i] = val.getStringValue();
           pvVars["pvInt" + i] = val.getDoubleValue();
-          if (val instanceof Scalar) {
-            pvVars["pvSev" + i] =
-              INT_SEVERITIES[val.getAlarm()?.getSeverity() || 0];
-          }
+          pvVars["pvSev" + i] =
+            INT_SEVERITIES[val.getAlarm()?.getSeverity() || 0];
         }
       }
     }

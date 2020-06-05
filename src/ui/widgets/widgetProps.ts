@@ -11,8 +11,8 @@ import {
   PvTypePropOpt
 } from "./propTypes";
 
-import { VType } from "../../types/vtypes/vtypes";
 import { GenericProp } from "../../types/props";
+import { DType } from "../../types/dtypes";
 
 export const WidgetPropType = {
   position: PositionProp,
@@ -48,7 +48,7 @@ export type AnyProps = PVWidgetComponent & {
   id: string;
   connected?: boolean;
   readonly?: boolean;
-  value?: VType;
+  value?: DType;
 } & {
   // All other props with valid types.
   [x: string]: GenericProp;

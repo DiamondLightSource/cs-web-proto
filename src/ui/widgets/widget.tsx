@@ -9,7 +9,7 @@ import { useId } from "react-id-generator";
 import { useRules } from "../hooks/useRules";
 import { PVWidgetComponent, WidgetComponent } from "./widgetProps";
 import { Border, BorderStyle } from "../../types/border";
-import { alarmOf, AlarmSeverity } from "../../types/vtypes/alarm";
+import { alarmOf, AlarmSeverity } from "../../types/alarm";
 import { Color } from "../../types/color";
 import { Position, RelativePosition } from "../../types/position";
 
