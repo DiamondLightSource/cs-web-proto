@@ -49,6 +49,17 @@ export const MacrosProp = PropTypes.objectOf(PropTypes.string.isRequired)
   .isRequired;
 export const MacrosPropOpt = PropTypes.objectOf(PropTypes.string.isRequired);
 
+export const PvTypePropOpt = PropTypes.shape({
+  double: BoolPropOpt,
+  string: BoolPropOpt,
+  base64Array: BoolPropOpt,
+  stringArray: BoolPropOpt,
+  display: BoolPropOpt,
+  timestamp: BoolPropOpt
+});
+
+export const PvTypeProp = PvTypePropOpt.isRequired;
+
 const RulePvs = PropTypes.shape({
   pvName: PvProp,
   trigger: BoolProp

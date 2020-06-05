@@ -7,7 +7,8 @@ import {
   PositionProp,
   ActionsPropType,
   RulesPropOpt,
-  PvPropOpt
+  PvPropOpt,
+  PvTypePropOpt
 } from "./propTypes";
 
 import { VType } from "../../types/vtypes/vtypes";
@@ -33,6 +34,7 @@ export type WidgetComponent = WidgetProps & {
 // Internal prop types object for properties which are not in a standard widget
 const PVExtras = {
   pvName: PvPropOpt,
+  pvType: PvTypePropOpt,
   alarmBorder: BoolPropOpt
 };
 // PropTypes object for a PV widget which can be expanded

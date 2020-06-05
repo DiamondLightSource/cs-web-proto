@@ -2,8 +2,9 @@ import React from "react";
 import { useSubscription } from "./useSubscription";
 import { useSelector } from "react-redux";
 import { CsState } from "../../redux/csState";
-import { VType } from "../../types/vtypes/vtypes";
 import { pvStateSelector, PvArrayResults, pvStateComparator } from "./utils";
+import { PVType } from "../../connection/plugin";
+import { DType } from "../../types/dtypes";
 
 export interface PvProps extends React.PropsWithChildren<any> {
   pvName: string;
@@ -12,10 +13,12 @@ export interface PvProps extends React.PropsWithChildren<any> {
 
 export function useConnection(
   id: string,
-  pvName?: string
-): [string, boolean, boolean, VType?] {
+  pvName?: string,
+  type?: PVType
+): [string, boolean, boolean, DType?] {
   const pvNameArray = pvName === undefined ? [] : [pvName];
-  useSubscription(id, pvNameArray);
+  const typeArray = type === undefined ? [] : [type];
+  useSubscription(id, pvNameArray, typeArray);
   const pvResults = useSelector(
     (state: CsState): PvArrayResults => pvStateSelector(pvNameArray, state),
     pvStateComparator

@@ -2,7 +2,7 @@ import React, { useState, CSSProperties } from "react";
 
 import classes from "./input.module.css";
 import { writePv } from "../../hooks/useSubscription";
-import { vtypeToString, stringToVtype } from "../../../types/vtypes/utils";
+import { stringToVtype } from "../../../types/vtypes/utils";
 import { Widget } from "../widget";
 import { PVInputComponent, PVWidgetPropType } from "../widgetProps";
 import { registerWidget } from "../register";
@@ -15,6 +15,7 @@ import {
 } from "../propTypes";
 import { Font } from "../../../types/font";
 import { Color } from "../../../types/color";
+import { dtypeToString } from "../../../types/dtypes";
 
 export interface InputProps {
   pvName: string;
@@ -97,11 +98,11 @@ export const SmartInputComponent = (
   function onBlur(event: React.ChangeEvent<HTMLInputElement>): void {
     setEditing(false);
     /* When focus lost show PV value. */
-    setInputValue(vtypeToString(props.value));
+    setInputValue(dtypeToString(props.value));
   }
 
-  if (!editing && inputValue !== vtypeToString(props.value)) {
-    setInputValue(vtypeToString(props.value));
+  if (!editing && inputValue !== dtypeToString(props.value)) {
+    setInputValue(dtypeToString(props.value));
   }
 
   return (

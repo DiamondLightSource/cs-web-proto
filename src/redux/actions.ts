@@ -1,6 +1,5 @@
-import { ConnectionState } from "../connection/plugin";
-import { VType } from "../types/vtypes/vtypes";
-import { PartialVType } from "../types/vtypes/merge";
+import { DType } from "../types/dtypes";
+import { ConnectionState, PVType } from "../connection/plugin";
 
 export const CONNECTION_CHANGED = "connection_changed";
 export const SUBSCRIBE = "subscribe";
@@ -32,6 +31,7 @@ export interface Subscribe {
     componentId: string;
     pvName: string;
     effectivePvName: string;
+    type: PVType;
   };
 }
 
@@ -47,7 +47,7 @@ export interface ValueChanged {
   type: typeof VALUE_CHANGED;
   payload: {
     pvName: string;
-    value: VType | PartialVType | undefined;
+    value: DType;
   };
 }
 
@@ -60,7 +60,7 @@ export interface WritePv {
   type: typeof WRITE_PV;
   payload: {
     pvName: string;
-    value: VType;
+    value: DType;
   };
 }
 

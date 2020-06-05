@@ -49,9 +49,10 @@ export const connectionMiddleware = (connection: Connection) => (
 
   switch (action.type) {
     case SUBSCRIBE: {
-      const { pvName } = action.payload;
+      console.log(action.payload);
+      const { pvName, type } = action.payload;
       // Are we already subscribed?
-      const effectivePvName = connection.subscribe(pvName);
+      const effectivePvName = connection.subscribe(pvName, type);
       action = {
         ...action,
         payload: {

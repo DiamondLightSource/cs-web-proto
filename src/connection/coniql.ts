@@ -17,14 +17,11 @@ import {
   ConnectionChangedCallback,
   ValueChangedCallback,
   nullConnCallback,
-  nullValueCallback
+  nullValueCallback,
+  PVType
 } from "./plugin";
-import { VType } from "../types/vtypes/vtypes";
-import { AlarmStatus, alarm } from "../types/vtypes/alarm";
-import { time } from "../types/vtypes/time";
 import { SubscriptionClient } from "subscriptions-transport-ws";
-import { display } from "../types/vtypes/display";
-import { PartialVType } from "../types/vtypes/merge";
+import { DType } from "../types/dtypes";
 
 export interface ConiqlStatus {
   quality: "ALARM" | "WARNING" | "VALID";
@@ -60,47 +57,14 @@ const ARRAY_TYPES = {
   INT64: Int32Array
 };
 
-function coniqlToPartialVtype(
+function coniqlToDtype(
   value: any,
   timeVal: ConiqlTime,
   status: ConiqlStatus,
   display: any
-): PartialVType {
-  const result: PartialVType = {};
-  if (value != null) {
-    if (value.float) {
-      result.value = value.float;
-      result.type = VTYPE_CLASSES["FLOAT64"];
-    } else if (value.string) {
-      result.value = value.string;
-      result.type = VTYPE_CLASSES["String"];
-    }
-    result.array = false;
-  }
-  if (value && value.base64Array) {
-    const bd = base64js.toByteArray(value.base64Array.base64);
-    const array = new ARRAY_TYPES[value.base64Array.numberType as CONIQL_TYPE](
-      bd.buffer
-    );
-    result.value = array;
-    result.array = true;
-  }
-  if (timeVal) {
-    result.time = time(
-      { secondsPastEpoch: timeVal.seconds, nanoseconds: timeVal.nanoseconds },
-      timeVal.userTag,
-      false
-    );
-  }
-  if (display) {
-    // some stuff here!
-    console.log(`display`);
-    console.log(display);
-  }
-  if (status) {
-    result.alarm = alarm(ALARMS[status.quality], AlarmStatus.NONE, "");
-  }
-  return result;
+): DType {
+  // TODO handle time, alarm, display
+  return new DType(value.string, value.float, value.base64Array);
 }
 
 const PV_SUBSCRIPTION = gql`
@@ -212,7 +176,7 @@ export class ConiqlPlugin implements Connection {
               isReadonly: !status.mutable
             });
           }
-          const pvtype = coniqlToPartialVtype(value, time, status, display);
+          const pvtype = coniqlToDtype(value, time, status, display);
           this.onValueUpdate(pvName, pvtype);
         },
         error: (err): void => {
@@ -229,7 +193,8 @@ export class ConiqlPlugin implements Connection {
       });
   }
 
-  public subscribe(pvName: string): string {
+  public subscribe(pvName: string, type: PVType): string {
+    // How to handle multiple subscriptions of different types to the same channel?
     if (this.subscriptions[pvName] === undefined) {
       this._subscribe(pvName);
     }
@@ -237,7 +202,7 @@ export class ConiqlPlugin implements Connection {
     return pvName;
   }
 
-  public putPv(pvName: string, value: VType): void {
+  public putPv(pvName: string, value: DType): void {
     // noop
   }
 

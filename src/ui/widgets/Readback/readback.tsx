@@ -6,7 +6,6 @@ import { PVComponent, PVWidgetPropType } from "../widgetProps";
 import classes from "./readback.module.css";
 import { alarmOf, AlarmSeverity } from "../../../types/vtypes/alarm";
 import { displayOf } from "../../../types/vtypes/display";
-import { vtypeToString } from "../../../types/vtypes/utils";
 import {
   IntPropOpt,
   BoolPropOpt,
@@ -77,7 +76,7 @@ export const ReadbackComponent = (
   if (!value) {
     displayedValue = "Waiting for value";
   } else {
-    displayedValue = vtypeToString(value, precision);
+    displayedValue = value.getStringValue();
   }
 
   // Add units if there are any and show units is true
@@ -113,6 +112,8 @@ const ReadbackWidgetProps = {
 
 export const Readback = (
   props: InferWidgetProps<typeof ReadbackWidgetProps>
-): JSX.Element => <Widget baseWidget={ReadbackComponent} {...props} />;
+): JSX.Element => (
+  <Widget pvType={{ string: true }} baseWidget={ReadbackComponent} {...props} />
+);
 
 registerWidget(Readback, ReadbackWidgetProps, "readback");

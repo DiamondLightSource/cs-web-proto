@@ -3,8 +3,19 @@ import { getStore } from "../../redux/store";
 import { SUBSCRIBE, UNSUBSCRIBE, WRITE_PV } from "../../redux/actions";
 import { useDispatch } from "react-redux";
 import { VType } from "../../types/vtypes/vtypes";
+import { PVType } from "../../connection/plugin";
 
-export function useSubscription(componentId: string, pvNames: string[]): void {
+export function useSubscription(
+  componentId: string,
+  pvNames: string[],
+  types: PVType[]
+): void {
+  // zip pvNames and types together
+  const pvsAndTypes: [string, PVType][] = pvNames.map(
+    (pvName: string, i: number) => {
+      return [pvName, types[i]];
+    }
+  );
   const dispatch = useDispatch();
   // Get a repeatable value for React to decide whether to re-render.
   // If you put pvNames into the useEffect dependency array it will
@@ -14,10 +25,10 @@ export function useSubscription(componentId: string, pvNames: string[]): void {
   // - takes no arguments and
   // - returns a function that takes no arguments and returns nothing
   useEffect((): (() => void) => {
-    pvNames.forEach((pvName): void => {
+    pvsAndTypes.forEach(([pvName, type]): void => {
       dispatch({
         type: SUBSCRIBE,
-        payload: { componentId: componentId, pvName: pvName }
+        payload: { componentId: componentId, pvName: pvName, type: type }
       });
     });
     return (): void => {

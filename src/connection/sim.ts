@@ -8,7 +8,6 @@ import {
   nullValueCallback
 } from "./plugin";
 import {
-  VType,
   vdouble,
   vdoubleArray,
   VNumber,
@@ -23,18 +22,7 @@ import {
   AlarmStatus
 } from "../types/vtypes/alarm";
 import { timeNow } from "../types/vtypes/time";
-import { vtypeInfo, PartialVType } from "../types/vtypes/merge";
-
-function partialise(
-  value: VType | undefined,
-  type?: string
-): PartialVType | undefined {
-  if (value === undefined) {
-    return undefined;
-  } else {
-    return vtypeInfo(value, { type: type });
-  }
-}
+import { DType } from "../types/dtypes";
 
 type SimArgs = [
   string,
@@ -49,7 +37,7 @@ abstract class SimPv {
   protected subscribed: boolean;
   public pvName: string;
   protected updateRate?: number;
-  abstract getValue(): VType | undefined;
+  abstract getValue(): DType;
   public type: string | undefined;
   public constructor(
     pvName: string,
@@ -80,7 +68,7 @@ abstract class SimPv {
 
   public publish(): void {
     if (this.subscribed) {
-      this.onValueUpdate(this.pvName, partialise(this.getValue(), this.type));
+      this.onValueUpdate(this.pvName, this.getValue());
     }
   }
 
@@ -88,7 +76,7 @@ abstract class SimPv {
     this.onConnectionUpdate(this.pvName, this.getConnection());
   }
 
-  public updateValue(_: VType): void {
+  public updateValue(_: DType): void {
     throw new Error(`Cannot set value on ${this.constructor.name}`);
   }
 
@@ -108,14 +96,34 @@ class SinePv extends SimPv {
     setInterval(this.publish.bind(this), this.updateRate);
   }
 
-  public getValue(): VType | undefined {
+  public getValue(): DType {
     const val = Math.sin(
       new Date().getSeconds() + new Date().getMilliseconds() * 0.001
     );
-    return vdouble(val);
+    return new DType(undefined, val);
   }
 }
 
+<<<<<<< HEAD
+=======
+class SineArrayPv extends SimPv {
+  type = "VDoubleArray";
+  val: number[] = [];
+  public constructor(...args: SimArgs) {
+    super(...args);
+    setInterval(this.publish.bind(this), this.updateRate);
+  }
+
+  public getValue(): DType {
+    this.val.push(Math.sin(Date.now() * 0.001));
+    if (this.val.length > 100) {
+      this.val.shift();
+    }
+    return new DType(undefined, undefined, this.val);
+  }
+}
+
+>>>>>>> First version with dtypes.
 class RampPv extends SimPv {
   type = "VDouble";
   // Goes from 0-99 on a loop
@@ -124,7 +132,7 @@ class RampPv extends SimPv {
     setInterval(this.publish.bind(this), this.updateRate);
   }
 
-  public getValue(): VType | undefined {
+  public getValue(): DType {
     const d = new Date();
     const val =
       (d.getSeconds() % 10) * 10 + Math.floor(d.getMilliseconds() / 100);
@@ -134,7 +142,7 @@ class RampPv extends SimPv {
     } else if (val > 80 || val < 20) {
       rampAlarm = alarm(AlarmSeverity.MINOR, AlarmStatus.NONE, "");
     }
-    return vdouble(val, rampAlarm);
+    return new DType(undefined, val, undefined, rampAlarm);
   }
 }
 
@@ -144,8 +152,8 @@ class RandomPv extends SimPv {
     super(...args);
     this.maybeSetInterval(this.publish.bind(this));
   }
-  public getValue(): VType | undefined {
-    return vdouble(Math.random());
+  public getValue(): DType {
+    return new DType(undefined, Math.random());
   }
 }
 
@@ -161,11 +169,12 @@ class Disconnector extends SimPv {
     return { isConnected: randomBool, isReadonly: true };
   }
 
-  public getValue(): VType | undefined {
-    return vdouble(Math.random());
+  public getValue(): DType {
+    return new DType(undefined, Math.random());
   }
 }
 
+/*
 class SimEnumPv extends SimPv {
   type = "VEnum";
   private value: VEnum = venum(
@@ -254,25 +263,26 @@ class EnumPv extends SimPv {
     return this.value;
   }
 }
+*/
 
 class LocalPv extends SimPv {
   type = "VString";
-  private value: VType | undefined;
+  private value: DType;
   public constructor(...args: SimArgs) {
     super(...args);
     this.publishConnection();
-    this.value = undefined;
+    this.value = new DType();
   }
 
   public getConnection(): ConnectionState {
     return { isConnected: true, isReadonly: false };
   }
 
-  public getValue(): VType | undefined {
+  public getValue(): DType {
     return this.value;
   }
 
-  public updateValue(value: VType): void {
+  public updateValue(value: DType): void {
     this.value = value;
     this.publish();
   }
@@ -280,13 +290,13 @@ class LocalPv extends SimPv {
 
 class LimitData extends SimPv {
   type = "VDouble";
-  private value: VType;
+  private value: DType;
   // Class to provide PV value along with Alarm and Timestamp data
   // Initial limits will be 10, 20, 80 and 90 - with expected range between 0 and 100
 
   public constructor(...args: SimArgs) {
     super(...args);
-    this.value = vdouble(50);
+    this.value = new DType(undefined, 50);
     this.publishConnection();
   }
 
@@ -294,14 +304,16 @@ class LimitData extends SimPv {
     return { isConnected: true, isReadonly: false };
   }
 
-  public updateValue(value: VType): void {
+  public updateValue(value: DType): void {
     // Set alarm status
     let alarmSeverity = 0;
     if (value instanceof VNumber) {
       const v = value.getValue();
       alarmSeverity = v < 10 ? 2 : v > 90 ? 2 : v < 20 ? 1 : v > 80 ? 1 : 0;
-      this.value = vdouble(
+      this.value = new DType(
+        undefined,
         value.getValue(),
+        undefined,
         alarm(alarmSeverity, 0, ""),
         timeNow()
       );
@@ -311,7 +323,7 @@ class LimitData extends SimPv {
     }
   }
 
-  public getValue(): VType {
+  public getValue(): DType {
     return this.value;
   }
 }
@@ -433,12 +445,14 @@ export class SimulatorPlugin implements Connection {
     if (nameInfo.protocol === "loc://") {
       cls = LocalPv;
 
+      /*
       if (
         nameInfo.initialValue !== undefined &&
         nameInfo.initialValue instanceof VEnum
       ) {
         cls = EnumPv;
       }
+      */
       if (nameInfo.initialValue !== undefined) {
         initial = nameInfo.initialValue;
       } else {
@@ -450,9 +464,14 @@ export class SimulatorPlugin implements Connection {
     } else if (nameInfo.protocol === "sim://sine") {
       cls = SinePv;
       initial = undefined;
+    } else if (nameInfo.protocol === "sim://sinearray") {
+      cls = SineArrayPv;
+      initial = undefined;
+      /*
     } else if (nameInfo.protocol === "sim://enum") {
       cls = SimEnumPv;
       initial = undefined;
+      */
     } else if (nameInfo.protocol === "sim://random") {
       initial = undefined;
       cls = RandomPv;
@@ -499,7 +518,7 @@ export class SimulatorPlugin implements Connection {
     return this.simPvs.get(nameInfo.keyName);
   }
 
-  public putPv(pvName: string, value: VType): void {
+  public putPv(pvName: string, value: DType): void {
     const pvSimulator = this.initSimulator(pvName);
     if (pvSimulator !== undefined) {
       pvSimulator.updateValue(value);
@@ -510,7 +529,7 @@ export class SimulatorPlugin implements Connection {
     }
   }
 
-  public getValue(pvName: string): VType | undefined {
+  public getValue(pvName: string): DType | undefined {
     const pvSimulator = this.initSimulator(pvName);
     return pvSimulator && pvSimulator.getValue();
   }

@@ -16,6 +16,7 @@ import { PVInputComponent, PVWidgetPropType } from "../widgetProps";
 import { InferWidgetProps } from "../propTypes";
 import { registerWidget } from "../register";
 import { vdouble } from "../../../types/vtypes/vtypes";
+import { DType } from "../../../types/dtypes";
 
 export const SlideControlComponent = (
   props: InferWidgetProps<typeof ProgressBarProps> & PVInputComponent
@@ -46,7 +47,7 @@ export const SlideControlComponent = (
     writePv(pvName, stringToVtype(event.currentTarget.value));
   }
 
-  const stringValue = vtypeToString(value);
+  const stringValue = value?.getStringValue() || "";
   if (!editing && inputValue !== stringValue) {
     setInputValue(stringValue);
   }
@@ -65,7 +66,7 @@ export const SlideControlComponent = (
       >
         <ProgressBarComponent
           connected={connected}
-          value={vdouble(parseFloat(inputValue))}
+          value={new DType(undefined, parseFloat(inputValue))}
           min={min}
           max={max}
           precision={precision}

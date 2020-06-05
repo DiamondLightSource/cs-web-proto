@@ -37,7 +37,7 @@ export const ProgressBarComponent = (
   } = props;
 
   // eslint-disable-next-line no-undef
-  const numValue = vtypeOrUndefinedToNumber(value);
+  const numValue = value?.getDoubleValue() || 0;
   const onPercent =
     numValue < min
       ? 0

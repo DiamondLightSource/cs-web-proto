@@ -9,6 +9,7 @@ import { AnyProps } from "../widgets/widgetProps";
 import { vtypeToString, vtypeToNumber } from "../../types/vtypes/utils";
 import { AlarmSeverity } from "../../types/vtypes/alarm";
 import { Scalar } from "../../types/vtypes/vtypes";
+import { PVType } from "../../connection/plugin";
 
 // See https://stackoverflow.com/questions/54542318/using-an-enum-as-a-dictionary-key
 type EnumDictionary<T extends string | symbol | number, U> = {
@@ -27,13 +28,15 @@ export function useRules(props: AnyProps): AnyProps {
   const newProps: AnyProps = { ...props };
   const rules = props.rules === undefined ? [] : props.rules;
   const allPvs: string[] = [];
+  const allTypes: PVType[] = [];
   for (const rule of rules) {
     for (const pv of rule.pvs) {
       allPvs.push(pv.pvName.qualifiedName());
+      allTypes.push({ string: true, double: true });
     }
   }
   // Subscribe to all PVs.
-  useSubscription(props.id, allPvs);
+  useSubscription(props.id, allPvs, allTypes);
   // Get results from all PVs.
   const results = useSelector(
     (state: CsState): PvArrayResults => pvStateSelector(allPvs, state),
@@ -49,11 +52,12 @@ export function useRules(props: AnyProps): AnyProps {
       if (pvResults) {
         const val = results[pvs[i].pvName.qualifiedName()][0].value;
         if (val) {
-          pvVars["pv" + i] = vtypeToNumber(val);
-          pvVars["pvStr" + i] = vtypeToString(val);
-          pvVars["pvInt" + i] = vtypeToNumber(val);
+          pvVars["pv" + i] = val.getDoubleValue();
+          pvVars["pvStr" + i] = val.getStringValue();
+          pvVars["pvInt" + i] = val.getDoubleValue();
           if (val instanceof Scalar) {
-            pvVars["pvSev" + i] = INT_SEVERITIES[val.getAlarm().getSeverity()];
+            pvVars["pvSev" + i] =
+              INT_SEVERITIES[val.getAlarm()?.getSeverity() || 0];
           }
         }
       }
