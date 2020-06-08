@@ -17,7 +17,7 @@ function tooltipValue(connected?: boolean, value?: DType): string {
     }
     const dateAndAlarm = [
       value ? (time ? time.datetime : "") : "",
-      value ? (alarm ? alarm.getName() : "") : ""
+      value ? (alarm ? alarm.message : "") : ""
     ]
       .filter((word): boolean => word !== "")
       .join(", ");

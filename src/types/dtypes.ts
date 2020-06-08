@@ -1,4 +1,3 @@
-import { Alarm, ALARM_NONE } from "./alarm";
 import { Display, DISPLAY_NONE } from "./display";
 
 export class DTime {
@@ -11,6 +10,29 @@ export class DTime {
 
 export function dtimeNow(): DTime {
   return new DTime(new Date());
+}
+
+export enum AlarmQuality {
+  VALID,
+  WARNING,
+  ALARM,
+  INVALID,
+  UNDEFINED,
+  CHANGING
+}
+
+export class DAlarm {
+  public quality: AlarmQuality;
+  public message: string;
+
+  public constructor(quality: AlarmQuality, message: string) {
+    this.message = message;
+    this.quality = quality;
+  }
+
+  public static NONE = new DAlarm(AlarmQuality.VALID, "");
+  public static MINOR = new DAlarm(AlarmQuality.WARNING, "");
+  public static MAJOR = new DAlarm(AlarmQuality.ALARM, "");
 }
 
 type NumberArray =
@@ -35,12 +57,12 @@ interface DTypeValue {
 export class DType {
   public value: DTypeValue;
   public time: DTime;
-  public alarm?: Alarm;
+  public alarm?: DAlarm;
   public display?: Display;
 
   public constructor(
     value: DTypeValue,
-    alarm?: Alarm,
+    alarm?: DAlarm,
     time?: DTime,
     display?: Display
   ) {
@@ -80,8 +102,8 @@ export class DType {
     }
   }
 
-  public getAlarm(): Alarm {
-    return this.alarm ?? ALARM_NONE;
+  public getAlarm(): DAlarm {
+    return this.alarm ?? DAlarm.NONE;
   }
   public getTime(): DTime {
     return this.time;
@@ -105,7 +127,7 @@ export function dtypeToString(dtype?: DType): string {
 
 export function valueToDtype(
   value: any,
-  alarm = ALARM_NONE,
+  alarm = DAlarm.NONE,
   time = dtimeNow(),
   display = DISPLAY_NONE
 ): DType {
@@ -118,4 +140,18 @@ export function valueToDtype(
     dvalue.doubleValue = 0;
   }
   return new DType(dvalue, alarm, time, display);
+}
+
+export function mergeDtype(original: DType | undefined, update: DType): DType {
+  return new DType(
+    {
+      stringValue: update.value.stringValue ?? original?.value.stringValue,
+      doubleValue: update.value.doubleValue ?? original?.value.doubleValue,
+      arrayValue: update.value.arrayValue ?? original?.value.arrayValue
+    },
+
+    update.alarm ?? original?.alarm,
+    update.time ?? original?.time,
+    update.display ?? original?.display
+  );
 }

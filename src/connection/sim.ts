@@ -7,8 +7,7 @@ import {
   nullConnCallback,
   nullValueCallback
 } from "./plugin";
-import { alarm, ALARM_NONE, AlarmSeverity, AlarmStatus } from "../types/alarm";
-import { DType, dtimeNow } from "../types/dtypes";
+import { DType, dtimeNow, DAlarm } from "../types/dtypes";
 
 type SimArgs = [
   string,
@@ -108,7 +107,6 @@ class SineArrayPv extends SimPv {
 }
 
 class RampPv extends SimPv {
-  type = "VDouble";
   // Goes from 0-99 on a loop
   public constructor(...args: SimArgs) {
     super(...args);
@@ -119,18 +117,17 @@ class RampPv extends SimPv {
     const d = new Date();
     const val =
       (d.getSeconds() % 10) * 10 + Math.floor(d.getMilliseconds() / 100);
-    let rampAlarm = ALARM_NONE;
+    let rampAlarm = DAlarm.NONE;
     if (val > 90 || val < 10) {
-      rampAlarm = alarm(AlarmSeverity.MAJOR, AlarmStatus.NONE, "");
+      rampAlarm = DAlarm.MINOR;
     } else if (val > 80 || val < 20) {
-      rampAlarm = alarm(AlarmSeverity.MINOR, AlarmStatus.NONE, "");
+      rampAlarm = DAlarm.MAJOR;
     }
     return new DType({ doubleValue: val }, rampAlarm);
   }
 }
 
 class RandomPv extends SimPv {
-  type = "VDouble";
   public constructor(...args: SimArgs) {
     super(...args);
     this.maybeSetInterval(this.publish.bind(this));
@@ -141,7 +138,6 @@ class RandomPv extends SimPv {
 }
 
 class Disconnector extends SimPv {
-  type = "VDouble";
   public constructor(...args: SimArgs) {
     super(...args);
     this.publish();
@@ -294,7 +290,7 @@ class LimitData extends SimPv {
     alarmSeverity = v < 10 ? 2 : v > 90 ? 2 : v < 20 ? 1 : v > 80 ? 1 : 0;
     this.value = new DType(
       { doubleValue: value.getDoubleValue() },
-      alarm(alarmSeverity, 0, ""),
+      new DAlarm(alarmSeverity, ""),
       dtimeNow()
     );
     this.publish();
@@ -379,6 +375,7 @@ export class SimulatorPlugin implements Connection {
         initial = undefined;
         keyName = pvName;
       } else if (groups[3] !== undefined) {
+        // TODO restore enum
         const typeName = groups[2];
         initial = JSON.parse("[" + groups[3] + "]");
         keyName = "loc://" + groups[1];

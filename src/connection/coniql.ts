@@ -21,13 +21,22 @@ import {
   PVType
 } from "./plugin";
 import { SubscriptionClient } from "subscriptions-transport-ws";
-import { DType, DTime } from "../types/dtypes";
+import { DType, DTime, DAlarm, AlarmQuality } from "../types/dtypes";
 
 export interface ConiqlStatus {
-  quality: "ALARM" | "WARNING" | "VALID";
+  quality: "ALARM" | "WARNING" | "VALID" | "INVALID" | "UNDEFINED" | "CHANGING";
   message: string;
   mutable: boolean;
 }
+
+const QUALITY_TYPES = {
+  VALID: AlarmQuality.VALID,
+  ALARM: AlarmQuality.ALARM,
+  WARNING: AlarmQuality.WARNING,
+  INVALID: AlarmQuality.INVALID,
+  UNDEFINED: AlarmQuality.UNDEFINED,
+  CHANGING: AlarmQuality.CHANGING
+};
 
 type CONIQL_TYPE =
   | "INT8"
@@ -55,28 +64,32 @@ const ARRAY_TYPES = {
 };
 
 function coniqlToDtype(
-  value: any,
+  value: any, // TODO any
   timeVal: Date,
   status: ConiqlStatus,
   display: any
 ): DType {
-  // TODO handle time, alarm, display
+  console.log(value);
+  console.log(status);
+  let alarm = undefined;
+  if (status) {
+    alarm = new DAlarm(QUALITY_TYPES[status.quality], status.message);
+  }
+  // TODO handle display
   let array = undefined;
   if (value.base64Array) {
-    console.log(value.base64Array.base64);
     const bd = base64js.toByteArray(value.base64Array.base64);
     array = new ARRAY_TYPES[value.base64Array.numberType as CONIQL_TYPE](
       bd.buffer
     );
   }
-  console.log(array);
   return new DType(
     {
       stringValue: value.string,
       doubleValue: value.float,
       arrayValue: array
     },
-    undefined, // TODO alarm
+    alarm,
     new DTime(timeVal)
   );
 }
@@ -179,9 +192,7 @@ export class ConiqlPlugin implements Connection {
       })
       .subscribe({
         next: (data): void => {
-          log.info("data", data);
           const { value, time, status, display } = data.data.subscribeChannel;
-          console.log(`status? ${status}`);
           if (status) {
             this.onConnectionUpdate(pvName, {
               isConnected: true,

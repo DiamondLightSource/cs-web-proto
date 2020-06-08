@@ -42,7 +42,13 @@ export const SlideControlComponent = (
   }
   function onMouseUp(event: React.MouseEvent<HTMLInputElement>): void {
     setEditing(false);
-    writePv(pvName, new DType({ stringValue: event.currentTarget.value }));
+    try {
+      const doubleValue = parseFloat(event.currentTarget.value);
+      writePv(pvName, new DType({ doubleValue: doubleValue }));
+    } catch (error) {
+      // TODO ????
+      console.log("????");
+    }
   }
 
   const stringValue = value?.getStringValue() || "";

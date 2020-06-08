@@ -4,7 +4,6 @@ import { Widget } from "../widget";
 import { PVComponent, PVWidgetPropType } from "../widgetProps";
 
 import classes from "./readback.module.css";
-import { alarmOf, AlarmSeverity } from "../../../types/alarm";
 import { displayOf } from "../../../types/display";
 import {
   IntPropOpt,
@@ -17,6 +16,7 @@ import {
 } from "../propTypes";
 import { registerWidget } from "../register";
 import { LabelComponent } from "../Label/label";
+import { AlarmQuality, DAlarm } from "../../../types/dtypes";
 
 const ReadbackProps = {
   precision: IntPropOpt,
@@ -34,17 +34,17 @@ const ReadbackProps = {
 export type ReadbackComponentProps = InferWidgetProps<typeof ReadbackProps> &
   PVComponent;
 
-function getClass(connected: boolean, alarmSeverity: AlarmSeverity): string {
+function getClass(connected: boolean, alarmSeverity: AlarmQuality): string {
   let cls = classes.Readback;
   if (!connected) {
     cls += ` ${classes.Disconnected}`;
   } else {
     switch (alarmSeverity) {
-      case AlarmSeverity.MINOR: {
+      case AlarmQuality.WARNING: {
         cls += ` ${classes.Minor}`;
         break;
       }
-      case AlarmSeverity.MAJOR: {
+      case AlarmQuality.ALARM: {
         cls += ` ${classes.Major}`;
         break;
       }
@@ -70,7 +70,7 @@ export const ReadbackComponent = (
     showUnits = false
   } = props;
   // Decide what to display.
-  const alarm = alarmOf(value);
+  const alarm = value?.getAlarm() || DAlarm.NONE;
   const display = displayOf(value);
   let displayedValue;
   if (!value) {
@@ -87,7 +87,7 @@ export const ReadbackComponent = (
   // Handle foreground alarm sensitivity.
   let className = classes.Readback;
   if (fgAlarmSensitive) {
-    className = getClass(connected, alarm.getSeverity());
+    className = getClass(connected, alarm.quality);
   }
 
   // Use a LabelComponent to display it.

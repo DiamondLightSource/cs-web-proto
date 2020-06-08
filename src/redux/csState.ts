@@ -10,8 +10,7 @@ import {
   ValueChanged
 } from "./actions";
 import { MacroMap } from "../types/macros";
-import { mergeDtype } from "../types/mergeD";
-import { DType } from "../types/dtypes";
+import { DType, mergeDtype } from "../types/dtypes";
 
 const initialState: CsState = {
   valueCache: {},

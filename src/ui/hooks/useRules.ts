@@ -6,20 +6,21 @@ import { CsState } from "../../redux/csState";
 
 import { PvArrayResults, pvStateSelector, pvStateComparator } from "./utils";
 import { AnyProps } from "../widgets/widgetProps";
-import { AlarmSeverity } from "../../types/alarm";
 import { PVType } from "../../connection/plugin";
+import { AlarmQuality } from "../../types/dtypes";
 
 // See https://stackoverflow.com/questions/54542318/using-an-enum-as-a-dictionary-key
 type EnumDictionary<T extends string | symbol | number, U> = {
   [K in T]: U;
 };
 
-const INT_SEVERITIES: EnumDictionary<AlarmSeverity, number> = {
-  [AlarmSeverity.NONE]: 0,
-  [AlarmSeverity.MINOR]: 1,
-  [AlarmSeverity.MAJOR]: 2,
-  [AlarmSeverity.INVALID]: -1,
-  [AlarmSeverity.UNDEFINED]: -1
+const INT_SEVERITIES: EnumDictionary<AlarmQuality, number> = {
+  [AlarmQuality.VALID]: 0,
+  [AlarmQuality.WARNING]: 1,
+  [AlarmQuality.ALARM]: 2,
+  [AlarmQuality.INVALID]: -1,
+  [AlarmQuality.UNDEFINED]: -1,
+  [AlarmQuality.CHANGING]: -1
 };
 
 export function useRules(props: AnyProps): AnyProps {
@@ -53,8 +54,7 @@ export function useRules(props: AnyProps): AnyProps {
           pvVars["pv" + i] = val.getDoubleValue();
           pvVars["pvStr" + i] = val.getStringValue();
           pvVars["pvInt" + i] = val.getDoubleValue();
-          pvVars["pvSev" + i] =
-            INT_SEVERITIES[val.getAlarm()?.getSeverity() || 0];
+          pvVars["pvSev" + i] = INT_SEVERITIES[val.getAlarm()?.quality || 0];
         }
       }
     }
