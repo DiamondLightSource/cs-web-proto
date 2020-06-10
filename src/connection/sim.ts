@@ -7,7 +7,7 @@ import {
   nullConnCallback,
   nullValueCallback
 } from "./plugin";
-import { DType, dtimeNow, DAlarm } from "../types/dtypes";
+import { DType, dtimeNow, DAlarm, DDisplay } from "../types/dtypes";
 
 type SimArgs = [
   string,
@@ -85,7 +85,20 @@ class SinePv extends SimPv {
     const val = Math.sin(
       new Date().getSeconds() + new Date().getMilliseconds() * 0.001
     );
-    return new DType({ doubleValue: val });
+    return new DType(
+      { doubleValue: val },
+      undefined,
+      undefined,
+      new DDisplay(
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        "yoonits!"
+      )
+    );
   }
 }
 

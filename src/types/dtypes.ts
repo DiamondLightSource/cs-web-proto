@@ -1,5 +1,3 @@
-import { Display, DISPLAY_NONE } from "./display";
-
 export class DTime {
   public datetime: Date;
 
@@ -35,6 +33,79 @@ export class DAlarm {
   public static MAJOR = new DAlarm(AlarmQuality.ALARM, "");
 }
 
+export enum ChannelRole {
+  RO,
+  WO,
+  RW
+}
+
+export enum DisplayForm {
+  DEFAULT,
+  STRING,
+  BINARY,
+  DECIMAL,
+  HEX,
+  EXPONENTIAL,
+  ENGINEERING
+}
+
+export class DRange {
+  public min: number;
+  public max: number;
+  public constructor(min: number, max: number) {
+    this.min = min;
+    this.max = max;
+  }
+  public static NONE = new DRange(0, 0);
+}
+
+export class DDisplay {
+  public description?: string;
+  public role?: ChannelRole;
+  public controlRange?: DRange;
+  public alarmRange?: DRange;
+  public warningRange?: DRange;
+  public units?: string;
+  public precision?: number;
+  public form?: DisplayForm;
+  public choices?: string[];
+
+  public constructor(
+    description?: string,
+    role?: ChannelRole,
+    controlRange?: DRange,
+    alarmRange?: DRange,
+    warningRange?: DRange,
+    units?: string,
+    precision?: number,
+    form?: DisplayForm,
+    choices?: string[]
+  ) {
+    this.description = description;
+    this.role = role;
+    this.controlRange = controlRange;
+    this.alarmRange = alarmRange;
+    this.warningRange = warningRange;
+    this.units = units;
+    this.precision = precision;
+    this.form = form;
+    this.choices = choices;
+  }
+
+  public static NONE = new DDisplay(
+    "",
+    "",
+    ChannelRole.RW,
+    DRange.NONE,
+    DRange.NONE,
+    DRange.NONE,
+    "",
+    0,
+    DisplayForm.DEFAULT,
+    []
+  );
+}
+
 type NumberArray =
   | Int8Array
   | Uint8Array
@@ -58,13 +129,13 @@ export class DType {
   public value: DTypeValue;
   public time: DTime;
   public alarm?: DAlarm;
-  public display?: Display;
+  public display?: DDisplay;
 
   public constructor(
     value: DTypeValue,
     alarm?: DAlarm,
     time?: DTime,
-    display?: Display
+    display?: DDisplay
   ) {
     // TODO check for no value.
     this.value = value;
@@ -89,6 +160,12 @@ export class DType {
     // TODO what if not defined?
     if (this.value.doubleValue) {
       return this.value.doubleValue;
+    } else if (this.value.stringValue) {
+      try {
+        return parseFloat(this.value.stringValue);
+      } catch (error) {
+        return NaN;
+      }
     } else {
       return NaN;
     }
@@ -108,8 +185,8 @@ export class DType {
   public getTime(): DTime {
     return this.time;
   }
-  public getDisplay(): Display | undefined {
-    return this.display ?? DISPLAY_NONE;
+  public getDisplay(): DDisplay | undefined {
+    return this.display;
   }
 
   public toString(): string {
@@ -129,7 +206,7 @@ export function valueToDtype(
   value: any,
   alarm = DAlarm.NONE,
   time = dtimeNow(),
-  display = DISPLAY_NONE
+  display = DDisplay.NONE
 ): DType {
   const dvalue: DTypeValue = {};
   if (typeof value === "string") {
@@ -142,6 +219,24 @@ export function valueToDtype(
   return new DType(dvalue, alarm, time, display);
 }
 
+export function mergeDDisplay(
+  original: DDisplay | undefined,
+  update: DDisplay | undefined
+): DDisplay {
+  return new DDisplay(
+    update?.label ?? original?.label,
+    update?.description ?? original?.description,
+    update?.role ?? original?.role,
+    update?.controlRange ?? original?.controlRange,
+    update?.alarmRange ?? original?.alarmRange,
+    update?.warningRange ?? original?.warningRange,
+    update?.units ?? original?.units,
+    update?.precision ?? original?.precision,
+    update?.form ?? original?.form,
+    update?.choices ?? original?.choices
+  );
+}
+
 export function mergeDtype(original: DType | undefined, update: DType): DType {
   return new DType(
     {
@@ -152,6 +247,6 @@ export function mergeDtype(original: DType | undefined, update: DType): DType {
 
     update.alarm ?? original?.alarm,
     update.time ?? original?.time,
-    update.display ?? original?.display
+    mergeDDisplay(original?.display, update.display)
   );
 }

@@ -4,7 +4,6 @@ import { Widget } from "../widget";
 import { PVComponent, PVWidgetPropType } from "../widgetProps";
 
 import classes from "./readback.module.css";
-import { displayOf } from "../../../types/display";
 import {
   IntPropOpt,
   BoolPropOpt,
@@ -71,7 +70,7 @@ export const ReadbackComponent = (
   } = props;
   // Decide what to display.
   const alarm = value?.getAlarm() || DAlarm.NONE;
-  const display = displayOf(value);
+  const display = value?.getDisplay();
   let displayedValue;
   if (!value) {
     displayedValue = "Waiting for value";
@@ -80,8 +79,8 @@ export const ReadbackComponent = (
   }
 
   // Add units if there are any and show units is true
-  if (showUnits && display && display?.getUnit) {
-    displayedValue = displayedValue + ` ${display.getUnit()}`;
+  if (showUnits && display?.units) {
+    displayedValue = displayedValue + ` ${display.units}`;
   }
 
   // Handle foreground alarm sensitivity.

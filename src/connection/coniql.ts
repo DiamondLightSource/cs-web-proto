@@ -21,7 +21,16 @@ import {
   PVType
 } from "./plugin";
 import { SubscriptionClient } from "subscriptions-transport-ws";
-import { DType, DTime, DAlarm, AlarmQuality } from "../types/dtypes";
+import {
+  DType,
+  DTime,
+  DAlarm,
+  AlarmQuality,
+  DDisplay,
+  DRange,
+  ChannelRole,
+  DisplayForm
+} from "../types/dtypes";
 
 export interface ConiqlStatus {
   quality: "ALARM" | "WARNING" | "VALID" | "INVALID" | "UNDEFINED" | "CHANGING";
@@ -36,6 +45,49 @@ const QUALITY_TYPES = {
   INVALID: AlarmQuality.INVALID,
   UNDEFINED: AlarmQuality.UNDEFINED,
   CHANGING: AlarmQuality.CHANGING
+};
+
+export interface Range {
+  min: number;
+  max: number;
+}
+
+export interface ConiqlDisplay {
+  description: string;
+  role: "RW" | "WO" | "RO";
+  controlRange: Range;
+  displayRange: Range;
+  warningRange: Range;
+  alarmRange: Range;
+  units: string;
+  precision: number;
+  form: FORM;
+  choices: string[];
+}
+
+const ROLES = {
+  RW: ChannelRole.RW,
+  RO: ChannelRole.RO,
+  WO: ChannelRole.WO
+};
+
+type FORM =
+  | "DEFAULT"
+  | "STRING"
+  | "BINARY"
+  | "DECIMAL"
+  | "HEX"
+  | "EXPONENTIAL"
+  | "ENGINEERING";
+
+const FORMS = {
+  DEFAULT: DisplayForm.DEFAULT,
+  STRING: DisplayForm.STRING,
+  BINARY: DisplayForm.BINARY,
+  DECIMAL: DisplayForm.DECIMAL,
+  HEX: DisplayForm.HEX,
+  EXPONENTIAL: DisplayForm.EXPONENTIAL,
+  ENGINEERING: DisplayForm.ENGINEERING
 };
 
 type CONIQL_TYPE =
@@ -67,13 +119,34 @@ function coniqlToDtype(
   value: any, // TODO any
   timeVal: Date,
   status: ConiqlStatus,
-  display: any
+  display: ConiqlDisplay
 ): DType {
   console.log(value);
   console.log(status);
   let alarm = undefined;
+  let ddisplay = undefined;
   if (status) {
     alarm = new DAlarm(QUALITY_TYPES[status.quality], status.message);
+  }
+  if (display) {
+    console.log(display);
+    ddisplay = new DDisplay(
+      display.description,
+      display.role ? ROLES[display.role] : undefined,
+      display.controlRange
+        ? new DRange(display.controlRange.min, display.controlRange.max)
+        : undefined,
+      display.alarmRange
+        ? new DRange(display.alarmRange.min, display.alarmRange.max)
+        : undefined,
+      display.warningRange
+        ? new DRange(display.warningRange.min, display.warningRange.max)
+        : undefined,
+      display.units,
+      display.precision,
+      display.form ? FORMS[display.form] : undefined,
+      display.choices
+    );
   }
   // TODO handle display
   let array = undefined;
@@ -90,7 +163,8 @@ function coniqlToDtype(
       arrayValue: array
     },
     alarm,
-    new DTime(timeVal)
+    new DTime(timeVal),
+    ddisplay
   );
 }
 
