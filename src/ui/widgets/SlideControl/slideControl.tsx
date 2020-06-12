@@ -2,6 +2,7 @@
 // Displays value via an embedded progressbar widget
 
 import React, { useState } from "react";
+import log from "loglevel";
 
 import classes from "./slideControl.module.css";
 
@@ -46,8 +47,7 @@ export const SlideControlComponent = (
       const doubleValue = parseFloat(event.currentTarget.value);
       writePv(pvName, new DType({ doubleValue: doubleValue }));
     } catch (error) {
-      // TODO ????
-      console.log("????");
+      log.warn(`Unexpected value ${event.currentTarget.value} set to slider.`)
     }
   }
 

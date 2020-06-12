@@ -47,18 +47,18 @@ const QUALITY_TYPES = {
   CHANGING: AlarmQuality.CHANGING
 };
 
-export interface Range {
+interface ConiqlRange {
   min: number;
   max: number;
 }
 
-export interface ConiqlDisplay {
+interface ConiqlDisplay {
   description: string;
   role: "RW" | "WO" | "RO";
-  controlRange: Range;
-  displayRange: Range;
-  warningRange: Range;
-  alarmRange: Range;
+  controlRange: ConiqlRange;
+  displayRange: ConiqlRange;
+  warningRange: ConiqlRange;
+  alarmRange: ConiqlRange;
   units: string;
   precision: number;
   form: FORM;
@@ -115,21 +115,30 @@ const ARRAY_TYPES = {
   FLOAT64: Float64Array
 };
 
+interface ConiqlBase64Array {
+  numberType: CONIQL_TYPE;
+  base64: string;
+}
+
+interface ConiqlValue {
+  string: string;
+  float: number;
+  base64Array: ConiqlBase64Array;
+  stringArray: string[];
+}
+
 function coniqlToDtype(
-  value: any, // TODO any
+  value: ConiqlValue,
   timeVal: Date,
   status: ConiqlStatus,
   display: ConiqlDisplay
 ): DType {
-  console.log(value);
-  console.log(status);
   let alarm = undefined;
   let ddisplay = undefined;
   if (status) {
     alarm = new DAlarm(QUALITY_TYPES[status.quality], status.message);
   }
   if (display) {
-    console.log(display);
     ddisplay = new DDisplay({
       description: display.description,
       role: display.role ? ROLES[display.role] : undefined,
@@ -148,7 +157,6 @@ function coniqlToDtype(
       choices: display.choices
     });
   }
-  // TODO handle display
   let array = undefined;
   if (value.base64Array) {
     const bd = base64js.toByteArray(value.base64Array.base64);
