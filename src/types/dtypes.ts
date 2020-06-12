@@ -1,3 +1,4 @@
+import log from "loglevel";
 export class DTime {
   public datetime: Date;
 
@@ -70,17 +71,27 @@ export class DDisplay {
   public form?: DisplayForm;
   public choices?: string[];
 
-  public constructor(
-    description?: string,
-    role?: ChannelRole,
-    controlRange?: DRange,
-    alarmRange?: DRange,
-    warningRange?: DRange,
-    units?: string,
-    precision?: number,
-    form?: DisplayForm,
-    choices?: string[]
-  ) {
+  public constructor({
+    description = undefined,
+    role = undefined,
+    controlRange = undefined,
+    alarmRange = undefined,
+    warningRange = undefined,
+    units = undefined,
+    precision = undefined,
+    form = undefined,
+    choices = undefined
+  }: {
+    description?: string;
+    role?: ChannelRole;
+    controlRange?: DRange;
+    alarmRange?: DRange;
+    warningRange?: DRange;
+    units?: string;
+    precision?: number;
+    form?: DisplayForm;
+    choices?: string[];
+  } = {}) {
     this.description = description;
     this.role = role;
     this.controlRange = controlRange;
@@ -92,18 +103,7 @@ export class DDisplay {
     this.choices = choices;
   }
 
-  public static NONE = new DDisplay(
-    "",
-    "",
-    ChannelRole.RW,
-    DRange.NONE,
-    DRange.NONE,
-    DRange.NONE,
-    "",
-    0,
-    DisplayForm.DEFAULT,
-    []
-  );
+  public static NONE = new DDisplay({});
 }
 
 type NumberArray =
@@ -145,9 +145,10 @@ export class DType {
   }
 
   public getStringValue(): string {
-    if (this.value.stringValue) {
+    log.debug(this.value)
+    if (typeof this.value.stringValue === "string") {
       return this.value.stringValue;
-    } else if (this.value.doubleValue) {
+    } else if (typeof this.value.doubleValue === "number") {
       return this.value.doubleValue?.toString();
     } else if (this.value.arrayValue) {
       return this.value.arrayValue?.toString();
@@ -157,10 +158,10 @@ export class DType {
   }
 
   public getDoubleValue(): number {
-    // TODO what if not defined?
-    if (this.value.doubleValue) {
+    // TODO what if no double value defined?
+    if (typeof this.value.doubleValue === "number") {
       return this.value.doubleValue;
-    } else if (this.value.stringValue) {
+    } else if (typeof this.value.stringValue === "string") {
       try {
         return parseFloat(this.value.stringValue);
       } catch (error) {
@@ -223,21 +224,22 @@ export function mergeDDisplay(
   original: DDisplay | undefined,
   update: DDisplay | undefined
 ): DDisplay {
-  return new DDisplay(
-    update?.label ?? original?.label,
-    update?.description ?? original?.description,
-    update?.role ?? original?.role,
-    update?.controlRange ?? original?.controlRange,
-    update?.alarmRange ?? original?.alarmRange,
-    update?.warningRange ?? original?.warningRange,
-    update?.units ?? original?.units,
-    update?.precision ?? original?.precision,
-    update?.form ?? original?.form,
-    update?.choices ?? original?.choices
-  );
+  return new DDisplay({
+    description: update?.description ?? original?.description,
+    role: update?.role ?? original?.role,
+    controlRange: update?.controlRange ?? original?.controlRange,
+    alarmRange: update?.alarmRange ?? original?.alarmRange,
+    warningRange: update?.warningRange ?? original?.warningRange,
+    units: update?.units ?? original?.units,
+    precision: update?.precision ?? original?.precision,
+    form: update?.form ?? original?.form,
+    choices: update?.choices ?? original?.choices
+  });
 }
 
 export function mergeDtype(original: DType | undefined, update: DType): DType {
+  // TODO we're accidentally merging e.g. string value 1 with double value 0
+  // when we're trying to update the value.
   return new DType(
     {
       stringValue: update.value.stringValue ?? original?.value.stringValue,

@@ -89,15 +89,9 @@ class SinePv extends SimPv {
       { doubleValue: val },
       undefined,
       undefined,
-      new DDisplay(
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-        "yoonits!"
-      )
+      new DDisplay({
+        units: "yoonits!"
+      })
     );
   }
 }
@@ -166,14 +160,15 @@ class Disconnector extends SimPv {
   }
 }
 
-/*
 class SimEnumPv extends SimPv {
   type = "VEnum";
-  private value: VEnum = venum(
-    0,
+  private value: DType = new DType(
+    {doubleValue: 0},
+    DAlarm.NONE,
+    dtimeNow(),
+    new DDisplay({"choices":
     ["one", "two", "three", "four"],
-    ALARM_NONE,
-    timeNow()
+  }),
   );
   public constructor(...args: SimArgs) {
     super(...args);
@@ -181,15 +176,17 @@ class SimEnumPv extends SimPv {
     this.publish();
     setInterval(this.publish.bind(this), this.updateRate);
   }
-  public getValue(): VType {
+  public getValue(): DType {
     const newIndex = Math.floor(
-      Math.random() * this.value.getDisplay().getChoices().length
+      Math.random() * (this.value?.display?.choices?.length || 0)
     );
-    this.value = venum(
-      newIndex,
-      this.value.getDisplay().getChoices(),
-      ALARM_NONE,
-      timeNow()
+    this.value = new DType(
+      {doubleValue: newIndex},
+      DAlarm.NONE,
+      dtimeNow(),
+      new DDisplay({
+      choices: this.value?.display?.choices
+      })
     );
     return this.value;
   }
@@ -197,11 +194,13 @@ class SimEnumPv extends SimPv {
 
 class EnumPv extends SimPv {
   type = "VEnum";
-  private value: VEnum = venum(
-    0,
-    ["zero", "one", "two", "three", "four", "five"],
-    ALARM_NONE,
-    timeNow()
+  private value: DType = new DType(
+    {doubleValue: 0},
+    DAlarm.NONE,
+    dtimeNow(),
+    new DDisplay({"choices":
+    ["one", "two", "three", "four"],
+  }),
   );
 
   public constructor(...args: SimArgs) {
@@ -214,48 +213,34 @@ class EnumPv extends SimPv {
     return { isConnected: true, isReadonly: false };
   }
 
-  public updateValue(value: VType): void {
-    if (value instanceof VEnum) {
-      this.value = value;
-    } else if (value instanceof VNumber) {
+  public updateValue(value: DType): void {
+      const dval = value.getDoubleValue();
+      const sval = value.getStringValue();
+    if (!isNaN(dval)) {
       // If it is a number, treat as index
       // Indexes outside the range to be ignored
       if (
-        value.getValue() >= 0 &&
-        value.getValue() < this.value.getDisplay().getChoices().length
+        dval >= 0 &&
+        dval < (this.value.display?.choices?.length || 0)
       ) {
-        this.value = venum(
-          value.getValue(),
-          this.value.getDisplay().getChoices(),
-          ALARM_NONE,
-          timeNow()
-        );
+        this.value.value.doubleValue = dval;
       }
-    } else if (value instanceof VString) {
+    } else if (sval) {
       // If a string, see if that string is stored as a value in the enum
       // If it is, change index to index of the string
       // Otherwise ignore
-      const valueIndex = this.value
-        .getDisplay()
-        .getChoices()
-        .indexOf(value.getValue());
+      const valueIndex = this.value.display?.choices?.indexOf(sval);
       if (valueIndex !== -1) {
-        this.value = venum(
-          valueIndex,
-          this.value.getDisplay().getChoices(),
-          ALARM_NONE,
-          timeNow()
-        );
+        this.value.value.doubleValue = valueIndex;
       }
     }
     this.publish();
   }
 
-  public getValue(): VType {
+  public getValue(): DType {
     return this.value;
   }
 }
-*/
 
 class LocalPv extends SimPv {
   type = "VString";
@@ -388,21 +373,19 @@ export class SimulatorPlugin implements Connection {
         initial = undefined;
         keyName = pvName;
       } else if (groups[3] !== undefined) {
-        // TODO restore enum
         const typeName = groups[2];
         initial = JSON.parse("[" + groups[3] + "]");
         keyName = "loc://" + groups[1];
 
-        /*
         if (typeName === "VEnum") {
-          initial = venum(
-            initial[0] - 1,
-            initial.slice(1),
-            ALARM_NONE,
-            dtimeNow()
+          initial = new DType({
+            doubleValue: initial[0] - 1,
+          },
+            DAlarm.NONE,
+            dtimeNow(),
+            new DDisplay({choices: []}),
           );
-          */
-        if (initial.length === 1) {
+        } else if (initial.length === 1) {
           initial = new DType({ doubleValue: initial[0] });
         } else {
           initial = new DType({ arrayValue: initial });
@@ -434,14 +417,12 @@ export class SimulatorPlugin implements Connection {
     if (nameInfo.protocol === "loc://") {
       cls = LocalPv;
 
-      /*
       if (
         nameInfo.initialValue !== undefined &&
-        nameInfo.initialValue instanceof VEnum
+        nameInfo.initialValue.display?.choices
       ) {
         cls = EnumPv;
       }
-      */
       if (nameInfo.initialValue !== undefined) {
         initial = nameInfo.initialValue;
       } else {
@@ -456,11 +437,9 @@ export class SimulatorPlugin implements Connection {
     } else if (nameInfo.protocol === "sim://sinearray") {
       cls = SineArrayPv;
       initial = undefined;
-      /*
     } else if (nameInfo.protocol === "sim://enum") {
       cls = SimEnumPv;
       initial = undefined;
-      */
     } else if (nameInfo.protocol === "sim://random") {
       initial = undefined;
       cls = RandomPv;

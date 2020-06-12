@@ -130,23 +130,23 @@ function coniqlToDtype(
   }
   if (display) {
     console.log(display);
-    ddisplay = new DDisplay(
-      display.description,
-      display.role ? ROLES[display.role] : undefined,
-      display.controlRange
+    ddisplay = new DDisplay({
+      description: display.description,
+      role: display.role ? ROLES[display.role] : undefined,
+      controlRange: display.controlRange
         ? new DRange(display.controlRange.min, display.controlRange.max)
         : undefined,
-      display.alarmRange
+      alarmRange: display.alarmRange
         ? new DRange(display.alarmRange.min, display.alarmRange.max)
         : undefined,
-      display.warningRange
+      warningRange: display.warningRange
         ? new DRange(display.warningRange.min, display.warningRange.max)
         : undefined,
-      display.units,
-      display.precision,
-      display.form ? FORMS[display.form] : undefined,
-      display.choices
-    );
+      units: display.units,
+      precision: display.precision,
+      form: display.form ? FORMS[display.form] : undefined,
+      choices: display.choices
+    });
   }
   // TODO handle display
   let array = undefined;

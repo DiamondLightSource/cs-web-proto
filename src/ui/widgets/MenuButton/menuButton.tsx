@@ -36,11 +36,9 @@ export const MenuButtonComponent = (props: MenuButtonProps): JSX.Element => {
 
   if (!connected || value === null) {
     disabled = true;
-    /*
-  } else if (value instanceof VEnum) {
-    options = value.getDisplay().getChoices();
-    displayIndex = value.getIndex();
-    */
+  } else if (value?.display?.choices) {
+    options = value?.display?.choices;
+    displayIndex = value.getDoubleValue();
   } else {
     options = [dtypeToString(value)];
     disabled = true;
