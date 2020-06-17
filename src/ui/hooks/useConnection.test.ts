@@ -1,8 +1,8 @@
 import { useSelector } from "react-redux";
-import { vdouble } from "../../types/vtypes/vtypes";
 import { useConnection } from "./useConnection";
+import { ddouble } from "../../setupTests";
 
-const TEST_VAL = vdouble(2);
+const TEST_VAL = ddouble(2);
 
 // Mock useSubscription.
 jest.mock("./useSubscription", (): object => {

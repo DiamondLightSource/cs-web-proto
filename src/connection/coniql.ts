@@ -127,9 +127,13 @@ interface ConiqlValue {
   stringArray: string[];
 }
 
+export interface ConiqlTime {
+  datetime: Date;
+}
+
 function coniqlToDtype(
   value: ConiqlValue,
-  timeVal: Date,
+  timeVal: ConiqlTime,
   status: ConiqlStatus,
   display: ConiqlDisplay
 ): DType {
@@ -158,20 +162,24 @@ function coniqlToDtype(
     });
   }
   let array = undefined;
-  if (value.base64Array) {
+  if (value?.base64Array) {
     const bd = base64js.toByteArray(value.base64Array.base64);
     array = new ARRAY_TYPES[value.base64Array.numberType as CONIQL_TYPE](
       bd.buffer
     );
   }
+  let dtime = undefined;
+  if (timeVal?.datetime) {
+    dtime = new DTime(timeVal.datetime);
+  }
   return new DType(
     {
-      stringValue: value.string,
-      doubleValue: value.float,
+      stringValue: value?.string,
+      doubleValue: value?.float,
       arrayValue: array
     },
     alarm,
-    new DTime(timeVal),
+    dtime,
     ddisplay
   );
 }
@@ -274,6 +282,8 @@ export class ConiqlPlugin implements Connection {
       })
       .subscribe({
         next: (data): void => {
+          console.log("subscribe");
+          console.log(data);
           const { value, time, status, display } = data.data.subscribeChannel;
           if (status) {
             this.onConnectionUpdate(pvName, {
@@ -281,7 +291,7 @@ export class ConiqlPlugin implements Connection {
               isReadonly: !status.mutable
             });
           }
-          const pvtype = coniqlToDtype(value, time.datetime, status, display);
+          const pvtype = coniqlToDtype(value, time, status, display);
           this.onValueUpdate(pvName, pvtype);
         },
         error: (err): void => {

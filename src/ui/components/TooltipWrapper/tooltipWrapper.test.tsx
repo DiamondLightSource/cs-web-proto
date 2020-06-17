@@ -4,7 +4,7 @@ import copyToClipboard from "clipboard-copy";
 import Popover from "react-tiny-popover";
 
 import { TooltipWrapper } from "./tooltipWrapper";
-import { vstring } from "../../../types/vtypes/string";
+import { dstring } from "../../../setupTests";
 
 jest.mock("clipboard-copy", () => {
   return jest.fn((a: string) => Promise.resolve());
@@ -21,7 +21,7 @@ beforeEach((): void => {
       // eslint-disable-next-line no-template-curly-in-string
       tooltip="${pvName}"
       connected={true}
-      value={vstring("hello")}
+      value={dstring("hello")}
     >
       Testing Tooltip Wrapper
     </TooltipWrapper>

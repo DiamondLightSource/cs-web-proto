@@ -127,7 +127,7 @@ interface DTypeValue {
 
 export class DType {
   public value: DTypeValue;
-  public time: DTime;
+  public time?: DTime;
   public alarm?: DAlarm;
   public display?: DDisplay;
 
@@ -140,12 +140,12 @@ export class DType {
     // TODO check for no value.
     this.value = value;
     this.alarm = alarm;
-    this.time = time ?? dtimeNow();
+    this.time = time;
     this.display = display;
   }
 
   public getStringValue(): string {
-    log.debug(this.value)
+    log.debug(this.value);
     if (typeof this.value.stringValue === "string") {
       return this.value.stringValue;
     } else if (typeof this.value.doubleValue === "number") {
@@ -183,7 +183,7 @@ export class DType {
   public getAlarm(): DAlarm {
     return this.alarm ?? DAlarm.NONE;
   }
-  public getTime(): DTime {
+  public getTime(): DTime | undefined {
     return this.time;
   }
   public getDisplay(): DDisplay | undefined {

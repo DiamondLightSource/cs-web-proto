@@ -1,7 +1,6 @@
 import { SimulatorPlugin } from "./sim";
-import { VType, vdouble, VDouble, VEnum } from "../types/vtypes/vtypes";
-import { mergeVtype, PartialVType } from "../types/vtypes/merge";
 import { nullConnCallback, nullValueCallback } from "./plugin";
+import { ddouble } from "../setupTests";
 
 let simulator: SimulatorPlugin;
 beforeEach((): void => {
@@ -11,11 +10,11 @@ beforeEach((): void => {
 // Some ugly TypeScript here.
 function diffToValue(x: PartialVType | VType | undefined): VType {
   if (typeof x === undefined) {
-    return vdouble(0);
+    return ddouble(0);
   } else if (x instanceof VType) {
     return x;
   } else {
-    return mergeVtype(vdouble(0), x as PartialVType) as VType;
+    return mergeVtype(ddouble(0), x as PartialVType) as VType;
   }
 }
 
@@ -52,12 +51,12 @@ it("test local values", (done): void => {
     done();
   });
   simulator.subscribe("loc://location");
-  simulator.putPv("loc://location", vdouble(17));
+  simulator.putPv("loc://location", ddouble(17));
 });
 
 it("test enum values blocked", (): void => {
   expect((): void => {
-    simulator.putPv("enum://name", vdouble(1));
+    simulator.putPv("enum://name", ddouble(1));
   }).toThrow();
 });
 
@@ -137,7 +136,7 @@ it("modifying limit values", (done): void => {
     iter.next(value);
   });
   simulator.subscribe("sim://limit");
-  simulator.putPv("sim://limit", vdouble(17));
+  simulator.putPv("sim://limit", ddduble(17));
 });
 
 it("distinguishes limit values", (done): void => {
@@ -167,8 +166,8 @@ it("distinguishes limit values", (done): void => {
 
   simulator.subscribe("sim://limit#one");
   simulator.subscribe("sim://limit#two");
-  simulator.putPv("sim://limit#one", vdouble(1));
-  simulator.putPv("sim://limit#two", vdouble(2));
+  simulator.putPv("sim://limit#one", ddouble(1));
+  simulator.putPv("sim://limit#two", ddouble(2));
 });
 
 it("test disconnector", (done): void => {
@@ -261,7 +260,7 @@ class ConnectionClient {
   private key: string | undefined;
 
   public constructor(simulator: SimulatorPlugin, key?: string) {
-    this.expectedValue = vdouble(0.0);
+    this.expectedValue = ddouble(0.0);
     this.subscribed = false;
     this.simulator = simulator;
     this.key = key;
@@ -286,8 +285,8 @@ class ConnectionClient {
   }
 
   public putPv(value: number, key?: string): void {
-    this.expectedValue = vdouble(value);
-    simulator.putPv(this._key(key), vdouble(value));
+    this.expectedValue = ddouble(value);
+    simulator.putPv(this._key(key), ddouble(value));
   }
 
   public callback(callback: Function): Function {
@@ -391,7 +390,7 @@ it("unsubscribe stops updates, but maintains value", (done): void => {
 });
 
 it("test sine values ", (): void => {
-  expect((): void => simulator.putPv("sim://sine", vdouble(17))).toThrow(
+  expect((): void => simulator.putPv("sim://sine", ddouble(17))).toThrow(
     new Error("Cannot set value on SinePv")
   );
 });
