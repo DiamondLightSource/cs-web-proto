@@ -1,6 +1,6 @@
 import { DType } from "../types/dtypes";
 
-export interface PVType {
+export interface SubscriptionType {
   double?: boolean;
   string?: boolean;
   base64Array?: boolean;
@@ -24,7 +24,7 @@ export type ConnectionChangedCallback = (
 export type ValueChangedCallback = (pvName: string, value: DType) => void;
 
 export interface Connection {
-  subscribe: (pvName: string, type: PVType) => string; // must be idempotent
+  subscribe: (pvName: string, type: SubscriptionType) => string; // must be idempotent
   putPv: (pvName: string, value: DType) => void;
   connect: (
     connectionCallback: ConnectionChangedCallback,

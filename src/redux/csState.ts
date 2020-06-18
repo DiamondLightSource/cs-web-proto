@@ -10,7 +10,7 @@ import {
   ValueChanged
 } from "./actions";
 import { MacroMap } from "../types/macros";
-import { DType, mergeDtype } from "../types/dtypes";
+import { DType, mergeDType } from "../types/dtypes";
 
 const initialState: CsState = {
   valueCache: {},
@@ -52,7 +52,7 @@ function updateValueCache(
 ): void {
   const { pvName, value } = action.payload;
   const pvState = oldValueCache[pvName];
-  const newValue = mergeDtype(pvState.value, value);
+  const newValue = mergeDType(pvState.value, value);
   const newPvState = Object.assign({}, pvState, {
     value: newValue
   });

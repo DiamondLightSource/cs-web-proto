@@ -18,7 +18,7 @@ import {
   ValueChangedCallback,
   nullConnCallback,
   nullValueCallback,
-  PVType
+  SubscriptionType
 } from "./plugin";
 import { SubscriptionClient } from "subscriptions-transport-ws";
 import {
@@ -131,7 +131,7 @@ export interface ConiqlTime {
   datetime: Date;
 }
 
-function coniqlToDtype(
+function coniqlToDType(
   value: ConiqlValue,
   timeVal: ConiqlTime,
   status: ConiqlStatus,
@@ -283,8 +283,6 @@ export class ConiqlPlugin implements Connection {
       })
       .subscribe({
         next: (data): void => {
-          console.log("subscribe");
-          console.log(data);
           const { value, time, status, display } = data.data.subscribeChannel;
           if (status) {
             this.onConnectionUpdate(pvName, {
@@ -292,7 +290,7 @@ export class ConiqlPlugin implements Connection {
               isReadonly: !status.mutable
             });
           }
-          const dtype = coniqlToDtype(value, time, status, display);
+          const dtype = coniqlToDType(value, time, status, display);
           this.onValueUpdate(pvName, dtype);
         },
         error: (err): void => {
@@ -309,7 +307,7 @@ export class ConiqlPlugin implements Connection {
       });
   }
 
-  public subscribe(pvName: string, type: PVType): string {
+  public subscribe(pvName: string, type: SubscriptionType): string {
     // How to handle multiple subscriptions of different types to the same channel?
     if (this.subscriptions[pvName] === undefined) {
       this._subscribe(pvName);

@@ -3,7 +3,7 @@ import { useSubscription } from "./useSubscription";
 import { useSelector } from "react-redux";
 import { CsState } from "../../redux/csState";
 import { pvStateSelector, PvArrayResults, pvStateComparator } from "./utils";
-import { PVType } from "../../connection/plugin";
+import { SubscriptionType } from "../../connection/plugin";
 import { DType } from "../../types/dtypes";
 
 export interface PvProps extends React.PropsWithChildren<any> {
@@ -14,7 +14,7 @@ export interface PvProps extends React.PropsWithChildren<any> {
 export function useConnection(
   id: string,
   pvName?: string,
-  type?: PVType
+  type?: SubscriptionType
 ): [string, boolean, boolean, DType?] {
   const pvNameArray = pvName === undefined ? [] : [pvName];
   const typeArray = type === undefined ? [] : [type];

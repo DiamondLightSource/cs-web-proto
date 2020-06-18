@@ -2,16 +2,16 @@ import { useEffect } from "react";
 import { getStore } from "../../redux/store";
 import { SUBSCRIBE, UNSUBSCRIBE, WRITE_PV } from "../../redux/actions";
 import { useDispatch } from "react-redux";
-import { PVType } from "../../connection/plugin";
 import { DType } from "../../types/dtypes";
+import { SubscriptionType } from "../../connection/plugin";
 
 export function useSubscription(
   componentId: string,
   pvNames: string[],
-  types: PVType[]
+  types: SubscriptionType[]
 ): void {
   // zip pvNames and types together
-  const pvsAndTypes: [string, PVType][] = pvNames.map(
+  const pvsAndTypes: [string, SubscriptionType][] = pvNames.map(
     (pvName: string, i: number) => {
       return [pvName, types[i]];
     }

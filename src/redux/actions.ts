@@ -1,5 +1,5 @@
 import { DType } from "../types/dtypes";
-import { ConnectionState, PVType } from "../connection/plugin";
+import { ConnectionState, SubscriptionType } from "../connection/plugin";
 
 export const CONNECTION_CHANGED = "connection_changed";
 export const SUBSCRIBE = "subscribe";
@@ -31,7 +31,7 @@ export interface Subscribe {
     componentId: string;
     pvName: string;
     effectivePvName: string;
-    type: PVType;
+    type: SubscriptionType;
   };
 }
 

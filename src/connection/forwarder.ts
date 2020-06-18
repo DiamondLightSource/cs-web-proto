@@ -2,7 +2,7 @@ import {
   Connection,
   ConnectionChangedCallback,
   ValueChangedCallback,
-  PVType
+  SubscriptionType
 } from "./plugin";
 
 export class ConnectionForwarder implements Connection {
@@ -27,7 +27,7 @@ export class ConnectionForwarder implements Connection {
     throw new Error(`No connections for ${pvName}`);
   }
 
-  public subscribe(pvName: string, type: PVType): string {
+  public subscribe(pvName: string, type: SubscriptionType): string {
     const connection = this.getConnection(pvName);
     return connection.subscribe(pvName, type);
   }

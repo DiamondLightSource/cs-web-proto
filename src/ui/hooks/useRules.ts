@@ -6,8 +6,8 @@ import { CsState } from "../../redux/csState";
 
 import { PvArrayResults, pvStateSelector, pvStateComparator } from "./utils";
 import { AnyProps } from "../widgets/widgetProps";
-import { PVType } from "../../connection/plugin";
 import { AlarmQuality } from "../../types/dtypes";
+import { SubscriptionType } from "../../connection/plugin";
 
 // See https://stackoverflow.com/questions/54542318/using-an-enum-as-a-dictionary-key
 type EnumDictionary<T extends string | symbol | number, U> = {
@@ -27,7 +27,7 @@ export function useRules(props: AnyProps): AnyProps {
   const newProps: AnyProps = { ...props };
   const rules = props.rules === undefined ? [] : props.rules;
   const allPvs: string[] = [];
-  const allTypes: PVType[] = [];
+  const allTypes: SubscriptionType[] = [];
   for (const rule of rules) {
     for (const pv of rule.pvs) {
       allPvs.push(pv.pvName.qualifiedName());

@@ -26,7 +26,7 @@ const baseUrl = settings.baseUrl ?? "http://localhost:3000";
 const SIMULATION_TIME = settings.simulationTime ?? 100;
 const THROTTLE_PERIOD = settings.throttlePeriod ?? 100;
 
-log.setLevel("debug");
+log.setLevel("info");
 
 function applyTheme(theme: any): void {
   Object.keys(theme).forEach(function(key): void {

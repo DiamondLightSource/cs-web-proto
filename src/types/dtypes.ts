@@ -237,7 +237,7 @@ export function mergeDDisplay(
   });
 }
 
-export function mergeDtype(original: DType | undefined, update: DType): DType {
+export function mergeDType(original: DType | undefined, update: DType): DType {
   // TODO we're accidentally merging e.g. string value 1 with double value 0
   // when we're trying to update the value.
   return new DType(
