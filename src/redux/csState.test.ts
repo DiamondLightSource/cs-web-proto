@@ -108,11 +108,21 @@ describe("CONNECTION_CHANGED", (): void => {
 test("handles initializers", (): void => {
   const action: Subscribe = {
     type: SUBSCRIBE,
-    payload: { pvName: "PV(1)", effectivePvName: "PV", componentId: "0" }
+    payload: {
+      pvName: "PV(1)",
+      effectivePvName: "PV",
+      componentId: "0",
+      type: { double: true }
+    }
   };
   const action2: Subscribe = {
     type: SUBSCRIBE,
-    payload: { pvName: "PV(1)", effectivePvName: "PV", componentId: "1" }
+    payload: {
+      pvName: "PV(1)",
+      effectivePvName: "PV",
+      componentId: "1",
+      type: { double: true }
+    }
   };
   const state2 = csReducer(initialState, action);
   const state3 = csReducer(state2, action2);

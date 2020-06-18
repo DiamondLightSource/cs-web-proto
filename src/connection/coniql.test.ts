@@ -1,5 +1,10 @@
 import { ApolloClient } from "apollo-client";
-import { ConiqlPlugin, ConiqlStatus, ConiqlTime } from "./coniql";
+import {
+  ConiqlPlugin,
+  ConiqlStatus,
+  ConiqlTime,
+  ConiqlBase64Array
+} from "./coniql";
 import { ddoubleArray, ddouble } from "../setupTests";
 import { DType } from "../types/dtypes";
 
@@ -11,17 +16,20 @@ const EPOCH_2017 = { seconds: 1511111111, nanoseconds: 0, userTag: 0 };
 class MockObservable {
   private float?: number;
   private string?: string;
+  private array?: ConiqlBase64Array;
   private time?: ConiqlTime;
   private status?: ConiqlStatus;
 
   public constructor(
     float?: number,
     string?: string,
+    array?: ConiqlBase64Array,
     time?: ConiqlTime,
     status?: ConiqlStatus
   ) {
     this.float = float;
     this.string = string;
+    this.array = array;
     this.time = time;
     this.status = status;
   }
@@ -30,7 +38,11 @@ class MockObservable {
     x.next({
       data: {
         subscribeChannel: {
-          value: { float: this.float, string: this.string },
+          value: {
+            float: this.float,
+            string: this.string,
+            base64Array: this.array
+          },
           time: this.time
         }
       }
@@ -64,13 +76,15 @@ describe("ConiqlPlugin", (): void => {
   it("handles update to array value", (): void => {
     ApolloClient.prototype.subscribe = jest.fn(
       (_): MockObservable =>
-        new MockObservable({
+        new MockObservable(
+          undefined,
+          undefined,
           // Corresponds to Int32Array with values [0, 1, 2]
-          base64Array: {
+          {
             numberType: "INT32",
             base64: "AAAAAAEAAAACAAAA"
           }
-        })
+        )
     ) as jest.Mock;
     cp.subscribe("hello", { string: true });
     expect(ApolloClient.prototype.subscribe).toHaveBeenCalled();
@@ -83,7 +97,9 @@ describe("ConiqlPlugin", (): void => {
   it("handles update to time", (): void => {
     ApolloClient.prototype.subscribe = jest.fn(
       (_): MockObservable =>
-        new MockObservable(undefined, { datetime: new Date(2017, 1, 1) })
+        new MockObservable(undefined, undefined, undefined, {
+          datetime: new Date(2017, 1, 1)
+        })
     ) as jest.Mock;
     cp.subscribe("hello", { string: true });
     expect(ApolloClient.prototype.subscribe).toHaveBeenCalled();

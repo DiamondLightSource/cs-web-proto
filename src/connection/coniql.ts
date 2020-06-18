@@ -115,7 +115,7 @@ const ARRAY_TYPES = {
   FLOAT64: Float64Array
 };
 
-interface ConiqlBase64Array {
+export interface ConiqlBase64Array {
   numberType: CONIQL_TYPE;
   base64: string;
 }
@@ -142,6 +142,7 @@ function coniqlToDtype(
   if (status) {
     alarm = new DAlarm(QUALITY_TYPES[status.quality], status.message);
   }
+  console.log(value);
   if (display) {
     ddisplay = new DDisplay({
       description: display.description,
@@ -291,8 +292,8 @@ export class ConiqlPlugin implements Connection {
               isReadonly: !status.mutable
             });
           }
-          const pvtype = coniqlToDtype(value, time, status, display);
-          this.onValueUpdate(pvName, pvtype);
+          const dtype = coniqlToDtype(value, time, status, display);
+          this.onValueUpdate(pvName, dtype);
         },
         error: (err): void => {
           log.error("err", err);

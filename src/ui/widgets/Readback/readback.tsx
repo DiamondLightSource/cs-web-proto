@@ -75,7 +75,13 @@ export const ReadbackComponent = (
   if (!value) {
     displayedValue = "Waiting for value";
   } else {
-    displayedValue = value.getStringValue();
+    if (precision !== undefined && !isNaN(value.getDoubleValue())) {
+      console.log("here");
+      displayedValue = value.getDoubleValue().toFixed(precision);
+      console.log(displayedValue);
+    } else {
+      displayedValue = value.getStringValue();
+    }
   }
 
   // Add units if there are any and show units is true
@@ -112,7 +118,13 @@ const ReadbackWidgetProps = {
 export const Readback = (
   props: InferWidgetProps<typeof ReadbackWidgetProps>
 ): JSX.Element => (
-  <Widget pvType={{ string: true }} baseWidget={ReadbackComponent} {...props} />
+  <Widget
+    // TODO: Note that we asking for both string and double here;
+    // this subverts the intended efficiency.
+    pvType={{ string: true, double: true }}
+    baseWidget={ReadbackComponent}
+    {...props}
+  />
 );
 
 registerWidget(Readback, ReadbackWidgetProps, "readback");

@@ -47,7 +47,7 @@ export const SlideControlComponent = (
       const doubleValue = parseFloat(event.currentTarget.value);
       writePv(pvName, new DType({ doubleValue: doubleValue }));
     } catch (error) {
-      log.warn(`Unexpected value ${event.currentTarget.value} set to slider.`)
+      log.warn(`Unexpected value ${event.currentTarget.value} set to slider.`);
     }
   }
 

@@ -28,7 +28,12 @@ describe("connectionMiddleware", (): void => {
     const actionHandler = nextHandler(mockNext);
     const subscribeAction: Subscribe = {
       type: SUBSCRIBE,
-      payload: { pvName: "pv", componentId: "2", effectivePvName: "pv" }
+      payload: {
+        pvName: "pv",
+        componentId: "2",
+        effectivePvName: "pv",
+        type: { double: true }
+      }
     };
     actionHandler(subscribeAction);
     expect(mockConnection.subscribe).toHaveBeenCalledTimes(1);

@@ -163,12 +163,10 @@ class Disconnector extends SimPv {
 class SimEnumPv extends SimPv {
   type = "VEnum";
   private value: DType = new DType(
-    {doubleValue: 0},
+    { doubleValue: 0, stringValue: "one" },
     DAlarm.NONE,
     dtimeNow(),
-    new DDisplay({"choices":
-    ["one", "two", "three", "four"],
-  }),
+    new DDisplay({ choices: ["one", "two", "three", "four"] })
   );
   public constructor(...args: SimArgs) {
     super(...args);
@@ -178,14 +176,17 @@ class SimEnumPv extends SimPv {
   }
   public getValue(): DType {
     const newIndex = Math.floor(
-      Math.random() * (this.value?.display?.choices?.length || 0)
+      Math.random() * (this.value.display?.choices?.length || 0)
     );
     this.value = new DType(
-      {doubleValue: newIndex},
+      {
+        doubleValue: newIndex,
+        stringValue: (this.value.display?.choices as string[])[newIndex]
+      },
       DAlarm.NONE,
       dtimeNow(),
       new DDisplay({
-      choices: this.value?.display?.choices
+        choices: this.value.display?.choices
       })
     );
     return this.value;
@@ -195,12 +196,10 @@ class SimEnumPv extends SimPv {
 class EnumPv extends SimPv {
   type = "VEnum";
   private value: DType = new DType(
-    {doubleValue: 0},
+    { doubleValue: 0 },
     DAlarm.NONE,
     dtimeNow(),
-    new DDisplay({"choices":
-    ["one", "two", "three", "four"],
-  }),
+    new DDisplay({ choices: ["one", "two", "three", "four"] })
   );
 
   public constructor(...args: SimArgs) {
@@ -214,15 +213,12 @@ class EnumPv extends SimPv {
   }
 
   public updateValue(value: DType): void {
-      const dval = value.getDoubleValue();
-      const sval = value.getStringValue();
+    const dval = value.getDoubleValue();
+    const sval = value.getStringValue();
     if (!isNaN(dval)) {
       // If it is a number, treat as index
       // Indexes outside the range to be ignored
-      if (
-        dval >= 0 &&
-        dval < (this.value.display?.choices?.length || 0)
-      ) {
+      if (dval >= 0 && dval < (this.value.display?.choices?.length || 0)) {
         this.value.value.doubleValue = dval;
       }
     } else if (sval) {
@@ -378,12 +374,13 @@ export class SimulatorPlugin implements Connection {
         keyName = "loc://" + groups[1];
 
         if (typeName === "VEnum") {
-          initial = new DType({
-            doubleValue: initial[0] - 1,
-          },
+          initial = new DType(
+            {
+              doubleValue: initial[0] - 1
+            },
             DAlarm.NONE,
             dtimeNow(),
-            new DDisplay({choices: []}),
+            new DDisplay({ choices: initial.slice(1) })
           );
         } else if (initial.length === 1) {
           initial = new DType({ doubleValue: initial[0] });
