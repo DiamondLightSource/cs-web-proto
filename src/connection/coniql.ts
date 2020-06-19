@@ -185,6 +185,38 @@ function coniqlToDType(
   );
 }
 
+const PV_QUERY = gql`
+  query query1($pvName: ID!) {
+    getChannel(id: $pvName) {
+      id
+      time {
+        datetime
+      }
+      value {
+        string
+        float
+        base64Array {
+          numberType
+          base64
+        }
+      }
+      status {
+        quality
+        message
+        mutable
+      }
+      display {
+        units
+        form
+        controlRange {
+          max
+          min
+        }
+      }
+    }
+  }
+`;
+
 const PV_SUBSCRIPTION = gql`
   subscription sub1($pvName: ID!) {
     subscribeChannel(id: $pvName) {
@@ -297,7 +329,31 @@ export class ConiqlPlugin implements Connection {
     return this.connected;
   }
 
+  private _process(data: any, pvName: string, operation: string): void {
+    // Process an update to a channel either from getChannel or subscribeChannel.
+    const { value, time, status, display } = data.data[operation];
+    if (status) {
+      this.onConnectionUpdate(pvName, {
+        isConnected: true,
+        isReadonly: !status.mutable
+      });
+    }
+    const dtype = coniqlToDType(value, time, status, display);
+    this.onValueUpdate(pvName, dtype);
+  }
+
   private _subscribe(pvName: string): void {
+    // Make a query to get the initial values.
+    // https://github.com/apollographql/subscriptions-transport-ws/issues/170
+    this.client
+      .query({
+        query: PV_QUERY,
+        variables: { pvName: pvName }
+      })
+      .then(data => {
+        this._process(data, pvName, "getChannel");
+      });
+    // Subscribe to further updates.
     this.client
       .subscribe({
         query: PV_SUBSCRIPTION,
@@ -305,15 +361,7 @@ export class ConiqlPlugin implements Connection {
       })
       .subscribe({
         next: (data): void => {
-          const { value, time, status, display } = data.data.subscribeChannel;
-          if (status) {
-            this.onConnectionUpdate(pvName, {
-              isConnected: true,
-              isReadonly: !status.mutable
-            });
-          }
-          const dtype = coniqlToDType(value, time, status, display);
-          this.onValueUpdate(pvName, dtype);
+          this._process(data, pvName, "subscribeChannel");
         },
         error: (err): void => {
           log.error("err", err);
