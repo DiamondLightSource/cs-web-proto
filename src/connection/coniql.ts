@@ -208,7 +208,19 @@ const PV_SUBSCRIPTION = gql`
       display {
         units
         form
+        controlRange {
+          max
+          min
+        }
       }
+    }
+  }
+`;
+
+const PV_MUTATION = gql`
+  mutation put1($pvName: ID!, $value: String!) {
+    putChannels(ids: [$pvName], values: [$value]) {
+      id
     }
   }
 `;
@@ -236,6 +248,16 @@ export class ConiqlPlugin implements Connection {
         this._subscribe(pvName);
       }
       this.disconnected = [];
+    });
+    this.wsClient.onDisconnected((): void => {
+      log.error("Websockect client disconnected.");
+      for (const pvName of Object.keys(this.subscriptions)) {
+        this.subscriptions[pvName] = false;
+        this.onConnectionUpdate(pvName, {
+          isConnected: false,
+          isReadonly: true
+        });
+      }
     });
     const link = this.createLink(socket);
     this.client = new ApolloClient({ link, cache });
@@ -308,7 +330,7 @@ export class ConiqlPlugin implements Connection {
   }
 
   public subscribe(pvName: string, type: SubscriptionType): string {
-    // How to handle multiple subscriptions of different types to the same channel?
+    // TODO: How to handle multiple subscriptions of different types to the same channel?
     if (this.subscriptions[pvName] === undefined) {
       this._subscribe(pvName);
     }
@@ -317,10 +339,15 @@ export class ConiqlPlugin implements Connection {
   }
 
   public putPv(pvName: string, value: DType): void {
-    // noop
+    log.debug(`Putting ${value} to ${pvName}.`);
+    const variables = {
+      pvName: pvName,
+      value: value.getStringValue()
+    };
+    this.client.mutate({ mutation: PV_MUTATION, variables: variables });
   }
 
   public unsubscribe(pvName: string): void {
-    // noop
+    // TODO: handle unsubscribing.
   }
 }

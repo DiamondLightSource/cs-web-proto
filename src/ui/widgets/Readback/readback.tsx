@@ -76,9 +76,7 @@ export const ReadbackComponent = (
     displayedValue = "Waiting for value";
   } else {
     if (precision !== undefined && !isNaN(value.getDoubleValue())) {
-      console.log("here");
       displayedValue = value.getDoubleValue().toFixed(precision);
-      console.log(displayedValue);
     } else {
       displayedValue = value.getStringValue();
     }
@@ -91,10 +89,10 @@ export const ReadbackComponent = (
 
   // Handle foreground alarm sensitivity.
   let className = classes.Readback;
+  // TODO: should we show disconnection even if not alarm sensitive?
   if (fgAlarmSensitive) {
     className = getClass(connected, alarm.quality);
   }
-
   // Use a LabelComponent to display it.
   return (
     <LabelComponent
