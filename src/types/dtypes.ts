@@ -158,15 +158,12 @@ export class DType {
   }
 
   public getDoubleValue(): number {
-    // TODO what if no double value defined?
+    // TODO is NaN the best idea here?
     if (typeof this.value.doubleValue === "number") {
       return this.value.doubleValue;
     } else if (typeof this.value.stringValue === "string") {
-      try {
-        return parseFloat(this.value.stringValue);
-      } catch (error) {
-        return NaN;
-      }
+      // Returns NaN if cannot parse.
+      return parseFloat(this.value.stringValue);
     } else {
       return NaN;
     }
@@ -203,7 +200,7 @@ export function dtypeToString(dtype?: DType): string {
   }
 }
 
-export function valueToDtype(
+export function valueToDType(
   value: any,
   alarm = DAlarm.NONE,
   time = dtimeNow(),
@@ -215,6 +212,7 @@ export function valueToDtype(
   } else if (typeof value === "number") {
     dvalue.doubleValue = value;
   } else {
+    // TODO this is not correct!
     dvalue.doubleValue = 0;
   }
   return new DType(dvalue, alarm, time, display);

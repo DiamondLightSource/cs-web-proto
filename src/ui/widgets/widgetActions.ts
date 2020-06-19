@@ -10,7 +10,7 @@ import {
   getUrlInfoFromHistory
 } from "./urlControl";
 import { MacroMap } from "../../types/macros";
-import { valueToDtype } from "../../types/dtypes";
+import { valueToDType } from "../../types/dtypes";
 
 export const OPEN_PAGE = "OPEN_PAGE";
 export const CLOSE_PAGE = "CLOSE_PAGE";
@@ -155,7 +155,7 @@ export const executeAction = (
     case WRITE_PV:
       writePv(
         action.writePvInfo.pvName,
-        valueToDtype(action.writePvInfo.value)
+        valueToDType(action.writePvInfo.value)
       );
       break;
     default:
