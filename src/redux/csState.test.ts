@@ -11,7 +11,7 @@ import {
   ValuesChanged,
   VALUES_CHANGED
 } from "./actions";
-import { DType, DAlarm } from "../types/dtypes";
+import { DAlarm } from "../types/dtypes";
 import { ddouble, dstring, ddoubleArray } from "../setupTests";
 
 const initialState: CsState = {

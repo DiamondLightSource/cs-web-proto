@@ -5,10 +5,7 @@ import {
   ConiqlTime,
   ConiqlBase64Array
 } from "./coniql";
-import { ddoubleArray, ddouble } from "../setupTests";
 import { DType } from "../types/dtypes";
-
-const EPOCH_2017 = { seconds: 1511111111, nanoseconds: 0, userTag: 0 };
 
 /* This mocks the observable returned by apolloclient.subscribe().
    Its subscribe method calls the next() method on its parameter

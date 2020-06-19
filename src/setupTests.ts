@@ -12,17 +12,23 @@ if (typeof window.URL.createObjectURL === "undefined") {
   Object.defineProperty(window.URL, "createObjectURL", { value: () => {} });
 }
 
-export function ddouble(doubleValue: number, alarm: DAlarm = DAlarm.NONE) {
+export function ddouble(
+  doubleValue: number,
+  alarm: DAlarm = DAlarm.NONE
+): DType {
   return new DType({ doubleValue: doubleValue }, alarm);
 }
 
 export function ddoubleArray(
   arrayValue: number[],
   alarm: DAlarm = DAlarm.NONE
-) {
+): DType {
   return new DType({ arrayValue: Float64Array.from(arrayValue) }, alarm);
 }
 
-export function dstring(stringValue: string, alarm: DAlarm = DAlarm.NONE) {
+export function dstring(
+  stringValue: string,
+  alarm: DAlarm = DAlarm.NONE
+): DType {
   return new DType({ stringValue: stringValue }, alarm);
 }
