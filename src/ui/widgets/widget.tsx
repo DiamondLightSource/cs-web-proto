@@ -1,4 +1,4 @@
-import React from "react";
+import React, { CSSProperties } from "react";
 import log from "loglevel";
 
 import { TooltipWrapper } from "../components/TooltipWrapper/tooltipWrapper";
@@ -12,6 +12,23 @@ import { Border, BorderStyle } from "../../types/border";
 import { alarmOf, AlarmSeverity } from "../../types/vtypes/alarm";
 import { Color } from "../../types/color";
 import { Position, RelativePosition } from "../../types/position";
+import { Font } from "../../types/font";
+
+export function commonCss(props: {
+  border?: Border;
+  font?: Font;
+  visible?: boolean;
+  highlight?: boolean;
+  backgroundColor?: Color;
+}): CSSProperties {
+  return {
+    ...props.border?.css(),
+    ...props.font?.css(),
+    backgroundColor: props.backgroundColor?.rgbaString(),
+    visibility: props.visible ? "hidden" : undefined,
+    opacity: props.highlight ? "50%" : undefined
+  };
+}
 
 // Function to recursively wrap a given set of widgets
 const recursiveWrapping = (
@@ -47,6 +64,7 @@ const recursiveWrapping = (
 */
 export const ConnectingComponent = (props: {
   components: React.FC<any>[];
+  highlight?: string;
   containerStyling: Position;
   containerProps: any & { id: string };
   widgetProps: any;
@@ -135,12 +153,20 @@ export const Widget = (
   }
   components.push(TooltipWrapper);
   components.push(baseWidget);
+  if (props.highlight) {
+    baseWidgetProps.border = new Border(
+      BorderStyle.Dashed,
+      Color.parse(props.highlight),
+      3
+    );
+  }
 
   // We could select the ConnectingComponent only if there is a PV
   // to which to connect, if we felt that would be more efficient.
   return (
     <ConnectingComponent
       alarmBorder={alarmBorder}
+      highlight={props.highlight}
       components={components}
       containerStyling={position}
       containerProps={containerProps}

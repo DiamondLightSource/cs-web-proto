@@ -1,7 +1,7 @@
-import React from "react";
+import React, { CSSProperties } from "react";
 
 import classes from "./label.module.css";
-import { Widget } from "../widget";
+import { Widget, commonCss } from "../widget";
 import { WidgetPropType } from "../widgetProps";
 import { registerWidget } from "../register";
 import {
@@ -37,12 +37,9 @@ type LabelWidget = InferWidgetProps<typeof LabelWidgetProps>;
 export const LabelComponent = (
   props: InferWidgetProps<typeof LabelProps>
 ): JSX.Element => {
-  const { visible = true, transparent = false, textAlign = "center" } = props;
+  const style: CSSProperties = commonCss(props);
+  const { transparent = false, textAlign = "center" } = props;
   const className = props.className ?? `Label ${classes.Label}`;
-  const style: any = { ...props.font?.css(), ...props.border?.css() };
-  if (!visible) {
-    style["visibility"] = "hidden";
-  }
   // Since display is "flex", use "flex-start" and "flex-end" to align
   // the content.
   let alignment = "center";

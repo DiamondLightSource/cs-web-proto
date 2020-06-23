@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 
-import { Widget } from "../widget";
+import { Widget, commonCss } from "../widget";
 import { WidgetPropType } from "../widgetProps";
 import { registerWidget } from "../register";
 import {
@@ -46,19 +46,13 @@ export const DisplayComponent = (
       DID: props.id // highest priority
     }
   };
+  const style = commonCss(props);
+  style["position"] = "relative";
+  style["overflow"] = props.overflow;
+  style["height"] = "100%";
   return (
     <MacroContext.Provider value={displayMacroContext}>
-      <div
-        style={{
-          position: "relative",
-          height: "100%",
-          overflow: props.overflow,
-          backgroundColor: props.backgroundColor?.rgbaString(),
-          ...props.border?.css()
-        }}
-      >
-        {props.children}
-      </div>
+      <div style={style}>{props.children}</div>
     </MacroContext.Provider>
   );
 };

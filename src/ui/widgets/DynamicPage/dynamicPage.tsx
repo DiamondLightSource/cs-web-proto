@@ -3,12 +3,17 @@ import log from "loglevel";
 import { Route } from "react-router-dom";
 import { History } from "history";
 
-import { Widget } from "../widget";
+import { Widget, commonCss } from "../widget";
 import { WidgetPropType } from "../widgetProps";
 import { ActionButton } from "../ActionButton/actionButton";
 import { CLOSE_PAGE } from "../widgetActions";
 import { registerWidget } from "../register";
-import { StringProp, InferWidgetProps, StringPropOpt } from "../propTypes";
+import {
+  StringProp,
+  InferWidgetProps,
+  StringPropOpt,
+  BorderPropOpt
+} from "../propTypes";
 import { BaseUrlContext } from "../../../baseUrl";
 import { EmbeddedDisplay } from "../EmbeddedDisplay/embeddedDisplay";
 import { Color } from "../../../types/color";
@@ -48,16 +53,18 @@ export function DynamicPageFetch(props: {
 
 const DynamicPageProps = {
   routePath: StringProp,
-  defaultProtocol: StringPropOpt
+  defaultProtocol: StringPropOpt,
+  border: BorderPropOpt
 };
 
 // Generic display widget to put other things inside
 const DynamicPageComponent = (
   props: InferWidgetProps<typeof DynamicPageProps>
 ): JSX.Element => {
+  const style = commonCss(props);
   const { routePath, defaultProtocol } = props;
   return (
-    <div style={{ width: "100%", height: "100%" }}>
+    <div style={style}>
       <Route
         render={(routeProps): JSX.Element => (
           <div>
