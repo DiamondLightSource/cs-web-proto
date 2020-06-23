@@ -2,6 +2,7 @@ import React from "react";
 import { GroupingContainerComponent } from "./groupingContainer";
 import { shallow, ShallowWrapper } from "enzyme";
 import { create, ReactTestRenderer } from "react-test-renderer";
+import { MacroContext } from "../../../types/macros";
 
 let snapshot: ReactTestRenderer;
 let wrapper: ShallowWrapper;
@@ -18,7 +19,8 @@ describe("<GroupingContainerComponent />", (): void => {
   });
 
   test("it is a div HTML object", (): void => {
-    expect(wrapper.type()).toEqual("div");
+    expect(wrapper.type()).toEqual(MacroContext.Provider);
+    expect(wrapper.childAt(0).type()).toEqual("div");
   });
 
   test("it renders child div with text", (): void => {

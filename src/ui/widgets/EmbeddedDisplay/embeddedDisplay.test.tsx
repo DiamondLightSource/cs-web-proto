@@ -1,4 +1,4 @@
-import React from "react";
+import React, * as ReactAll from "react";
 import { EmbeddedDisplay } from "./embeddedDisplay";
 import { shallow } from "enzyme";
 
@@ -6,17 +6,14 @@ import { Display } from "../Display/display";
 import { Label } from "../Label/label";
 import { DEFAULT_BASE_URL } from "../../../baseUrl";
 import { RelativePosition } from "../../../types/position";
+import { MacroContext } from "../../../types/macros";
 interface GlobalFetch extends NodeJS.Global {
   fetch: any;
 }
 const globalWithFetch = global as GlobalFetch;
-const useEffect = jest.spyOn(React, "useEffect");
-const mockUseEffect = (): void => {
-  useEffect.mockImplementationOnce((f): any => f());
-};
+jest.spyOn(ReactAll, "useEffect").mockImplementation((f): any => f());
 
 beforeEach((): void => {
-  mockUseEffect();
   // Ensure the fetch() function mock is always cleared.
   jest.spyOn(globalWithFetch, "fetch").mockClear();
 });
@@ -59,7 +56,7 @@ describe("<EmbeddedDisplay>", (): void => {
       expect(globalWithFetch.fetch).toHaveBeenCalledWith(resolvedFile);
 
       process.nextTick((): void => {
-        expect(wrapper.type()).toEqual(Display);
+        expect(wrapper.type()).toEqual(MacroContext.Provider);
         done();
       });
     }
@@ -97,8 +94,9 @@ describe("<EmbeddedDisplay>", (): void => {
     );
 
     process.nextTick((): void => {
-      expect(wrapper.type()).toEqual(Label);
-      expect(wrapper.props().text).toContain("Error");
+      expect(wrapper.type()).toEqual(MacroContext.Provider);
+      expect(wrapper.childAt(0).type()).toEqual(Label);
+      expect(wrapper.childAt(0).props().text).toContain("Error");
       done();
     });
   });
@@ -142,10 +140,11 @@ describe("<EmbeddedDisplay>", (): void => {
     );
 
     process.nextTick((): void => {
-      expect(wrapper.type()).toEqual(Display);
+      expect(wrapper.type()).toEqual(MacroContext.Provider);
       expect(wrapper.childAt(0).type()).toEqual(Display);
       expect(
         wrapper
+          .childAt(0)
           .childAt(0)
           .childAt(0)
           .type()
@@ -181,10 +180,11 @@ describe("<EmbeddedDisplay>", (): void => {
     );
 
     process.nextTick((): void => {
-      expect(wrapper.type()).toEqual(Display);
+      expect(wrapper.childAt(0).type()).toEqual(Display);
       // Why the nesting?
       expect(
         wrapper
+          .childAt(0)
           .childAt(0)
           .childAt(0)
           .type()

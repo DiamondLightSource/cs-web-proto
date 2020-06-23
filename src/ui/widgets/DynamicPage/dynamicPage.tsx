@@ -34,8 +34,6 @@ export function DynamicPageFetch(props: {
     pageDesc = currentUrlInfo[props.routePath];
     file = `${baseUrl}/json/${pageDesc.filename}.json`;
     macros = pageDesc.macros ?? {};
-    // const file = `${baseUrl}/json/${match.params.json}.json`;
-    // let map = {};
   } catch (error) {
     log.warn(currentUrlInfo);
     log.warn(error);
@@ -46,7 +44,7 @@ export function DynamicPageFetch(props: {
     <EmbeddedDisplay
       file={file}
       filetype="json"
-      macroMap={macros}
+      macros={macros}
       position={new RelativePosition()}
       defaultProtocol={props.defaultProtocol ?? "ca"}
     />

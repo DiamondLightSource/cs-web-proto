@@ -1,8 +1,8 @@
-import { Rule, Expression } from "../../../types/props";
-import { ElementCompact, xml2js } from "xml-js";
-import { WidgetActions, WRITE_PV, OPEN_WEBPAGE } from "../widgetActions";
 import log from "loglevel";
-import { MacroMap } from "../../../redux/csState";
+import { ElementCompact, xml2js } from "xml-js";
+import { Rule, Expression } from "../../../types/props";
+import { WidgetActions, WRITE_PV, OPEN_WEBPAGE } from "../widgetActions";
+import { MacroMap } from "../../../types/macros";
 import { Color } from "../../../types/color";
 import { FontStyle, Font } from "../../../types/font";
 import { Border, BorderStyle } from "../../../types/border";

@@ -13,7 +13,7 @@ const pvState: FullPvState = {
 
 const state: CsState = {
   valueCache: { pv1: pvState },
-  macroMap: {},
+  globalMacros: {},
   effectivePvNameMap: { pv1: "pv1", pv2: "pv3" },
   subscriptions: {}
 };

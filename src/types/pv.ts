@@ -28,4 +28,8 @@ export class PV {
       return `${this.protocol}${PV.DELIMITER}${this.name}`;
     }
   }
+
+  public toString(): string {
+    return this.qualifiedName();
+  }
 }

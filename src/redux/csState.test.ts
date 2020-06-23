@@ -29,7 +29,7 @@ const initialState: CsState = {
       initializingPvName: ""
     }
   },
-  macroMap: {},
+  globalMacros: {},
   subscriptions: {},
   effectivePvNameMap: {}
 };
