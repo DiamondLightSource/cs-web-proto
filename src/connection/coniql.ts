@@ -181,7 +181,10 @@ function coniqlToDType(
     },
     alarm,
     dtime,
-    ddisplay
+    ddisplay,
+    // Coniql only returns changed values so these DTypes are
+    // always partial.
+    true
   );
 }
 

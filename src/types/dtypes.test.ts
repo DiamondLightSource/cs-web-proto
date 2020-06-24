@@ -1,5 +1,5 @@
-import { dstring, ddoubleArray } from "../setupTests";
-import { valueToDType } from "./dtypes";
+import { dstring, ddoubleArray, ddouble } from "../setupTests";
+import { valueToDType, mergeDType } from "./dtypes";
 
 const stringDType = dstring("hello");
 
@@ -27,5 +27,12 @@ describe("DType", (): void => {
 
   test("valueToDType handles double", (): void => {
     expect(valueToDType(4).getDoubleValue()).toEqual(4);
+  });
+});
+
+describe("mergeDType", (): void => {
+  test("returns update if not partial", (): void => {
+    const doubleDType = ddouble(3);
+    expect(mergeDType(doubleDType, stringDType)).toEqual(stringDType);
   });
 });

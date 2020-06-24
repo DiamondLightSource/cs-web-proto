@@ -130,18 +130,25 @@ export class DType {
   public time?: DTime;
   public alarm?: DAlarm;
   public display?: DDisplay;
+  // If partial, this DType may be merged with an existing
+  // value to create the latest status.
+  public partial = false;
 
   public constructor(
     value: DTypeValue,
     alarm?: DAlarm,
     time?: DTime,
-    display?: DDisplay
+    display?: DDisplay,
+    partial?: boolean
   ) {
     // TODO check for no value.
     this.value = value;
     this.alarm = alarm;
     this.time = time;
     this.display = display;
+    if (partial) {
+      this.partial = true;
+    }
   }
 
   public getStringValue(): string {
@@ -238,15 +245,19 @@ export function mergeDDisplay(
 export function mergeDType(original: DType | undefined, update: DType): DType {
   // TODO we're accidentally merging e.g. string value 1 with double value 0
   // when we're trying to update the value.
-  return new DType(
-    {
-      stringValue: update.value.stringValue ?? original?.value.stringValue,
-      doubleValue: update.value.doubleValue ?? original?.value.doubleValue,
-      arrayValue: update.value.arrayValue ?? original?.value.arrayValue
-    },
+  if (!update.partial) {
+    return update;
+  } else {
+    return new DType(
+      {
+        stringValue: update.value.stringValue ?? original?.value.stringValue,
+        doubleValue: update.value.doubleValue ?? original?.value.doubleValue,
+        arrayValue: update.value.arrayValue ?? original?.value.arrayValue
+      },
 
-    update.alarm ?? original?.alarm,
-    update.time ?? original?.time,
-    mergeDDisplay(original?.display, update.display)
-  );
+      update.alarm ?? original?.alarm,
+      update.time ?? original?.time,
+      mergeDDisplay(original?.display, update.display)
+    );
+  }
 }

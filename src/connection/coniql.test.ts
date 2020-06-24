@@ -66,7 +66,7 @@ describe("ConiqlPlugin", (): void => {
     expect(ApolloClient.prototype.subscribe).toHaveBeenCalled();
     expect(mockValUpdate).toHaveBeenCalledWith(
       "hello",
-      new DType({ doubleValue: 42 })
+      new DType({ doubleValue: 42 }, undefined, undefined, undefined, true)
     );
   });
 
@@ -87,7 +87,13 @@ describe("ConiqlPlugin", (): void => {
     expect(ApolloClient.prototype.subscribe).toHaveBeenCalled();
     expect(mockValUpdate).toHaveBeenCalledWith(
       "hello",
-      new DType({ arrayValue: Int32Array.from([0, 1, 2]) })
+      new DType(
+        { arrayValue: Int32Array.from([0, 1, 2]) },
+        undefined,
+        undefined,
+        undefined,
+        true
+      )
     );
   });
 
