@@ -225,7 +225,7 @@ export class DType {
   }
 
   public toString(): string {
-    return DType.coerceString(this);
+    return `DType: ${DType.coerceString(this)}`;
   }
 }
 

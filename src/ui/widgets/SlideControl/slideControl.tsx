@@ -24,12 +24,16 @@ export const SlideControlComponent = (
     pvName,
     connected,
     value,
-    min = 0,
-    max = 100,
+    limitsFromPv = false,
     /* TODO: Implement vertical style and allow absolute positioning */
     //vertical = false,
     precision = undefined
   } = props;
+  let { min = 0, max = 100 } = props;
+  if (limitsFromPv && value?.display.controlRange) {
+    min = value.display.controlRange?.min;
+    max = value.display.controlRange?.max;
+  }
 
   const [inputValue, setInputValue] = useState("");
   const [editing, setEditing] = useState(false);
@@ -51,7 +55,7 @@ export const SlideControlComponent = (
     }
   }
 
-  const stringValue = value?.getStringValue() || "";
+  const stringValue = DType.coerceString(value);
   if (!editing && inputValue !== stringValue) {
     setInputValue(stringValue);
   }
@@ -70,9 +74,10 @@ export const SlideControlComponent = (
       >
         <ProgressBarComponent
           connected={connected}
-          value={new DType({ doubleValue: parseFloat(inputValue) })}
+          value={value}
           min={min}
           max={max}
+          limitsFromPv={limitsFromPv}
           precision={precision}
           readonly={props.readonly}
         />

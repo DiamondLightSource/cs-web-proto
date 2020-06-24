@@ -142,7 +142,6 @@ function coniqlToDType(
   if (status) {
     alarm = new DAlarm(QUALITY_TYPES[status.quality], status.message);
   }
-  console.log(value);
   if (display) {
     ddisplay = new DDisplay({
       description: display.description,
@@ -393,7 +392,7 @@ export class ConiqlPlugin implements Connection {
     log.debug(`Putting ${value} to ${pvName}.`);
     const variables = {
       pvName: pvName,
-      value: value.getStringValue()
+      value: DType.coerceString(value)
     };
     this.client.mutate({ mutation: PV_MUTATION, variables: variables });
   }
