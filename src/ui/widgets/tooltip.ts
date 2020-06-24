@@ -12,7 +12,7 @@ function tooltipValue(connected?: boolean, value?: DType): string {
       if (!value) {
         displayValue = "Warning: Waiting for value";
       } else {
-        displayValue = value.getStringValue();
+        displayValue = DType.coerceString(value);
       }
     }
     const dateAndAlarm = [

@@ -215,7 +215,7 @@ class EnumPv extends SimPv {
   public updateValue(value: DType): void {
     const dval = value.getDoubleValue();
     const sval = value.getStringValue();
-    if (!isNaN(dval)) {
+    if (dval !== undefined && !isNaN(dval)) {
       // If it is a number, treat as index
       // Indexes outside the range to be ignored
       if (dval >= 0 && dval < (this.value.display?.choices?.length || 0)) {
@@ -281,13 +281,15 @@ class LimitData extends SimPv {
     // Set alarm status
     let alarmSeverity = 0;
     const v = value.getDoubleValue();
-    alarmSeverity = v < 10 ? 2 : v > 90 ? 2 : v < 20 ? 1 : v > 80 ? 1 : 0;
-    this.value = new DType(
-      { doubleValue: value.getDoubleValue() },
-      new DAlarm(alarmSeverity, ""),
-      dtimeNow()
-    );
-    this.publish();
+    if (v !== undefined) {
+      alarmSeverity = v < 10 ? 2 : v > 90 ? 2 : v < 20 ? 1 : v > 80 ? 1 : 0;
+      this.value = new DType(
+        { doubleValue: value.getDoubleValue() },
+        new DAlarm(alarmSeverity, ""),
+        dtimeNow()
+      );
+      this.publish();
+    }
   }
 
   public getValue(): DType {

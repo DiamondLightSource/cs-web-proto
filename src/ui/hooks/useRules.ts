@@ -6,7 +6,7 @@ import { CsState } from "../../redux/csState";
 
 import { PvArrayResults, pvStateSelector, pvStateComparator } from "./utils";
 import { AnyProps } from "../widgets/widgetProps";
-import { AlarmQuality } from "../../types/dtypes";
+import { AlarmQuality, DType } from "../../types/dtypes";
 import { SubscriptionType } from "../../connection/plugin";
 
 // See https://stackoverflow.com/questions/54542318/using-an-enum-as-a-dictionary-key
@@ -51,9 +51,14 @@ export function useRules(props: AnyProps): AnyProps {
       if (pvResults) {
         const val = results[pvs[i].pvName.qualifiedName()][0].value;
         if (val) {
-          pvVars["pv" + i] = val.getDoubleValue();
-          pvVars["pvStr" + i] = val.getStringValue();
-          pvVars["pvInt" + i] = val.getDoubleValue();
+          const doubleValue = val.getDoubleValue();
+          if (doubleValue !== undefined) {
+            pvVars["pv" + i] = doubleValue;
+          } else {
+            pvVars["pv" + i] = DType.coerceString(val);
+          }
+          pvVars["pvStr" + i] = DType.coerceString(val);
+          pvVars["pvInt" + i] = DType.coerceDouble(val);
           pvVars["pvSev" + i] = INT_SEVERITIES[val.getAlarm()?.quality || 0];
         }
       }

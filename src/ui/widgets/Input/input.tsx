@@ -14,7 +14,7 @@ import {
 } from "../propTypes";
 import { Font } from "../../../types/font";
 import { Color } from "../../../types/color";
-import { dtypeToString, DType } from "../../../types/dtypes";
+import { DType } from "../../../types/dtypes";
 
 export interface InputProps {
   pvName: string;
@@ -100,11 +100,11 @@ export const SmartInputComponent = (
   function onBlur(event: React.ChangeEvent<HTMLInputElement>): void {
     setEditing(false);
     /* When focus lost show PV value. */
-    setInputValue(dtypeToString(props.value));
+    setInputValue(DType.coerceString(props.value));
   }
 
-  if (!editing && inputValue !== dtypeToString(props.value)) {
-    setInputValue(dtypeToString(props.value));
+  if (!editing && inputValue !== DType.coerceString(props.value)) {
+    setInputValue(DType.coerceString(props.value));
   }
 
   return (

@@ -5,7 +5,7 @@ import { Widget } from "../widget";
 import { PVWidgetPropType } from "../widgetProps";
 import { registerWidget } from "../register";
 import { InferWidgetProps } from "../propTypes";
-import { DType, dtypeToString } from "../../../types/dtypes";
+import { DType } from "../../../types/dtypes";
 
 export interface MenuButtonProps {
   connected: boolean;
@@ -38,9 +38,9 @@ export const MenuButtonComponent = (props: MenuButtonProps): JSX.Element => {
     disabled = true;
   } else if (value?.display?.choices) {
     options = value?.display?.choices;
-    displayIndex = value.getDoubleValue();
+    displayIndex = value.getDoubleValue() ?? 0;
   } else {
-    options = [dtypeToString(value)];
+    options = [DType.coerceString(value)];
     disabled = true;
   }
 
