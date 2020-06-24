@@ -13,6 +13,8 @@ import { EmbeddedDisplay } from "./ui/widgets";
 import { BaseUrlContext } from "./baseUrl";
 import { onRenderCallback } from "./profilerCallback";
 import { RelativePosition } from "./types/position";
+import { Header } from "./ui/components/Header/header";
+import { Footer } from "./ui/components/Footer/footer";
 
 let settings: any;
 try {
@@ -53,7 +55,7 @@ const App: React.FC = (): JSX.Element => {
   const plugin = new ConnectionForwarder(plugins);
   initialiseStore(plugin, THROTTLE_PERIOD);
   const store = getStore();
-  const { toggle, dark } = React.useContext(ThemeContext);
+  const { dark } = React.useContext(ThemeContext);
   applyTheme(dark ? darkTheme : lightTheme);
 
   return (
@@ -78,9 +80,7 @@ const App: React.FC = (): JSX.Element => {
           />
           <Provider store={store}>
             <div className="App">
-              <button type="button" onClick={toggle}>
-                Toggle Theme
-              </button>
+              <Header />
               <Profiler id="Dynamic Page Profiler" onRender={onRenderCallback}>
                 <EmbeddedDisplay
                   position={new RelativePosition()}
@@ -89,6 +89,7 @@ const App: React.FC = (): JSX.Element => {
                   defaultProtocol="pva"
                 />
               </Profiler>
+              <Footer />
             </div>
           </Provider>
         </Switch>
