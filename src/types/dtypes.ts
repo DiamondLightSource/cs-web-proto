@@ -128,7 +128,7 @@ export class DType {
   public value: DTypeValue;
   public time?: DTime;
   public alarm?: DAlarm;
-  public display?: DDisplay;
+  public display: DDisplay;
   // If partial, this DType may be merged with an existing
   // value to create the latest status.
   public partial = false;
@@ -144,7 +144,7 @@ export class DType {
     this.value = value;
     this.alarm = alarm;
     this.time = time;
-    this.display = display;
+    this.display = display ?? DDisplay.NONE;
     if (partial) {
       this.partial = true;
     }
