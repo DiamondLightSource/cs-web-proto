@@ -1,6 +1,5 @@
 import { dstring, ddoubleArray, ddouble } from "../setupTests";
 import {
-  valueToDType,
   mergeDType,
   DType,
   DDisplay,
@@ -87,15 +86,5 @@ describe("mergeDType", (): void => {
       warningRange: new DRange(1, 2)
     });
     expect(mergeDDisplay(orig, update)).toEqual(expected);
-  });
-});
-
-describe("valueToDType", (): void => {
-  test("valueToDType() handles string", (): void => {
-    expect(valueToDType("hello").getStringValue()).toEqual("hello");
-  });
-
-  test("valueToDType() handles double", (): void => {
-    expect(valueToDType(4).getDoubleValue()).toEqual(4);
   });
 });

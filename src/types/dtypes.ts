@@ -229,24 +229,6 @@ export class DType {
   }
 }
 
-export function valueToDType(
-  value: any,
-  alarm = DAlarm.NONE,
-  time = dtimeNow(),
-  display = DDisplay.NONE
-): DType {
-  const dvalue: DTypeValue = {};
-  if (typeof value === "string") {
-    dvalue.stringValue = value;
-  } else if (typeof value === "number") {
-    dvalue.doubleValue = value;
-  } else {
-    // TODO this is not correct!
-    dvalue.doubleValue = 0;
-  }
-  return new DType(dvalue, alarm, time, display);
-}
-
 export function mergeDDisplay(
   original: DDisplay | undefined,
   update: DDisplay | undefined
