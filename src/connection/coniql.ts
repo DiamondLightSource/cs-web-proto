@@ -31,6 +31,7 @@ import {
   ChannelRole,
   DisplayForm
 } from "../types/dtypes";
+import { Subscription } from "apollo-client/util/Observable";
 
 export interface ConiqlStatus {
   quality: "ALARM" | "WARNING" | "VALID" | "INVALID" | "UNDEFINED" | "CHANGING";
@@ -266,7 +267,7 @@ export class ConiqlPlugin implements Connection {
   private connected: boolean;
   private wsClient: SubscriptionClient;
   private disconnected: string[] = [];
-  private subscriptions: { [pvName: string]: boolean };
+  private subscriptions: { [pvName: string]: Subscription };
 
   public constructor(socket: string) {
     const fragmentMatcher = new IntrospectionFragmentMatcher({
@@ -286,7 +287,8 @@ export class ConiqlPlugin implements Connection {
     this.wsClient.onDisconnected((): void => {
       log.error("Websockect client disconnected.");
       for (const pvName of Object.keys(this.subscriptions)) {
-        this.subscriptions[pvName] = false;
+        this.subscriptions[pvName].unsubscribe();
+        delete this.subscriptions[pvName];
         this.onConnectionUpdate(pvName, {
           isConnected: false,
           isReadonly: true
@@ -344,7 +346,7 @@ export class ConiqlPlugin implements Connection {
     this.onValueUpdate(pvName, dtype);
   }
 
-  private _subscribe(pvName: string): void {
+  private _subscribe(pvName: string): Subscription {
     // Make a query to get the initial values.
     // https://github.com/apollographql/subscriptions-transport-ws/issues/170
     this.client
@@ -356,7 +358,7 @@ export class ConiqlPlugin implements Connection {
         this._process(data, pvName, "getChannel");
       });
     // Subscribe to further updates.
-    this.client
+    return this.client
       .subscribe({
         query: PV_SUBSCRIPTION,
         variables: { pvName: pvName }
@@ -382,9 +384,8 @@ export class ConiqlPlugin implements Connection {
   public subscribe(pvName: string, type: SubscriptionType): string {
     // TODO: How to handle multiple subscriptions of different types to the same channel?
     if (this.subscriptions[pvName] === undefined) {
-      this._subscribe(pvName);
+      this.subscriptions[pvName] = this._subscribe(pvName);
     }
-    this.subscriptions[pvName] = true;
     return pvName;
   }
 
@@ -398,6 +399,13 @@ export class ConiqlPlugin implements Connection {
   }
 
   public unsubscribe(pvName: string): void {
-    // TODO: handle unsubscribing.
+    // Note that connectionMiddleware handles multiple subscriptions
+    // for the same PV at present, so if this method is called then
+    // there is no further need for this PV.
+    // Note that a bug in tartiflette-aiohttp means that the
+    // unsubscribe does not work on Python 3.8.
+    // https://github.com/tartiflette/tartiflette-aiohttp/pull/81
+    this.subscriptions[pvName].unsubscribe();
+    delete this.subscriptions[pvName];
   }
 }
