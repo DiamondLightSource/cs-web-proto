@@ -85,7 +85,6 @@ describe("opi widget parser", (): void => {
   </display>`;
   it("handles a missing dimension", (): void => {
     const display = parseBob(noXString, "xxx");
-    console.log(display);
     // Is this correct?
     expect(display.x).toEqual(undefined);
   });

@@ -26,7 +26,6 @@ describe("<Slideshow />", (): void => {
   });
 
   test("it renders only one child component", () => {
-    // console.log(mounted.find("#child-element").debug());
     expect(mounted.find("#child-element")).toHaveLength(1);
   });
 
