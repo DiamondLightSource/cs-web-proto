@@ -7,11 +7,12 @@ import {
   PositionProp,
   ActionsPropType,
   RulesPropOpt,
-  PvPropOpt
+  PvPropOpt,
+  PvTypePropOpt
 } from "./propTypes";
 
-import { VType } from "../../types/vtypes/vtypes";
 import { GenericProp } from "../../types/props";
+import { DType } from "../../types/dtypes";
 
 export const WidgetPropType = {
   position: PositionProp,
@@ -35,6 +36,7 @@ export type WidgetComponent = WidgetProps & {
 // Internal prop types object for properties which are not in a standard widget
 const PVExtras = {
   pvName: PvPropOpt,
+  pvType: PvTypePropOpt,
   alarmBorder: BoolPropOpt
 };
 // PropTypes object for a PV widget which can be expanded
@@ -48,7 +50,7 @@ export type AnyProps = PVWidgetComponent & {
   id: string;
   connected?: boolean;
   readonly?: boolean;
-  value?: VType;
+  value?: DType;
 } & {
   // All other props with valid types.
   [x: string]: GenericProp;

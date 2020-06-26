@@ -9,9 +9,8 @@ import {
   UNSUBSCRIBE,
   ValueChanged
 } from "./actions";
-import { VType } from "../types/vtypes/vtypes";
-import { mergeVtype } from "../types/vtypes/merge";
 import { MacroMap } from "../types/macros";
+import { DType, mergeDType } from "../types/dtypes";
 
 const initialState: CsState = {
   valueCache: {},
@@ -21,7 +20,7 @@ const initialState: CsState = {
 };
 
 export interface PvState {
-  value?: VType;
+  value?: DType;
   connected: boolean;
   readonly: boolean;
 }
@@ -53,12 +52,7 @@ function updateValueCache(
 ): void {
   const { pvName, value } = action.payload;
   const pvState = oldValueCache[pvName];
-  let newValue: VType | undefined;
-  if (value instanceof VType) {
-    newValue = value;
-  } else {
-    newValue = mergeVtype(pvState.value, value);
-  }
+  const newValue = mergeDType(pvState.value, value);
   const newPvState = Object.assign({}, pvState, {
     value: newValue
   });

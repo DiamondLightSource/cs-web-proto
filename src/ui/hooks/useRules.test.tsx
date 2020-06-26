@@ -2,10 +2,10 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { useRules } from "./useRules";
 import { shallow } from "enzyme";
-import { vdouble } from "../../types/vtypes/vtypes";
 import { AnyProps } from "../widgets/widgetProps";
 import { Rule } from "../../types/props";
 import { PV } from "../../types/pv";
+import { ddouble } from "../../setupTests";
 
 // Mock useSubscription.
 jest.mock("./useSubscription", (): object => {
@@ -20,10 +20,10 @@ jest.mock("react-redux", (): object => {
   };
 });
 // This has to be done in a second step because Jest does the
-// mocking before we have access to other imports (vdouble).
+// mocking before we have access to other imports (ddouble).
 (useSelector as jest.Mock).mockImplementation((pvName: string): any => {
   return {
-    "ca://PV1": [{ value: vdouble(0), connected: true, readonly: false }, "PV1"]
+    "ca://PV1": [{ value: ddouble(0), connected: true, readonly: false }, "PV1"]
   };
 });
 const RuleTester = (props: { id: string; rules: Rule[] }): JSX.Element => {
@@ -79,7 +79,7 @@ describe("useRules", (): void => {
     (useSelector as jest.Mock).mockImplementation((pvName: string): any => {
       return {
         "ca://PV1": [
-          { value: vdouble(2), connected: true, readonly: false },
+          { value: ddouble(2), connected: true, readonly: false },
           "PV"
         ]
       };
@@ -95,7 +95,7 @@ describe("useRules", (): void => {
     (useSelector as jest.Mock).mockImplementation((pvName: string): any => {
       return {
         "ca://PV1": [
-          { value: vdouble(0), connected: true, readonly: false },
+          { value: ddouble(0), connected: true, readonly: false },
           "PV"
         ]
       };
@@ -110,7 +110,7 @@ describe("useRules", (): void => {
     (useSelector as jest.Mock).mockImplementation((pvName: string): any => {
       return {
         "ca://PV1": [
-          { value: vdouble(2), connected: true, readonly: false },
+          { value: ddouble(2), connected: true, readonly: false },
           "PV"
         ]
       };

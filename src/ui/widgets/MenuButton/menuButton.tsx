@@ -1,17 +1,16 @@
 import React from "react";
 import { writePv } from "../../hooks/useSubscription";
 
-import { VType, VEnum } from "../../../types/vtypes/vtypes";
-import { vtypeToString, stringToVtype } from "../../../types/vtypes/utils";
 import { Widget } from "../widget";
 import { PVWidgetPropType } from "../widgetProps";
 import { registerWidget } from "../register";
 import { InferWidgetProps } from "../propTypes";
+import { DType } from "../../../types/dtypes";
 
 export interface MenuButtonProps {
   connected: boolean;
   onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
-  value?: VType;
+  value?: DType;
   readonly: boolean;
   style?: {};
 }
@@ -37,11 +36,11 @@ export const MenuButtonComponent = (props: MenuButtonProps): JSX.Element => {
 
   if (!connected || value === null) {
     disabled = true;
-  } else if (value instanceof VEnum) {
-    options = value.getDisplay().getChoices();
-    displayIndex = value.getIndex();
+  } else if (value?.display?.choices) {
+    options = value?.display?.choices;
+    displayIndex = value.getDoubleValue() ?? 0;
   } else {
-    options = [vtypeToString(value)];
+    options = [DType.coerceString(value)];
     disabled = true;
   }
 
@@ -79,13 +78,16 @@ export const MenuButtonComponent = (props: MenuButtonProps): JSX.Element => {
 export const SmartMenuButton = (props: {
   connected: boolean;
   pvName: string;
-  value?: VType;
+  value?: DType;
   readonly: boolean;
   style?: {};
 }): JSX.Element => {
   // Function to send the value on to the PV
   function onChange(event: React.ChangeEvent<HTMLSelectElement>): void {
-    writePv(props.pvName, stringToVtype(event.currentTarget.value));
+    writePv(
+      props.pvName,
+      new DType({ stringValue: event.currentTarget.value })
+    );
   }
 
   return (

@@ -17,149 +17,190 @@ import {
   ConnectionChangedCallback,
   ValueChangedCallback,
   nullConnCallback,
-  nullValueCallback
+  nullValueCallback,
+  SubscriptionType
 } from "./plugin";
-import { VType } from "../types/vtypes/vtypes";
-import { AlarmStatus, alarm } from "../types/vtypes/alarm";
-import { time } from "../types/vtypes/time";
 import { SubscriptionClient } from "subscriptions-transport-ws";
-import { display } from "../types/vtypes/display";
-import { PartialVType } from "../types/vtypes/merge";
+import {
+  DType,
+  DTime,
+  DAlarm,
+  AlarmQuality,
+  DDisplay,
+  DRange,
+  ChannelRole,
+  DisplayForm
+} from "../types/dtypes";
+import { Subscription } from "apollo-client/util/Observable";
 
 export interface ConiqlStatus {
-  quality: "ALARM" | "WARNING" | "VALID";
+  quality: "ALARM" | "WARNING" | "VALID" | "INVALID" | "UNDEFINED" | "CHANGING";
   message: string;
   mutable: boolean;
 }
 
-export interface ConiqlTime {
-  seconds: number;
-  nanoseconds: number;
-  userTag: number;
+const QUALITY_TYPES = {
+  VALID: AlarmQuality.VALID,
+  ALARM: AlarmQuality.ALARM,
+  WARNING: AlarmQuality.WARNING,
+  INVALID: AlarmQuality.INVALID,
+  UNDEFINED: AlarmQuality.UNDEFINED,
+  CHANGING: AlarmQuality.CHANGING
+};
+
+interface ConiqlRange {
+  min: number;
+  max: number;
 }
 
-const ALARMS = {
-  ALARM: 2,
-  WARNING: 1,
-  VALID: 0
+interface ConiqlDisplay {
+  description: string;
+  role: "RW" | "WO" | "RO";
+  controlRange: ConiqlRange;
+  displayRange: ConiqlRange;
+  warningRange: ConiqlRange;
+  alarmRange: ConiqlRange;
+  units: string;
+  precision: number;
+  form: FORM;
+  choices: string[];
+}
+
+const ROLES = {
+  RW: ChannelRole.RW,
+  RO: ChannelRole.RO,
+  WO: ChannelRole.WO
 };
 
-type CONIQL_TYPE = "FLOAT64" | "INT32" | "INT64";
+type FORM =
+  | "DEFAULT"
+  | "STRING"
+  | "BINARY"
+  | "DECIMAL"
+  | "HEX"
+  | "EXPONENTIAL"
+  | "ENGINEERING";
 
-const VTYPE_CLASSES = {
-  FLOAT64: "VDouble",
-  INT32: "VInt",
-  INT64: "VLong",
-  String: "VString"
+const FORMS = {
+  DEFAULT: DisplayForm.DEFAULT,
+  STRING: DisplayForm.STRING,
+  BINARY: DisplayForm.BINARY,
+  DECIMAL: DisplayForm.DECIMAL,
+  HEX: DisplayForm.HEX,
+  EXPONENTIAL: DisplayForm.EXPONENTIAL,
+  ENGINEERING: DisplayForm.ENGINEERING
 };
+
+type CONIQL_TYPE =
+  | "INT8"
+  | "UINT8"
+  | "INT16"
+  | "UINT16"
+  | "INT32"
+  | "UINT32"
+  | "INT32"
+  | "INT64"
+  | "FLOAT32"
+  | "FLOAT64";
 
 const ARRAY_TYPES = {
-  FLOAT64: Float64Array,
+  INT8: Int8Array,
+  UINT8: Uint8Array,
+  INT16: Int16Array,
+  UINT16: Uint16Array,
   INT32: Int32Array,
-  // I don't know why I can't use BigInt64Array.
-  INT64: Int32Array
+  UINT32: Uint32Array,
+  INT64: BigInt64Array,
+  UINT64: BigUint64Array,
+  FLOAT32: Float32Array,
+  FLOAT64: Float64Array
 };
 
-function coniqlToPartialVtype(
-  value: any,
-  timeVal: ConiqlTime,
-  meta: any,
-  status: ConiqlStatus
-): PartialVType {
-  const result: PartialVType = {};
-  if (value != null) {
-    result.value = value;
-  }
-  if (value && value.numberType) {
-    const bd = base64js.toByteArray(value.base64);
-    const array = new ARRAY_TYPES[value.numberType as CONIQL_TYPE](bd.buffer);
-    result.value = array;
-  }
-  if (timeVal) {
-    result.time = time(
-      { secondsPastEpoch: timeVal.seconds, nanoseconds: timeVal.nanoseconds },
-      timeVal.userTag,
-      false
-    );
-  }
-  if (meta) {
-    result.array = meta.array;
-    if (meta.__typename === "NumberMeta") {
-      result.type = VTYPE_CLASSES[meta.numberType as CONIQL_TYPE];
-      if (meta.display) {
-        const {
-          controlRange,
-          displayRange,
-          alarmRange,
-          warningRange,
-          units
-        } = meta.display;
-        result.display = display(
-          displayRange,
-          alarmRange,
-          warningRange,
-          controlRange,
-          units
-        );
-      }
-    } else if (meta.__typename === "EnumMeta") {
-      result.type = "VEnum";
-      result.choices = meta.choices;
-      result.index = value;
-    } else {
-      result.type = VTYPE_CLASSES[meta.type as CONIQL_TYPE];
-    }
-  }
-  if (status) {
-    result.alarm = alarm(ALARMS[status.quality], AlarmStatus.NONE, "");
-  }
-  return result;
+export interface ConiqlBase64Array {
+  numberType: CONIQL_TYPE;
+  base64: string;
 }
 
-const PV_SUBSCRIPTION = gql`
-  subscription sub1($pvName: String!) {
-    subscribeChannel(id: $pvName) {
-      value
+interface ConiqlValue {
+  string: string;
+  float: number;
+  base64Array: ConiqlBase64Array;
+  stringArray: string[];
+}
+
+export interface ConiqlTime {
+  datetime: Date;
+}
+
+function coniqlToDType(
+  value: ConiqlValue,
+  timeVal: ConiqlTime,
+  status: ConiqlStatus,
+  display: ConiqlDisplay
+): DType {
+  let alarm = undefined;
+  let ddisplay = undefined;
+  if (status) {
+    alarm = new DAlarm(QUALITY_TYPES[status.quality], status.message);
+  }
+  if (display) {
+    ddisplay = new DDisplay({
+      description: display.description,
+      role: display.role ? ROLES[display.role] : undefined,
+      controlRange: display.controlRange
+        ? new DRange(display.controlRange.min, display.controlRange.max)
+        : undefined,
+      alarmRange: display.alarmRange
+        ? new DRange(display.alarmRange.min, display.alarmRange.max)
+        : undefined,
+      warningRange: display.warningRange
+        ? new DRange(display.warningRange.min, display.warningRange.max)
+        : undefined,
+      units: display.units,
+      precision: display.precision,
+      form: display.form ? FORMS[display.form] : undefined,
+      choices: display.choices
+    });
+  }
+  let array = undefined;
+  if (value?.base64Array) {
+    const bd = base64js.toByteArray(value.base64Array.base64);
+    array = new ARRAY_TYPES[value.base64Array.numberType as CONIQL_TYPE](
+      bd.buffer
+    );
+  }
+  let dtime = undefined;
+  if (timeVal?.datetime) {
+    dtime = new DTime(timeVal.datetime);
+  }
+  return new DType(
+    {
+      stringValue: value?.string,
+      doubleValue: value?.float,
+      arrayValue: array
+    },
+    alarm,
+    dtime,
+    ddisplay,
+    // Coniql only returns changed values so these DTypes are
+    // always partial.
+    true
+  );
+}
+
+const PV_QUERY = gql`
+  query query1($pvName: ID!) {
+    getChannel(id: $pvName) {
+      id
       time {
-        seconds
-        nanoseconds
-        userTag
+        datetime
       }
-      meta {
-        __typename
-        array
-        ... on ObjectMeta {
-          array
-          type
-        }
-        ... on NumberMeta {
-          array
+      value {
+        string
+        float
+        base64Array {
           numberType
-          display {
-            controlRange {
-              min
-              max
-            }
-            displayRange {
-              min
-              max
-            }
-            alarmRange {
-              min
-              max
-            }
-            warningRange {
-              min
-              max
-            }
-            units
-            precision
-            form
-          }
-        }
-        ... on EnumMeta {
-          array
-          choices
+          base64
         }
       }
       status {
@@ -167,6 +208,54 @@ const PV_SUBSCRIPTION = gql`
         message
         mutable
       }
+      display {
+        units
+        form
+        controlRange {
+          max
+          min
+        }
+      }
+    }
+  }
+`;
+
+const PV_SUBSCRIPTION = gql`
+  subscription sub1($pvName: ID!) {
+    subscribeChannel(id: $pvName) {
+      id
+      time {
+        datetime
+      }
+      value {
+        string
+        float
+        base64Array {
+          numberType
+          base64
+        }
+      }
+      status {
+        quality
+        message
+        mutable
+      }
+      display {
+        units
+        form
+        controlRange {
+          max
+          min
+        }
+      }
+    }
+  }
+`;
+
+const PV_MUTATION = gql`
+  mutation put1($pvName: ID!, $value: String!) {
+    putChannels(ids: [$pvName], values: [$value]) {
+      id
     }
   }
 `;
@@ -178,7 +267,7 @@ export class ConiqlPlugin implements Connection {
   private connected: boolean;
   private wsClient: SubscriptionClient;
   private disconnected: string[] = [];
-  private subscriptions: { [pvName: string]: boolean };
+  private subscriptions: { [pvName: string]: Subscription };
 
   public constructor(socket: string) {
     const fragmentMatcher = new IntrospectionFragmentMatcher({
@@ -186,7 +275,7 @@ export class ConiqlPlugin implements Connection {
     });
 
     const cache = new InMemoryCache({ fragmentMatcher });
-    this.wsClient = new SubscriptionClient(`ws://${socket}/subscriptions`, {
+    this.wsClient = new SubscriptionClient(`ws://${socket}/ws`, {
       reconnect: true
     });
     this.wsClient.onReconnecting((): void => {
@@ -194,6 +283,17 @@ export class ConiqlPlugin implements Connection {
         this._subscribe(pvName);
       }
       this.disconnected = [];
+    });
+    this.wsClient.onDisconnected((): void => {
+      log.error("Websockect client disconnected.");
+      for (const pvName of Object.keys(this.subscriptions)) {
+        this.subscriptions[pvName].unsubscribe();
+        delete this.subscriptions[pvName];
+        this.onConnectionUpdate(pvName, {
+          isConnected: false,
+          isReadonly: true
+        });
+      }
     });
     const link = this.createLink(socket);
     this.client = new ApolloClient({ link, cache });
@@ -233,24 +333,39 @@ export class ConiqlPlugin implements Connection {
     return this.connected;
   }
 
-  private _subscribe(pvName: string): void {
+  private _process(data: any, pvName: string, operation: string): void {
+    // Process an update to a channel either from getChannel or subscribeChannel.
+    const { value, time, status, display } = data.data[operation];
+    if (status) {
+      this.onConnectionUpdate(pvName, {
+        isConnected: true,
+        isReadonly: !status.mutable
+      });
+    }
+    const dtype = coniqlToDType(value, time, status, display);
+    this.onValueUpdate(pvName, dtype);
+  }
+
+  private _subscribe(pvName: string): Subscription {
+    // Make a query to get the initial values.
+    // https://github.com/apollographql/subscriptions-transport-ws/issues/170
     this.client
+      .query({
+        query: PV_QUERY,
+        variables: { pvName: pvName }
+      })
+      .then(data => {
+        this._process(data, pvName, "getChannel");
+      });
+    // Subscribe to further updates.
+    return this.client
       .subscribe({
         query: PV_SUBSCRIPTION,
         variables: { pvName: pvName }
       })
       .subscribe({
         next: (data): void => {
-          log.trace("data", data);
-          const { value, time, meta, status } = data.data.subscribeChannel;
-          if (meta) {
-            this.onConnectionUpdate(pvName, {
-              isConnected: true,
-              isReadonly: !meta.mutable
-            });
-          }
-          const pvtype = coniqlToPartialVtype(value, time, meta, status);
-          this.onValueUpdate(pvName, pvtype);
+          this._process(data, pvName, "subscribeChannel");
         },
         error: (err): void => {
           log.error("err", err);
@@ -266,19 +381,31 @@ export class ConiqlPlugin implements Connection {
       });
   }
 
-  public subscribe(pvName: string): string {
+  public subscribe(pvName: string, type: SubscriptionType): string {
+    // TODO: How to handle multiple subscriptions of different types to the same channel?
     if (this.subscriptions[pvName] === undefined) {
-      this._subscribe(pvName);
+      this.subscriptions[pvName] = this._subscribe(pvName);
     }
-    this.subscriptions[pvName] = true;
     return pvName;
   }
 
-  public putPv(pvName: string, value: VType): void {
-    // noop
+  public putPv(pvName: string, value: DType): void {
+    log.debug(`Putting ${value} to ${pvName}.`);
+    const variables = {
+      pvName: pvName,
+      value: DType.coerceString(value)
+    };
+    this.client.mutate({ mutation: PV_MUTATION, variables: variables });
   }
 
   public unsubscribe(pvName: string): void {
-    // noop
+    // Note that connectionMiddleware handles multiple subscriptions
+    // for the same PV at present, so if this method is called then
+    // there is no further need for this PV.
+    // Note that a bug in tartiflette-aiohttp means that the
+    // unsubscribe does not work on Python 3.8.
+    // https://github.com/tartiflette/tartiflette-aiohttp/pull/81
+    this.subscriptions[pvName].unsubscribe();
+    delete this.subscriptions[pvName];
   }
 }

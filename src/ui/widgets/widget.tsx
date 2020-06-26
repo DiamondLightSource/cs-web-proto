@@ -9,9 +9,9 @@ import { useId } from "react-id-generator";
 import { useRules } from "../hooks/useRules";
 import { PVWidgetComponent, WidgetComponent } from "./widgetProps";
 import { Border, BorderStyle } from "../../types/border";
-import { alarmOf, AlarmSeverity } from "../../types/vtypes/alarm";
 import { Color } from "../../types/color";
 import { Position, RelativePosition } from "../../types/position";
+import { AlarmQuality } from "../../types/dtypes";
 import { Font } from "../../types/font";
 
 export function commonCss(props: {
@@ -74,19 +74,21 @@ export const ConnectingComponent = (props: {
 
   const [effectivePvName, connected, readonly, latestValue] = useConnection(
     props.containerProps.id,
-    props.containerProps.pvName?.qualifiedName()
+    props.containerProps.pvName?.qualifiedName(),
+    props.containerProps.type
   );
 
   if (props.alarmBorder) {
-    const severity = alarmOf(latestValue).getSeverity();
-    const colors: { [key in AlarmSeverity]: Color } = {
-      [AlarmSeverity.NONE]: Color.BLACK,
-      [AlarmSeverity.MINOR]: Color.YELLOW,
-      [AlarmSeverity.MAJOR]: Color.RED,
-      [AlarmSeverity.INVALID]: Color.WHITE,
-      [AlarmSeverity.UNDEFINED]: Color.WHITE
+    const severity = latestValue?.getAlarm()?.quality || AlarmQuality.VALID;
+    const colors: { [key in AlarmQuality]: Color } = {
+      [AlarmQuality.VALID]: Color.BLACK,
+      [AlarmQuality.WARNING]: Color.YELLOW,
+      [AlarmQuality.ALARM]: Color.RED,
+      [AlarmQuality.INVALID]: Color.WHITE,
+      [AlarmQuality.UNDEFINED]: Color.WHITE,
+      [AlarmQuality.CHANGING]: Color.WHITE
     };
-    if (severity !== AlarmSeverity.NONE) {
+    if (severity !== AlarmQuality.VALID) {
       props.widgetProps.border = new Border(
         BorderStyle.Line,
         colors[severity],

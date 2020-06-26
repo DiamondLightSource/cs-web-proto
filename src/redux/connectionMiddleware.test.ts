@@ -1,6 +1,6 @@
 import { SUBSCRIBE, Subscribe, WRITE_PV, WritePv } from "./actions";
 import { connectionMiddleware } from "./connectionMiddleware";
-import { vdouble } from "../types/vtypes/vtypes";
+import { ddouble } from "../setupTests";
 
 const mockStore = { dispatch: jest.fn(), getState: jest.fn() };
 
@@ -28,7 +28,12 @@ describe("connectionMiddleware", (): void => {
     const actionHandler = nextHandler(mockNext);
     const subscribeAction: Subscribe = {
       type: SUBSCRIBE,
-      payload: { pvName: "pv", componentId: "2", effectivePvName: "pv" }
+      payload: {
+        pvName: "pv",
+        componentId: "2",
+        effectivePvName: "pv",
+        type: { double: true }
+      }
     };
     actionHandler(subscribeAction);
     expect(mockConnection.subscribe).toHaveBeenCalledTimes(1);
@@ -47,7 +52,7 @@ describe("connectionMiddleware", (): void => {
     const actionHandler = nextHandler(mockNext);
     const writeAction: WritePv = {
       type: WRITE_PV,
-      payload: { pvName: "pv", value: vdouble(0) }
+      payload: { pvName: "pv", value: ddouble(0) }
     };
     actionHandler(writeAction);
     expect(mockConnection.putPv).toHaveBeenCalledTimes(1);

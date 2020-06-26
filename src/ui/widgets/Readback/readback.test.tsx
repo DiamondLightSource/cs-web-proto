@@ -2,9 +2,9 @@ import React from "react";
 import { ReadbackComponent, ReadbackComponentProps } from "./readback";
 import { configure, shallow, ShallowWrapper } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
-import { stringToVtype } from "../../../types/vtypes/utils";
 import { create, ReactTestRenderer } from "react-test-renderer";
 import { LabelComponent } from "../Label/label";
+import { DType } from "../../../types/dtypes";
 
 configure({ adapter: new Adapter() });
 
@@ -16,7 +16,9 @@ beforeEach((): void => {
     <ReadbackComponent
       connected={true}
       readonly={false}
-      value={stringToVtype("3.14159265359")}
+      value={
+        new DType({ stringValue: "3.14159265359", doubleValue: 3.1415926539 })
+      }
       precision={2}
     />
   );

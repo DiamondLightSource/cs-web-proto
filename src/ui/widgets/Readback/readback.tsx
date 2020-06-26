@@ -4,9 +4,6 @@ import { Widget } from "../widget";
 import { PVComponent, PVWidgetPropType } from "../widgetProps";
 
 import classes from "./readback.module.css";
-import { alarmOf, AlarmSeverity } from "../../../types/vtypes/alarm";
-import { displayOf } from "../../../types/vtypes/display";
-import { vtypeToString } from "../../../types/vtypes/utils";
 import {
   IntPropOpt,
   BoolPropOpt,
@@ -18,6 +15,7 @@ import {
 } from "../propTypes";
 import { registerWidget } from "../register";
 import { LabelComponent } from "../Label/label";
+import { AlarmQuality, DAlarm, DType } from "../../../types/dtypes";
 
 const ReadbackProps = {
   precision: IntPropOpt,
@@ -35,17 +33,17 @@ const ReadbackProps = {
 export type ReadbackComponentProps = InferWidgetProps<typeof ReadbackProps> &
   PVComponent;
 
-function getClass(connected: boolean, alarmSeverity: AlarmSeverity): string {
+function getClass(connected: boolean, alarmSeverity: AlarmQuality): string {
   let cls = classes.Readback;
   if (!connected) {
     cls += ` ${classes.Disconnected}`;
   } else {
     switch (alarmSeverity) {
-      case AlarmSeverity.MINOR: {
+      case AlarmQuality.WARNING: {
         cls += ` ${classes.Minor}`;
         break;
       }
-      case AlarmSeverity.MAJOR: {
+      case AlarmQuality.ALARM: {
         cls += ` ${classes.Major}`;
         break;
       }
@@ -71,26 +69,30 @@ export const ReadbackComponent = (
     showUnits = false
   } = props;
   // Decide what to display.
-  const alarm = alarmOf(value);
-  const display = displayOf(value);
+  const alarm = value?.getAlarm() || DAlarm.NONE;
+  const display = value?.getDisplay();
   let displayedValue;
   if (!value) {
     displayedValue = "Waiting for value";
   } else {
-    displayedValue = vtypeToString(value, precision);
+    if (precision !== undefined && !isNaN(DType.coerceDouble(value))) {
+      displayedValue = DType.coerceDouble(value).toFixed(precision);
+    } else {
+      displayedValue = DType.coerceString(value);
+    }
   }
 
   // Add units if there are any and show units is true
-  if (showUnits && display && display?.getUnit) {
-    displayedValue = displayedValue + ` ${display.getUnit()}`;
+  if (showUnits && display?.units) {
+    displayedValue = displayedValue + ` ${display.units}`;
   }
 
   // Handle foreground alarm sensitivity.
   let className = classes.Readback;
+  // TODO: should we show disconnection even if not alarm sensitive?
   if (fgAlarmSensitive) {
-    className = getClass(connected, alarm.getSeverity());
+    className = getClass(connected, alarm.quality);
   }
-
   // Use a LabelComponent to display it.
   return (
     <LabelComponent
@@ -113,6 +115,14 @@ const ReadbackWidgetProps = {
 
 export const Readback = (
   props: InferWidgetProps<typeof ReadbackWidgetProps>
-): JSX.Element => <Widget baseWidget={ReadbackComponent} {...props} />;
+): JSX.Element => (
+  <Widget
+    // TODO: Note that we asking for both string and double here;
+    // this subverts the intended efficiency.
+    pvType={{ string: true, double: true }}
+    baseWidget={ReadbackComponent}
+    {...props}
+  />
+);
 
 registerWidget(Readback, ReadbackWidgetProps, "readback");

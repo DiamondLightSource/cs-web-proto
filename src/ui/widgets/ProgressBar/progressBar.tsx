@@ -1,7 +1,6 @@
 import React from "react";
 
 import classes from "./progressBar.module.css";
-import { vtypeOrUndefinedToNumber } from "../../../types/vtypes/utils";
 import { Widget } from "../widget";
 import { PVComponent, PVWidgetPropType } from "../widgetProps";
 import { registerWidget } from "../register";
@@ -17,6 +16,7 @@ import {
 export const ProgressBarProps = {
   min: FloatPropOpt,
   max: FloatPropOpt,
+  limitsFromPv: BoolPropOpt,
   vertical: BoolPropOpt,
   color: StringPropOpt,
   precision: IntPropOpt,
@@ -28,16 +28,20 @@ export const ProgressBarComponent = (
 ): JSX.Element => {
   const {
     value,
-    min = 0,
-    max = 100,
+    limitsFromPv = false,
     font,
     vertical = false,
     color = "#00aa00",
     precision = undefined
   } = props;
+  let { min = 0, max = 100 } = props;
 
-  // eslint-disable-next-line no-undef
-  const numValue = vtypeOrUndefinedToNumber(value);
+  if (limitsFromPv && value?.display.controlRange) {
+    min = value.display.controlRange?.min;
+    max = value.display.controlRange?.max;
+  }
+
+  const numValue = value?.getDoubleValue() || 0;
   const onPercent =
     numValue < min
       ? 0

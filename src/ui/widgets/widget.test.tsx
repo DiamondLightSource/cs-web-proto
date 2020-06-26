@@ -4,12 +4,12 @@ import { mount } from "enzyme";
 import { Widget, ConnectingComponent } from "./widget";
 import { LabelComponent } from "./Label/label";
 import { MacroProps } from "../hooks/useMacros";
-import { vdouble } from "../../types/vtypes/vtypes";
 import { useConnection } from "../hooks/useConnection";
 import { TooltipWrapper } from "../components/TooltipWrapper/tooltipWrapper";
 import { AnyProps } from "./widgetProps";
 import { RelativePosition } from "../../types/position";
 import { PV } from "../../types/pv";
+import { ddouble } from "../../setupTests";
 
 // Mock the useMacros hook as otherwise we'd have to provide
 // a store for it to use.
@@ -29,9 +29,9 @@ jest.mock("../hooks/useConnection", (): object => ({
   useConnection: jest.fn()
 }));
 // This has to be done in a second step because Jest does the
-// mocking before we have access to other imports (vdouble).
+// mocking before we have access to other imports (ddouble).
 (useConnection as jest.Mock).mockImplementation((pvName: string): any => {
-  const val = vdouble(0);
+  const val = ddouble(0);
   return [pvName, true, false, val];
 });
 

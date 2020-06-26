@@ -1,29 +1,30 @@
 import { MacroMap, resolveMacros } from "../../types/macros";
-import { timeOf } from "../../types/vtypes/time";
-import { alarmOf } from "../../types/vtypes/alarm";
-import { vtypeToString } from "../../types/vtypes/utils";
-import { VType } from "../../types/vtypes/vtypes";
+import { DType } from "../../types/dtypes";
 
-function tooltipValue(connected: boolean, value: VType): string {
-  const time = timeOf(value);
-  const alarm = alarmOf(value);
-  let displayValue = "";
-  if (!connected) {
-    displayValue = "WARNING: Not Connected";
-  } else {
-    if (!value) {
-      displayValue = "Warning: Waiting for value";
+function tooltipValue(connected?: boolean, value?: DType): string {
+  if (value) {
+    const time = value.getTime();
+    const alarm = value.getAlarm();
+    let displayValue = "";
+    if (!connected) {
+      displayValue = "WARNING: Not Connected";
     } else {
-      displayValue = vtypeToString(value, 3);
+      if (!value) {
+        displayValue = "Warning: Waiting for value";
+      } else {
+        displayValue = DType.coerceString(value);
+      }
     }
+    const dateAndAlarm = [
+      value ? (time ? time.datetime : "") : "",
+      value ? (alarm ? alarm.message : "") : ""
+    ]
+      .filter((word): boolean => word !== "")
+      .join(", ");
+    return `${displayValue}\n ${dateAndAlarm}`;
+  } else {
+    return "no value";
   }
-  const dateAndAlarm = [
-    value ? (time ? time.asDate() : "") : "",
-    value ? (alarm ? alarm.getName() : "") : ""
-  ]
-    .filter((word): boolean => word !== "")
-    .join(", ");
-  return `${displayValue}\n ${dateAndAlarm}`;
 }
 
 export function resolveTooltip(props: any): string | undefined {

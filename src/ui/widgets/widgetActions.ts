@@ -1,5 +1,4 @@
 import { writePv } from "../hooks/useSubscription";
-import { valueToVtype } from "../../types/vtypes/utils";
 import { History } from "history";
 import log from "loglevel";
 
@@ -11,6 +10,7 @@ import {
   getUrlInfoFromHistory
 } from "./urlControl";
 import { MacroMap } from "../../types/macros";
+import { DType } from "../../types/dtypes";
 
 export const OPEN_PAGE = "OPEN_PAGE";
 export const CLOSE_PAGE = "CLOSE_PAGE";
@@ -153,10 +153,13 @@ export const executeAction = (
       window.open(action.openWebpageInfo.url);
       break;
     case WRITE_PV:
-      writePv(
-        action.writePvInfo.pvName,
-        valueToVtype(action.writePvInfo.value)
-      );
+      let dtypeVal;
+      if (typeof action.writePvInfo.value === "number") {
+        dtypeVal = new DType({ doubleValue: action.writePvInfo.value });
+      } else {
+        dtypeVal = new DType({ stringValue: action.writePvInfo.value });
+      }
+      writePv(action.writePvInfo.pvName, dtypeVal);
       break;
     default:
       throw new InvalidAction(action);

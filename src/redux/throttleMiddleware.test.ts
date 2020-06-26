@@ -6,7 +6,7 @@ import {
   ValueChanged,
   ConnectionChanged
 } from "./actions";
-import { vdouble } from "../types/vtypes/vtypes";
+import { ddouble } from "../setupTests";
 
 // Mock setInterval.
 jest.useFakeTimers();
@@ -22,14 +22,14 @@ describe("UpdateThrottle", (): void => {
       type: VALUE_CHANGED,
       payload: {
         pvName: "PV",
-        value: vdouble(0)
+        value: ddouble(0)
       }
     });
     updater.queueUpdate({
       type: VALUE_CHANGED,
       payload: {
         pvName: "PV",
-        value: vdouble(1)
+        value: ddouble(1)
       }
     });
     updater.clearQueue(mockStore);
@@ -51,7 +51,7 @@ describe("throttleMidddlware", (): void => {
     const actionHandler = nextHandler(mockNext);
     const valueAction: ValueChanged = {
       type: VALUE_CHANGED,
-      payload: { pvName: "pv", value: vdouble(0) }
+      payload: { pvName: "pv", value: ddouble(0) }
     };
     actionHandler(valueAction);
     expect(mockStore.dispatch).toHaveBeenCalledTimes(1);

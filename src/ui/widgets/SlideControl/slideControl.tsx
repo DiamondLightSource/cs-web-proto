@@ -2,9 +2,9 @@
 // Displays value via an embedded progressbar widget
 
 import React, { useState } from "react";
+import log from "loglevel";
 
 import classes from "./slideControl.module.css";
-import { vtypeToString, stringToVtype } from "../../../types/vtypes/utils";
 
 import {
   ProgressBarComponent,
@@ -15,7 +15,7 @@ import { Widget } from "../widget";
 import { PVInputComponent, PVWidgetPropType } from "../widgetProps";
 import { InferWidgetProps } from "../propTypes";
 import { registerWidget } from "../register";
-import { vdouble } from "../../../types/vtypes/vtypes";
+import { DType } from "../../../types/dtypes";
 
 export const SlideControlComponent = (
   props: InferWidgetProps<typeof ProgressBarProps> & PVInputComponent
@@ -24,12 +24,16 @@ export const SlideControlComponent = (
     pvName,
     connected,
     value,
-    min = 0,
-    max = 100,
+    limitsFromPv = false,
     /* TODO: Implement vertical style and allow absolute positioning */
     //vertical = false,
     precision = undefined
   } = props;
+  let { min = 0, max = 100 } = props;
+  if (limitsFromPv && value?.display.controlRange) {
+    min = value.display.controlRange?.min;
+    max = value.display.controlRange?.max;
+  }
 
   const [inputValue, setInputValue] = useState("");
   const [editing, setEditing] = useState(false);
@@ -43,10 +47,15 @@ export const SlideControlComponent = (
   }
   function onMouseUp(event: React.MouseEvent<HTMLInputElement>): void {
     setEditing(false);
-    writePv(pvName, stringToVtype(event.currentTarget.value));
+    try {
+      const doubleValue = parseFloat(event.currentTarget.value);
+      writePv(pvName, new DType({ doubleValue: doubleValue }));
+    } catch (error) {
+      log.warn(`Unexpected value ${event.currentTarget.value} set to slider.`);
+    }
   }
 
-  const stringValue = vtypeToString(value);
+  const stringValue = DType.coerceString(value);
   if (!editing && inputValue !== stringValue) {
     setInputValue(stringValue);
   }
@@ -65,9 +74,10 @@ export const SlideControlComponent = (
       >
         <ProgressBarComponent
           connected={connected}
-          value={vdouble(parseFloat(inputValue))}
+          value={value}
           min={min}
           max={max}
+          limitsFromPv={limitsFromPv}
           precision={precision}
           readonly={props.readonly}
         />

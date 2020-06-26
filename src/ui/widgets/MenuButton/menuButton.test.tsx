@@ -3,10 +3,8 @@ import { MenuButtonComponent, MenuButtonProps } from "./menuButton";
 import { configure, shallow, ShallowWrapper } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import { create, ReactTestRenderer } from "react-test-renderer";
-import { venum, vdouble } from "../../../types/vtypes/vtypes";
-import { vstring } from "../../../types/vtypes/string";
-import { ALARM_NONE } from "../../../types/vtypes/alarm";
-import { timeNow } from "../../../types/vtypes/time";
+import { dtimeNow, DAlarm, DType, DDisplay } from "../../../types/dtypes";
+import { ddouble, dstring } from "../../../setupTests";
 
 configure({ adapter: new Adapter() });
 
@@ -22,12 +20,16 @@ beforeEach((): void => {
   const menubutton = (
     <MenuButtonComponent
       connected={true}
-      value={venum(
-        0,
-        ["zero", "one", "two", "three", "four", "five"],
-        ALARM_NONE,
-        timeNow()
-      )}
+      value={
+        new DType(
+          { doubleValue: 0 },
+          DAlarm.NONE,
+          dtimeNow(),
+          new DDisplay({
+            choices: ["zero", "one", "two", "three", "four", "five"]
+          })
+        )
+      }
       readonly={false}
       onChange={mock}
     />
@@ -35,7 +37,7 @@ beforeEach((): void => {
   const menuButtonString = (
     <MenuButtonComponent
       connected={true}
-      value={vstring("testing enum")}
+      value={dstring("testing enum")}
       readonly={false}
       onChange={mock}
     />
@@ -43,7 +45,7 @@ beforeEach((): void => {
   const menuButtonNumber = (
     <MenuButtonComponent
       connected={true}
-      value={vdouble(3.14159)}
+      value={ddouble(3.14159)}
       readonly={false}
       onChange={mock}
     />
@@ -76,12 +78,16 @@ describe("<MenuButton />", (): void => {
     const menubuttonwrap = shallow(
       <MenuButtonComponent
         connected={true}
-        value={venum(
-          5,
-          ["zero", "one", "two", "three", "four", "five"],
-          ALARM_NONE,
-          timeNow()
-        )}
+        value={
+          new DType(
+            { doubleValue: 5 },
+            DAlarm.NONE,
+            dtimeNow(),
+            new DDisplay({
+              choices: ["zero", "one", "two", "three", "four", "five"]
+            })
+          )
+        }
         readonly={false}
         onChange={mock}
       />

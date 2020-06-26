@@ -1,7 +1,8 @@
 import {
   Connection,
   ConnectionChangedCallback,
-  ValueChangedCallback
+  ValueChangedCallback,
+  SubscriptionType
 } from "./plugin";
 
 export class ConnectionForwarder implements Connection {
@@ -12,6 +13,8 @@ export class ConnectionForwarder implements Connection {
     this.connected = false;
   }
   private getConnection(pvName: string): Connection {
+    console.log("getConnection");
+    console.log(pvName);
     for (const [prefix, connection] of this.prefixConnections) {
       if (pvName.startsWith(prefix)) {
         if (connection !== undefined) {
@@ -24,9 +27,9 @@ export class ConnectionForwarder implements Connection {
     throw new Error(`No connections for ${pvName}`);
   }
 
-  public subscribe(pvName: string): string {
+  public subscribe(pvName: string, type: SubscriptionType): string {
     const connection = this.getConnection(pvName);
-    return connection.subscribe(pvName);
+    return connection.subscribe(pvName, type);
   }
 
   public unsubscribe(pvName: string): void {

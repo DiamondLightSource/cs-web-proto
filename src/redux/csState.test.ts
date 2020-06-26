@@ -11,19 +11,13 @@ import {
   ValuesChanged,
   VALUES_CHANGED
 } from "./actions";
-import {
-  vdouble,
-  VDoubleArray,
-  VDouble,
-  vdoubleArray
-} from "../types/vtypes/vtypes";
-import { AlarmSeverity, AlarmStatus, alarm } from "../types/vtypes/alarm";
-import { VString, vstring } from "../types/vtypes/string";
+import { DAlarm } from "../types/dtypes";
+import { ddouble, dstring, ddoubleArray } from "../setupTests";
 
 const initialState: CsState = {
   valueCache: {
     PV: {
-      value: vdouble(0),
+      value: ddouble(0),
       connected: true,
       readonly: false,
       initializingPvName: ""
@@ -39,13 +33,13 @@ describe("VALUES_CHANGED", (): void => {
     const action: ValuesChanged = {
       type: VALUES_CHANGED,
       payload: [
-        { type: VALUE_CHANGED, payload: { pvName: "PV", value: vdouble(1) } },
-        { type: VALUE_CHANGED, payload: { pvName: "PV", value: vdouble(2) } }
+        { type: VALUE_CHANGED, payload: { pvName: "PV", value: ddouble(1) } },
+        { type: VALUE_CHANGED, payload: { pvName: "PV", value: ddouble(2) } }
       ]
     };
     const newState = csReducer(initialState, action);
     // expect the latter value to
-    expect((newState.valueCache["PV"].value as VDouble).getValue()).toEqual(2);
+    expect(newState.valueCache["PV"].value?.getDoubleValue()).toEqual(2);
   });
 });
 
@@ -53,24 +47,24 @@ describe("VALUE_CHANGED", (): void => {
   test("csReducer handles value update", (): void => {
     const action: ValueChanged = {
       type: VALUE_CHANGED,
-      payload: { pvName: "PV", value: vdouble(1) }
+      payload: { pvName: "PV", value: ddouble(1) }
     };
     const newState = csReducer(initialState, action);
-    expect((newState.valueCache["PV"].value as VDouble).getValue()).toEqual(1);
+    expect(newState?.valueCache["PV"].value?.getDoubleValue()).toEqual(1);
   });
 
   test("csReducer handles alarm update", (): void => {
-    const majorAlarm = alarm(AlarmSeverity.MAJOR, AlarmStatus.NONE, "major");
+    const majorAlarm = DAlarm.MAJOR;
     const action: ValueChanged = {
       type: VALUE_CHANGED,
       payload: {
         pvName: "PV",
-        value: vdouble(0, majorAlarm)
+        value: ddouble(0, majorAlarm)
       }
     };
     const newState = csReducer(initialState, action);
-    const newValue = newState.valueCache["PV"].value as VString;
-    expect(newValue.getAlarm()).toEqual(majorAlarm);
+    const newValue = newState.valueCache["PV"].value;
+    expect(newValue?.getAlarm()).toEqual(majorAlarm);
   });
 
   test("csReducer handles type update", (): void => {
@@ -78,12 +72,12 @@ describe("VALUE_CHANGED", (): void => {
       type: VALUE_CHANGED,
       payload: {
         pvName: "PV",
-        value: vstring("hello")
+        value: dstring("hello")
       }
     };
     const newState = csReducer(initialState, action);
-    const newValue = newState.valueCache["PV"].value as VString;
-    expect(newValue.getValue()).toEqual("hello");
+    const newValue = newState.valueCache["PV"].value;
+    expect(newValue?.getStringValue()).toEqual("hello");
   });
 
   test("csReducer handles array type update", (): void => {
@@ -91,12 +85,12 @@ describe("VALUE_CHANGED", (): void => {
       type: VALUE_CHANGED,
       payload: {
         pvName: "PV",
-        value: vdoubleArray([1, 2, 3], [3])
+        value: ddoubleArray([1, 2, 3])
       }
     };
     const newState = csReducer(initialState, action);
-    const newValue = newState.valueCache["PV"].value as VDoubleArray;
-    expect(newValue.getValue()).toEqual([1, 2, 3]);
+    const newValue = newState.valueCache["PV"].value;
+    expect(newValue?.getArrayValue()).toEqual(Float64Array.from([1, 2, 3]));
   });
 });
 
@@ -114,11 +108,21 @@ describe("CONNECTION_CHANGED", (): void => {
 test("handles initializers", (): void => {
   const action: Subscribe = {
     type: SUBSCRIBE,
-    payload: { pvName: "PV(1)", effectivePvName: "PV", componentId: "0" }
+    payload: {
+      pvName: "PV(1)",
+      effectivePvName: "PV",
+      componentId: "0",
+      type: { double: true }
+    }
   };
   const action2: Subscribe = {
     type: SUBSCRIBE,
-    payload: { pvName: "PV(1)", effectivePvName: "PV", componentId: "1" }
+    payload: {
+      pvName: "PV(1)",
+      effectivePvName: "PV",
+      componentId: "1",
+      type: { double: true }
+    }
   };
   const state2 = csReducer(initialState, action);
   const state3 = csReducer(state2, action2);
