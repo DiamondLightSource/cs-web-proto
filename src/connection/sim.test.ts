@@ -86,7 +86,6 @@ it("test illegal names", (): void => {
 
 it("test enum", (): void => {
   getValue("sim://enum", (value: DType): void => {
-    console.log(value);
     expect(
       ["one", "two", "three", "four"].indexOf(DType.coerceString(value))
     ).toBeGreaterThan(-1);
