@@ -50,7 +50,7 @@ const App: React.FC = (): JSX.Element => {
     const coniql = new ConiqlPlugin(settings.coniqlSocket);
     plugins.unshift(["pva://", coniql]);
     plugins.unshift(["ca://", coniql]);
-    plugins.unshift(["csim://", coniql]);
+    plugins.unshift(["ssim://", coniql]);
   }
   const plugin = new ConnectionForwarder(plugins);
   initialiseStore(plugin, THROTTLE_PERIOD);
