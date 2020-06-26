@@ -188,38 +188,6 @@ function coniqlToDType(
   );
 }
 
-const PV_QUERY = gql`
-  query query1($pvName: ID!) {
-    getChannel(id: $pvName) {
-      id
-      time {
-        datetime
-      }
-      value {
-        string
-        float
-        base64Array {
-          numberType
-          base64
-        }
-      }
-      status {
-        quality
-        message
-        mutable
-      }
-      display {
-        units
-        form
-        controlRange {
-          max
-          min
-        }
-      }
-    }
-  }
-`;
-
 const PV_SUBSCRIPTION = gql`
   subscription sub1($pvName: ID!) {
     subscribeChannel(id: $pvName) {
@@ -347,17 +315,6 @@ export class ConiqlPlugin implements Connection {
   }
 
   private _subscribe(pvName: string): Subscription {
-    // Make a query to get the initial values.
-    // https://github.com/apollographql/subscriptions-transport-ws/issues/170
-    this.client
-      .query({
-        query: PV_QUERY,
-        variables: { pvName: pvName }
-      })
-      .then(data => {
-        this._process(data, pvName, "getChannel");
-      });
-    // Subscribe to further updates.
     return this.client
       .subscribe({
         query: PV_SUBSCRIPTION,
