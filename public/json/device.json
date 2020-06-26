@@ -1,0 +1,123 @@
+{
+  "type": "display",
+  "position": "relative",
+  "overflow": "auto",
+  "backgroundColor": "#012265",
+  "children": [
+    {
+      "type": "shape",
+      "position": "relative",
+      "height": "5vh",
+      "width": "100%",
+      "backgroundColor": "#012265"
+    },
+    {
+      "type": "slideshow",
+      "position": "relative",
+      "width": "90%",
+      "margin": "auto",
+      "overflow": "auto",
+      "backgroundColor": "white",
+      "border": {
+        "style": "line",
+        "width": 5,
+        "color": "#ffcf00",
+        "radius": 10
+      },
+      "children": [
+        {
+          "type": "display",
+          "position": "relative",
+          "width": "100%",
+          "backgroundColor": "#cccccc",
+          "overflow": "auto",
+          "children": [
+            {
+              "type": "label",
+              "position": "relative",
+              "height": "4rem",
+              "textAlign": "center",
+              "font": {
+                "style": "bold",
+                "size": 20
+              },
+              "backgroundColor": "#eeeeee",
+              "text": "Device Test"
+            },
+            {
+              "type": "embeddedDisplay",
+              "position": "relative",
+              "file": "xpress.json",
+              "filetype": "json",
+              "defaultProtocol": "ca"
+            }
+          ]
+        },
+        {
+          "type": "display",
+          "position": "relative",
+          "width": "100%",
+          "backgroundColor": "#cccccc",
+          "overflow": "auto",
+          "macros": {
+            "motor": "1"
+          },
+          "children": [
+            {
+              "type": "label",
+              "position": "relative",
+              "width": "100%",
+              "height": "4rem",
+              "textAlign": "center",
+              "font": {
+                "style": "bold",
+                "size": 30
+              },
+              "backgroundColor": "#eeeeee",
+              "text": "Embed"
+            },
+            {
+              "type": "dynamicpage",
+              "position": "relative",
+              "routePath": "embed"
+            }
+          ]
+        },
+        {
+          "type": "display",
+          "position": "relative",
+          "width": "100%",
+          "backgroundColor": "#cccccc",
+          "overflow": "auto",
+          "children": [
+            {
+              "type": "label",
+              "position": "relative",
+              "width": "100%",
+              "height": "4rem",
+              "textAlign": "center",
+              "font": {
+                "style": "bold",
+                "size": 30
+              },
+              "backgroundColor": "#eeeeee",
+              "text": "Detail"
+            },
+            {
+              "type": "dynamicpage",
+              "position": "relative",
+              "routePath": "detail"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "shape",
+      "position": "relative",
+      "height": "5vh",
+      "width": "100%",
+      "backgroundColor": "#012265"
+    }
+  ]
+}

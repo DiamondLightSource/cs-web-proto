@@ -1,0 +1,194 @@
+{
+  "type": "display",
+  "position": "relative",
+  "width": "600px",
+  "height": "210px",
+  "margin": "10px",
+  "border": {
+    "style": "dotted",
+    "width": 3,
+    "color": "red"
+  },
+  "children": [
+      {
+          "type": "progressbar",
+          "position": "relative",
+          "width": "25%",
+          "pvName": "csim://sine(-10, 10, 100, 0.1)",
+          "precision": 2,
+          "min": -10,
+          "max": 10,
+          "border": {
+            "style": "line",
+            "width": 1,
+            "color": "#aaaaaa"
+          },
+          "font": {
+            "size": 20,
+            "style": "bold"
+          }
+        },
+    {
+      "type": "actionbutton",
+      "pvName": "sim://limit#1",
+      "text": "Motor 2",
+      "image": "DCM-base.png",
+      "position": "absolute",
+      "x": "150px",
+      "y": "0px",
+      "width": "100px",
+      "height": "100px",
+      "actions": {
+        "executeAsOne": false,
+        "actions": [
+          {
+            "type": "OPEN_PAGE",
+            "openPageInfo": {
+              "page": "embed",
+              "pageDescription": {
+                "filename": "motor",
+                "filetype": "json",
+                "description": "Motor 2 Info",
+                "macros": { "motor": "2" }
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "shape",
+      "position": "absolute",
+      "x": "250px",
+      "y": "50px",
+      "width": "100px",
+      "height": "100px",
+      "shapeWidth": "100px",
+      "shapeHeight": "5px",
+      "shapeRadius": "0",
+      "backgroundColor": "red"
+    },
+    {
+      "type": "shape",
+      "position": "absolute",
+      "x": "100px",
+      "y": "0px",
+      "width": "50px",
+      "height": "100px",
+      "shapeWidth": "50px",
+      "shapeHeight": "100px",
+      "shapeRadius": "50%",
+      "backgroundColor": "green"
+    },
+    {
+      "type": "actionbutton",
+      "pvName": "sim://limit#1",
+      "text": "Motor 3",
+      "image": "DCM-base.png",
+      "position": "absolute",
+      "x": "350px",
+      "y": "0px",
+      "width": "100px",
+      "height": "100px",
+      "actions": {
+        "executeAsOne": false,
+        "actions": [
+          {
+            "type": "OPEN_PAGE",
+            "openPageInfo": {
+              "page": "embed",
+              "pageDescription": {
+                "filename": "motor",
+                "filetype": "json",
+                "description": "Motor 3 Info",
+                "macros": { "motor": "3" }
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "actionbutton",
+      "pvName": "sim://limit#1",
+      "text": "RFFB OPI",
+      "position": "absolute",
+      "x": "450px",
+      "y": "0px",
+      "width": "100px",
+      "height": "100px",
+      "actions": {
+        "executeAsOne": false,
+        "actions": [
+          {
+            "type": "OPEN_PAGE",
+            "openPageInfo": {
+              "page": "embed",
+              "pageDescription": {
+                "filename": "rffb",
+                "filetype": "json",
+                "description": "Open RFFB",
+                "macros": {}
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "actionbutton",
+      "pvName": "sim://limit#1",
+      "text": "Digitel MPC Ionp",
+      "image": "ionp.svg",
+      "position": "absolute",
+      "x": "450px",
+      "y": "100px",
+      "width": "100px",
+      "height": "100px",
+      "actions": {
+        "executeAsOne": false,
+        "actions": [
+          {
+            "type": "OPEN_PAGE",
+            "openPageInfo": {
+              "page": "embed",
+              "pageDescription": {
+                "filename": "digitelmpcionp",
+                "filetype": "json",
+                "description": "Digitel MPC Ionp Sim",
+                "macros": {}
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "actionbutton",
+      "text": "Motor Summary Screen",
+      "position": "absolute",
+      "x": "20px",
+      "y": "125px",
+      "width": "200px",
+      "height": "40px",
+      "backgroundColor": "#aaaaaa",
+      "actions": {
+        "executeAsOne": false,
+        "actions": [
+          {
+            "type": "OPEN_PAGE",
+            "openPageInfo": {
+              "page": "embed",
+              "pageDescription": {
+                "filename": "motorSummary",
+                "filetype": "json",
+                "macros": {},
+                "description": "Motor Summary Screen"
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

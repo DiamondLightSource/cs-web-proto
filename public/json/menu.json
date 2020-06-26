@@ -60,6 +60,34 @@
     },
     {
       "type": "actionbutton",
+      "text": "Device Testing",
+      "position": "relative",
+      "width": "300px",
+      "height": "200px",
+      "margin": "10px",
+      "backgroundColor": "#ffa64d",
+      "font": {
+        "size": 30
+      },
+      "actions": {
+        "executeAsOne": false,
+        "actions": [
+          {
+            "type": "OPEN_PAGE",
+            "openPageInfo": {
+              "page": "app",
+              "pageDescription": {
+                "filename": "device",
+                "filetype": "json",
+                "macros": {}
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "actionbutton",
       "text": "Performance Testing",
       "position": "relative",
       "width": "300px",
