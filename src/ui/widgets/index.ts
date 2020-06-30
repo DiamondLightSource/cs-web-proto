@@ -18,3 +18,4 @@ export { Slideshow } from "./Slideshow/slideshow";
 export { DrawerWidget } from "./Drawer/drawer";
 export { NavigationTabs } from "./Tabs/navigationTabs";
 export { TabContainer } from "./Tabs/tabContainer";
+export { DynamicTabs } from "./Tabs/dynamicTabs";

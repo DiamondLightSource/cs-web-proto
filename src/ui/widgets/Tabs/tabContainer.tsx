@@ -31,8 +31,6 @@ export const TabContainerComponent = (
 ): JSX.Element => {
   const [childIndex, setIndex] = useState(0);
 
-  console.log(props.tabs);
-
   try {
     // TODO: Find out if this repeated calculation can be done in the useMemo hook for measurable performance gains
     const children = Object.values(props.tabs).map((child, index) =>

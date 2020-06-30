@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import PropTypes from "prop-types";
 
 import { Widget } from "../widget";
 import { WidgetPropType } from "../widgetProps";
@@ -9,21 +8,17 @@ import {
   StringOrNumPropOpt,
   BorderPropOpt,
   ColorPropOpt,
-  MacrosProp
+  StringProp
 } from "../propTypes";
 import { EmbeddedDisplay } from "../EmbeddedDisplay/embeddedDisplay";
 import { RelativePosition } from "../../../types/position";
 
 import classes from "./navigationTabs.module.css";
+import { useHistory } from "react-router-dom";
+import { getUrlInfoFromHistory } from "../urlControl";
 
-export const NavigationTabsProps = {
-  tabs: PropTypes.objectOf(
-    PropTypes.shape({
-      filename: PropTypes.string.isRequired,
-      filetype: PropTypes.oneOf(["bob", "opi", "json"]).isRequired,
-      macros: MacrosProp
-    })
-  ).isRequired,
+export const DynamicTabsProps = {
+  routePath: StringProp,
   maxHeight: StringOrNumPropOpt,
   maxWidth: StringOrNumPropOpt,
   minHeight: StringOrNumPropOpt,
@@ -31,12 +26,16 @@ export const NavigationTabsProps = {
   backgroundColor: ColorPropOpt
 };
 
-export const NavigationTabsComponent = (
-  props: InferWidgetProps<typeof NavigationTabsProps>
+export const DynamicTabsComponent = (
+  props: InferWidgetProps<typeof DynamicTabsProps>
 ): JSX.Element => {
+  const history = useHistory();
+  const currentUrlInfo = getUrlInfoFromHistory(history);
   const [childIndex, setIndex] = useState(0);
 
-  const children = Object.values(props.tabs).map((child, index) => (
+  const tabs = currentUrlInfo[props.routePath] ?? {};
+
+  const children = Object.values(tabs).map((child, index) => (
     <EmbeddedDisplay
       position={new RelativePosition()}
       file={child?.filename || ""}
@@ -50,7 +49,7 @@ export const NavigationTabsComponent = (
   return (
     <div>
       <div className={classes.Bar}>
-        {Object.keys(props.tabs).map(
+        {Object.keys(tabs).map(
           (key, index): JSX.Element => (
             <button
               onClick={(): void => {
@@ -70,13 +69,13 @@ export const NavigationTabsComponent = (
   );
 };
 
-export const NavigationTabsWidgetProps = {
-  ...NavigationTabsProps,
+export const DynamicTabsWidgetProps = {
+  ...DynamicTabsProps,
   ...WidgetPropType
 };
 
-export const NavigationTabs = (
-  props: InferWidgetProps<typeof NavigationTabsWidgetProps>
-): JSX.Element => <Widget baseWidget={NavigationTabsComponent} {...props} />;
+export const DynamicTabs = (
+  props: InferWidgetProps<typeof DynamicTabsWidgetProps>
+): JSX.Element => <Widget baseWidget={DynamicTabsComponent} {...props} />;
 
-registerWidget(NavigationTabs, NavigationTabsProps, "navigationtabs");
+registerWidget(DynamicTabs, DynamicTabsProps, "dynamictabs");

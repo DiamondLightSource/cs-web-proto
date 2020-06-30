@@ -7,7 +7,9 @@ import {
   putUrlInfoToHistory,
   updatePageDesciption,
   removePageDescription,
-  getUrlInfoFromHistory
+  getUrlInfoFromHistory,
+  updateTabDesciption,
+  removeTabDescription
 } from "./urlControl";
 import { MacroMap } from "../../types/macros";
 import { DType } from "../../types/dtypes";
@@ -48,16 +50,16 @@ export interface OpenTab {
     tab: string;
     page: string;
     pageDescription: UrlPageDescription;
-    description: string;
+    description?: string;
   };
 }
 
 export interface CloseTab {
   type: typeof CLOSE_TAB;
-  closePageInfo: {
+  closeTabInfo: {
     tab: string;
     page: string;
-    description: string;
+    description?: string;
   };
 }
 
@@ -78,7 +80,13 @@ export interface WritePv {
   };
 }
 
-export type WidgetAction = OpenWebpage | WritePv | OpenPage | ClosePage;
+export type WidgetAction =
+  | OpenWebpage
+  | WritePv
+  | OpenPage
+  | ClosePage
+  | OpenTab
+  | CloseTab;
 
 export interface WidgetActions {
   actions: WidgetAction[];
@@ -118,6 +126,18 @@ export const getActionDescription = (action: WidgetAction): string => {
       } else {
         return `Open ${action.closePageInfo.page}`;
       }
+    case OPEN_TAB:
+      if (action.openTabInfo.description) {
+        return action.openTabInfo.description;
+      } else {
+        return `Open tab ${action.openTabInfo.page}`;
+      }
+    case CLOSE_TAB:
+      if (action.closeTabInfo.description) {
+        return action.closeTabInfo.description;
+      } else {
+        return `Close tab ${action.closeTabInfo.page}`;
+      }
     default:
       throw new InvalidAction(action);
   }
@@ -150,6 +170,34 @@ export const closePage = (action: ClosePage, history: History): void => {
   putUrlInfoToHistory(history, newUrlInfo);
 };
 
+export const openTab = (
+  action: OpenTab,
+  history: History,
+  parentMacros?: MacroMap
+): void => {
+  //Find current browser path: currentPath
+  const currentUrlInfo = getUrlInfoFromHistory(history);
+  const { tab, page, pageDescription } = action.openTabInfo;
+  pageDescription.macros = {
+    ...(parentMacros ?? {}),
+    ...pageDescription.macros
+  };
+  const newUrlInfo = updateTabDesciption(
+    currentUrlInfo,
+    tab,
+    page,
+    pageDescription
+  );
+  putUrlInfoToHistory(history, newUrlInfo);
+};
+
+export const closeTab = (action: CloseTab, history: History): void => {
+  const currentUrlInfo = getUrlInfoFromHistory(history);
+  const { tab, page } = action.closeTabInfo;
+  const newUrlInfo = removeTabDescription(currentUrlInfo, tab, page);
+  putUrlInfoToHistory(history, newUrlInfo);
+};
+
 export const executeAction = (
   action: WidgetAction,
   history?: History,
@@ -166,6 +214,20 @@ export const executeAction = (
     case CLOSE_PAGE:
       if (history) {
         closePage(action, history);
+      } else {
+        log.error("Tried to open a page but no history object passed");
+      }
+      break;
+    case OPEN_TAB:
+      if (history) {
+        openTab(action, history, parentMacros);
+      } else {
+        log.error("Tried to open a page but no history object passed");
+      }
+      break;
+    case CLOSE_TAB:
+      if (history) {
+        closeTab(action, history);
       } else {
         log.error("Tried to open a page but no history object passed");
       }

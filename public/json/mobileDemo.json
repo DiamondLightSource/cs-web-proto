@@ -443,6 +443,87 @@
           "height": "100%"
         }
       }
+    },
+    {
+      "type": "dynamictabs",
+      "position": "relative",
+      "margin": "20px 0 0 0",
+      "width": "100%",
+      "routePath": "testing"
+    },
+    {
+      "type": "flexcontainer",
+      "position": "relative",
+      "width": "100%",
+      "children": [
+        {
+          "type": "actionbutton",
+          "text": "Open in dynamic tab",
+          "position": "relative",
+          "width": "40%",
+          "height": "4rem",
+          "margin": "1% 5% 1% 5%",
+          "foregroundColor": "#012265",
+          "backgroundColor": "#ffcf00",
+          "font": {
+            "size": "25"
+          },
+          "border": {
+            "style": "none",
+            "color": "#ffcf00",
+            "width": 1
+          },
+          "actions": {
+            "executeAsOne": false,
+            "actions": [
+              {
+                "type": "OPEN_TAB",
+                "openTabInfo": {
+                  "tab": "testing",
+                  "page": "One",
+                  "pageDescription": {
+                    "filename": "tab_embed.json",
+                    "filetype": "json",
+                    "macros": {
+                      "LABEL": "This is tab one"
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "actionbutton",
+          "text": "Close in dynamic tab",
+          "position": "relative",
+          "width": "40%",
+          "height": "4rem",
+          "margin": "1% 5% 1% 5%",
+          "foregroundColor": "#012265",
+          "backgroundColor": "#ffcf00",
+          "font": {
+            "size": "25"
+          },
+          "border": {
+            "style": "none",
+            "color": "#ffcf00",
+            "width": 1
+          },
+          "actions": {
+            "executeAsOne": false,
+            "actions": [
+              {
+                "type": "CLOSE_TAB",
+                "closeTabInfo": {
+                  "tab": "testing",
+                  "page": "One"
+                }
+              }
+            ]
+          }
+        }
+      ]
     }
   ]
 }

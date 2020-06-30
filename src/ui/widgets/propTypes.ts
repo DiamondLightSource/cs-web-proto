@@ -145,11 +145,36 @@ const WritePvPropType = PropTypes.shape({
   }).isRequired
 });
 
+const OpenTabPropType = PropTypes.shape({
+  type: StringProp,
+  openTabInfo: PropTypes.shape({
+    tab: StringProp,
+    page: StringProp,
+    pageDescription: PropTypes.shape({
+      filename: PropTypes.string,
+      filetype: PropTypes.oneOf(["bob", "opi", "json"]),
+      macros: MacrosProp
+    }),
+    description: StringPropOpt
+  }).isRequired
+});
+
+const CloseTabPropType = PropTypes.shape({
+  type: StringProp,
+  closeTabInfo: PropTypes.shape({
+    page: StringProp,
+    tab: StringProp,
+    description: StringPropOpt
+  }).isRequired
+});
+
 const ActionPropType = PropTypes.oneOfType([
   OpenPagePropType,
   ClosePagePropType,
   WritePvPropType,
-  OpenWebpagePropType
+  OpenWebpagePropType,
+  OpenTabPropType,
+  CloseTabPropType
 ]);
 
 export const ActionsPropType = PropTypes.shape({
