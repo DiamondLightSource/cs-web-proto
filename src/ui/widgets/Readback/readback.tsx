@@ -15,7 +15,7 @@ import {
 } from "../propTypes";
 import { registerWidget } from "../register";
 import { LabelComponent } from "../Label/label";
-import { AlarmQuality, DAlarm } from "../../../types/dtypes";
+import { AlarmQuality, DAlarm, DType } from "../../../types/dtypes";
 
 const ReadbackProps = {
   precision: IntPropOpt,
@@ -75,10 +75,10 @@ export const ReadbackComponent = (
   if (!value) {
     displayedValue = "Waiting for value";
   } else {
-    if (precision !== undefined && !isNaN(value.getDoubleValue())) {
-      displayedValue = value.getDoubleValue().toFixed(precision);
+    if (precision !== undefined && !isNaN(DType.coerceDouble(value))) {
+      displayedValue = DType.coerceDouble(value).toFixed(precision);
     } else {
-      displayedValue = value.getStringValue();
+      displayedValue = DType.coerceString(value);
     }
   }
 

@@ -132,7 +132,6 @@ export const SlideshowComponent = (
           flexGrow: 0
         }}
         onClick={(): void => {
-          console.log("Next button");
           setTransition(slideRightTransition);
           setChildIndex(
             nextChildIndex(childIndex, props.children?.length ?? 0)

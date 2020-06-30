@@ -17,7 +17,8 @@ import {
   StringProp,
   InferWidgetProps,
   ChoiceProp,
-  MacrosPropOpt
+  MacrosPropOpt,
+  StringPropOpt
 } from "../propTypes";
 import { BaseUrlContext } from "../../../baseUrl";
 import { parseOpi } from "./opiParser";
@@ -49,7 +50,8 @@ const EmbeddedDisplayProps = {
   file: StringProp,
   filetype: ChoiceProp(["json", "bob", "opi"]),
   defaultProtocol: StringProp,
-  macros: MacrosPropOpt
+  macros: MacrosPropOpt,
+  highlight: StringPropOpt
 };
 
 export const EmbeddedDisplay = (
@@ -131,7 +133,8 @@ export const EmbeddedDisplay = (
       position: props.position,
       border: props.border,
       overflow: overflow,
-      children: [description]
+      children: [description],
+      highlight: props.highlight
     });
   } catch (e) {
     const message = `Error converting file ${file} into components.`;

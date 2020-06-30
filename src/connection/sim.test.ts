@@ -23,9 +23,9 @@ const assertValue = (
   done: jest.DoneCallback
 ): void => {
   getValue(impliedPv, (updatedValue: DType): void => {
-    if (!isNaN(updatedValue.getDoubleValue())) {
+    if (!isNaN(DType.coerceDouble(updatedValue))) {
       expect(updatedValue.getDoubleValue()).toStrictEqual(value);
-    } else if (updatedValue.getArrayValue().length > 0) {
+    } else if (updatedValue.getArrayValue() !== undefined) {
       expect(updatedValue.getArrayValue()).toStrictEqual(value);
     } else {
       expect(updatedValue.getStringValue()).toStrictEqual(value);
@@ -86,13 +86,12 @@ it("test illegal names", (): void => {
 
 it("test enum", (): void => {
   getValue("sim://enum", (value: DType): void => {
-    console.log(value);
     expect(
-      ["one", "two", "three", "four"].indexOf(value.getStringValue())
+      ["one", "two", "three", "four"].indexOf(DType.coerceString(value))
     ).toBeGreaterThan(-1);
-    expect((value.display?.choices as string[])[value.getDoubleValue()]).toBe(
-      value.getStringValue()
-    );
+    expect(
+      (value.display?.choices as string[])[DType.coerceDouble(value)]
+    ).toBe(value.getStringValue());
   });
   simulator.subscribe("sim://enum");
 });

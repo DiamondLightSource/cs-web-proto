@@ -21,7 +21,9 @@ export const WidgetPropType = {
   tooltip: StringPropOpt,
   resolvedTooltip: StringPropOpt,
   menuWrapper: BoolPropOpt,
-  border: BorderPropOpt
+  border: BorderPropOpt,
+  highlight: StringPropOpt,
+  visible: BoolPropOpt
 };
 
 type WidgetProps = InferWidgetProps<typeof WidgetPropType>;

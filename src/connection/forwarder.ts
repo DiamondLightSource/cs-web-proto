@@ -13,8 +13,6 @@ export class ConnectionForwarder implements Connection {
     this.connected = false;
   }
   private getConnection(pvName: string): Connection {
-    console.log("getConnection");
-    console.log(pvName);
     for (const [prefix, connection] of this.prefixConnections) {
       if (pvName.startsWith(prefix)) {
         if (connection !== undefined) {

@@ -1,4 +1,3 @@
-import log from "loglevel";
 export class DTime {
   public datetime: Date;
 
@@ -129,52 +128,90 @@ export class DType {
   public value: DTypeValue;
   public time?: DTime;
   public alarm?: DAlarm;
-  public display?: DDisplay;
+  public display: DDisplay;
+  // If partial, this DType may be merged with an existing
+  // value to create the latest status.
+  public partial = false;
 
   public constructor(
     value: DTypeValue,
     alarm?: DAlarm,
     time?: DTime,
-    display?: DDisplay
+    display?: DDisplay,
+    partial?: boolean
   ) {
     // TODO check for no value.
     this.value = value;
     this.alarm = alarm;
     this.time = time;
-    this.display = display;
+    this.display = display ?? DDisplay.NONE;
+    if (partial) {
+      this.partial = true;
+    }
   }
 
-  public getStringValue(): string {
-    log.debug(this.value);
-    if (typeof this.value.stringValue === "string") {
-      return this.value.stringValue;
-    } else if (typeof this.value.doubleValue === "number") {
-      return this.value.doubleValue?.toString();
-    } else if (this.value.arrayValue) {
-      return this.value.arrayValue?.toString();
+  public getStringValue(): string | undefined {
+    return this.value.stringValue;
+  }
+
+  public static coerceString(value?: DType): string {
+    if (value) {
+      const stringValue = value.getStringValue();
+      const doubleValue = value.getDoubleValue();
+      const arrayValue = value.getDoubleValue();
+      if (stringValue !== undefined) {
+        return stringValue;
+      } else if (doubleValue !== undefined) {
+        return doubleValue.toString();
+      } else if (arrayValue !== undefined) {
+        return arrayValue.toString();
+      } else {
+        return "";
+      }
     } else {
       return "";
     }
   }
 
-  public getDoubleValue(): number {
-    // TODO is NaN the best idea here?
-    if (typeof this.value.doubleValue === "number") {
-      return this.value.doubleValue;
-    } else if (typeof this.value.stringValue === "string") {
-      // Returns NaN if cannot parse.
-      return parseFloat(this.value.stringValue);
+  public getDoubleValue(): number | undefined {
+    return this.value.doubleValue;
+  }
+
+  public static coerceDouble(value?: DType): number {
+    if (value !== undefined) {
+      const doubleValue = value.getDoubleValue();
+      const stringValue = value.getStringValue();
+      if (typeof doubleValue === "number") {
+        return doubleValue;
+      } else if (stringValue !== undefined) {
+        // Returns NaN if cannot parse.
+        return parseFloat(stringValue);
+      } else {
+        return NaN;
+      }
     } else {
       return NaN;
     }
   }
 
-  public getArrayValue(): NumberArray {
-    if (this.value.arrayValue) {
-      return this.value.arrayValue;
+  public getArrayValue(): NumberArray | undefined {
+    return this.value.arrayValue;
+  }
+
+  public static coerceArray(value: DType): NumberArray {
+    const arrayValue = value.getArrayValue();
+    const doubleValue = value.getDoubleValue();
+    if (arrayValue !== undefined) {
+      return arrayValue;
+    } else if (doubleValue !== undefined) {
+      return Float64Array.from([doubleValue]);
     } else {
       return Float64Array.from([]);
     }
+  }
+
+  public getStringArrayValue(): string[] | undefined {
+    return this.value.stringArray;
   }
 
   public getAlarm(): DAlarm {
@@ -188,34 +225,8 @@ export class DType {
   }
 
   public toString(): string {
-    return this.getStringValue();
+    return `DType: ${DType.coerceString(this)}`;
   }
-}
-
-export function dtypeToString(dtype?: DType): string {
-  if (dtype) {
-    return dtype.getStringValue();
-  } else {
-    return "";
-  }
-}
-
-export function valueToDType(
-  value: any,
-  alarm = DAlarm.NONE,
-  time = dtimeNow(),
-  display = DDisplay.NONE
-): DType {
-  const dvalue: DTypeValue = {};
-  if (typeof value === "string") {
-    dvalue.stringValue = value;
-  } else if (typeof value === "number") {
-    dvalue.doubleValue = value;
-  } else {
-    // TODO this is not correct!
-    dvalue.doubleValue = 0;
-  }
-  return new DType(dvalue, alarm, time, display);
 }
 
 export function mergeDDisplay(
@@ -236,17 +247,19 @@ export function mergeDDisplay(
 }
 
 export function mergeDType(original: DType | undefined, update: DType): DType {
-  // TODO we're accidentally merging e.g. string value 1 with double value 0
-  // when we're trying to update the value.
-  return new DType(
-    {
-      stringValue: update.value.stringValue ?? original?.value.stringValue,
-      doubleValue: update.value.doubleValue ?? original?.value.doubleValue,
-      arrayValue: update.value.arrayValue ?? original?.value.arrayValue
-    },
+  if (!update.partial) {
+    return update;
+  } else {
+    return new DType(
+      {
+        stringValue: update.value.stringValue ?? original?.value.stringValue,
+        doubleValue: update.value.doubleValue ?? original?.value.doubleValue,
+        arrayValue: update.value.arrayValue ?? original?.value.arrayValue
+      },
 
-    update.alarm ?? original?.alarm,
-    update.time ?? original?.time,
-    mergeDDisplay(original?.display, update.display)
-  );
+      update.alarm ?? original?.alarm,
+      update.time ?? original?.time,
+      mergeDDisplay(original?.display, update.display)
+    );
+  }
 }

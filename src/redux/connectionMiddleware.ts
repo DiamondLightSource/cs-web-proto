@@ -8,6 +8,7 @@ import {
   UNSUBSCRIBE,
   Action
 } from "./actions";
+import { DType } from "../types/dtypes";
 
 function connectionChanged(
   store: MiddlewareAPI,
@@ -23,7 +24,7 @@ function connectionChanged(
 function valueChanged(
   store: MiddlewareAPI,
   pvName: string,
-  value?: object
+  value: DType
 ): void {
   store.dispatch({
     type: VALUE_CHANGED,
@@ -39,14 +40,12 @@ export const connectionMiddleware = (connection: Connection) => (
       // Partial function application.
       (pvName: string, value: ConnectionState): void =>
         connectionChanged(store, pvName, value),
-      (pvName: string, value?: object): void =>
-        valueChanged(store, pvName, value)
+      (pvName: string, value: DType): void => valueChanged(store, pvName, value)
     );
   }
 
   switch (action.type) {
     case SUBSCRIBE: {
-      console.log(action.payload);
       const { pvName, type } = action.payload;
       // Are we already subscribed?
       const effectivePvName = connection.subscribe(pvName, type);
