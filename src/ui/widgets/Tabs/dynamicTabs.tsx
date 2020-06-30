@@ -12,6 +12,9 @@ import {
 } from "../propTypes";
 import { EmbeddedDisplay } from "../EmbeddedDisplay/embeddedDisplay";
 import { RelativePosition } from "../../../types/position";
+import { ActionButton } from "../ActionButton/actionButton";
+import { CLOSE_TAB } from "../widgetActions";
+import { Color } from "../../../types/color";
 
 import classes from "./navigationTabs.module.css";
 import { useHistory } from "react-router-dom";
@@ -59,7 +62,27 @@ export const DynamicTabsComponent = (
               style={index === childIndex ? { borderStyle: "inset" } : {}}
               key={index}
             >
-              {key}
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <div>{key}</div>
+                <ActionButton
+                  position={new RelativePosition("40px")}
+                  backgroundColor={Color.parse("#ff3333")}
+                  foregroundColor={Color.parse("#ffffff")}
+                  actions={{
+                    executeAsOne: false,
+                    actions: [
+                      {
+                        type: CLOSE_TAB,
+                        closeTabInfo: {
+                          tab: props.routePath,
+                          page: key
+                        }
+                      }
+                    ]
+                  }}
+                  text="X"
+                />
+              </div>
             </button>
           )
         )}
