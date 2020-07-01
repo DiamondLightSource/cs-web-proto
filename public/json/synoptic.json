@@ -24,13 +24,13 @@
         "executeAsOne": false,
         "actions": [
           {
-            "type": "OPEN_PAGE",
-            "openPageInfo": {
-              "page": "embed",
+            "type": "OPEN_TAB",
+            "openTabInfo": {
+              "tab": "embed",
+              "page": "Motor 1",
               "pageDescription": {
                 "filename": "motor",
                 "filetype": "json",
-                "description": "Motor 1 Info",
                 "macros": { "motor": "1" }
               }
             }
@@ -52,13 +52,13 @@
         "executeAsOne": false,
         "actions": [
           {
-            "type": "OPEN_PAGE",
-            "openPageInfo": {
-              "page": "embed",
+            "type": "OPEN_TAB",
+            "openTabInfo": {
+              "tab": "embed",
+              "page": "Motor 2",
               "pageDescription": {
                 "filename": "motor",
                 "filetype": "json",
-                "description": "Motor 2 Info",
                 "macros": { "motor": "2" }
               }
             }
@@ -104,13 +104,13 @@
         "executeAsOne": false,
         "actions": [
           {
-            "type": "OPEN_PAGE",
-            "openPageInfo": {
-              "page": "embed",
+            "type": "OPEN_TAB",
+            "openTabInfo": {
+              "tab": "embed",
+              "page": "Motor 3",
               "pageDescription": {
                 "filename": "motor",
                 "filetype": "json",
-                "description": "Motor 3 Info",
                 "macros": { "motor": "3" }
               }
             }
@@ -131,13 +131,13 @@
         "executeAsOne": false,
         "actions": [
           {
-            "type": "OPEN_PAGE",
-            "openPageInfo": {
-              "page": "embed",
+            "type": "OPEN_TAB",
+            "openTabInfo": {
+              "tab": "embed",
+              "page": "RFFB",
               "pageDescription": {
                 "filename": "rffb",
                 "filetype": "json",
-                "description": "Open RFFB",
                 "macros": {}
               }
             }
@@ -159,13 +159,13 @@
         "executeAsOne": false,
         "actions": [
           {
-            "type": "OPEN_PAGE",
-            "openPageInfo": {
-              "page": "embed",
+            "type": "OPEN_TAB",
+            "openTabInfo": {
+              "tab": "embed",
+              "page": "Digitel MPC Ionp Sim",
               "pageDescription": {
                 "filename": "digitelmpcionp",
                 "filetype": "json",
-                "description": "Digitel MPC Ionp Sim",
                 "macros": {}
               }
             }
@@ -186,14 +186,14 @@
         "executeAsOne": false,
         "actions": [
           {
-            "type": "OPEN_PAGE",
-            "openPageInfo": {
-              "page": "embed",
+            "type": "OPEN_TAB",
+            "openTabInfo": {
+              "tab": "embed",
+              "page": "Motor Summary Screen",
               "pageDescription": {
                 "filename": "motorSummary",
                 "filetype": "json",
-                "macros": {},
-                "description": "Motor Summary Screen"
+                "macros": {}
               }
             }
           }

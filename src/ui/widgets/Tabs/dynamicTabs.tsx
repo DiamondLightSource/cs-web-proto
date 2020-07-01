@@ -41,7 +41,7 @@ export const DynamicTabsComponent = (
   const children = Object.values(tabs).map((child, index) => (
     <EmbeddedDisplay
       position={new RelativePosition()}
-      file={child?.filename || ""}
+      file={child?.filename + `.${child?.filetype}` || ""}
       filetype={child?.filetype || "json"}
       defaultProtocol="pva"
       macros={child?.macros}

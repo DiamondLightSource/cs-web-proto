@@ -68,6 +68,8 @@ export const EmbeddedDisplay = (
     file = props.file;
   }
 
+  console.log(file);
+
   // Using directly from React for testing purposes
   useEffect((): (() => void) => {
     // Will be set on the first render
