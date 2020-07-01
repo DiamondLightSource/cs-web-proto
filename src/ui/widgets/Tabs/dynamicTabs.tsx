@@ -59,7 +59,11 @@ export const DynamicTabsComponent = (
                 setIndex(index);
               }}
               className={classes.Button}
-              style={index === childIndex ? { borderStyle: "inset" } : {}}
+              style={
+                index === Math.min(childIndex, children.length - 1)
+                  ? { borderStyle: "inset" }
+                  : {}
+              }
               key={index}
             >
               <div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -87,7 +91,7 @@ export const DynamicTabsComponent = (
           )
         )}
       </div>
-      {children[childIndex]}
+      {children[Math.min(childIndex, children.length - 1)]}
     </div>
   );
 };

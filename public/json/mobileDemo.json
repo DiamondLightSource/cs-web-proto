@@ -458,7 +458,7 @@
       "children": [
         {
           "type": "actionbutton",
-          "text": "Open in dynamic tab",
+          "text": "Open Tab One",
           "position": "relative",
           "width": "40%",
           "height": "4rem",
@@ -495,7 +495,7 @@
         },
         {
           "type": "actionbutton",
-          "text": "Close in dynamic tab",
+          "text": "Open Tab Two",
           "position": "relative",
           "width": "40%",
           "height": "4rem",
@@ -514,10 +514,91 @@
             "executeAsOne": false,
             "actions": [
               {
-                "type": "CLOSE_TAB",
-                "closeTabInfo": {
+                "type": "OPEN_TAB",
+                "openTabInfo": {
                   "tab": "testing",
-                  "page": "One"
+                  "page": "Two",
+                  "pageDescription": {
+                    "filename": "tab_embed.json",
+                    "filetype": "json",
+                    "macros": {
+                      "LABEL": "This is tab two"
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "actionbutton",
+          "text": "Open Tab Three",
+          "position": "relative",
+          "width": "40%",
+          "height": "4rem",
+          "margin": "1% 5% 1% 5%",
+          "foregroundColor": "#012265",
+          "backgroundColor": "#ffcf00",
+          "font": {
+            "size": "25"
+          },
+          "border": {
+            "style": "none",
+            "color": "#ffcf00",
+            "width": 1
+          },
+          "actions": {
+            "executeAsOne": false,
+            "actions": [
+              {
+                "type": "OPEN_TAB",
+                "openTabInfo": {
+                  "tab": "testing",
+                  "page": "Three",
+                  "pageDescription": {
+                    "filename": "tab_embed.json",
+                    "filetype": "json",
+                    "macros": {
+                      "LABEL": "This is tab three"
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "actionbutton",
+          "text": "Open Tab Four",
+          "position": "relative",
+          "width": "40%",
+          "height": "4rem",
+          "margin": "1% 5% 1% 5%",
+          "foregroundColor": "#012265",
+          "backgroundColor": "#ffcf00",
+          "font": {
+            "size": "25"
+          },
+          "border": {
+            "style": "none",
+            "color": "#ffcf00",
+            "width": 1
+          },
+          "actions": {
+            "executeAsOne": false,
+            "actions": [
+              {
+                "type": "OPEN_TAB",
+                "openTabInfo": {
+                  "tab": "testing",
+                  "page": "Four",
+                  "pageDescription": {
+                    "filename": "tab_embed.json",
+                    "filetype": "json",
+                    "macros": {
+                      "LABEL": "This is tab four"
+                    }
+                  }
                 }
               }
             ]
