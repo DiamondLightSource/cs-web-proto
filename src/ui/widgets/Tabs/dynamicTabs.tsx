@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { Widget } from "../widget";
 import { WidgetPropType } from "../widgetProps";
@@ -49,6 +49,10 @@ export const DynamicTabsComponent = (
     />
   ));
 
+  useEffect(() => {
+    setIndex(children.length - 1);
+  }, [children.length]);
+
   return (
     <div>
       <div className={classes.Bar}>
@@ -59,11 +63,7 @@ export const DynamicTabsComponent = (
                 setIndex(index);
               }}
               className={classes.Button}
-              style={
-                index === Math.min(childIndex, children.length - 1)
-                  ? { borderStyle: "inset" }
-                  : {}
-              }
+              style={index === childIndex ? { borderStyle: "inset" } : {}}
               key={index}
             >
               <div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -91,7 +91,7 @@ export const DynamicTabsComponent = (
           )
         )}
       </div>
-      {children[Math.min(childIndex, children.length - 1)]}
+      {children[childIndex]}
     </div>
   );
 };
