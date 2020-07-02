@@ -34,42 +34,80 @@ export const DynamicTabsComponent = (
 ): JSX.Element => {
   const history = useHistory();
   const currentUrlInfo = getUrlInfoFromHistory(history);
-  const [childIndex, setIndex] = useState(0);
+  const [activeTab, setActiveTab] = useState("");
+  const [tabNumber, setTabNumber] = useState(0);
 
   const tabs = currentUrlInfo[props.routePath] ?? {};
 
-  const children = Object.values(tabs).map((child, index) => (
-    <EmbeddedDisplay
-      position={new RelativePosition()}
-      file={child?.filename + `.${child?.filetype}` || ""}
-      filetype={child?.filetype || "json"}
-      defaultProtocol="pva"
-      macros={child?.macros}
-      key={index}
-    />
-  ));
+  // Using obect map method found here: https://stackoverflow.com/questions/14810506/map-function-for-objects-instead-of-arrays
+  const children = Object.fromEntries(
+    Object.entries(tabs).map(([key, child]) => [
+      key,
+      <EmbeddedDisplay
+        position={new RelativePosition()}
+        file={child?.filename + `.${child?.filetype}` || ""}
+        filetype={child?.filetype || "json"}
+        defaultProtocol="pva"
+        macros={child?.macros}
+        key={key}
+      />
+    ])
+  );
 
   useEffect(() => {
-    setIndex(children.length - 1);
-  }, [children.length]);
+    // If a new key has been added
+    if (tabNumber < Object.keys(children).length) {
+      // Open the new tab
+      setActiveTab(Object.keys(children).slice(-1)[0]);
+    }
+    // Else if a key has been removed
+    else if (tabNumber > Object.keys(children).length) {
+      // If the active tab is still around, keep it open
+      // Otherwise open the "last" tab
+      setActiveTab(
+        children[activeTab] ? activeTab : Object.keys(children).slice(-1)[0]
+      );
+    }
+
+    setTabNumber(Object.keys(children).length);
+  }, [children, activeTab, tabNumber]);
 
   return (
     <div>
       <div className={classes.Bar}>
         {Object.keys(tabs).map(
-          (key, index): JSX.Element => (
-            <button
-              onClick={(): void => {
-                setIndex(index);
+          (key): JSX.Element => (
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between"
               }}
               className={classes.Button}
-              style={index === childIndex ? { borderStyle: "inset" } : {}}
-              key={index}
+              key={key}
             >
-              <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <div>{key}</div>
+              <button
+                onClick={(): void => {
+                  setActiveTab(key);
+                }}
+                style={{
+                  borderStyle: activeTab === key ? "inset" : "",
+                  flexGrow: 1,
+                  fontSize: "2rem",
+                  fontWeight: "bold"
+                }}
+              >
+                {key}
+              </button>
+              <div
+                style={{
+                  position: "relative",
+                  width: "40px",
+                  height: "100%",
+                  flexShrink: 0
+                }}
+              >
                 <ActionButton
-                  position={new RelativePosition("40px")}
+                  position={new RelativePosition("100%", "100%")}
                   backgroundColor={Color.parse("#ff3333")}
                   foregroundColor={Color.parse("#ffffff")}
                   actions={{
@@ -87,11 +125,11 @@ export const DynamicTabsComponent = (
                   text="X"
                 />
               </div>
-            </button>
+            </div>
           )
         )}
       </div>
-      {children[childIndex]}
+      {children[activeTab]}
     </div>
   );
 };
