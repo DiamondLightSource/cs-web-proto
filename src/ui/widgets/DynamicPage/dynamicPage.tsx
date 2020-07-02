@@ -1,7 +1,6 @@
-import React, { useContext } from "react";
+import React from "react";
 import log from "loglevel";
-import { Route } from "react-router-dom";
-import { History } from "history";
+import { useHistory } from "react-router-dom";
 
 import { Widget, commonCss } from "../widget";
 import { WidgetPropType } from "../widgetProps";
@@ -14,42 +13,10 @@ import {
   StringPropOpt,
   BorderPropOpt
 } from "../propTypes";
-import { BaseUrlContext } from "../../../baseUrl";
 import { EmbeddedDisplay } from "../EmbeddedDisplay/embeddedDisplay";
 import { Color } from "../../../types/color";
 import { RelativePosition } from "../../../types/position";
 import { getUrlInfoFromHistory, UrlPageDescription } from "../urlControl";
-
-export function DynamicPageFetch(props: {
-  history: History;
-  routePath: string;
-  defaultProtocol?: string;
-}): JSX.Element {
-  const baseUrl = useContext(BaseUrlContext);
-  const currentUrlInfo = getUrlInfoFromHistory(props.history);
-  let pageDesc: UrlPageDescription;
-  let file = "";
-  let macros = {};
-  try {
-    pageDesc = currentUrlInfo[props.routePath] as UrlPageDescription;
-    file = `${baseUrl}/json/${pageDesc.filename}.json`;
-    macros = pageDesc.macros ?? {};
-  } catch (error) {
-    log.warn(currentUrlInfo);
-    log.warn(error);
-    return <div></div>;
-  }
-
-  return (
-    <EmbeddedDisplay
-      file={file}
-      filetype="json"
-      macros={macros}
-      position={new RelativePosition()}
-      defaultProtocol={props.defaultProtocol ?? "ca"}
-    />
-  );
-}
 
 const DynamicPageProps = {
   routePath: StringProp,
@@ -62,55 +29,66 @@ const DynamicPageComponent = (
   props: InferWidgetProps<typeof DynamicPageProps>
 ): JSX.Element => {
   const style = commonCss(props);
-  const { routePath, defaultProtocol } = props;
+  const history = useHistory();
+  const currentUrlInfo = getUrlInfoFromHistory(history);
+
+  let pageDesc: UrlPageDescription;
+  let file = "";
+  let macros = {};
+  try {
+    pageDesc = currentUrlInfo[props.routePath] as UrlPageDescription;
+    file = pageDesc.filename + `.${pageDesc.filetype}`;
+    macros = pageDesc.macros ?? {};
+  } catch (error) {
+    log.warn(currentUrlInfo);
+    log.warn(error);
+    return <div></div>;
+  }
+
   return (
     <div style={style}>
-      <Route
-        render={(routeProps): JSX.Element => (
-          <div>
-            <div
-              style={{
-                position: "relative",
-                height: "30px"
-              }}
-            >
-              <div
-                style={{
-                  position: "absolute",
-                  right: "5px",
-                  top: "5px",
-                  width: "40px",
-                  height: "20px",
-                  backgroundColor: "green"
-                }}
-              >
-                <ActionButton
-                  position={new RelativePosition()}
-                  backgroundColor={Color.parse("#ff3333")}
-                  foregroundColor={Color.parse("#ffffff")}
-                  actions={{
-                    executeAsOne: false,
-                    actions: [
-                      {
-                        type: CLOSE_PAGE,
-                        closePageInfo: {
-                          page: props.routePath,
-                          description: "Close"
-                        }
-                      }
-                    ]
-                  }}
-                  text="X"
-                />
-              </div>
-            </div>
-            <DynamicPageFetch
-              {...routeProps}
-              routePath={routePath}
-              defaultProtocol={defaultProtocol}
-            />
-          </div>
-        )}
+      <div
+        style={{
+          position: "relative",
+          height: "30px"
+        }}
+      >
+        <div
+          style={{
+            position: "absolute",
+            right: "5px",
+            top: "5px",
+            width: "40px",
+            height: "20px",
+            backgroundColor: "green"
+          }}
+        >
+          <ActionButton
+            position={new RelativePosition()}
+            backgroundColor={Color.parse("#ff3333")}
+            foregroundColor={Color.parse("#ffffff")}
+            actions={{
+              executeAsOne: false,
+              actions: [
+                {
+                  type: CLOSE_PAGE,
+                  closePageInfo: {
+                    page: props.routePath,
+                    description: "Close"
+                  }
+                }
+              ]
+            }}
+            text="X"
+          />
+        </div>
+      </div>
+      <EmbeddedDisplay
+        file={file}
+        filetype="json"
+        macros={macros}
+        position={new RelativePosition()}
+        defaultProtocol={props.defaultProtocol ?? "ca"}
       />
     </div>
   );

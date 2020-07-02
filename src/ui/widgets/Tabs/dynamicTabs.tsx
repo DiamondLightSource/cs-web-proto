@@ -8,7 +8,8 @@ import {
   StringOrNumPropOpt,
   BorderPropOpt,
   ColorPropOpt,
-  StringProp
+  StringProp,
+  StringPropOpt
 } from "../propTypes";
 import { EmbeddedDisplay } from "../EmbeddedDisplay/embeddedDisplay";
 import { RelativePosition } from "../../../types/position";
@@ -22,6 +23,7 @@ import { getUrlInfoFromHistory } from "../urlControl";
 
 export const DynamicTabsProps = {
   routePath: StringProp,
+  defaultProtocol: StringPropOpt,
   maxHeight: StringOrNumPropOpt,
   maxWidth: StringOrNumPropOpt,
   minHeight: StringOrNumPropOpt,
@@ -47,7 +49,7 @@ export const DynamicTabsComponent = (
         position={new RelativePosition()}
         file={child?.filename + `.${child?.filetype}` || ""}
         filetype={child?.filetype || "json"}
-        defaultProtocol="pva"
+        defaultProtocol={props.defaultProtocol ?? "ca"}
         macros={child?.macros}
         key={key}
       />
