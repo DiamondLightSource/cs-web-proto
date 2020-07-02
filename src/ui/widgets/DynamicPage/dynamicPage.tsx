@@ -11,12 +11,13 @@ import {
   StringProp,
   InferWidgetProps,
   StringPropOpt,
-  BorderPropOpt
+  BorderPropOpt,
+  FileDescription
 } from "../propTypes";
 import { EmbeddedDisplay } from "../EmbeddedDisplay/embeddedDisplay";
 import { Color } from "../../../types/color";
 import { RelativePosition } from "../../../types/position";
-import { getUrlInfoFromHistory, UrlPageDescription } from "../urlControl";
+import { getUrlInfoFromHistory } from "../urlControl";
 
 const DynamicPageProps = {
   routePath: StringProp,
@@ -32,12 +33,12 @@ const DynamicPageComponent = (
   const history = useHistory();
   const currentUrlInfo = getUrlInfoFromHistory(history);
 
-  let pageDesc: UrlPageDescription;
+  let pageDesc: FileDescription;
   let file = "";
   let macros = {};
   try {
-    pageDesc = currentUrlInfo[props.routePath] as UrlPageDescription;
-    file = pageDesc.filename + `.${pageDesc.filetype}`;
+    pageDesc = currentUrlInfo[props.routePath] as FileDescription;
+    file = pageDesc.path + `.${pageDesc.type}`;
     macros = pageDesc.macros ?? {};
   } catch (error) {
     log.warn(currentUrlInfo);
@@ -88,7 +89,7 @@ const DynamicPageComponent = (
         filetype="json"
         macros={macros}
         position={new RelativePosition()}
-        defaultProtocol={props.defaultProtocol ?? "ca"}
+        defaultProtocol={pageDesc.defaultProtocol}
       />
     </div>
   );

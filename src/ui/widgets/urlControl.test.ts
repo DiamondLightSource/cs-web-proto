@@ -2,12 +2,12 @@ import {
   getUrlInfoFromHistory,
   putUrlInfoToHistory,
   UrlInfo,
-  UrlPageDescription,
   updatePageDesciption,
   removePageDescription,
   updateTabDesciption,
   removeTabDescription
 } from "./urlControl";
+import { FileDescription } from "./propTypes";
 import { History } from "history";
 
 const mockHistory = {
@@ -21,27 +21,31 @@ const mockHistory = {
 
 const mockInfo: UrlInfo = {
   page1: {
-    filename: "page1",
-    filetype: "json",
-    macros: {}
+    path: "page1",
+    type: "json",
+    macros: {},
+    defaultProtocol: "pva"
   },
   page2: {
-    filename: "page2",
-    filetype: "bob",
-    macros: {}
+    path: "page2",
+    type: "bob",
+    macros: {},
+    defaultProtocol: "pva"
   },
   page3: {
-    filename: "page3",
-    filetype: "opi",
+    path: "page3",
+    type: "opi",
     macros: {
       device: "example device"
-    }
+    },
+    defaultProtocol: "pva"
   },
   tabs: {
     tabOne: {
-      filename: "one",
-      filetype: "json",
-      macros: {}
+      path: "one",
+      type: "json",
+      macros: {},
+      defaultProtocol: "pva"
     }
   }
 };
@@ -52,12 +56,13 @@ beforeEach((): void => {
 
 describe("interaction with history", (): void => {
   it("puts one description in history", (): void => {
-    const desc: UrlPageDescription = {
-      filename: "file",
-      filetype: "json",
+    const desc: FileDescription = {
+      path: "file",
+      type: "json",
       macros: {
         device: "example device"
-      }
+      },
+      defaultProtocol: "pva"
     };
     const info: UrlInfo = {
       desc: desc
@@ -72,12 +77,13 @@ describe("interaction with history", (): void => {
     expect(getUrlInfoFromHistory(mockHistory)).toEqual({});
   });
   it("gets one page description properly", (): void => {
-    const desc: UrlPageDescription = {
-      filename: "file",
-      filetype: "json",
+    const desc: FileDescription = {
+      path: "file",
+      type: "json",
       macros: {
         device: "example device"
-      }
+      },
+      defaultProtocol: "pva"
     };
     const info: UrlInfo = {
       desc: desc
@@ -86,12 +92,13 @@ describe("interaction with history", (): void => {
     expect(getUrlInfoFromHistory(mockHistory)).toEqual(info);
   });
   it("gets multiple page descriptions properly", (): void => {
-    const desc: UrlPageDescription = {
-      filename: "file",
-      filetype: "json",
+    const desc: FileDescription = {
+      path: "file",
+      type: "json",
       macros: {
         device: "example device"
-      }
+      },
+      defaultProtocol: "pva"
     };
     const info: UrlInfo = {
       desc: desc,
@@ -105,19 +112,21 @@ describe("interaction with history", (): void => {
 
 describe("modifying UrlInfo object", (): void => {
   it("adds a new page description", (): void => {
-    const desc: UrlPageDescription = {
-      filename: "page4",
-      filetype: "json",
-      macros: {}
+    const desc: FileDescription = {
+      path: "page4",
+      type: "json",
+      macros: {},
+      defaultProtocol: "pva"
     };
     const info = updatePageDesciption(mockInfo, "page4", desc);
     expect(info.page4).toStrictEqual(desc);
   });
   it("modifies and existing page description", (): void => {
-    const desc: UrlPageDescription = {
-      filename: "page4",
-      filetype: "json",
-      macros: {}
+    const desc: FileDescription = {
+      path: "page4",
+      type: "json",
+      macros: {},
+      defaultProtocol: "pva"
     };
     const info = updatePageDesciption(mockInfo, "page1", desc);
     expect(info.page1).toStrictEqual(desc);
@@ -128,35 +137,39 @@ describe("modifying UrlInfo object", (): void => {
   });
 
   it("adds a new tab container with page description", (): void => {
-    const newTab: UrlPageDescription = {
-      filename: "two",
-      filetype: "json",
-      macros: {}
+    const newTab: FileDescription = {
+      path: "two",
+      type: "json",
+      macros: {},
+      defaultProtocol: "pva"
     };
     const info = updateTabDesciption(mockInfo, "tabs_two", "tabTwo", newTab);
     expect(info.tabs_two).toStrictEqual({ tabTwo: newTab });
   });
   it("adds a new tab to an existing container", (): void => {
-    const newTab: UrlPageDescription = {
-      filename: "two",
-      filetype: "json",
-      macros: {}
+    const newTab: FileDescription = {
+      path: "two",
+      type: "json",
+      macros: {},
+      defaultProtocol: "pva"
     };
     const info = updateTabDesciption(mockInfo, "tabs", "tabTwo", newTab);
     expect(info.tabs).toStrictEqual({
       tabOne: {
         filename: "one",
         filetype: "json",
-        macros: {}
+        macros: {},
+        defaultProtocol: "pva"
       },
       tabTwo: newTab
     });
   });
   it("updates an existing tab in an existing container", (): void => {
-    const newTab: UrlPageDescription = {
-      filename: "two",
-      filetype: "json",
-      macros: {}
+    const newTab: FileDescription = {
+      path: "two",
+      type: "json",
+      macros: {},
+      defaultProtocol: "pva"
     };
     const info = updateTabDesciption(mockInfo, "tabs", "tabOne", newTab);
     expect(info.tabs).toStrictEqual({ tabOne: newTab });
@@ -166,10 +179,11 @@ describe("modifying UrlInfo object", (): void => {
     expect(info.tabs).toStrictEqual({});
   });
   it("Adds a new tab and removes an old one", (): void => {
-    const newTab: UrlPageDescription = {
-      filename: "two",
-      filetype: "json",
-      macros: {}
+    const newTab: FileDescription = {
+      path: "two",
+      type: "json",
+      macros: {},
+      defaultProtocol: "pva"
     };
     const addedTabInfo = updateTabDesciption(
       mockInfo,

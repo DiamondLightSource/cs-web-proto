@@ -3,7 +3,6 @@ import { History } from "history";
 import log from "loglevel";
 
 import {
-  UrlPageDescription,
   putUrlInfoToHistory,
   updatePageDesciption,
   removePageDescription,
@@ -13,6 +12,7 @@ import {
 } from "./urlControl";
 import { MacroMap } from "../../types/macros";
 import { DType } from "../../types/dtypes";
+import { DynamicContent } from "./propTypes";
 
 export const OPEN_PAGE = "OPEN_PAGE";
 export const CLOSE_PAGE = "CLOSE_PAGE";
@@ -29,38 +29,22 @@ export const WRITE_PV = "WRITE_PV";
 
 export interface OpenPage {
   type: typeof OPEN_PAGE;
-  openPageInfo: {
-    page: string;
-    pageDescription: UrlPageDescription;
-    description: string;
-  };
+  openPageInfo: DynamicContent;
 }
 
 export interface ClosePage {
   type: typeof CLOSE_PAGE;
-  closePageInfo: {
-    page: string;
-    description: string;
-  };
+  closePageInfo: DynamicContent;
 }
 
 export interface OpenTab {
   type: typeof OPEN_TAB;
-  openTabInfo: {
-    tab: string;
-    page: string;
-    pageDescription: UrlPageDescription;
-    description?: string;
-  };
+  openTabInfo: DynamicContent;
 }
 
 export interface CloseTab {
   type: typeof CLOSE_TAB;
-  closeTabInfo: {
-    tab: string;
-    page: string;
-    description?: string;
-  };
+  closeTabInfo: DynamicContent;
 }
 
 export interface OpenWebpage {
@@ -115,28 +99,29 @@ export const getActionDescription = (action: WidgetAction): string => {
         return `Open ${action.openWebpageInfo.url}`;
       }
     case OPEN_PAGE:
+      console.log(action.openPageInfo.description);
       if (action.openPageInfo.description) {
         return action.openPageInfo.description;
       } else {
-        return `Open ${action.openPageInfo.page}`;
+        return `Open ${action.openPageInfo.name}`;
       }
     case CLOSE_PAGE:
       if (action.closePageInfo.description) {
         return action.closePageInfo.description;
       } else {
-        return `Open ${action.closePageInfo.page}`;
+        return `Open ${action.closePageInfo.name}`;
       }
     case OPEN_TAB:
       if (action.openTabInfo.description) {
         return action.openTabInfo.description;
       } else {
-        return `Open tab ${action.openTabInfo.page}`;
+        return `Open tab ${action.openTabInfo.name}`;
       }
     case CLOSE_TAB:
       if (action.closeTabInfo.description) {
         return action.closeTabInfo.description;
       } else {
-        return `Close tab ${action.closeTabInfo.page}`;
+        return `Close tab ${action.closeTabInfo.name}`;
       }
     default:
       throw new InvalidAction(action);
@@ -150,23 +135,19 @@ export const openPage = (
 ): void => {
   //Find current browser path: currentPath
   const currentUrlInfo = getUrlInfoFromHistory(history);
-  const { page, pageDescription } = action.openPageInfo;
-  pageDescription.macros = {
+  const { location, file } = action.openPageInfo;
+  file.macros = {
     ...(parentMacros ?? {}),
-    ...pageDescription.macros
+    ...file.macros
   };
-  const newUrlInfo = updatePageDesciption(
-    currentUrlInfo,
-    page,
-    pageDescription
-  );
+  const newUrlInfo = updatePageDesciption(currentUrlInfo, location, file);
   putUrlInfoToHistory(history, newUrlInfo);
 };
 
 export const closePage = (action: ClosePage, history: History): void => {
   const currentUrlInfo = getUrlInfoFromHistory(history);
-  const { page } = action.closePageInfo;
-  const newUrlInfo = removePageDescription(currentUrlInfo, page);
+  const { location } = action.closePageInfo;
+  const newUrlInfo = removePageDescription(currentUrlInfo, location);
   putUrlInfoToHistory(history, newUrlInfo);
 };
 
@@ -177,24 +158,19 @@ export const openTab = (
 ): void => {
   //Find current browser path: currentPath
   const currentUrlInfo = getUrlInfoFromHistory(history);
-  const { tab, page, pageDescription } = action.openTabInfo;
-  pageDescription.macros = {
+  const { name, location, file } = action.openTabInfo;
+  file.macros = {
     ...(parentMacros ?? {}),
-    ...pageDescription.macros
+    ...file.macros
   };
-  const newUrlInfo = updateTabDesciption(
-    currentUrlInfo,
-    tab,
-    page,
-    pageDescription
-  );
+  const newUrlInfo = updateTabDesciption(currentUrlInfo, location, name, file);
   putUrlInfoToHistory(history, newUrlInfo);
 };
 
 export const closeTab = (action: CloseTab, history: History): void => {
   const currentUrlInfo = getUrlInfoFromHistory(history);
-  const { tab, page } = action.closeTabInfo;
-  const newUrlInfo = removeTabDescription(currentUrlInfo, tab, page);
+  const { name, location } = action.closeTabInfo;
+  const newUrlInfo = removeTabDescription(currentUrlInfo, location, name);
   putUrlInfoToHistory(history, newUrlInfo);
 };
 

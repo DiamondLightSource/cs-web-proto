@@ -1,16 +1,10 @@
 // File with useful functions for manipulating the path
 
 import { History } from "history";
-import { MacroMap } from "../../types/macros";
-
-export interface UrlPageDescription {
-  filename: string;
-  filetype: "json" | "opi" | "bob";
-  macros: MacroMap;
-}
+import { FileDescription } from "./propTypes";
 
 export interface UrlInfo {
-  [key: string]: UrlPageDescription | UrlInfo;
+  [key: string]: FileDescription | UrlInfo;
 }
 
 // Functions for getting/putting url from/to history object
@@ -35,7 +29,7 @@ export function putUrlInfoToHistory(history: History, info: UrlInfo): void {
 export function updatePageDesciption(
   info: UrlInfo,
   page: string,
-  desc: UrlPageDescription
+  desc: FileDescription
 ): UrlInfo {
   return { ...info, [page]: desc };
 }
@@ -50,7 +44,7 @@ export function updateTabDesciption(
   info: UrlInfo,
   tab: string,
   page: string,
-  desc: UrlPageDescription
+  desc: FileDescription
 ): UrlInfo {
   // Using pattern found at https://redux.js.org/recipes/structuring-reducers/immutable-update-patterns
   return { ...info, [tab]: { ...info[tab], [page]: desc } };
