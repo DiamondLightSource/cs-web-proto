@@ -39,12 +39,12 @@ export interface ClosePage {
 
 export interface OpenTab {
   type: typeof OPEN_TAB;
-  openTabInfo: DynamicContent;
+  dynamicInfo: DynamicContent;
 }
 
 export interface CloseTab {
   type: typeof CLOSE_TAB;
-  closeTabInfo: DynamicContent;
+  dynamicInfo: DynamicContent;
 }
 
 export interface OpenWebpage {
@@ -112,16 +112,16 @@ export const getActionDescription = (action: WidgetAction): string => {
         return `Open ${action.dynamicInfo.name}`;
       }
     case OPEN_TAB:
-      if (action.openTabInfo.description) {
-        return action.openTabInfo.description;
+      if (action.dynamicInfo.description) {
+        return action.dynamicInfo.description;
       } else {
-        return `Open tab ${action.openTabInfo.name}`;
+        return `Open tab ${action.dynamicInfo.name}`;
       }
     case CLOSE_TAB:
-      if (action.closeTabInfo.description) {
-        return action.closeTabInfo.description;
+      if (action.dynamicInfo.description) {
+        return action.dynamicInfo.description;
       } else {
-        return `Close tab ${action.closeTabInfo.name}`;
+        return `Close tab ${action.dynamicInfo.name}`;
       }
     default:
       throw new InvalidAction(action);
@@ -158,7 +158,7 @@ export const openTab = (
 ): void => {
   //Find current browser path: currentPath
   const currentUrlInfo = getUrlInfoFromHistory(history);
-  const { name, location, file } = action.openTabInfo;
+  const { name, location, file } = action.dynamicInfo;
   file.macros = {
     ...(parentMacros ?? {}),
     ...file.macros
@@ -169,7 +169,7 @@ export const openTab = (
 
 export const closeTab = (action: CloseTab, history: History): void => {
   const currentUrlInfo = getUrlInfoFromHistory(history);
-  const { name, location } = action.closeTabInfo;
+  const { name, location } = action.dynamicInfo;
   const newUrlInfo = removeTabDescription(currentUrlInfo, location, name);
   putUrlInfoToHistory(history, newUrlInfo);
 };

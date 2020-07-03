@@ -478,15 +478,16 @@
             "actions": [
               {
                 "type": "OPEN_TAB",
-                "openTabInfo": {
-                  "tab": "testing",
-                  "page": "One",
-                  "pageDescription": {
-                    "filename": "tab_embed",
-                    "filetype": "json",
+                "dynamicInfo": {
+                  "location": "testing",
+                  "name": "One",
+                  "file": {
+                    "path": "tab_embed",
+                    "type": "json",
                     "macros": {
                       "LABEL": "This is tab one"
-                    }
+                    },
+                    "defaultProtocol": "pva"
                   }
                 }
               }
@@ -515,15 +516,16 @@
             "actions": [
               {
                 "type": "OPEN_TAB",
-                "openTabInfo": {
-                  "tab": "testing",
-                  "page": "Two",
-                  "pageDescription": {
-                    "filename": "tab_embed",
-                    "filetype": "json",
+                "dynamicInfo": {
+                  "location": "testing",
+                  "name": "Two",
+                  "file": {
+                    "path": "tab_embed",
+                    "type": "json",
                     "macros": {
                       "LABEL": "This is tab two"
-                    }
+                    },
+                    "defaultProtocol": "pva"
                   }
                 }
               }
@@ -552,15 +554,16 @@
             "actions": [
               {
                 "type": "OPEN_TAB",
-                "openTabInfo": {
-                  "tab": "testing",
-                  "page": "Three",
-                  "pageDescription": {
-                    "filename": "tab_embed",
-                    "filetype": "json",
+                "dynamicInfo": {
+                  "location": "testing",
+                  "name": "Three",
+                  "file": {
+                    "path": "tab_embed",
+                    "type": "json",
                     "macros": {
                       "LABEL": "This is tab three"
-                    }
+                    },
+                    "defaultProtocol": "pva"
                   }
                 }
               }
@@ -589,15 +592,16 @@
             "actions": [
               {
                 "type": "OPEN_TAB",
-                "openTabInfo": {
-                  "tab": "testing",
-                  "page": "Four",
-                  "pageDescription": {
-                    "filename": "tab_embed",
-                    "filetype": "json",
+                "dynamicInfo": {
+                  "location": "testing",
+                  "name": "Four",
+                  "file": {
+                    "path": "tab_embed",
+                    "type": "json",
                     "macros": {
                       "LABEL": "This is tab four"
-                    }
+                    },
+                    "defaultProtocol": "pva"
                   }
                 }
               }

@@ -47,9 +47,9 @@ export const DynamicTabsComponent = (
       key,
       <EmbeddedDisplay
         position={new RelativePosition()}
-        file={child?.filename + `.${child?.filetype}` || ""}
-        filetype={child?.filetype || "json"}
-        defaultProtocol={props.defaultProtocol ?? "ca"}
+        file={child?.path + `.${child?.type}` || ""}
+        filetype={child?.type || "json"}
+        defaultProtocol={child?.defaultProtocol ?? "ca"}
         macros={child?.macros}
         key={key}
       />
@@ -77,8 +77,8 @@ export const DynamicTabsComponent = (
   return (
     <div>
       <div className={classes.Bar}>
-        {Object.keys(tabs).map(
-          (key): JSX.Element => (
+        {Object.entries(tabs).map(
+          ([key, child]): JSX.Element => (
             <div
               style={{
                 display: "flex",
@@ -117,9 +117,10 @@ export const DynamicTabsComponent = (
                     actions: [
                       {
                         type: CLOSE_TAB,
-                        closeTabInfo: {
-                          tab: props.routePath,
-                          page: key
+                        dynamicInfo: {
+                          location: props.routePath,
+                          name: key,
+                          file: child.file
                         }
                       }
                     ]

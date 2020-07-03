@@ -154,34 +154,21 @@ const ClosePagePropType = PropTypes.shape({
   dynamicInfo: DynamicContentPropType
 });
 
+const OpenTabPropType = PropTypes.shape({
+  type: StringProp,
+  dynamicInfo: DynamicContentPropType
+});
+
+const CloseTabPropType = PropTypes.shape({
+  type: StringProp,
+  dynamicInfo: DynamicContentPropType
+});
+
 const WritePvPropType = PropTypes.shape({
   type: StringProp,
   writePvInfo: PropTypes.shape({
     pvName: StringProp,
     value: PropTypes.oneOfType([StringPropOpt, FloatPropOpt]),
-    description: StringPropOpt
-  }).isRequired
-});
-
-const OpenTabPropType = PropTypes.shape({
-  type: StringProp,
-  openTabInfo: PropTypes.shape({
-    tab: StringProp,
-    page: StringProp,
-    pageDescription: PropTypes.shape({
-      filename: PropTypes.string,
-      filetype: PropTypes.oneOf(["bob", "opi", "json"]),
-      macros: MacrosProp
-    }),
-    description: StringPropOpt
-  }).isRequired
-});
-
-const CloseTabPropType = PropTypes.shape({
-  type: StringProp,
-  closeTabInfo: PropTypes.shape({
-    page: StringProp,
-    tab: StringProp,
     description: StringPropOpt
   }).isRequired
 });
