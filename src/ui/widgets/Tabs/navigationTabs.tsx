@@ -9,7 +9,7 @@ import {
   StringOrNumPropOpt,
   BorderPropOpt,
   ColorPropOpt,
-  MacrosProp
+  FilePropType
 } from "../propTypes";
 import { EmbeddedDisplay } from "../EmbeddedDisplay/embeddedDisplay";
 import { RelativePosition } from "../../../types/position";
@@ -17,13 +17,7 @@ import { RelativePosition } from "../../../types/position";
 import classes from "./navigationTabs.module.css";
 
 export const NavigationTabsProps = {
-  tabs: PropTypes.objectOf(
-    PropTypes.shape({
-      filename: PropTypes.string.isRequired,
-      filetype: PropTypes.oneOf(["bob", "opi", "json"]).isRequired,
-      macros: MacrosProp
-    })
-  ).isRequired,
+  tabs: PropTypes.objectOf(FilePropType).isRequired,
   maxHeight: StringOrNumPropOpt,
   maxWidth: StringOrNumPropOpt,
   minHeight: StringOrNumPropOpt,
@@ -40,8 +34,8 @@ export const NavigationTabsComponent = (
     <EmbeddedDisplay
       position={new RelativePosition()}
       file={{
-        path: child?.filename || "",
-        type: child?.filetype || "json",
+        path: child?.path || "",
+        type: child?.type || "json",
         defaultProtocol: "pva",
         macros: child?.macros || {}
       }}

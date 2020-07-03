@@ -10,7 +10,6 @@ import { registerWidget } from "../register";
 import {
   StringProp,
   InferWidgetProps,
-  StringPropOpt,
   BorderPropOpt,
   FileDescription
 } from "../propTypes";
@@ -21,7 +20,6 @@ import { getUrlInfoFromHistory } from "../urlControl";
 
 const DynamicPageProps = {
   routePath: StringProp,
-  defaultProtocol: StringPropOpt,
   border: BorderPropOpt
 };
 
@@ -33,13 +31,9 @@ const DynamicPageComponent = (
   const history = useHistory();
   const currentUrlInfo = getUrlInfoFromHistory(history);
 
-  let pageDesc: FileDescription;
-  let file = "";
-  let macros = {};
+  let file;
   try {
-    pageDesc = currentUrlInfo[props.routePath] as FileDescription;
-    file = pageDesc.path + `.${pageDesc.type}`;
-    macros = pageDesc.macros ?? {};
+    file = currentUrlInfo[props.routePath] as FileDescription;
   } catch (error) {
     log.warn(currentUrlInfo);
     log.warn(error);
@@ -76,7 +70,7 @@ const DynamicPageComponent = (
                   dynamicInfo: {
                     name: props.routePath,
                     location: props.routePath,
-                    file: pageDesc,
+                    file: file,
                     description: "Close"
                   }
                 }
@@ -86,15 +80,7 @@ const DynamicPageComponent = (
           />
         </div>
       </div>
-      <EmbeddedDisplay
-        file={{
-          path: file,
-          type: "json",
-          macros: macros,
-          defaultProtocol: pageDesc.defaultProtocol
-        }}
-        position={new RelativePosition()}
-      />
+      <EmbeddedDisplay file={file} position={new RelativePosition()} />
     </div>
   );
 };

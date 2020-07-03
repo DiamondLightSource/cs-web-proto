@@ -8,8 +8,7 @@ import {
   StringOrNumPropOpt,
   BorderPropOpt,
   ColorPropOpt,
-  StringProp,
-  StringPropOpt
+  StringProp
 } from "../propTypes";
 import { EmbeddedDisplay } from "../EmbeddedDisplay/embeddedDisplay";
 import { RelativePosition } from "../../../types/position";
@@ -23,7 +22,6 @@ import { getUrlInfoFromHistory } from "../urlControl";
 
 export const DynamicTabsProps = {
   routePath: StringProp,
-  defaultProtocol: StringPropOpt,
   maxHeight: StringOrNumPropOpt,
   maxWidth: StringOrNumPropOpt,
   minHeight: StringOrNumPropOpt,
