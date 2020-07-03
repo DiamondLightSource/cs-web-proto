@@ -27,23 +27,13 @@ export const WRITE_PV = "WRITE_PV";
    name: https://stackoverflow.com/questions/59373461/proptypes-oneoftype-not-working-as-i-expect-with-typescript
 */
 
-export interface OpenPage {
-  type: typeof OPEN_PAGE;
-  dynamicInfo: DynamicContent;
-}
-
-export interface ClosePage {
-  type: typeof CLOSE_PAGE;
-  dynamicInfo: DynamicContent;
-}
-
-export interface OpenTab {
-  type: typeof OPEN_TAB;
-  dynamicInfo: DynamicContent;
-}
-
-export interface CloseTab {
-  type: typeof CLOSE_TAB;
+// Still restricts action types for typescript and easy to add more
+export interface DynamicAction {
+  type:
+    | typeof OPEN_PAGE
+    | typeof CLOSE_PAGE
+    | typeof OPEN_TAB
+    | typeof CLOSE_TAB;
   dynamicInfo: DynamicContent;
 }
 
@@ -64,13 +54,7 @@ export interface WritePv {
   };
 }
 
-export type WidgetAction =
-  | OpenWebpage
-  | WritePv
-  | OpenPage
-  | ClosePage
-  | OpenTab
-  | CloseTab;
+export type WidgetAction = OpenWebpage | WritePv | DynamicAction;
 
 export interface WidgetActions {
   actions: WidgetAction[];
@@ -129,7 +113,7 @@ export const getActionDescription = (action: WidgetAction): string => {
 };
 
 export const openPage = (
-  action: OpenPage,
+  action: DynamicAction,
   history: History,
   parentMacros?: MacroMap
 ): void => {
@@ -144,7 +128,7 @@ export const openPage = (
   putUrlInfoToHistory(history, newUrlInfo);
 };
 
-export const closePage = (action: ClosePage, history: History): void => {
+export const closePage = (action: DynamicAction, history: History): void => {
   const currentUrlInfo = getUrlInfoFromHistory(history);
   const { location } = action.dynamicInfo;
   const newUrlInfo = removePageDescription(currentUrlInfo, location);
@@ -152,7 +136,7 @@ export const closePage = (action: ClosePage, history: History): void => {
 };
 
 export const openTab = (
-  action: OpenTab,
+  action: DynamicAction,
   history: History,
   parentMacros?: MacroMap
 ): void => {
@@ -167,7 +151,7 @@ export const openTab = (
   putUrlInfoToHistory(history, newUrlInfo);
 };
 
-export const closeTab = (action: CloseTab, history: History): void => {
+export const closeTab = (action: DynamicAction, history: History): void => {
   const currentUrlInfo = getUrlInfoFromHistory(history);
   const { name, location } = action.dynamicInfo;
   const newUrlInfo = removeTabDescription(currentUrlInfo, location, name);

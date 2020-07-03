@@ -144,22 +144,7 @@ export interface DynamicContent {
 // I would like this line to work but unfortunately it doesn't
 // export type DynamicContent = InferWidgetProps<typeof DynamicContentPropType>;
 
-const OpenPagePropType = PropTypes.shape({
-  type: StringProp,
-  dynamicInfo: DynamicContentPropType
-});
-
-const ClosePagePropType = PropTypes.shape({
-  type: StringProp,
-  dynamicInfo: DynamicContentPropType
-});
-
-const OpenTabPropType = PropTypes.shape({
-  type: StringProp,
-  dynamicInfo: DynamicContentPropType
-});
-
-const CloseTabPropType = PropTypes.shape({
+const DynamicActionPropType = PropTypes.shape({
   type: StringProp,
   dynamicInfo: DynamicContentPropType
 });
@@ -174,12 +159,9 @@ const WritePvPropType = PropTypes.shape({
 });
 
 const ActionPropType = PropTypes.oneOfType([
-  OpenPagePropType,
-  ClosePagePropType,
+  DynamicActionPropType,
   WritePvPropType,
-  OpenWebpagePropType,
-  OpenTabPropType,
-  CloseTabPropType
+  OpenWebpagePropType
 ]);
 
 export const ActionsPropType = PropTypes.shape({
