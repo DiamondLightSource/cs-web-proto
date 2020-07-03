@@ -29,12 +29,12 @@ export const WRITE_PV = "WRITE_PV";
 
 export interface OpenPage {
   type: typeof OPEN_PAGE;
-  openPageInfo: DynamicContent;
+  dynamicInfo: DynamicContent;
 }
 
 export interface ClosePage {
   type: typeof CLOSE_PAGE;
-  closePageInfo: DynamicContent;
+  dynamicInfo: DynamicContent;
 }
 
 export interface OpenTab {
@@ -99,17 +99,17 @@ export const getActionDescription = (action: WidgetAction): string => {
         return `Open ${action.openWebpageInfo.url}`;
       }
     case OPEN_PAGE:
-      console.log(action.openPageInfo.description);
-      if (action.openPageInfo.description) {
-        return action.openPageInfo.description;
+      console.log(action.dynamicInfo.description);
+      if (action.dynamicInfo.description) {
+        return action.dynamicInfo.description;
       } else {
-        return `Open ${action.openPageInfo.name}`;
+        return `Open ${action.dynamicInfo.name}`;
       }
     case CLOSE_PAGE:
-      if (action.closePageInfo.description) {
-        return action.closePageInfo.description;
+      if (action.dynamicInfo.description) {
+        return action.dynamicInfo.description;
       } else {
-        return `Open ${action.closePageInfo.name}`;
+        return `Open ${action.dynamicInfo.name}`;
       }
     case OPEN_TAB:
       if (action.openTabInfo.description) {
@@ -135,7 +135,7 @@ export const openPage = (
 ): void => {
   //Find current browser path: currentPath
   const currentUrlInfo = getUrlInfoFromHistory(history);
-  const { location, file } = action.openPageInfo;
+  const { location, file } = action.dynamicInfo;
   file.macros = {
     ...(parentMacros ?? {}),
     ...file.macros
@@ -146,7 +146,7 @@ export const openPage = (
 
 export const closePage = (action: ClosePage, history: History): void => {
   const currentUrlInfo = getUrlInfoFromHistory(history);
-  const { location } = action.closePageInfo;
+  const { location } = action.dynamicInfo;
   const newUrlInfo = removePageDescription(currentUrlInfo, location);
   putUrlInfoToHistory(history, newUrlInfo);
 };

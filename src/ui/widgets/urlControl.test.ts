@@ -156,8 +156,8 @@ describe("modifying UrlInfo object", (): void => {
     const info = updateTabDesciption(mockInfo, "tabs", "tabTwo", newTab);
     expect(info.tabs).toStrictEqual({
       tabOne: {
-        filename: "one",
-        filetype: "json",
+        path: "one",
+        type: "json",
         macros: {},
         defaultProtocol: "pva"
       },

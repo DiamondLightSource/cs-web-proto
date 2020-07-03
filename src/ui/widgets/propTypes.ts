@@ -115,25 +115,43 @@ const OpenWebpagePropType = PropTypes.shape({
   }).isRequired
 });
 
+export const DynamicContentPropType = PropTypes.shape({
+  name: StringProp,
+  location: StringProp,
+  description: StringPropOpt,
+  file: PropTypes.shape({
+    path: StringProp,
+    type: PropTypes.oneOf(["json", "bob", "opi"]),
+    macros: MacrosProp,
+    defaultProtocol: StringProp
+  })
+});
+
+export interface FileDescription {
+  // All information required for an embedded display
+  path: string; // Name or file of path (without suffix ?)
+  type: "json" | "opi" | "bob"; // File type - which parser and suffix
+  macros: { [key: string]: string }; // Macros
+  defaultProtocol: string; // Default PV prefix for parser
+}
+
+export interface DynamicContent {
+  name: string; // Name associated with the content
+  location: string; // Location of component to target
+  description?: string; // Optional description of action
+  file: FileDescription;
+}
+// I would like this line to work but unfortunately it doesn't
+// export type DynamicContent = InferWidgetProps<typeof DynamicContentPropType>;
+
 const OpenPagePropType = PropTypes.shape({
   type: StringProp,
-  openPageInfo: PropTypes.shape({
-    page: StringProp,
-    pageDescription: PropTypes.shape({
-      filename: PropTypes.string,
-      filetype: PropTypes.oneOf(["bob", "opi", "json"]),
-      macros: MacrosProp
-    }),
-    description: StringPropOpt
-  }).isRequired
+  dynamicInfo: DynamicContentPropType
 });
 
 const ClosePagePropType = PropTypes.shape({
   type: StringProp,
-  closePageInfo: PropTypes.shape({
-    page: StringProp,
-    description: StringPropOpt
-  }).isRequired
+  dynamicInfo: DynamicContentPropType
 });
 
 const WritePvPropType = PropTypes.shape({
@@ -168,43 +186,13 @@ const CloseTabPropType = PropTypes.shape({
   }).isRequired
 });
 
-export const DynamicContentPropType = PropTypes.shape({
-  name: StringProp,
-  location: StringProp,
-  description: StringProp,
-  file: PropTypes.exact({
-    path: StringProp,
-    type: PropTypes.oneOf(["json", "bob", "opi"]),
-    macros: MacrosProp,
-    defaultProtocol: StringProp
-  })
-});
-
-export interface FileDescription {
-  // All information required for an embedded display
-  path: string; // Name or file of path (without suffix ?)
-  type: "json" | "opi" | "bob"; // File type - which parser and suffix
-  macros: { [key: string]: string }; // Macros
-  defaultProtocol: string; // Default PV prefix for parser
-}
-
-export interface DynamicContent {
-  name: string; // Name associated with the content
-  location: string; // Location of component to target
-  description?: string; // Optional description of action
-  file: FileDescription;
-}
-// I would like this line to work but unfortunately it doesn't
-// export type DynamicContent = InferWidgetProps<typeof DynamicContentPropType>;
-
 const ActionPropType = PropTypes.oneOfType([
   OpenPagePropType,
   ClosePagePropType,
   WritePvPropType,
   OpenWebpagePropType,
   OpenTabPropType,
-  CloseTabPropType,
-  DynamicContentPropType
+  CloseTabPropType
 ]);
 
 export const ActionsPropType = PropTypes.shape({
