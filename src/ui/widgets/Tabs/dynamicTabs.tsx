@@ -46,7 +46,7 @@ export const DynamicTabsComponent = (
       <EmbeddedDisplay
         position={new RelativePosition()}
         file={{
-          path: child?.path + `.${child?.type}` || "",
+          path: child?.path || "",
           type: child?.type || "json",
           defaultProtocol: child?.defaultProtocol ?? "ca",
           macros: child?.macros || {}

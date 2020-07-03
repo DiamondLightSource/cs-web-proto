@@ -67,7 +67,7 @@ const App: React.FC = (): JSX.Element => {
               encodeURIComponent(
                 JSON.stringify({
                   app: {
-                    path: "home",
+                    path: "home.json",
                     type: "json",
                     macros: {},
                     defaultProtocol: "ca"
