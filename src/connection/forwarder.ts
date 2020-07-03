@@ -30,6 +30,12 @@ export class ConnectionForwarder implements Connection {
     return connection.subscribe(pvName, type);
   }
 
+  public subscribe_device(deviceName: string): string {
+    const connection = this.getConnection(deviceName);
+    console.log("trying to get connection");
+    return connection.subscribe_device(deviceName);
+  }
+
   public unsubscribe(pvName: string): void {
     const connection = this.getConnection(pvName);
     return connection.unsubscribe(pvName);

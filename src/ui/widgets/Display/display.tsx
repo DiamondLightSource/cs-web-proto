@@ -1,5 +1,10 @@
 import React, { useState, useContext } from "react";
 
+
+import {
+  widgetDescriptionToComponent
+} from "../createComponent";
+
 import { Widget, commonCss } from "../widget";
 import { WidgetPropType } from "../widgetProps";
 import { registerWidget } from "../register";
@@ -50,6 +55,7 @@ export const DisplayComponent = (
   style["position"] = "relative";
   style["overflow"] = props.overflow;
   style["height"] = "100%";
+
   return (
     <MacroContext.Provider value={displayMacroContext}>
       <div style={style}>{props.children}</div>

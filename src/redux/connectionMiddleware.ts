@@ -3,6 +3,7 @@ import { Connection, ConnectionState } from "../connection/plugin";
 import {
   CONNECTION_CHANGED,
   SUBSCRIBE,
+  SUBSCRIBE_DEVICE,
   WRITE_PV,
   VALUE_CHANGED,
   UNSUBSCRIBE,
@@ -43,7 +44,7 @@ export const connectionMiddleware = (connection: Connection) => (
       (pvName: string, value: DType): void => valueChanged(store, pvName, value)
     );
   }
-
+  console.log("action", action.type);
   switch (action.type) {
     case SUBSCRIBE: {
       const { pvName, type } = action.payload;
@@ -55,6 +56,19 @@ export const connectionMiddleware = (connection: Connection) => (
           ...action.payload,
           effectivePvName: effectivePvName,
           pvName: pvName
+        }
+      };
+      break;
+    }
+    case SUBSCRIBE_DEVICE: {
+      let { componentId, deviceName, description } = action.payload;
+      // Are we already subscribed?
+      description = connection.subscribe_device(deviceName);
+      action = {
+        ...action,
+        payload: {
+          ...action.payload,
+          deviceName: deviceName
         }
       };
       break;

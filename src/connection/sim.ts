@@ -337,6 +337,11 @@ export class SimulatorPlugin implements Connection {
     return (simulator && simulator.pvName) || pvName;
   }
 
+  public subscribe_device(deviceName: string) : string {
+    console.log("in sim!");
+    return '{"key" : "value"}';
+  }
+
   public connect(
     connectionCallback: ConnectionChangedCallback,
     valueCallback: ValueChangedCallback

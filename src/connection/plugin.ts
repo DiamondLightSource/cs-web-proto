@@ -25,6 +25,7 @@ export type ValueChangedCallback = (pvName: string, value: DType) => void;
 
 export interface Connection {
   subscribe: (pvName: string, type: SubscriptionType) => string; // must be idempotent
+  subscribe_device: (deviceName: string) => string;
   putPv: (pvName: string, value: DType) => void;
   connect: (
     connectionCallback: ConnectionChangedCallback,

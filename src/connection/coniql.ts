@@ -2,6 +2,7 @@ import log from "loglevel";
 import base64js from "base64-js";
 import { ApolloClient } from "apollo-client";
 import { ApolloLink } from "apollo-link";
+import { onError } from "apollo-link-error";
 import { HttpLink } from "apollo-link-http";
 import { WebSocketLink } from "apollo-link-ws";
 import { getMainDefinition } from "apollo-utilities";
@@ -31,7 +32,6 @@ import {
   ChannelRole,
   DisplayForm
 } from "../types/dtypes";
-import { Subscription } from "apollo-client/util/Observable";
 
 export interface ConiqlStatus {
   quality: "ALARM" | "WARNING" | "VALID" | "INVALID" | "UNDEFINED" | "CHANGING";
@@ -143,6 +143,7 @@ function coniqlToDType(
   if (status) {
     alarm = new DAlarm(QUALITY_TYPES[status.quality], status.message);
   }
+  console.log(value);
   if (display) {
     ddisplay = new DDisplay({
       description: display.description,
@@ -181,12 +182,68 @@ function coniqlToDType(
     },
     alarm,
     dtime,
-    ddisplay,
-    // Coniql only returns changed values so these DTypes are
-    // always partial.
-    true
+    ddisplay
   );
 }
+
+const DEVICE_QUERY = gql`
+  query query1($devName: ID!) {
+    getDevice(id: $devName) {
+      id
+      children(flatten:true) {
+        name
+        label
+        child {
+          __typename
+          ... on Channel {
+            id
+          }
+          ... on Device {
+            id
+          }
+          ... on Group {
+            layout
+            children {
+              name
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
+const PV_QUERY = gql`
+  query query2($pvName: ID!) {
+    getChannel(id: $pvName) {
+      id
+      time {
+        datetime
+      }
+      value {
+        string
+        float
+        base64Array {
+          numberType
+          base64
+        }
+      }
+      status {
+        quality
+        message
+        mutable
+      }
+      display {
+        units
+        form
+        controlRange {
+          max
+          min
+        }
+      }
+    }
+  }
+`;
 
 const PV_SUBSCRIPTION = gql`
   subscription sub1($pvName: ID!) {
@@ -235,7 +292,7 @@ export class ConiqlPlugin implements Connection {
   private connected: boolean;
   private wsClient: SubscriptionClient;
   private disconnected: string[] = [];
-  private subscriptions: { [pvName: string]: Subscription };
+  private subscriptions: { [pvName: string]: boolean };
 
   public constructor(socket: string) {
     const fragmentMatcher = new IntrospectionFragmentMatcher({
@@ -255,8 +312,7 @@ export class ConiqlPlugin implements Connection {
     this.wsClient.onDisconnected((): void => {
       log.error("Websockect client disconnected.");
       for (const pvName of Object.keys(this.subscriptions)) {
-        this.subscriptions[pvName].unsubscribe();
-        delete this.subscriptions[pvName];
+        this.subscriptions[pvName] = false;
         this.onConnectionUpdate(pvName, {
           isConnected: false,
           isReadonly: true
@@ -282,11 +338,36 @@ export class ConiqlPlugin implements Connection {
         );
       },
       new WebSocketLink(this.wsClient),
-      new HttpLink({ uri: `http://${socket}/graphql` })
+      new HttpLink({ uri: `http://${socket}/graphql`, credentials: 'include' })
     );
 
-    return link;
-  }
+    //const errorLink = onError(error => {
+    //  const { graphQLErrors = [], networkError = {}, operation = {}, forward } = 
+    //    error || {};
+    //  const { getContext } = operation || {};
+    //  const { scope, headers = {} } = getContext() || {};
+    //  const { message: networkErrorMessage = '' } = networkError || {};
+    //  const networkFailed = message =>
+    //    typeof message === 'string' &&
+    //    message.startsWith('NetworkError when attempting to fetch resource');
+    //  if (networkFailed(networkErrorMessage)) return forward(operation);
+    //});
+
+    const errorlink = onError(({ graphQLErrors, networkError, operation, forward }) => {
+    if (graphQLErrors)
+      graphQLErrors.forEach(({ message, locations, path }) =>
+       console.log(
+        `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
+       )
+      );
+    if (networkError) {
+      console.log(`[Network error]: ${networkError}`);
+      return forward(operation);
+    }
+    });
+    return errorlink.concat(link);
+ 
+ }
 
   public connect(
     connectionCallback: ConnectionChangedCallback,
@@ -299,6 +380,12 @@ export class ConiqlPlugin implements Connection {
 
   public isConnected(): boolean {
     return this.connected;
+  }
+
+  private _process_device(data: any, deviceName: string, operation: string) : {} {
+    const { children } = data.data[operation];
+    console.log("child result", children);    
+    return children;
   }
 
   private _process(data: any, pvName: string, operation: string): void {
@@ -314,8 +401,31 @@ export class ConiqlPlugin implements Connection {
     this.onValueUpdate(pvName, dtype);
   }
 
-  private _subscribe(pvName: string): Subscription {
-    return this.client
+  private _subscribe_device(deviceName: string): string {
+    this.client
+    .query({
+      query: DEVICE_QUERY,
+      variables: { devName: deviceName.replace("csim://","") }
+    })
+    .then(data => {
+      this._process_device(data, deviceName, "getDevice");
+    })
+    return '{"key" : "value"}';
+    }
+
+  private _subscribe(pvName: string): void {
+    // Make a query to get the initial values.
+    // https://github.com/apollographql/subscriptions-transport-ws/issues/170
+    this.client
+      .query({
+        query: PV_QUERY,
+        variables: { pvName: pvName }
+      })
+      .then(data => {
+        this._process(data, pvName, "getChannel");
+      });
+    // Subscribe to further updates.
+    this.client
       .subscribe({
         query: PV_SUBSCRIPTION,
         variables: { pvName: pvName }
@@ -341,28 +451,27 @@ export class ConiqlPlugin implements Connection {
   public subscribe(pvName: string, type: SubscriptionType): string {
     // TODO: How to handle multiple subscriptions of different types to the same channel?
     if (this.subscriptions[pvName] === undefined) {
-      this.subscriptions[pvName] = this._subscribe(pvName);
+      this._subscribe(pvName);
     }
+    this.subscriptions[pvName] = true;
     return pvName;
+  }
+
+  public subscribe_device(deviceName: string) : string {
+    console.log("subscribing_device");
+    return this._subscribe_device(deviceName);
   }
 
   public putPv(pvName: string, value: DType): void {
     log.debug(`Putting ${value} to ${pvName}.`);
     const variables = {
       pvName: pvName,
-      value: DType.coerceString(value)
+      value: value.getStringValue()
     };
     this.client.mutate({ mutation: PV_MUTATION, variables: variables });
   }
 
   public unsubscribe(pvName: string): void {
-    // Note that connectionMiddleware handles multiple subscriptions
-    // for the same PV at present, so if this method is called then
-    // there is no further need for this PV.
-    // Note that a bug in tartiflette-aiohttp means that the
-    // unsubscribe does not work on Python 3.8.
-    // https://github.com/tartiflette/tartiflette-aiohttp/pull/81
-    this.subscriptions[pvName].unsubscribe();
-    delete this.subscriptions[pvName];
+    // TODO: handle unsubscribing.
   }
 }

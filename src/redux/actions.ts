@@ -3,6 +3,7 @@ import { ConnectionState, SubscriptionType } from "../connection/plugin";
 
 export const CONNECTION_CHANGED = "connection_changed";
 export const SUBSCRIBE = "subscribe";
+export const SUBSCRIBE_DEVICE = "subscribe_device";
 export const UNSUBSCRIBE = "unsubscribe";
 export const VALUE_CHANGED = "value_changed";
 export const VALUES_CHANGED = "values_changed";
@@ -33,6 +34,15 @@ export interface Subscribe {
     effectivePvName: string;
     type: SubscriptionType;
   };
+}
+
+export interface SubscribeDevice {
+  type: typeof SUBSCRIBE_DEVICE;
+  payload: {
+    componentId: string;
+    deviceName: string;
+    description: string;
+  }
 }
 
 export interface Unsubscribe {
@@ -67,6 +77,7 @@ export interface WritePv {
 export type Action =
   | ConnectionChanged
   | Subscribe
+  | SubscribeDevice
   | Unsubscribe
   | ValueChanged
   | ValuesChanged
