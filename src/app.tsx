@@ -84,9 +84,12 @@ const App: React.FC = (): JSX.Element => {
               <Profiler id="Dynamic Page Profiler" onRender={onRenderCallback}>
                 <EmbeddedDisplay
                   position={new RelativePosition()}
-                  file="app.json"
-                  filetype="json"
-                  defaultProtocol="pva"
+                  file={{
+                    path: "app.json",
+                    type: "json",
+                    defaultProtocol: "pva",
+                    macros: {}
+                  }}
                 />
               </Profiler>
             </div>

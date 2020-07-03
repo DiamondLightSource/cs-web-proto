@@ -28,35 +28,38 @@ export function putUrlInfoToHistory(history: History, info: UrlInfo): void {
 // Add or update a page
 export function updatePageDesciption(
   info: UrlInfo,
-  page: string,
-  desc: FileDescription
+  location: string,
+  file: FileDescription
 ): UrlInfo {
-  return { ...info, [page]: desc };
+  return { ...info, [location]: file };
 }
 
 // Remove a page
-export function removePageDescription(info: UrlInfo, page: string): UrlInfo {
-  const { [page]: value, ...remainingInfo } = info;
+export function removePageDescription(
+  info: UrlInfo,
+  location: string
+): UrlInfo {
+  const { [location]: value, ...remainingInfo } = info;
   return remainingInfo;
 }
 
 export function updateTabDesciption(
   info: UrlInfo,
-  tab: string,
-  page: string,
-  desc: FileDescription
+  location: string,
+  name: string,
+  file: FileDescription
 ): UrlInfo {
   // Using pattern found at https://redux.js.org/recipes/structuring-reducers/immutable-update-patterns
-  return { ...info, [tab]: { ...info[tab], [page]: desc } };
+  return { ...info, [location]: { ...info[location], [name]: file } };
 }
 
 // Remove a page
 export function removeTabDescription(
   info: UrlInfo,
-  tab: string,
-  page: string
+  location: string,
+  name: string
 ): UrlInfo {
-  const tabInfo = info[tab] as UrlInfo;
-  const { [page]: value, ...remainingInfo } = tabInfo;
-  return { ...info, [tab]: remainingInfo };
+  const tabInfo = info[location] as UrlInfo;
+  const { [name]: value, ...remainingInfo } = tabInfo;
+  return { ...info, [location]: remainingInfo };
 }

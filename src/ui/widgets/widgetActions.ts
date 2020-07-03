@@ -83,17 +83,16 @@ export const getActionDescription = (action: WidgetAction): string => {
         return `Open ${action.openWebpageInfo.url}`;
       }
     case OPEN_PAGE:
-      console.log(action.dynamicInfo.description);
       if (action.dynamicInfo.description) {
         return action.dynamicInfo.description;
       } else {
-        return `Open ${action.dynamicInfo.name}`;
+        return `Open page ${action.dynamicInfo.name}`;
       }
     case CLOSE_PAGE:
       if (action.dynamicInfo.description) {
         return action.dynamicInfo.description;
       } else {
-        return `Open ${action.dynamicInfo.name}`;
+        return `Close page ${action.dynamicInfo.name}`;
       }
     case OPEN_TAB:
       if (action.dynamicInfo.description) {

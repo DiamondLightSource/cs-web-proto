@@ -39,10 +39,12 @@ export const NavigationTabsComponent = (
   const children = Object.values(props.tabs).map((child, index) => (
     <EmbeddedDisplay
       position={new RelativePosition()}
-      file={child?.filename || ""}
-      filetype={child?.filetype || "json"}
-      defaultProtocol="pva"
-      macros={child?.macros}
+      file={{
+        path: child?.filename || "",
+        type: child?.filetype || "json",
+        defaultProtocol: "pva",
+        macros: child?.macros || {}
+      }}
       key={index}
     />
   ));

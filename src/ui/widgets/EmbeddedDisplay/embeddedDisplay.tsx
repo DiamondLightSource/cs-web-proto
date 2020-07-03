@@ -13,13 +13,7 @@ import { MacroContext, MacroContextType } from "../../../types/macros";
 import { RelativePosition, AbsolutePosition } from "../../../types/position";
 import { WidgetPropType } from "../widgetProps";
 import { registerWidget } from "../register";
-import {
-  StringProp,
-  InferWidgetProps,
-  ChoiceProp,
-  MacrosPropOpt,
-  StringPropOpt
-} from "../propTypes";
+import { InferWidgetProps, StringPropOpt, FilePropType } from "../propTypes";
 import { BaseUrlContext } from "../../../baseUrl";
 import { parseOpi } from "./opiParser";
 import { parseJson } from "./jsonParser";
@@ -47,10 +41,7 @@ export function errorWidget(message: string): WidgetDescription {
 
 const EmbeddedDisplayProps = {
   ...WidgetPropType,
-  file: StringProp,
-  filetype: ChoiceProp(["json", "bob", "opi"]),
-  defaultProtocol: StringProp,
-  macros: MacrosPropOpt,
+  file: FilePropType,
   highlight: StringPropOpt
 };
 
@@ -62,10 +53,10 @@ export const EmbeddedDisplay = (
   const baseUrl = useContext(BaseUrlContext);
 
   let file: string;
-  if (!props.file.startsWith("http")) {
-    file = `${baseUrl}/${props.filetype}/${props.file}`;
+  if (!props.file.path.startsWith("http")) {
+    file = `${baseUrl}/${props.file.type}/${props.file.path}`;
   } else {
-    file = props.file;
+    file = props.file.path;
   }
 
   // Using directly from React for testing purposes
@@ -99,15 +90,15 @@ export const EmbeddedDisplay = (
     let description = EMPTY_WIDGET;
     if (contents !== "") {
       // Convert the contents to widget description style object
-      switch (props.filetype) {
+      switch (props.file.type) {
         case "bob":
-          description = parseBob(contents, props.defaultProtocol);
+          description = parseBob(contents, props.file.defaultProtocol);
           break;
         case "json":
-          description = parseJson(contents, props.defaultProtocol);
+          description = parseJson(contents, props.file.defaultProtocol);
           break;
         case "opi":
-          description = parseOpi(contents, props.defaultProtocol);
+          description = parseOpi(contents, props.file.defaultProtocol);
           break;
       }
     }
@@ -147,7 +138,7 @@ export const EmbeddedDisplay = (
 
   // Include and override parent macros with those from the prop.
   const parentMacros = useContext(MacroContext).macros;
-  const embeddedDisplayMacros = props.macros ?? {};
+  const embeddedDisplayMacros = props.file.macros ?? {};
   const embeddedDisplayMacroContext: MacroContextType = {
     // Currently not allowing changing the macros of an embedded display.
     updateMacro: (key: string, value: string): void => {},

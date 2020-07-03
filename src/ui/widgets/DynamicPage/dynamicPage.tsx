@@ -87,11 +87,13 @@ const DynamicPageComponent = (
         </div>
       </div>
       <EmbeddedDisplay
-        file={file}
-        filetype="json"
-        macros={macros}
+        file={{
+          path: file,
+          type: "json",
+          macros: macros,
+          defaultProtocol: pageDesc.defaultProtocol
+        }}
         position={new RelativePosition()}
-        defaultProtocol={pageDesc.defaultProtocol}
       />
     </div>
   );

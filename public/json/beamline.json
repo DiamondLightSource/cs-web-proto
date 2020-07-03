@@ -47,9 +47,12 @@
             {
               "type": "embeddedDisplay",
               "position": "relative",
-              "file": "synoptic.json",
-              "filetype": "json",
-              "defaultProtocol": "ca"
+              "file": {
+                "path": "synoptic.json",
+                "type": "json",
+                "macros": {},
+                "defaultProtocol": "ca"
+              }
             }
           ]
         },

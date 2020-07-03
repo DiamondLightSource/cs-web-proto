@@ -32,9 +32,12 @@
           "type": "embeddedDisplay",
           "position": "relative",
           "width": "100%",
-          "file": "drawer.json",
-          "filetype": "json",
-          "defaultProtocol": "pva"
+          "file": {
+            "path": "drawer.json",
+            "type": "json",
+            "defaultProtocol": "pva",
+            "macros": {}
+          }
         }
       ]
     }

@@ -115,16 +115,18 @@ const OpenWebpagePropType = PropTypes.shape({
   }).isRequired
 });
 
+export const FilePropType = PropTypes.shape({
+  path: StringProp,
+  type: PropTypes.oneOf(["json", "bob", "opi"]),
+  macros: MacrosProp,
+  defaultProtocol: StringProp
+}).isRequired;
+
 export const DynamicContentPropType = PropTypes.shape({
   name: StringProp,
   location: StringProp,
   description: StringPropOpt,
-  file: PropTypes.shape({
-    path: StringProp,
-    type: PropTypes.oneOf(["json", "bob", "opi"]),
-    macros: MacrosProp,
-    defaultProtocol: StringProp
-  })
+  file: FilePropType
 });
 
 export interface FileDescription {
