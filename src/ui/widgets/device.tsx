@@ -43,15 +43,9 @@ const DeviceComponent = (
   props: InferWidgetProps<typeof DeviceProps>
 ): JSX.Element => {
 
-  /* Add connection to PV and then recursively wrap widgets */
-
-  console.log("testing ...", props.deviceName);
-
+  console.log("to display?");
   let components : string = '';
-  console.log("aiming ...");
   components = useDevice("", "csim://"+props.deviceName);
-
-  console.log("what is ...", components);
 
   let description = parseJson(components, "pva");
   if (props.deviceName == "Xspress3.Channel1") {

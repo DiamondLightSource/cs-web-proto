@@ -4,6 +4,7 @@ import {
   VALUES_CHANGED,
   Action,
   SUBSCRIBE,
+  SUBSCRIBE_DEVICE,
   WRITE_PV,
   CONNECTION_CHANGED,
   UNSUBSCRIBE,
@@ -14,6 +15,7 @@ import { DType, mergeDType } from "../types/dtypes";
 
 const initialState: CsState = {
   valueCache: {},
+  deviceCache: {},
   globalMacros: { SUFFIX: "1" },
   effectivePvNameMap: {},
   subscriptions: {}
@@ -33,6 +35,10 @@ export interface ValueCache {
   [key: string]: FullPvState;
 }
 
+export interface DeviceCache {
+  [key: string]: string;
+}
+
 export interface Subscriptions {
   [pv: string]: string[];
 }
@@ -40,6 +46,7 @@ export interface Subscriptions {
 /* The shape of the store for the entire application. */
 export interface CsState {
   valueCache: ValueCache;
+  deviceCache: DeviceCache;
   effectivePvNameMap: { [pvName: string]: string };
   globalMacros: MacroMap;
   subscriptions: Subscriptions;
@@ -105,6 +112,12 @@ export function csReducer(state = initialState, action: Action): CsState {
         subscriptions: newSubscriptions,
         effectivePvNameMap: newEffectivePvMap
       };
+    }
+    case SUBSCRIBE_DEVICE: {
+      const { deviceName, value, description } = action.payload;
+      let newDeviceCache = state.deviceCache;
+      newDeviceCache[deviceName] = value;
+      return { ...state, deviceCache: newDeviceCache };
     }
     case UNSUBSCRIBE: {
       const newEffectivePvMap = { ...state.effectivePvNameMap };

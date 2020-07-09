@@ -16,6 +16,14 @@ export function pvStateSelector(
   return results;
 }
 
+export function deviceSelector(
+  deviceName: string,
+  state: CsState
+): string {
+  console.log("Device", deviceName, state.deviceCache[deviceName]);
+  return state.deviceCache[deviceName];
+}
+
 /* Used for preventing re-rendering if the results are equivalent.
    Note that if the state for a particular PV hasn't changed, we will
    get back the same object as last time so we are safe to compare them.
@@ -40,3 +48,10 @@ export function pvStateComparator(
   }
   return true;
 }
+  
+  export function temp(
+    before: string,
+    after: string
+  ): boolean {
+    return true;
+  }

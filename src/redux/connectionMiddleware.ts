@@ -33,6 +33,17 @@ function valueChanged(
   });
 }
 
+function deviceQueryChanged(
+  store: MiddlewareAPI,
+  deviceName: string,
+  value: string
+): void {
+  store.dispatch({
+    type: SUBSCRIBE_DEVICE,
+    payload: { deviceName: deviceName, value: value }
+  });
+}
+
 export const connectionMiddleware = (connection: Connection) => (
   store: MiddlewareAPI
 ) => (next: Dispatch<Action>): any => (action: Action): Action => {
@@ -41,7 +52,8 @@ export const connectionMiddleware = (connection: Connection) => (
       // Partial function application.
       (pvName: string, value: ConnectionState): void =>
         connectionChanged(store, pvName, value),
-      (pvName: string, value: DType): void => valueChanged(store, pvName, value)
+      (pvName: string, value: DType): void => valueChanged(store, pvName, value),
+      (deviceName: string, value: string): void => deviceQueryChanged(store, deviceName, value)
     );
   }
   console.log("action", action.type);
@@ -61,14 +73,15 @@ export const connectionMiddleware = (connection: Connection) => (
       break;
     }
     case SUBSCRIBE_DEVICE: {
-      let { componentId, deviceName, description } = action.payload;
+      let { deviceName, description } = action.payload;
       // Are we already subscribed?
       description = connection.subscribe_device(deviceName);
       action = {
         ...action,
         payload: {
           ...action.payload,
-          deviceName: deviceName
+          deviceName: deviceName,
+          description: description
         }
       };
       break;

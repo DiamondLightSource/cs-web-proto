@@ -39,8 +39,8 @@ export interface Subscribe {
 export interface SubscribeDevice {
   type: typeof SUBSCRIBE_DEVICE;
   payload: {
-    componentId: string;
     deviceName: string;
+    value: string;
     description: string;
   }
 }

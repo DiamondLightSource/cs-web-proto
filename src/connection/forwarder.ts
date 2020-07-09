@@ -2,6 +2,7 @@ import {
   Connection,
   ConnectionChangedCallback,
   ValueChangedCallback,
+  DeviceQueryCallback,
   SubscriptionType
 } from "./plugin";
 
@@ -32,7 +33,6 @@ export class ConnectionForwarder implements Connection {
 
   public subscribe_device(deviceName: string): string {
     const connection = this.getConnection(deviceName);
-    console.log("trying to get connection");
     return connection.subscribe_device(deviceName);
   }
 
@@ -52,12 +52,13 @@ export class ConnectionForwarder implements Connection {
 
   public connect(
     connectionCallback: ConnectionChangedCallback,
-    valueCallback: ValueChangedCallback
+    valueCallback: ValueChangedCallback,
+    deviceQueryCallback: DeviceQueryCallback
   ): void {
     for (const [, connection] of this.prefixConnections) {
       if (connection !== undefined) {
         if (!connection.isConnected()) {
-          connection.connect(connectionCallback, valueCallback);
+          connection.connect(connectionCallback, valueCallback, deviceQueryCallback);
         }
       }
     }

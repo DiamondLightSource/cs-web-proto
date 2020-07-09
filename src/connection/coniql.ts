@@ -17,8 +17,10 @@ import {
   Connection,
   ConnectionChangedCallback,
   ValueChangedCallback,
+  DeviceQueryCallback,
   nullConnCallback,
   nullValueCallback,
+  nullDeviceQueryCallback,
   SubscriptionType
 } from "./plugin";
 import { SubscriptionClient } from "subscriptions-transport-ws";
@@ -289,10 +291,12 @@ export class ConiqlPlugin implements Connection {
   private client: ApolloClient<NormalizedCacheObject>;
   private onConnectionUpdate: ConnectionChangedCallback;
   private onValueUpdate: ValueChangedCallback;
+  private onDeviceQueryUpdate: DeviceQueryCallback;
   private connected: boolean;
   private wsClient: SubscriptionClient;
   private disconnected: string[] = [];
   private subscriptions: { [pvName: string]: boolean };
+  private devices: { [deviceName: string]: boolean };
 
   public constructor(socket: string) {
     const fragmentMatcher = new IntrospectionFragmentMatcher({
@@ -323,8 +327,10 @@ export class ConiqlPlugin implements Connection {
     this.client = new ApolloClient({ link, cache });
     this.onConnectionUpdate = nullConnCallback;
     this.onValueUpdate = nullValueCallback;
+    this.onDeviceQueryUpdate = nullDeviceQueryCallback;
     this.connected = false;
     this.subscriptions = {};
+    this.devices = {};
   }
 
   public createLink(socket: string): ApolloLink {
@@ -371,10 +377,12 @@ export class ConiqlPlugin implements Connection {
 
   public connect(
     connectionCallback: ConnectionChangedCallback,
-    valueCallback: ValueChangedCallback
+    valueCallback: ValueChangedCallback,
+    deviceQueryCallback: DeviceQueryCallback
   ): void {
     this.onConnectionUpdate = connectionCallback;
     this.onValueUpdate = valueCallback;
+    this.onDeviceQueryUpdate = deviceQueryCallback;
     this.connected = true;
   }
 
@@ -382,10 +390,11 @@ export class ConiqlPlugin implements Connection {
     return this.connected;
   }
 
-  private _process_device(data: any, deviceName: string, operation: string) : {} {
+  private _process_device(data: any, deviceName: string, operation: string) : void {
+    // Process a device 
     const { children } = data.data[operation];
-    console.log("child result", children);    
-    return children;
+    console.log("to parse", children);
+    this.onDeviceQueryUpdate(deviceName, children);
   }
 
   private _process(data: any, pvName: string, operation: string): void {
@@ -401,16 +410,14 @@ export class ConiqlPlugin implements Connection {
     this.onValueUpdate(pvName, dtype);
   }
 
-  private _subscribe_device(deviceName: string): string {
+  private _subscribe_device(deviceName: string): void {
     this.client
     .query({
       query: DEVICE_QUERY,
-      variables: { devName: deviceName.replace("csim://","") }
-    })
-    .then(data => {
+      variables: { devName: deviceName.replace("csim://","") } //NOT IDEAL TO SWAP OUT CSIM
+    }).then( data => {
       this._process_device(data, deviceName, "getDevice");
-    })
-    return '{"key" : "value"}';
+      });
     }
 
   private _subscribe(pvName: string): void {
@@ -458,8 +465,11 @@ export class ConiqlPlugin implements Connection {
   }
 
   public subscribe_device(deviceName: string) : string {
-    console.log("subscribing_device");
-    return this._subscribe_device(deviceName);
+    if (this.devices[deviceName] === undefined) {
+      this._subscribe_device(deviceName);
+    }
+    this.devices[deviceName] = true;
+    return deviceName;
   }
 
   public putPv(pvName: string, value: DType): void {
