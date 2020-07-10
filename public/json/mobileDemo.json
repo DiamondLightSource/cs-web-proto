@@ -455,7 +455,14 @@
       "position": "relative",
       "margin": "20px 0 0 0",
       "width": "100%",
-      "routePath": "testing"
+      "location": "testing"
+    },
+    {
+      "type": "dynamictabs",
+      "position": "relative",
+      "margin": "20px 0 0 0",
+      "width": "100%",
+      "location": "testing"
     },
     {
       "type": "flexcontainer",
@@ -483,7 +490,7 @@
             "executeAsOne": false,
             "actions": [
               {
-                "type": "OPEN_TAB",
+                "type": "OPEN_PAGE",
                 "dynamicInfo": {
                   "location": "testing",
                   "name": "One",
@@ -521,7 +528,7 @@
             "executeAsOne": false,
             "actions": [
               {
-                "type": "OPEN_TAB",
+                "type": "OPEN_PAGE",
                 "dynamicInfo": {
                   "location": "testing",
                   "name": "Two",
@@ -559,7 +566,7 @@
             "executeAsOne": false,
             "actions": [
               {
-                "type": "OPEN_TAB",
+                "type": "OPEN_PAGE",
                 "dynamicInfo": {
                   "location": "testing",
                   "name": "Three",
@@ -597,7 +604,7 @@
             "executeAsOne": false,
             "actions": [
               {
-                "type": "OPEN_TAB",
+                "type": "OPEN_PAGE",
                 "dynamicInfo": {
                   "location": "testing",
                   "name": "Four",

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useContext, useState } from "react";
 
 import { Widget } from "../widget";
 import { WidgetPropType } from "../widgetProps";
@@ -12,16 +12,16 @@ import {
 } from "../propTypes";
 import { EmbeddedDisplay } from "../EmbeddedDisplay/embeddedDisplay";
 import { RelativePosition } from "../../../types/position";
-import { ActionButton } from "../ActionButton/actionButton";
-import { CLOSE_TAB } from "../widgetActions";
-import { Color } from "../../../types/color";
 
 import classes from "./navigationTabs.module.css";
-import { useHistory } from "react-router-dom";
-import { getUrlInfoFromHistory } from "../urlControl";
+import {
+  FileContext,
+  FileDescription,
+  fileDescEqual
+} from "../../../fileContext";
 
 export const DynamicTabsProps = {
-  routePath: StringProp,
+  location: StringProp,
   maxHeight: StringOrNumPropOpt,
   maxWidth: StringOrNumPropOpt,
   minHeight: StringOrNumPropOpt,
@@ -32,73 +32,80 @@ export const DynamicTabsProps = {
 export const DynamicTabsComponent = (
   props: InferWidgetProps<typeof DynamicTabsProps>
 ): JSX.Element => {
-  const history = useHistory();
-  const currentUrlInfo = getUrlInfoFromHistory(history);
-  const [activeTab, setActiveTab] = useState("");
-  const [tabNumber, setTabNumber] = useState(0);
+  const fileContext = useContext(FileContext);
+  const [selectedTab, setSelectedTab] = useState<string>("");
+  const [selectedTabExt, setSelectedTabExt] = useState<string>("");
+  const [openTabs, setOpenTabs] = useState<[string, FileDescription][]>([]);
+  const [name, locationFile] = fileContext.locations[props.location] ?? [
+    "",
+    undefined
+  ];
+  const tabJustOpened = name !== "" && selectedTabExt !== name;
 
-  const tabs = currentUrlInfo[props.routePath] ?? {};
+  if (tabJustOpened) {
+    setSelectedTab(name);
+    setSelectedTabExt(name);
+  }
 
-  // Using obect map method found here: https://stackoverflow.com/questions/14810506/map-function-for-objects-instead-of-arrays
+  let matched = false;
+  for (const [, tab] of openTabs) {
+    if (fileDescEqual(locationFile, tab)) {
+      matched = true;
+    }
+  }
+  if (tabJustOpened && !matched && locationFile !== undefined) {
+    const tabsCopy = openTabs.slice();
+    tabsCopy.push([name, locationFile]);
+    setOpenTabs(tabsCopy);
+  }
+
+  // Using object map method found here: https://stackoverflow.com/questions/14810506/map-function-for-objects-instead-of-arrays
   const children = Object.fromEntries(
-    Object.entries(tabs).map(([key, child]) => [
-      key,
+    Object.values(openTabs).map(([name, description]) => [
+      name,
       <EmbeddedDisplay
         position={new RelativePosition()}
         file={{
-          path: child?.path || "",
-          type: child?.type || "json",
-          defaultProtocol: child?.defaultProtocol ?? "ca",
-          macros: child?.macros || {}
+          path: description?.path || "",
+          type: description?.type || "json",
+          defaultProtocol: description?.defaultProtocol ?? "ca",
+          macros: description?.macros || {}
         }}
-        key={key}
+        key={name}
       />
     ])
   );
 
-  useEffect(() => {
-    // If a new key has been added
-    if (tabNumber < Object.keys(children).length) {
-      // Open the new tab
-      setActiveTab(Object.keys(children).slice(-1)[0]);
-    }
-    // Else if a key has been removed
-    else if (tabNumber > Object.keys(children).length) {
-      // If the active tab is still around, keep it open
-      // Otherwise open the "last" tab
-      setActiveTab(
-        children[activeTab] ? activeTab : Object.keys(children).slice(-1)[0]
-      );
-    }
-
-    setTabNumber(Object.keys(children).length);
-  }, [children, activeTab, tabNumber]);
-
   return (
     <div>
       <div className={classes.Bar}>
-        {Object.entries(tabs).map(
-          ([key, child]): JSX.Element => (
+        {openTabs.map(
+          ([tabName, description], index): JSX.Element => (
             <div
               style={{
                 display: "flex",
                 justifyContent: "space-between"
               }}
               className={classes.Button}
-              key={key}
+              key={index}
             >
               <button
                 onClick={(): void => {
-                  setActiveTab(key);
+                  for (const [name1] of Object.values(openTabs)) {
+                    if (name1 === tabName) {
+                      setSelectedTab(tabName);
+                    }
+                  }
                 }}
                 style={{
-                  borderStyle: activeTab === key ? "inset" : "",
+                  borderStyle: selectedTab === tabName ? "inset" : "",
                   flexGrow: 1,
                   fontSize: "2rem",
-                  fontWeight: "bold"
+                  fontWeight: "bold",
+                  backgroundColor: selectedTab === tabName ? "red" : "green"
                 }}
               >
-                {key}
+                {tabName}
               </button>
               <div
                 style={{
@@ -108,31 +115,26 @@ export const DynamicTabsComponent = (
                   flexShrink: 0
                 }}
               >
-                <ActionButton
-                  position={new RelativePosition("100%", "100%")}
-                  backgroundColor={Color.parse("#ff3333")}
-                  foregroundColor={Color.parse("#ffffff")}
-                  actions={{
-                    executeAsOne: false,
-                    actions: [
-                      {
-                        type: CLOSE_TAB,
-                        dynamicInfo: {
-                          location: props.routePath,
-                          name: key,
-                          file: child.file
-                        }
-                      }
-                    ]
+                <button
+                  style={{
+                    color: "#ff3333",
+                    backgroundColor: "#ffffff"
                   }}
-                  text="X"
-                />
+                  onClick={() => {
+                    const filteredTabs = openTabs.filter(([name, desc]) => {
+                      return !fileDescEqual(description, desc);
+                    });
+                    setOpenTabs(filteredTabs);
+                  }}
+                >
+                  X
+                </button>
               </div>
             </div>
           )
         )}
       </div>
-      {children[activeTab]}
+      {children[selectedTab]}
     </div>
   );
 };

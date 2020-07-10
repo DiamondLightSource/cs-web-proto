@@ -4,6 +4,7 @@ import { Font } from "../../types/font";
 import { Border } from "../../types/border";
 import { RelativePosition, AbsolutePosition } from "../../types/position";
 import { PV } from "../../types/pv";
+import { FileDescription } from "../../fileContext";
 
 export type ExcludeNulls<T> = {
   [P in keyof T]: Exclude<T[P], null>;
@@ -128,14 +129,6 @@ export const DynamicContentPropType = PropTypes.shape({
   description: StringPropOpt,
   file: FilePropType
 });
-
-export interface FileDescription {
-  // All information required for an embedded display
-  path: string; // Name or file of path (without suffix ?)
-  type: "json" | "opi" | "bob"; // File type - which parser and suffix
-  macros: { [key: string]: string }; // Macros
-  defaultProtocol: string; // Default PV prefix for parser
-}
 
 export interface DynamicContent {
   name: string; // Name associated with the content

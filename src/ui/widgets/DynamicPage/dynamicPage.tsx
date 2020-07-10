@@ -1,25 +1,19 @@
-import React from "react";
+import React, { useContext } from "react";
 import log from "loglevel";
-import { useHistory } from "react-router-dom";
 
 import { Widget, commonCss } from "../widget";
 import { WidgetPropType } from "../widgetProps";
 import { ActionButton } from "../ActionButton/actionButton";
 import { CLOSE_PAGE } from "../widgetActions";
 import { registerWidget } from "../register";
-import {
-  StringProp,
-  InferWidgetProps,
-  BorderPropOpt,
-  FileDescription
-} from "../propTypes";
+import { StringProp, InferWidgetProps, BorderPropOpt } from "../propTypes";
 import { EmbeddedDisplay } from "../EmbeddedDisplay/embeddedDisplay";
 import { Color } from "../../../types/color";
 import { RelativePosition } from "../../../types/position";
-import { getUrlInfoFromHistory } from "../urlControl";
+import { FileContext } from "../../../fileContext";
 
 const DynamicPageProps = {
-  routePath: StringProp,
+  location: StringProp,
   border: BorderPropOpt
 };
 
@@ -28,14 +22,13 @@ const DynamicPageComponent = (
   props: InferWidgetProps<typeof DynamicPageProps>
 ): JSX.Element => {
   const style = commonCss(props);
-  const history = useHistory();
-  const currentUrlInfo = getUrlInfoFromHistory(history);
+  const fileContext = useContext(FileContext);
 
   let file;
   try {
-    file = currentUrlInfo[props.routePath] as FileDescription;
+    file = fileContext.locations[props.location][1];
   } catch (error) {
-    log.warn(currentUrlInfo);
+    log.warn(fileContext);
     log.warn(error);
     return <div></div>;
   }
@@ -68,8 +61,8 @@ const DynamicPageComponent = (
                 {
                   type: CLOSE_PAGE,
                   dynamicInfo: {
-                    name: props.routePath,
-                    location: props.routePath,
+                    name: props.location,
+                    location: props.location,
                     file: file,
                     description: "Close"
                   }
