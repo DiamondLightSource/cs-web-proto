@@ -145,7 +145,6 @@ function coniqlToDType(
   if (status) {
     alarm = new DAlarm(QUALITY_TYPES[status.quality], status.message);
   }
-  console.log(value);
   if (display) {
     ddisplay = new DDisplay({
       description: display.description,
@@ -393,7 +392,6 @@ export class ConiqlPlugin implements Connection {
   private _process_device(data: any, deviceName: string, operation: string) : void {
     // Process a device 
     const { children } = data.data[operation];
-    console.log("to parse", children);
     this.onDeviceQueryUpdate(deviceName, children);
   }
 

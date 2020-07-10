@@ -4,6 +4,7 @@ import { ConnectionState, SubscriptionType } from "../connection/plugin";
 export const CONNECTION_CHANGED = "connection_changed";
 export const SUBSCRIBE = "subscribe";
 export const SUBSCRIBE_DEVICE = "subscribe_device";
+export const QUERY_DEVICE = "query_device";
 export const UNSUBSCRIBE = "unsubscribe";
 export const VALUE_CHANGED = "value_changed";
 export const VALUES_CHANGED = "values_changed";
@@ -40,8 +41,15 @@ export interface SubscribeDevice {
   type: typeof SUBSCRIBE_DEVICE;
   payload: {
     deviceName: string;
-    value: string;
     description: string;
+  }
+}
+
+export interface QueryDevice {
+  type: typeof QUERY_DEVICE;
+  payload: {
+    deviceName: string;
+    query: string;
   }
 }
 
@@ -78,6 +86,7 @@ export type Action =
   | ConnectionChanged
   | Subscribe
   | SubscribeDevice
+  | QueryDevice
   | Unsubscribe
   | ValueChanged
   | ValuesChanged

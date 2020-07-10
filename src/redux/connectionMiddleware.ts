@@ -4,6 +4,7 @@ import {
   CONNECTION_CHANGED,
   SUBSCRIBE,
   SUBSCRIBE_DEVICE,
+  QUERY_DEVICE,
   WRITE_PV,
   VALUE_CHANGED,
   UNSUBSCRIBE,
@@ -36,11 +37,11 @@ function valueChanged(
 function deviceQueryChanged(
   store: MiddlewareAPI,
   deviceName: string,
-  value: string
+  query: string
 ): void {
   store.dispatch({
-    type: SUBSCRIBE_DEVICE,
-    payload: { deviceName: deviceName, value: value }
+    type: QUERY_DEVICE,
+    payload: { deviceName: deviceName, query: query }
   });
 }
 
@@ -56,7 +57,6 @@ export const connectionMiddleware = (connection: Connection) => (
       (deviceName: string, value: string): void => deviceQueryChanged(store, deviceName, value)
     );
   }
-  console.log("action", action.type);
   switch (action.type) {
     case SUBSCRIBE: {
       const { pvName, type } = action.payload;
@@ -73,15 +73,13 @@ export const connectionMiddleware = (connection: Connection) => (
       break;
     }
     case SUBSCRIBE_DEVICE: {
-      let { deviceName, description } = action.payload;
+      let { deviceName } = action.payload;
       // Are we already subscribed?
-      description = connection.subscribe_device(deviceName);
+      connection.subscribe_device(deviceName);
       action = {
         ...action,
         payload: {
-          ...action.payload,
-          deviceName: deviceName,
-          description: description
+          ...action.payload
         }
       };
       break;

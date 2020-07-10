@@ -338,7 +338,6 @@ export class SimulatorPlugin implements Connection {
   }
 
   public subscribe_device(deviceName: string) : string {
-    console.log("in sim!");
     return '{"key" : "value"}';
   }
 

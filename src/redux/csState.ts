@@ -5,6 +5,7 @@ import {
   Action,
   SUBSCRIBE,
   SUBSCRIBE_DEVICE,
+  QUERY_DEVICE,
   WRITE_PV,
   CONNECTION_CHANGED,
   UNSUBSCRIBE,
@@ -113,10 +114,10 @@ export function csReducer(state = initialState, action: Action): CsState {
         effectivePvNameMap: newEffectivePvMap
       };
     }
-    case SUBSCRIBE_DEVICE: {
-      const { deviceName, value, description } = action.payload;
+    case QUERY_DEVICE: {
+      const { deviceName, query } = action.payload;
       let newDeviceCache = state.deviceCache;
-      newDeviceCache[deviceName] = value;
+      newDeviceCache[deviceName] = query;
       return { ...state, deviceCache: newDeviceCache };
     }
     case UNSUBSCRIBE: {

@@ -142,7 +142,6 @@ export function parseJson(jsonString: string, defaultProtocol: string): any {
       (rules: Rule[]): Rule[] => jsonParseRules(rules, defaultProtocol)
     ]
   };
-  console.log("returning", jsonString);
   return parseWidget(
     JSON.parse(jsonString),
     jsonGetTargetWidget,
