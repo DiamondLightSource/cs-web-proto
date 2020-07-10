@@ -1,4 +1,5 @@
 export { ActionButton } from "./ActionButton/actionButton";
+export { Device } from "./Device/device";
 export { Display } from "./Display/display";
 export { DynamicPageWidget } from "./DynamicPage/dynamicPage";
 export { EmbeddedDisplay } from "./EmbeddedDisplay/embeddedDisplay";
@@ -16,5 +17,3 @@ export { SlideControl } from "./SlideControl/slideControl";
 export { DropDown } from "./DropDown/dropDown";
 export { Slideshow } from "./Slideshow/slideshow";
 export { DrawerWidget } from "./Drawer/drawer";
-
-export { Device } from "./device";

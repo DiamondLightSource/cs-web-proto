@@ -1,41 +1,25 @@
 import React from "react";
-import log from "loglevel";
 
-import { Widget, commonCss } from "./widget";
-import { WidgetPropType } from "./widgetProps";
+import { Widget, commonCss } from "./../widget";
+import { WidgetPropType } from "./../widgetProps";
 
 import {
-  IntPropOpt,
-  BoolPropOpt,
   InferWidgetProps,
-  ChoicePropOpt,
-  FontPropOpt,
-  ColorPropOpt,
-  BorderPropOpt,
   StringProp
-} from "./propTypes";
+} from "./../propTypes";
 
-import { parseJson } from "./EmbeddedDisplay/jsonParser";
+import { parseJson } from "./../EmbeddedDisplay/jsonParser";
 
 import {
-  WidgetDescription,
   widgetDescriptionToComponent
-} from "./createComponent";
+} from "./../createComponent";
 
-import { PV } from "../../types/pv";
+import { useDevice } from "../../hooks/useDevice";
 
-import { useDevice } from "../hooks/useDevice";
-
-import { registerWidget } from "./register";
-import { RelativePosition } from "../../types/position";
-import { js2xml } from "xml-js";
+import { registerWidget } from "./../register";
+import { RelativePosition } from "../../../types/position";
 
 const DeviceProps = {
-  //children: ChildrenPropOpt,
-  //overflow: ChoicePropOpt(["scroll", "hidden", "auto", "visible"]),
-  //backgroundColor: ColorPropOpt,
-  //border: BorderPropOpt,
-  //macros: MacrosPropOpt
   deviceName: StringProp
 };
 
