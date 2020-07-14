@@ -1,31 +1,13 @@
 
-interface childInfo {
-  name: string,
-  label: string
+function coniqlToWidget(coniql: string) : string {
+
+  if (coniql === "TEXTUPDATE") {
+    return "readback";
+  }
+
+  return "readback";
+
 }
-
-function coniqlToJSON_childParse(child: {}) : string {
-  return ''
-}
-
-function coniqlToJSON_objectParse(obj : object) : string {
-  return ''; 
-}
-
-//function create_container()
-/*
-      "type": "flexcontainer",
-      "position": "relative",
-      "children": [
-        {
-          "type": "label",
-          "position": "relative",
-          "width": "50%",
-          "text": "Position",
-          "backgroundColor": "transparent"
-        },
-
-*/
 
 export function coniqlToJSON(coniqlQuery: {}) : string {
 
@@ -64,8 +46,10 @@ export function coniqlToJSON(coniqlQuery: {}) : string {
         
         if (__typename === "Channel") {
 
+          var {widget} = child;
+
           JSON_str += ', {\
-                            "type": "progressbar",\
+                            "type": "' + coniqlToWidget(widget) + '",\
                             "position": "relative",\
                             "width":"50%",\
                             "pvName": "' + id + '"\
