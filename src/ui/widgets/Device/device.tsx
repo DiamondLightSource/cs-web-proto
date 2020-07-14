@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Widget, commonCss } from "./../widget";
+import { Widget } from "./../widget";
 import { WidgetPropType } from "./../widgetProps";
 
 import {
@@ -19,6 +19,8 @@ import { useDevice } from "../../hooks/useDevice";
 import { registerWidget } from "./../register";
 import { RelativePosition } from "../../../types/position";
 
+import { coniqlToJSON } from "./coniqlParser";
+
 const DeviceProps = {
   deviceName: StringProp
 };
@@ -28,7 +30,7 @@ const DeviceComponent = (
 ): JSX.Element => {
 
   let components : string = '';
-  components = useDevice("csim://"+props.deviceName);
+  components = coniqlToJSON(useDevice("csim://"+props.deviceName));
 
   let description = parseJson(components, "pva");
   if (props.deviceName == "Xspress3.Channel1") {
@@ -42,7 +44,7 @@ const DeviceComponent = (
     children: [description]
   });
 
-  return <div>{props.deviceName}:{component}</div>;
+  return <div>{props.deviceName}{component}</div>;
 
 };
 

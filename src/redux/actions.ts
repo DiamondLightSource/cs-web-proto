@@ -49,7 +49,7 @@ export interface QueryDevice {
   type: typeof QUERY_DEVICE;
   payload: {
     deviceName: string;
-    query: string;
+    query: {};
   }
 }
 

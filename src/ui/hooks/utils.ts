@@ -19,7 +19,7 @@ export function pvStateSelector(
 export function deviceSelector(
   deviceName: string,
   state: CsState
-): string {
+): {} {
   return state.deviceCache[deviceName];
 }
 
@@ -49,10 +49,10 @@ export function pvStateComparator(
 }
   
   export function deviceComparator(
-    before: string,
-    after: string
+    before: {},
+    after: {}
   ): boolean {
-    if (before !== after) {
+    if (Object.keys(before).length !== Object.keys(after).length) {
       return false;
     }
     return true;

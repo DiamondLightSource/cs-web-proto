@@ -37,7 +37,7 @@ export interface ValueCache {
 }
 
 export interface DeviceCache {
-  [key: string]: string;
+  [key: string]: {};
 }
 
 export interface Subscriptions {

@@ -37,7 +37,7 @@ function valueChanged(
 function deviceQueryChanged(
   store: MiddlewareAPI,
   deviceName: string,
-  query: string
+  query: {}
 ): void {
   store.dispatch({
     type: QUERY_DEVICE,
@@ -54,7 +54,7 @@ export const connectionMiddleware = (connection: Connection) => (
       (pvName: string, value: ConnectionState): void =>
         connectionChanged(store, pvName, value),
       (pvName: string, value: DType): void => valueChanged(store, pvName, value),
-      (deviceName: string, value: string): void => deviceQueryChanged(store, deviceName, value)
+      (deviceName: string, value: {}): void => deviceQueryChanged(store, deviceName, value)
     );
   }
   switch (action.type) {
