@@ -33,10 +33,6 @@ const DeviceComponent = (
   components = coniqlToJSON(useDevice("csim://"+props.deviceName));
 
   let description = parseJson(components, "pva");
-  if (props.deviceName == "Xspress3.Channel1") {
-    const test = '{"type":"progressbar","position":"relative","width":"25%","pvName":"csim://sine(-10,10,100,0.1)"}';
-    description = parseJson(test, "pva");
-  }
 
   const component = widgetDescriptionToComponent({
     position: new RelativePosition("100%","100%"),

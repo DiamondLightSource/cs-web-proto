@@ -30,7 +30,6 @@ function coniqlToJSON_objectParse(obj : object) : string {
 export function coniqlToJSON(coniqlQuery: {}) : string {
 
   var JSON_str = '{"type":"display","position":"relative","overflow":"auto",';
-  //"children":[{"type":"device","deviceName":"Xspress3.Channel1","position":"relative","height":"5vh","width":"50%"},{"type":"progressbar","position":"relative","height":"5vh","width":"50%","pvName":"csim://sine(-10,10,100,0.1)","backgroundColor":"#012265"}]}';
 
   if (coniqlQuery !== undefined) {
 
@@ -40,12 +39,13 @@ export function coniqlToJSON(coniqlQuery: {}) : string {
 
     for (var entry in obj) {
 
+      // Hack for excess ',' - FIX ME
       if (entry !== '0')
         JSON_str += ',';
 
-      console.log("obj", obj[entry]);
-      var {name, label, child, __typename} = obj[entry];
-      console.log("obj", name, label, child, __typename);
+      var {label, child, __typename} = obj[entry];
+
+      // Parse Label
 
       JSON_str += '{"type": "flexcontainer",\
       "position": "relative",\
@@ -53,66 +53,49 @@ export function coniqlToJSON(coniqlQuery: {}) : string {
         {\
           "type": "label",\
           "position": "relative",\
-          "width": "50%",\
           "text":"' + label + '",\
+          "width":"50%",\
           "backgroundColor": "transparent"\
-        }]}';
-      
-      //console.log("obj-", JSON.parse(obj[child]) as childInfo);
+        }';
+        
+        //Parse child
+        
+        var {__typename, id} = child;
+        
+        if (__typename === "Channel") {
 
-    }
+          JSON_str += ', {\
+                            "type": "progressbar",\
+                            "position": "relative",\
+                            "width":"50%",\
+                            "pvName": "' + id + '"\
+                          }';
 
-    //console.log("obj", JSON.parse(obj));
+        }
+        
+        if (__typename === "Device") {
+
+          JSON_str += ', {\
+            "type": "device",\
+            "position": "relative",\
+            "width":"50%",\
+            "deviceName": "' + id + '"\
+          }';
+
+        }
+
+        JSON_str += ']}';
     
-    //console.log("obj", obj);
-
-    //var child_str = '';
-
-    Object.entries(coniqlQuery).forEach(
-      ([key, value]) => {
-        
-        //List of 'NamedChild' - name, label, child, typename
-
-        // if 'child' 'Channel' -> 'display widget'
-        // if 'child' 'Device' - 'plonk part back into this ...'
-        console.log("?", key, value);
-      });
-
-        /*
-        if (key.includes("name") && value === 'NamedChild') {
-        
-          //console.log("? type of child", value);
-        }
-        if (typeof(value) === 'object' && value !== null) {
-        Object.entries(value).forEach(
-          ([ckey, cvalue]) => {
-            console.log("?", ckey, cvalue);
-            console.log("?", ckey, typeof(cvalue));
-            if (ckey.includes("typename")) {
-              console.log("? type of child", cvalue);
-            }
-          }
-        )
-        }
-        console.log("?", typeof(value));
-        //Object.entries(value).forEach(
-        //if (key == "name") {
-        //  console.log("??", value);
-        //}
-    // }
-      }
-      );
-      */
-  //}
-  //else {
-    JSON_str += ']}';
-  //}
     }
-else {
-  JSON_str += '"children":[]}'
-}
-  console.log("hmm", JSON_str);
+  
+    JSON_str += ']}';
+  
+  }
+
+  else {
+    JSON_str += '"children":[]}'
+  }
+
   return JSON_str;
-  //return '{"type":"display","position":"relative","overflow":"auto","backgroundColor":"#012265","children":[{"type":"device","deviceName":"Xspress3.Channel1","position":"relative","height":"5vh","width":"50%"},{"type":"progressbar","position":"relative","height":"5vh","width":"50%","pvName":"csim://sine(-10,10,100,0.1)","backgroundColor":"#012265"}]}';
 
 }
