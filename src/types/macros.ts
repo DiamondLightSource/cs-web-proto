@@ -5,7 +5,7 @@ export interface MacroMap {
   [key: string]: string;
 }
 
-export function macrosEqual(first: MacroMap, second: MacroMap) {
+export function macrosEqual(first: MacroMap, second: MacroMap): boolean {
   // TODO why are the DIDs not matching?
   const { DID: firstDid, ...firstOthers } = first;
   const { DID: secondDid, ...secondOthers } = first;

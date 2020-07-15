@@ -120,11 +120,14 @@ export const DynamicTabsComponent = (
                     color: "#ff3333",
                     backgroundColor: "#ffffff"
                   }}
-                  onClick={() => {
+                  onClick={(): void => {
                     const filteredTabs = openTabs.filter(([name, desc]) => {
                       return !fileDescEqual(description, desc);
                     });
                     setOpenTabs(filteredTabs);
+                    // Keep the last tab open if there are any left
+                    const lastTab = filteredTabs.slice(-1)[0];
+                    setSelectedTab(lastTab ? lastTab[0] : "");
                   }}
                 >
                   X

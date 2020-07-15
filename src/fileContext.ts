@@ -9,7 +9,10 @@ export interface FileDescription {
   defaultProtocol: string; // Default PV prefix for parser
 }
 
-export function fileDescEqual(first: FileDescription, second: FileDescription) {
+export function fileDescEqual(
+  first: FileDescription,
+  second: FileDescription
+): boolean {
   if (first === undefined || second === undefined) {
     return false;
   }
