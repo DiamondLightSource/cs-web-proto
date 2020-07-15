@@ -1,7 +1,6 @@
-import React, { Profiler } from "react";
+import React, { Profiler, useState } from "react";
 import "./app.css";
 import { Provider } from "react-redux";
-import { BrowserRouter, Redirect, Switch } from "react-router-dom";
 import { getStore, initialiseStore } from "./redux/store";
 import log from "loglevel";
 import { lightTheme, darkTheme, ThemeContext } from "./themeContext";
@@ -13,6 +12,12 @@ import { EmbeddedDisplay } from "./ui/widgets";
 import { BaseUrlContext } from "./baseUrl";
 import { onRenderCallback } from "./profilerCallback";
 import { RelativePosition } from "./types/position";
+import {
+  FileContext,
+  FileContextType,
+  LocationCache,
+  FileDescription
+} from "./fileContext";
 
 let settings: any;
 try {
@@ -55,48 +60,55 @@ const App: React.FC = (): JSX.Element => {
   const { toggle, dark } = React.useContext(ThemeContext);
   applyTheme(dark ? darkTheme : lightTheme);
 
+  const [locations, setLocations] = useState<LocationCache>({
+    app: [
+      "home",
+      {
+        path: "home.json",
+        type: "json",
+        macros: {},
+        defaultProtocol: "pva"
+      }
+    ]
+  });
+  const fileContext: FileContextType = {
+    locations: locations,
+    addFile: (location: string, desc: FileDescription, name: string) => {
+      const locationsCopy = { ...locations };
+      locationsCopy[location] = [name, desc];
+      setLocations(locationsCopy);
+    },
+    removeFile: (location: string, desc: FileDescription) => {
+      // TODO: match the description.
+      const locationsCopy = { ...locations };
+      delete locationsCopy[location];
+      setLocations(locationsCopy);
+    }
+  };
+
   return (
-    <BaseUrlContext.Provider value={baseUrl}>
-      <BrowserRouter>
-        <Switch>
-          <Redirect
-            exact
-            from="/"
-            to={
-              "/" +
-              encodeURIComponent(
-                JSON.stringify({
-                  app: {
-                    path: "home.json",
-                    type: "json",
-                    macros: {},
-                    defaultProtocol: "ca"
-                  }
-                })
-              )
-            }
-          />
-          <Provider store={store}>
-            <div className="App">
-              <button type="button" onClick={toggle}>
-                Toggle Theme
-              </button>
-              <Profiler id="Dynamic Page Profiler" onRender={onRenderCallback}>
-                <EmbeddedDisplay
-                  position={new RelativePosition()}
-                  file={{
-                    path: "app.json",
-                    type: "json",
-                    defaultProtocol: "pva",
-                    macros: {}
-                  }}
-                />
-              </Profiler>
-            </div>
-          </Provider>
-        </Switch>
-      </BrowserRouter>
-    </BaseUrlContext.Provider>
+    <FileContext.Provider value={fileContext}>
+      <BaseUrlContext.Provider value={baseUrl}>
+        <Provider store={store}>
+          <div className="App">
+            <button type="button" onClick={toggle}>
+              Toggle Theme
+            </button>
+            <Profiler id="Dynamic Page Profiler" onRender={onRenderCallback}>
+              <EmbeddedDisplay
+                position={new RelativePosition()}
+                file={{
+                  path: "app.json",
+                  type: "json",
+                  defaultProtocol: "pva",
+                  macros: {}
+                }}
+              />
+            </Profiler>
+          </div>
+        </Provider>
+      </BaseUrlContext.Provider>
+    </FileContext.Provider>
   );
 };
 

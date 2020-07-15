@@ -3,7 +3,6 @@ import { WidgetActions, executeActions } from "../widgetActions";
 import { Widget } from "../widget";
 import { PVWidgetPropType } from "../widgetProps";
 import classes from "./actionButton.module.css";
-import { useHistory } from "react-router-dom";
 import { registerWidget } from "../register";
 import {
   ActionsPropType,
@@ -19,6 +18,7 @@ import { Color } from "../../../types/color";
 import { Font } from "../../../types/font";
 import { Border } from "../../../types/border";
 import { MacroContext } from "../../../types/macros";
+import { FileContext } from "../../../fileContext";
 
 export interface ActionButtonProps {
   text: string;
@@ -81,11 +81,11 @@ export const ActionButtonWidget = (
   props: InferWidgetProps<typeof ActionButtonPropType>
 ): JSX.Element => {
   // Function to send the value on to the PV
-  const history = useHistory();
+  const files = useContext(FileContext);
   const parentMacros = useContext(MacroContext).macros;
   function onClick(event: React.MouseEvent<HTMLButtonElement>): void {
     if (props.actions !== undefined)
-      executeActions(props.actions as WidgetActions, history, parentMacros);
+      executeActions(props.actions as WidgetActions, files, parentMacros);
   }
   return (
     <ActionButtonComponent

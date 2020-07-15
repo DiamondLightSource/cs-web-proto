@@ -5,6 +5,27 @@ export interface MacroMap {
   [key: string]: string;
 }
 
+export function macrosEqual(first: MacroMap, second: MacroMap) {
+  // TODO why are the DIDs not matching?
+  const { DID: firstDid, ...firstOthers } = first;
+  const { DID: secondDid, ...secondOthers } = first;
+  for (const key in firstOthers) {
+    if (first.hasOwnProperty(key)) {
+      if (first[key] !== second[key]) {
+        return false;
+      }
+    }
+  }
+  for (const key in secondOthers) {
+    if (second.hasOwnProperty(key)) {
+      if (first[key] !== second[key]) {
+        return false;
+      }
+    }
+  }
+  return true;
+}
+
 /* The MacroContext, used for providing macros to children of
    container widgets.
 

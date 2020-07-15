@@ -1,4 +1,4 @@
-import React, { ReactNode, useState } from "react";
+import React, { ReactNode, useState, useContext } from "react";
 import {
   WidgetActions,
   WidgetAction,
@@ -6,7 +6,7 @@ import {
   getActionDescription
 } from "../../widgets/widgetActions";
 import classes from "./menuWrapper.module.css";
-import { useHistory } from "react-router-dom";
+import { FileContext } from "../../../fileContext";
 
 export const MenuWrapper = (props: {
   pvName: string;
@@ -18,7 +18,7 @@ export const MenuWrapper = (props: {
   const [x, setX] = useState(0);
   const [y, setY] = useState(0);
 
-  const history = useHistory();
+  const files = useContext(FileContext);
 
   const handleClick = (e: React.MouseEvent): void => {
     e.preventDefault();
@@ -34,7 +34,7 @@ export const MenuWrapper = (props: {
   };
 
   function triggerCallback(action: WidgetAction): void {
-    executeAction(action, history);
+    executeAction(action, files);
     setContextOpen(false);
   }
 
