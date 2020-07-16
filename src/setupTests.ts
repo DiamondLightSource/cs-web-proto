@@ -1,3 +1,6 @@
+// React testing library extensions to expect().
+import "@testing-library/jest-dom/extend-expect";
+// Set up Enzyme.
 import { configure } from "enzyme";
 import log from "loglevel";
 import Adapter from "enzyme-adapter-react-16";
