@@ -1,9 +1,9 @@
 import { useEffect } from "react";
-import { getStore } from "../../redux/store";
 import { SUBSCRIBE, UNSUBSCRIBE, WRITE_PV } from "../../redux/actions";
 import { useDispatch } from "react-redux";
 import { DType } from "../../types/dtypes";
 import { SubscriptionType } from "../../connection/plugin";
+import { store } from "../../redux/store";
 
 export function useSubscription(
   componentId: string,
@@ -44,7 +44,7 @@ export function useSubscription(
 }
 
 export function writePv(pvName: string, value: DType): void {
-  getStore().dispatch({
+  store.dispatch({
     type: WRITE_PV,
     payload: { pvName: pvName, value: value }
   });
