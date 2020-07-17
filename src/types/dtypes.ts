@@ -151,6 +151,12 @@ export class DType {
   }
 
   public getStringValue(): string | undefined {
+    if (this.value.stringValue !== undefined) {
+      return this.value.stringValue;
+    } else if (this.value.doubleValue !== undefined && this.display?.choices) {
+      return this.display.choices[this.value.doubleValue];
+    }
+
     return this.value.stringValue;
   }
 

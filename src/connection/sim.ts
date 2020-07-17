@@ -213,8 +213,14 @@ class EnumPv extends SimPv {
   }
 
   public updateValue(value: DType): void {
+    // At the moment, if the value "0" arrived it won't be
+    // interpreted as the index 0.
     const dval = value.getDoubleValue();
     const sval = value.getStringValue();
+    // Allow updating choices?
+    if (value.display?.choices) {
+      this.value.display.choices = value.display.choices;
+    }
     if (dval !== undefined && !isNaN(dval)) {
       // If it is a number, treat as index
       // Indexes outside the range to be ignored
@@ -354,7 +360,7 @@ export class SimulatorPlugin implements Connection {
     return this.onConnectionUpdate !== nullConnCallback;
   }
 
-  protected parseName(
+  public static parseName(
     pvName: string
   ): { initialValue: any; protocol: string; keyName: string } {
     const parts = pvName.split("#");
@@ -410,7 +416,7 @@ export class SimulatorPlugin implements Connection {
     updateRate: number
   ): { simulator: SimPv | undefined; initialValue: any } {
     let cls;
-    const nameInfo = this.parseName(pvName);
+    const nameInfo = SimulatorPlugin.parseName(pvName);
     let initial;
 
     if (nameInfo.protocol === "loc://") {
@@ -461,7 +467,7 @@ export class SimulatorPlugin implements Connection {
   }
 
   public initSimulator(pvName: string): SimPv | undefined {
-    const nameInfo = this.parseName(pvName);
+    const nameInfo = SimulatorPlugin.parseName(pvName);
 
     if (this.simPvs.get(nameInfo.keyName) === undefined) {
       const simulatorInfo = this.makeSimulator(

@@ -3,3 +3,4 @@ export const baseUrl = "http://localhost:3000" // Base URL to look at to get scr
 export const simulationTime = 100; // Time between sim PV updates (ms)
 export const profilerEnabled = true; // Enable the profiler component
 export const throttlePeriod = 100; // Minimum time between CS value updates (ms)
+export const loglevel = "info"; // Log level passed to the loglevel library.

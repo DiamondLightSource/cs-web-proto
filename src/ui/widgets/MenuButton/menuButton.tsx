@@ -84,9 +84,11 @@ export const SmartMenuButton = (props: {
 }): JSX.Element => {
   // Function to send the value on to the PV
   function onChange(event: React.ChangeEvent<HTMLSelectElement>): void {
+    // The value from the select element is an integer as a string,
+    // so we parse it into a float.
     writePv(
       props.pvName,
-      new DType({ stringValue: event.currentTarget.value })
+      new DType({ doubleValue: parseFloat(event.currentTarget.value) })
     );
   }
 
