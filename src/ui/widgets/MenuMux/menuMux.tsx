@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 
 import { Widget } from "../widget";
 import { PVWidgetPropType } from "../widgetProps";
@@ -43,9 +43,11 @@ export const SmartMenuMux = (props: {
   function onChange(event: React.ChangeEvent<HTMLSelectElement>): void {
     macroContext.updateMacro(props.symbol, event.currentTarget.value);
   }
-  if (macroContext.macros[props.symbol] === undefined) {
-    macroContext.updateMacro(props.symbol, Object.values(props.values)[0]);
-  }
+  useEffect(() => {
+    if (macroContext.macros[props.symbol] === undefined) {
+      macroContext.updateMacro(props.symbol, Object.values(props.values)[0]);
+    }
+  });
 
   return (
     <MenuMuxComponent

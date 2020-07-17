@@ -3,7 +3,7 @@ import "./app.css";
 import { Provider } from "react-redux";
 import { BrowserRouter, Redirect, Switch } from "react-router-dom";
 import { getStore, initialiseStore } from "./redux/store";
-import log from "loglevel";
+import log, { LogLevelDesc } from "loglevel";
 import { lightTheme, darkTheme, ThemeContext } from "./themeContext";
 import { SimulatorPlugin } from "./connection/sim";
 import { ConiqlPlugin } from "./connection/coniql";
@@ -16,20 +16,16 @@ import { RelativePosition } from "./types/position";
 import { Header } from "./ui/components/Header/header";
 import { Footer } from "./ui/components/Footer/footer";
 
-let settings: any;
-try {
-  // Use require so that we can catch this error
-  settings = require("./settings");
-} catch (e) {
-  settings = {};
-}
+const baseUrl = process.env.REACT_APP_BASE_URL ?? "http://localhost:3000";
+const SIMULATION_TIME = parseFloat(
+  process.env.REACT_APP_SIMULATION_TIME ?? "100"
+);
+const THROTTLE_PERIOD = parseFloat(
+  process.env.REACT_APP_THROTTLE_PERIOD ?? "100"
+);
+const CONIQL_SOCKET = process.env.REACT_APP_CONIQL_SOCKET;
 
-const baseUrl = settings.baseUrl ?? "http://localhost:3000";
-const SIMULATION_TIME = settings.simulationTime ?? 100;
-const THROTTLE_PERIOD = settings.throttlePeriod ?? 100;
-const loglevel = settings.loglevel ?? "info";
-
-log.setLevel(loglevel);
+log.setLevel((process.env.REACT_APP_LOG_LEVEL as LogLevelDesc) ?? "info");
 
 function applyTheme(theme: any): void {
   Object.keys(theme).forEach(function(key): void {
@@ -46,8 +42,8 @@ const App: React.FC = (): JSX.Element => {
     ["loc://", simulator],
     ["", fallbackPlugin]
   ];
-  if (settings.coniqlSocket !== undefined) {
-    const coniql = new ConiqlPlugin(settings.coniqlSocket);
+  if (CONIQL_SOCKET !== undefined) {
+    const coniql = new ConiqlPlugin(CONIQL_SOCKET);
     plugins.unshift(["pva://", coniql]);
     plugins.unshift(["ca://", coniql]);
     plugins.unshift(["ssim://", coniql]);

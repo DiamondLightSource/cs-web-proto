@@ -1,15 +1,9 @@
 import log from "loglevel";
 
-let settings: any;
-try {
-  // Use require so that we can catch this error
-  settings = require("./settings");
-} catch (e) {
-  settings = {};
-}
-
-const PROFILE_ENABLED = settings.profilerEnabled ?? false;
-const SIMULATION_TIME = settings.simulationTime ?? 100;
+const PROFILE_ENABLED = process.env.REACT_APP_PROFILER_ENABLED === "true";
+const SIMULATION_TIME = parseFloat(
+  process.env.REACT_APP_SIMULATION_TIME ?? "100"
+);
 
 const recordedTimings = {
   startTime: 0,
