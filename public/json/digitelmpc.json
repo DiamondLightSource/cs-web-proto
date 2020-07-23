@@ -6,12 +6,15 @@
       "type": "embeddedDisplay",
       "position": "relative",
       "margin": "10px",
-      "file": "digitelMpc.opi",
-      "filetype": "opi",
-      "macros": {
-        "device": "pva://TEST",
-        "pv_name": "${pvName}",
-        "pv_value": "${pvValue}"
+      "file": {
+        "path": "digitelMpc.opi",
+        "type": "opi",
+        "macros": {
+          "device": "pva://TEST",
+          "pv_name": "${pvName}",
+          "pv_value": "${pvValue}"
+        },
+        "defaultProtocol": "ca"
       }
     }
   ]

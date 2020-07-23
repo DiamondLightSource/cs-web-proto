@@ -52,15 +52,21 @@
         },
         {
           "type": "embeddedDisplay",
-          "file": "mobileDemo.json",
-          "filetype": "json",
-          "defaultProtocol": "ca"
+          "file": {
+            "path": "mobileDemo.json",
+            "type": "json",
+            "macros": {},
+            "defaultProtocol": "ca"
+          }
         },
         {
           "type": "embeddedDisplay",
-          "file": "performance.json",
-          "filetype": "json",
-          "defaultProtocol": "ca"
+          "file": {
+            "path": "performance.json",
+            "type": "json",
+            "macros": {},
+            "defaultProtocol": "ca"
+          }
         }
       ]
     }

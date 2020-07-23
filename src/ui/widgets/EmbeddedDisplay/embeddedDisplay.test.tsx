@@ -46,9 +46,12 @@ describe("<EmbeddedDisplay>", (): void => {
       const wrapper = shallow(
         <EmbeddedDisplay
           position={new RelativePosition()}
-          file={inputFile}
-          filetype={filetype}
-          defaultProtocol="ca"
+          file={{
+            path: inputFile,
+            type: filetype,
+            defaultProtocol: "ca",
+            macros: {}
+          }}
         />
       );
 
@@ -82,9 +85,12 @@ describe("<EmbeddedDisplay>", (): void => {
     const wrapper = shallow(
       <EmbeddedDisplay
         position={new RelativePosition()}
-        file="TestFile"
-        filetype="bob"
-        defaultProtocol="ca"
+        file={{
+          path: "TestFile",
+          type: "bob",
+          defaultProtocol: "ca",
+          macros: {}
+        }}
       />
     );
 
@@ -128,9 +134,12 @@ describe("<EmbeddedDisplay>", (): void => {
     const wrapper = shallow(
       <EmbeddedDisplay
         position={new RelativePosition()}
-        file="TestFile"
-        filetype="bob"
-        defaultProtocol="ca"
+        file={{
+          path: "TestFile",
+          type: "bob",
+          defaultProtocol: "ca",
+          macros: {}
+        }}
       />
     );
 
@@ -168,9 +177,12 @@ describe("<EmbeddedDisplay>", (): void => {
     const wrapper = shallow(
       <EmbeddedDisplay
         position={new RelativePosition()}
-        file="TestFile"
-        filetype="json"
-        defaultProtocol="ca"
+        file={{
+          path: "TestFile",
+          type: "json",
+          defaultProtocol: "ca",
+          macros: {}
+        }}
       />
     );
 

@@ -4,6 +4,7 @@ import { Font } from "../../types/font";
 import { Border } from "../../types/border";
 import { RelativePosition, AbsolutePosition } from "../../types/position";
 import { PV } from "../../types/pv";
+import { FileDescription } from "../../fileContext";
 
 export type ExcludeNulls<T> = {
   [P in keyof T]: Exclude<T[P], null>;
@@ -115,25 +116,32 @@ const OpenWebpagePropType = PropTypes.shape({
   }).isRequired
 });
 
-const OpenPagePropType = PropTypes.shape({
-  type: StringProp,
-  openPageInfo: PropTypes.shape({
-    page: StringProp,
-    pageDescription: PropTypes.shape({
-      filename: PropTypes.string,
-      filetype: PropTypes.oneOf(["bob", "opi", "json"]),
-      macros: MacrosProp
-    }),
-    description: StringPropOpt
-  }).isRequired
+export const FilePropType = PropTypes.shape({
+  path: StringProp,
+  type: PropTypes.oneOf(["json", "bob", "opi"]),
+  macros: MacrosProp,
+  defaultProtocol: StringProp
+}).isRequired;
+
+export const DynamicContentPropType = PropTypes.shape({
+  name: StringProp,
+  location: StringProp,
+  description: StringPropOpt,
+  file: FilePropType
 });
 
-const ClosePagePropType = PropTypes.shape({
+export interface DynamicContent {
+  name: string; // Name associated with the content
+  location: string; // Location of component to target
+  description?: string; // Optional description of action
+  file: FileDescription;
+}
+// I would like this line to work but unfortunately it doesn't
+// export type DynamicContent = InferWidgetProps<typeof DynamicContentPropType>;
+
+const DynamicActionPropType = PropTypes.shape({
   type: StringProp,
-  closePageInfo: PropTypes.shape({
-    page: StringProp,
-    description: StringPropOpt
-  }).isRequired
+  dynamicInfo: DynamicContentPropType
 });
 
 const WritePvPropType = PropTypes.shape({
@@ -146,8 +154,7 @@ const WritePvPropType = PropTypes.shape({
 });
 
 const ActionPropType = PropTypes.oneOfType([
-  OpenPagePropType,
-  ClosePagePropType,
+  DynamicActionPropType,
   WritePvPropType,
   OpenWebpagePropType
 ]);

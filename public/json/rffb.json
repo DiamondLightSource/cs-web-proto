@@ -4,15 +4,17 @@
   "children": [
     {
       "type": "embeddedDisplay",
-      "filetype": "opi",
       "position": "relative",
       "margin": "10px",
-      "file": "rffb.opi",
-      "defaultProtocol": "ca",
-      "macros": {
-        "device": "SR03S-VA-IONP-03",
-        "pv_name": "${pvName}",
-        "pv_value": "${pvValue}"
+      "file": {
+        "path": "rffb.opi",
+        "type": "opi",
+        "macros": {
+          "device": "SR03S-VA-IONP-03",
+          "pv_name": "${pvName}",
+          "pv_value": "${pvValue}"
+        },
+        "defaultProtocol": "ca"
       }
     }
   ]

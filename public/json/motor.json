@@ -196,14 +196,16 @@
             "actions": [
               {
                 "type": "OPEN_PAGE",
-                "openPageInfo": {
-                  "page": "detail",
-                  "pageDescription": {
-                    "filename": "motorDetail",
-                    "filetype": "json",
+                "dynamicInfo": {
+                  "name": "Motor Detail",
+                  "location": "detail",
+                  "file": {
+                    "path": "motorDetail.json",
+                    "type": "json",
                     "macros": {
                       "motor": "${motor}"
-                    }
+                    },
+                    "defaultProtocol": "pva"
                   }
                 }
               }

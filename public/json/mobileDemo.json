@@ -336,6 +336,292 @@
           "height": "100%"
         }
       ]
+    },
+    {
+      "type": "navigationtabs",
+      "position": "relative",
+      "margin": "20px 0 0 0",
+      "width": "100%",
+      "tabs": {
+        "Tab One": {
+          "path": "tab_embed.json",
+          "type": "json",
+          "macros": {
+            "LABEL": "This is tab one"
+          },
+          "defaultProtocol": "pva"
+        },
+        "Tab Two": {
+          "path": "tab_embed.json",
+          "type": "json",
+          "macros": {
+            "LABEL": "This is tab two"
+          },
+          "defaultProtocol": "pva"
+        },
+        "Tab Three": {
+          "path": "tab_embed.json",
+          "type": "json",
+          "macros": {
+            "LABEL": "This is tab three"
+          },
+          "defaultProtocol": "pva"
+        },
+        "Tab Four": {
+          "path": "tab_embed.json",
+          "type": "json",
+          "macros": {
+            "LABEL": "This is tab four"
+          },
+          "defaultProtocol": "pva"
+        },
+        "Tab Six": {
+          "path": "tab_embed.json",
+          "type": "json",
+          "macros": {
+            "LABEL": "This is tab six"
+          },
+          "defaultProtocol": "pva"
+        },
+        "Tab Seven": {
+          "path": "tab_embed.json",
+          "type": "json",
+          "macros": {
+            "LABEL": "This is tab seven"
+          },
+          "defaultProtocol": "pva"
+        }
+      }
+    },
+    {
+      "type": "tabcontainer",
+      "position": "relative",
+      "margin": "20px 0 0 0",
+      "width": "100%",
+      "tabs": {
+        "One": {
+          "type": "label",
+          "position": "relative",
+          "width": "100%",
+          "text": "This is label one",
+          "height": "100%"
+        },
+        "Two": {
+          "type": "label",
+          "position": "relative",
+          "width": "100%",
+          "text": "This is label two",
+          "height": "100%"
+        },
+        "Three": {
+          "type": "label",
+          "position": "relative",
+          "width": "100%",
+          "text": "This is label three",
+          "height": "100%"
+        },
+        "Four": {
+          "type": "label",
+          "position": "relative",
+          "width": "100%",
+          "text": "This is label four",
+          "height": "100%"
+        },
+        "Five": {
+          "type": "label",
+          "position": "relative",
+          "width": "100%",
+          "text": "This is label five",
+          "height": "100%"
+        },
+        "Six": {
+          "type": "label",
+          "position": "relative",
+          "width": "100%",
+          "text": "This is label six",
+          "height": "100%"
+        },
+        "Seven": {
+          "type": "label",
+          "position": "relative",
+          "width": "100%",
+          "text": "This is label seven",
+          "height": "100%"
+        }
+      }
+    },
+    {
+      "type": "dynamictabs",
+      "position": "relative",
+      "margin": "20px 0 0 0",
+      "width": "100%",
+      "location": "testing"
+    },
+    {
+      "type": "dynamictabs",
+      "position": "relative",
+      "margin": "20px 0 0 0",
+      "width": "100%",
+      "location": "testing"
+    },
+    {
+      "type": "flexcontainer",
+      "position": "relative",
+      "width": "100%",
+      "children": [
+        {
+          "type": "actionbutton",
+          "text": "Open Tab One",
+          "position": "relative",
+          "width": "40%",
+          "height": "4rem",
+          "margin": "1% 5% 1% 5%",
+          "foregroundColor": "#012265",
+          "backgroundColor": "#ffcf00",
+          "font": {
+            "size": "25"
+          },
+          "border": {
+            "style": "none",
+            "color": "#ffcf00",
+            "width": 1
+          },
+          "actions": {
+            "executeAsOne": false,
+            "actions": [
+              {
+                "type": "OPEN_PAGE",
+                "dynamicInfo": {
+                  "location": "testing",
+                  "name": "One",
+                  "file": {
+                    "path": "tab_embed.json",
+                    "type": "json",
+                    "macros": {
+                      "LABEL": "This is tab one"
+                    },
+                    "defaultProtocol": "pva"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "actionbutton",
+          "text": "Open Tab Two",
+          "position": "relative",
+          "width": "40%",
+          "height": "4rem",
+          "margin": "1% 5% 1% 5%",
+          "foregroundColor": "#012265",
+          "backgroundColor": "#ffcf00",
+          "font": {
+            "size": "25"
+          },
+          "border": {
+            "style": "none",
+            "color": "#ffcf00",
+            "width": 1
+          },
+          "actions": {
+            "executeAsOne": false,
+            "actions": [
+              {
+                "type": "OPEN_PAGE",
+                "dynamicInfo": {
+                  "location": "testing",
+                  "name": "Two",
+                  "file": {
+                    "path": "tab_embed.json",
+                    "type": "json",
+                    "macros": {
+                      "LABEL": "This is tab two"
+                    },
+                    "defaultProtocol": "pva"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "actionbutton",
+          "text": "Open Tab Three",
+          "position": "relative",
+          "width": "40%",
+          "height": "4rem",
+          "margin": "1% 5% 1% 5%",
+          "foregroundColor": "#012265",
+          "backgroundColor": "#ffcf00",
+          "font": {
+            "size": "25"
+          },
+          "border": {
+            "style": "none",
+            "color": "#ffcf00",
+            "width": 1
+          },
+          "actions": {
+            "executeAsOne": false,
+            "actions": [
+              {
+                "type": "OPEN_PAGE",
+                "dynamicInfo": {
+                  "location": "testing",
+                  "name": "Three",
+                  "file": {
+                    "path": "tab_embed.json",
+                    "type": "json",
+                    "macros": {
+                      "LABEL": "This is tab three"
+                    },
+                    "defaultProtocol": "pva"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "actionbutton",
+          "text": "Open Tab Four",
+          "position": "relative",
+          "width": "40%",
+          "height": "4rem",
+          "margin": "1% 5% 1% 5%",
+          "foregroundColor": "#012265",
+          "backgroundColor": "#ffcf00",
+          "font": {
+            "size": "25"
+          },
+          "border": {
+            "style": "none",
+            "color": "#ffcf00",
+            "width": 1
+          },
+          "actions": {
+            "executeAsOne": false,
+            "actions": [
+              {
+                "type": "OPEN_PAGE",
+                "dynamicInfo": {
+                  "location": "testing",
+                  "name": "Four",
+                  "file": {
+                    "path": "tab_embed.json",
+                    "type": "json",
+                    "macros": {
+                      "LABEL": "This is tab four"
+                    },
+                    "defaultProtocol": "pva"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ]
     }
   ]
 }

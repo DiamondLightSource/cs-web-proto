@@ -25,14 +25,16 @@
         "actions": [
           {
             "type": "OPEN_PAGE",
-            "openPageInfo": {
-              "page": "embed",
-              "pageDescription": {
-                "filename": "motor",
-                "filetype": "json",
-                "description": "Motor 1 Info",
-                "macros": { "motor": "1" }
-              }
+            "dynamicInfo": {
+              "name": "Motor 1",
+              "location": "embed",
+              "file": {
+                "path": "motor.json",
+                "type": "json",
+                "macros": { "motor": "1" },
+                "defaultProtocol": "pva"
+              },
+              "description": "Motor 1 Info"
             }
           }
         ]
@@ -53,14 +55,16 @@
         "actions": [
           {
             "type": "OPEN_PAGE",
-            "openPageInfo": {
-              "page": "embed",
-              "pageDescription": {
-                "filename": "motor",
-                "filetype": "json",
-                "description": "Motor 2 Info",
-                "macros": { "motor": "2" }
-              }
+            "dynamicInfo": {
+              "name": "Motor 2",
+              "location": "embed",
+              "file": {
+                "path": "motor.json",
+                "type": "json",
+                "macros": { "motor": "2" },
+                "defaultProtocol": "pva"
+              },
+              "description": "Motor 2 Info"
             }
           }
         ]
@@ -105,14 +109,16 @@
         "actions": [
           {
             "type": "OPEN_PAGE",
-            "openPageInfo": {
-              "page": "embed",
-              "pageDescription": {
-                "filename": "motor",
-                "filetype": "json",
-                "description": "Motor 3 Info",
-                "macros": { "motor": "3" }
-              }
+            "dynamicInfo": {
+              "name": "Motor 3",
+              "location": "embed",
+              "file": {
+                "path": "motor.json",
+                "type": "json",
+                "macros": { "motor": "3" },
+                "defaultProtocol": "pva"
+              },
+              "description": "Motor 3 Info"
             }
           }
         ]
@@ -132,14 +138,16 @@
         "actions": [
           {
             "type": "OPEN_PAGE",
-            "openPageInfo": {
-              "page": "embed",
-              "pageDescription": {
-                "filename": "rffb",
-                "filetype": "json",
-                "description": "Open RFFB",
-                "macros": {}
-              }
+            "dynamicInfo": {
+              "name": "RFFB",
+              "location": "embed",
+              "file": {
+                "path": "rffb.json",
+                "type": "json",
+                "macros": {},
+                "defaultProtocol": "pva"
+              },
+              "description": "Open RFFB"
             }
           }
         ]
@@ -160,14 +168,16 @@
         "actions": [
           {
             "type": "OPEN_PAGE",
-            "openPageInfo": {
-              "page": "embed",
-              "pageDescription": {
-                "filename": "digitelmpcionp",
-                "filetype": "json",
-                "description": "Digitel MPC Ionp Sim",
-                "macros": {}
-              }
+            "dynamicInfo": {
+              "name": "Digitel MPC Ionp",
+              "location": "embed",
+              "file": {
+                "path": "digitelmpcionp.json",
+                "type": "json",
+                "macros": {},
+                "defaultProtocol": "pva"
+              },
+              "description": "Digitel MPC Ionp Sim"
             }
           }
         ]
@@ -187,14 +197,16 @@
         "actions": [
           {
             "type": "OPEN_PAGE",
-            "openPageInfo": {
-              "page": "embed",
-              "pageDescription": {
-                "filename": "motorSummary",
-                "filetype": "json",
+            "dynamicInfo": {
+              "name": "Motor Summary",
+              "location": "embed",
+              "file": {
+                "path": "motorSummary.json",
+                "type": "json",
                 "macros": {},
-                "description": "Motor Summary Screen"
-              }
+                "defaultProtocol": "pva"
+              },
+              "description": "Motor Summary Screen"
             }
           }
         ]

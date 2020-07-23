@@ -16,3 +16,10 @@ export { SlideControl } from "./SlideControl/slideControl";
 export { DropDown } from "./DropDown/dropDown";
 export { Slideshow } from "./Slideshow/slideshow";
 export { DrawerWidget } from "./Drawer/drawer";
+export { NavigationTabs } from "./Tabs/navigationTabs";
+export { TabContainer } from "./Tabs/tabContainer";
+export { DynamicTabs } from "./Tabs/dynamicTabs";
+
+// By importing this you ensure all the above widgets are imported
+// and thus registered.
+export const TRIGGER_REGISTER = "trigger";

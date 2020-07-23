@@ -1,16 +1,10 @@
 import { writePv } from "../hooks/useSubscription";
-import { History } from "history";
 import log from "loglevel";
 
-import {
-  UrlPageDescription,
-  putUrlInfoToHistory,
-  updatePageDesciption,
-  removePageDescription,
-  getUrlInfoFromHistory
-} from "./urlControl";
 import { MacroMap } from "../../types/macros";
 import { DType } from "../../types/dtypes";
+import { DynamicContent } from "./propTypes";
+import { FileContextType } from "../../fileContext";
 
 export const OPEN_PAGE = "OPEN_PAGE";
 export const CLOSE_PAGE = "CLOSE_PAGE";
@@ -23,21 +17,10 @@ export const WRITE_PV = "WRITE_PV";
    name: https://stackoverflow.com/questions/59373461/proptypes-oneoftype-not-working-as-i-expect-with-typescript
 */
 
-export interface OpenPage {
-  type: typeof OPEN_PAGE;
-  openPageInfo: {
-    page: string;
-    pageDescription: UrlPageDescription;
-    description: string;
-  };
-}
-
-export interface ClosePage {
-  type: typeof CLOSE_PAGE;
-  closePageInfo: {
-    page: string;
-    description: string;
-  };
+// Still restricts action types for typescript and easy to add more
+export interface DynamicAction {
+  type: typeof OPEN_PAGE | typeof CLOSE_PAGE;
+  dynamicInfo: DynamicContent;
 }
 
 export interface OpenWebpage {
@@ -57,7 +40,7 @@ export interface WritePv {
   };
 }
 
-export type WidgetAction = OpenWebpage | WritePv | OpenPage | ClosePage;
+export type WidgetAction = OpenWebpage | WritePv | DynamicAction;
 
 export interface WidgetActions {
   actions: WidgetAction[];
@@ -86,16 +69,16 @@ export const getActionDescription = (action: WidgetAction): string => {
         return `Open ${action.openWebpageInfo.url}`;
       }
     case OPEN_PAGE:
-      if (action.openPageInfo.description) {
-        return action.openPageInfo.description;
+      if (action.dynamicInfo.description) {
+        return action.dynamicInfo.description;
       } else {
-        return `Open ${action.openPageInfo.page}`;
+        return `Open page ${action.dynamicInfo.name}`;
       }
     case CLOSE_PAGE:
-      if (action.closePageInfo.description) {
-        return action.closePageInfo.description;
+      if (action.dynamicInfo.description) {
+        return action.dynamicInfo.description;
       } else {
-        return `Open ${action.closePageInfo.page}`;
+        return `Close page ${action.dynamicInfo.name}`;
       }
     default:
       throw new InvalidAction(action);
@@ -103,50 +86,67 @@ export const getActionDescription = (action: WidgetAction): string => {
 };
 
 export const openPage = (
-  action: OpenPage,
-  history: History,
+  action: DynamicAction,
+  fileContext?: FileContextType,
   parentMacros?: MacroMap
 ): void => {
   //Find current browser path: currentPath
-  const currentUrlInfo = getUrlInfoFromHistory(history);
-  const { page, pageDescription } = action.openPageInfo;
-  pageDescription.macros = {
+  const { name, location, file } = action.dynamicInfo;
+  file.macros = {
     ...(parentMacros ?? {}),
-    ...pageDescription.macros
+    ...file.macros
   };
-  const newUrlInfo = updatePageDesciption(
-    currentUrlInfo,
-    page,
-    pageDescription
-  );
-  putUrlInfoToHistory(history, newUrlInfo);
+  fileContext?.addFile(location, file, name);
 };
 
-export const closePage = (action: ClosePage, history: History): void => {
-  const currentUrlInfo = getUrlInfoFromHistory(history);
-  const { page } = action.closePageInfo;
-  const newUrlInfo = removePageDescription(currentUrlInfo, page);
-  putUrlInfoToHistory(history, newUrlInfo);
+export const closePage = (
+  action: DynamicAction,
+  fileContext?: FileContextType
+): void => {
+  const { location, file } = action.dynamicInfo;
+  fileContext?.removeFile(location, file);
+};
+
+export const openTab = (
+  action: DynamicAction,
+  fileContext?: FileContextType,
+  parentMacros?: MacroMap
+): void => {
+  //Find current browser path: currentPath
+  const { name, location, file } = action.dynamicInfo;
+  file.macros = {
+    ...(parentMacros ?? {}),
+    ...file.macros
+  };
+  fileContext?.addFile(location, file, name);
+};
+
+export const closeTab = (
+  action: DynamicAction,
+  fileContext: FileContextType
+): void => {
+  const { file, location } = action.dynamicInfo;
+  fileContext.removeFile(location, file);
 };
 
 export const executeAction = (
   action: WidgetAction,
-  history?: History,
+  files?: FileContextType,
   parentMacros?: MacroMap
 ): void => {
   switch (action.type) {
     case OPEN_PAGE:
-      if (history) {
-        openPage(action, history, parentMacros);
+      if (files) {
+        openPage(action, files, parentMacros);
       } else {
-        log.error("Tried to open a page but no history object passed");
+        log.error("Tried to open a page but no file context passed");
       }
       break;
     case CLOSE_PAGE:
-      if (history) {
-        closePage(action, history);
+      if (files) {
+        closePage(action, files);
       } else {
-        log.error("Tried to open a page but no history object passed");
+        log.error("Tried to open a page but no file context passed");
       }
       break;
     case OPEN_WEBPAGE:
@@ -168,7 +168,7 @@ export const executeAction = (
 
 export const executeActions = (
   actions: WidgetActions,
-  history?: History,
+  files?: FileContextType,
   parentMacros?: MacroMap
 ): void => {
   if (actions.actions.length > 0) {
@@ -180,7 +180,7 @@ export const executeActions = (
     }
     for (const action of toExecute) {
       log.debug(`executing an action: ${getActionDescription(action)}`);
-      executeAction(action, history, parentMacros);
+      executeAction(action, files, parentMacros);
     }
   }
 };

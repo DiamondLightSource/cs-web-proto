@@ -4,11 +4,14 @@
   "children": [
     {
       "type": "embeddedDisplay",
-      "filetype": "bob",
       "position": "relative",
       "margin": "10px",
-      "file": "basic.bob",
-      "defaultProtocol": "ca"
+      "file": {
+        "path": "basic.bob",
+        "type": "bob",
+        "macros": {},
+        "defaultProtocol": "ca"
+      }
     }
   ]
 }

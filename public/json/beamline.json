@@ -12,11 +12,10 @@
       "backgroundColor": "#012265"
     },
     {
-      "type": "slideshow",
+      "type": "tabcontainer",
       "position": "relative",
       "width": "90%",
       "margin": "auto",
-      "overflow": "auto",
       "backgroundColor": "white",
       "border": {
         "style": "line",
@@ -24,8 +23,8 @@
         "color": "#ffcf00",
         "radius": 10
       },
-      "children": [
-        {
+      "tabs": {
+        "Synoptic": {
           "type": "display",
           "position": "relative",
           "width": "100%",
@@ -47,13 +46,16 @@
             {
               "type": "embeddedDisplay",
               "position": "relative",
-              "file": "synoptic.json",
-              "filetype": "json",
-              "defaultProtocol": "ca"
+              "file": {
+                "path": "synoptic.json",
+                "type": "json",
+                "macros": {},
+                "defaultProtocol": "ca"
+              }
             }
           ]
         },
-        {
+        "Embed": {
           "type": "display",
           "position": "relative",
           "width": "100%",
@@ -77,13 +79,13 @@
               "text": "Embed"
             },
             {
-              "type": "dynamicpage",
+              "type": "dynamictabs",
               "position": "relative",
-              "routePath": "embed"
+              "location": "embed"
             }
           ]
         },
-        {
+        "Detail": {
           "type": "display",
           "position": "relative",
           "width": "100%",
@@ -104,13 +106,13 @@
               "text": "Detail"
             },
             {
-              "type": "dynamicpage",
+              "type": "dynamictabs",
               "position": "relative",
-              "routePath": "detail"
+              "location": "detail"
             }
           ]
         }
-      ]
+      }
     },
     {
       "type": "shape",
