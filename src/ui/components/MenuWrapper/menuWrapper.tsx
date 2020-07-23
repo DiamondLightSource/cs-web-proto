@@ -22,11 +22,9 @@ export const MenuWrapper = (props: {
 
   const handleClick = (e: React.MouseEvent): void => {
     e.preventDefault();
-    if (e.button === 2) {
-      setContextOpen(contextOpen ? false : true);
-      setX(e.nativeEvent.offsetX);
-      setY(e.nativeEvent.offsetY);
-    }
+    setContextOpen(contextOpen ? false : true);
+    setX(e.nativeEvent.offsetX);
+    setY(e.nativeEvent.offsetY);
   };
   const handleMouseLeave = (e: React.MouseEvent): void => {
     e.preventDefault();
@@ -83,7 +81,7 @@ export const MenuWrapper = (props: {
         {props.children}
       </div>
     );
-  } else
+  } else {
     return (
       <div
         style={props.style}
@@ -93,4 +91,5 @@ export const MenuWrapper = (props: {
         {props.children}
       </div>
     );
+  }
 };
