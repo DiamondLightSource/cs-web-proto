@@ -1,6 +1,6 @@
 import React from "react";
 import { ReadbackComponent } from "./readback";
-import { DType, DDisplay } from "../../../types/dtypes";
+import { DType, DDisplay, DAlarm, AlarmQuality } from "../../../types/dtypes";
 import { render } from "@testing-library/react";
 
 describe("readback component", (): void => {
@@ -39,7 +39,27 @@ describe("readback component", (): void => {
     );
 
     const { queryByText } = render(readback);
-    // Check for precision.
+    // Units displayed along with the value.
     expect(queryByText("hello xyz")).toBeInTheDocument();
+  });
+  test("alarm-sensitive foreground colour", (): void => {
+    const readback = (
+      <ReadbackComponent
+        connected={true}
+        readonly={false}
+        fgAlarmSensitive={true}
+        value={
+          new DType(
+            { stringValue: "hello" },
+            new DAlarm(AlarmQuality.ALARM, "")
+          )
+        }
+        precision={2}
+      />
+    );
+
+    const { queryByText } = render(readback);
+    // 'Major' class added.
+    expect(queryByText("hello")).toHaveClass("Major");
   });
 });
