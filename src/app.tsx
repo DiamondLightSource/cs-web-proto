@@ -1,13 +1,9 @@
 import React, { Profiler, useState } from "react";
 import "./app.css";
 import { Provider } from "react-redux";
-import { getStore, initialiseStore } from "./redux/store";
-import log from "loglevel";
+import { store } from "./redux/store";
+import log, { LogLevelDesc } from "loglevel";
 import { lightTheme, darkTheme, ThemeContext } from "./themeContext";
-import { SimulatorPlugin } from "./connection/sim";
-import { ConiqlPlugin } from "./connection/coniql";
-import { ConnectionForwarder } from "./connection/forwarder";
-import { Connection } from "./connection/plugin";
 import { EmbeddedDisplay } from "./ui/widgets";
 import { BaseUrlContext } from "./baseUrl";
 import { onRenderCallback } from "./profilerCallback";
@@ -18,20 +14,12 @@ import {
   LocationCache,
   FileDescription
 } from "./fileContext";
+import { Header } from "./ui/components/Header/header";
+import { Footer } from "./ui/components/Footer/footer";
 
-let settings: any;
-try {
-  // Use require so that we can catch this error
-  settings = require("./settings");
-} catch (e) {
-  settings = {};
-}
+const baseUrl = process.env.REACT_APP_BASE_URL ?? "http://localhost:3000";
 
-const baseUrl = settings.baseUrl ?? "http://localhost:3000";
-const SIMULATION_TIME = settings.simulationTime ?? 100;
-const THROTTLE_PERIOD = settings.throttlePeriod ?? 100;
-
-log.setLevel("info");
+log.setLevel((process.env.REACT_APP_LOG_LEVEL as LogLevelDesc) ?? "info");
 
 function applyTheme(theme: any): void {
   Object.keys(theme).forEach(function(key): void {
@@ -41,23 +29,7 @@ function applyTheme(theme: any): void {
 }
 
 const App: React.FC = (): JSX.Element => {
-  const simulator = new SimulatorPlugin(SIMULATION_TIME);
-  const fallbackPlugin = simulator;
-  const plugins: [string, Connection][] = [
-    ["sim://", simulator],
-    ["loc://", simulator],
-    ["", fallbackPlugin]
-  ];
-  if (settings.coniqlSocket !== undefined) {
-    const coniql = new ConiqlPlugin(settings.coniqlSocket);
-    plugins.unshift(["pva://", coniql]);
-    plugins.unshift(["ca://", coniql]);
-    plugins.unshift(["csim://", coniql]);
-  }
-  const plugin = new ConnectionForwarder(plugins);
-  initialiseStore(plugin, THROTTLE_PERIOD);
-  const store = getStore();
-  const { toggle, dark } = React.useContext(ThemeContext);
+  const { dark } = React.useContext(ThemeContext);
   applyTheme(dark ? darkTheme : lightTheme);
 
   const [locations, setLocations] = useState<LocationCache>({
@@ -91,9 +63,7 @@ const App: React.FC = (): JSX.Element => {
       <BaseUrlContext.Provider value={baseUrl}>
         <Provider store={store}>
           <div className="App">
-            <button type="button" onClick={toggle}>
-              Toggle Theme
-            </button>
+            <Header />
             <Profiler id="Dynamic Page Profiler" onRender={onRenderCallback}>
               <EmbeddedDisplay
                 position={new RelativePosition()}
@@ -105,6 +75,7 @@ const App: React.FC = (): JSX.Element => {
                 }}
               />
             </Profiler>
+            <Footer />
           </div>
         </Provider>
       </BaseUrlContext.Provider>

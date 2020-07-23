@@ -1,0 +1,42 @@
+.header {
+  height: 5vh;
+  width: 100%;
+  position: relative;
+  background-color: white;
+  display: flex;
+}
+
+.imgWrapper {
+  display: flex;
+  flex-grow: 1;
+  flex-basis: 0;
+  min-width: 0;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.img {
+  height: 50%;
+}
+
+.h1 {
+  clear: none;
+  font-size: 2vh;
+  display: flex;
+  justify-content: center;
+  flex-grow: 1;
+  flex-basis: 0;
+  min-width: 0;
+  align-items: center;
+}
+
+.buttonWrapper {
+  width: 100px;
+  display: flex;
+  flex-grow: 1;
+  flex-basis: 0;
+  min-width: 0;
+  justify-content: flex-end;
+  align-items: center;
+  border: 0;
+}

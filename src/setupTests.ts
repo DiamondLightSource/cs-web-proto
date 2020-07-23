@@ -1,3 +1,6 @@
+// React testing library extensions to expect().
+import "@testing-library/jest-dom/extend-expect";
+// Set up Enzyme.
 import { configure } from "enzyme";
 import log from "loglevel";
 import Adapter from "enzyme-adapter-react-16";
@@ -11,6 +14,9 @@ log.setLevel("info");
 if (typeof window.URL.createObjectURL === "undefined") {
   Object.defineProperty(window.URL, "createObjectURL", { value: () => {} });
 }
+
+// Mock window.open
+window.open = jest.fn();
 
 export function ddouble(
   doubleValue: number,

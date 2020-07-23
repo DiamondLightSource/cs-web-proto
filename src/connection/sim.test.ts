@@ -1,6 +1,6 @@
 import { SimulatorPlugin } from "./sim";
 import { nullConnCallback, nullValueCallback } from "./plugin";
-import { ddouble } from "../setupTests";
+import { ddouble, dstring } from "../setupTests";
 import { DType } from "../types/dtypes";
 
 let simulator: SimulatorPlugin;
@@ -10,7 +10,9 @@ beforeEach((): void => {
 
 function getValue(pvName: string, callback: Function): void {
   simulator.connect(nullConnCallback, function(updatePvName, value): void {
-    if (pvName === updatePvName) {
+    const nameInfo1 = SimulatorPlugin.parseName(updatePvName);
+    const nameInfo2 = SimulatorPlugin.parseName(updatePvName);
+    if (nameInfo1.keyName === nameInfo2.keyName) {
       callback(value);
     }
   });
@@ -35,7 +37,7 @@ const assertValue = (
   simulator.subscribe(pvName);
 };
 
-it("test local values", (done): void => {
+test("local double updates", (done): void => {
   let zeroDone = false;
   getValue("loc://location", (value: DType): void => {
     if (!zeroDone) {
@@ -48,6 +50,39 @@ it("test local values", (done): void => {
   });
   simulator.subscribe("loc://location");
   simulator.putPv("loc://location", ddouble(17));
+});
+test("local enum updates", (done): void => {
+  let zeroDone = false;
+  getValue("loc://enum", (value: DType): void => {
+    if (!zeroDone) {
+      expect(value.getDoubleValue()).toEqual(1.0);
+      expect(value.getStringValue()).toEqual("deux");
+      zeroDone = true;
+    } else {
+      expect(value.getDoubleValue()).toEqual(0.0);
+      expect(value.getStringValue()).toEqual("un");
+    }
+    done();
+  });
+  simulator.subscribe('loc://enum<VEnum>(2, "un", "deux", "trois")');
+  simulator.putPv("loc://enum", ddouble(0));
+});
+
+test("local enum updates from string", (done): void => {
+  let zeroDone = false;
+  getValue("loc://enum", (value: DType): void => {
+    if (!zeroDone) {
+      expect(value.getDoubleValue()).toEqual(1.0);
+      expect(value.getStringValue()).toEqual("deux");
+      zeroDone = true;
+    } else {
+      expect(value.getDoubleValue()).toEqual(0.0);
+      expect(value.getStringValue()).toEqual("un");
+    }
+    done();
+  });
+  simulator.subscribe('loc://enum<VEnum>(2, "un", "deux", "trois")');
+  simulator.putPv("loc://enum", dstring("un"));
 });
 
 it("test enum values blocked", (): void => {

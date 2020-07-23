@@ -1,37 +1,45 @@
-import { createStore, applyMiddleware, Store, compose } from "redux";
+import { createStore, applyMiddleware, compose } from "redux";
 
-import { csReducer, CsState } from "./csState";
+import { csReducer } from "./csState";
 import { connectionMiddleware } from "./connectionMiddleware";
 import { throttleMiddleware, UpdateThrottle } from "./throttleMiddleware";
 import { Connection } from "../connection/plugin";
+import { SimulatorPlugin } from "../connection/sim";
+import { ConiqlPlugin } from "../connection/coniql";
+import { ConnectionForwarder } from "../connection/forwarder";
 
-// Setting this to Action or Action<Any> seems to trip up the type system
-type CsStore = Store<CsState, any>;
-let store: CsStore | null = null;
+const CONIQL_SOCKET = process.env.REACT_APP_CONIQL_SOCKET;
+const THROTTLE_PERIOD = parseFloat(
+  process.env.REACT_APP_THROTTLE_PERIOD ?? "100"
+);
 
-export function initialiseStore(
-  connection: Connection,
-  updateMillis: number
-): void {
-  const composeEnhancers =
-    (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-  store = createStore(
-    csReducer,
-    /* preloadedState, */ composeEnhancers(
-      applyMiddleware(
-        connectionMiddleware(connection),
-        throttleMiddleware(new UpdateThrottle(updateMillis))
-      )
+const SIMULATION_TIME = parseFloat(
+  process.env.REACT_APP_SIMULATION_TIME ?? "100"
+);
+const simulator = new SimulatorPlugin(SIMULATION_TIME);
+const fallbackPlugin = simulator;
+const plugins: [string, Connection][] = [
+  ["sim://", simulator],
+  ["loc://", simulator],
+  ["", fallbackPlugin]
+];
+if (CONIQL_SOCKET !== undefined) {
+  const coniql = new ConiqlPlugin(CONIQL_SOCKET);
+  plugins.unshift(["pva://", coniql]);
+  plugins.unshift(["ca://", coniql]);
+  plugins.unshift(["csim://", coniql]);
+}
+const connection = new ConnectionForwarder(plugins);
+
+const composeEnhancers =
+  (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+export const store = createStore(
+  csReducer,
+  /* preloadedState, */ composeEnhancers(
+    applyMiddleware(
+      connectionMiddleware(connection),
+      throttleMiddleware(new UpdateThrottle(THROTTLE_PERIOD))
     )
-  );
-}
-
-function raiseStoreEmpty(): never {
-  throw new Error(
-    "store singleton is not initialised. (see initialiseStore())"
-  );
-}
-
-export function getStore(): CsStore {
-  return store || raiseStoreEmpty();
-}
+  )
+);
