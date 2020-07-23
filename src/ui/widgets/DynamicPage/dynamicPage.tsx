@@ -18,7 +18,7 @@ const DynamicPageProps = {
 };
 
 // Generic display widget to put other things inside
-const DynamicPageComponent = (
+export const DynamicPageComponent = (
   props: InferWidgetProps<typeof DynamicPageProps>
 ): JSX.Element => {
   const style = commonCss(props);
