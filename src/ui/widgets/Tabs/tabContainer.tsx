@@ -31,44 +31,47 @@ export const TabContainerComponent = (
 ): JSX.Element => {
   const [childIndex, setIndex] = useState(0);
 
-  try {
-    // TODO: Find out if this repeated calculation can be done in the useMemo hook for measurable performance gains
-    const children = Object.values(props.tabs).map((child, index) =>
-      widgetDescriptionToComponent(
+  // TODO: Find out if this repeated calculation can be done in the useMemo hook for measurable performance gains
+  const children = Object.values(props.tabs).map((child, index) => {
+    try {
+      return widgetDescriptionToComponent(
         parseJson(JSON.stringify(child), "pva"),
         index
-      )
-    );
+      );
+    } catch (e) {
+      const message = `Error transforming children into components`;
+      log.error(message);
+      log.error(e);
+      log.error(e.msg);
+      log.error(e.details);
+      return widgetDescriptionToComponent(
+        parseJson(JSON.stringify(errorWidget(message)), "pva"),
+        index
+      );
+    }
+  });
 
-    return (
-      <div>
-        <div className={classes.Bar}>
-          {Object.keys(props.tabs).map(
-            (key, index): JSX.Element => (
-              <button
-                onClick={(): void => {
-                  setIndex(index);
-                }}
-                className={classes.Button}
-                style={index === childIndex ? { borderStyle: "inset" } : {}}
-                key={index}
-              >
-                {key}
-              </button>
-            )
-          )}
-        </div>
-        {children[childIndex]}
+  return (
+    <div>
+      <div className={classes.Bar}>
+        {Object.keys(props.tabs).map(
+          (key, index): JSX.Element => (
+            <button
+              onClick={(): void => {
+                setIndex(index);
+              }}
+              className={classes.Button}
+              style={index === childIndex ? { borderStyle: "inset" } : {}}
+              key={index}
+            >
+              {key}
+            </button>
+          )
+        )}
       </div>
-    );
-  } catch (e) {
-    const message = `Error transforming children into components`;
-    log.error(message);
-    log.error(e);
-    log.error(e.msg);
-    log.error(e.details);
-    return widgetDescriptionToComponent(errorWidget(message));
-  }
+      {children[childIndex]}
+    </div>
+  );
 };
 
 export const TabContainerWidgetProps = {

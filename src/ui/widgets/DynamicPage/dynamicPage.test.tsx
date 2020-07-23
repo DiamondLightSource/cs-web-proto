@@ -5,6 +5,7 @@ import { DynamicPageComponent } from "./dynamicPage";
 import { FileContext, FileContextType } from "../../../fileContext";
 import { Provider } from "react-redux";
 import { store } from "../../../redux/store";
+
 interface GlobalFetch extends NodeJS.Global {
   fetch: any;
 }
