@@ -15,6 +15,9 @@ if (typeof window.URL.createObjectURL === "undefined") {
   Object.defineProperty(window.URL, "createObjectURL", { value: () => {} });
 }
 
+// Mock window.open
+window.open = jest.fn();
+
 export function ddouble(
   doubleValue: number,
   alarm: DAlarm = DAlarm.NONE

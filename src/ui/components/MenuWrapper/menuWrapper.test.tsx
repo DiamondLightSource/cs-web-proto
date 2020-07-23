@@ -1,9 +1,8 @@
 import React from "react";
-import { shallow, ShallowWrapper } from "enzyme";
+import { render, fireEvent, waitFor } from "@testing-library/react";
 
 import { MenuWrapper } from "./menuWrapper";
-
-let wrapper: ShallowWrapper;
+import { OPEN_WEBPAGE, WidgetAction } from "../../widgets/widgetActions";
 
 // Mock the useHistory hook
 jest.mock("react-router-dom", (): object => ({
@@ -12,23 +11,37 @@ jest.mock("react-router-dom", (): object => ({
   })
 }));
 
-beforeEach((): void => {
-  const actions = { executeAsOne: false, actions: [] };
-  const menuWrapper = (
-    <MenuWrapper pvName="pv" actions={actions}>
-      Children
-    </MenuWrapper>
-  );
-  wrapper = shallow(menuWrapper);
+// Clear the window.open mock (set up in setupTests.ts).
+afterEach((): void => {
+  (window.open as jest.Mock).mockClear();
 });
 
-describe("<MenuWrapper>", (): void => {
-  test("it renders a basic element", (): void => {
-    expect(wrapper.text()).toContain("Children");
-  });
-  test("it contains one child element", (): void => {
-    const children = wrapper.find("div");
-    expect(children).toHaveLength(1);
-    expect(children.find("div")).toHaveLength(1);
+const BBC_ACTION: WidgetAction = {
+  type: OPEN_WEBPAGE,
+  openWebpageInfo: { url: "https://bbc.co.uk", description: "BBC" }
+};
+
+test("menu wrapper opens on middle click and executes action if clicked", async () => {
+  const contents = <div>Hello</div>;
+  const { queryByText } = render(
+    <MenuWrapper
+      pvName="hello"
+      actions={{
+        actions: [BBC_ACTION],
+        executeAsOne: false
+      }}
+    >
+      {[contents]}
+    </MenuWrapper>
+  );
+
+  expect(queryByText("Hello")).toBeInTheDocument();
+  // Click the button
+  fireEvent.contextMenu(queryByText("Hello") as HTMLDivElement);
+  // Wait for the menu to appear.
+  await waitFor((): void => {
+    expect(queryByText("BBC")).toBeInTheDocument();
+    fireEvent.click(queryByText("BBC") as HTMLDivElement);
+    expect(window.open).toBeCalled();
   });
 });
