@@ -10,26 +10,8 @@ licensed with the Apache License: see `LICENSE`.
 
 ## Setup
 
-You will need NodeJS. See
-[this wiki page](https://github.com/dls-controls/cs-web-proto/wiki/Development-Environment)
-for installation instructions.
-
-Move into the directory and install the packages using `npm`:
-
-`npm install`
-
-Now run the server:
-
-`npm start`
-
-To run the tests in watch mode:
-
-`npm test`
-
-## Development Environment
-
-For more details on the development environment see
-[this wiki page](https://github.com/dls-controls/cs-web-proto/wiki/Development-Environment).
+See [the development environment wiki page](https://github.com/dls-controls/cs-web-proto/wiki/Development-Environment)
+for how to get started and notes on development.
 
 ## Libraries
 
@@ -44,13 +26,14 @@ For more details on the development environment see
 
 ### Development
 
+- [TypeScript](https://www.typescriptlang.org/) adds some type safety to JavaScript code.
 - [Create React App](https://github.com/facebook/create-react-app) - a
-  framework for starting React apps quickly.
+  framework for starting React apps quickly
 - [Jest](https://github.com/facebook/jest) is a widely-used testing framework
   developed by Facebook
 - [Prettier](https://github.com/prettier/prettier) is used for code formatting
 
-### Connection information
+## Connection information
 
 This application can use data that come from external sources. These settings will vary from machine to machine, so must, if used, be configured when one checks out the source code.
 
