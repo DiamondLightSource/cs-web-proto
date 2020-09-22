@@ -12,7 +12,7 @@ import {
   FileContext,
   FileContextType,
   LocationCache,
-  FileDescription
+  FileDescription,
 } from "./fileContext";
 import { Header } from "./ui/components/Header/header";
 import { Footer } from "./ui/components/Footer/footer";
@@ -21,15 +21,8 @@ const baseUrl = process.env.REACT_APP_BASE_URL ?? "http://localhost:3000";
 
 log.setLevel((process.env.REACT_APP_LOG_LEVEL as LogLevelDesc) ?? "info");
 
-function applyTheme(theme: any): void {
-  Object.keys(theme).forEach(function(key): void {
-    const value = theme[key];
-    document.documentElement.style.setProperty(key, value);
-  });
-}
-
 const App: React.FC = (): JSX.Element => {
-  const { dark } = React.useContext(ThemeContext);
+  const { dark, applyTheme } = React.useContext(ThemeContext);
   applyTheme(dark ? darkTheme : lightTheme);
 
   const [locations, setLocations] = useState<LocationCache>({
@@ -39,10 +32,11 @@ const App: React.FC = (): JSX.Element => {
         path: "home.json",
         type: "json",
         macros: {},
-        defaultProtocol: "pva"
-      }
-    ]
+        defaultProtocol: "pva",
+      },
+    ],
   });
+
   const fileContext: FileContextType = {
     locations: locations,
     addFile: (location: string, desc: FileDescription, name: string) => {
@@ -55,7 +49,7 @@ const App: React.FC = (): JSX.Element => {
       const locationsCopy = { ...locations };
       delete locationsCopy[location];
       setLocations(locationsCopy);
-    }
+    },
   };
 
   return (
@@ -71,7 +65,7 @@ const App: React.FC = (): JSX.Element => {
                   path: "app.json",
                   type: "json",
                   defaultProtocol: "pva",
-                  macros: {}
+                  macros: {},
                 }}
               />
             </Profiler>
