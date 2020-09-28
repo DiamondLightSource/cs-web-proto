@@ -5,6 +5,7 @@ import App from "./app";
 import { ThemeProvider } from "./themeContext";
 
 ReactDOM.render(
+  // Website wrapped in ThemeProvider so dark and light mode is global
   <ThemeProvider>
     <App />
   </ThemeProvider>,

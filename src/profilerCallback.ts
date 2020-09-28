@@ -1,17 +1,29 @@
 import log from "loglevel";
 
+/**
+ * Functions concerned with profiling the code
+ * Everything but the header is wrapped in the profiler, which triggers
+ * the onRenderCallback function
+ * Inbuilt profiler is used as opposed to browser profiler for simplicity of use,
+ * and for more reliable measurements
+ */
+
 const PROFILE_ENABLED = process.env.REACT_APP_PROFILER_ENABLED === "true";
 const SIMULATION_TIME = parseFloat(
   process.env.REACT_APP_SIMULATION_TIME ?? "100"
 );
 
+// Object for storing profiling information
 const recordedTimings = {
   startTime: 0,
   actualDur: 0,
   baseDur: 0,
-  reconciliation: 0
+  reconciliation: 0,
 };
 
+/**
+ * Called whenever a new render occurs
+ */
 export function onRenderCallback(
   id: string,
   phase: "mount" | "update",

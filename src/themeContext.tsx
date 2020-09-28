@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 
+// 28/09/20 Not sure if there is a better way to define this type
 export interface Theme {
   [property: string]: string;
 }
@@ -25,6 +26,8 @@ function applyTheme(theme: Theme): void {
   });
 }
 
+// These properties are accessible when using ThemeContext
+// const { dark, applyTheme } = React.useContext(ThemeContext);
 const initialState = {
   dark: false,
   theme: lightTheme,
@@ -40,6 +43,7 @@ export const ThemeContext = React.createContext(initialState);
  * const { toggle } = useContext(ThemeContext)
  */
 export const ThemeProvider: React.FC<{}> = ({ children }: any): JSX.Element => {
+  // dark represents dark mode or light mode
   const [dark, setIsDark] = useState(localStorage.getItem("dark") === "true");
 
   const toggle = (): void => {
