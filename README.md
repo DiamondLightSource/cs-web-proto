@@ -42,6 +42,16 @@ You needn't set connection information if you don't need any external sources of
 - Edit the file `.env` to contain the correct connection information.
 - Restart the process for the settings to take effect.
 
+### Coniql
+
+The primary server that you will use is called [Coniql](https://github.com/dls-controls/coniql). It connects to the EPICS control system and provides data over GraphQL.
+
+For more on how to set up Coniql see [this wiki page](https://github.com/dls-controls/cs-web-proto/wiki/Running-cs-web-proto-against-Coniql).
+
+### Simulator
+
+There is a built-in simulator that can provide demo data. See [this wiki page](https://github.com/dls-controls/cs-web-proto/wiki/Simulating-a-control-system).
+
 ## Debugging
 
 The [loglevel](https://github.com/pimterry/loglevel) library is used for logging. To enable this, change the argument to `log.setLevel` in `App.tsx` and open the javascript console.
