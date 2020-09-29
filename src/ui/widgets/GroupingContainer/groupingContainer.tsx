@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-
 import { Widget, commonCss } from "../widget";
 import { WidgetPropType } from "../widgetProps";
 import { registerWidget } from "../register";
@@ -8,7 +7,7 @@ import {
   ChildrenPropOpt,
   InferWidgetProps,
   BorderPropOpt,
-  MacrosPropOpt
+  MacrosPropOpt,
 } from "../propTypes";
 import { MacroContextType, MacroContext } from "../../../types/macros";
 
@@ -16,7 +15,7 @@ const GroupingContainerProps = {
   name: StringProp,
   children: ChildrenPropOpt,
   border: BorderPropOpt,
-  macros: MacrosPropOpt
+  macros: MacrosPropOpt,
 };
 
 // Generic display widget to put other things inside
@@ -33,8 +32,8 @@ export const GroupingContainerComponent = (
     updateMacro: updateMacro,
     macros: {
       ...macros, // lower priority
-      ...groupingContainerMacros // higher priority
-    }
+      ...groupingContainerMacros, // higher priority
+    },
   };
 
   return (
@@ -46,7 +45,7 @@ export const GroupingContainerComponent = (
 
 const GroupingWidgetProps = {
   ...GroupingContainerProps,
-  ...WidgetPropType
+  ...WidgetPropType,
 };
 
 export const GroupingContainer = (

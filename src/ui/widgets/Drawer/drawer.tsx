@@ -12,7 +12,7 @@ import {
   FontPropOpt,
   StringPropOpt,
   ColorPropOpt,
-  BorderPropOpt
+  BorderPropOpt,
 } from "../propTypes";
 
 export const DrawerProps = {
@@ -24,7 +24,7 @@ export const DrawerProps = {
   backgroundColor: ColorPropOpt,
   border: BorderPropOpt,
   text: StringPropOpt,
-  children: PropTypes.arrayOf(PropTypes.element)
+  children: PropTypes.arrayOf(PropTypes.element),
 };
 
 export const DrawerComponent = (
@@ -45,7 +45,7 @@ export const DrawerComponent = (
           ...props.font?.css(),
           ...props.border?.css(),
           color: props.foregroundColor?.rgbaString(),
-          backgroundColor: props.backgroundColor?.rgbaString()
+          backgroundColor: props.backgroundColor?.rgbaString(),
         }}
       >
         {props.text ?? "\u2630"}
@@ -58,7 +58,7 @@ export const DrawerComponent = (
         <div
           style={{
             width: props.drawerWidth ?? "80vw",
-            maxWidth: props.drawerMaxWidth ?? "400px"
+            maxWidth: props.drawerMaxWidth ?? "400px",
           }}
         >
           {props.children}
@@ -70,7 +70,7 @@ export const DrawerComponent = (
 
 export const DrawerWidgetProps = {
   ...DrawerProps,
-  ...WidgetPropType
+  ...WidgetPropType,
 };
 
 export const DrawerWidget = (

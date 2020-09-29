@@ -9,4 +9,8 @@ describe("PV", (): void => {
     const pv = new PV("loc://test", "ca");
     expect(pv.qualifiedName()).toEqual("loc://test");
   });
+  it("default protocol is applied", (): void => {
+    const pv = PV.parse("pvName");
+    expect(pv).toEqual(new PV("pvName", "ca"));
+  });
 });
