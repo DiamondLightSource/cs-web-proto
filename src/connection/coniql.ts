@@ -1,3 +1,6 @@
+/* Module that handles a GraphQL connection to the Coniql server.
+   See https://github.com/dls-controls/coniql
+ */
 import log from "loglevel";
 import base64js from "base64-js";
 import { ApolloClient } from "apollo-client";
