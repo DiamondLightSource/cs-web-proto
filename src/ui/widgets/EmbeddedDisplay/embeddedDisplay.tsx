@@ -5,7 +5,7 @@ import log from "loglevel";
 
 import {
   WidgetDescription,
-  widgetDescriptionToComponent,
+  widgetDescriptionToComponent
 } from "../createComponent";
 import { Color } from "../../../types/color";
 import { Font, FontStyle } from "../../../types/font";
@@ -21,7 +21,7 @@ import { parseBob } from "./bobParser";
 
 const EMPTY_WIDGET: WidgetDescription = {
   type: "shape",
-  position: new AbsolutePosition("0", "0", "0", "0"),
+  position: new AbsolutePosition("0", "0", "0", "0")
 };
 
 const ERROR_WIDGET: WidgetDescription = {
@@ -29,20 +29,20 @@ const ERROR_WIDGET: WidgetDescription = {
   position: new RelativePosition(),
   font: new Font(16, FontStyle.Bold),
   backgroundColor: Color.RED,
-  text: "Error",
+  text: "Error"
 };
 
 export function errorWidget(message: string): WidgetDescription {
   return {
     ...ERROR_WIDGET,
-    text: message,
+    text: message
   };
 }
 
 const EmbeddedDisplayProps = {
   ...WidgetPropType,
   file: FilePropType,
-  highlight: StringPropOpt,
+  highlight: StringPropOpt
 };
 
 export const EmbeddedDisplay = (
@@ -130,7 +130,7 @@ export const EmbeddedDisplay = (
       border: props.border,
       overflow: overflow,
       children: [description],
-      highlight: props.highlight,
+      highlight: props.highlight
     });
   } catch (e) {
     const message = `Error converting file ${file} into components.`;
@@ -149,8 +149,8 @@ export const EmbeddedDisplay = (
     updateMacro: (key: string, value: string): void => {},
     macros: {
       ...parentMacros, // lower priority
-      ...embeddedDisplayMacros, // higher priority
-    },
+      ...embeddedDisplayMacros // higher priority
+    }
   };
 
   return (

@@ -6,7 +6,7 @@ export enum BorderStyle {
   Line,
   Dashed,
   Dotted,
-  GroupBox,
+  GroupBox
 }
 
 const CssBorders: { [key in BorderStyle]: string } = {
@@ -14,7 +14,7 @@ const CssBorders: { [key in BorderStyle]: string } = {
   [BorderStyle.Line]: "solid",
   [BorderStyle.Dashed]: "dashed",
   [BorderStyle.Dotted]: "dotted",
-  [BorderStyle.GroupBox]: "ridge",
+  [BorderStyle.GroupBox]: "ridge"
 };
 
 export class Border {
@@ -44,7 +44,7 @@ export class Border {
       borderStyle: CssBorders[this.style],
       borderWidth: `${this.width}px`,
       borderColor: this.color.rgbaString(),
-      borderRadius: `${this.radius}px`,
+      borderRadius: `${this.radius}px`
     };
   }
 }

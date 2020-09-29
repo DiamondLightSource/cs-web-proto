@@ -8,7 +8,7 @@ describe("Border", () => {
       borderStyle: "solid",
       borderWidth: "1px",
       borderColor: "rgba(255, 0, 0, 255)",
-      borderRadius: "0px",
+      borderRadius: "0px"
     });
   });
 });

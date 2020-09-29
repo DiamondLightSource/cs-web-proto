@@ -4,7 +4,7 @@ import { MacroMap, resolveMacros, macrosEqual } from "./macros";
 const macroMap: MacroMap = {
   A: "B",
   C: "D",
-  E: "",
+  E: ""
 };
 
 it("substitutes if macro matches", (): void => {
@@ -50,11 +50,11 @@ it("false if macros with same properties don't have the same keys", (): void => 
 it("false with macros with different properties", (): void => {
   const macroC: MacroMap = {
     G: "H",
-    A: "B",
+    A: "B"
   };
   const macroD: MacroMap = {
     D: "P",
-    Q: "X",
+    Q: "X"
   };
   expect(macrosEqual(macroC, macroD)).toEqual(false);
 });

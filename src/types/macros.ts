@@ -41,7 +41,7 @@ export interface MacroContextType {
 }
 export const MacroContext = React.createContext<MacroContextType>({
   macros: {},
-  updateMacro: (key: string, value: string) => {},
+  updateMacro: (key: string, value: string) => {}
 });
 
 /**

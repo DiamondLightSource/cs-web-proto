@@ -6,7 +6,7 @@ export enum FontStyle {
   Regular,
   Bold,
   Italic,
-  BoldItalic,
+  BoldItalic
 }
 
 export class Font {
@@ -49,7 +49,7 @@ export class Font {
       // Fall back to sans-serif.
       fontFamily: `${this.typeface},sans-serif`,
       fontWeight: fontWeight,
-      fontStyle: fontStyle,
+      fontStyle: fontStyle
     };
     if (fontSize) {
       style.fontSize = fontSize;

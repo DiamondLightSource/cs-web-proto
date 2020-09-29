@@ -16,7 +16,7 @@ export enum AlarmQuality {
   ALARM,
   INVALID,
   UNDEFINED,
-  CHANGING,
+  CHANGING
 }
 
 export class DAlarm {
@@ -36,7 +36,7 @@ export class DAlarm {
 export enum ChannelRole {
   RO,
   WO,
-  RW,
+  RW
 }
 
 export enum DisplayForm {
@@ -46,7 +46,7 @@ export enum DisplayForm {
   DECIMAL,
   HEX,
   EXPONENTIAL,
-  ENGINEERING,
+  ENGINEERING
 }
 
 export class DRange {
@@ -79,7 +79,7 @@ export class DDisplay {
     units = undefined,
     precision = undefined,
     form = undefined,
-    choices = undefined,
+    choices = undefined
   }: {
     description?: string;
     role?: ChannelRole;
@@ -264,7 +264,7 @@ export function mergeDDisplay(
     units: update?.units ?? original?.units,
     precision: update?.precision ?? original?.precision,
     form: update?.form ?? original?.form,
-    choices: update?.choices ?? original?.choices,
+    choices: update?.choices ?? original?.choices
   });
 }
 
@@ -276,7 +276,7 @@ export function mergeDType(original: DType | undefined, update: DType): DType {
       {
         stringValue: update.value.stringValue ?? original?.value.stringValue,
         doubleValue: update.value.doubleValue ?? original?.value.doubleValue,
-        arrayValue: update.value.arrayValue ?? original?.value.arrayValue,
+        arrayValue: update.value.arrayValue ?? original?.value.arrayValue
       },
 
       update.alarm ?? original?.alarm,

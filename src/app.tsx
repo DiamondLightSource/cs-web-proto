@@ -13,7 +13,7 @@ import {
   FileContextType,
   LocationCache,
   FileDescription,
-  fileDescEqual,
+  fileDescEqual
 } from "./fileContext";
 import { Header } from "./ui/components/Header/header";
 import { Footer } from "./ui/components/Footer/footer";
@@ -35,9 +35,9 @@ const App: React.FC = (): JSX.Element => {
         path: "home.json",
         type: "json",
         macros: {},
-        defaultProtocol: "pva",
-      },
-    ],
+        defaultProtocol: "pva"
+      }
+    ]
   });
 
   // Manages locations, and functions for adding and removing location
@@ -55,7 +55,7 @@ const App: React.FC = (): JSX.Element => {
         delete locationsCopy[location];
       }
       setLocations(locationsCopy);
-    },
+    }
   };
 
   return (
@@ -75,7 +75,7 @@ const App: React.FC = (): JSX.Element => {
                   path: "app.json",
                   type: "json",
                   defaultProtocol: "pva",
-                  macros: {},
+                  macros: {}
                 }}
               />
             </Profiler>

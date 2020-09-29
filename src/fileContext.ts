@@ -43,6 +43,6 @@ export type FileContextType = {
 const initialState: FileContextType = {
   locations: {},
   addFile: () => {},
-  removeFile: () => {},
+  removeFile: () => {}
 };
 export const FileContext = React.createContext(initialState);

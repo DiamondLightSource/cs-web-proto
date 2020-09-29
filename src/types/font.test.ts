@@ -8,7 +8,7 @@ describe("Font", (): void => {
       fontFamily: "sans,sans-serif",
       fontSize: "1rem",
       fontWeight: "normal",
-      fontStyle: "normal",
+      fontStyle: "normal"
     });
   });
   it("returns the correct style for a bold italic font", (): void => {
@@ -18,7 +18,7 @@ describe("Font", (): void => {
       fontFamily: "Liberation sans,sans-serif",
       fontSize: "1.6rem",
       fontWeight: "bold",
-      fontStyle: "italic",
+      fontStyle: "italic"
     });
   });
 

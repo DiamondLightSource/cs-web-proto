@@ -18,7 +18,7 @@ const recordedTimings = {
   startTime: 0,
   actualDur: 0,
   baseDur: 0,
-  reconciliation: 0,
+  reconciliation: 0
 };
 
 /**
