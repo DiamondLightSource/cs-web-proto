@@ -1,0 +1,18 @@
+.TabBar {
+  display: flex;
+  overflow: auto;
+  justify-content: flex-start;
+}
+
+.Tab {
+  margin: 0.2em 0.2em 0 0.2em;
+  border-radius: 0.2em 0.2em 0 0;
+  font-size: 2rem;
+  min-width: 20%;
+  border-bottom: none;
+}
+
+.TabSelected {
+  font-weight: bold;
+  border-style: inset inset none inset;
+}

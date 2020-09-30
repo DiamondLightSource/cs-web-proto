@@ -13,7 +13,7 @@ import {
 import { EmbeddedDisplay } from "../EmbeddedDisplay/embeddedDisplay";
 import { RelativePosition } from "../../../types/position";
 
-import classes from "./navigationTabs.module.css";
+import classes from "./tabs.module.css";
 import {
   FileContext,
   FileDescription,
@@ -76,70 +76,76 @@ export const DynamicTabsComponent = (
     ])
   );
 
-  return (
-    <div>
-      <div className={classes.Bar}>
-        {openTabs.map(
-          ([tabName, description], index): JSX.Element => (
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between"
-              }}
-              className={classes.Button}
-              key={index}
-            >
-              <button
-                onClick={(): void => {
-                  for (const [name1] of Object.values(openTabs)) {
-                    if (name1 === tabName) {
-                      setSelectedTab(tabName);
-                    }
-                  }
-                }}
-                style={{
-                  borderStyle: selectedTab === tabName ? "inset" : "",
-                  flexGrow: 1,
-                  fontSize: "2rem",
-                  fontWeight: "bold",
-                  backgroundColor: selectedTab === tabName ? "red" : "green"
-                }}
-              >
-                {tabName}
-              </button>
+  if (openTabs.length === 0) {
+    return (
+      <div style={{ border: "1px solid black", minHeight: "50px" }}>
+        <h3>Dynamic tabs "{props.location}": no file loaded.</h3>
+      </div>
+    );
+  } else {
+    return (
+      <div>
+        <div className={classes.TabBar}>
+          {openTabs.map(
+            ([tabName, description], index): JSX.Element => (
               <div
                 style={{
-                  position: "relative",
-                  width: "40px",
-                  height: "100%",
-                  flexShrink: 0
+                  display: "flex",
+                  justifyContent: "space-between"
                 }}
+                className={classes.Tab}
+                key={index}
               >
                 <button
-                  style={{
-                    color: "#ff3333",
-                    backgroundColor: "#ffffff"
-                  }}
                   onClick={(): void => {
-                    const filteredTabs = openTabs.filter(([name, desc]) => {
-                      return !fileDescEqual(description, desc);
-                    });
-                    setOpenTabs(filteredTabs);
-                    // Keep the last tab open if there are any left
-                    const lastTab = filteredTabs.slice(-1)[0];
-                    setSelectedTab(lastTab ? lastTab[0] : "");
+                    for (const [name1] of Object.values(openTabs)) {
+                      if (name1 === tabName) {
+                        setSelectedTab(tabName);
+                      }
+                    }
+                  }}
+                  className={
+                    selectedTab === tabName
+                      ? `${classes.Tab} ${classes.TabSelected}`
+                      : classes.Tab
+                  }
+                >
+                  {tabName}
+                </button>
+                <div
+                  style={{
+                    position: "relative",
+                    width: "40px",
+                    height: "100%",
+                    flexShrink: 0
                   }}
                 >
-                  X
-                </button>
+                  <button
+                    style={{
+                      color: "#ff3333",
+                      backgroundColor: "#ffffff"
+                    }}
+                    onClick={(): void => {
+                      const filteredTabs = openTabs.filter(([name, desc]) => {
+                        return !fileDescEqual(description, desc);
+                      });
+                      setOpenTabs(filteredTabs);
+                      // Keep the last tab open if there are any left
+                      const lastTab = filteredTabs.slice(-1)[0];
+                      setSelectedTab(lastTab ? lastTab[0] : "");
+                    }}
+                  >
+                    X
+                  </button>
+                </div>
               </div>
-            </div>
-          )
-        )}
+            )
+          )}
+        </div>
+        {children[selectedTab]}
       </div>
-      {children[selectedTab]}
-    </div>
-  );
+    );
+  }
 };
 
 export const DynamicTabsWidgetProps = {

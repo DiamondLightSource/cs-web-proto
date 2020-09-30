@@ -14,7 +14,7 @@ import {
 import { EmbeddedDisplay } from "../EmbeddedDisplay/embeddedDisplay";
 import { RelativePosition } from "../../../types/position";
 
-import classes from "./navigationTabs.module.css";
+import classes from "./tabs.module.css";
 
 export const NavigationTabsProps = {
   tabs: PropTypes.objectOf(FilePropType).isRequired,
@@ -45,15 +45,18 @@ export const NavigationTabsComponent = (
 
   return (
     <div>
-      <div className={classes.Bar}>
+      <div className={classes.TabBar}>
         {Object.keys(props.tabs).map(
           (key, index): JSX.Element => (
             <button
               onClick={(): void => {
                 setIndex(index);
               }}
-              className={classes.Button}
-              style={index === childIndex ? { borderStyle: "inset" } : {}}
+              className={
+                index === childIndex
+                  ? `${classes.Tab} ${classes.TabSelected}`
+                  : classes.Tab
+              }
               key={index}
             >
               {key}
