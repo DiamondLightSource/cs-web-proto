@@ -9,6 +9,12 @@ export interface FileDescription {
   defaultProtocol: string; // Default PV prefix for parser
 }
 
+/**
+ * Compare each property on two FileDescription objects
+ * @param first first object to compare to second
+ * @param second second object to compare to first
+ * @returns boolean, true if all properties match else false
+ */
 export function fileDescEqual(
   first: FileDescription,
   second: FileDescription
@@ -25,6 +31,7 @@ export function fileDescEqual(
 }
 
 export interface LocationCache {
+  // Location (a string), contains a tuple of a string with a FileDescription
   [location: string]: [string, FileDescription];
 }
 export type FileContextType = {
@@ -32,6 +39,9 @@ export type FileContextType = {
   addFile: (location: string, fileDesc: FileDescription, name: string) => void;
   removeFile: (location: string, fileDesc: FileDescription) => void;
 };
+
+// React.useContext(FileContext) gives access to each of the
+// properties in initialState
 const initialState: FileContextType = {
   locations: {},
   addFile: () => {},

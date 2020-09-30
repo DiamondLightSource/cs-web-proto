@@ -160,11 +160,16 @@ export class DType {
     return this.value.stringValue;
   }
 
+  /**
+   * Tries to convert a DType into a string by first converting to
+   * an intermediary value (first tried is string, then double, then array)
+   * @param value
+   */
   public static coerceString(value?: DType): string {
     if (value) {
       const stringValue = value.getStringValue();
       const doubleValue = value.getDoubleValue();
-      const arrayValue = value.getDoubleValue();
+      const arrayValue = value.getArrayValue();
       if (stringValue !== undefined) {
         return stringValue;
       } else if (doubleValue !== undefined) {
@@ -183,6 +188,11 @@ export class DType {
     return this.value.doubleValue;
   }
 
+  /**
+   * Attempts to extract a doubleValue from a DType through an
+   * intermediary conversion (first tried is double, then string)
+   * @param value
+   */
   public static coerceDouble(value?: DType): number {
     if (value !== undefined) {
       const doubleValue = value.getDoubleValue();
@@ -204,6 +214,11 @@ export class DType {
     return this.value.arrayValue;
   }
 
+  /**
+   * Attempts to extract a arrayValue from a DType through an
+   * intermediary conversion (first tried is array, then double)
+   * @param value
+   */
   public static coerceArray(value: DType): NumberArray {
     const arrayValue = value.getArrayValue();
     const doubleValue = value.getDoubleValue();
@@ -226,6 +241,7 @@ export class DType {
   public getTime(): DTime | undefined {
     return this.time;
   }
+
   public getDisplay(): DDisplay | undefined {
     return this.display;
   }

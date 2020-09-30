@@ -60,30 +60,35 @@ export const EmbeddedDisplay = (
   }
 
   // Using directly from React for testing purposes
-  useEffect((): (() => void) => {
-    // Will be set on the first render
-    let mounted = true;
-    if (file !== renderedFile) {
-      fetch(file)
-        .then(
-          (response): Promise<any> => {
-            return response.text();
-          }
-        )
-        .then((text): void => {
-          // Check component is still mounted when result comes back
-          if (mounted) {
-            setContents(text);
-            setFile(file);
-          }
-        });
-    }
+  useEffect(
+    (): (() => void) => {
+      // Will be set on the first render
+      let mounted = true;
+      if (file !== renderedFile) {
+        fetch(file)
+          .then(
+            (response): Promise<any> => {
+              return response.text();
+            }
+          )
+          .then((text): void => {
+            // Check component is still mounted when result comes back
+            if (mounted) {
+              setContents(text);
+              setFile(file);
+            }
+          });
+      }
 
-    // Clean up function
-    return (): void => {
-      mounted = false;
-    };
-  });
+      // Clean up function
+      return (): void => {
+        mounted = false;
+      };
+    }
+    // TODO 28/09/20: Course I did said should always declare dependencies as second argument
+    // to stop useEffect from continuously re-rendering, at this point not sure
+    // what to specify though (George)
+  );
 
   let component: JSX.Element;
   try {

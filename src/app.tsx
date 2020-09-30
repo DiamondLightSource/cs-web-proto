@@ -12,7 +12,8 @@ import {
   FileContext,
   FileContextType,
   LocationCache,
-  FileDescription
+  FileDescription,
+  fileDescEqual
 } from "./fileContext";
 import { Header } from "./ui/components/Header/header";
 import { Footer } from "./ui/components/Footer/footer";
@@ -21,15 +22,9 @@ const baseUrl = process.env.REACT_APP_BASE_URL ?? "http://localhost:3000";
 
 log.setLevel((process.env.REACT_APP_LOG_LEVEL as LogLevelDesc) ?? "info");
 
-function applyTheme(theme: any): void {
-  Object.keys(theme).forEach(function(key): void {
-    const value = theme[key];
-    document.documentElement.style.setProperty(key, value);
-  });
-}
-
 const App: React.FC = (): JSX.Element => {
-  const { dark } = React.useContext(ThemeContext);
+  // Set dark or light mode using ThemeContext
+  const { dark, applyTheme } = React.useContext(ThemeContext);
   applyTheme(dark ? darkTheme : lightTheme);
 
   const [locations, setLocations] = useState<LocationCache>({
@@ -43,22 +38,34 @@ const App: React.FC = (): JSX.Element => {
       }
     ]
   });
+
+  // Manages locations, and functions for adding and removing location
   const fileContext: FileContextType = {
-    locations: locations,
+    locations,
     addFile: (location: string, desc: FileDescription, name: string) => {
       const locationsCopy = { ...locations };
       locationsCopy[location] = [name, desc];
       setLocations(locationsCopy);
     },
     removeFile: (location: string, desc: FileDescription) => {
-      // TODO: match the description.
       const locationsCopy = { ...locations };
-      delete locationsCopy[location];
+
+      // description stored in second element of array but may not exist
+      if (locationsCopy[location][1] !== undefined) {
+        if (fileDescEqual(desc, locationsCopy[location][1])) {
+          delete locationsCopy[location];
+        }
+      } else {
+        delete locationsCopy[location];
+      }
       setLocations(locationsCopy);
     }
   };
 
   return (
+    // Each instance of context provider allows child components to access
+    // the properties on the object placed in value
+    // Profiler sends render information whenever child components rerender
     <FileContext.Provider value={fileContext}>
       <BaseUrlContext.Provider value={baseUrl}>
         <Provider store={store}>
@@ -66,6 +73,7 @@ const App: React.FC = (): JSX.Element => {
             <Header />
             <Profiler id="Dynamic Page Profiler" onRender={onRenderCallback}>
               <EmbeddedDisplay
+                // RelativePosition returns CSS properties
                 position={new RelativePosition()}
                 file={{
                   path: "app.json",

@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-
 import { Widget, commonCss } from "../widget";
 import { WidgetPropType } from "../widgetProps";
 import { registerWidget } from "../register";
