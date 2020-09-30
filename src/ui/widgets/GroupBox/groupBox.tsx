@@ -31,8 +31,8 @@ const GroupBoxProps = {
   children: ChildrenPropOpt
 };
 
-export const GroupingContainer = (
+export const GroupBox = (
   props: InferWidgetProps<typeof GroupBoxProps>
 ): JSX.Element => <Widget baseWidget={GroupBoxComponent} {...props} />;
 
-registerWidget(GroupingContainer, GroupBoxProps, "grouping");
+registerWidget(GroupBox, GroupBoxProps, "groupingBox");
