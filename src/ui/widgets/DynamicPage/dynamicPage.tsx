@@ -30,7 +30,11 @@ export const DynamicPageComponent = (
   } catch (error) {
     log.warn(fileContext);
     log.warn(error);
-    return <div></div>;
+    return (
+      <div style={{ border: "1px solid black", minHeight: "100px", ...style }}>
+        <h3>Dynamic page "{props.location}": no file loaded.</h3>
+      </div>
+    );
   }
 
   return (
