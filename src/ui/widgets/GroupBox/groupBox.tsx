@@ -35,4 +35,4 @@ export const GroupBox = (
   props: InferWidgetProps<typeof GroupBoxProps>
 ): JSX.Element => <Widget baseWidget={GroupBoxComponent} {...props} />;
 
-registerWidget(GroupBox, GroupBoxProps, "groupingBox");
+registerWidget(GroupBox, GroupBoxProps, "groupBox");

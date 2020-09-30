@@ -3,6 +3,7 @@ export { Display } from "./Display/display";
 export { DynamicPageWidget } from "./DynamicPage/dynamicPage";
 export { EmbeddedDisplay } from "./EmbeddedDisplay/embeddedDisplay";
 export { FlexContainer } from "./FlexContainer/flexContainer";
+export { GroupBox } from "./GroupBox/groupBox";
 export { GroupingContainer } from "./GroupingContainer/groupingContainer";
 export { Image } from "./Image/image";
 export { Input } from "./Input/input";
