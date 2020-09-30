@@ -89,55 +89,35 @@ export const DynamicTabsComponent = (
           {openTabs.map(
             ([tabName, description], index): JSX.Element => (
               <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between"
-                }}
-                className={classes.Tab}
                 key={index}
-              >
-                <button
-                  onClick={(): void => {
-                    for (const [name1] of Object.values(openTabs)) {
-                      if (name1 === tabName) {
-                        setSelectedTab(tabName);
-                      }
+                onClick={(): void => {
+                  for (const [name1] of Object.values(openTabs)) {
+                    if (name1 === tabName) {
+                      setSelectedTab(tabName);
                     }
-                  }}
-                  className={
-                    selectedTab === tabName
-                      ? `${classes.Tab} ${classes.TabSelected}`
-                      : classes.Tab
                   }
-                >
-                  {tabName}
-                </button>
-                <div
-                  style={{
-                    position: "relative",
-                    width: "40px",
-                    height: "100%",
-                    flexShrink: 0
+                }}
+                className={
+                  selectedTab === tabName
+                    ? `${classes.Tab} ${classes.CloseableTab} ${classes.TabSelected}`
+                    : `${classes.Tab} ${classes.CloseableTab}`
+                }
+              >
+                <p className={classes.CloseableTabText}>{tabName}</p>
+                <button
+                  className={classes.TabCloseButton}
+                  onClick={(): void => {
+                    const filteredTabs = openTabs.filter(([name, desc]) => {
+                      return !fileDescEqual(description, desc);
+                    });
+                    setOpenTabs(filteredTabs);
+                    // Keep the last tab open if there are any left
+                    const lastTab = filteredTabs.slice(-1)[0];
+                    setSelectedTab(lastTab ? lastTab[0] : "");
                   }}
                 >
-                  <button
-                    style={{
-                      color: "#ff3333",
-                      backgroundColor: "#ffffff"
-                    }}
-                    onClick={(): void => {
-                      const filteredTabs = openTabs.filter(([name, desc]) => {
-                        return !fileDescEqual(description, desc);
-                      });
-                      setOpenTabs(filteredTabs);
-                      // Keep the last tab open if there are any left
-                      const lastTab = filteredTabs.slice(-1)[0];
-                      setSelectedTab(lastTab ? lastTab[0] : "");
-                    }}
-                  >
-                    X
-                  </button>
-                </div>
+                  X
+                </button>
               </div>
             )
           )}
