@@ -22,7 +22,6 @@ const baseUrl = process.env.REACT_APP_BASE_URL ?? "http://localhost:3000";
 
 log.setLevel((process.env.REACT_APP_LOG_LEVEL as LogLevelDesc) ?? "info");
 
-// React.FC: React functional component
 const App: React.FC = (): JSX.Element => {
   // Set dark or light mode using ThemeContext
   const { dark, applyTheme } = React.useContext(ThemeContext);
@@ -50,8 +49,13 @@ const App: React.FC = (): JSX.Element => {
     },
     removeFile: (location: string, desc: FileDescription) => {
       const locationsCopy = { ...locations };
-      // description stored in second element of array
-      if (fileDescEqual(desc, locationsCopy[location][1])) {
+
+      // description stored in second element of array but may not exist
+      if (locationsCopy[location][1] !== undefined) {
+        if (fileDescEqual(desc, locationsCopy[location][1])) {
+          delete locationsCopy[location];
+        }
+      } else {
         delete locationsCopy[location];
       }
       setLocations(locationsCopy);

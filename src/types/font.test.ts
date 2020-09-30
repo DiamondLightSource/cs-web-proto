@@ -22,7 +22,7 @@ describe("Font", (): void => {
     });
   });
 
-  it("size is left out of CSSProperties when not input", (): void => {
+  it("fontStyle is left out of CSSProperties when not input", (): void => {
     const font = new Font();
     expect(font).not.toHaveProperty("fontStyle");
   });

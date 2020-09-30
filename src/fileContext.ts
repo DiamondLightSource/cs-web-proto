@@ -11,7 +11,9 @@ export interface FileDescription {
 
 /**
  * Compare each property on two FileDescription objects
- * Return true if all properties are equal
+ * @param first first object to compare to second
+ * @param second second object to compare to first
+ * @returns boolean, true if all properties match else false
  */
 export function fileDescEqual(
   first: FileDescription,

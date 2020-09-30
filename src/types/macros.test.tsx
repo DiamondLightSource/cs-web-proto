@@ -58,3 +58,31 @@ it("false with macros with different properties", (): void => {
   };
   expect(macrosEqual(macroC, macroD)).toEqual(false);
 });
+
+describe("Assigning first or second to both objects instead of just one fails", (): void => {
+  /**
+   * Previously there was a bug that assigned first to both objects in the macrosEqual function
+   * e.g.
+   * const { DID: firstDid, ...firstOthers } = first;
+   * const { DID: secondDid, ...secondOthers } = first;
+   * This test checks this doesn't happen again and one of the below tests will fail
+   * if either first is applied to both, or second is applied to both
+   */
+
+  const macroA: MacroMap = {
+    A: "B",
+    C: "D"
+  };
+  const macroB: MacroMap = {
+    ...macroA,
+    D: "E"
+  };
+
+  it("fails when first is assigned to both objects", (): void => {
+    expect(macrosEqual(macroA, macroB)).toEqual(false);
+  });
+
+  it("fails when second is assigned to both objects", (): void => {
+    expect(macrosEqual(macroB, macroA)).toEqual(false);
+  });
+});
