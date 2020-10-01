@@ -19,6 +19,7 @@ import {
   FileDescription,
   fileDescEqual
 } from "../../../fileContext";
+import { BaseUrlContext } from "../../../baseUrl";
 
 export const DynamicTabsProps = {
   location: StringProp,
@@ -33,6 +34,7 @@ export const DynamicTabsComponent = (
   props: InferWidgetProps<typeof DynamicTabsProps>
 ): JSX.Element => {
   const fileContext = useContext(FileContext);
+  const baseUrl = useContext(BaseUrlContext);
   const [selectedTab, setSelectedTab] = useState<string>("");
   const [selectedTabExt, setSelectedTabExt] = useState<string>("");
   const [openTabs, setOpenTabs] = useState<[string, FileDescription][]>([]);
@@ -116,7 +118,10 @@ export const DynamicTabsComponent = (
                     setSelectedTab(lastTab ? lastTab[0] : "");
                   }}
                 >
-                  X
+                  <img
+                    style={{ height: "15px", display: "block" }}
+                    src={`${baseUrl}/img/x.png`}
+                  ></img>
                 </button>
               </div>
             )

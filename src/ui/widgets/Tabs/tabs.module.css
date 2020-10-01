@@ -30,9 +30,13 @@
 }
 
 .TabCloseButton {
-  color: #ff3333;
-  background-color: #ffffff;
+  background-color: transparent;
+  border: none;
   display: inline;
   margin: 3px;
   padding: 0;
+}
+
+.TabCloseButton:hover {
+  background-color: #ffffff;
 }
