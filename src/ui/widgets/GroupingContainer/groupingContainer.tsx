@@ -52,4 +52,4 @@ export const GroupingContainer = (
   props: InferWidgetProps<typeof GroupingWidgetProps>
 ): JSX.Element => <Widget baseWidget={GroupingContainerComponent} {...props} />;
 
-registerWidget(GroupingContainer, GroupingWidgetProps, "grouping");
+registerWidget(GroupingContainer, GroupingWidgetProps, "groupingContainer");
