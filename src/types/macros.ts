@@ -94,6 +94,5 @@ export function resolveMacros(
   unresolvedPvName: string,
   macroMap: MacroMap
 ): string {
-  const resolved: string = interpolate(unresolvedPvName, macroMap);
-  return resolved;
+  return interpolate(unresolvedPvName, macroMap);
 }
