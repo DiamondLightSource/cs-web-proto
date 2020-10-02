@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-
 import { Widget, commonCss } from "../widget";
 import { WidgetPropType } from "../widgetProps";
 import { registerWidget } from "../register";
@@ -53,4 +52,4 @@ export const GroupingContainer = (
   props: InferWidgetProps<typeof GroupingWidgetProps>
 ): JSX.Element => <Widget baseWidget={GroupingContainerComponent} {...props} />;
 
-registerWidget(GroupingContainer, GroupingWidgetProps, "grouping");
+registerWidget(GroupingContainer, GroupingWidgetProps, "groupingContainer");

@@ -10,6 +10,7 @@ import {
 
 const stringDType = dstring("hello");
 const doubleDType = ddouble(42);
+const arrayDType = ddoubleArray([3, 5, 0.5]);
 
 describe("DType", (): void => {
   test("getStringValue() returns string if present", (): void => {
@@ -51,8 +52,12 @@ describe("DType coercion", (): void => {
     expect(DType.coerceString(doubleDType)).toEqual("42");
   });
 
-  test("coerceDouble() returns string if defined", (): void => {
+  test("coerceString() returns string if defined", (): void => {
     expect(DType.coerceString(stringDType)).toEqual("hello");
+  });
+
+  test("coerceString() returns array type", (): void => {
+    expect(DType.coerceString(arrayDType)).toEqual("3,5,0.5");
   });
 
   test("coerceArray() returns array if defined", (): void => {

@@ -1,5 +1,6 @@
 import { createCanvas } from "canvas";
 import log from "loglevel";
+
 export class Color {
   private r: number;
   private g: number;
@@ -17,7 +18,12 @@ export class Color {
   public static ORANGE = new Color(255, 165, 0);
   public static TRANSPARENT = new Color(0, 0, 0, 0);
 
-  // Use the browser to compute colours from names.
+  /**
+   * Use the browser to compute colours from names.
+   * @param cssColorName string representing the color name
+   * @returns hex code for the corresponding color, or #000000 if not possible
+   * @example fromName("red") -> "#FF0000"
+   */
   public static fromName(cssColorName: string): string {
     let ctx = document.createElement("canvas").getContext("2d");
     if (!ctx) {
@@ -25,7 +31,9 @@ export class Color {
       ctx = createCanvas(100, 100).getContext("2d");
     }
     if (ctx) {
+      // settings fillstyle with string name
       ctx.fillStyle = cssColorName;
+      // then accessing the name is converted to hex color code
       return ctx.fillStyle;
     } else {
       log.warn(
@@ -35,6 +43,13 @@ export class Color {
     }
   }
 
+  /**
+   * Parses multiple different color formats into a new
+   * Color object
+   * @param cssColor string hex code "#FF0000", or rgb code "rgb(100, 53, 195)",
+   * or transparent "transparent", or css color "red"
+   * @returns new Color object from parsed color, or black if color is not found
+   */
   public static parse(cssColor: string): Color {
     let r = 0;
     let g = 0;
@@ -47,6 +62,7 @@ export class Color {
       intRep /= 256;
       r = Math.floor(intRep);
     } else if (cssColor.startsWith("rgb")) {
+      // expected format "rgb(100, 53, 195)"
       const parts = cssColor.match(/rgb\((.*), (.*), (.*)\)/);
       if (parts !== null) {
         r = parseInt(parts[1]);

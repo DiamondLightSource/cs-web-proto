@@ -3,7 +3,9 @@ import { render, fireEvent, waitFor } from "@testing-library/react";
 import { DrawerComponent } from "./drawer";
 
 test("drawer opens on click", async () => {
-  const contents = <div>Hello</div>;
+  // when passing contents as a list each item in the list
+  // requires a key
+  const contents = <div key={1}>Hello</div>;
   const { container, queryByText } = render(
     <DrawerComponent>{[contents]}</DrawerComponent>
   );

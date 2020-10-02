@@ -1,5 +1,7 @@
 import { CSSProperties } from "react";
 
+// assigned int values starting from zero
+// also functions as a type
 export enum FontStyle {
   Regular,
   Bold,
@@ -12,6 +14,7 @@ export class Font {
   private size?: number;
   private style: FontStyle;
   private typeface: string;
+  // TODO: name is currently unused
   private name?: string;
 
   public constructor(
@@ -26,6 +29,10 @@ export class Font {
     this.name = name;
   }
 
+  /**
+   * Returns a CSSProperties object containing all parameters defined by the
+   * user and default properties for optional parameters not input by the user
+   */
   public css(): CSSProperties {
     const fontSize = this.size ? `${this.size / 10}rem` : undefined;
     const fontWeight =

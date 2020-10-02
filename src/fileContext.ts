@@ -9,6 +9,12 @@ export interface FileDescription {
   defaultProtocol: string; // Default PV prefix for parser
 }
 
+/**
+ * Compare each property on two FileDescription objects
+ * @param first first object to compare to second
+ * @param second second object to compare to first
+ * @returns boolean, true if all properties match else false
+ */
 export function fileDescEqual(
   first: FileDescription,
   second: FileDescription
@@ -157,6 +163,9 @@ export type FileContextType = {
   removeTab: (location: string, fileDesc: FileDescription) => void;
   selectTab: (location: string, tabName: string) => void;
 };
+
+// React.useContext(FileContext) gives access to each of the
+// properties in initialState
 const initialState: FileContextType = {
   pages: {},
   tabs: {},

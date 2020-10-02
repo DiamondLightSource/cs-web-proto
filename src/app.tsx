@@ -27,15 +27,9 @@ const baseUrl = process.env.REACT_APP_BASE_URL ?? "http://localhost:3000";
 
 log.setLevel((process.env.REACT_APP_LOG_LEVEL as LogLevelDesc) ?? "info");
 
-function applyTheme(theme: any): void {
-  Object.keys(theme).forEach(function(key): void {
-    const value = theme[key];
-    document.documentElement.style.setProperty(key, value);
-  });
-}
-
 const App: React.FC = (): JSX.Element => {
-  const { dark } = React.useContext(ThemeContext);
+  // Set dark or light mode using ThemeContext
+  const { dark, applyTheme } = React.useContext(ThemeContext);
   applyTheme(dark ? darkTheme : lightTheme);
 
   const [pages, setPages] = useState<PageState>({
@@ -68,6 +62,9 @@ const App: React.FC = (): JSX.Element => {
   };
 
   return (
+    // Each instance of context provider allows child components to access
+    // the properties on the object placed in value
+    // Profiler sends render information whenever child components rerender
     <FileContext.Provider value={fileContext}>
       <BaseUrlContext.Provider value={baseUrl}>
         <Provider store={store}>
@@ -75,6 +72,7 @@ const App: React.FC = (): JSX.Element => {
             <Header />
             <Profiler id="Dynamic Page Profiler" onRender={onRenderCallback}>
               <EmbeddedDisplay
+                // RelativePosition returns CSS properties
                 position={new RelativePosition()}
                 file={{
                   path: "app.json",
