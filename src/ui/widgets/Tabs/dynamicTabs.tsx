@@ -34,7 +34,7 @@ export const DynamicTabsComponent = (
   if (!fileContext.tabs[props.location]) {
     return (
       <div style={{ border: "1px solid black", minHeight: "50px" }}>
-        <h3>Dynamic tabs "{props.location}": no file loaded.</h3>
+        <h3>Dynamic tabs &quot;{props.location}&quot;: no file loaded.</h3>
       </div>
     );
   } else {
