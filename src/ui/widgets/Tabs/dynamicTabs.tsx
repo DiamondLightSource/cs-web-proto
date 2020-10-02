@@ -31,15 +31,15 @@ export const DynamicTabsComponent = (
 ): JSX.Element => {
   const fileContext = useContext(FileContext);
   const baseUrl = useContext(BaseUrlContext);
-  if (!fileContext.tabs[props.location]) {
+  if (!fileContext.tabState[props.location]) {
     return (
       <div style={{ border: "1px solid black", minHeight: "50px" }}>
         <h3>Dynamic tabs &quot;{props.location}&quot;: no file loaded.</h3>
       </div>
     );
   } else {
-    const openTabs = fileContext.tabs[props.location].fileDetails;
-    const selectedTab = fileContext.tabs[props.location].selectedTab;
+    const openTabs = fileContext.tabState[props.location].fileDetails;
+    const selectedTab = fileContext.tabState[props.location].selectedTab;
 
     // Using object map method found here: https://stackoverflow.com/questions/14810506/map-function-for-objects-instead-of-arrays
     const children = Object.fromEntries(

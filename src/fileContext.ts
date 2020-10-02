@@ -151,8 +151,8 @@ export function selectTab(
 }
 
 export type FileContextType = {
-  pages: PageState;
-  tabs: TabState;
+  pageState: PageState;
+  tabState: TabState;
   addPage: (location: string, fileDesc: FileDescription) => void;
   removePage: (location: string, fileDesc?: FileDescription) => void;
   addTab: (
@@ -167,12 +167,46 @@ export type FileContextType = {
 // React.useContext(FileContext) gives access to each of the
 // properties in initialState
 const initialState: FileContextType = {
-  pages: {},
-  tabs: {},
+  pageState: {},
+  tabState: {},
   addPage: () => {},
   removePage: () => {},
   addTab: () => {},
   removeTab: () => {},
   selectTab: () => {}
 };
+
+/**
+ * Helper function to create a file context given the appropriate state.
+ * @param pageState PageState for app
+ * @param setPageState function for setting pageState
+ * @param tabState TabState for app
+ * @param setTabState function for setting tabState
+ */
+export function createFileContext(
+  pageState: PageState,
+  setPageState: React.Dispatch<React.SetStateAction<PageState>>,
+  tabState: TabState,
+  setTabState: React.Dispatch<React.SetStateAction<TabState>>
+): FileContextType {
+  return {
+    pageState,
+    tabState,
+    addPage: (location: string, fileDesc: FileDescription) => {
+      setPageState(addPage(pageState, location, fileDesc));
+    },
+    removePage: (location: string, fileDesc?: FileDescription) => {
+      setPageState(removePage(pageState, location, fileDesc));
+    },
+    addTab: (location: string, tabName: string, fileDesc: FileDescription) => {
+      setTabState(addTab(tabState, location, tabName, fileDesc));
+    },
+    removeTab: (location: string, fileDesc: FileDescription) => {
+      setTabState(removeTab(tabState, location, fileDesc));
+    },
+    selectTab: (location: string, tabName: string) => {
+      setTabState(selectTab(tabState, location, tabName));
+    }
+  };
+}
 export const FileContext = React.createContext(initialState);

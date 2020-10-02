@@ -10,15 +10,9 @@ import { onRenderCallback } from "./profilerCallback";
 import { RelativePosition } from "./types/position";
 import {
   FileContext,
-  FileContextType,
   TabState,
-  FileDescription,
   PageState,
-  addPage,
-  removePage,
-  removeTab,
-  addTab,
-  selectTab
+  createFileContext
 } from "./fileContext";
 import { Header } from "./ui/components/Header/header";
 import { Footer } from "./ui/components/Footer/footer";
@@ -27,39 +21,31 @@ const baseUrl = process.env.REACT_APP_BASE_URL ?? "http://localhost:3000";
 
 log.setLevel((process.env.REACT_APP_LOG_LEVEL as LogLevelDesc) ?? "info");
 
+/* Page that will be loaded at start. */
+const INITIAL_PAGE_STATE: PageState = {
+  app: {
+    path: "home.json",
+    type: "json",
+    macros: {},
+    defaultProtocol: "pva"
+  }
+};
+
 const App: React.FC = (): JSX.Element => {
   // Set dark or light mode using ThemeContext
   const { dark, applyTheme } = React.useContext(ThemeContext);
   applyTheme(dark ? darkTheme : lightTheme);
 
-  const [pages, setPages] = useState<PageState>({
-    app: {
-      path: "home.json",
-      type: "json",
-      macros: {},
-      defaultProtocol: "pva"
-    }
-  });
-  const [tabs, setTabs] = useState<TabState>({});
-  const fileContext: FileContextType = {
-    pages,
-    tabs,
-    addPage: (location: string, fileDesc: FileDescription) => {
-      setPages(addPage(pages, location, fileDesc));
-    },
-    removePage: (location: string, fileDesc?: FileDescription) => {
-      setPages(removePage(pages, location, fileDesc));
-    },
-    addTab: (location: string, tabName: string, fileDesc: FileDescription) => {
-      setTabs(addTab(tabs, location, tabName, fileDesc));
-    },
-    removeTab: (location: string, fileDesc: FileDescription) => {
-      setTabs(removeTab(tabs, location, fileDesc));
-    },
-    selectTab: (location: string, tabName: string) => {
-      setTabs(selectTab(tabs, location, tabName));
-    }
-  };
+  // Set up the file context, which contains information about
+  // the open pages in DynamicPages and tabs in DynamicTabs.
+  const [pageState, setPageState] = useState<PageState>(INITIAL_PAGE_STATE);
+  const [tabState, setTabState] = useState<TabState>({});
+  const fileContext = createFileContext(
+    pageState,
+    setPageState,
+    tabState,
+    setTabState
+  );
 
   return (
     // Each instance of context provider allows child components to access
