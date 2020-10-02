@@ -29,24 +29,25 @@ describe("<DynamicPage>", (): void => {
       .spyOn(globalWithFetch, "fetch")
       .mockImplementation((): Promise<{}> => mockFetchPromise);
 
-    const xx: FileContextType = {
-      locations: {
-        testlocation: [
-          "dummy",
-          {
-            path: "test.json",
-            type: "json",
-            macros: {},
-            defaultProtocol: "pva"
-          }
-        ]
+    const fileContext: FileContextType = {
+      pages: {
+        testlocation: {
+          path: "test.json",
+          type: "json",
+          macros: {},
+          defaultProtocol: "pva"
+        }
       },
-      addFile: () => {},
-      removeFile: () => {}
+      tabs: {},
+      addPage: () => {},
+      removePage: () => {},
+      addTab: () => {},
+      removeTab: () => {},
+      selectTab: () => {}
     };
     const { queryByText } = render(
       <Provider store={store}>
-        <FileContext.Provider value={xx}>
+        <FileContext.Provider value={fileContext}>
           <DynamicPageComponent location="testlocation" />
         </FileContext.Provider>
       </Provider>

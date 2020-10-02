@@ -26,7 +26,7 @@ export const DynamicPageComponent = (
 
   let file;
   try {
-    file = fileContext.locations[props.location][1];
+    file = fileContext.pages[props.location];
   } catch (error) {
     log.warn(fileContext);
     log.warn(error);

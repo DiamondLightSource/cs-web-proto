@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 
 import { Widget } from "../widget";
 import { WidgetPropType } from "../widgetProps";
@@ -14,11 +14,7 @@ import { EmbeddedDisplay } from "../EmbeddedDisplay/embeddedDisplay";
 import { RelativePosition } from "../../../types/position";
 
 import classes from "./tabs.module.css";
-import {
-  FileContext,
-  FileDescription,
-  fileDescEqual
-} from "../../../fileContext";
+import { FileContext } from "../../../fileContext";
 import { BaseUrlContext } from "../../../baseUrl";
 
 export const DynamicTabsProps = {
@@ -35,56 +31,33 @@ export const DynamicTabsComponent = (
 ): JSX.Element => {
   const fileContext = useContext(FileContext);
   const baseUrl = useContext(BaseUrlContext);
-  const [selectedTab, setSelectedTab] = useState<string>("");
-  const [selectedTabExt, setSelectedTabExt] = useState<string>("");
-  const [openTabs, setOpenTabs] = useState<[string, FileDescription][]>([]);
-  const [name, locationFile] = fileContext.locations[props.location] ?? [
-    "",
-    undefined
-  ];
-  const tabJustOpened = name !== "" && selectedTabExt !== name;
-
-  if (tabJustOpened) {
-    setSelectedTab(name);
-    setSelectedTabExt(name);
-  }
-
-  let matched = false;
-  for (const [, tab] of openTabs) {
-    if (fileDescEqual(locationFile, tab)) {
-      matched = true;
-    }
-  }
-  if (tabJustOpened && !matched && locationFile !== undefined) {
-    const tabsCopy = openTabs.slice();
-    tabsCopy.push([name, locationFile]);
-    setOpenTabs(tabsCopy);
-  }
-
-  // Using object map method found here: https://stackoverflow.com/questions/14810506/map-function-for-objects-instead-of-arrays
-  const children = Object.fromEntries(
-    Object.values(openTabs).map(([name, description]) => [
-      name,
-      <EmbeddedDisplay
-        position={new RelativePosition()}
-        file={{
-          path: description?.path || "",
-          type: description?.type || "json",
-          defaultProtocol: description?.defaultProtocol ?? "ca",
-          macros: description?.macros || {}
-        }}
-        key={name}
-      />
-    ])
-  );
-
-  if (openTabs.length === 0) {
+  if (!fileContext.tabs[props.location]) {
     return (
       <div style={{ border: "1px solid black", minHeight: "50px" }}>
         <h3>Dynamic tabs "{props.location}": no file loaded.</h3>
       </div>
     );
   } else {
+    const openTabs = fileContext.tabs[props.location].fileDetails;
+    const selectedTab = fileContext.tabs[props.location].selectedTab;
+
+    // Using object map method found here: https://stackoverflow.com/questions/14810506/map-function-for-objects-instead-of-arrays
+    const children = Object.fromEntries(
+      Object.values(openTabs).map(([name, description]) => [
+        name,
+        <EmbeddedDisplay
+          position={new RelativePosition()}
+          file={{
+            path: description?.path || "",
+            type: description?.type || "json",
+            defaultProtocol: description?.defaultProtocol ?? "ca",
+            macros: description?.macros || {}
+          }}
+          key={name}
+        />
+      ])
+    );
+
     return (
       <div>
         <div className={classes.TabBar}>
@@ -93,11 +66,7 @@ export const DynamicTabsComponent = (
               <div
                 key={index}
                 onClick={(): void => {
-                  for (const [name1] of Object.values(openTabs)) {
-                    if (name1 === tabName) {
-                      setSelectedTab(tabName);
-                    }
-                  }
+                  fileContext.selectTab(props.location, tabName);
                 }}
                 className={
                   selectedTab === tabName
@@ -108,19 +77,15 @@ export const DynamicTabsComponent = (
                 <p className={classes.CloseableTabText}>{tabName}</p>
                 <button
                   className={classes.TabCloseButton}
-                  onClick={(): void => {
-                    const filteredTabs = openTabs.filter(([name, desc]) => {
-                      return !fileDescEqual(description, desc);
-                    });
-                    setOpenTabs(filteredTabs);
-                    // Keep the last tab open if there are any left
-                    const lastTab = filteredTabs.slice(-1)[0];
-                    setSelectedTab(lastTab ? lastTab[0] : "");
+                  onClick={(event): void => {
+                    fileContext.removeTab(props.location, description);
+                    event.stopPropagation();
                   }}
                 >
                   <img
                     style={{ height: "15px", display: "block" }}
                     src={`${baseUrl}/img/x.png`}
+                    alt="Close tab"
                   ></img>
                 </button>
               </div>

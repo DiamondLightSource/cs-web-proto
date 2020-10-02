@@ -11,8 +11,14 @@ import { RelativePosition } from "./types/position";
 import {
   FileContext,
   FileContextType,
-  LocationCache,
-  FileDescription
+  TabState,
+  FileDescription,
+  PageState,
+  addPage,
+  removePage,
+  removeTab,
+  addTab,
+  selectTab
 } from "./fileContext";
 import { Header } from "./ui/components/Header/header";
 import { Footer } from "./ui/components/Footer/footer";
@@ -32,29 +38,32 @@ const App: React.FC = (): JSX.Element => {
   const { dark } = React.useContext(ThemeContext);
   applyTheme(dark ? darkTheme : lightTheme);
 
-  const [locations, setLocations] = useState<LocationCache>({
-    app: [
-      "home",
-      {
-        path: "home.json",
-        type: "json",
-        macros: {},
-        defaultProtocol: "pva"
-      }
-    ]
+  const [pages, setPages] = useState<PageState>({
+    app: {
+      path: "home.json",
+      type: "json",
+      macros: {},
+      defaultProtocol: "pva"
+    }
   });
+  const [tabs, setTabs] = useState<TabState>({});
   const fileContext: FileContextType = {
-    locations: locations,
-    addFile: (location: string, desc: FileDescription, name: string) => {
-      const locationsCopy = { ...locations };
-      locationsCopy[location] = [name, desc];
-      setLocations(locationsCopy);
+    pages,
+    tabs,
+    addPage: (location: string, fileDesc: FileDescription) => {
+      setPages(addPage(pages, location, fileDesc));
     },
-    removeFile: (location: string, desc: FileDescription) => {
-      // TODO: match the description.
-      const locationsCopy = { ...locations };
-      delete locationsCopy[location];
-      setLocations(locationsCopy);
+    removePage: (location: string, fileDesc?: FileDescription) => {
+      setPages(removePage(pages, location, fileDesc));
+    },
+    addTab: (location: string, tabName: string, fileDesc: FileDescription) => {
+      setTabs(addTab(tabs, location, tabName, fileDesc));
+    },
+    removeTab: (location: string, fileDesc: FileDescription) => {
+      setTabs(removeTab(tabs, location, fileDesc));
+    },
+    selectTab: (location: string, tabName: string) => {
+      setTabs(selectTab(tabs, location, tabName));
     }
   };
 

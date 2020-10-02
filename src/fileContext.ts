@@ -24,17 +24,146 @@ export function fileDescEqual(
   return val;
 }
 
-export interface LocationCache {
-  [location: string]: [string, FileDescription];
+export interface PageState {
+  [location: string]: FileDescription;
 }
+
+export interface TabState {
+  [location: string]: {
+    fileDetails: [string, FileDescription][];
+    selectedTab: string;
+  };
+}
+
+export function addPage(
+  pageState: PageState,
+  location: string,
+  desc: FileDescription
+): PageState {
+  const pagesCopy = { ...pageState };
+  pagesCopy[location] = desc;
+  return pagesCopy;
+}
+
+export function removePage(
+  pageState: PageState,
+  location: string,
+  desc?: FileDescription
+): PageState {
+  // If desc not provided, close the page anyway.
+  // If desc is provided, close the page only if desc
+  // matches the loaded page.
+  const pagesCopy = { ...pageState };
+  if (!desc || fileDescEqual(desc, pagesCopy[location])) {
+    delete pagesCopy[location];
+  }
+  return pagesCopy;
+}
+
+export function addTab(
+  tabState: TabState,
+  location: string,
+  tabName: string,
+  desc: FileDescription
+): TabState {
+  const tabsCopy = { ...tabState };
+  const locationTabs = tabsCopy[location] ?? {
+    fileDetails: [],
+    selectedTab: ""
+  };
+  let matched = false;
+  for (const [tabName1, desc1] of locationTabs.fileDetails) {
+    if (fileDescEqual(desc, desc1) && tabName === tabName1) {
+      matched = true;
+      locationTabs.selectedTab = tabName;
+    }
+  }
+  if (!matched) {
+    locationTabs.fileDetails.push([tabName, desc]);
+    locationTabs.selectedTab = tabName;
+  }
+  const newTabState = {
+    ...tabsCopy,
+    [location]: locationTabs
+  };
+  return newTabState;
+}
+
+export function removeTab(
+  tabState: TabState,
+  location: string,
+  desc: FileDescription
+): TabState {
+  const tabsCopy = { ...tabState };
+  const locationTabs = tabsCopy[location] ?? {
+    fileDetails: [],
+    selectedTab: ""
+  };
+  let selectedTabRemoved = false;
+  let selectedTab = locationTabs.selectedTab;
+  const filteredFileDetails = locationTabs.fileDetails.filter(
+    ([tabName1, desc1]) => {
+      if (fileDescEqual(desc, desc1)) {
+        if (tabName1 === locationTabs.selectedTab) {
+          selectedTabRemoved = true;
+        }
+        return false;
+      }
+      return true;
+    }
+  );
+  if (selectedTabRemoved) {
+    selectedTab = filteredFileDetails[filteredFileDetails.length - 1][0];
+  }
+  const newTabState = {
+    ...tabsCopy,
+    [location]: {
+      fileDetails: filteredFileDetails,
+      selectedTab
+    }
+  };
+  return newTabState;
+}
+
+export function selectTab(
+  tabState: TabState,
+  location: string,
+  tabName: string
+): TabState {
+  const tabsCopy = { ...tabState };
+  const locationTabs = tabsCopy[location] ?? {
+    fileDetails: [],
+    selectedTab: ""
+  };
+  return {
+    ...tabsCopy,
+    [location]: {
+      ...locationTabs,
+      selectedTab: tabName
+    }
+  };
+}
+
 export type FileContextType = {
-  locations: LocationCache;
-  addFile: (location: string, fileDesc: FileDescription, name: string) => void;
-  removeFile: (location: string, fileDesc: FileDescription) => void;
+  pages: PageState;
+  tabs: TabState;
+  addPage: (location: string, fileDesc: FileDescription) => void;
+  removePage: (location: string, fileDesc?: FileDescription) => void;
+  addTab: (
+    location: string,
+    tabName: string,
+    fileDesc: FileDescription
+  ) => void;
+  removeTab: (location: string, fileDesc: FileDescription) => void;
+  selectTab: (location: string, tabName: string) => void;
 };
 const initialState: FileContextType = {
-  locations: {},
-  addFile: () => {},
-  removeFile: () => {}
+  pages: {},
+  tabs: {},
+  addPage: () => {},
+  removePage: () => {},
+  addTab: () => {},
+  removeTab: () => {},
+  selectTab: () => {}
 };
 export const FileContext = React.createContext(initialState);
