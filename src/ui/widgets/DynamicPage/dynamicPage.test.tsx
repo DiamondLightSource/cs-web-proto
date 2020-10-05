@@ -30,7 +30,7 @@ describe("<DynamicPage>", (): void => {
       .mockImplementation((): Promise<{}> => mockFetchPromise);
 
     const fileContext: FileContextType = {
-      pages: {
+      pageState: {
         testlocation: {
           path: "test.json",
           type: "json",
@@ -38,7 +38,7 @@ describe("<DynamicPage>", (): void => {
           defaultProtocol: "pva"
         }
       },
-      tabs: {},
+      tabState: {},
       addPage: () => {},
       removePage: () => {},
       addTab: () => {},

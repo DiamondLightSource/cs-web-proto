@@ -98,7 +98,7 @@ export function addTab(
 export function removeTab(
   tabState: TabState,
   location: string,
-  desc: FileDescription
+  tabName: string
 ): TabState {
   const tabsCopy = { ...tabState };
   const locationTabs = tabsCopy[location] ?? {
@@ -107,19 +107,21 @@ export function removeTab(
   };
   let selectedTabRemoved = false;
   let selectedTab = locationTabs.selectedTab;
-  const filteredFileDetails = locationTabs.fileDetails.filter(
-    ([tabName1, desc1]) => {
-      if (fileDescEqual(desc, desc1)) {
-        if (tabName1 === locationTabs.selectedTab) {
-          selectedTabRemoved = true;
-        }
-        return false;
+  const filteredFileDetails = locationTabs.fileDetails.filter(([tabName1]) => {
+    if (tabName1 === tabName) {
+      if (tabName1 === locationTabs.selectedTab) {
+        selectedTabRemoved = true;
       }
-      return true;
+      return false;
     }
-  );
+    return true;
+  });
   if (selectedTabRemoved) {
-    selectedTab = filteredFileDetails[filteredFileDetails.length - 1][0];
+    if (filteredFileDetails.length > 0) {
+      selectedTab = filteredFileDetails[filteredFileDetails.length - 1][0];
+    } else {
+      selectedTab = "";
+    }
   }
   const newTabState = {
     ...tabsCopy,
@@ -160,7 +162,7 @@ export type FileContextType = {
     tabName: string,
     fileDesc: FileDescription
   ) => void;
-  removeTab: (location: string, fileDesc: FileDescription) => void;
+  removeTab: (location: string, tabName: string) => void;
   selectTab: (location: string, tabName: string) => void;
 };
 
@@ -192,19 +194,23 @@ export function createFileContext(
   return {
     pageState,
     tabState,
-    addPage: (location: string, fileDesc: FileDescription) => {
+    addPage: (location: string, fileDesc: FileDescription): void => {
       setPageState(addPage(pageState, location, fileDesc));
     },
-    removePage: (location: string, fileDesc?: FileDescription) => {
+    removePage: (location: string, fileDesc?: FileDescription): void => {
       setPageState(removePage(pageState, location, fileDesc));
     },
-    addTab: (location: string, tabName: string, fileDesc: FileDescription) => {
+    addTab: (
+      location: string,
+      tabName: string,
+      fileDesc: FileDescription
+    ): void => {
       setTabState(addTab(tabState, location, tabName, fileDesc));
     },
-    removeTab: (location: string, fileDesc: FileDescription) => {
-      setTabState(removeTab(tabState, location, fileDesc));
+    removeTab: (location: string, tabName: string): void => {
+      setTabState(removeTab(tabState, location, tabName));
     },
-    selectTab: (location: string, tabName: string) => {
+    selectTab: (location: string, tabName: string): void => {
       setTabState(selectTab(tabState, location, tabName));
     }
   };

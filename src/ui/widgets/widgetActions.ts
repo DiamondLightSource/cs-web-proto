@@ -142,8 +142,8 @@ export const closeTab = (
   action: DynamicAction,
   fileContext: FileContextType
 ): void => {
-  const { file, location } = action.dynamicInfo;
-  fileContext.removeTab(location, file);
+  const { name, location } = action.dynamicInfo;
+  fileContext.removeTab(location, name);
 };
 
 export const executeAction = (

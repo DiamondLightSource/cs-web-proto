@@ -15,7 +15,7 @@ import { errorWidget } from "../EmbeddedDisplay/embeddedDisplay";
 import { parseJson } from "../EmbeddedDisplay/jsonParser";
 import { widgetDescriptionToComponent } from "../createComponent";
 
-import classes from "./tabs.module.css";
+import { TabBar } from "./tabs";
 
 export const TabContainerProps = {
   tabs: PropTypes.objectOf(PropTypes.object).isRequired,
@@ -51,27 +51,18 @@ export const TabContainerComponent = (
     }
   });
 
+  const tabNames = Object.keys(props.tabs);
+  const onTabSelected = (tabName: string): void => {
+    setIndex(tabNames.indexOf(tabName));
+  };
+
   return (
     <div>
-      <div className={classes.TabBar}>
-        {Object.keys(props.tabs).map(
-          (key, index): JSX.Element => (
-            <button
-              onClick={(): void => {
-                setIndex(index);
-              }}
-              className={
-                index === childIndex
-                  ? `${classes.Tab} ${classes.TabSelected}`
-                  : classes.Tab
-              }
-              key={index}
-            >
-              {key}
-            </button>
-          )
-        )}
-      </div>
+      <TabBar
+        tabNames={tabNames}
+        selectedTab={tabNames[childIndex]}
+        onTabSelected={onTabSelected}
+      ></TabBar>
       {children[childIndex]}
     </div>
   );
