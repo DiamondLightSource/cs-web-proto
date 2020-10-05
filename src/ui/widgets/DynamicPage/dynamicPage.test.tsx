@@ -1,10 +1,9 @@
 import React, * as ReactAll from "react";
 
-import { render, waitFor } from "@testing-library/react";
+import { waitFor } from "@testing-library/react";
 import { DynamicPageComponent } from "./dynamicPage";
-import { FileContext, FileContextType } from "../../../fileContext";
-import { Provider } from "react-redux";
-import { store } from "../../../redux/store";
+import { PageState } from "../../../fileContext";
+import { fileContextRender } from "../../../setupTests";
 
 interface GlobalFetch extends NodeJS.Global {
   fetch: any;
@@ -29,28 +28,18 @@ describe("<DynamicPage>", (): void => {
       .spyOn(globalWithFetch, "fetch")
       .mockImplementation((): Promise<{}> => mockFetchPromise);
 
-    const fileContext: FileContextType = {
-      pageState: {
-        testlocation: {
-          path: "test.json",
-          type: "json",
-          macros: {},
-          defaultProtocol: "pva"
-        }
-      },
-      tabState: {},
-      addPage: () => {},
-      removePage: () => {},
-      addTab: () => {},
-      removeTab: () => {},
-      selectTab: () => {}
+    const initialPageState: PageState = {
+      testlocation: {
+        path: "test.json",
+        type: "json",
+        macros: {},
+        defaultProtocol: "pva"
+      }
     };
-    const { queryByText } = render(
-      <Provider store={store}>
-        <FileContext.Provider value={fileContext}>
-          <DynamicPageComponent location="testlocation" />
-        </FileContext.Provider>
-      </Provider>
+    const { queryByText } = fileContextRender(
+      <DynamicPageComponent location="testlocation" />,
+      initialPageState,
+      {}
     );
 
     expect(queryByText("hello")).not.toBeInTheDocument();
