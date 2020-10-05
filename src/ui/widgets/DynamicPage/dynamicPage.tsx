@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-import log from "loglevel";
 
 import { Widget, commonCss } from "../widget";
 import { WidgetPropType } from "../widgetProps";
@@ -24,62 +23,59 @@ export const DynamicPageComponent = (
   const style = commonCss(props);
   const fileContext = useContext(FileContext);
 
-  let file;
-  try {
-    file = fileContext.pageState[props.location];
-  } catch (error) {
-    log.warn(fileContext);
-    log.warn(error);
+  const file = fileContext.pageState[props.location];
+
+  if (file === undefined) {
     return (
       <div style={{ border: "1px solid black", minHeight: "100px", ...style }}>
         <h3>Dynamic page &quot;{props.location}&quot;: no file loaded.</h3>
       </div>
     );
-  }
-
-  return (
-    <div style={style}>
-      <div
-        style={{
-          position: "relative",
-          height: "30px"
-        }}
-      >
+  } else {
+    return (
+      <div style={style}>
         <div
           style={{
-            position: "absolute",
-            right: "5px",
-            top: "5px",
-            width: "40px",
-            height: "20px",
-            backgroundColor: "green"
+            position: "relative",
+            height: "30px"
           }}
         >
-          <ActionButton
-            position={new RelativePosition()}
-            backgroundColor={Color.parse("#ff3333")}
-            foregroundColor={Color.parse("#ffffff")}
-            actions={{
-              executeAsOne: false,
-              actions: [
-                {
-                  type: CLOSE_PAGE,
-                  dynamicInfo: {
-                    name: props.location,
-                    location: props.location,
-                    file: file,
-                    description: "Close"
-                  }
-                }
-              ]
+          <div
+            style={{
+              position: "absolute",
+              right: "5px",
+              top: "5px",
+              width: "40px",
+              height: "20px",
+              backgroundColor: "green"
             }}
-            text="X"
-          />
+          >
+            <ActionButton
+              position={new RelativePosition()}
+              backgroundColor={Color.parse("#ff3333")}
+              foregroundColor={Color.parse("#ffffff")}
+              actions={{
+                executeAsOne: false,
+                actions: [
+                  {
+                    type: CLOSE_PAGE,
+                    dynamicInfo: {
+                      name: props.location,
+                      location: props.location,
+                      file: file,
+                      description: "Close"
+                    }
+                  }
+                ]
+              }}
+              text="X"
+            />
+          </div>
         </div>
+        <EmbeddedDisplay file={file} position={new RelativePosition()} />
       </div>
-      <EmbeddedDisplay file={file} position={new RelativePosition()} />
-    </div>
-  );
+    );
+  }
 };
 
 const DynamicPageWidgetProps = {

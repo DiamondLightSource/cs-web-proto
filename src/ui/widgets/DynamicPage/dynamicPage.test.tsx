@@ -17,6 +17,14 @@ beforeEach((): void => {
 });
 
 describe("<DynamicPage>", (): void => {
+  it("shows placeholder if no page is loaded", () => {
+    const { queryByText } = fileContextRender(
+      <DynamicPageComponent location="testlocation" />,
+      {},
+      {}
+    );
+    expect(queryByText(/.*no file loaded/)).toBeInTheDocument();
+  });
   it("loads a page", () => {
     const mockSuccessResponse =
       '{"type": "display", "position": "relative", "children": [ { "type": "label", "position": "relative", "text": "hello" } ] }';
