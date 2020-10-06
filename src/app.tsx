@@ -10,10 +10,9 @@ import { onRenderCallback } from "./profilerCallback";
 import { RelativePosition } from "./types/position";
 import {
   FileContext,
-  FileContextType,
-  LocationCache,
-  FileDescription,
-  fileDescEqual
+  TabState,
+  PageState,
+  createFileContext
 } from "./fileContext";
 import { Header } from "./ui/components/Header/header";
 import { Footer } from "./ui/components/Footer/footer";
@@ -22,45 +21,31 @@ const baseUrl = process.env.REACT_APP_BASE_URL ?? "http://localhost:3000";
 
 log.setLevel((process.env.REACT_APP_LOG_LEVEL as LogLevelDesc) ?? "info");
 
+/* Page that will be loaded at start. */
+const INITIAL_PAGE_STATE: PageState = {
+  app: {
+    path: "home.json",
+    type: "json",
+    macros: {},
+    defaultProtocol: "pva"
+  }
+};
+
 const App: React.FC = (): JSX.Element => {
   // Set dark or light mode using ThemeContext
   const { dark, applyTheme } = React.useContext(ThemeContext);
   applyTheme(dark ? darkTheme : lightTheme);
 
-  const [locations, setLocations] = useState<LocationCache>({
-    app: [
-      "home",
-      {
-        path: "home.json",
-        type: "json",
-        macros: {},
-        defaultProtocol: "pva"
-      }
-    ]
-  });
-
-  // Manages locations, and functions for adding and removing location
-  const fileContext: FileContextType = {
-    locations,
-    addFile: (location: string, desc: FileDescription, name: string) => {
-      const locationsCopy = { ...locations };
-      locationsCopy[location] = [name, desc];
-      setLocations(locationsCopy);
-    },
-    removeFile: (location: string, desc: FileDescription) => {
-      const locationsCopy = { ...locations };
-
-      // description stored in second element of array but may not exist
-      if (locationsCopy[location][1] !== undefined) {
-        if (fileDescEqual(desc, locationsCopy[location][1])) {
-          delete locationsCopy[location];
-        }
-      } else {
-        delete locationsCopy[location];
-      }
-      setLocations(locationsCopy);
-    }
-  };
+  // Set up the file context, which contains information about
+  // the open pages in DynamicPages and tabs in DynamicTabs.
+  const [pageState, setPageState] = useState<PageState>(INITIAL_PAGE_STATE);
+  const [tabState, setTabState] = useState<TabState>({});
+  const fileContext = createFileContext(
+    pageState,
+    setPageState,
+    tabState,
+    setTabState
+  );
 
   return (
     // Each instance of context provider allows child components to access

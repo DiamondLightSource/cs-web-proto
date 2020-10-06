@@ -8,6 +8,8 @@ import { FileContextType } from "../../fileContext";
 
 export const OPEN_PAGE = "OPEN_PAGE";
 export const CLOSE_PAGE = "CLOSE_PAGE";
+export const OPEN_TAB = "OPEN_TAB";
+export const CLOSE_TAB = "CLOSE_TAB";
 export const OPEN_WEBPAGE = "OPEN_WEBPAGE";
 export const WRITE_PV = "WRITE_PV";
 
@@ -19,7 +21,11 @@ export const WRITE_PV = "WRITE_PV";
 
 // Still restricts action types for typescript and easy to add more
 export interface DynamicAction {
-  type: typeof OPEN_PAGE | typeof CLOSE_PAGE;
+  type:
+    | typeof OPEN_PAGE
+    | typeof CLOSE_PAGE
+    | typeof OPEN_TAB
+    | typeof CLOSE_TAB;
   dynamicInfo: DynamicContent;
 }
 
@@ -80,6 +86,18 @@ export const getActionDescription = (action: WidgetAction): string => {
       } else {
         return `Close page ${action.dynamicInfo.name}`;
       }
+    case OPEN_TAB:
+      if (action.dynamicInfo.description) {
+        return action.dynamicInfo.description;
+      } else {
+        return `Open tab ${action.dynamicInfo.name}`;
+      }
+    case CLOSE_TAB:
+      if (action.dynamicInfo.description) {
+        return action.dynamicInfo.description;
+      } else {
+        return `Close tab ${action.dynamicInfo.name}`;
+      }
     default:
       throw new InvalidAction(action);
   }
@@ -91,12 +109,12 @@ export const openPage = (
   parentMacros?: MacroMap
 ): void => {
   //Find current browser path: currentPath
-  const { name, location, file } = action.dynamicInfo;
+  const { location, file } = action.dynamicInfo;
   file.macros = {
     ...(parentMacros ?? {}),
     ...file.macros
   };
-  fileContext?.addFile(location, file, name);
+  fileContext?.addPage(location, file);
 };
 
 export const closePage = (
@@ -104,7 +122,7 @@ export const closePage = (
   fileContext?: FileContextType
 ): void => {
   const { location, file } = action.dynamicInfo;
-  fileContext?.removeFile(location, file);
+  fileContext?.removePage(location, file);
 };
 
 export const openTab = (
@@ -112,21 +130,20 @@ export const openTab = (
   fileContext?: FileContextType,
   parentMacros?: MacroMap
 ): void => {
-  //Find current browser path: currentPath
   const { name, location, file } = action.dynamicInfo;
   file.macros = {
     ...(parentMacros ?? {}),
     ...file.macros
   };
-  fileContext?.addFile(location, file, name);
+  fileContext?.addTab(location, name, file);
 };
 
 export const closeTab = (
   action: DynamicAction,
   fileContext: FileContextType
 ): void => {
-  const { file, location } = action.dynamicInfo;
-  fileContext.removeFile(location, file);
+  const { name, location } = action.dynamicInfo;
+  fileContext.removeTab(location, name);
 };
 
 export const executeAction = (
@@ -145,6 +162,20 @@ export const executeAction = (
     case CLOSE_PAGE:
       if (files) {
         closePage(action, files);
+      } else {
+        log.error("Tried to open a page but no file context passed");
+      }
+      break;
+    case OPEN_TAB:
+      if (files) {
+        openTab(action, files, parentMacros);
+      } else {
+        log.error("Tried to open a page but no file context passed");
+      }
+      break;
+    case CLOSE_TAB:
+      if (files) {
+        closeTab(action, files);
       } else {
         log.error("Tried to open a page but no file context passed");
       }

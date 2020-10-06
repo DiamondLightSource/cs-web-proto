@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 
 import { Widget } from "../widget";
 import { WidgetPropType } from "../widgetProps";
@@ -13,12 +13,8 @@ import {
 import { EmbeddedDisplay } from "../EmbeddedDisplay/embeddedDisplay";
 import { RelativePosition } from "../../../types/position";
 
-import classes from "./navigationTabs.module.css";
-import {
-  FileContext,
-  FileDescription,
-  fileDescEqual
-} from "../../../fileContext";
+import { FileContext } from "../../../fileContext";
+import { TabBar } from "./tabs";
 
 export const DynamicTabsProps = {
   location: StringProp,
@@ -33,113 +29,53 @@ export const DynamicTabsComponent = (
   props: InferWidgetProps<typeof DynamicTabsProps>
 ): JSX.Element => {
   const fileContext = useContext(FileContext);
-  const [selectedTab, setSelectedTab] = useState<string>("");
-  const [selectedTabExt, setSelectedTabExt] = useState<string>("");
-  const [openTabs, setOpenTabs] = useState<[string, FileDescription][]>([]);
-  const [name, locationFile] = fileContext.locations[props.location] ?? [
-    "",
-    undefined
-  ];
-  const tabJustOpened = name !== "" && selectedTabExt !== name;
-
-  if (tabJustOpened) {
-    setSelectedTab(name);
-    setSelectedTabExt(name);
-  }
-
-  let matched = false;
-  for (const [, tab] of openTabs) {
-    if (fileDescEqual(locationFile, tab)) {
-      matched = true;
-    }
-  }
-  if (tabJustOpened && !matched && locationFile !== undefined) {
-    const tabsCopy = openTabs.slice();
-    tabsCopy.push([name, locationFile]);
-    setOpenTabs(tabsCopy);
-  }
-
-  // Using object map method found here: https://stackoverflow.com/questions/14810506/map-function-for-objects-instead-of-arrays
-  const children = Object.fromEntries(
-    Object.values(openTabs).map(([name, description]) => [
-      name,
-      <EmbeddedDisplay
-        position={new RelativePosition()}
-        file={{
-          path: description?.path || "",
-          type: description?.type || "json",
-          defaultProtocol: description?.defaultProtocol ?? "ca",
-          macros: description?.macros || {}
-        }}
-        key={name}
-      />
-    ])
-  );
-
-  return (
-    <div>
-      <div className={classes.Bar}>
-        {openTabs.map(
-          ([tabName, description], index): JSX.Element => (
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between"
-              }}
-              className={classes.Button}
-              key={index}
-            >
-              <button
-                onClick={(): void => {
-                  for (const [name1] of Object.values(openTabs)) {
-                    if (name1 === tabName) {
-                      setSelectedTab(tabName);
-                    }
-                  }
-                }}
-                style={{
-                  borderStyle: selectedTab === tabName ? "inset" : "",
-                  flexGrow: 1,
-                  fontSize: "2rem",
-                  fontWeight: "bold",
-                  backgroundColor: selectedTab === tabName ? "red" : "green"
-                }}
-              >
-                {tabName}
-              </button>
-              <div
-                style={{
-                  position: "relative",
-                  width: "40px",
-                  height: "100%",
-                  flexShrink: 0
-                }}
-              >
-                <button
-                  style={{
-                    color: "#ff3333",
-                    backgroundColor: "#ffffff"
-                  }}
-                  onClick={(): void => {
-                    const filteredTabs = openTabs.filter(([name, desc]) => {
-                      return !fileDescEqual(description, desc);
-                    });
-                    setOpenTabs(filteredTabs);
-                    // Keep the last tab open if there are any left
-                    const lastTab = filteredTabs.slice(-1)[0];
-                    setSelectedTab(lastTab ? lastTab[0] : "");
-                  }}
-                >
-                  X
-                </button>
-              </div>
-            </div>
-          )
-        )}
+  const tabState = fileContext.tabState[props.location];
+  if (!tabState || tabState.fileDetails.length === 0) {
+    return (
+      <div style={{ border: "1px solid black", minHeight: "50px" }}>
+        <h3>Dynamic tabs &quot;{props.location}&quot;: no file loaded.</h3>
       </div>
-      {children[selectedTab]}
-    </div>
-  );
+    );
+  } else {
+    const openTabs = tabState.fileDetails;
+    const selectedTab = tabState.selectedTab;
+
+    // Using object map method found here: https://stackoverflow.com/questions/14810506/map-function-for-objects-instead-of-arrays
+    const children = Object.fromEntries(
+      Object.values(openTabs).map(([name, description]) => [
+        name,
+        <EmbeddedDisplay
+          position={new RelativePosition()}
+          file={{
+            path: description?.path || "",
+            type: description?.type || "json",
+            defaultProtocol: description?.defaultProtocol ?? "ca",
+            macros: description?.macros || {}
+          }}
+          key={name}
+        />
+      ])
+    );
+    const tabNames = openTabs.map(([name]) => name);
+    const onTabSelected = (tabName: string): void => {
+      fileContext.selectTab(props.location, tabName);
+    };
+    const onTabClosed = (tabName: string): void => {
+      fileContext.removeTab(props.location, tabName);
+    };
+
+    return (
+      <div>
+        <TabBar
+          tabNames={tabNames}
+          selectedTab={selectedTab}
+          onTabSelected={onTabSelected}
+          onTabClosed={onTabClosed}
+        ></TabBar>
+        {children[selectedTab]}
+      </div>
+    );
+  }
 };
 
 export const DynamicTabsWidgetProps = {

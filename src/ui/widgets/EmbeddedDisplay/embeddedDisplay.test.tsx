@@ -35,9 +35,9 @@ describe("<EmbeddedDisplay>", (): void => {
       done: jest.DoneCallback
     ): void => {
       const mockSuccessResponse = {};
-      const mockJsonPromise = Promise.resolve(mockSuccessResponse);
+      const mockTextPromise = Promise.resolve(mockSuccessResponse);
       const mockFetchPromise = Promise.resolve({
-        json: (): Promise<{}> => mockJsonPromise
+        text: (): Promise<{}> => mockTextPromise
       });
       jest
         .spyOn(globalWithFetch, "fetch")

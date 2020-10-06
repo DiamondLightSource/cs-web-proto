@@ -1,10 +1,9 @@
 import React, * as ReactAll from "react";
 
-import { render, waitFor } from "@testing-library/react";
+import { waitFor } from "@testing-library/react";
 import { DynamicPageComponent } from "./dynamicPage";
-import { FileContext, FileContextType } from "../../../fileContext";
-import { Provider } from "react-redux";
-import { store } from "../../../redux/store";
+import { PageState } from "../../../fileContext";
+import { fileContextRender } from "../../../setupTests";
 
 interface GlobalFetch extends NodeJS.Global {
   fetch: any;
@@ -18,6 +17,14 @@ beforeEach((): void => {
 });
 
 describe("<DynamicPage>", (): void => {
+  it("shows placeholder if no page is loaded", () => {
+    const { queryByText } = fileContextRender(
+      <DynamicPageComponent location="testlocation" />,
+      {},
+      {}
+    );
+    expect(queryByText(/.*no file loaded/)).toBeInTheDocument();
+  });
   it("loads a page", () => {
     const mockSuccessResponse =
       '{"type": "display", "position": "relative", "children": [ { "type": "label", "position": "relative", "text": "hello" } ] }';
@@ -29,27 +36,18 @@ describe("<DynamicPage>", (): void => {
       .spyOn(globalWithFetch, "fetch")
       .mockImplementation((): Promise<{}> => mockFetchPromise);
 
-    const xx: FileContextType = {
-      locations: {
-        testlocation: [
-          "dummy",
-          {
-            path: "test.json",
-            type: "json",
-            macros: {},
-            defaultProtocol: "pva"
-          }
-        ]
-      },
-      addFile: () => {},
-      removeFile: () => {}
+    const initialPageState: PageState = {
+      testlocation: {
+        path: "test.json",
+        type: "json",
+        macros: {},
+        defaultProtocol: "pva"
+      }
     };
-    const { queryByText } = render(
-      <Provider store={store}>
-        <FileContext.Provider value={xx}>
-          <DynamicPageComponent location="testlocation" />
-        </FileContext.Provider>
-      </Provider>
+    const { queryByText } = fileContextRender(
+      <DynamicPageComponent location="testlocation" />,
+      initialPageState,
+      {}
     );
 
     expect(queryByText("hello")).not.toBeInTheDocument();

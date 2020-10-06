@@ -4,7 +4,7 @@ module.exports = {
   testRegex: "(/__tests__/.*|(\\.|/)(test|spec))\\.tsx?$",
   moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"],
   snapshotSerializers: ["enzyme-to-json/serializer"],
-  setupTestFrameworkScriptFile: "<rootDir>/src/setupTests.ts",
+  setupTestFrameworkScriptFile: "<rootDir>/src/setupTests.tsx",
   collectCoverage: true,
   collectCoverageFrom: ["**/*.ts", "!<rootDir>/node_modules/**"],
   coverageReporters: ["lcov", "text-summary", "html"]

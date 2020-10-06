@@ -1,0 +1,46 @@
+.TabBar {
+  display: flex;
+  overflow: auto;
+  justify-content: flex-start;
+}
+
+.Tab {
+  background-color: rgb(240, 240, 240);
+  border: 2px solid rgb(227, 227, 227);
+  margin: 0.2em 0.2em 0 0.2em;
+  border-radius: 0.2em 0.2em 0 0;
+  font-size: 1.5rem;
+  min-width: 20%;
+  border-bottom: none;
+}
+
+.Tab p {
+  cursor: default;
+}
+
+.TabSelected {
+  font-weight: bold;
+  border-style: inset inset none inset;
+}
+
+.CloseableTab {
+  display: inline-flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.CloseableTabText {
+  margin: 0 10px 0 10px;
+}
+
+.TabCloseButton {
+  background-color: transparent;
+  border: none;
+  display: inline;
+  margin: 3px;
+  padding: 0;
+}
+
+.TabCloseButton:hover {
+  background-color: #ffffff;
+}
