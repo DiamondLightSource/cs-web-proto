@@ -49,7 +49,6 @@ export const EmbeddedDisplay = (
   props: InferWidgetProps<typeof EmbeddedDisplayProps>
 ): JSX.Element => {
   const [contents, setContents] = useState<string>("");
-  const [renderedFile, setFile] = useState("");
   const baseUrl = useContext(BaseUrlContext);
 
   let file: string;
@@ -59,35 +58,27 @@ export const EmbeddedDisplay = (
     file = props.file.path;
   }
 
-  useEffect(
-    (): (() => void) => {
-      // Will be set on the first render
-      let mounted = true;
-      if (file !== renderedFile) {
-        fetch(file)
-          .then(
-            (response): Promise<any> => {
-              return response.text();
-            }
-          )
-          .then((text): void => {
-            // Check component is still mounted when result comes back
-            if (mounted) {
-              setContents(text);
-              setFile(file);
-            }
-          });
-      }
+  useEffect((): (() => void) => {
+    // Will be set on the first render
+    let mounted = true;
+    fetch(file)
+      .then(
+        (response): Promise<any> => {
+          return response.text();
+        }
+      )
+      .then((text): void => {
+        // Check component is still mounted when result comes back
+        if (mounted) {
+          setContents(text);
+        }
+      });
 
-      // Clean up function
-      return (): void => {
-        mounted = false;
-      };
-    }
-    // TODO 28/09/20: Course I did said should always declare dependencies as second argument
-    // to stop useEffect from continuously re-rendering, at this point not sure
-    // what to specify though (George)
-  );
+    // Clean up function
+    return (): void => {
+      mounted = false;
+    };
+  }, [file]);
 
   let component: JSX.Element;
   try {
