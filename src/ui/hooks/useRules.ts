@@ -47,20 +47,17 @@ export function useRules(props: AnyProps): AnyProps {
     const pvVars: { [pvName: string]: number | string } = {};
     for (let i = 0; i < pvs.length; i++) {
       // Set up variables that might be used.
-      const pvResults = results[pvs[i].pvName.qualifiedName()][0];
-      if (pvResults) {
-        const val = results[pvs[i].pvName.qualifiedName()][0].value;
-        if (val) {
-          const doubleValue = val.getDoubleValue();
-          if (doubleValue !== undefined) {
-            pvVars["pv" + i] = doubleValue;
-          } else {
-            pvVars["pv" + i] = DType.coerceString(val);
-          }
-          pvVars["pvStr" + i] = DType.coerceString(val);
-          pvVars["pvInt" + i] = DType.coerceDouble(val);
-          pvVars["pvSev" + i] = INT_SEVERITIES[val.getAlarm()?.quality || 0];
+      const val = results[pvs[i].pvName.qualifiedName()][0]?.value;
+      if (val) {
+        const doubleValue = val.getDoubleValue();
+        if (doubleValue !== undefined) {
+          pvVars["pv" + i] = doubleValue;
+        } else {
+          pvVars["pv" + i] = DType.coerceString(val);
         }
+        pvVars["pvStr" + i] = DType.coerceString(val);
+        pvVars["pvInt" + i] = DType.coerceDouble(val);
+        pvVars["pvSev" + i] = INT_SEVERITIES[val.getAlarm()?.quality || 0];
       }
     }
 
