@@ -20,6 +20,7 @@ export { DrawerWidget } from "./Drawer/drawer";
 export { NavigationTabs } from "./Tabs/navigationTabs";
 export { TabContainer } from "./Tabs/tabContainer";
 export { DynamicTabs } from "./Tabs/dynamicTabs";
+export { LED } from "./LED/led";
 
 // By importing this you ensure all the above widgets are imported
 // and thus registered.
