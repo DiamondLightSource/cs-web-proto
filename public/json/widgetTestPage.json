@@ -1,0 +1,74 @@
+{
+  "type": "display",
+  "position": "relative",
+  "height": "85vh",
+  "width": "100%",
+  "backgroundColor": "#012265",
+  "children": [
+    {
+      "type": "shape",
+      "position": "relative",
+      "height": "5vh",
+      "width": "100%",
+      "shapeColor": "#012265"
+    },
+    {
+      "type": "flexcontainer",
+      "position": "relative",
+      "margin": "auto",
+      "width": "90%",
+      "maxWidth": "600px",
+      "height": "200px",
+      "backgroundColor": "white",
+      "border": {
+        "style": "line",
+        "color": "#ffcf00",
+        "width": 5,
+        "radius": 10
+      },
+      "children": [
+        {
+          "type": "label",
+          "position": "relative",
+          "font": {
+            "size": "40"
+          },
+          "transparent": true,
+          "foregroundColor": "#012265",
+          "text": "Widget page"
+        },
+        {
+          "type": "label",
+          "position": "relative",
+          "font": {
+            "size": "20"
+          },
+          "transparent": true,
+          "foregroundColor": "#012265",
+          "text": "This is a page for displaying widgets under development as well as to show examples of other widgets.",
+          "height": "20rem"
+        },
+        {
+          "type": "shape",
+          "position": "relative",
+          "width": "100%"
+        },
+        {
+          "type": "label",
+          "position": "relative",
+          "width": "50%",
+          "text": "Image"
+        },
+        {
+          "type": "image",
+          "position": "relative",
+          "width": "100%",
+          "src": "Diamond_logo_col.jpg",
+          "fill": true,
+          "margin": "2% 5% 2% 5%",
+          "backgroundColor": "white"
+        }
+      ]
+    }
+  ]
+}
