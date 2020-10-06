@@ -13,6 +13,12 @@ const LedProps = {};
 
 export type LedComponentProps = InferWidgetProps<typeof LedProps> & PVComponent;
 
+/**
+ * Creates a small led icon which can change color depending on connection
+ * and alarm type, css file defines these colours
+ * @param props properties to pass in, these will be handled by the below LED
+ * function and only extra props defined on LedProps need to be passed in as well
+ */
 export const LedComponent = (props: LedComponentProps): JSX.Element => {
   const { value, connected } = props;
 
