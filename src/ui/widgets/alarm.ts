@@ -1,6 +1,6 @@
 import { AlarmQuality } from "../../types/dtypes";
 
-export type CssAlarm = {
+export type CssProps = {
   [key: string]: string;
 };
 
@@ -13,7 +13,7 @@ export type CssAlarm = {
  * onto/modify, if not passed will access the Default CSS properties in the classes object
  */
 export function getClass(
-  classes: CssAlarm,
+  classes: CssProps,
   connected: boolean,
   alarmSeverity: AlarmQuality,
   defaultClass?: string
