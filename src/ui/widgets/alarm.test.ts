@@ -1,6 +1,5 @@
 import { getClass } from "./alarm";
 import { DAlarm, AlarmQuality } from "../../types/dtypes";
-import { NoSubstitutionTemplateLiteral } from "typescript";
 
 const classes = {
   Default: "Default",
