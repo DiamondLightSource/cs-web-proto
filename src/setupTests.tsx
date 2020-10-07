@@ -1,6 +1,5 @@
 // React testing library extensions to expect().
 import "@testing-library/jest-dom/extend-expect";
-// Set up Enzyme.
 import { configure } from "enzyme";
 import log from "loglevel";
 import Adapter from "enzyme-adapter-react-16";
@@ -15,6 +14,8 @@ import { render, RenderResult } from "@testing-library/react";
 import React, { useState } from "react";
 import { Provider } from "react-redux";
 import { store } from "./redux/store";
+
+// Set up Enzyme.
 configure({ adapter: new Adapter() });
 
 log.setLevel("info");
@@ -53,8 +54,8 @@ export function dstring(
 // Helper function for rendering with a working fileContext.
 export function fileContextRender(
   component: JSX.Element,
-  initialPageState: PageState,
-  initialTabState: TabState
+  initialPageState: PageState = {},
+  initialTabState: TabState = {}
 ): RenderResult {
   const ParentComponent = (props: { child: JSX.Element }): JSX.Element => {
     const [pageState, setPageState] = useState<PageState>(initialPageState);
