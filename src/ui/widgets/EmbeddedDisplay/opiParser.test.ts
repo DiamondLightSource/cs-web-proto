@@ -4,7 +4,6 @@ import { Rule } from "../../../types/props";
 import { Label } from "..";
 import { parseOpi } from "./opiParser";
 import { AbsolutePosition, RelativePosition } from "../../../types/position";
-import log from "loglevel";
 
 describe("opi widget parser", (): void => {
   const displayString = `
@@ -213,7 +212,6 @@ describe("opi widget parser", (): void => {
   </display>`;
 
   it("parses an input widget", (): void => {
-    log.setLevel("debug");
     const widget = parseOpi(inputString, "ca").children[0];
     expect(widget.textAlign).toEqual("right");
     // Adds ca:// prefix.
