@@ -1,5 +1,6 @@
 import { getClass } from "./alarm";
 import { DAlarm, AlarmQuality } from "../../types/dtypes";
+import { NoSubstitutionTemplateLiteral } from "typescript";
 
 const classes = {
   Default: "Default",
@@ -12,10 +13,10 @@ const createAlarm = (alarmType: number): DAlarm => {
   return new DAlarm(alarmType, "");
 };
 
+type TestTuple = [number, boolean, string];
+
 describe("getClass responds to different alarms and connection states", (): void => {
-  // TODO: 06/10/20 Had trouble defining types for this test to get rid of the
-  // syntax highlighting
-  test.each([
+  test.each<TestTuple>([
     [AlarmQuality.UNDEFINED, true, "Default"],
     [AlarmQuality.ALARM, true, "Default Major"],
     [AlarmQuality.WARNING, true, "Default Minor"],
