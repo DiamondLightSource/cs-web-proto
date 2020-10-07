@@ -22,7 +22,8 @@ const BBC_ACTION: WidgetAction = {
 };
 
 test("menu wrapper opens on middle click and executes action if clicked", async () => {
-  const contents = <div>Hello</div>;
+  // Add key attribute to suppress React warning about children.
+  const contents = <div key="0">Hello</div>;
   const { queryByText } = render(
     <MenuWrapper
       pvName="hello"
