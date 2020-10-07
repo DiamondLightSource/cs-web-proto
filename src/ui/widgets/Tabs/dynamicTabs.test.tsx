@@ -1,6 +1,6 @@
 import React from "react";
 import { FileDescription, TabState } from "../../../fileContext";
-import { fileContextRender } from "../../../setupTests";
+import { contextRender } from "../../../setupTests";
 import { DynamicTabsComponent } from "./dynamicTabs";
 
 const TAB_ONE: FileDescription = {
@@ -12,7 +12,7 @@ const TAB_ONE: FileDescription = {
 
 describe("fileContext", (): void => {
   it("shows no tabs initially", (): void => {
-    const { queryByText } = fileContextRender(
+    const { queryByText } = contextRender(
       <DynamicTabsComponent location="testing" />,
       {},
       {}
@@ -27,7 +27,7 @@ describe("fileContext", (): void => {
         selectedTab: "tab one"
       }
     };
-    const { queryByText } = fileContextRender(
+    const { queryByText } = contextRender(
       <DynamicTabsComponent location="testing" />,
       {},
       initialTabs

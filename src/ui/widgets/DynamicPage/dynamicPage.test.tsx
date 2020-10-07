@@ -3,7 +3,7 @@ import React, * as ReactAll from "react";
 import { waitFor } from "@testing-library/react";
 import { DynamicPageComponent } from "./dynamicPage";
 import { PageState } from "../../../fileContext";
-import { fileContextRender } from "../../../setupTests";
+import { contextRender } from "../../../setupTests";
 
 interface GlobalFetch extends NodeJS.Global {
   fetch: any;
@@ -18,7 +18,7 @@ beforeEach((): void => {
 
 describe("<DynamicPage>", (): void => {
   it("shows placeholder if no page is loaded", () => {
-    const { queryByText } = fileContextRender(
+    const { queryByText } = contextRender(
       <DynamicPageComponent location="testlocation" />,
       {},
       {}
@@ -44,7 +44,7 @@ describe("<DynamicPage>", (): void => {
         defaultProtocol: "pva"
       }
     };
-    const { queryByText } = fileContextRender(
+    const { queryByText } = contextRender(
       <DynamicPageComponent location="testlocation" />,
       initialPageState,
       {}
