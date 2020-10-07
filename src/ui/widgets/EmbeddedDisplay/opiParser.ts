@@ -156,36 +156,40 @@ export const opiParseRules = (
   jsonProp: ElementCompact,
   defaultProtocol: string
 ): Rule[] => {
-  const ruleArray = toArray(jsonProp.rules.rule);
-  const rules = ruleArray.map((ruleElement: ElementCompact) => {
-    const name = ruleElement._attributes?.name as string;
-    const xmlProp = ruleElement._attributes?.prop_id as string;
+  if (!jsonProp.rules) {
+    return [];
+  } else {
+    const ruleArray = toArray(jsonProp.rules.rule);
+    const rules = ruleArray.map((ruleElement: ElementCompact) => {
+      const name = ruleElement._attributes?.name as string;
+      const xmlProp = ruleElement._attributes?.prop_id as string;
 
-    const outExp = ruleElement._attributes?.out_exp === "true";
-    const pvArray = toArray(ruleElement.pv);
-    const pvs = pvArray.map((pv: ElementCompact) => {
+      const outExp = ruleElement._attributes?.out_exp === "true";
+      const pvArray = toArray(ruleElement.pv);
+      const pvs = pvArray.map((pv: ElementCompact) => {
+        return {
+          pvName: opiParsePvName(pv, defaultProtocol),
+          trigger: pv._attributes?.trig === "true"
+        };
+      });
+      const expArray = toArray(ruleElement.exp);
+      const expressions = expArray.map((expression: ElementCompact) => {
+        const value = expression.value;
+        return {
+          boolExp: expression._attributes?.bool_exp as string,
+          value: value
+        };
+      });
       return {
-        pvName: opiParsePvName(pv, defaultProtocol),
-        trigger: pv._attributes?.trig === "true"
+        name: name,
+        prop: xmlProp,
+        outExp: outExp,
+        expressions: expressions,
+        pvs: pvs
       };
     });
-    const expArray = toArray(ruleElement.exp);
-    const expressions = expArray.map((expression: ElementCompact) => {
-      const value = expression.value;
-      return {
-        boolExp: expression._attributes?.bool_exp as string,
-        value: value
-      };
-    });
-    return {
-      name: name,
-      prop: xmlProp,
-      outExp: outExp,
-      expressions: expressions,
-      pvs: pvs
-    };
-  });
-  return rules;
+    return rules;
+  }
 };
 
 function opiParseNumber(jsonProp: ElementCompact): number {

@@ -48,6 +48,8 @@ describe("<EmbeddedDisplay>", (): void => {
         .spyOn(globalWithFetch, "fetch")
         .mockImplementation((): Promise<{}> => mockFetchPromise);
 
+      // Suppress logging for expected error.
+      log.setLevel("error");
       const { queryByText } = contextRender(
         <EmbeddedDisplay
           position={new RelativePosition()}
@@ -66,6 +68,7 @@ describe("<EmbeddedDisplay>", (): void => {
       await waitFor((): void =>
         expect(queryByText(/Error converting.*/)).toBeInTheDocument()
       );
+      log.setLevel("info");
     }
   );
   it("returns an error label when embedding a widget only", async (): Promise<
@@ -88,6 +91,8 @@ describe("<EmbeddedDisplay>", (): void => {
       .spyOn(globalWithFetch, "fetch")
       .mockImplementation((): Promise<{}> => mockFetchPromise);
 
+    // Suppress logging for expected error.
+    log.setLevel("error");
     const { queryByText } = contextRender(
       <EmbeddedDisplay
         position={new RelativePosition()}
@@ -110,6 +115,7 @@ describe("<EmbeddedDisplay>", (): void => {
     await waitFor((): void =>
       expect(queryByText(/Error converting.*/)).toBeInTheDocument()
     );
+    log.setLevel("info");
   });
 
   it("converts a display with child widget", async (): Promise<void> => {
