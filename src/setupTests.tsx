@@ -74,6 +74,7 @@ export function contextRender(
       tabState,
       setTabState
     );
+    // Hard-code macros for now.
     const contextMacros = { a: "A", b: "B", c: "C" };
     const globalMacros = { c: "D", d: "E" };
     initialCsState.globalMacros = globalMacros;
