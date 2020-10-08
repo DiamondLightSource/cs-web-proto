@@ -1,10 +1,15 @@
 import React from "react";
 import { Widget } from "../widget";
-import { InferWidgetProps, StringPropOpt, FloatPropOpt } from "../propTypes";
+import {
+  InferWidgetProps,
+  StringPropOpt,
+  FloatPropOpt,
+  BoolPropOpt
+} from "../propTypes";
 import { PVComponent, PVWidgetPropType } from "../widgetProps";
 import { registerWidget } from "../register";
 import classes from "./led.module.css";
-import { DAlarm, DType } from "../../../types/dtypes";
+import { DAlarm } from "../../../types/dtypes";
 import { getClass } from "../alarm";
 
 /**
@@ -12,12 +17,9 @@ import { getClass } from "../alarm";
  * scale: a scaling factor for the led from it's default value
  */
 const LedProps = {
-  rule: StringPropOpt,
-  scale: FloatPropOpt
-};
-
-const ruleToAlarm = (rule: string, value: DType): DAlarm => {
-  return DAlarm.MAJOR;
+  scale: FloatPropOpt,
+  useRule: BoolPropOpt,
+  rule: StringPropOpt
 };
 
 export type LedComponentProps = InferWidgetProps<typeof LedProps> & PVComponent;
@@ -31,16 +33,25 @@ export type LedComponentProps = InferWidgetProps<typeof LedProps> & PVComponent;
  * tooltip property in a json file containing a led
  */
 export const LedComponent = (props: LedComponentProps): JSX.Element => {
-  const { value, connected, rule, scale = 1.0 } = props;
+  const { value, connected, useRule, rule, scale = 1.0 } = props;
 
   let alarm = DAlarm.NONE;
   // User defined rule takes priority over alarm on PV
-  if (rule) {
-    alarm = value ? ruleToAlarm(rule, value) : DAlarm.NONE;
+  if (useRule) {
+    switch (rule) {
+      case "major":
+        alarm = DAlarm.MAJOR;
+        break;
+      case "minor":
+        alarm = DAlarm.MINOR;
+        break;
+      default:
+        alarm = DAlarm.NONE;
+        break;
+    }
   } else {
     alarm = value?.getAlarm() || DAlarm.NONE;
   }
-  alarm = DAlarm.MAJOR;
   const className = getClass(classes, connected, alarm.quality);
 
   const scaleTransform = {
