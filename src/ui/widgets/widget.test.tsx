@@ -1,94 +1,62 @@
 import React from "react";
-import { mount } from "enzyme";
 
-import { Widget, ConnectingComponent } from "./widget";
+import { Widget } from "./widget";
 import { LabelComponent } from "./Label/label";
-import { MacroProps } from "../hooks/useMacros";
-import { useConnection } from "../hooks/useConnection";
-import { TooltipWrapper } from "../components/TooltipWrapper/tooltipWrapper";
-import { AnyProps } from "./widgetProps";
 import { RelativePosition } from "../../types/position";
 import { PV } from "../../types/pv";
-import { ddouble } from "../../setupTests";
+import { contextRender } from "../../setupTests";
+import { fireEvent, waitFor } from "@testing-library/react";
+import copyToClipboard from "clipboard-copy";
 
-// Mock the useMacros hook as otherwise we'd have to provide
-// a store for it to use.
-jest.mock("../hooks/useMacros", (): object => {
+const PV_NAME = "ca://pv";
+
+// Mock copy-to-clipboard function.
+// See https://remarkablemark.org/blog/2018/06/28/jest-mock-default-named-export/
+jest.mock("clipboard-copy", (): object => {
   return {
-    useMacros: (props: MacroProps): MacroProps => props
+    __esModule: true,
+    default: jest.fn()
   };
 });
-// Mock useRules.
-jest.mock("../hooks/useRules", (): object => {
-  return {
-    useRules: (props: AnyProps): AnyProps => props
-  };
-});
-// Slightly elaborate mocking of useConnection.
-jest.mock("../hooks/useConnection", (): object => ({
-  useConnection: jest.fn()
-}));
-// This has to be done in a second step because Jest does the
-// mocking before we have access to other imports (ddouble).
-(useConnection as jest.Mock).mockImplementation((pvName: string): any => {
-  const val = ddouble(0);
-  return [pvName, true, false, val];
-});
-
 const TestLabel = (): JSX.Element => {
   return <LabelComponent text="Test" />;
 };
 
 describe("<Widget />", (): void => {
-  const component = mount(
-    <Widget baseWidget={TestLabel} position={new RelativePosition()} />
-  );
-
-  test("it retains label text", (): void => {
-    expect(component.text()).toEqual("Test");
+  test("it shows label text", (): void => {
+    const { queryByText } = contextRender(
+      <Widget baseWidget={TestLabel} position={new RelativePosition()} />
+    );
+    expect(queryByText("Test")).toBeInTheDocument();
   });
 
-  test("it has one child all the way down", (): void => {
-    // Widget
-    expect(component.children()).toHaveLength(1);
-    // ConnectingComponent
-    const c1 = component.childAt(0);
-    expect(c1.type()).toEqual(ConnectingComponent);
-    expect(c1.children()).toHaveLength(1);
-    // TooltipWrapper
-    const c2 = c1.childAt(0);
-    expect(c2.children()).toHaveLength(1);
-    expect(c2.type()).toEqual(TooltipWrapper);
-    // div child of TooltipWrapper
-    const c3 = c2.childAt(0);
-    expect(c3.type()).toEqual("div");
-    expect(c3.children()).toHaveLength(1);
-    // TestLabel
-    const c4 = c3.childAt(0);
-    expect(c4.type()).toEqual(TestLabel);
-    // LabelComponent
-    const c5 = c4.childAt(0);
-    expect(c5.type()).toEqual(LabelComponent);
-    // Finally the Label div
-    const c6 = c5.childAt(0);
-    expect(c6.type()).toEqual("div");
-    // No further children
-    expect(c6.text()).toEqual("Test");
-  });
+  test("it loads TooltipWrapper on middle click", async (): Promise<void> => {
+    // We have to provide a valid subscriptions dict otherwise
+    // we get an error when the widget comes to unsubscribe.
+    const initialCsState = {
+      effectivePvNameMap: {},
+      globalMacros: {},
+      subscriptions: { [PV_NAME]: [] },
+      valueCache: {}
+    };
 
-  test("it has TooltipWrapper", (): void => {
-    const component = mount(
+    const { getByText } = contextRender(
       <Widget
-        pvName={new PV("pv")}
+        pvName={new PV(PV_NAME)}
         baseWidget={TestLabel}
         position={new RelativePosition()}
-      />
+        tooltip="hi there"
+      />,
+      {},
+      {},
+      initialCsState
     );
-    expect(
-      component
-        .childAt(0)
-        .childAt(0)
-        .name()
-    ).toEqual("TooltipWrapper");
+    const label = getByText("Test");
+    // simulate middle click
+    fireEvent.mouseDown(label, { button: 1 });
+    await waitFor((): void => {
+      expect(getByText(/.*hi.*/)).toBeInTheDocument();
+      expect(copyToClipboard).toHaveBeenCalledWith("ca://pv");
+    });
   });
 });

@@ -124,10 +124,10 @@ export const EmbeddedDisplay = (
     });
   } catch (e) {
     const message = `Error converting file ${file} into components.`;
-    log.error(message);
-    log.error(e);
-    log.error(e.msg);
-    log.error(e.details);
+    log.warn(message);
+    log.warn(e);
+    log.warn(e.msg);
+    log.warn(e.details);
     component = widgetDescriptionToComponent(errorWidget(message));
   }
 

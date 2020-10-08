@@ -29,11 +29,14 @@ describe("<TabContainer>", (): void => {
     const child = {
       type: "label"
     };
+    // Suppress logging for expected error.
+    log.setLevel("error");
     const { queryByText } = render(
       <Provider store={store}>
         <TabContainerComponent tabs={{ one: child }} />
       </Provider>
     );
+    log.setLevel("info");
 
     expect(queryByText(/Error/)).toBeInTheDocument();
   });

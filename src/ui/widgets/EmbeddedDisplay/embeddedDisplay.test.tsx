@@ -4,7 +4,7 @@ import { EmbeddedDisplay } from "./embeddedDisplay";
 
 import { DEFAULT_BASE_URL } from "../../../baseUrl";
 import { RelativePosition } from "../../../types/position";
-import { fileContextRender } from "../../../setupTests";
+import { contextRender } from "../../../setupTests";
 import { waitFor } from "@testing-library/react";
 
 // Ensure that all widgets are registered by importing
@@ -48,7 +48,9 @@ describe("<EmbeddedDisplay>", (): void => {
         .spyOn(globalWithFetch, "fetch")
         .mockImplementation((): Promise<{}> => mockFetchPromise);
 
-      const { queryByText } = fileContextRender(
+      // Suppress logging for expected error.
+      log.setLevel("error");
+      const { queryByText } = contextRender(
         <EmbeddedDisplay
           position={new RelativePosition()}
           file={{
@@ -66,6 +68,7 @@ describe("<EmbeddedDisplay>", (): void => {
       await waitFor((): void =>
         expect(queryByText(/Error converting.*/)).toBeInTheDocument()
       );
+      log.setLevel("info");
     }
   );
   it("returns an error label when embedding a widget only", async (): Promise<
@@ -88,7 +91,9 @@ describe("<EmbeddedDisplay>", (): void => {
       .spyOn(globalWithFetch, "fetch")
       .mockImplementation((): Promise<{}> => mockFetchPromise);
 
-    const { queryByText } = fileContextRender(
+    // Suppress logging for expected error.
+    log.setLevel("error");
+    const { queryByText } = contextRender(
       <EmbeddedDisplay
         position={new RelativePosition()}
         file={{
@@ -110,6 +115,7 @@ describe("<EmbeddedDisplay>", (): void => {
     await waitFor((): void =>
       expect(queryByText(/Error converting.*/)).toBeInTheDocument()
     );
+    log.setLevel("info");
   });
 
   it("converts a display with child widget", async (): Promise<void> => {
@@ -136,7 +142,7 @@ describe("<EmbeddedDisplay>", (): void => {
       .spyOn(globalWithFetch, "fetch")
       .mockImplementation((): Promise<{}> => mockFetchPromise);
 
-    const { queryByText } = fileContextRender(
+    const { queryByText } = contextRender(
       <EmbeddedDisplay
         position={new RelativePosition()}
         file={{
@@ -172,7 +178,7 @@ describe("<EmbeddedDisplay>", (): void => {
       .spyOn(globalWithFetch, "fetch")
       .mockImplementation((): Promise<{}> => mockFetchPromise);
 
-    const { queryByText } = fileContextRender(
+    const { queryByText } = contextRender(
       <EmbeddedDisplay
         position={new RelativePosition()}
         file={{
