@@ -26,13 +26,15 @@ export function commonCss(props: {
   visible?: boolean;
   highlight?: boolean;
   backgroundColor?: Color;
+  transform?: string;
 }): CSSProperties {
   return {
     ...props.border?.css(),
     ...props.font?.css(),
     backgroundColor: props.backgroundColor?.rgbaString(),
     visibility: props.visible ? "hidden" : undefined,
-    opacity: props.highlight ? "50%" : undefined
+    opacity: props.highlight ? "50%" : undefined,
+    transform: props.transform
   };
 }
 

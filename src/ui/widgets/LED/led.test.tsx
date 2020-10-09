@@ -33,7 +33,9 @@ describe("led changes Css properties based on alarm and connection state", (): v
     // type errors of renderedLed may be null and ReactTestRendererJSON[] does
     // not have property type props, unless (renderedLed as ReactTestRenderedJSON)
     // is added
-    expect(renderedLed.props.className).toBe("Default Minor");
+    expect(renderedLed.props.style.backgroundColor).toBe(
+      "rgba(255, 255, 0, 255)"
+    );
   });
 });
 
@@ -41,39 +43,26 @@ describe("css properties change depending on user defined rule", (): void => {
   test("useRule overwrites the default alarm behaviour", (): void => {
     const ledProps = {
       value: unusedValue,
-      useRule: true,
-      ruleRes: undefined
+      userColor: "red"
     };
 
     const renderedLed = renderLed(ledProps, true);
 
-    expect(renderedLed.props.className).toBe("Default");
-  });
-
-  test("resolved rule is only used when useRule is set to true", (): void => {
-    const value = createValue(AlarmQuality.ALARM);
-
-    const ledProps = {
-      value,
-      useRule: false,
-      ruleRes: "minor"
-    };
-
-    const renderedLed = renderLed(ledProps, true);
-
-    expect(renderedLed.props.className).toBe("Default Major");
+    expect(renderedLed.props.style.backgroundColor).toBe(
+      "rgba(255, 0, 0, 255)"
+    );
   });
 
   test("rule resolved but component is disconnected should results in Default Disconnected", (): void => {
     const ledProps = {
-      value: unusedValue,
-      useRule: true,
-      ruleRes: ""
+      value: unusedValue
     };
 
     const renderedLed = renderLed(ledProps, false);
 
-    expect(renderedLed.props.className).toBe("Default Disconnected");
+    expect(renderedLed.props.style.backgroundColor).toBe(
+      "rgba(220, 220, 220, 255)"
+    );
   });
 });
 
