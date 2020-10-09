@@ -57,12 +57,15 @@ export const LedComponent = (props: LedComponentProps): JSX.Element => {
     backgroundColor = Color.GREY;
   }
 
-  const style = {
-    transform: `scale(${scale})`,
-    backgroundColor
-  };
-
-  return <div className={classes.led} style={commonCss(style)} />;
+  return (
+    <div
+      className={classes.led}
+      style={{
+        backgroundColor: backgroundColor.rgbaString(),
+        transform: `scale(${scale})`
+      }}
+    />
+  );
 };
 
 const LedWidgetProps = {
