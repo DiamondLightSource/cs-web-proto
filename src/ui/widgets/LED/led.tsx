@@ -1,5 +1,5 @@
 import React from "react";
-import { Widget, commonCss } from "../widget";
+import { Widget } from "../widget";
 import { InferWidgetProps, StringPropOpt, FloatPropOpt } from "../propTypes";
 import { PVComponent, PVWidgetPropType } from "../widgetProps";
 import { registerWidget } from "../register";
