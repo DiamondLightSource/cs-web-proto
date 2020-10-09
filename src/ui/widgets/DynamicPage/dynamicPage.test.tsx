@@ -1,9 +1,14 @@
 import React, * as ReactAll from "react";
+import log from "loglevel";
 
 import { waitFor } from "@testing-library/react";
 import { DynamicPageComponent } from "./dynamicPage";
 import { PageState } from "../../../fileContext";
-import { fileContextRender } from "../../../setupTests";
+import { contextRender } from "../../../setupTests";
+
+// Import display widget to ensure that it is registered.
+import { Display } from "..";
+log.debug(Display.name);
 
 interface GlobalFetch extends NodeJS.Global {
   fetch: any;
@@ -18,13 +23,14 @@ beforeEach((): void => {
 
 describe("<DynamicPage>", (): void => {
   it("shows placeholder if no page is loaded", () => {
-    const { queryByText } = fileContextRender(
+    const { queryByText } = contextRender(
       <DynamicPageComponent location="testlocation" />,
       {},
       {}
     );
     expect(queryByText(/.*no file loaded/)).toBeInTheDocument();
   });
+
   it("loads a page", () => {
     const mockSuccessResponse =
       '{"type": "display", "position": "relative", "children": [ { "type": "label", "position": "relative", "text": "hello" } ] }';
@@ -44,10 +50,9 @@ describe("<DynamicPage>", (): void => {
         defaultProtocol: "pva"
       }
     };
-    const { queryByText } = fileContextRender(
+    const { queryByText } = contextRender(
       <DynamicPageComponent location="testlocation" />,
-      initialPageState,
-      {}
+      initialPageState
     );
 
     expect(queryByText("hello")).not.toBeInTheDocument();

@@ -1,6 +1,5 @@
 // React testing library extensions to expect().
 import "@testing-library/jest-dom/extend-expect";
-// Set up Enzyme.
 import { configure } from "enzyme";
 import log from "loglevel";
 import Adapter from "enzyme-adapter-react-16";
@@ -14,7 +13,11 @@ import {
 import { render, RenderResult } from "@testing-library/react";
 import React, { useState } from "react";
 import { Provider } from "react-redux";
-import { store } from "./redux/store";
+import { MacroContext } from "./types/macros";
+import { csReducer, CsState } from "./redux/csState";
+import { createStore } from "redux";
+
+// Set up Enzyme.
 configure({ adapter: new Adapter() });
 
 log.setLevel("info");
@@ -51,10 +54,16 @@ export function dstring(
 }
 
 // Helper function for rendering with a working fileContext.
-export function fileContextRender(
+export function contextRender(
   component: JSX.Element,
-  initialPageState: PageState,
-  initialTabState: TabState
+  initialPageState: PageState = {},
+  initialTabState: TabState = {},
+  initialCsState: CsState = {
+    effectivePvNameMap: {},
+    globalMacros: {},
+    subscriptions: {},
+    valueCache: {}
+  }
 ): RenderResult {
   const ParentComponent = (props: { child: JSX.Element }): JSX.Element => {
     const [pageState, setPageState] = useState<PageState>(initialPageState);
@@ -65,11 +74,22 @@ export function fileContextRender(
       tabState,
       setTabState
     );
+    // Hard-code macros for now.
+    const contextMacros = { a: "A", b: "B", c: "C" };
+    const globalMacros = { c: "D", d: "E" };
+    initialCsState.globalMacros = globalMacros;
+    const macroContext = { macros: contextMacros, updateMacro: (): void => {} };
+    const store = createStore<CsState, any, any, any>(
+      csReducer,
+      initialCsState
+    );
     return (
       <Provider store={store}>
-        <FileContext.Provider value={fileContext}>
-          {props.child}
-        </FileContext.Provider>
+        <MacroContext.Provider value={macroContext}>
+          <FileContext.Provider value={fileContext}>
+            {props.child}
+          </FileContext.Provider>
+        </MacroContext.Provider>
       </Provider>
     );
   };

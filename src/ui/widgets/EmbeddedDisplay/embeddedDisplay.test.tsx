@@ -1,12 +1,18 @@
 import React, * as ReactAll from "react";
+import log from "loglevel";
 import { EmbeddedDisplay } from "./embeddedDisplay";
-import { shallow } from "enzyme";
 
-import { Display } from "../Display/display";
-import { Label } from "../Label/label";
 import { DEFAULT_BASE_URL } from "../../../baseUrl";
 import { RelativePosition } from "../../../types/position";
-import { MacroContext } from "../../../types/macros";
+import { contextRender } from "../../../setupTests";
+import { waitFor } from "@testing-library/react";
+
+// Ensure that all widgets are registered by importing
+// from src/ui/wigets/index.ts, which in turn imports
+// all the widgets.
+import { Label } from "..";
+// We need to use the import for it to take effect.
+log.debug(Label.name);
 interface GlobalFetch extends NodeJS.Global {
   fetch: any;
 }
@@ -28,12 +34,11 @@ describe("<EmbeddedDisplay>", (): void => {
     ["https://a.com/b.opi", "https://a.com/b.opi", "opi"]
   ] as [string, string, string][])(
     "fetches a file from the server",
-    (
+    async (
       inputFile: string,
       resolvedFile: string,
-      filetype: string,
-      done: jest.DoneCallback
-    ): void => {
+      filetype: string
+    ): Promise<void> => {
       const mockSuccessResponse = {};
       const mockTextPromise = Promise.resolve(mockSuccessResponse);
       const mockFetchPromise = Promise.resolve({
@@ -43,7 +48,9 @@ describe("<EmbeddedDisplay>", (): void => {
         .spyOn(globalWithFetch, "fetch")
         .mockImplementation((): Promise<{}> => mockFetchPromise);
 
-      const wrapper = shallow(
+      // Suppress logging for expected error.
+      log.setLevel("error");
+      const { queryByText } = contextRender(
         <EmbeddedDisplay
           position={new RelativePosition()}
           file={{
@@ -58,13 +65,15 @@ describe("<EmbeddedDisplay>", (): void => {
       expect(globalWithFetch.fetch).toHaveBeenCalledTimes(1);
       expect(globalWithFetch.fetch).toHaveBeenCalledWith(resolvedFile);
 
-      process.nextTick((): void => {
-        expect(wrapper.type()).toEqual(MacroContext.Provider);
-        done();
-      });
+      await waitFor((): void =>
+        expect(queryByText(/Error converting.*/)).toBeInTheDocument()
+      );
+      log.setLevel("info");
     }
   );
-  it("returns an error label when embedding a widget only", (done): void => {
+  it("returns an error label when embedding a widget only", async (): Promise<
+    void
+  > => {
     const mockSuccessResponse = `
     <widget type="label" version="2.0.0">
         <name>Label</name>
@@ -82,7 +91,9 @@ describe("<EmbeddedDisplay>", (): void => {
       .spyOn(globalWithFetch, "fetch")
       .mockImplementation((): Promise<{}> => mockFetchPromise);
 
-    const wrapper = shallow(
+    // Suppress logging for expected error.
+    log.setLevel("error");
+    const { queryByText } = contextRender(
       <EmbeddedDisplay
         position={new RelativePosition()}
         file={{
@@ -91,7 +102,9 @@ describe("<EmbeddedDisplay>", (): void => {
           defaultProtocol: "ca",
           macros: {}
         }}
-      />
+      />,
+      {},
+      {}
     );
 
     expect(globalWithFetch.fetch).toHaveBeenCalledTimes(1);
@@ -99,15 +112,13 @@ describe("<EmbeddedDisplay>", (): void => {
       `${DEFAULT_BASE_URL}/bob/TestFile`
     );
 
-    process.nextTick((): void => {
-      expect(wrapper.type()).toEqual(MacroContext.Provider);
-      expect(wrapper.childAt(0).type()).toEqual(Label);
-      expect(wrapper.childAt(0).props().text).toContain("Error");
-      done();
-    });
+    await waitFor((): void =>
+      expect(queryByText(/Error converting.*/)).toBeInTheDocument()
+    );
+    log.setLevel("info");
   });
 
-  it("converts a display with child widget", (done): void => {
+  it("converts a display with child widget", async (): Promise<void> => {
     const mockSuccessResponse = `
     <?xml version="1.0" encoding="UTF-8"?>
     <display version="2.0.0">
@@ -131,7 +142,7 @@ describe("<EmbeddedDisplay>", (): void => {
       .spyOn(globalWithFetch, "fetch")
       .mockImplementation((): Promise<{}> => mockFetchPromise);
 
-    const wrapper = shallow(
+    const { queryByText } = contextRender(
       <EmbeddedDisplay
         position={new RelativePosition()}
         file={{
@@ -140,7 +151,9 @@ describe("<EmbeddedDisplay>", (): void => {
           defaultProtocol: "ca",
           macros: {}
         }}
-      />
+      />,
+      {},
+      {}
     );
 
     expect(globalWithFetch.fetch).toHaveBeenCalledTimes(1);
@@ -148,21 +161,12 @@ describe("<EmbeddedDisplay>", (): void => {
       `${DEFAULT_BASE_URL}/bob/TestFile`
     );
 
-    process.nextTick((): void => {
-      expect(wrapper.type()).toEqual(MacroContext.Provider);
-      expect(wrapper.childAt(0).type()).toEqual(Display);
-      expect(
-        wrapper
-          .childAt(0)
-          .childAt(0)
-          .childAt(0)
-          .type()
-      ).toEqual(Label);
-      done();
-    });
+    await waitFor((): void =>
+      expect(queryByText("From .bob file")).toBeInTheDocument()
+    );
   });
 
-  it("converts fetched children to JSON", (done): void => {
+  it("converts fetched children to JSON", async (): Promise<void> => {
     const mockSuccessResponse =
       '{ "type": "display", "position": "relative", "children": [{ "type": "label", "position": "relative", "text": "Test" }] }';
     const mockJsonPromise = Promise.resolve(mockSuccessResponse);
@@ -174,7 +178,7 @@ describe("<EmbeddedDisplay>", (): void => {
       .spyOn(globalWithFetch, "fetch")
       .mockImplementation((): Promise<{}> => mockFetchPromise);
 
-    const wrapper = shallow(
+    const { queryByText } = contextRender(
       <EmbeddedDisplay
         position={new RelativePosition()}
         file={{
@@ -183,7 +187,9 @@ describe("<EmbeddedDisplay>", (): void => {
           defaultProtocol: "ca",
           macros: {}
         }}
-      />
+      />,
+      {},
+      {}
     );
 
     expect(globalWithFetch.fetch).toHaveBeenCalledTimes(1);
@@ -191,17 +197,6 @@ describe("<EmbeddedDisplay>", (): void => {
       `${DEFAULT_BASE_URL}/json/TestFile`
     );
 
-    process.nextTick((): void => {
-      expect(wrapper.childAt(0).type()).toEqual(Display);
-      // Why the nesting?
-      expect(
-        wrapper
-          .childAt(0)
-          .childAt(0)
-          .childAt(0)
-          .type()
-      ).toEqual(Label);
-      done();
-    });
+    await waitFor((): void => expect(queryByText("Test")).toBeInTheDocument());
   });
 });

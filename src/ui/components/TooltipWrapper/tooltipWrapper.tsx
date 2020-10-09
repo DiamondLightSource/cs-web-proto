@@ -36,6 +36,8 @@ export const TooltipWrapper = (props: {
         e.currentTarget.classList.add(classes.Copying);
         copyToClipboard(pvName);
       }
+      // Stop regular middle-click behaviour if showing tooltip.
+      e.preventDefault();
     }
   };
   const mouseUp = (e: React.MouseEvent): void => {

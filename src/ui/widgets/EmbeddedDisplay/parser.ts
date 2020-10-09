@@ -76,9 +76,9 @@ export function genericParser(
           log.debug(`result ${newProps[prop]}`);
         }
       } catch (e) {
-        log.error(`Could not convert simple prop ${prop}:`);
-        log.error(widget[opiPropName]);
-        log.error(e);
+        log.warn(`Could not convert simple prop ${prop}:`);
+        log.warn(widget[opiPropName]);
+        log.warn(e);
       }
     } else if (complexParsers.hasOwnProperty(prop)) {
       /* More complex props need access to the entire widget. */
@@ -88,8 +88,8 @@ export function genericParser(
         newProps[prop] = propParser(widget);
         log.debug(`result ${newProps[prop]}`);
       } catch (e) {
-        log.error(`Could not convert complex prop ${prop}:`);
-        log.error(e);
+        log.warn(`Could not convert complex prop ${prop}:`);
+        log.warn(e);
       }
     } else if (passThrough) {
       newProps[prop] = widget[prop];

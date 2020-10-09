@@ -1,10 +1,10 @@
+import log from "loglevel";
 import { Color } from "../../../types/color";
 import { Border } from "../../../types/border";
 import { Rule } from "../../../types/props";
 import { Label } from "..";
 import { parseOpi } from "./opiParser";
 import { AbsolutePosition, RelativePosition } from "../../../types/position";
-import log from "loglevel";
 
 describe("opi widget parser", (): void => {
   const displayString = `
@@ -102,6 +102,10 @@ describe("opi widget parser", (): void => {
     <height>20</height>
     <width>20</width>
     <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
+      <x>0</x>
+      <y>0</y>
+      <height>20</height>
+      <width>20</width>
       <rules>
         <rule name="Rule" prop_id="text" out_exp="true">
           <exp bool_exp="pv0&gt;5">
@@ -135,8 +139,16 @@ describe("opi widget parser", (): void => {
     <height>20</height>
     <width>20</width>
     <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
+      <x>0</x>
+      <y>0</y>
+      <height>20</height>
+      <width>20</width>
       <text>hello</text>
       <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
+        <x>0</x>
+        <y>0</y>
+        <height>20</height>
+        <width>20</width>
         <text>bye</text>
       </widget>
     </widget>
@@ -154,6 +166,10 @@ describe("opi widget parser", (): void => {
     <height>20</height>
     <width>20</width>
     <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
+      <x>0</x>
+      <y>0</y>
+      <height>20</height>
+      <width>20</width>
       <actions hook="false" hook_all="false">
         <action type="OPEN_WEBPAGE">
           <hyperlink>https://confluence.diamond.ac.uk/x/ZVhRBQ</hyperlink>
@@ -181,6 +197,7 @@ describe("opi widget parser", (): void => {
     <width>20</width>
     <widget typeId="org.csstudio.opibuilder.widgets.TextInput" version="2.0.0">
       <confirm_message></confirm_message>
+      <height>100</height>
       <horizontal_alignment>2</horizontal_alignment>
       <limits_from_pv>false</limits_from_pv>
       <maximum>1.7976931348623157E308</maximum>
@@ -213,7 +230,6 @@ describe("opi widget parser", (): void => {
   </display>`;
 
   it("parses an input widget", (): void => {
-    log.setLevel("debug");
     const widget = parseOpi(inputString, "ca").children[0];
     expect(widget.textAlign).toEqual("right");
     // Adds ca:// prefix.
@@ -231,8 +247,11 @@ describe("opi widget parser", (): void => {
     </widget>
   </display>`;
   it("doesn't parse an invalid string", (): void => {
+    // Reduce logging when expecting error.
+    log.setLevel("error");
     const widget = parseOpi(invalidString, "ca").children[0];
     expect(widget.text).toBeUndefined();
+    log.setLevel("info");
   });
   const invalidBool = `
   <display typeId="org.csstudio.opibuilder.Display" version="1.0.0">
@@ -246,7 +265,10 @@ describe("opi widget parser", (): void => {
     </widget>
   </display>`;
   it("doesn't parse an invalid bool", (): void => {
+    // Reduce logging when expecting error.
+    log.setLevel("error");
     const widget = parseOpi(invalidBool, "ca").children[0];
     expect(widget.showUnits).toBeUndefined();
+    log.setLevel("info");
   });
 });
