@@ -15,7 +15,8 @@ import {
 } from "../propTypes";
 import { registerWidget } from "../register";
 import { LabelComponent } from "../Label/label";
-import { AlarmQuality, DAlarm, DType } from "../../../types/dtypes";
+import { DAlarm, DType } from "../../../types/dtypes";
+import { getClass } from "../alarm";
 
 const ReadbackProps = {
   precision: IntPropOpt,
@@ -32,25 +33,6 @@ const ReadbackProps = {
 // Needs to be exported for testing
 export type ReadbackComponentProps = InferWidgetProps<typeof ReadbackProps> &
   PVComponent;
-
-function getClass(connected: boolean, alarmSeverity: AlarmQuality): string {
-  let cls = classes.Readback;
-  if (!connected) {
-    cls += ` ${classes.Disconnected}`;
-  } else {
-    switch (alarmSeverity) {
-      case AlarmQuality.WARNING: {
-        cls += ` ${classes.Minor}`;
-        break;
-      }
-      case AlarmQuality.ALARM: {
-        cls += ` ${classes.Major}`;
-        break;
-      }
-    }
-  }
-  return cls;
-}
 
 export const ReadbackComponent = (
   props: ReadbackComponentProps
@@ -87,11 +69,10 @@ export const ReadbackComponent = (
     displayedValue = displayedValue + ` ${display.units}`;
   }
 
-  // Handle foreground alarm sensitivity.
-  let className = classes.Readback;
+  let className;
   // TODO: should we show disconnection even if not alarm sensitive?
   if (fgAlarmSensitive) {
-    className = getClass(connected, alarm.quality);
+    className = getClass(classes, connected, alarm.quality, classes.Readback);
   }
   // Use a LabelComponent to display it.
   return (
