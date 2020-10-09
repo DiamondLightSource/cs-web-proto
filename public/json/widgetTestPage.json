@@ -78,7 +78,30 @@
           "alarmBorder": true,
           "highlight": "",
           "tooltip": "Green = no alarm\n${pvName}\n${pvValue}",
-          "scale": 1.0
+          "scale": 1.0,
+          "rules": [
+            {
+              "name": "limits",
+              "prop": "userColor",
+              "outExp": false,
+              "pvs": [
+                {
+                  "pvName": "sim://sine",
+                  "trigger": true
+                }
+              ],
+              "expressions": [
+                {
+                  "boolExp": "pv0 > 0.6",
+                  "value": "red"
+                },
+                {
+                  "boolExp": "pv0 < -0.5",
+                  "value": "yellow"
+                }
+              ]
+            }
+          ]
         }
       ]
     }
