@@ -78,9 +78,10 @@
           "alarmBorder": true,
           "highlight": "",
           "tooltip": "Green = no alarm\n${pvName}\n${pvValue}",
+          "scale": 5.0,
           "rules": [
             {
-              "name": "posneg",
+              "name": "limits",
               "prop": "rule",
               "outExp": false,
               "pvs": [
@@ -97,6 +98,10 @@
                 {
                   "boolExp": "pv0 < -0.5",
                   "value": "minor"
+                },
+                {
+                  "boolExp": "pv0 < 1.0",
+                  "value": "default"
                 }
               ]
             }
