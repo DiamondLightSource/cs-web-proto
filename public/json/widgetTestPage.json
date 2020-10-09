@@ -78,34 +78,7 @@
           "alarmBorder": true,
           "highlight": "",
           "tooltip": "Green = no alarm\n${pvName}\n${pvValue}",
-          "scale": 5.0,
-          "rules": [
-            {
-              "name": "limits",
-              "prop": "rule",
-              "outExp": false,
-              "pvs": [
-                {
-                  "pvName": "sim://sine",
-                  "trigger": true
-                }
-              ],
-              "expressions": [
-                {
-                  "boolExp": "pv0 > 0.6",
-                  "value": "major"
-                },
-                {
-                  "boolExp": "pv0 < -0.5",
-                  "value": "minor"
-                },
-                {
-                  "boolExp": "pv0 < 1.0",
-                  "value": "default"
-                }
-              ]
-            }
-          ]
+          "scale": 1.0
         }
       ]
     }

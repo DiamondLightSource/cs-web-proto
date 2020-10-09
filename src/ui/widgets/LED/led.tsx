@@ -13,13 +13,14 @@ import { DAlarm } from "../../../types/dtypes";
 import { getClass } from "../alarm";
 
 /**
- * rule: a user defined rule for when the led should trigger e.g. "x < 10"
  * scale: a scaling factor for the led from it's default value
+ * ruleRes: the resolved value of the user defined rule (if there is one)
+ * useRule: whether to use the user defined rule instead of the PV alarm level
  */
-const LedProps = {
+export const LedProps = {
   scale: FloatPropOpt,
-  useRule: BoolPropOpt,
-  rule: StringPropOpt
+  ruleRes: StringPropOpt,
+  useRule: BoolPropOpt
 };
 
 export type LedComponentProps = InferWidgetProps<typeof LedProps> & PVComponent;
@@ -33,21 +34,15 @@ export type LedComponentProps = InferWidgetProps<typeof LedProps> & PVComponent;
  * tooltip property in a json file containing a led
  */
 export const LedComponent = (props: LedComponentProps): JSX.Element => {
-  const { value, connected, useRule, rule, scale = 1.0 } = props;
+  const { value, connected, useRule = false, ruleRes, scale = 1.0 } = props;
 
+  // Alarm level, user defined rule takes precedent over PV alarm
   let alarm = DAlarm.NONE;
-  // User defined rule takes priority over alarm on PV
   if (useRule) {
-    switch (rule) {
-      case "major":
-        alarm = DAlarm.MAJOR;
-        break;
-      case "minor":
-        alarm = DAlarm.MINOR;
-        break;
-      default:
-        alarm = DAlarm.NONE;
-        break;
+    if (ruleRes === "major") {
+      alarm = DAlarm.MAJOR;
+    } else if (ruleRes === "minor") {
+      alarm = DAlarm.MINOR;
     }
   } else {
     alarm = value?.getAlarm() || DAlarm.NONE;
@@ -70,4 +65,4 @@ export const LED = (
   props: InferWidgetProps<typeof LedWidgetProps>
 ): JSX.Element => <Widget baseWidget={LedComponent} {...props} />;
 
-registerWidget(LED, PVWidgetPropType, "led");
+registerWidget(LED, LedWidgetProps, "led");
