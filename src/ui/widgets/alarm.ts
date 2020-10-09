@@ -31,6 +31,8 @@ export function getClass(
         cls += ` ${classes.Major}`;
         break;
       }
+      default:
+        break;
     }
   }
   return cls;
