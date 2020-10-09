@@ -76,3 +76,11 @@ describe("css properties change depending on user defined rule", (): void => {
     expect(renderedLed.props.className).toBe("Default Disconnected");
   });
 });
+
+describe("scale property is used", (): void => {
+  test("scale is added to properties", (): void => {
+    const renderedLed = renderLed({ scale: 2.0 }, true);
+
+    expect(renderedLed.props.style.transform).toBe("scale(2)");
+  });
+});
