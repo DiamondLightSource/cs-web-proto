@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 
-import { Widget, commonCss } from "../widget";
+import { Widget, useCommonCss } from "../widget";
 import { WidgetPropType } from "../widgetProps";
 import { ActionButton } from "../ActionButton/actionButton";
 import { CLOSE_PAGE } from "../widgetActions";
@@ -20,7 +20,7 @@ const DynamicPageProps = {
 export const DynamicPageComponent = (
   props: InferWidgetProps<typeof DynamicPageProps>
 ): JSX.Element => {
-  const style = commonCss(props);
+  const style = useCommonCss(props);
   const fileContext = useContext(FileContext);
 
   const file = fileContext.pageState[props.location];
