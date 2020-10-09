@@ -1,0 +1,4498 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<display typeId="org.csstudio.opibuilder.Display" version="1.0.0">
+  <show_close_button>true</show_close_button>
+  <rules />
+  <wuid>10115110:145d1627210:-7e7a</wuid>
+  <show_grid>true</show_grid>
+  <auto_zoom_to_fit_all>false</auto_zoom_to_fit_all>
+  <scripts />
+  <height>180</height>
+  <macros>
+    <include_parent_macros>true</include_parent_macros>
+  </macros>
+  <boy_version>4.0.104.201510210901</boy_version>
+  <show_edit_range>true</show_edit_range>
+  <widget_type>Display</widget_type>
+  <auto_scale_widgets>
+    <auto_scale_widgets>false</auto_scale_widgets>
+    <min_width>-1</min_width>
+    <min_height>-1</min_height>
+  </auto_scale_widgets>
+  <background_color>
+    <color name="Canvas" red="200" green="200" blue="200" />
+  </background_color>
+  <width>1155</width>
+  <x>-1</x>
+  <name>Synoptic</name>
+  <grid_space>5</grid_space>
+  <show_ruler>true</show_ruler>
+  <y>-1</y>
+  <snap_to_geometry>false</snap_to_geometry>
+  <foreground_color>
+    <color red="192" green="192" blue="192" />
+  </foreground_color>
+  <actions hook="false" hook_all="false">
+    <action type="OPEN_DISPLAY">
+      <path>Bl14I-hardware.opi</path>
+      <macros>
+        <include_parent_macros>true</include_parent_macros>
+      </macros>
+      <mode>7</mode>
+      <description></description>
+    </action>
+  </actions>
+  <widget typeId="org.csstudio.opibuilder.widgets.symbol.multistate.MultistateMonitorWidget" version="1.0.0">
+    <alarm_pulsing>false</alarm_pulsing>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <rules />
+    <pv_value />
+    <auto_size>false</auto_size>
+    <image_file>../vacuumSpaceApp_opi/symbol/space 0.svg</image_file>
+    <height>20</height>
+    <border_width>0</border_width>
+    <items_from_pv>true</items_from_pv>
+    <align_to_nearest_second>false</align_to_nearest_second>
+    <visible>true</visible>
+    <pv_name></pv_name>
+    <degree>0</degree>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <widget_type>Multistate Symbol Monitor</widget_type>
+    <flip_horizontal>false</flip_horizontal>
+    <permutation_matrix>
+      <row>
+        <col>1.0</col>
+        <col>0.0</col>
+      </row>
+      <row>
+        <col>0.0</col>
+        <col>1.0</col>
+      </row>
+    </permutation_matrix>
+    <name>SP10</name>
+    <actions hook="false" hook_all="true">
+      <action type="OPEN_DISPLAY">
+        <path>../vacuumSpaceApp_opi/space_detail.opi</path>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+          <device>BL21I-VA-SPACE-04</device>
+          <desc>BL21I-VA-SPACE-04</desc>
+          <name>SP4</name>
+        </macros>
+        <mode>3</mode>
+        <description>Open detail screen</description>
+      </action>
+      <action type="OPEN_DISPLAY">
+        <path>BL21I-vacuum.opi</path>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+        </macros>
+        <mode>1</mode>
+        <description></description>
+      </action>
+    </actions>
+    <items />
+    <flip_vertical>false</flip_vertical>
+    <show_boolean_label>false</show_boolean_label>
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <crop_left>0</crop_left>
+    <enabled>true</enabled>
+    <wuid>-1b1bc1f:14ff04de031:-7f0a</wuid>
+    <on_color>
+      <color red="232" green="50" blue="50" />
+    </on_color>
+    <scripts />
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <crop_bottom>0</crop_bottom>
+    <no_animation>false</no_animation>
+    <off_color>
+      <color red="210" green="230" blue="210" />
+    </off_color>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <background_color>
+      <color red="240" green="240" blue="240" />
+    </background_color>
+    <boolean_label_position>0</boolean_label_position>
+    <width>46</width>
+    <x>970</x>
+    <y>5</y>
+    <foreground_color>
+      <color red="192" green="192" blue="192" />
+    </foreground_color>
+    <crop_top>0</crop_top>
+    <crop_right>0</crop_right>
+    <stretch_to_fit>true</stretch_to_fit>
+    <font>
+      <opifont.name fontName="Arial" height="11" style="0">Default</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.symbol.multistate.MultistateMonitorWidget" version="1.0.0">
+    <alarm_pulsing>false</alarm_pulsing>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <rules />
+    <pv_value />
+    <auto_size>false</auto_size>
+    <image_file>../vacuumSpaceApp_opi/symbol/space 0.svg</image_file>
+    <height>20</height>
+    <border_width>0</border_width>
+    <items_from_pv>true</items_from_pv>
+    <align_to_nearest_second>false</align_to_nearest_second>
+    <visible>true</visible>
+    <pv_name>BL21I-VA-SPACE-07:STA.SEVR</pv_name>
+    <degree>0</degree>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <widget_type>Multistate Symbol Monitor</widget_type>
+    <flip_horizontal>false</flip_horizontal>
+    <permutation_matrix>
+      <row>
+        <col>1.0</col>
+        <col>0.0</col>
+      </row>
+      <row>
+        <col>0.0</col>
+        <col>1.0</col>
+      </row>
+    </permutation_matrix>
+    <name>auto(SP7)</name>
+    <actions hook="false" hook_all="true">
+      <action type="OPEN_DISPLAY">
+        <path>../vacuumSpaceApp_opi/space_detail.opi</path>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+          <device>BL21I-VA-SPACE-07</device>
+          <desc>BL21I-VA-SPACE-07</desc>
+          <name>SP7</name>
+        </macros>
+        <mode>3</mode>
+        <description>Open detail screen</description>
+      </action>
+      <action type="OPEN_DISPLAY">
+        <path>BL21I-vacuum.opi</path>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+        </macros>
+        <mode>1</mode>
+        <description></description>
+      </action>
+    </actions>
+    <items />
+    <flip_vertical>false</flip_vertical>
+    <show_boolean_label>false</show_boolean_label>
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <crop_left>0</crop_left>
+    <enabled>true</enabled>
+    <wuid>-2b23b6d3:14a57f65520:-7ae4</wuid>
+    <on_color>
+      <color red="232" green="50" blue="50" />
+    </on_color>
+    <scripts />
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <crop_bottom>0</crop_bottom>
+    <no_animation>false</no_animation>
+    <off_color>
+      <color red="210" green="230" blue="210" />
+    </off_color>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <background_color>
+      <color red="240" green="240" blue="240" />
+    </background_color>
+    <boolean_label_position>0</boolean_label_position>
+    <width>56</width>
+    <x>628</x>
+    <y>5</y>
+    <foreground_color>
+      <color red="192" green="192" blue="192" />
+    </foreground_color>
+    <crop_top>0</crop_top>
+    <crop_right>0</crop_right>
+    <stretch_to_fit>true</stretch_to_fit>
+    <font>
+      <opifont.name fontName="Arial" height="11" style="0">Default</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.symbol.multistate.MultistateMonitorWidget" version="1.0.0">
+    <alarm_pulsing>false</alarm_pulsing>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <rules />
+    <pv_value />
+    <auto_size>false</auto_size>
+    <image_file>../vacuumSpaceApp_opi/symbol/space 0.svg</image_file>
+    <height>20</height>
+    <border_width>0</border_width>
+    <items_from_pv>true</items_from_pv>
+    <align_to_nearest_second>false</align_to_nearest_second>
+    <visible>true</visible>
+    <pv_name>BL21I-VA-SPACE-01:STA.SEVR</pv_name>
+    <degree>0</degree>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <widget_type>Multistate Symbol Monitor</widget_type>
+    <flip_horizontal>false</flip_horizontal>
+    <permutation_matrix>
+      <row>
+        <col>1.0</col>
+        <col>0.0</col>
+      </row>
+      <row>
+        <col>0.0</col>
+        <col>1.0</col>
+      </row>
+    </permutation_matrix>
+    <name>auto(SP1)</name>
+    <actions hook="false" hook_all="true">
+      <action type="OPEN_DISPLAY">
+        <path>../vacuumSpaceApp_opi/space_detail.opi</path>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+          <device>BL21I-VA-SPACE-01</device>
+          <desc>BL21I-VA-SPACE-01</desc>
+          <name>SP1</name>
+        </macros>
+        <mode>3</mode>
+        <description>Open detail screen</description>
+      </action>
+      <action type="OPEN_DISPLAY">
+        <path>BL21I-vacuum.opi</path>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+        </macros>
+        <mode>1</mode>
+        <description></description>
+      </action>
+    </actions>
+    <items />
+    <flip_vertical>false</flip_vertical>
+    <show_boolean_label>false</show_boolean_label>
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <crop_left>0</crop_left>
+    <enabled>true</enabled>
+    <wuid>-2b23b6d3:14a57f65520:-7b2d</wuid>
+    <on_color>
+      <color red="232" green="50" blue="50" />
+    </on_color>
+    <scripts />
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <crop_bottom>0</crop_bottom>
+    <no_animation>false</no_animation>
+    <off_color>
+      <color red="210" green="230" blue="210" />
+    </off_color>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <background_color>
+      <color red="240" green="240" blue="240" />
+    </background_color>
+    <boolean_label_position>0</boolean_label_position>
+    <width>141</width>
+    <x>95</x>
+    <y>5</y>
+    <foreground_color>
+      <color red="192" green="192" blue="192" />
+    </foreground_color>
+    <crop_top>0</crop_top>
+    <crop_right>0</crop_right>
+    <stretch_to_fit>true</stretch_to_fit>
+    <font>
+      <opifont.name fontName="Arial" height="11" style="0">Default</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.symbol.multistate.MultistateMonitorWidget" version="1.0.0">
+    <alarm_pulsing>false</alarm_pulsing>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <rules />
+    <pv_value />
+    <auto_size>false</auto_size>
+    <image_file>../vacuumSpaceApp_opi/symbol/space 0.svg</image_file>
+    <height>20</height>
+    <border_width>0</border_width>
+    <items_from_pv>true</items_from_pv>
+    <align_to_nearest_second>false</align_to_nearest_second>
+    <visible>true</visible>
+    <pv_name>BL21I-VA-SPACE-02:STA.SEVR</pv_name>
+    <degree>0</degree>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <widget_type>Multistate Symbol Monitor</widget_type>
+    <flip_horizontal>false</flip_horizontal>
+    <permutation_matrix>
+      <row>
+        <col>1.0</col>
+        <col>0.0</col>
+      </row>
+      <row>
+        <col>0.0</col>
+        <col>1.0</col>
+      </row>
+    </permutation_matrix>
+    <name>auto(SP2)</name>
+    <actions hook="false" hook_all="true">
+      <action type="OPEN_DISPLAY">
+        <path>../vacuumSpaceApp_opi/space_detail.opi</path>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+          <device>BL21I-VA-SPACE-02</device>
+          <desc>BL21I-VA-SPACE-02</desc>
+          <name>SP2</name>
+        </macros>
+        <mode>3</mode>
+        <description>Open detail screen</description>
+      </action>
+      <action type="OPEN_DISPLAY">
+        <path>BL21I-vacuum.opi</path>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+        </macros>
+        <mode>1</mode>
+        <description></description>
+      </action>
+    </actions>
+    <items />
+    <flip_vertical>false</flip_vertical>
+    <show_boolean_label>false</show_boolean_label>
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <crop_left>0</crop_left>
+    <enabled>true</enabled>
+    <wuid>-6e4a8ead:149f6ba5bec:-7c7a</wuid>
+    <on_color>
+      <color red="232" green="50" blue="50" />
+    </on_color>
+    <scripts />
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <crop_bottom>0</crop_bottom>
+    <no_animation>false</no_animation>
+    <off_color>
+      <color red="210" green="230" blue="210" />
+    </off_color>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <background_color>
+      <color red="240" green="240" blue="240" />
+    </background_color>
+    <boolean_label_position>0</boolean_label_position>
+    <width>30</width>
+    <x>255</x>
+    <y>5</y>
+    <foreground_color>
+      <color red="192" green="192" blue="192" />
+    </foreground_color>
+    <crop_top>0</crop_top>
+    <crop_right>0</crop_right>
+    <stretch_to_fit>true</stretch_to_fit>
+    <font>
+      <opifont.name fontName="Arial" height="11" style="0">Default</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
+    <border_style>0</border_style>
+    <tooltip></tooltip>
+    <horizontal_alignment>0</horizontal_alignment>
+    <rules />
+    <enabled>true</enabled>
+    <wuid>-1e1b9177:14619b8f4f0:-1ec3</wuid>
+    <transparent>true</transparent>
+    <auto_size>false</auto_size>
+    <text>EH</text>
+    <scripts />
+    <height>20</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <visible>true</visible>
+    <vertical_alignment>1</vertical_alignment>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <widget_type>Label</widget_type>
+    <wrap_words>false</wrap_words>
+    <background_color>
+      <color red="255" green="255" blue="255" />
+    </background_color>
+    <width>191</width>
+    <x>1020</x>
+    <name>Label</name>
+    <y>120</y>
+    <foreground_color>
+      <color red="0" green="0" blue="0" />
+    </foreground_color>
+    <actions hook="false" hook_all="false" />
+    <font>
+      <opifont.name fontName="Arial" height="11" style="1">Default Bold</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
+    <border_style>0</border_style>
+    <tooltip></tooltip>
+    <horizontal_alignment>0</horizontal_alignment>
+    <rules />
+    <enabled>true</enabled>
+    <wuid>-1e1b9177:14619b8f4f0:-1905</wuid>
+    <transparent>true</transparent>
+    <auto_size>false</auto_size>
+    <text>OH1</text>
+    <scripts />
+    <height>20</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <visible>true</visible>
+    <vertical_alignment>1</vertical_alignment>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <widget_type>Label</widget_type>
+    <wrap_words>false</wrap_words>
+    <background_color>
+      <color name="Canvas" red="200" green="200" blue="200" />
+    </background_color>
+    <width>201</width>
+    <x>105</x>
+    <name>Label_1</name>
+    <y>110</y>
+    <foreground_color>
+      <color red="0" green="0" blue="0" />
+    </foreground_color>
+    <actions hook="false" hook_all="false" />
+    <font>
+      <opifont.name fontName="Arial" height="11" style="1">Default Bold</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
+    <toggle_button>false</toggle_button>
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <alarm_pulsing>false</alarm_pulsing>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <push_action_index>0</push_action_index>
+    <rules />
+    <enabled>true</enabled>
+    <wuid>103a364e:1491e5351a6:-7dde</wuid>
+    <pv_value />
+    <text>Motor Summary</text>
+    <scripts />
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <height>25</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <image></image>
+    <visible>true</visible>
+    <pv_name></pv_name>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <widget_type>Action Button</widget_type>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <background_color>
+      <color name="Canvas" red="200" green="200" blue="200" />
+    </background_color>
+    <width>130</width>
+    <x>600</x>
+    <name>Action Button</name>
+    <y>150</y>
+    <style>0</style>
+    <foreground_color>
+      <color name="Related Display: FG" red="128" green="64" blue="0" />
+    </foreground_color>
+    <actions hook="false" hook_all="false">
+      <action type="OPEN_DISPLAY">
+        <path>BL21I-motor-homed.opi</path>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+        </macros>
+        <mode>1</mode>
+        <description>Motor Homed Summary</description>
+      </action>
+    </actions>
+    <font>
+      <opifont.name fontName="Arial" height="11" style="0">Default</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
+    <toggle_button>false</toggle_button>
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <alarm_pulsing>true</alarm_pulsing>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <push_action_index>0</push_action_index>
+    <rules />
+    <enabled>true</enabled>
+    <wuid>57dbea6f:149f0d3c4df:-7b94</wuid>
+    <pv_value />
+    <text>DIAG</text>
+    <scripts />
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <height>55</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <image>../BLGuiApp_opi/images/diag-stick.png</image>
+    <visible>true</visible>
+    <pv_name>BL21I-DI-DIAGO-01:DEVSTA</pv_name>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <widget_type>Action Button</widget_type>
+    <backcolor_alarm_sensitive>true</backcolor_alarm_sensitive>
+    <background_color>
+      <color name="Canvas" red="200" green="200" blue="200" />
+    </background_color>
+    <width>40</width>
+    <x>245</x>
+    <name>auto(DGN)</name>
+    <y>300</y>
+    <style>0</style>
+    <foreground_color>
+      <color name="Black" red="0" green="0" blue="0" />
+    </foreground_color>
+    <actions hook="true" hook_all="false">
+      <action type="OPEN_DISPLAY">
+        <path>DGN.opi</path>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+        </macros>
+        <mode>1</mode>
+        <description>Open component screen</description>
+      </action>
+      <action type="WRITE_PV">
+        <pv_name>$(pv_name).PROC</pv_name>
+        <value>1</value>
+        <timeout>5</timeout>
+        <confirm_message></confirm_message>
+        <description>Clear alarm status</description>
+      </action>
+      <action type="WRITE_PV">
+        <pv_name>$(pv_name):CALC.PROC</pv_name>
+        <value>1</value>
+        <timeout>5</timeout>
+        <confirm_message></confirm_message>
+        <description>Restore alarm status</description>
+      </action>
+    </actions>
+    <font>
+      <opifont.name fontName="Arial" height="10" style="0">Label Small</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
+    <toggle_button>false</toggle_button>
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <alarm_pulsing>true</alarm_pulsing>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <push_action_index>0</push_action_index>
+    <rules />
+    <enabled>false</enabled>
+    <wuid>57dbea6f:149f0d3c4df:-7b7a</wuid>
+    <pv_value />
+    <text>M2</text>
+    <scripts />
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <height>55</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <image>../BLGuiApp_opi/images/hfm.png</image>
+    <visible>true</visible>
+    <pv_name></pv_name>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <widget_type>Action Button</widget_type>
+    <backcolor_alarm_sensitive>true</backcolor_alarm_sensitive>
+    <background_color>
+      <color name="Canvas" red="200" green="200" blue="200" />
+    </background_color>
+    <width>40</width>
+    <x>550</x>
+    <name></name>
+    <y>40</y>
+    <style>0</style>
+    <foreground_color>
+      <color name="Black" red="0" green="0" blue="0" />
+    </foreground_color>
+    <actions hook="true" hook_all="false">
+      <action type="OPEN_DISPLAY">
+        <path>M2.opi</path>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+        </macros>
+        <mode>1</mode>
+        <description>Open component screen</description>
+      </action>
+      <action type="WRITE_PV">
+        <pv_name>$(pv_name).PROC</pv_name>
+        <value>1</value>
+        <timeout>5</timeout>
+        <confirm_message></confirm_message>
+        <description>Clear alarm status</description>
+      </action>
+      <action type="WRITE_PV">
+        <pv_name>$(pv_name):CALC.PROC</pv_name>
+        <value>1</value>
+        <timeout>5</timeout>
+        <confirm_message></confirm_message>
+        <description>Restore alarm status</description>
+      </action>
+    </actions>
+    <font>
+      <opifont.name fontName="Arial" height="10" style="0">Label Small</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
+    <toggle_button>false</toggle_button>
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <alarm_pulsing>true</alarm_pulsing>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <push_action_index>0</push_action_index>
+    <rules />
+    <enabled>true</enabled>
+    <wuid>57dbea6f:149f0d3c4df:-7b70</wuid>
+    <pv_value />
+    <text>D1</text>
+    <scripts />
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <height>55</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <image>../BLGuiApp_opi/images/diag-stick.png</image>
+    <visible>true</visible>
+    <pv_name>BL21I-DI-PHDGN-01:DEVSTA</pv_name>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <widget_type>Action Button</widget_type>
+    <backcolor_alarm_sensitive>true</backcolor_alarm_sensitive>
+    <background_color>
+      <color name="Canvas" red="200" green="200" blue="200" />
+    </background_color>
+    <width>40</width>
+    <x>300</x>
+    <name>auto(D1)</name>
+    <y>40</y>
+    <style>0</style>
+    <foreground_color>
+      <color name="Black" red="0" green="0" blue="0" />
+    </foreground_color>
+    <actions hook="true" hook_all="false">
+      <action type="OPEN_DISPLAY">
+        <path>D1.opi</path>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+        </macros>
+        <mode>1</mode>
+        <description>Open component screen</description>
+      </action>
+      <action type="WRITE_PV">
+        <pv_name>$(pv_name).PROC</pv_name>
+        <value>1</value>
+        <timeout>5</timeout>
+        <confirm_message></confirm_message>
+        <description>Clear alarm status</description>
+      </action>
+      <action type="WRITE_PV">
+        <pv_name>$(pv_name):CALC.PROC</pv_name>
+        <value>1</value>
+        <timeout>5</timeout>
+        <confirm_message></confirm_message>
+        <description>Restore alarm status</description>
+      </action>
+    </actions>
+    <font>
+      <opifont.name fontName="Arial" height="10" style="0">Label Small</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
+    <toggle_button>false</toggle_button>
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <alarm_pulsing>true</alarm_pulsing>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <push_action_index>0</push_action_index>
+    <rules />
+    <enabled>true</enabled>
+    <wuid>57dbea6f:149f0d3c4df:-7b62</wuid>
+    <pv_value />
+    <text>PGM</text>
+    <scripts />
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <height>55</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <image>../BLGuiApp_opi/images/dcm.png</image>
+    <visible>true</visible>
+    <pv_name>BL21I-OP-PGM-01:DEVSTA</pv_name>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <widget_type>Action Button</widget_type>
+    <backcolor_alarm_sensitive>true</backcolor_alarm_sensitive>
+    <background_color>
+      <color name="Canvas" red="200" green="200" blue="200" />
+    </background_color>
+    <width>40</width>
+    <x>790</x>
+    <name>auto(PGM.control)</name>
+    <y>40</y>
+    <style>0</style>
+    <foreground_color>
+      <color name="Black" red="0" green="0" blue="0" />
+    </foreground_color>
+    <actions hook="true" hook_all="false">
+      <action type="OPEN_DISPLAY">
+        <path>../pgmNextGenApp_opi/pgmNextGen.opi</path>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+          <P>BL21I-OP-PGM-01</P>
+          <MIRRORPITCH>MIR:PITCH</MIRRORPITCH>
+          <GRATINGPITCH>GRT:PITCH</GRATINGPITCH>
+          <GRATING_TRANS_REAL_MOTOR>GRT:X</GRATING_TRANS_REAL_MOTOR>
+          <MIRROR_TRANS_REAL_MOTOR>MIR:X</MIRROR_TRANS_REAL_MOTOR>
+          <GRATING_TRANS_SOFT_MOTOR>SOFTGRT:X</GRATING_TRANS_SOFT_MOTOR>
+          <MIRROR_TRANS_SOFT_MOTOR>SOFTMIR:X</MIRROR_TRANS_SOFT_MOTOR>
+        </macros>
+        <mode>1</mode>
+        <description>Open component screen</description>
+      </action>
+      <action type="WRITE_PV">
+        <pv_name>$(pv_name).PROC</pv_name>
+        <value>1</value>
+        <timeout>5</timeout>
+        <confirm_message></confirm_message>
+        <description>Clear alarm status</description>
+      </action>
+      <action type="WRITE_PV">
+        <pv_name>$(pv_name):CALC.PROC</pv_name>
+        <value>1</value>
+        <timeout>5</timeout>
+        <confirm_message></confirm_message>
+        <description>Restore alarm status</description>
+      </action>
+    </actions>
+    <font>
+      <opifont.name fontName="Arial" height="10" style="0">Label Small</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
+    <toggle_button>false</toggle_button>
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <alarm_pulsing>true</alarm_pulsing>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <push_action_index>0</push_action_index>
+    <rules />
+    <enabled>true</enabled>
+    <wuid>57dbea6f:149f0d3c4df:-7b42</wuid>
+    <pv_value />
+    <text>D2</text>
+    <scripts />
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <height>55</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <image>../BLGuiApp_opi/images/diag-stick.png</image>
+    <visible>true</visible>
+    <pv_name>BL21I-DI-PHDGN-02:DEVSTA</pv_name>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <widget_type>Action Button</widget_type>
+    <backcolor_alarm_sensitive>true</backcolor_alarm_sensitive>
+    <background_color>
+      <color name="Canvas" red="200" green="200" blue="200" />
+    </background_color>
+    <width>40</width>
+    <x>500</x>
+    <name>auto(D2)</name>
+    <y>40</y>
+    <style>0</style>
+    <foreground_color>
+      <color name="Black" red="0" green="0" blue="0" />
+    </foreground_color>
+    <actions hook="true" hook_all="false">
+      <action type="OPEN_DISPLAY">
+        <path>D2.opi</path>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+        </macros>
+        <mode>1</mode>
+        <description>Open component screen</description>
+      </action>
+      <action type="WRITE_PV">
+        <pv_name>$(pv_name).PROC</pv_name>
+        <value>1</value>
+        <timeout>5</timeout>
+        <confirm_message></confirm_message>
+        <description>Clear alarm status</description>
+      </action>
+      <action type="WRITE_PV">
+        <pv_name>$(pv_name):CALC.PROC</pv_name>
+        <value>1</value>
+        <timeout>5</timeout>
+        <confirm_message></confirm_message>
+        <description>Restore alarm status</description>
+      </action>
+    </actions>
+    <font>
+      <opifont.name fontName="Arial" height="10" style="0">Label Small</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
+    <toggle_button>false</toggle_button>
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <alarm_pulsing>true</alarm_pulsing>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <push_action_index>0</push_action_index>
+    <rules />
+    <enabled>true</enabled>
+    <wuid>57dbea6f:149f0d3c4df:-7b20</wuid>
+    <pv_value />
+    <text>D3A</text>
+    <scripts />
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <height>55</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <image>../BLGuiApp_opi/images/diag-stick-camera.png</image>
+    <visible>true</visible>
+    <pv_name>BL21I-DI-PHDGA-03:DEVSTA</pv_name>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <widget_type>Action Button</widget_type>
+    <backcolor_alarm_sensitive>true</backcolor_alarm_sensitive>
+    <background_color>
+      <color name="Canvas" red="200" green="200" blue="200" />
+    </background_color>
+    <width>40</width>
+    <x>600</x>
+    <name>auto(D3A)</name>
+    <y>40</y>
+    <style>0</style>
+    <foreground_color>
+      <color name="Black" red="0" green="0" blue="0" />
+    </foreground_color>
+    <actions hook="true" hook_all="false">
+      <action type="OPEN_DISPLAY">
+        <path>D3A.opi</path>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+        </macros>
+        <mode>1</mode>
+        <description>Open component screen</description>
+      </action>
+      <action type="WRITE_PV">
+        <pv_name>$(pv_name).PROC</pv_name>
+        <value>1</value>
+        <timeout>5</timeout>
+        <confirm_message></confirm_message>
+        <description>Clear alarm status</description>
+      </action>
+      <action type="WRITE_PV">
+        <pv_name>$(pv_name):CALC.PROC</pv_name>
+        <value>1</value>
+        <timeout>5</timeout>
+        <confirm_message></confirm_message>
+        <description>Restore alarm status</description>
+      </action>
+    </actions>
+    <font>
+      <opifont.name fontName="Arial" height="10" style="0">Label Small</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.symbol.multistate.MultistateMonitorWidget" version="1.0.0">
+    <alarm_pulsing>false</alarm_pulsing>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <rules />
+    <pv_value />
+    <auto_size>false</auto_size>
+    <image_file>../dlsPLCApp_opi/symbol/valve 1.svg</image_file>
+    <height>20</height>
+    <border_width>0</border_width>
+    <items_from_pv>true</items_from_pv>
+    <align_to_nearest_second>false</align_to_nearest_second>
+    <visible>true</visible>
+    <pv_name>BL21I-VA-VALVE-01:STA</pv_name>
+    <degree>0</degree>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <widget_type>Multistate Symbol Monitor</widget_type>
+    <flip_horizontal>false</flip_horizontal>
+    <permutation_matrix>
+      <row>
+        <col>1.0</col>
+        <col>0.0</col>
+      </row>
+      <row>
+        <col>0.0</col>
+        <col>1.0</col>
+      </row>
+    </permutation_matrix>
+    <name>auto(V1)</name>
+    <actions hook="false" hook_all="true">
+      <action type="OPEN_DISPLAY">
+        <path>../dlsPLCApp_opi/vacValve_detail.opi</path>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+          <device>BL21I-VA-VALVE-01</device>
+          <DESC>BL21I-VA-VALVE-01</DESC>
+          <ilk0>V1 Air</ilk0>
+          <ilk1>IMG-01 OK</ilk1>
+          <ilk2>IMG-02 OK</ilk2>
+          <ilk3>IMG-03 OK</ilk3>
+          <ilk4>PIRG-01 OK</ilk4>
+          <ilk5>PIRG-02 OK</ilk5>
+          <ilk6>PIRG-03 OK</ilk6>
+          <ilk7>unused</ilk7>
+          <ilk8>unused</ilk8>
+          <ilk9>unused</ilk9>
+          <ilk10>unused</ilk10>
+          <ilk11>unused</ilk11>
+          <ilk12>unused</ilk12>
+          <ilk13>unused</ilk13>
+          <ilk14>unused</ilk14>
+          <ilk15>fault</ilk15>
+          <gilk0>IMG1 PIRG1</gilk0>
+          <gilk1>IMG2 PIRG2</gilk1>
+          <gilk2>IMG3 PIRG3</gilk2>
+          <gilk3>IMG4 PIRG4</gilk3>
+          <gilk4>IMG5 PIRG5</gilk4>
+          <gilk5>IMG6 PIRG6</gilk5>
+          <gilk6>unused</gilk6>
+          <gilk7>unused</gilk7>
+          <gilk8>unused</gilk8>
+          <gilk9>unused</gilk9>
+          <gilk10>unused</gilk10>
+          <gilk11>unused</gilk11>
+          <gilk12>unused</gilk12>
+          <gilk13>unused</gilk13>
+          <gilk14>unused</gilk14>
+          <gilk15>unused</gilk15>
+          <name>V1</name>
+        </macros>
+        <mode>3</mode>
+        <description>Open detail screen</description>
+      </action>
+      <action type="OPEN_DISPLAY">
+        <path>BL21I-vacuum.opi</path>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+        </macros>
+        <mode>1</mode>
+        <description></description>
+      </action>
+    </actions>
+    <items />
+    <flip_vertical>false</flip_vertical>
+    <show_boolean_label>false</show_boolean_label>
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <crop_left>0</crop_left>
+    <enabled>true</enabled>
+    <wuid>57dbea6f:149f0d3c4df:-7a68</wuid>
+    <on_color>
+      <color red="0" green="0" blue="0" />
+    </on_color>
+    <scripts />
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <crop_bottom>0</crop_bottom>
+    <no_animation>false</no_animation>
+    <off_color>
+      <color red="0" green="0" blue="0" />
+    </off_color>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <background_color>
+      <color name="Canvas" red="200" green="200" blue="200" />
+    </background_color>
+    <boolean_label_position>0</boolean_label_position>
+    <width>20</width>
+    <x>235</x>
+    <y>5</y>
+    <foreground_color>
+      <color name="Black" red="0" green="0" blue="0" />
+    </foreground_color>
+    <crop_top>0</crop_top>
+    <crop_right>0</crop_right>
+    <stretch_to_fit>false</stretch_to_fit>
+    <font>
+      <opifont.name fontName="Arial" height="11" style="0">Default</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.symbol.multistate.MultistateMonitorWidget" version="1.0.0">
+    <alarm_pulsing>false</alarm_pulsing>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <rules />
+    <pv_value />
+    <auto_size>false</auto_size>
+    <image_file>../dlsPLCApp_opi/symbol/shutter 1.svg</image_file>
+    <height>20</height>
+    <border_width>0</border_width>
+    <items_from_pv>true</items_from_pv>
+    <align_to_nearest_second>false</align_to_nearest_second>
+    <visible>true</visible>
+    <pv_name>FE14I-PS-SHTR-01:STA</pv_name>
+    <degree>0</degree>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <widget_type>Multistate Symbol Monitor</widget_type>
+    <flip_horizontal>false</flip_horizontal>
+    <permutation_matrix>
+      <row>
+        <col>1.0</col>
+        <col>0.0</col>
+      </row>
+      <row>
+        <col>0.0</col>
+        <col>1.0</col>
+      </row>
+    </permutation_matrix>
+    <name>auto(FESHTR1)</name>
+    <actions hook="false" hook_all="true">
+      <action type="OPEN_DISPLAY">
+        <path>../vacuumSpaceApp_opi/space_detail.opi</path>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+          <device>BL21I-VA-SPACE-05</device>
+          <desc>BL21I-VA-SPACE-05</desc>
+          <name>SP5</name>
+        </macros>
+        <mode>3</mode>
+        <description>Open detail screen</description>
+      </action>
+      <action type="OPEN_DISPLAY">
+        <path>BL21I-vacuum.opi</path>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+        </macros>
+        <mode>1</mode>
+        <description></description>
+      </action>
+    </actions>
+    <items />
+    <flip_vertical>false</flip_vertical>
+    <show_boolean_label>false</show_boolean_label>
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <crop_left>0</crop_left>
+    <enabled>true</enabled>
+    <wuid>57dbea6f:149f0d3c4df:-7a67</wuid>
+    <on_color>
+      <color red="0" green="0" blue="0" />
+    </on_color>
+    <scripts />
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <crop_bottom>0</crop_bottom>
+    <no_animation>false</no_animation>
+    <off_color>
+      <color red="0" green="0" blue="0" />
+    </off_color>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <background_color>
+      <color name="Canvas" red="200" green="200" blue="200" />
+    </background_color>
+    <boolean_label_position>0</boolean_label_position>
+    <width>20</width>
+    <x>75</x>
+    <y>5</y>
+    <foreground_color>
+      <color red="192" green="192" blue="192" />
+    </foreground_color>
+    <crop_top>0</crop_top>
+    <crop_right>0</crop_right>
+    <stretch_to_fit>false</stretch_to_fit>
+    <font>
+      <opifont.name fontName="Arial" height="11" style="0">Default</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.symbol.multistate.MultistateMonitorWidget" version="1.0.0">
+    <alarm_pulsing>false</alarm_pulsing>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <rules />
+    <pv_value />
+    <auto_size>false</auto_size>
+    <image_file>../dlsPLCApp_opi/symbol/absorber 1.svg</image_file>
+    <height>20</height>
+    <border_width>0</border_width>
+    <items_from_pv>true</items_from_pv>
+    <align_to_nearest_second>false</align_to_nearest_second>
+    <visible>true</visible>
+    <pv_name>FE14I-RS-ABSB-01:STA</pv_name>
+    <degree>0</degree>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <widget_type>Multistate Symbol Monitor</widget_type>
+    <flip_horizontal>false</flip_horizontal>
+    <permutation_matrix>
+      <row>
+        <col>1.0</col>
+        <col>0.0</col>
+      </row>
+      <row>
+        <col>0.0</col>
+        <col>1.0</col>
+      </row>
+    </permutation_matrix>
+    <name>auto(FEABSB1)</name>
+    <actions hook="false" hook_all="true">
+      <action type="OPEN_DISPLAY">
+        <path>../vacuumSpaceApp_opi/space_detail.opi</path>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+          <device>BL21I-VA-SPACE-05</device>
+          <desc>BL21I-VA-SPACE-05</desc>
+          <name>SP5</name>
+        </macros>
+        <mode>3</mode>
+        <description>Open detail screen</description>
+      </action>
+      <action type="OPEN_DISPLAY">
+        <path>BL21I-vacuum.opi</path>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+        </macros>
+        <mode>1</mode>
+        <description></description>
+      </action>
+    </actions>
+    <items />
+    <flip_vertical>false</flip_vertical>
+    <show_boolean_label>false</show_boolean_label>
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <crop_left>0</crop_left>
+    <enabled>true</enabled>
+    <wuid>57dbea6f:149f0d3c4df:-7a66</wuid>
+    <on_color>
+      <color red="0" green="0" blue="0" />
+    </on_color>
+    <scripts />
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <crop_bottom>0</crop_bottom>
+    <no_animation>false</no_animation>
+    <off_color>
+      <color red="0" green="0" blue="0" />
+    </off_color>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <background_color>
+      <color name="Canvas" red="200" green="200" blue="200" />
+    </background_color>
+    <boolean_label_position>0</boolean_label_position>
+    <width>20</width>
+    <x>45</x>
+    <y>5</y>
+    <foreground_color>
+      <color red="192" green="192" blue="192" />
+    </foreground_color>
+    <crop_top>0</crop_top>
+    <crop_right>0</crop_right>
+    <stretch_to_fit>false</stretch_to_fit>
+    <font>
+      <opifont.name fontName="Arial" height="11" style="0">Default</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.symbol.multistate.MultistateMonitorWidget" version="1.0.0">
+    <alarm_pulsing>false</alarm_pulsing>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <rules />
+    <pv_value />
+    <auto_size>false</auto_size>
+    <image_file>../BLGuiApp_opi/images/ring 1.svg</image_file>
+    <height>40</height>
+    <border_width>0</border_width>
+    <items_from_pv>true</items_from_pv>
+    <align_to_nearest_second>false</align_to_nearest_second>
+    <visible>true</visible>
+    <pv_name></pv_name>
+    <degree>0</degree>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <widget_type>Multistate Symbol Monitor</widget_type>
+    <flip_horizontal>false</flip_horizontal>
+    <permutation_matrix>
+      <row>
+        <col>1.0</col>
+        <col>0.0</col>
+      </row>
+      <row>
+        <col>0.0</col>
+        <col>1.0</col>
+      </row>
+    </permutation_matrix>
+    <name>MACH</name>
+    <actions hook="false" hook_all="false" />
+    <items />
+    <flip_vertical>false</flip_vertical>
+    <show_boolean_label>false</show_boolean_label>
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <crop_left>0</crop_left>
+    <enabled>true</enabled>
+    <wuid>57dbea6f:149f0d3c4df:-7a65</wuid>
+    <on_color>
+      <color red="0" green="0" blue="0" />
+    </on_color>
+    <scripts />
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <crop_bottom>0</crop_bottom>
+    <no_animation>false</no_animation>
+    <off_color>
+      <color red="0" green="0" blue="0" />
+    </off_color>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <background_color>
+      <color name="Canvas" red="200" green="200" blue="200" />
+    </background_color>
+    <boolean_label_position>0</boolean_label_position>
+    <width>40</width>
+    <x>0</x>
+    <y>0</y>
+    <foreground_color>
+      <color name="Black" red="0" green="0" blue="0" />
+    </foreground_color>
+    <crop_top>0</crop_top>
+    <crop_right>0</crop_right>
+    <stretch_to_fit>false</stretch_to_fit>
+    <font>
+      <opifont.name fontName="Arial" height="11" style="0">Default</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.symbol.multistate.MultistateMonitorWidget" version="1.0.0">
+    <alarm_pulsing>false</alarm_pulsing>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <rules />
+    <pv_value />
+    <auto_size>false</auto_size>
+    <image_file>../dlsPLCApp_opi/symbol/valve 1.svg</image_file>
+    <height>20</height>
+    <border_width>0</border_width>
+    <items_from_pv>true</items_from_pv>
+    <align_to_nearest_second>false</align_to_nearest_second>
+    <visible>true</visible>
+    <pv_name>BL21I-VA-VALVE-02:STA</pv_name>
+    <degree>0</degree>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <widget_type>Multistate Symbol Monitor</widget_type>
+    <flip_horizontal>false</flip_horizontal>
+    <permutation_matrix>
+      <row>
+        <col>1.0</col>
+        <col>0.0</col>
+      </row>
+      <row>
+        <col>0.0</col>
+        <col>1.0</col>
+      </row>
+    </permutation_matrix>
+    <name>auto(V2)</name>
+    <actions hook="false" hook_all="true">
+      <action type="OPEN_DISPLAY">
+        <path>../dlsPLCApp_opi/vacValve_detail.opi</path>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+          <device>BL21I-VA-VALVE-02</device>
+          <DESC>BL21I-VA-VALVE-02</DESC>
+          <ilk0>V2 Air</ilk0>
+          <ilk1>IMG-03 OK</ilk1>
+          <ilk2>IMG-04 OK</ilk2>
+          <ilk3>PIRG-03 OK</ilk3>
+          <ilk4>PIRG-04 OK</ilk4>
+          <ilk5>unused</ilk5>
+          <ilk6>unused</ilk6>
+          <ilk7>unused</ilk7>
+          <ilk8>unused</ilk8>
+          <ilk9>unused</ilk9>
+          <ilk10>unused</ilk10>
+          <ilk11>unused</ilk11>
+          <ilk12>unused</ilk12>
+          <ilk13>unused</ilk13>
+          <ilk14>unused</ilk14>
+          <ilk15>fault</ilk15>
+          <gilk0>IMG1 PIRG1</gilk0>
+          <gilk1>IMG2 PIRG2</gilk1>
+          <gilk2>IMG3 PIRG3</gilk2>
+          <gilk3>IMG4 PIRG4</gilk3>
+          <gilk4>IMG5 PIRG5</gilk4>
+          <gilk5>IMG6 PIRG6</gilk5>
+          <gilk6>unused</gilk6>
+          <gilk7>unused</gilk7>
+          <gilk8>unused</gilk8>
+          <gilk9>unused</gilk9>
+          <gilk10>unused</gilk10>
+          <gilk11>unused</gilk11>
+          <gilk12>unused</gilk12>
+          <gilk13>unused</gilk13>
+          <gilk14>unused</gilk14>
+          <gilk15>unused</gilk15>
+          <name>V2</name>
+        </macros>
+        <mode>3</mode>
+        <description>Open detail screen</description>
+      </action>
+      <action type="OPEN_DISPLAY">
+        <path>BL21I-vacuum.opi</path>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+        </macros>
+        <mode>1</mode>
+        <description></description>
+      </action>
+    </actions>
+    <items />
+    <flip_vertical>false</flip_vertical>
+    <show_boolean_label>false</show_boolean_label>
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <crop_left>0</crop_left>
+    <enabled>true</enabled>
+    <wuid>57dbea6f:149f0d3c4df:-7a64</wuid>
+    <on_color>
+      <color red="0" green="0" blue="0" />
+    </on_color>
+    <scripts />
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <crop_bottom>0</crop_bottom>
+    <no_animation>false</no_animation>
+    <off_color>
+      <color red="0" green="0" blue="0" />
+    </off_color>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <background_color>
+      <color name="Canvas" red="200" green="200" blue="200" />
+    </background_color>
+    <boolean_label_position>0</boolean_label_position>
+    <width>20</width>
+    <x>285</x>
+    <y>5</y>
+    <foreground_color>
+      <color name="Black" red="0" green="0" blue="0" />
+    </foreground_color>
+    <crop_top>0</crop_top>
+    <crop_right>0</crop_right>
+    <stretch_to_fit>false</stretch_to_fit>
+    <font>
+      <opifont.name fontName="Arial" height="11" style="0">Default</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.symbol.multistate.MultistateMonitorWidget" version="1.0.0">
+    <alarm_pulsing>false</alarm_pulsing>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <rules />
+    <pv_value />
+    <auto_size>false</auto_size>
+    <image_file>../dlsPLCApp_opi/symbol/valve 1.svg</image_file>
+    <height>20</height>
+    <border_width>0</border_width>
+    <items_from_pv>true</items_from_pv>
+    <align_to_nearest_second>false</align_to_nearest_second>
+    <visible>true</visible>
+    <pv_name>BL21I-VA-VALVE-03:STA</pv_name>
+    <degree>0</degree>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <widget_type>Multistate Symbol Monitor</widget_type>
+    <flip_horizontal>false</flip_horizontal>
+    <permutation_matrix>
+      <row>
+        <col>1.0</col>
+        <col>0.0</col>
+      </row>
+      <row>
+        <col>0.0</col>
+        <col>1.0</col>
+      </row>
+    </permutation_matrix>
+    <name>auto(V3)</name>
+    <actions hook="false" hook_all="true">
+      <action type="OPEN_DISPLAY">
+        <path>../dlsPLCApp_opi/vacValve_detail.opi</path>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+          <device>BL21I-VA-VALVE-03</device>
+          <DESC>BL21I-VA-VALVE-03</DESC>
+          <ilk0>V3 Air</ilk0>
+          <ilk1>unused</ilk1>
+          <ilk2>unused</ilk2>
+          <ilk3>unused</ilk3>
+          <ilk4>unused</ilk4>
+          <ilk5>unused</ilk5>
+          <ilk6>unused</ilk6>
+          <ilk7>unused</ilk7>
+          <ilk8>unused</ilk8>
+          <ilk9>unused</ilk9>
+          <ilk10>unused</ilk10>
+          <ilk11>unused</ilk11>
+          <ilk12>unused</ilk12>
+          <ilk13>unused</ilk13>
+          <ilk14>unused</ilk14>
+          <ilk15>fault</ilk15>
+          <gilk0>IMG1 PIRG1</gilk0>
+          <gilk1>IMG2 PIRG2</gilk1>
+          <gilk2>IMG3 PIRG3</gilk2>
+          <gilk3>IMG4 PIRG4</gilk3>
+          <gilk4>IMG5 PIRG5</gilk4>
+          <gilk5>IMG6 PIRG6</gilk5>
+          <gilk6>unused</gilk6>
+          <gilk7>unused</gilk7>
+          <gilk8>unused</gilk8>
+          <gilk9>unused</gilk9>
+          <gilk10>unused</gilk10>
+          <gilk11>unused</gilk11>
+          <gilk12>unused</gilk12>
+          <gilk13>unused</gilk13>
+          <gilk14>unused</gilk14>
+          <gilk15>unused</gilk15>
+          <name>V3</name>
+        </macros>
+        <mode>3</mode>
+        <description>Open detail screen</description>
+      </action>
+      <action type="OPEN_DISPLAY">
+        <path>BL21I-vacuum.opi</path>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+        </macros>
+        <mode>1</mode>
+        <description></description>
+      </action>
+    </actions>
+    <items />
+    <flip_vertical>false</flip_vertical>
+    <show_boolean_label>false</show_boolean_label>
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <crop_left>0</crop_left>
+    <enabled>true</enabled>
+    <wuid>-51fb4121:149f2142d1f:-7a2f</wuid>
+    <on_color>
+      <color red="0" green="0" blue="0" />
+    </on_color>
+    <scripts />
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <crop_bottom>0</crop_bottom>
+    <no_animation>false</no_animation>
+    <off_color>
+      <color red="0" green="0" blue="0" />
+    </off_color>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <background_color>
+      <color name="Canvas" red="200" green="200" blue="200" />
+    </background_color>
+    <boolean_label_position>0</boolean_label_position>
+    <width>20</width>
+    <x>385</x>
+    <y>5</y>
+    <foreground_color>
+      <color name="Black" red="0" green="0" blue="0" />
+    </foreground_color>
+    <crop_top>0</crop_top>
+    <crop_right>0</crop_right>
+    <stretch_to_fit>false</stretch_to_fit>
+    <font>
+      <opifont.name fontName="Arial" height="11" style="0">Default</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.symbol.multistate.MultistateMonitorWidget" version="1.0.0">
+    <alarm_pulsing>false</alarm_pulsing>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <rules />
+    <pv_value />
+    <auto_size>false</auto_size>
+    <image_file>../dlsPLCApp_opi/symbol/valve 1.svg</image_file>
+    <height>20</height>
+    <border_width>0</border_width>
+    <items_from_pv>true</items_from_pv>
+    <align_to_nearest_second>false</align_to_nearest_second>
+    <visible>true</visible>
+    <pv_name>BL21I-VA-VALVE-04:STA</pv_name>
+    <degree>0</degree>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <widget_type>Multistate Symbol Monitor</widget_type>
+    <flip_horizontal>false</flip_horizontal>
+    <permutation_matrix>
+      <row>
+        <col>1.0</col>
+        <col>0.0</col>
+      </row>
+      <row>
+        <col>0.0</col>
+        <col>1.0</col>
+      </row>
+    </permutation_matrix>
+    <name>auto(V4)</name>
+    <actions hook="false" hook_all="true">
+      <action type="OPEN_DISPLAY">
+        <path>../dlsPLCApp_opi/vacValve_detail.opi</path>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+          <device>BL21I-VA-VALVE-04</device>
+          <DESC>BL21I-VA-VALVE-04</DESC>
+          <ilk0>V4 Air</ilk0>
+          <ilk1>unused</ilk1>
+          <ilk2>unused</ilk2>
+          <ilk3>unused</ilk3>
+          <ilk4>unused</ilk4>
+          <ilk5>unused</ilk5>
+          <ilk6>unused</ilk6>
+          <ilk7>unused</ilk7>
+          <ilk8>unused</ilk8>
+          <ilk9>unused</ilk9>
+          <ilk10>unused</ilk10>
+          <ilk11>unused</ilk11>
+          <ilk12>unused</ilk12>
+          <ilk13>unused</ilk13>
+          <ilk14>unused</ilk14>
+          <ilk15>fault</ilk15>
+          <gilk0>IMG1 PIRG1</gilk0>
+          <gilk1>IMG2 PIRG2</gilk1>
+          <gilk2>IMG3 PIRG3</gilk2>
+          <gilk3>IMG4 PIRG4</gilk3>
+          <gilk4>IMG5 PIRG5</gilk4>
+          <gilk5>IMG6 PIRG6</gilk5>
+          <gilk6>unused</gilk6>
+          <gilk7>unused</gilk7>
+          <gilk8>unused</gilk8>
+          <gilk9>unused</gilk9>
+          <gilk10>unused</gilk10>
+          <gilk11>unused</gilk11>
+          <gilk12>unused</gilk12>
+          <gilk13>unused</gilk13>
+          <gilk14>unused</gilk14>
+          <gilk15>unused</gilk15>
+          <name>V4</name>
+        </macros>
+        <mode>3</mode>
+        <description>Open detail screen</description>
+      </action>
+      <action type="OPEN_DISPLAY">
+        <path>BL21I-vacuum.opi</path>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+        </macros>
+        <mode>1</mode>
+        <description></description>
+      </action>
+    </actions>
+    <items />
+    <flip_vertical>false</flip_vertical>
+    <show_boolean_label>false</show_boolean_label>
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <crop_left>0</crop_left>
+    <enabled>true</enabled>
+    <wuid>-51fb4121:149f2142d1f:-7a20</wuid>
+    <on_color>
+      <color red="0" green="0" blue="0" />
+    </on_color>
+    <scripts />
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <crop_bottom>0</crop_bottom>
+    <no_animation>false</no_animation>
+    <off_color>
+      <color red="0" green="0" blue="0" />
+    </off_color>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <background_color>
+      <color name="Canvas" red="200" green="200" blue="200" />
+    </background_color>
+    <boolean_label_position>0</boolean_label_position>
+    <width>20</width>
+    <x>485</x>
+    <y>5</y>
+    <foreground_color>
+      <color name="Black" red="0" green="0" blue="0" />
+    </foreground_color>
+    <crop_top>0</crop_top>
+    <crop_right>0</crop_right>
+    <stretch_to_fit>false</stretch_to_fit>
+    <font>
+      <opifont.name fontName="Arial" height="11" style="0">Default</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.symbol.multistate.MultistateMonitorWidget" version="1.0.0">
+    <alarm_pulsing>false</alarm_pulsing>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <rules />
+    <pv_value />
+    <auto_size>false</auto_size>
+    <image_file>../dlsPLCApp_opi/symbol/valve 1.svg</image_file>
+    <height>20</height>
+    <border_width>0</border_width>
+    <items_from_pv>true</items_from_pv>
+    <align_to_nearest_second>false</align_to_nearest_second>
+    <visible>true</visible>
+    <pv_name>BL21I-VA-VALVE-07:STA</pv_name>
+    <degree>0</degree>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <widget_type>Multistate Symbol Monitor</widget_type>
+    <flip_horizontal>false</flip_horizontal>
+    <permutation_matrix>
+      <row>
+        <col>1.0</col>
+        <col>0.0</col>
+      </row>
+      <row>
+        <col>0.0</col>
+        <col>1.0</col>
+      </row>
+    </permutation_matrix>
+    <name>auto(V7)</name>
+    <actions hook="false" hook_all="true">
+      <action type="OPEN_DISPLAY">
+        <path>../dlsPLCApp_opi/vacValve_detail.opi</path>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+          <device>BL21I-VA-VALVE-07</device>
+          <DESC>BL21I-VA-VALVE-07</DESC>
+          <ilk0>V7 Air</ilk0>
+          <ilk1>unused</ilk1>
+          <ilk2>unused</ilk2>
+          <ilk3>unused</ilk3>
+          <ilk4>unused</ilk4>
+          <ilk5>unused</ilk5>
+          <ilk6>unused</ilk6>
+          <ilk7>unused</ilk7>
+          <ilk8>unused</ilk8>
+          <ilk9>unused</ilk9>
+          <ilk10>unused</ilk10>
+          <ilk11>unused</ilk11>
+          <ilk12>unused</ilk12>
+          <ilk13>unused</ilk13>
+          <ilk14>unused</ilk14>
+          <ilk15>fault</ilk15>
+          <gilk0>IMG1 PIRG1</gilk0>
+          <gilk1>IMG2 PIRG2</gilk1>
+          <gilk2>IMG3 PIRG3</gilk2>
+          <gilk3>IMG4 PIRG4</gilk3>
+          <gilk4>IMG5 PIRG5</gilk4>
+          <gilk5>IMG6 PIRG6</gilk5>
+          <gilk6>unused</gilk6>
+          <gilk7>unused</gilk7>
+          <gilk8>unused</gilk8>
+          <gilk9>unused</gilk9>
+          <gilk10>unused</gilk10>
+          <gilk11>unused</gilk11>
+          <gilk12>unused</gilk12>
+          <gilk13>unused</gilk13>
+          <gilk14>unused</gilk14>
+          <gilk15>unused</gilk15>
+          <name>V7</name>
+        </macros>
+        <mode>3</mode>
+        <description>Open detail screen</description>
+      </action>
+      <action type="OPEN_DISPLAY">
+        <path>BL21I-vacuum.opi</path>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+        </macros>
+        <mode>1</mode>
+        <description></description>
+      </action>
+    </actions>
+    <items />
+    <flip_vertical>false</flip_vertical>
+    <show_boolean_label>false</show_boolean_label>
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <crop_left>0</crop_left>
+    <enabled>true</enabled>
+    <wuid>57cea673:149f6924ffa:-7e5a</wuid>
+    <on_color>
+      <color red="0" green="0" blue="0" />
+    </on_color>
+    <scripts />
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <crop_bottom>0</crop_bottom>
+    <no_animation>false</no_animation>
+    <off_color>
+      <color red="0" green="0" blue="0" />
+    </off_color>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <background_color>
+      <color name="Canvas" red="200" green="200" blue="200" />
+    </background_color>
+    <boolean_label_position>0</boolean_label_position>
+    <width>20</width>
+    <x>735</x>
+    <y>5</y>
+    <foreground_color>
+      <color name="Black" red="0" green="0" blue="0" />
+    </foreground_color>
+    <crop_top>0</crop_top>
+    <crop_right>0</crop_right>
+    <stretch_to_fit>false</stretch_to_fit>
+    <font>
+      <opifont.name fontName="Arial" height="11" style="0">Default</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.symbol.multistate.MultistateMonitorWidget" version="1.0.0">
+    <alarm_pulsing>false</alarm_pulsing>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <rules />
+    <pv_value />
+    <auto_size>false</auto_size>
+    <image_file>../dlsPLCApp_opi/symbol/absorber 1.svg</image_file>
+    <height>20</height>
+    <border_width>0</border_width>
+    <items_from_pv>true</items_from_pv>
+    <align_to_nearest_second>false</align_to_nearest_second>
+    <visible>true</visible>
+    <pv_name></pv_name>
+    <degree>0</degree>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <widget_type>Multistate Symbol Monitor</widget_type>
+    <flip_horizontal>false</flip_horizontal>
+    <permutation_matrix>
+      <row>
+        <col>1.0</col>
+        <col>0.0</col>
+      </row>
+      <row>
+        <col>0.0</col>
+        <col>1.0</col>
+      </row>
+    </permutation_matrix>
+    <name>ABS1</name>
+    <actions hook="false" hook_all="true">
+      <action type="OPEN_DISPLAY">
+        <path>../vacuumSpaceApp_opi/space_detail.opi</path>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+          <device>BL21I-VA-SPACE-05</device>
+          <desc>BL21I-VA-SPACE-05</desc>
+          <name>SP5</name>
+        </macros>
+        <mode>3</mode>
+        <description>Open detail screen</description>
+      </action>
+      <action type="OPEN_DISPLAY">
+        <path>BL21I-vacuum.opi</path>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+        </macros>
+        <mode>1</mode>
+        <description></description>
+      </action>
+    </actions>
+    <items />
+    <flip_vertical>false</flip_vertical>
+    <show_boolean_label>false</show_boolean_label>
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <crop_left>0</crop_left>
+    <enabled>true</enabled>
+    <wuid>57cea673:149f6924ffa:-7e31</wuid>
+    <on_color>
+      <color red="0" green="0" blue="0" />
+    </on_color>
+    <scripts />
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <crop_bottom>0</crop_bottom>
+    <no_animation>false</no_animation>
+    <off_color>
+      <color red="0" green="0" blue="0" />
+    </off_color>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <background_color>
+      <color red="240" green="240" blue="240" />
+    </background_color>
+    <boolean_label_position>0</boolean_label_position>
+    <width>20</width>
+    <x>925</x>
+    <y>5</y>
+    <foreground_color>
+      <color red="192" green="192" blue="192" />
+    </foreground_color>
+    <crop_top>0</crop_top>
+    <crop_right>0</crop_right>
+    <stretch_to_fit>false</stretch_to_fit>
+    <font>
+      <opifont.name fontName="Arial" height="11" style="0">Default</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
+    <toggle_button>false</toggle_button>
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <alarm_pulsing>true</alarm_pulsing>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <push_action_index>0</push_action_index>
+    <rules />
+    <enabled>false</enabled>
+    <wuid>57cea673:149f6924ffa:-7e02</wuid>
+    <pv_value />
+    <text>GBC2</text>
+    <scripts />
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <height>55</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <image>../BLGuiApp_opi/images/aperture.png</image>
+    <visible>true</visible>
+    <pv_name></pv_name>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <widget_type>Action Button</widget_type>
+    <backcolor_alarm_sensitive>true</backcolor_alarm_sensitive>
+    <background_color>
+      <color name="Canvas" red="200" green="200" blue="200" />
+    </background_color>
+    <width>40</width>
+    <x>350</x>
+    <name>GBC2</name>
+    <y>40</y>
+    <style>0</style>
+    <foreground_color>
+      <color name="Black" red="0" green="0" blue="0" />
+    </foreground_color>
+    <actions hook="true" hook_all="false">
+      <action type="WRITE_PV">
+        <pv_name>$(pv_name).PROC</pv_name>
+        <value>1</value>
+        <timeout>5</timeout>
+        <confirm_message></confirm_message>
+        <description>Clear alarm status</description>
+      </action>
+      <action type="WRITE_PV">
+        <pv_name>$(pv_name):CALC.PROC</pv_name>
+        <value>1</value>
+        <timeout>5</timeout>
+        <confirm_message></confirm_message>
+        <description>Restore alarm status</description>
+      </action>
+    </actions>
+    <font>
+      <opifont.name fontName="Arial" height="10" style="0">Label Small</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.symbol.multistate.MultistateMonitorWidget" version="1.0.0">
+    <alarm_pulsing>false</alarm_pulsing>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <rules />
+    <pv_value />
+    <auto_size>false</auto_size>
+    <image_file>../vacuumSpaceApp_opi/symbol/space 0.svg</image_file>
+    <height>20</height>
+    <border_width>0</border_width>
+    <items_from_pv>true</items_from_pv>
+    <align_to_nearest_second>false</align_to_nearest_second>
+    <visible>true</visible>
+    <pv_name>BL21I-VA-SPACE-03:STA.SEVR</pv_name>
+    <degree>0</degree>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <widget_type>Multistate Symbol Monitor</widget_type>
+    <flip_horizontal>false</flip_horizontal>
+    <permutation_matrix>
+      <row>
+        <col>1.0</col>
+        <col>0.0</col>
+      </row>
+      <row>
+        <col>0.0</col>
+        <col>1.0</col>
+      </row>
+    </permutation_matrix>
+    <name>auto(SP3)</name>
+    <actions hook="false" hook_all="true">
+      <action type="OPEN_DISPLAY">
+        <path>../vacuumSpaceApp_opi/space_detail.opi</path>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+          <device>BL21I-VA-SPACE-03</device>
+          <desc>BL21I-VA-SPACE-03</desc>
+          <name>SP3</name>
+        </macros>
+        <mode>3</mode>
+        <description>Open detail screen</description>
+      </action>
+      <action type="OPEN_DISPLAY">
+        <path>BL21I-vacuum.opi</path>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+        </macros>
+        <mode>1</mode>
+        <description></description>
+      </action>
+    </actions>
+    <items />
+    <flip_vertical>false</flip_vertical>
+    <show_boolean_label>false</show_boolean_label>
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <crop_left>0</crop_left>
+    <enabled>true</enabled>
+    <wuid>-2b23b6d3:14a57f65520:-7afc</wuid>
+    <on_color>
+      <color red="232" green="50" blue="50" />
+    </on_color>
+    <scripts />
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <crop_bottom>0</crop_bottom>
+    <no_animation>false</no_animation>
+    <off_color>
+      <color red="210" green="230" blue="210" />
+    </off_color>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <background_color>
+      <color red="240" green="240" blue="240" />
+    </background_color>
+    <boolean_label_position>0</boolean_label_position>
+    <width>80</width>
+    <x>305</x>
+    <y>5</y>
+    <foreground_color>
+      <color red="192" green="192" blue="192" />
+    </foreground_color>
+    <crop_top>0</crop_top>
+    <crop_right>0</crop_right>
+    <stretch_to_fit>true</stretch_to_fit>
+    <font>
+      <opifont.name fontName="Arial" height="11" style="0">Default</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.symbol.multistate.MultistateMonitorWidget" version="1.0.0">
+    <alarm_pulsing>false</alarm_pulsing>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <rules />
+    <pv_value />
+    <auto_size>false</auto_size>
+    <image_file>../vacuumSpaceApp_opi/symbol/space 0.svg</image_file>
+    <height>20</height>
+    <border_width>0</border_width>
+    <items_from_pv>true</items_from_pv>
+    <align_to_nearest_second>false</align_to_nearest_second>
+    <visible>true</visible>
+    <pv_name></pv_name>
+    <degree>0</degree>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <widget_type>Multistate Symbol Monitor</widget_type>
+    <flip_horizontal>false</flip_horizontal>
+    <permutation_matrix>
+      <row>
+        <col>1.0</col>
+        <col>0.0</col>
+      </row>
+      <row>
+        <col>0.0</col>
+        <col>1.0</col>
+      </row>
+    </permutation_matrix>
+    <name>SP8</name>
+    <actions hook="false" hook_all="true">
+      <action type="OPEN_DISPLAY">
+        <path>../vacuumSpaceApp_opi/space_detail.opi</path>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+          <device>BL21I-VA-SPACE-08</device>
+          <desc>BL21I-VA-SPACE-08</desc>
+          <name>SP8</name>
+        </macros>
+        <mode>3</mode>
+        <description>Open detail screen</description>
+      </action>
+      <action type="OPEN_DISPLAY">
+        <path>BL21I-vacuum.opi</path>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+        </macros>
+        <mode>1</mode>
+        <description></description>
+      </action>
+    </actions>
+    <items />
+    <flip_vertical>false</flip_vertical>
+    <show_boolean_label>false</show_boolean_label>
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <crop_left>0</crop_left>
+    <enabled>true</enabled>
+    <wuid>-2b23b6d3:14a57f65520:-7adc</wuid>
+    <on_color>
+      <color red="232" green="50" blue="50" />
+    </on_color>
+    <scripts />
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <crop_bottom>0</crop_bottom>
+    <no_animation>false</no_animation>
+    <off_color>
+      <color red="210" green="230" blue="210" />
+    </off_color>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <background_color>
+      <color red="240" green="240" blue="240" />
+    </background_color>
+    <boolean_label_position>0</boolean_label_position>
+    <width>71</width>
+    <x>755</x>
+    <y>5</y>
+    <foreground_color>
+      <color red="192" green="192" blue="192" />
+    </foreground_color>
+    <crop_top>0</crop_top>
+    <crop_right>0</crop_right>
+    <stretch_to_fit>true</stretch_to_fit>
+    <font>
+      <opifont.name fontName="Arial" height="11" style="0">Default</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.symbol.multistate.MultistateMonitorWidget" version="1.0.0">
+    <alarm_pulsing>false</alarm_pulsing>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <rules />
+    <pv_value />
+    <auto_size>false</auto_size>
+    <image_file>../vacuumSpaceApp_opi/symbol/space 0.svg</image_file>
+    <height>20</height>
+    <border_width>0</border_width>
+    <items_from_pv>true</items_from_pv>
+    <align_to_nearest_second>false</align_to_nearest_second>
+    <visible>true</visible>
+    <pv_name>BL21I-VA-SPACE-10:STA.SEVR</pv_name>
+    <degree>0</degree>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <widget_type>Multistate Symbol Monitor</widget_type>
+    <flip_horizontal>false</flip_horizontal>
+    <permutation_matrix>
+      <row>
+        <col>1.0</col>
+        <col>0.0</col>
+      </row>
+      <row>
+        <col>0.0</col>
+        <col>1.0</col>
+      </row>
+    </permutation_matrix>
+    <name>auto(SP10)</name>
+    <actions hook="false" hook_all="true">
+      <action type="OPEN_DISPLAY">
+        <path>../vacuumSpaceApp_opi/space_detail.opi</path>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+          <device>BL21I-VA-SPACE-10</device>
+          <desc>BL21I-VA-SPACE-10</desc>
+          <name>SP10</name>
+        </macros>
+        <mode>3</mode>
+        <description>Open detail screen</description>
+      </action>
+      <action type="OPEN_DISPLAY">
+        <path>BL21I-vacuum.opi</path>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+        </macros>
+        <mode>1</mode>
+        <description></description>
+      </action>
+    </actions>
+    <items />
+    <flip_vertical>false</flip_vertical>
+    <show_boolean_label>false</show_boolean_label>
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <crop_left>0</crop_left>
+    <enabled>true</enabled>
+    <wuid>-2b23b6d3:14a57f65520:-7ad2</wuid>
+    <on_color>
+      <color red="232" green="50" blue="50" />
+    </on_color>
+    <scripts />
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <crop_bottom>0</crop_bottom>
+    <no_animation>false</no_animation>
+    <off_color>
+      <color red="210" green="230" blue="210" />
+    </off_color>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <background_color>
+      <color red="240" green="240" blue="240" />
+    </background_color>
+    <boolean_label_position>0</boolean_label_position>
+    <width>31</width>
+    <x>895</x>
+    <y>5</y>
+    <foreground_color>
+      <color red="192" green="192" blue="192" />
+    </foreground_color>
+    <crop_top>0</crop_top>
+    <crop_right>0</crop_right>
+    <stretch_to_fit>true</stretch_to_fit>
+    <font>
+      <opifont.name fontName="Arial" height="11" style="0">Default</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.polyline" version="1.0.0">
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <line_width>4</line_width>
+    <horizontal_fill>true</horizontal_fill>
+    <alarm_pulsing>false</alarm_pulsing>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <arrows>0</arrows>
+    <rules />
+    <enabled>true</enabled>
+    <wuid>-2c02436b:1462304d2d9:-6dd3</wuid>
+    <transparent>false</transparent>
+    <points>
+      <point x="30" y="30" />
+      <point x="1135" y="30" />
+    </points>
+    <fill_arrow>true</fill_arrow>
+    <pv_value />
+    <alpha>255</alpha>
+    <rotation_angle>0.0</rotation_angle>
+    <scripts>
+      <path pathString="../BLGuiApp_opi/beam.py" checkConnect="true" sfe="false" seoe="false">
+        <pv trig="true">loc://shouldFlip</pv>
+        <pv trig="true">=indexOf('BL21I-VA-VALVE-01:STA')==1?0:"auto(V1)"</pv>
+        <pv trig="true">=indexOf('BL21I-VA-VALVE-02:STA')==1?0:"auto(V2)"</pv>
+        <pv trig="true">=indexOf('BL21I-VA-VALVE-03:STA')==1?0:"auto(V3)"</pv>
+        <pv trig="true">=indexOf('BL21I-VA-VALVE-04:STA')==1?0:"auto(V4)"</pv>
+        <pv trig="true">=indexOf('BL21I-VA-VALVE-05:STA')==1?0:"auto(V5)"</pv>
+        <pv trig="true">=indexOf('BL21I-VA-VALVE-06:STA')==1?0:"auto(V6)"</pv>
+        <pv trig="true">=indexOf('BL21I-VA-VALVE-07:STA')==1?0:"auto(V7)"</pv>
+        <pv trig="true">=indexOf('BL21I-VA-VALVE-08:STA')==1?0:"auto(V8)"</pv>
+        <pv trig="true">=indexOf('BL21I-VA-VALVE-09:STA')==1?0:"auto(V9)"</pv>
+      </path>
+    </scripts>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <height>1</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>true</keep_wh_ratio>
+    </scale_options>
+    <visible>true</visible>
+    <pv_name></pv_name>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <anti_alias>true</anti_alias>
+    <line_style>0</line_style>
+    <arrow_length>20</arrow_length>
+    <widget_type>Polyline</widget_type>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <background_color>
+      <color red="0" green="255" blue="255" />
+    </background_color>
+    <width>1106</width>
+    <x>30</x>
+    <name>Beam_1</name>
+    <y>30</y>
+    <fill_level>0.0</fill_level>
+    <foreground_color>
+      <color red="255" green="0" blue="0" />
+    </foreground_color>
+    <actions hook="false" hook_all="false" />
+    <font>
+      <opifont.name fontName="Arial" height="11" style="0">Default</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.symbol.multistate.MultistateMonitorWidget" version="1.0.0">
+    <alarm_pulsing>false</alarm_pulsing>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <rules />
+    <pv_value />
+    <auto_size>false</auto_size>
+    <image_file>../dlsPLCApp_opi/symbol/valve 1.svg</image_file>
+    <height>20</height>
+    <border_width>0</border_width>
+    <items_from_pv>true</items_from_pv>
+    <align_to_nearest_second>false</align_to_nearest_second>
+    <visible>true</visible>
+    <pv_name>BL21I-VA-VALVE-05:STA</pv_name>
+    <degree>0</degree>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <widget_type>Multistate Symbol Monitor</widget_type>
+    <flip_horizontal>false</flip_horizontal>
+    <permutation_matrix>
+      <row>
+        <col>1.0</col>
+        <col>0.0</col>
+      </row>
+      <row>
+        <col>0.0</col>
+        <col>1.0</col>
+      </row>
+    </permutation_matrix>
+    <name>auto(V5)</name>
+    <actions hook="false" hook_all="true">
+      <action type="OPEN_DISPLAY">
+        <path>../dlsPLCApp_opi/vacValve_detail.opi</path>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+          <device>BL21I-VA-VALVE-05</device>
+          <DESC>BL21I-VA-VALVE-05</DESC>
+          <ilk0>V5 Air</ilk0>
+          <ilk1>unused</ilk1>
+          <ilk2>unused</ilk2>
+          <ilk3>unused</ilk3>
+          <ilk4>unused</ilk4>
+          <ilk5>unused</ilk5>
+          <ilk6>unused</ilk6>
+          <ilk7>unused</ilk7>
+          <ilk8>unused</ilk8>
+          <ilk9>unused</ilk9>
+          <ilk10>unused</ilk10>
+          <ilk11>unused</ilk11>
+          <ilk12>unused</ilk12>
+          <ilk13>unused</ilk13>
+          <ilk14>unused</ilk14>
+          <ilk15>fault</ilk15>
+          <gilk0>IMG1 PIRG1</gilk0>
+          <gilk1>IMG2 PIRG2</gilk1>
+          <gilk2>IMG3 PIRG3</gilk2>
+          <gilk3>IMG4 PIRG4</gilk3>
+          <gilk4>IMG5 PIRG5</gilk4>
+          <gilk5>IMG6 PIRG6</gilk5>
+          <gilk6>unused</gilk6>
+          <gilk7>unused</gilk7>
+          <gilk8>unused</gilk8>
+          <gilk9>unused</gilk9>
+          <gilk10>unused</gilk10>
+          <gilk11>unused</gilk11>
+          <gilk12>unused</gilk12>
+          <gilk13>unused</gilk13>
+          <gilk14>unused</gilk14>
+          <gilk15>unused</gilk15>
+          <name>V5</name>
+        </macros>
+        <mode>3</mode>
+        <description>Open detail screen</description>
+      </action>
+      <action type="OPEN_DISPLAY">
+        <path>BL21I-vacuum.opi</path>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+        </macros>
+        <mode>1</mode>
+        <description></description>
+      </action>
+    </actions>
+    <items />
+    <flip_vertical>false</flip_vertical>
+    <show_boolean_label>false</show_boolean_label>
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <crop_left>0</crop_left>
+    <enabled>true</enabled>
+    <wuid>-51fb4121:149f2142d1f:-7a13</wuid>
+    <on_color>
+      <color red="0" green="0" blue="0" />
+    </on_color>
+    <scripts />
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <crop_bottom>0</crop_bottom>
+    <no_animation>false</no_animation>
+    <off_color>
+      <color red="0" green="0" blue="0" />
+    </off_color>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <background_color>
+      <color name="Canvas" red="200" green="200" blue="200" />
+    </background_color>
+    <boolean_label_position>0</boolean_label_position>
+    <width>20</width>
+    <x>530</x>
+    <y>5</y>
+    <foreground_color>
+      <color name="Black" red="0" green="0" blue="0" />
+    </foreground_color>
+    <crop_top>0</crop_top>
+    <crop_right>0</crop_right>
+    <stretch_to_fit>false</stretch_to_fit>
+    <font>
+      <opifont.name fontName="Arial" height="11" style="0">Default</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.symbol.multistate.MultistateMonitorWidget" version="1.0.0">
+    <alarm_pulsing>false</alarm_pulsing>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <rules />
+    <pv_value />
+    <auto_size>false</auto_size>
+    <image_file>/BL21I/dlsPLCApp_opi/symbol/valve 1.svg</image_file>
+    <height>20</height>
+    <border_width>0</border_width>
+    <items_from_pv>true</items_from_pv>
+    <align_to_nearest_second>false</align_to_nearest_second>
+    <visible>true</visible>
+    <pv_name></pv_name>
+    <degree>0</degree>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <widget_type>Multistate Symbol Monitor</widget_type>
+    <flip_horizontal>false</flip_horizontal>
+    <permutation_matrix>
+      <row>
+        <col>1.0</col>
+        <col>0.0</col>
+      </row>
+      <row>
+        <col>0.0</col>
+        <col>1.0</col>
+      </row>
+    </permutation_matrix>
+    <name>V8</name>
+    <actions hook="false" hook_all="true">
+      <action type="OPEN_DISPLAY">
+        <path>../vacuumSpaceApp_opi/space_detail.opi</path>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+          <device>BL21I-VA-SPACE-05</device>
+          <desc>BL21I-VA-SPACE-05</desc>
+          <name>SP5</name>
+        </macros>
+        <mode>3</mode>
+        <description>Open detail screen</description>
+      </action>
+      <action type="OPEN_DISPLAY">
+        <path>BL21I-vacuum.opi</path>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+        </macros>
+        <mode>1</mode>
+        <description></description>
+      </action>
+    </actions>
+    <items />
+    <flip_vertical>false</flip_vertical>
+    <show_boolean_label>false</show_boolean_label>
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <crop_left>0</crop_left>
+    <enabled>true</enabled>
+    <wuid>57cea673:149f6924ffa:-7e21</wuid>
+    <on_color>
+      <color red="0" green="0" blue="0" />
+    </on_color>
+    <scripts />
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <crop_bottom>0</crop_bottom>
+    <no_animation>false</no_animation>
+    <off_color>
+      <color red="0" green="0" blue="0" />
+    </off_color>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <background_color>
+      <color name="Canvas" red="200" green="200" blue="200" />
+    </background_color>
+    <boolean_label_position>0</boolean_label_position>
+    <width>20</width>
+    <x>825</x>
+    <y>5</y>
+    <foreground_color>
+      <color red="192" green="192" blue="192" />
+    </foreground_color>
+    <crop_top>0</crop_top>
+    <crop_right>0</crop_right>
+    <stretch_to_fit>false</stretch_to_fit>
+    <font>
+      <opifont.name fontName="Arial" height="11" style="0">Default</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.symbol.multistate.MultistateMonitorWidget" version="1.0.0">
+    <alarm_pulsing>false</alarm_pulsing>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <rules />
+    <pv_value />
+    <auto_size>false</auto_size>
+    <image_file>/BL21I/dlsPLCApp_opi/symbol/valve 1.svg</image_file>
+    <height>20</height>
+    <border_width>0</border_width>
+    <items_from_pv>true</items_from_pv>
+    <align_to_nearest_second>false</align_to_nearest_second>
+    <visible>true</visible>
+    <pv_name></pv_name>
+    <degree>0</degree>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <widget_type>Multistate Symbol Monitor</widget_type>
+    <flip_horizontal>false</flip_horizontal>
+    <permutation_matrix>
+      <row>
+        <col>1.0</col>
+        <col>0.0</col>
+      </row>
+      <row>
+        <col>0.0</col>
+        <col>1.0</col>
+      </row>
+    </permutation_matrix>
+    <name>V9</name>
+    <actions hook="false" hook_all="true">
+      <action type="OPEN_DISPLAY">
+        <path>../vacuumSpaceApp_opi/space_detail.opi</path>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+          <device>BL21I-VA-SPACE-05</device>
+          <desc>BL21I-VA-SPACE-05</desc>
+          <name>SP5</name>
+        </macros>
+        <mode>3</mode>
+        <description>Open detail screen</description>
+      </action>
+      <action type="OPEN_DISPLAY">
+        <path>BL21I-vacuum.opi</path>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+        </macros>
+        <mode>1</mode>
+        <description></description>
+      </action>
+    </actions>
+    <items />
+    <flip_vertical>false</flip_vertical>
+    <show_boolean_label>false</show_boolean_label>
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <crop_left>0</crop_left>
+    <enabled>true</enabled>
+    <wuid>57cea673:149f6924ffa:-7e0e</wuid>
+    <on_color>
+      <color red="0" green="0" blue="0" />
+    </on_color>
+    <scripts />
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <crop_bottom>0</crop_bottom>
+    <no_animation>false</no_animation>
+    <off_color>
+      <color red="0" green="0" blue="0" />
+    </off_color>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <background_color>
+      <color name="Canvas" red="200" green="200" blue="200" />
+    </background_color>
+    <boolean_label_position>0</boolean_label_position>
+    <width>20</width>
+    <x>950</x>
+    <y>5</y>
+    <foreground_color>
+      <color name="Black" red="0" green="0" blue="0" />
+    </foreground_color>
+    <crop_top>0</crop_top>
+    <crop_right>0</crop_right>
+    <stretch_to_fit>false</stretch_to_fit>
+    <font>
+      <opifont.name fontName="Arial" height="11" style="0">Default</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.symbol.multistate.MultistateMonitorWidget" version="1.0.0">
+    <alarm_pulsing>false</alarm_pulsing>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <rules />
+    <pv_value />
+    <auto_size>false</auto_size>
+    <image_file>/BL21I/dlsPLCApp_opi/symbol/valve 1.svg</image_file>
+    <height>20</height>
+    <border_width>0</border_width>
+    <items_from_pv>true</items_from_pv>
+    <align_to_nearest_second>false</align_to_nearest_second>
+    <visible>true</visible>
+    <pv_name></pv_name>
+    <degree>0</degree>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <widget_type>Multistate Symbol Monitor</widget_type>
+    <flip_horizontal>false</flip_horizontal>
+    <permutation_matrix>
+      <row>
+        <col>1.0</col>
+        <col>0.0</col>
+      </row>
+      <row>
+        <col>0.0</col>
+        <col>1.0</col>
+      </row>
+    </permutation_matrix>
+    <name>V10</name>
+    <actions hook="false" hook_all="false" />
+    <items />
+    <flip_vertical>false</flip_vertical>
+    <show_boolean_label>false</show_boolean_label>
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <crop_left>0</crop_left>
+    <enabled>true</enabled>
+    <wuid>57cea673:149f6924ffa:-7df5</wuid>
+    <on_color>
+      <color red="0" green="0" blue="0" />
+    </on_color>
+    <scripts />
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <crop_bottom>0</crop_bottom>
+    <no_animation>false</no_animation>
+    <off_color>
+      <color red="0" green="0" blue="0" />
+    </off_color>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <background_color>
+      <color name="Canvas" red="200" green="200" blue="200" />
+    </background_color>
+    <boolean_label_position>0</boolean_label_position>
+    <width>20</width>
+    <x>1015</x>
+    <y>5</y>
+    <foreground_color>
+      <color name="Black" red="0" green="0" blue="0" />
+    </foreground_color>
+    <crop_top>0</crop_top>
+    <crop_right>0</crop_right>
+    <stretch_to_fit>false</stretch_to_fit>
+    <font>
+      <opifont.name fontName="Arial" height="11" style="0">Default</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
+    <toggle_button>false</toggle_button>
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <alarm_pulsing>false</alarm_pulsing>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <push_action_index>0</push_action_index>
+    <rules />
+    <enabled>true</enabled>
+    <wuid>2dcc7379:14b4a223615:-7e03</wuid>
+    <pv_value />
+    <text>Hardware Status</text>
+    <scripts />
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <height>25</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <image></image>
+    <visible>true</visible>
+    <pv_name></pv_name>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <widget_type>Action Button</widget_type>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <background_color>
+      <color name="Canvas" red="200" green="200" blue="200" />
+    </background_color>
+    <width>130</width>
+    <x>460</x>
+    <name>Action Button_2</name>
+    <y>150</y>
+    <style>0</style>
+    <foreground_color>
+      <color name="Related Display: FG" red="128" green="64" blue="0" />
+    </foreground_color>
+    <actions hook="false" hook_all="false">
+      <action type="OPEN_DISPLAY">
+        <path>Bl21I-hardware.opi</path>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+        </macros>
+        <mode>1</mode>
+        <description></description>
+      </action>
+    </actions>
+    <font>
+      <opifont.name fontName="Arial" height="11" style="0">Default</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
+    <toggle_button>false</toggle_button>
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <alarm_pulsing>true</alarm_pulsing>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <push_action_index>0</push_action_index>
+    <rules />
+    <enabled>true</enabled>
+    <wuid>-6eb734e2:14b9d24a930:-7949</wuid>
+    <pv_value />
+    <text>S2</text>
+    <scripts />
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <height>55</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <image>../BLGuiApp_opi/images/slits.png</image>
+    <visible>true</visible>
+    <pv_name>BL21I-AL-SLITS-02:DEVSTA</pv_name>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <widget_type>Action Button</widget_type>
+    <backcolor_alarm_sensitive>true</backcolor_alarm_sensitive>
+    <background_color>
+      <color name="Canvas" red="200" green="200" blue="200" />
+    </background_color>
+    <width>40</width>
+    <x>450</x>
+    <name>auto(S2)</name>
+    <y>40</y>
+    <style>0</style>
+    <foreground_color>
+      <color name="Black" red="0" green="0" blue="0" />
+    </foreground_color>
+    <actions hook="true" hook_all="false">
+      <action type="OPEN_DISPLAY">
+        <path>S2.opi</path>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+        </macros>
+        <mode>1</mode>
+        <description>Open component screen</description>
+      </action>
+      <action type="WRITE_PV">
+        <pv_name>$(pv_name).PROC</pv_name>
+        <value>1</value>
+        <timeout>5</timeout>
+        <confirm_message></confirm_message>
+        <description>Clear alarm status</description>
+      </action>
+      <action type="WRITE_PV">
+        <pv_name>$(pv_name):CALC.PROC</pv_name>
+        <value>1</value>
+        <timeout>5</timeout>
+        <confirm_message></confirm_message>
+        <description>Restore alarm status</description>
+      </action>
+    </actions>
+    <font>
+      <opifont.name fontName="Arial" height="10" style="0">Label Small</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
+    <toggle_button>false</toggle_button>
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <alarm_pulsing>true</alarm_pulsing>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <push_action_index>0</push_action_index>
+    <rules />
+    <enabled>false</enabled>
+    <wuid>57862a79:14fd6448428:-7c4a</wuid>
+    <pv_value />
+    <text>FE</text>
+    <scripts />
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <height>55</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <image>../BLGuiApp_opi/images/fm.png</image>
+    <visible>true</visible>
+    <pv_name></pv_name>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <widget_type>Action Button</widget_type>
+    <backcolor_alarm_sensitive>true</backcolor_alarm_sensitive>
+    <background_color>
+      <color name="Canvas" red="200" green="200" blue="200" />
+    </background_color>
+    <width>40</width>
+    <x>30</x>
+    <name></name>
+    <y>40</y>
+    <style>0</style>
+    <foreground_color>
+      <color name="Black" red="0" green="0" blue="0" />
+    </foreground_color>
+    <actions hook="true" hook_all="false">
+      <action type="OPEN_DISPLAY">
+        <path>FE.opi</path>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+        </macros>
+        <mode>1</mode>
+        <description>Open component screen</description>
+      </action>
+      <action type="WRITE_PV">
+        <pv_name>$(pv_name).PROC</pv_name>
+        <value>1</value>
+        <timeout>5</timeout>
+        <confirm_message></confirm_message>
+        <description>Clear alarm status</description>
+      </action>
+      <action type="WRITE_PV">
+        <pv_name>$(pv_name):CALC.PROC</pv_name>
+        <value>1</value>
+        <timeout>5</timeout>
+        <confirm_message></confirm_message>
+        <description>Restore alarm status</description>
+      </action>
+    </actions>
+    <font>
+      <opifont.name fontName="Arial" height="10" style="0">Label Small</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Rectangle" version="1.0.0">
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <line_width>0</line_width>
+    <horizontal_fill>true</horizontal_fill>
+    <alarm_pulsing>false</alarm_pulsing>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <rules />
+    <enabled>true</enabled>
+    <wuid>-1f126ca9:14ff00fa833:-7cdd</wuid>
+    <transparent>false</transparent>
+    <pv_value />
+    <alpha>255</alpha>
+    <bg_gradient_color>
+      <color name="Grey 65%" red="166" green="166" blue="166" />
+    </bg_gradient_color>
+    <scripts />
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <height>116</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <visible>true</visible>
+    <pv_name></pv_name>
+    <gradient>true</gradient>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <anti_alias>true</anti_alias>
+    <line_style>0</line_style>
+    <widget_type>Rectangle</widget_type>
+    <fg_gradient_color>
+      <color red="255" green="255" blue="255" />
+    </fg_gradient_color>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <background_color>
+      <color name="Grey 50%" red="128" green="128" blue="128" />
+    </background_color>
+    <width>11</width>
+    <x>415</x>
+    <name>Rectangle_6</name>
+    <y>25</y>
+    <fill_level>0.0</fill_level>
+    <foreground_color>
+      <color red="255" green="0" blue="0" />
+    </foreground_color>
+    <actions hook="false" hook_all="false" />
+    <font>
+      <opifont.name fontName="Arial" height="11" style="0">Default</opifont.name>
+    </font>
+    <line_color>
+      <color red="169" green="165" blue="162" />
+    </line_color>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
+    <border_style>0</border_style>
+    <tooltip></tooltip>
+    <horizontal_alignment>0</horizontal_alignment>
+    <rules />
+    <enabled>true</enabled>
+    <wuid>-1f126ca9:14ff00fa833:-7cdc</wuid>
+    <transparent>true</transparent>
+    <auto_size>false</auto_size>
+    <text>OH2</text>
+    <scripts />
+    <height>20</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <visible>true</visible>
+    <vertical_alignment>1</vertical_alignment>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <widget_type>Label</widget_type>
+    <wrap_words>false</wrap_words>
+    <background_color>
+      <color red="255" green="255" blue="255" />
+    </background_color>
+    <width>191</width>
+    <x>435</x>
+    <name>Label_2</name>
+    <y>120</y>
+    <foreground_color>
+      <color red="0" green="0" blue="0" />
+    </foreground_color>
+    <actions hook="false" hook_all="false" />
+    <font>
+      <opifont.name fontName="Arial" height="11" style="1">Default Bold</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.symbol.multistate.MultistateMonitorWidget" version="1.0.0">
+    <alarm_pulsing>false</alarm_pulsing>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <rules />
+    <pv_value />
+    <auto_size>false</auto_size>
+    <image_file>../vacuumSpaceApp_opi/symbol/space 0.svg</image_file>
+    <height>20</height>
+    <border_width>0</border_width>
+    <items_from_pv>true</items_from_pv>
+    <align_to_nearest_second>false</align_to_nearest_second>
+    <visible>true</visible>
+    <pv_name>BL21I-VA-SPACE-04:STA.SEVR</pv_name>
+    <degree>0</degree>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <widget_type>Multistate Symbol Monitor</widget_type>
+    <flip_horizontal>false</flip_horizontal>
+    <permutation_matrix>
+      <row>
+        <col>1.0</col>
+        <col>0.0</col>
+      </row>
+      <row>
+        <col>0.0</col>
+        <col>1.0</col>
+      </row>
+    </permutation_matrix>
+    <name>auto(SP4)</name>
+    <actions hook="false" hook_all="true">
+      <action type="OPEN_DISPLAY">
+        <path>../vacuumSpaceApp_opi/space_detail.opi</path>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+          <device>BL21I-VA-SPACE-04</device>
+          <desc>BL21I-VA-SPACE-04</desc>
+          <name>SP4</name>
+        </macros>
+        <mode>3</mode>
+        <description>Open detail screen</description>
+      </action>
+      <action type="OPEN_DISPLAY">
+        <path>BL21I-vacuum.opi</path>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+        </macros>
+        <mode>1</mode>
+        <description></description>
+      </action>
+    </actions>
+    <items />
+    <flip_vertical>false</flip_vertical>
+    <show_boolean_label>false</show_boolean_label>
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <crop_left>0</crop_left>
+    <enabled>true</enabled>
+    <wuid>-1f126ca9:14ff00fa833:-7cd1</wuid>
+    <on_color>
+      <color red="232" green="50" blue="50" />
+    </on_color>
+    <scripts />
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <crop_bottom>0</crop_bottom>
+    <no_animation>false</no_animation>
+    <off_color>
+      <color red="210" green="230" blue="210" />
+    </off_color>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <background_color>
+      <color red="240" green="240" blue="240" />
+    </background_color>
+    <boolean_label_position>0</boolean_label_position>
+    <width>80</width>
+    <x>405</x>
+    <y>5</y>
+    <foreground_color>
+      <color red="192" green="192" blue="192" />
+    </foreground_color>
+    <crop_top>0</crop_top>
+    <crop_right>0</crop_right>
+    <stretch_to_fit>true</stretch_to_fit>
+    <font>
+      <opifont.name fontName="Arial" height="11" style="0">Default</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.symbol.multistate.MultistateMonitorWidget" version="1.0.0">
+    <alarm_pulsing>false</alarm_pulsing>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <rules />
+    <pv_value />
+    <auto_size>false</auto_size>
+    <image_file>../vacuumSpaceApp_opi/symbol/space 0.svg</image_file>
+    <height>20</height>
+    <border_width>0</border_width>
+    <items_from_pv>true</items_from_pv>
+    <align_to_nearest_second>false</align_to_nearest_second>
+    <visible>true</visible>
+    <pv_name>BL21I-VA-SPACE-05:STA.SEVR</pv_name>
+    <degree>0</degree>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <widget_type>Multistate Symbol Monitor</widget_type>
+    <flip_horizontal>false</flip_horizontal>
+    <permutation_matrix>
+      <row>
+        <col>1.0</col>
+        <col>0.0</col>
+      </row>
+      <row>
+        <col>0.0</col>
+        <col>1.0</col>
+      </row>
+    </permutation_matrix>
+    <name>auto(SP5)</name>
+    <actions hook="false" hook_all="true">
+      <action type="OPEN_DISPLAY">
+        <path>../vacuumSpaceApp_opi/space_detail.opi</path>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+          <device>BL21I-VA-SPACE-05</device>
+          <desc>BL21I-VA-SPACE-05</desc>
+          <name>SP5</name>
+        </macros>
+        <mode>3</mode>
+        <description>Open detail screen</description>
+      </action>
+      <action type="OPEN_DISPLAY">
+        <path>BL21I-vacuum.opi</path>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+        </macros>
+        <mode>1</mode>
+        <description></description>
+      </action>
+    </actions>
+    <items />
+    <flip_vertical>false</flip_vertical>
+    <show_boolean_label>false</show_boolean_label>
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <crop_left>0</crop_left>
+    <enabled>true</enabled>
+    <wuid>-1f126ca9:14ff00fa833:-7cc3</wuid>
+    <on_color>
+      <color red="232" green="50" blue="50" />
+    </on_color>
+    <scripts />
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <crop_bottom>0</crop_bottom>
+    <no_animation>false</no_animation>
+    <off_color>
+      <color red="210" green="230" blue="210" />
+    </off_color>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <background_color>
+      <color red="240" green="240" blue="240" />
+    </background_color>
+    <boolean_label_position>0</boolean_label_position>
+    <width>26</width>
+    <x>505</x>
+    <y>5</y>
+    <foreground_color>
+      <color red="192" green="192" blue="192" />
+    </foreground_color>
+    <crop_top>0</crop_top>
+    <crop_right>0</crop_right>
+    <stretch_to_fit>true</stretch_to_fit>
+    <font>
+      <opifont.name fontName="Arial" height="11" style="0">Default</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.symbol.multistate.MultistateMonitorWidget" version="1.0.0">
+    <alarm_pulsing>false</alarm_pulsing>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <rules />
+    <pv_value />
+    <auto_size>false</auto_size>
+    <image_file>../vacuumSpaceApp_opi/symbol/space 0.svg</image_file>
+    <height>20</height>
+    <border_width>0</border_width>
+    <items_from_pv>true</items_from_pv>
+    <align_to_nearest_second>false</align_to_nearest_second>
+    <visible>true</visible>
+    <pv_name>BL21I-VA-SPACE-06:STA.SEVR</pv_name>
+    <degree>0</degree>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <widget_type>Multistate Symbol Monitor</widget_type>
+    <flip_horizontal>false</flip_horizontal>
+    <permutation_matrix>
+      <row>
+        <col>1.0</col>
+        <col>0.0</col>
+      </row>
+      <row>
+        <col>0.0</col>
+        <col>1.0</col>
+      </row>
+    </permutation_matrix>
+    <name>auto(SP6)</name>
+    <actions hook="false" hook_all="true">
+      <action type="OPEN_DISPLAY">
+        <path>../vacuumSpaceApp_opi/space_detail.opi</path>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+          <device>BL21I-VA-SPACE-06</device>
+          <desc>BL21I-VA-SPACE-06</desc>
+          <name>SP6</name>
+        </macros>
+        <mode>3</mode>
+        <description>Open detail screen</description>
+      </action>
+      <action type="OPEN_DISPLAY">
+        <path>BL21I-vacuum.opi</path>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+        </macros>
+        <mode>1</mode>
+        <description></description>
+      </action>
+    </actions>
+    <items />
+    <flip_vertical>false</flip_vertical>
+    <show_boolean_label>false</show_boolean_label>
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <crop_left>0</crop_left>
+    <enabled>true</enabled>
+    <wuid>-1f126ca9:14ff00fa833:-7cbb</wuid>
+    <on_color>
+      <color red="232" green="50" blue="50" />
+    </on_color>
+    <scripts />
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <crop_bottom>0</crop_bottom>
+    <no_animation>false</no_animation>
+    <off_color>
+      <color red="210" green="230" blue="210" />
+    </off_color>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <background_color>
+      <color red="240" green="240" blue="240" />
+    </background_color>
+    <boolean_label_position>0</boolean_label_position>
+    <width>36</width>
+    <x>550</x>
+    <y>5</y>
+    <foreground_color>
+      <color red="192" green="192" blue="192" />
+    </foreground_color>
+    <crop_top>0</crop_top>
+    <crop_right>0</crop_right>
+    <stretch_to_fit>true</stretch_to_fit>
+    <font>
+      <opifont.name fontName="Arial" height="11" style="0">Default</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.symbol.multistate.MultistateMonitorWidget" version="1.0.0">
+    <alarm_pulsing>false</alarm_pulsing>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <rules />
+    <pv_value />
+    <auto_size>false</auto_size>
+    <image_file>../vacuumSpaceApp_opi/symbol/space 0.svg</image_file>
+    <height>20</height>
+    <border_width>0</border_width>
+    <items_from_pv>true</items_from_pv>
+    <align_to_nearest_second>false</align_to_nearest_second>
+    <visible>true</visible>
+    <pv_name>BL21I-VA-SPACE-07:STA.SEVR</pv_name>
+    <degree>0</degree>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <widget_type>Multistate Symbol Monitor</widget_type>
+    <flip_horizontal>false</flip_horizontal>
+    <permutation_matrix>
+      <row>
+        <col>1.0</col>
+        <col>0.0</col>
+      </row>
+      <row>
+        <col>0.0</col>
+        <col>1.0</col>
+      </row>
+    </permutation_matrix>
+    <name>auto(SP7)</name>
+    <actions hook="false" hook_all="true">
+      <action type="OPEN_DISPLAY">
+        <path>../vacuumSpaceApp_opi/space_detail.opi</path>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+          <device>BL21I-VA-SPACE-07</device>
+          <desc>BL21I-VA-SPACE-07</desc>
+          <name>SP7</name>
+        </macros>
+        <mode>3</mode>
+        <description>Open detail screen</description>
+      </action>
+      <action type="OPEN_DISPLAY">
+        <path>BL21I-vacuum.opi</path>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+        </macros>
+        <mode>1</mode>
+        <description></description>
+      </action>
+    </actions>
+    <items />
+    <flip_vertical>false</flip_vertical>
+    <show_boolean_label>false</show_boolean_label>
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <crop_left>0</crop_left>
+    <enabled>true</enabled>
+    <wuid>-1f126ca9:14ff00fa833:-7cad</wuid>
+    <on_color>
+      <color red="232" green="50" blue="50" />
+    </on_color>
+    <scripts />
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <crop_bottom>0</crop_bottom>
+    <no_animation>false</no_animation>
+    <off_color>
+      <color red="210" green="230" blue="210" />
+    </off_color>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <background_color>
+      <color red="240" green="240" blue="240" />
+    </background_color>
+    <boolean_label_position>0</boolean_label_position>
+    <width>131</width>
+    <x>605</x>
+    <y>5</y>
+    <foreground_color>
+      <color red="192" green="192" blue="192" />
+    </foreground_color>
+    <crop_top>0</crop_top>
+    <crop_right>0</crop_right>
+    <stretch_to_fit>true</stretch_to_fit>
+    <font>
+      <opifont.name fontName="Arial" height="11" style="0">Default</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
+    <toggle_button>false</toggle_button>
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <alarm_pulsing>true</alarm_pulsing>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <push_action_index>0</push_action_index>
+    <rules />
+    <enabled>true</enabled>
+    <wuid>-1f126ca9:14ff00fa833:-7ca6</wuid>
+    <pv_value />
+    <text>S3</text>
+    <scripts />
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <height>55</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <image>../BLGuiApp_opi/images/slits.png</image>
+    <visible>true</visible>
+    <pv_name>BL21I-AL-SLITS-03:DEVSTA</pv_name>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <widget_type>Action Button</widget_type>
+    <backcolor_alarm_sensitive>true</backcolor_alarm_sensitive>
+    <background_color>
+      <color name="Canvas" red="200" green="200" blue="200" />
+    </background_color>
+    <width>40</width>
+    <x>700</x>
+    <name>auto(S3)</name>
+    <y>40</y>
+    <style>0</style>
+    <foreground_color>
+      <color name="Black" red="0" green="0" blue="0" />
+    </foreground_color>
+    <actions hook="true" hook_all="false">
+      <action type="OPEN_DISPLAY">
+        <path>S3.opi</path>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+        </macros>
+        <mode>1</mode>
+        <description>Open component screen</description>
+      </action>
+      <action type="WRITE_PV">
+        <pv_name>$(pv_name).PROC</pv_name>
+        <value>1</value>
+        <timeout>5</timeout>
+        <confirm_message></confirm_message>
+        <description>Clear alarm status</description>
+      </action>
+      <action type="WRITE_PV">
+        <pv_name>$(pv_name):CALC.PROC</pv_name>
+        <value>1</value>
+        <timeout>5</timeout>
+        <confirm_message></confirm_message>
+        <description>Restore alarm status</description>
+      </action>
+    </actions>
+    <font>
+      <opifont.name fontName="Arial" height="10" style="0">Label Small</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Rectangle" version="1.0.0">
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <line_width>0</line_width>
+    <horizontal_fill>true</horizontal_fill>
+    <alarm_pulsing>false</alarm_pulsing>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <rules />
+    <enabled>true</enabled>
+    <wuid>-1f126ca9:14ff00fa833:-7c9d</wuid>
+    <transparent>false</transparent>
+    <pv_value />
+    <alpha>255</alpha>
+    <bg_gradient_color>
+      <color name="Grey 65%" red="166" green="166" blue="166" />
+    </bg_gradient_color>
+    <scripts />
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <height>116</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <visible>true</visible>
+    <pv_name></pv_name>
+    <gradient>true</gradient>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <anti_alias>true</anti_alias>
+    <line_style>0</line_style>
+    <widget_type>Rectangle</widget_type>
+    <fg_gradient_color>
+      <color red="255" green="255" blue="255" />
+    </fg_gradient_color>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <background_color>
+      <color name="Grey 50%" red="128" green="128" blue="128" />
+    </background_color>
+    <width>11</width>
+    <x>760</x>
+    <name>Rectangle_7</name>
+    <y>25</y>
+    <fill_level>0.0</fill_level>
+    <foreground_color>
+      <color red="255" green="0" blue="0" />
+    </foreground_color>
+    <actions hook="false" hook_all="false" />
+    <font>
+      <opifont.name fontName="Arial" height="11" style="0">Default</opifont.name>
+    </font>
+    <line_color>
+      <color red="169" green="165" blue="162" />
+    </line_color>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
+    <border_style>0</border_style>
+    <tooltip></tooltip>
+    <horizontal_alignment>0</horizontal_alignment>
+    <rules />
+    <enabled>true</enabled>
+    <wuid>-1f126ca9:14ff00fa833:-7c9c</wuid>
+    <transparent>true</transparent>
+    <auto_size>false</auto_size>
+    <text>OC</text>
+    <scripts />
+    <height>20</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <visible>true</visible>
+    <vertical_alignment>1</vertical_alignment>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <widget_type>Label</widget_type>
+    <wrap_words>false</wrap_words>
+    <background_color>
+      <color red="255" green="255" blue="255" />
+    </background_color>
+    <width>191</width>
+    <x>780</x>
+    <name>Label_3</name>
+    <y>120</y>
+    <foreground_color>
+      <color red="0" green="0" blue="0" />
+    </foreground_color>
+    <actions hook="false" hook_all="false" />
+    <font>
+      <opifont.name fontName="Arial" height="11" style="1">Default Bold</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.symbol.multistate.MultistateMonitorWidget" version="1.0.0">
+    <alarm_pulsing>false</alarm_pulsing>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <rules />
+    <pv_value />
+    <auto_size>false</auto_size>
+    <image_file>../dlsPLCApp_opi/symbol/shutter 1.svg</image_file>
+    <height>20</height>
+    <border_width>0</border_width>
+    <items_from_pv>true</items_from_pv>
+    <align_to_nearest_second>false</align_to_nearest_second>
+    <visible>true</visible>
+    <pv_name></pv_name>
+    <degree>0</degree>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <widget_type>Multistate Symbol Monitor</widget_type>
+    <flip_horizontal>false</flip_horizontal>
+    <permutation_matrix>
+      <row>
+        <col>1.0</col>
+        <col>0.0</col>
+      </row>
+      <row>
+        <col>0.0</col>
+        <col>1.0</col>
+      </row>
+    </permutation_matrix>
+    <name>SHTR1</name>
+    <actions hook="false" hook_all="true">
+      <action type="OPEN_DISPLAY">
+        <path>../vacuumSpaceApp_opi/space_detail.opi</path>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+          <device>BL21I-VA-SPACE-05</device>
+          <desc>BL21I-VA-SPACE-05</desc>
+          <name>SP5</name>
+        </macros>
+        <mode>3</mode>
+        <description>Open detail screen</description>
+      </action>
+      <action type="OPEN_DISPLAY">
+        <path>BL21I-vacuum.opi</path>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+        </macros>
+        <mode>1</mode>
+        <description></description>
+      </action>
+    </actions>
+    <items />
+    <flip_vertical>false</flip_vertical>
+    <show_boolean_label>false</show_boolean_label>
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <crop_left>0</crop_left>
+    <enabled>true</enabled>
+    <wuid>-1b1bc1f:14ff04de031:-7f29</wuid>
+    <on_color>
+      <color red="0" green="0" blue="0" />
+    </on_color>
+    <scripts />
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <crop_bottom>0</crop_bottom>
+    <no_animation>false</no_animation>
+    <off_color>
+      <color red="0" green="0" blue="0" />
+    </off_color>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <background_color>
+      <color name="Canvas" red="200" green="200" blue="200" />
+    </background_color>
+    <boolean_label_position>0</boolean_label_position>
+    <width>20</width>
+    <x>975</x>
+    <y>5</y>
+    <foreground_color>
+      <color red="192" green="192" blue="192" />
+    </foreground_color>
+    <crop_top>0</crop_top>
+    <crop_right>0</crop_right>
+    <stretch_to_fit>false</stretch_to_fit>
+    <font>
+      <opifont.name fontName="Arial" height="11" style="0">Default</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
+    <toggle_button>false</toggle_button>
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <alarm_pulsing>true</alarm_pulsing>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <push_action_index>0</push_action_index>
+    <rules />
+    <enabled>false</enabled>
+    <wuid>-1b1bc1f:14ff04de031:-7f25</wuid>
+    <pv_value />
+    <text>S4</text>
+    <scripts />
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <height>55</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <image>../BLGuiApp_opi/images/slits.png</image>
+    <visible>true</visible>
+    <pv_name></pv_name>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <widget_type>Action Button</widget_type>
+    <backcolor_alarm_sensitive>true</backcolor_alarm_sensitive>
+    <background_color>
+      <color name="Canvas" red="200" green="200" blue="200" />
+    </background_color>
+    <width>40</width>
+    <x>840</x>
+    <name></name>
+    <y>40</y>
+    <style>0</style>
+    <foreground_color>
+      <color name="Black" red="0" green="0" blue="0" />
+    </foreground_color>
+    <actions hook="true" hook_all="false">
+      <action type="OPEN_DISPLAY">
+        <path>S1.opi</path>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+        </macros>
+        <mode>1</mode>
+        <description>Open component screen</description>
+      </action>
+      <action type="WRITE_PV">
+        <pv_name>$(pv_name).PROC</pv_name>
+        <value>1</value>
+        <timeout>5</timeout>
+        <confirm_message></confirm_message>
+        <description>Clear alarm status</description>
+      </action>
+      <action type="WRITE_PV">
+        <pv_name>$(pv_name):CALC.PROC</pv_name>
+        <value>1</value>
+        <timeout>5</timeout>
+        <confirm_message></confirm_message>
+        <description>Restore alarm status</description>
+      </action>
+    </actions>
+    <font>
+      <opifont.name fontName="Arial" height="10" style="0">Label Small</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
+    <toggle_button>false</toggle_button>
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <alarm_pulsing>true</alarm_pulsing>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <push_action_index>0</push_action_index>
+    <rules />
+    <enabled>false</enabled>
+    <wuid>-1b1bc1f:14ff04de031:-7f1d</wuid>
+    <pv_value />
+    <text>D4</text>
+    <scripts />
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <height>55</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <image>../BLGuiApp_opi/images/diag-stick.png</image>
+    <visible>true</visible>
+    <pv_name></pv_name>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <widget_type>Action Button</widget_type>
+    <backcolor_alarm_sensitive>true</backcolor_alarm_sensitive>
+    <background_color>
+      <color name="Canvas" red="200" green="200" blue="200" />
+    </background_color>
+    <width>40</width>
+    <x>890</x>
+    <name>D4</name>
+    <y>40</y>
+    <style>0</style>
+    <foreground_color>
+      <color name="Black" red="0" green="0" blue="0" />
+    </foreground_color>
+    <actions hook="true" hook_all="false">
+      <action type="OPEN_DISPLAY">
+        <path>D3.opi</path>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+        </macros>
+        <mode>1</mode>
+        <description>Open component screen</description>
+      </action>
+      <action type="WRITE_PV">
+        <pv_name>$(pv_name).PROC</pv_name>
+        <value>1</value>
+        <timeout>5</timeout>
+        <confirm_message></confirm_message>
+        <description>Clear alarm status</description>
+      </action>
+      <action type="WRITE_PV">
+        <pv_name>$(pv_name):CALC.PROC</pv_name>
+        <value>1</value>
+        <timeout>5</timeout>
+        <confirm_message></confirm_message>
+        <description>Restore alarm status</description>
+      </action>
+    </actions>
+    <font>
+      <opifont.name fontName="Arial" height="10" style="0">Label Small</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.symbol.multistate.MultistateMonitorWidget" version="1.0.0">
+    <alarm_pulsing>false</alarm_pulsing>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <rules />
+    <pv_value />
+    <auto_size>false</auto_size>
+    <image_file>../vacuumSpaceApp_opi/symbol/space 0.svg</image_file>
+    <height>20</height>
+    <border_width>0</border_width>
+    <items_from_pv>true</items_from_pv>
+    <align_to_nearest_second>false</align_to_nearest_second>
+    <visible>true</visible>
+    <pv_name></pv_name>
+    <degree>0</degree>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <widget_type>Multistate Symbol Monitor</widget_type>
+    <flip_horizontal>false</flip_horizontal>
+    <permutation_matrix>
+      <row>
+        <col>1.0</col>
+        <col>0.0</col>
+      </row>
+      <row>
+        <col>0.0</col>
+        <col>1.0</col>
+      </row>
+    </permutation_matrix>
+    <name>SP9</name>
+    <actions hook="false" hook_all="true">
+      <action type="OPEN_DISPLAY">
+        <path>../vacuumSpaceApp_opi/space_detail.opi</path>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+          <device>BL21I-VA-SPACE-04</device>
+          <desc>BL21I-VA-SPACE-04</desc>
+          <name>SP4</name>
+        </macros>
+        <mode>3</mode>
+        <description>Open detail screen</description>
+      </action>
+      <action type="OPEN_DISPLAY">
+        <path>BL21I-vacuum.opi</path>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+        </macros>
+        <mode>1</mode>
+        <description></description>
+      </action>
+    </actions>
+    <items />
+    <flip_vertical>false</flip_vertical>
+    <show_boolean_label>false</show_boolean_label>
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <crop_left>0</crop_left>
+    <enabled>true</enabled>
+    <wuid>-1b1bc1f:14ff04de031:-7f12</wuid>
+    <on_color>
+      <color red="232" green="50" blue="50" />
+    </on_color>
+    <scripts />
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <crop_bottom>0</crop_bottom>
+    <no_animation>false</no_animation>
+    <off_color>
+      <color red="210" green="230" blue="210" />
+    </off_color>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <background_color>
+      <color red="240" green="240" blue="240" />
+    </background_color>
+    <boolean_label_position>0</boolean_label_position>
+    <width>106</width>
+    <x>845</x>
+    <y>5</y>
+    <foreground_color>
+      <color red="192" green="192" blue="192" />
+    </foreground_color>
+    <crop_top>0</crop_top>
+    <crop_right>0</crop_right>
+    <stretch_to_fit>true</stretch_to_fit>
+    <font>
+      <opifont.name fontName="Arial" height="11" style="0">Default</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.symbol.multistate.MultistateMonitorWidget" version="1.0.0">
+    <alarm_pulsing>false</alarm_pulsing>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <rules />
+    <pv_value />
+    <auto_size>false</auto_size>
+    <image_file>../dlsPLCApp_opi/symbol/valve 1.svg</image_file>
+    <height>20</height>
+    <border_width>0</border_width>
+    <items_from_pv>true</items_from_pv>
+    <align_to_nearest_second>false</align_to_nearest_second>
+    <visible>true</visible>
+    <pv_name>BL21I-VA-VALVE-06:STA</pv_name>
+    <degree>0</degree>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <widget_type>Multistate Symbol Monitor</widget_type>
+    <flip_horizontal>false</flip_horizontal>
+    <permutation_matrix>
+      <row>
+        <col>1.0</col>
+        <col>0.0</col>
+      </row>
+      <row>
+        <col>0.0</col>
+        <col>1.0</col>
+      </row>
+    </permutation_matrix>
+    <name>auto(V6)</name>
+    <actions hook="false" hook_all="true">
+      <action type="OPEN_DISPLAY">
+        <path>../dlsPLCApp_opi/vacValve_detail.opi</path>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+          <device>BL21I-VA-VALVE-06</device>
+          <DESC>BL21I-VA-VALVE-06</DESC>
+          <ilk0>V6 Air</ilk0>
+          <ilk1>unused</ilk1>
+          <ilk2>unused</ilk2>
+          <ilk3>unused</ilk3>
+          <ilk4>unused</ilk4>
+          <ilk5>unused</ilk5>
+          <ilk6>unused</ilk6>
+          <ilk7>unused</ilk7>
+          <ilk8>unused</ilk8>
+          <ilk9>unused</ilk9>
+          <ilk10>unused</ilk10>
+          <ilk11>unused</ilk11>
+          <ilk12>unused</ilk12>
+          <ilk13>unused</ilk13>
+          <ilk14>unused</ilk14>
+          <ilk15>fault</ilk15>
+          <gilk0>IMG1 PIRG1</gilk0>
+          <gilk1>IMG2 PIRG2</gilk1>
+          <gilk2>IMG3 PIRG3</gilk2>
+          <gilk3>IMG4 PIRG4</gilk3>
+          <gilk4>IMG5 PIRG5</gilk4>
+          <gilk5>IMG6 PIRG6</gilk5>
+          <gilk6>unused</gilk6>
+          <gilk7>unused</gilk7>
+          <gilk8>unused</gilk8>
+          <gilk9>unused</gilk9>
+          <gilk10>unused</gilk10>
+          <gilk11>unused</gilk11>
+          <gilk12>unused</gilk12>
+          <gilk13>unused</gilk13>
+          <gilk14>unused</gilk14>
+          <gilk15>unused</gilk15>
+          <name>V6</name>
+        </macros>
+        <mode>3</mode>
+        <description>Open detail screen</description>
+      </action>
+      <action type="OPEN_DISPLAY">
+        <path>BL21I-vacuum.opi</path>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+        </macros>
+        <mode>1</mode>
+        <description></description>
+      </action>
+    </actions>
+    <items />
+    <flip_vertical>false</flip_vertical>
+    <show_boolean_label>false</show_boolean_label>
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <crop_left>0</crop_left>
+    <enabled>true</enabled>
+    <wuid>-51fb4121:149f2142d1f:-7a0c</wuid>
+    <on_color>
+      <color red="0" green="0" blue="0" />
+    </on_color>
+    <scripts />
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <crop_bottom>0</crop_bottom>
+    <no_animation>false</no_animation>
+    <off_color>
+      <color red="0" green="0" blue="0" />
+    </off_color>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <background_color>
+      <color name="Canvas" red="200" green="200" blue="200" />
+    </background_color>
+    <boolean_label_position>0</boolean_label_position>
+    <width>20</width>
+    <x>585</x>
+    <y>5</y>
+    <foreground_color>
+      <color name="Black" red="0" green="0" blue="0" />
+    </foreground_color>
+    <crop_top>0</crop_top>
+    <crop_right>0</crop_right>
+    <stretch_to_fit>false</stretch_to_fit>
+    <font>
+      <opifont.name fontName="Arial" height="11" style="0">Default</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
+    <toggle_button>false</toggle_button>
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <alarm_pulsing>true</alarm_pulsing>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <push_action_index>0</push_action_index>
+    <rules />
+    <enabled>true</enabled>
+    <wuid>66fa3901:14ff4788217:-7e70</wuid>
+    <pv_value />
+    <text>D3B</text>
+    <scripts />
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <height>55</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <image>../BLGuiApp_opi/images/diag-stick-camera.png</image>
+    <visible>true</visible>
+    <pv_name>BL21I-DI-PHDGB-03:DEVSTA</pv_name>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <widget_type>Action Button</widget_type>
+    <backcolor_alarm_sensitive>true</backcolor_alarm_sensitive>
+    <background_color>
+      <color name="Canvas" red="200" green="200" blue="200" />
+    </background_color>
+    <width>40</width>
+    <x>650</x>
+    <name>auto(D3B)</name>
+    <y>40</y>
+    <style>0</style>
+    <foreground_color>
+      <color name="Black" red="0" green="0" blue="0" />
+    </foreground_color>
+    <actions hook="true" hook_all="false">
+      <action type="OPEN_DISPLAY">
+        <path>D3B.opi</path>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+        </macros>
+        <mode>1</mode>
+        <description>Open component screen</description>
+      </action>
+      <action type="WRITE_PV">
+        <pv_name>$(pv_name).PROC</pv_name>
+        <value>1</value>
+        <timeout>5</timeout>
+        <confirm_message></confirm_message>
+        <description>Clear alarm status</description>
+      </action>
+      <action type="WRITE_PV">
+        <pv_name>$(pv_name):CALC.PROC</pv_name>
+        <value>1</value>
+        <timeout>5</timeout>
+        <confirm_message></confirm_message>
+        <description>Restore alarm status</description>
+      </action>
+    </actions>
+    <font>
+      <opifont.name fontName="Arial" height="10" style="0">Label Small</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Rectangle" version="1.0.0">
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <line_width>0</line_width>
+    <horizontal_fill>true</horizontal_fill>
+    <alarm_pulsing>false</alarm_pulsing>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <rules />
+    <enabled>true</enabled>
+    <wuid>-32ed6e3f:1470fd48560:-7507</wuid>
+    <transparent>false</transparent>
+    <pv_value />
+    <alpha>255</alpha>
+    <bg_gradient_color>
+      <color name="Grey 65%" red="166" green="166" blue="166" />
+    </bg_gradient_color>
+    <scripts />
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <height>116</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <visible>true</visible>
+    <pv_name></pv_name>
+    <gradient>true</gradient>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <anti_alias>true</anti_alias>
+    <line_style>0</line_style>
+    <widget_type>Rectangle</widget_type>
+    <fg_gradient_color>
+      <color red="255" green="255" blue="255" />
+    </fg_gradient_color>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <background_color>
+      <color name="Grey 50%" red="128" green="128" blue="128" />
+    </background_color>
+    <width>11</width>
+    <x>1000</x>
+    <name>Rectangle_7</name>
+    <y>25</y>
+    <fill_level>0.0</fill_level>
+    <foreground_color>
+      <color red="255" green="0" blue="0" />
+    </foreground_color>
+    <actions hook="false" hook_all="false" />
+    <font>
+      <opifont.name fontName="Arial" height="11" style="0">Default</opifont.name>
+    </font>
+    <line_color>
+      <color red="169" green="165" blue="162" />
+    </line_color>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Rectangle" version="1.0.0">
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <line_width>0</line_width>
+    <horizontal_fill>true</horizontal_fill>
+    <alarm_pulsing>false</alarm_pulsing>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <rules />
+    <enabled>true</enabled>
+    <wuid>-32ed6e3f:1470fd48560:-7856</wuid>
+    <transparent>false</transparent>
+    <pv_value />
+    <alpha>255</alpha>
+    <bg_gradient_color>
+      <color name="Grey 65%" red="166" green="166" blue="166" />
+    </bg_gradient_color>
+    <scripts />
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <height>116</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <visible>true</visible>
+    <pv_name></pv_name>
+    <gradient>true</gradient>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <anti_alias>true</anti_alias>
+    <line_style>0</line_style>
+    <widget_type>Rectangle</widget_type>
+    <fg_gradient_color>
+      <color red="255" green="255" blue="255" />
+    </fg_gradient_color>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <background_color>
+      <color name="Grey 50%" red="128" green="128" blue="128" />
+    </background_color>
+    <width>10</width>
+    <x>80</x>
+    <name>Rectangle_5</name>
+    <y>25</y>
+    <fill_level>0.0</fill_level>
+    <foreground_color>
+      <color red="255" green="0" blue="0" />
+    </foreground_color>
+    <actions hook="false" hook_all="false" />
+    <font>
+      <opifont.name fontName="Arial" height="11" style="0">Default</opifont.name>
+    </font>
+    <line_color>
+      <color red="169" green="165" blue="162" />
+    </line_color>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.symbol.multistate.MultistateMonitorWidget" version="1.0.0">
+    <alarm_pulsing>false</alarm_pulsing>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <rules />
+    <pv_value />
+    <auto_size>false</auto_size>
+    <image_file>../BLGuiApp_opi/images/slits.png</image_file>
+    <height>50</height>
+    <border_width>1</border_width>
+    <items_from_pv>true</items_from_pv>
+    <align_to_nearest_second>false</align_to_nearest_second>
+    <visible>true</visible>
+    <pv_name></pv_name>
+    <degree>0</degree>
+    <border_color>
+      <color name="Black" red="0" green="0" blue="0" />
+    </border_color>
+    <widget_type>Multistate Symbol Monitor</widget_type>
+    <flip_horizontal>false</flip_horizontal>
+    <permutation_matrix>
+      <row>
+        <col>1.0</col>
+        <col>0.0</col>
+      </row>
+      <row>
+        <col>0.0</col>
+        <col>1.0</col>
+      </row>
+    </permutation_matrix>
+    <name>auto(S1)</name>
+    <actions hook="false" hook_all="false" />
+    <items />
+    <flip_vertical>false</flip_vertical>
+    <show_boolean_label>true</show_boolean_label>
+    <border_style>1</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <crop_left>0</crop_left>
+    <enabled>true</enabled>
+    <wuid>1479e8d3:150a3619cce:-7bd7</wuid>
+    <on_color>
+      <color name="Black" red="0" green="0" blue="0" />
+    </on_color>
+    <scripts />
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <crop_bottom>0</crop_bottom>
+    <no_animation>false</no_animation>
+    <off_color>
+      <color name="Black" red="0" green="0" blue="0" />
+    </off_color>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <background_color>
+      <color name="Canvas" red="200" green="200" blue="200" />
+    </background_color>
+    <boolean_label_position>5</boolean_label_position>
+    <width>33</width>
+    <x>150</x>
+    <y>40</y>
+    <foreground_color>
+      <color name="Black" red="0" green="0" blue="0" />
+    </foreground_color>
+    <crop_top>0</crop_top>
+    <crop_right>0</crop_right>
+    <stretch_to_fit>false</stretch_to_fit>
+    <font>
+      <opifont.name fontName="Arial" height="11" style="0">Default</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.symbol.multistate.MultistateMonitorWidget" version="1.0.0">
+    <alarm_pulsing>false</alarm_pulsing>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <rules />
+    <pv_value />
+    <auto_size>false</auto_size>
+    <image_file>images/diag-stick-camera.png</image_file>
+    <height>50</height>
+    <border_width>1</border_width>
+    <items_from_pv>true</items_from_pv>
+    <align_to_nearest_second>false</align_to_nearest_second>
+    <visible>true</visible>
+    <pv_name></pv_name>
+    <degree>0</degree>
+    <border_color>
+      <color name="Black" red="0" green="0" blue="0" />
+    </border_color>
+    <widget_type>Multistate Symbol Monitor</widget_type>
+    <flip_horizontal>false</flip_horizontal>
+    <permutation_matrix>
+      <row>
+        <col>1.0</col>
+        <col>0.0</col>
+      </row>
+      <row>
+        <col>0.0</col>
+        <col>1.0</col>
+      </row>
+    </permutation_matrix>
+    <name>auto(DIAG)</name>
+    <actions hook="false" hook_all="false" />
+    <items />
+    <flip_vertical>false</flip_vertical>
+    <show_boolean_label>true</show_boolean_label>
+    <border_style>1</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <crop_left>0</crop_left>
+    <enabled>true</enabled>
+    <wuid>1479e8d3:150a3619cce:-7bc0</wuid>
+    <on_color>
+      <color name="Black" red="0" green="0" blue="0" />
+    </on_color>
+    <scripts />
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <crop_bottom>0</crop_bottom>
+    <no_animation>false</no_animation>
+    <off_color>
+      <color name="Black" red="0" green="0" blue="0" />
+    </off_color>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <background_color>
+      <color name="Canvas" red="200" green="200" blue="200" />
+    </background_color>
+    <boolean_label_position>5</boolean_label_position>
+    <width>33</width>
+    <x>200</x>
+    <y>40</y>
+    <foreground_color>
+      <color name="Black" red="0" green="0" blue="0" />
+    </foreground_color>
+    <crop_top>0</crop_top>
+    <crop_right>0</crop_right>
+    <stretch_to_fit>false</stretch_to_fit>
+    <font>
+      <opifont.name fontName="Arial" height="11" style="0">Default</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.symbol.multistate.MultistateMonitorWidget" version="1.0.0">
+    <alarm_pulsing>false</alarm_pulsing>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <rules />
+    <pv_value />
+    <auto_size>false</auto_size>
+    <image_file>images/vfm-up.png</image_file>
+    <height>50</height>
+    <border_width>1</border_width>
+    <items_from_pv>true</items_from_pv>
+    <align_to_nearest_second>false</align_to_nearest_second>
+    <visible>true</visible>
+    <pv_name></pv_name>
+    <degree>0</degree>
+    <border_color>
+      <color name="Black" red="0" green="0" blue="0" />
+    </border_color>
+    <widget_type>Multistate Symbol Monitor</widget_type>
+    <flip_horizontal>false</flip_horizontal>
+    <permutation_matrix>
+      <row>
+        <col>1.0</col>
+        <col>0.0</col>
+      </row>
+      <row>
+        <col>0.0</col>
+        <col>1.0</col>
+      </row>
+    </permutation_matrix>
+    <name>auto(M1)</name>
+    <actions hook="false" hook_all="false" />
+    <items />
+    <flip_vertical>false</flip_vertical>
+    <show_boolean_label>true</show_boolean_label>
+    <border_style>1</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <crop_left>0</crop_left>
+    <enabled>true</enabled>
+    <wuid>1479e8d3:150a3619cce:-7bb5</wuid>
+    <on_color>
+      <color name="Black" red="0" green="0" blue="0" />
+    </on_color>
+    <scripts />
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <crop_bottom>0</crop_bottom>
+    <no_animation>false</no_animation>
+    <off_color>
+      <color name="Black" red="0" green="0" blue="0" />
+    </off_color>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <background_color>
+      <color name="Canvas" red="200" green="200" blue="200" />
+    </background_color>
+    <boolean_label_position>5</boolean_label_position>
+    <width>33</width>
+    <x>250</x>
+    <y>40</y>
+    <foreground_color>
+      <color name="Black" red="0" green="0" blue="0" />
+    </foreground_color>
+    <crop_top>0</crop_top>
+    <crop_right>0</crop_right>
+    <stretch_to_fit>false</stretch_to_fit>
+    <font>
+      <opifont.name fontName="Arial" height="11" style="0">Default</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.symbol.multistate.MultistateMonitorWidget" version="1.0.0">
+    <alarm_pulsing>false</alarm_pulsing>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <rules />
+    <pv_value />
+    <auto_size>false</auto_size>
+    <image_file>images/aperture.png</image_file>
+    <height>50</height>
+    <border_width>1</border_width>
+    <items_from_pv>true</items_from_pv>
+    <align_to_nearest_second>false</align_to_nearest_second>
+    <visible>true</visible>
+    <pv_name></pv_name>
+    <degree>0</degree>
+    <border_color>
+      <color name="Black" red="0" green="0" blue="0" />
+    </border_color>
+    <widget_type>Multistate Symbol Monitor</widget_type>
+    <flip_horizontal>false</flip_horizontal>
+    <permutation_matrix>
+      <row>
+        <col>1.0</col>
+        <col>0.0</col>
+      </row>
+      <row>
+        <col>0.0</col>
+        <col>1.0</col>
+      </row>
+    </permutation_matrix>
+    <name>auto(GBC1)</name>
+    <actions hook="false" hook_all="false" />
+    <items />
+    <flip_vertical>false</flip_vertical>
+    <show_boolean_label>true</show_boolean_label>
+    <border_style>1</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <crop_left>0</crop_left>
+    <enabled>true</enabled>
+    <wuid>1479e8d3:150a3619cce:-7bb0</wuid>
+    <on_color>
+      <color name="Black" red="0" green="0" blue="0" />
+    </on_color>
+    <scripts />
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <crop_bottom>0</crop_bottom>
+    <no_animation>false</no_animation>
+    <off_color>
+      <color name="Black" red="0" green="0" blue="0" />
+    </off_color>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <background_color>
+      <color name="Canvas" red="200" green="200" blue="200" />
+    </background_color>
+    <boolean_label_position>5</boolean_label_position>
+    <width>33</width>
+    <x>100</x>
+    <y>40</y>
+    <foreground_color>
+      <color name="Black" red="0" green="0" blue="0" />
+    </foreground_color>
+    <crop_top>0</crop_top>
+    <crop_right>0</crop_right>
+    <stretch_to_fit>false</stretch_to_fit>
+    <font>
+      <opifont.name fontName="Arial" height="11" style="0">Default</opifont.name>
+    </font>
+  </widget>
+</display>
