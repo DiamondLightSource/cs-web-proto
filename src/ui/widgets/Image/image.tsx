@@ -13,7 +13,7 @@ import { registerWidget } from "../register";
 import { BaseUrlContext } from "../../../baseUrl";
 
 const ImageProps = {
-  src: StringProp,
+  src: StringPropOpt,
   alt: StringPropOpt,
   fill: BoolPropOpt,
   backgroundColor: ColorPropOpt
