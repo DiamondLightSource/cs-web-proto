@@ -3,12 +3,18 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./app";
 import { ThemeProvider } from "./themeContext";
+import { OutlineProvider } from "./outlineContext";
+import { FileProvider } from "./fileContext";
 
 ReactDOM.render(
-  // Website wrapped in ThemeProvider so dark and light mode is
-  // available anywhere in the app
-  <ThemeProvider>
-    <App />
-  </ThemeProvider>,
+  // App wrapped in various providers that allows use of their
+  // contexts by any component in the app.
+  <FileProvider>
+    <OutlineProvider>
+      <ThemeProvider>
+        <App />
+      </ThemeProvider>
+    </OutlineProvider>
+  </FileProvider>,
   document.getElementById("root")
 );

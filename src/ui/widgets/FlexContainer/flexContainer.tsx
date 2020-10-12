@@ -1,7 +1,7 @@
 import React from "react";
 
 import classes from "./flexContainer.module.css";
-import { Widget, commonCss } from "../widget";
+import { Widget, useCommonCss } from "../widget";
 import { WidgetPropType } from "../widgetProps";
 import { registerWidget } from "../register";
 import {
@@ -22,7 +22,7 @@ const FlexProps = {
 export const FlexContainerComponent = (
   props: InferWidgetProps<typeof FlexProps>
 ): JSX.Element => {
-  const style = commonCss(props);
+  const style = useCommonCss(props);
   const classNames = [classes.FlexContainer];
   const { flexFlow = null } = props;
   if (flexFlow !== null) {
