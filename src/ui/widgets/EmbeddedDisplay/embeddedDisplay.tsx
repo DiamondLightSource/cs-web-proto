@@ -13,7 +13,7 @@ import { MacroContext, MacroContextType } from "../../../types/macros";
 import { RelativePosition, AbsolutePosition } from "../../../types/position";
 import { WidgetPropType } from "../widgetProps";
 import { registerWidget } from "../register";
-import { InferWidgetProps, StringPropOpt, FilePropType } from "../propTypes";
+import { InferWidgetProps, FilePropType } from "../propTypes";
 import { BaseUrlContext } from "../../../baseUrl";
 import { parseOpi } from "./opiParser";
 import { parseJson } from "./jsonParser";
@@ -41,8 +41,7 @@ export function errorWidget(message: string): WidgetDescription {
 
 const EmbeddedDisplayProps = {
   ...WidgetPropType,
-  file: FilePropType,
-  highlight: StringPropOpt
+  file: FilePropType
 };
 
 export const EmbeddedDisplay = (
@@ -119,8 +118,7 @@ export const EmbeddedDisplay = (
       position: props.position,
       border: props.border,
       overflow: overflow,
-      children: [description],
-      highlight: props.highlight
+      children: [description]
     });
   } catch (e) {
     const message = `Error converting file ${file} into components.`;

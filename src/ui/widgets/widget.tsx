@@ -1,4 +1,4 @@
-import React, { CSSProperties } from "react";
+import React, { CSSProperties, useContext } from "react";
 import log from "loglevel";
 
 import { TooltipWrapper } from "../components/TooltipWrapper/tooltipWrapper";
@@ -13,26 +13,28 @@ import { Color } from "../../types/color";
 import { Position, RelativePosition } from "../../types/position";
 import { AlarmQuality } from "../../types/dtypes";
 import { Font } from "../../types/font";
+import { OutlineContext } from "../../outlineContext";
 
 /**
- * Creates a CSSProperties object that formats borders, fonts, visiblity,
- * highlights, and background color that can be passed in as the style key
+ * A custom hook returning a CSSProperties object that formats borders,
+ * fonts, visiblity and background color that can be passed in as the style key
  * @param props properties of the widget to be formatted
  * @returns a CSSProperties object to pass into another element under the style key
  */
-export function commonCss(props: {
+export function useCommonCss(props: {
   border?: Border;
   font?: Font;
   visible?: boolean;
-  highlight?: boolean;
   backgroundColor?: Color;
 }): CSSProperties {
+  const { showOutlines } = useContext(OutlineContext);
   return {
     ...props.border?.css(),
     ...props.font?.css(),
     backgroundColor: props.backgroundColor?.rgbaString(),
     visibility: props.visible ? "hidden" : undefined,
-    opacity: props.highlight ? "50%" : undefined
+    outline: showOutlines ? "1px dashed grey" : undefined,
+    outlineOffset: showOutlines ? "-2px" : undefined
   };
 }
 
@@ -93,7 +95,6 @@ const recursiveWrapping = (
  */
 export const ConnectingComponent = (props: {
   components: React.FC<any>[];
-  highlight?: string;
   containerStyling: Position;
   containerProps: any & { id: string };
   widgetProps: any;
@@ -184,20 +185,12 @@ export const Widget = (
   }
   components.push(TooltipWrapper);
   components.push(baseWidget);
-  if (props.highlight) {
-    baseWidgetProps.border = new Border(
-      BorderStyle.Dashed,
-      Color.parse(props.highlight),
-      3
-    );
-  }
 
   // We could select the ConnectingComponent only if there is a PV
   // to which to connect, if we felt that would be more efficient.
   return (
     <ConnectingComponent
       alarmBorder={alarmBorder}
-      highlight={props.highlight}
       components={components}
       containerStyling={position}
       containerProps={containerProps}

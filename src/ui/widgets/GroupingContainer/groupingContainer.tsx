@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Widget, commonCss } from "../widget";
+import { Widget, useCommonCss } from "../widget";
 import { WidgetPropType } from "../widgetProps";
 import { registerWidget } from "../register";
 import {
@@ -22,7 +22,7 @@ const GroupingContainerProps = {
 export const GroupingContainerComponent = (
   props: InferWidgetProps<typeof GroupingContainerProps>
 ): JSX.Element => {
-  const style = commonCss(props);
+  const style = useCommonCss(props);
 
   // Include and override parent macros with those from the prop.
   const { updateMacro, macros } = useContext(MacroContext);

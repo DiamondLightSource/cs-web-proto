@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { MacroMap, macrosEqual } from "./types/macros";
 
 export interface FileDescription {
@@ -178,20 +178,34 @@ const initialState: FileContextType = {
   selectTab: () => {}
 };
 
-/**
- * Helper function to create a file context given the appropriate state.
- * @param pageState PageState for app
- * @param setPageState function for setting pageState
- * @param tabState TabState for app
- * @param setTabState function for setting tabState
- */
-export function createFileContext(
-  pageState: PageState,
-  setPageState: React.Dispatch<React.SetStateAction<PageState>>,
-  tabState: TabState,
-  setTabState: React.Dispatch<React.SetStateAction<TabState>>
-): FileContextType {
-  return {
+export const FileContext = React.createContext(initialState);
+
+/* Page that will be loaded at start. */
+const INITIAL_PAGE_STATE: PageState = {
+  app: {
+    path: "home.json",
+    type: "json",
+    macros: {},
+    defaultProtocol: "pva"
+  }
+};
+
+interface FileProviderProps {
+  initialPageState?: PageState;
+  initialTabState?: TabState;
+  children: JSX.Element;
+}
+
+export const FileProvider: React.FC<FileProviderProps> = (
+  props: FileProviderProps
+): JSX.Element => {
+  // Set up the file context, which contains information about
+  // the open pages in DynamicPages and tabs in DynamicTabs.
+  const initialPageState = props.initialPageState ?? INITIAL_PAGE_STATE;
+  const initialTabState = props.initialTabState ?? {};
+  const [pageState, setPageState] = useState<PageState>(initialPageState);
+  const [tabState, setTabState] = useState<TabState>(initialTabState);
+  const fileContext = {
     pageState,
     tabState,
     addPage: (location: string, fileDesc: FileDescription): void => {
@@ -214,5 +228,12 @@ export function createFileContext(
       setTabState(selectTab(tabState, location, tabName));
     }
   };
-}
-export const FileContext = React.createContext(initialState);
+  // All descendents of ThemeContext.provider re-render whenever
+  // the value property changes (whole app wrapped hence theme
+  // everywhere will change)
+  return (
+    <FileContext.Provider value={fileContext}>
+      {props.children}
+    </FileContext.Provider>
+  );
+};

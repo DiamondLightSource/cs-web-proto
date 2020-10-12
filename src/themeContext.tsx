@@ -31,7 +31,7 @@ function applyTheme(theme: Theme): void {
 const initialState = {
   dark: false,
   theme: lightTheme,
-  toggle: (): void => {},
+  toggleTheme: (): void => {},
   applyTheme
 };
 
@@ -46,7 +46,7 @@ export const ThemeProvider: React.FC<{}> = ({ children }: any): JSX.Element => {
   // dark represents dark mode or light mode
   const [dark, setIsDark] = useState(localStorage.getItem("dark") === "true");
 
-  const toggle = (): void => {
+  const toggleTheme = (): void => {
     const isDark = !dark;
     localStorage.setItem("dark", JSON.stringify(isDark));
     setIsDark(isDark);
@@ -60,7 +60,7 @@ export const ThemeProvider: React.FC<{}> = ({ children }: any): JSX.Element => {
   // the value property changes (whole app wrapped hence theme
   // everywhere will change)
   return (
-    <ThemeContext.Provider value={{ dark, theme, toggle, applyTheme }}>
+    <ThemeContext.Provider value={{ dark, theme, toggleTheme, applyTheme }}>
       {children}
     </ThemeContext.Provider>
   );
