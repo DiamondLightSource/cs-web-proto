@@ -6,7 +6,6 @@ import { WidgetPropType } from "../widgetProps";
 import { registerWidget } from "../register";
 import {
   BoolPropOpt,
-  StringProp,
   InferWidgetProps,
   StringPropOpt,
   ChoicePropOpt,
@@ -16,7 +15,7 @@ import {
 } from "../propTypes";
 
 const LabelProps = {
-  text: StringProp,
+  text: StringPropOpt,
   visible: BoolPropOpt,
   transparent: BoolPropOpt,
   className: StringPropOpt,
@@ -38,7 +37,7 @@ export const LabelComponent = (
   props: InferWidgetProps<typeof LabelProps>
 ): JSX.Element => {
   const style: CSSProperties = commonCss(props);
-  const { transparent = false, textAlign = "center" } = props;
+  const { transparent = false, textAlign = "center", text = "" } = props;
   const className = props.className ?? `Label ${classes.Label}`;
   // Since display is "flex", use "flex-start" and "flex-end" to align
   // the content.
@@ -58,7 +57,7 @@ export const LabelComponent = (
   // Simple component to display text - defaults to black text and dark grey background
   return (
     <div className={className} style={style}>
-      {props.text}
+      {text}
     </div>
   );
 };
