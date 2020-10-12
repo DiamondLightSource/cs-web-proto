@@ -27,7 +27,7 @@ export const SymbolComponent = (
   props: InferWidgetProps<typeof SymbolProps>
 ): JSX.Element => {
   return (
-    <GroupingContainerComponent name={"Grouping"}>
+    <GroupingContainerComponent name={"Grouping"} {...props}>
       <ImageComponent {...props} />
       <LabelComponent {...props} />
     </GroupingContainerComponent>
