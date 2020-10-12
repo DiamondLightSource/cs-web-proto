@@ -324,6 +324,17 @@ function opiParsePosition(props: any): Position {
 }
 
 /**
+ * Parses a props object to extract the filename (NOT THE PATH) of an
+ * image file
+ * @param props
+ */
+function opiParseImageFile(props: any): string {
+  const splitDirectory = opiParseString(props).split("/");
+  const filename = splitDirectory[splitDirectory.length - 1];
+  return filename;
+}
+
+/**
  * Attempt to return the widget associated with a props object, failing
  * that will return a shape object
  * @param props
@@ -354,7 +365,8 @@ export const OPI_SIMPLE_PARSERS: ParserDict = {
   showUnits: ["show_units", opiParseBoolean],
   transparent: ["transparent", opiParseBoolean],
   font: ["font", opiParseFont],
-  macroMap: ["macros", opiParseMacros]
+  macroMap: ["macros", opiParseMacros],
+  src: ["image_file", opiParseImageFile]
 };
 
 /**
