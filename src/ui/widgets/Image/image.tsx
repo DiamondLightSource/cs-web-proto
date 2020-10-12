@@ -4,7 +4,6 @@ import { Widget } from "../widget";
 import { WidgetPropType } from "../widgetProps";
 import {
   InferWidgetProps,
-  StringProp,
   BoolPropOpt,
   StringPropOpt,
   ColorPropOpt

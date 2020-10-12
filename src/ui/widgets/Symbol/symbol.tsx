@@ -1,13 +1,13 @@
 import React from "react";
 
 import { Widget } from "../widget";
-import { WidgetPropType } from "../widgetProps";
+import { PVWidgetPropType, PVComponent } from "../widgetProps";
 import {
   InferWidgetProps,
-  StringProp,
   BoolPropOpt,
   StringPropOpt,
-  ColorPropOpt
+  ColorPropOpt,
+  PositionProp
 } from "../propTypes";
 import { registerWidget } from "../register";
 import { ImageComponent } from "../Image/image";
@@ -15,19 +15,21 @@ import { LabelComponent } from "../Label/label";
 import { GroupingContainerComponent } from "../GroupingContainer/groupingContainer";
 
 const SymbolProps = {
-  src: StringProp,
+  src: StringPropOpt,
   alt: StringPropOpt,
   fill: BoolPropOpt,
   width: StringPropOpt,
   text: StringPropOpt,
-  backgroundColor: ColorPropOpt
+  backgroundColor: ColorPropOpt,
+  position: PositionProp
 };
 
-export const SymbolComponent = (
-  props: InferWidgetProps<typeof SymbolProps>
-): JSX.Element => {
+export type SymbolComponentProps = InferWidgetProps<typeof SymbolProps> &
+  PVComponent;
+
+export const SymbolComponent = (props: SymbolComponentProps): JSX.Element => {
   return (
-    <GroupingContainerComponent name={"Grouping"} {...props}>
+    <GroupingContainerComponent name={props.id} {...props}>
       <ImageComponent {...props} />
       <LabelComponent {...props} />
     </GroupingContainerComponent>
@@ -36,7 +38,7 @@ export const SymbolComponent = (
 
 const SymbolWidgetProps = {
   ...SymbolProps,
-  ...WidgetPropType
+  ...PVWidgetPropType
 };
 
 export const Symbol = (
