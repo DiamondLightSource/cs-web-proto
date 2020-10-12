@@ -6,7 +6,8 @@ import {
   InferWidgetProps,
   StringProp,
   BoolPropOpt,
-  StringPropOpt
+  StringPropOpt,
+  ColorPropOpt
 } from "../propTypes";
 import { registerWidget } from "../register";
 import { ImageComponent } from "../Image/image";
@@ -17,7 +18,9 @@ const SymbolProps = {
   src: StringProp,
   alt: StringPropOpt,
   fill: BoolPropOpt,
-  width: StringPropOpt
+  width: StringPropOpt,
+  text: StringPropOpt,
+  backgroundColor: ColorPropOpt
 };
 
 export const SymbolComponent = (
@@ -25,8 +28,8 @@ export const SymbolComponent = (
 ): JSX.Element => {
   return (
     <GroupingContainerComponent name={"Grouping"}>
-      <ImageComponent {...props} />;
-      <LabelComponent />;
+      <ImageComponent {...props} />
+      <LabelComponent {...props} />
     </GroupingContainerComponent>
   );
 };

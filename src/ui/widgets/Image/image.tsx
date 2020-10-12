@@ -6,7 +6,8 @@ import {
   InferWidgetProps,
   StringProp,
   BoolPropOpt,
-  StringPropOpt
+  StringPropOpt,
+  ColorPropOpt
 } from "../propTypes";
 import { registerWidget } from "../register";
 import { BaseUrlContext } from "../../../baseUrl";
@@ -14,12 +15,14 @@ import { BaseUrlContext } from "../../../baseUrl";
 const ImageProps = {
   src: StringProp,
   alt: StringPropOpt,
-  fill: BoolPropOpt
+  fill: BoolPropOpt,
+  backgroundColor: ColorPropOpt
 };
 
 export const ImageComponent = (
   props: InferWidgetProps<typeof ImageProps>
 ): JSX.Element => {
+  console.log(props);
   const baseUrl = useContext(BaseUrlContext);
   let file = `img/${props.src}`;
   if (!file.startsWith("http")) {
@@ -44,7 +47,8 @@ export const ImageComponent = (
         alt={props.alt || undefined}
         style={{
           height: imageSize,
-          width: imageSize
+          width: imageSize,
+          backgroundColor: props.backgroundColor?.rgbaString()
         }}
       />
     </div>
