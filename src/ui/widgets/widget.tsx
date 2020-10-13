@@ -100,7 +100,8 @@ export const ConnectingComponent = (props: {
   widgetProps: any;
   alarmBorder: boolean;
 }): JSX.Element => {
-  /* Add connection to PV and then recursively wrap widgets */
+  // Allow modification of border prop.
+  let border = props.widgetProps.border;
 
   const [effectivePvName, connected, readonly, latestValue] = useConnection(
     props.containerProps.id,
@@ -110,7 +111,7 @@ export const ConnectingComponent = (props: {
 
   // Always indicate with border if PV is disconnected.
   if (props.containerProps.pvName && connected === false) {
-    props.widgetProps.border = new Border(BorderStyle.Dotted, Color.WHITE, 3);
+    border = new Border(BorderStyle.Dotted, Color.WHITE, 3);
   } else if (props.alarmBorder) {
     // Implement alarm border for all widgets if configured.
     const severity = latestValue?.getAlarm()?.quality || AlarmQuality.VALID;
@@ -123,11 +124,7 @@ export const ConnectingComponent = (props: {
       [AlarmQuality.CHANGING]: Color.WHITE
     };
     if (severity !== AlarmQuality.VALID) {
-      props.widgetProps.border = new Border(
-        BorderStyle.Line,
-        colors[severity],
-        2
-      );
+      border = new Border(BorderStyle.Line, colors[severity], 2);
     }
   }
 
@@ -146,7 +143,8 @@ export const ConnectingComponent = (props: {
       pvName: effectivePvName,
       connected: connected,
       readonly: readonly,
-      value: latestValue
+      value: latestValue,
+      border: border
     }
   );
 };

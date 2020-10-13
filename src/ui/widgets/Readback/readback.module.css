@@ -13,14 +13,16 @@
   width: 100%;
 }
 
-.Readback.Disconnected {
+.Readback.undefined,
+.Readback.invalid,
+.Readback.changing {
   color: #ffffff;
 }
 
-.Readback.Minor {
+.Readback.warning {
   color: #eeee00;
 }
 
-.Readback.Major {
+.Readback.alarm {
   color: #ee0000;
 }

@@ -15,12 +15,12 @@ import {
 } from "../propTypes";
 import { registerWidget } from "../register";
 import { LabelComponent } from "../Label/label";
-import { AlarmQuality, DAlarm, DType } from "../../../types/dtypes";
+import { DAlarm, DType } from "../../../types/dtypes";
 
 const ReadbackProps = {
   precision: IntPropOpt,
   showUnits: BoolPropOpt,
-  fgAlarmSensitive: BoolPropOpt,
+  alarmSensitive: BoolPropOpt,
   textAlign: ChoicePropOpt(["left", "center", "right"]),
   transparent: BoolPropOpt,
   font: FontPropOpt,
@@ -33,37 +33,17 @@ const ReadbackProps = {
 export type ReadbackComponentProps = InferWidgetProps<typeof ReadbackProps> &
   PVComponent;
 
-function getClass(connected: boolean, alarmSeverity: AlarmQuality): string {
-  let cls = classes.Readback;
-  if (!connected) {
-    cls += ` ${classes.Disconnected}`;
-  } else {
-    switch (alarmSeverity) {
-      case AlarmQuality.WARNING: {
-        cls += ` ${classes.Minor}`;
-        break;
-      }
-      case AlarmQuality.ALARM: {
-        cls += ` ${classes.Major}`;
-        break;
-      }
-    }
-  }
-  return cls;
-}
-
 export const ReadbackComponent = (
   props: ReadbackComponentProps
 ): JSX.Element => {
   const {
-    connected,
     value,
     precision,
     font,
     foregroundColor,
     backgroundColor,
     border,
-    fgAlarmSensitive = false,
+    alarmSensitive = false,
     transparent = false,
     textAlign = "center",
     showUnits = false
@@ -73,7 +53,7 @@ export const ReadbackComponent = (
   const display = value?.getDisplay();
   let displayedValue;
   if (!value) {
-    displayedValue = "Waiting for value";
+    displayedValue = "######";
   } else {
     if (precision !== undefined && !isNaN(DType.coerceDouble(value))) {
       displayedValue = DType.coerceDouble(value).toFixed(precision);
@@ -82,16 +62,15 @@ export const ReadbackComponent = (
     }
   }
 
-  // Add units if there are any and show units is true
+  // Add units if there are any and show units is true.
   if (showUnits && display?.units) {
     displayedValue = displayedValue + ` ${display.units}`;
   }
 
-  // Handle foreground alarm sensitivity.
+  // Handle alarm sensitivity.
   let className = classes.Readback;
-  // TODO: should we show disconnection even if not alarm sensitive?
-  if (fgAlarmSensitive) {
-    className = getClass(connected, alarm.quality);
+  if (alarmSensitive) {
+    className += ` ${classes[alarm.quality]}`;
   }
   // Use a LabelComponent to display it.
   return (
