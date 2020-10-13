@@ -20,7 +20,7 @@ export const OutlineProvider: React.FC<{}> = ({
 
   const toggleOutlines = (): void => {
     const toggledValue = !showOutlines;
-    localStorage.setItem("outlines", JSON.stringify(toggledValue));
+    localStorage.setItem("showOutlines", JSON.stringify(toggledValue));
     setShowOutlines(toggledValue);
   };
 
