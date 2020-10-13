@@ -145,60 +145,79 @@ it("test receive updates", (done): void => {
   simulator.subscribe("sim://sine");
 });
 
-it("initial limit values", (done): void => {
-  getValue("sim://limit", (value: DType): void => {
-    expect(value.getDoubleValue()).toBe(50);
-    done();
-  });
-  simulator.subscribe("sim://limit");
-});
-
-it("modifying limit values", (done): void => {
-  function* repeatedCallback(): any {
-    const value1 = yield;
-    expect(value1.getDoubleValue()).toEqual(50);
-    const value2 = yield;
-    expect(value2.getDoubleValue()).toEqual(17);
-    done();
-  }
-  const iter = repeatedCallback();
-  iter.next();
-  getValue("sim://limit", (value: DType | undefined): void => {
-    iter.next(value);
-  });
-  simulator.subscribe("sim://limit");
-  simulator.putPv("sim://limit", ddouble(17));
-});
-
-it("distinguishes limit values", (done): void => {
-  function* repeatedCallback(): any {
-    const update1 = yield;
-    expect(update1.name).toEqual("sim://limit#one");
-    expect(update1.value.getDoubleValue()).toEqual(50);
-
-    const update2 = yield;
-    expect(update2.name).toEqual("sim://limit#two");
-    expect(update2.value.getDoubleValue()).toEqual(50);
-
-    const update3 = yield;
-    expect(update3.name).toEqual("sim://limit#one");
-    expect(update3.value.getDoubleValue()).toEqual(1);
-    const update4 = yield;
-    expect(update4.name).toEqual("sim://limit#two");
-    expect(update4.value.getDoubleValue()).toEqual(2);
-    done();
-  }
-  const iter = repeatedCallback();
-  iter.next();
-
-  simulator.connect(nullConnCallback, function(name, value): void {
-    iter.next({ name: name, value: value });
+describe("LimitData", (): void => {
+  test("initial limit values", (done): void => {
+    getValue("sim://limit", (value: DType): void => {
+      expect(value.getDoubleValue()).toBe(50);
+      done();
+    });
+    simulator.subscribe("sim://limit");
   });
 
-  simulator.subscribe("sim://limit#one");
-  simulator.subscribe("sim://limit#two");
-  simulator.putPv("sim://limit#one", ddouble(1));
-  simulator.putPv("sim://limit#two", ddouble(2));
+  test("set double to limit PV", (done): void => {
+    function* repeatedCallback(): any {
+      const value1 = yield;
+      expect(value1.getDoubleValue()).toEqual(50);
+      const value2 = yield;
+      expect(value2.getDoubleValue()).toEqual(17);
+      done();
+    }
+    const iter = repeatedCallback();
+    iter.next();
+    getValue("sim://limit", (value: DType | undefined): void => {
+      iter.next(value);
+    });
+    simulator.subscribe("sim://limit");
+    simulator.putPv("sim://limit", ddouble(17));
+  });
+
+  test("set string to limit PV", (done): void => {
+    function* repeatedCallback(): any {
+      const value1 = yield;
+      expect(value1.getDoubleValue()).toEqual(50);
+      const value2 = yield;
+      expect(value2.getDoubleValue()).toEqual(89);
+      done();
+    }
+    const iter = repeatedCallback();
+    iter.next();
+    getValue("sim://limit", (value: DType | undefined): void => {
+      iter.next(value);
+    });
+    simulator.subscribe("sim://limit");
+    simulator.putPv("sim://limit", dstring("89"));
+  });
+
+  it("distinguishes limit values", (done): void => {
+    function* repeatedCallback(): any {
+      const update1 = yield;
+      expect(update1.name).toEqual("sim://limit#one");
+      expect(update1.value.getDoubleValue()).toEqual(50);
+
+      const update2 = yield;
+      expect(update2.name).toEqual("sim://limit#two");
+      expect(update2.value.getDoubleValue()).toEqual(50);
+
+      const update3 = yield;
+      expect(update3.name).toEqual("sim://limit#one");
+      expect(update3.value.getDoubleValue()).toEqual(1);
+      const update4 = yield;
+      expect(update4.name).toEqual("sim://limit#two");
+      expect(update4.value.getDoubleValue()).toEqual(2);
+      done();
+    }
+    const iter = repeatedCallback();
+    iter.next();
+
+    simulator.connect(nullConnCallback, function(name, value): void {
+      iter.next({ name: name, value: value });
+    });
+
+    simulator.subscribe("sim://limit#one");
+    simulator.subscribe("sim://limit#two");
+    simulator.putPv("sim://limit#one", ddouble(1));
+    simulator.putPv("sim://limit#two", ddouble(2));
+  });
 });
 
 it("test disconnector", (done): void => {

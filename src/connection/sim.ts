@@ -292,7 +292,7 @@ class LimitData extends SimPv {
   public updateValue(value: DType): void {
     // Set alarm status
     let alarmSeverity = AlarmQuality.VALID;
-    const v = value.getDoubleValue();
+    const v = DType.coerceDouble(value);
     if (v !== undefined) {
       alarmSeverity =
         v < 10
@@ -305,7 +305,7 @@ class LimitData extends SimPv {
           ? AlarmQuality.WARNING
           : AlarmQuality.VALID;
       this.value = new DType(
-        { doubleValue: value.getDoubleValue() },
+        { doubleValue: v },
         new DAlarm(alarmSeverity, ""),
         dtimeNow()
       );
