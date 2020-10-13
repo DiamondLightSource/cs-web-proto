@@ -1,4 +1,4 @@
-import React, { CSSProperties } from "react";
+import React, { CSSProperties, useContext } from "react";
 import log from "loglevel";
 
 import { TooltipWrapper } from "../components/TooltipWrapper/tooltipWrapper";
@@ -13,24 +13,49 @@ import { Color } from "../../types/color";
 import { Position, RelativePosition } from "../../types/position";
 import { AlarmQuality } from "../../types/dtypes";
 import { Font } from "../../types/font";
+import { OutlineContext } from "../../outlineContext";
 
-export function commonCss(props: {
+/**
+ * A custom hook returning a CSSProperties object that formats borders,
+ * fonts, visiblity and background color that can be passed in as the style key
+ * @param props properties of the widget to be formatted
+ * @returns a CSSProperties object to pass into another element under the style key
+ */
+export function useCommonCss(props: {
   border?: Border;
   font?: Font;
   visible?: boolean;
-  highlight?: boolean;
   backgroundColor?: Color;
 }): CSSProperties {
+  const { showOutlines } = useContext(OutlineContext);
+  const visible = props.visible === undefined || props.visible;
   return {
     ...props.border?.css(),
     ...props.font?.css(),
     backgroundColor: props.backgroundColor?.rgbaString(),
-    visibility: props.visible ? "hidden" : undefined,
-    opacity: props.highlight ? "50%" : undefined
+    visibility: visible ? undefined : "hidden",
+    outline: showOutlines ? "1px dashed grey" : undefined,
+    outlineOffset: showOutlines ? "-2px" : undefined
   };
 }
 
 // Function to recursively wrap a given set of widgets
+/**
+ * A function that recursively wraps all components in an array in
+ * order of entry, container properties are applied to all components
+ * except the base child, of which the widget properties are applied.
+ * @param components The list of functional components to wrap in eachother
+ * @param position The position of the parent component
+ * @param containerProps The properties to apply to each component
+ * @param widgetProps Widget properties to pass into the base child component
+ * @returns One component with each subsequent component wrapped in the last
+ * @example recursiveWrapping([Label, Input, Image], position, containerProps, widgetProps) ->
+ * <Label style={position.css()} {...containerProps}>
+ * Indent <Input style={position.css()} {...containerProps}>
+ * DoubleIndent <Image style={position.css()} {...widgetProps} />
+ * Indent </Input>
+ * </Label>
+ */
 const recursiveWrapping = (
   components: React.FC<any>[],
   position: Position,
@@ -62,15 +87,22 @@ const recursiveWrapping = (
    PV is likely to be the main source of updates. React can re-render
    this component but need not re-render Widget every time.
 */
+/**
+ * This component creates the connection aspect of a widget, and can
+ * be returned by another function to allow react to rerender the child component (this function)
+ * only, as opposed to rendering the parent component
+ * @param props
+ * @returns
+ */
 export const ConnectingComponent = (props: {
   components: React.FC<any>[];
-  highlight?: string;
   containerStyling: Position;
   containerProps: any & { id: string };
   widgetProps: any;
   alarmBorder: boolean;
 }): JSX.Element => {
-  /* Add connection to PV and then recursively wrap widgets */
+  // Allow modification of border prop.
+  let border = props.widgetProps.border;
 
   const [effectivePvName, connected, readonly, latestValue] = useConnection(
     props.containerProps.id,
@@ -78,7 +110,11 @@ export const ConnectingComponent = (props: {
     props.containerProps.type
   );
 
-  if (props.alarmBorder) {
+  // Always indicate with border if PV is disconnected.
+  if (props.containerProps.pvName && connected === false) {
+    border = new Border(BorderStyle.Dotted, Color.WHITE, 3);
+  } else if (props.alarmBorder) {
+    // Implement alarm border for all widgets if configured.
     const severity = latestValue?.getAlarm()?.quality || AlarmQuality.VALID;
     const colors: { [key in AlarmQuality]: Color } = {
       [AlarmQuality.VALID]: Color.BLACK,
@@ -89,11 +125,7 @@ export const ConnectingComponent = (props: {
       [AlarmQuality.CHANGING]: Color.WHITE
     };
     if (severity !== AlarmQuality.VALID) {
-      props.widgetProps.border = new Border(
-        BorderStyle.Line,
-        colors[severity],
-        2
-      );
+      border = new Border(BorderStyle.Line, colors[severity], 2);
     }
   }
 
@@ -112,7 +144,8 @@ export const ConnectingComponent = (props: {
       pvName: effectivePvName,
       connected: connected,
       readonly: readonly,
-      value: latestValue
+      value: latestValue,
+      border: border
     }
   );
 };
@@ -155,20 +188,12 @@ export const Widget = (
   }
   components.push(TooltipWrapper);
   components.push(baseWidget);
-  if (props.highlight) {
-    baseWidgetProps.border = new Border(
-      BorderStyle.Dashed,
-      Color.parse(props.highlight),
-      3
-    );
-  }
 
   // We could select the ConnectingComponent only if there is a PV
   // to which to connect, if we felt that would be more efficient.
   return (
     <ConnectingComponent
       alarmBorder={alarmBorder}
-      highlight={props.highlight}
       components={components}
       containerStyling={position}
       containerProps={containerProps}

@@ -4,14 +4,9 @@ import { configure } from "enzyme";
 import log from "loglevel";
 import Adapter from "enzyme-adapter-react-16";
 import { DType, DAlarm } from "./types/dtypes";
-import {
-  createFileContext,
-  FileContext,
-  PageState,
-  TabState
-} from "./fileContext";
+import { FileProvider, PageState, TabState } from "./fileContext";
 import { render, RenderResult } from "@testing-library/react";
-import React, { useState } from "react";
+import React from "react";
 import { Provider } from "react-redux";
 import { MacroContext } from "./types/macros";
 import { csReducer, CsState } from "./redux/csState";
@@ -66,14 +61,6 @@ export function contextRender(
   }
 ): RenderResult {
   const ParentComponent = (props: { child: JSX.Element }): JSX.Element => {
-    const [pageState, setPageState] = useState<PageState>(initialPageState);
-    const [tabState, setTabState] = useState<TabState>(initialTabState);
-    const fileContext = createFileContext(
-      pageState,
-      setPageState,
-      tabState,
-      setTabState
-    );
     // Hard-code macros for now.
     const contextMacros = { a: "A", b: "B", c: "C" };
     const globalMacros = { c: "D", d: "E" };
@@ -86,9 +73,12 @@ export function contextRender(
     return (
       <Provider store={store}>
         <MacroContext.Provider value={macroContext}>
-          <FileContext.Provider value={fileContext}>
+          <FileProvider
+            initialPageState={initialPageState}
+            initialTabState={initialTabState}
+          >
             {props.child}
-          </FileContext.Provider>
+          </FileProvider>
         </MacroContext.Provider>
       </Provider>
     );

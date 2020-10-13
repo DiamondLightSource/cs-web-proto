@@ -10,13 +10,14 @@ export function dtimeNow(): DTime {
   return new DTime(new Date());
 }
 
+// Give string values so that they can be used elsewhere at runtime.
 export enum AlarmQuality {
-  VALID,
-  WARNING,
-  ALARM,
-  INVALID,
-  UNDEFINED,
-  CHANGING
+  VALID = "valid",
+  WARNING = "warning",
+  ALARM = "alarm",
+  INVALID = "invalid",
+  UNDEFINED = "undefined",
+  CHANGING = "changing"
 }
 
 export class DAlarm {

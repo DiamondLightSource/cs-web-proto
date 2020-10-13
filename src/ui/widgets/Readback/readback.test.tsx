@@ -47,7 +47,7 @@ describe("readback component", (): void => {
       <ReadbackComponent
         connected={true}
         readonly={false}
-        fgAlarmSensitive={true}
+        alarmSensitive={true}
         value={
           new DType(
             { stringValue: "hello" },
@@ -59,7 +59,7 @@ describe("readback component", (): void => {
     );
 
     const { queryByText } = render(readback);
-    // 'Major' class added.
-    expect(queryByText("hello")).toHaveClass("Major");
+    // 'alarm' class added.
+    expect(queryByText("hello")).toHaveClass("alarm");
   });
 });

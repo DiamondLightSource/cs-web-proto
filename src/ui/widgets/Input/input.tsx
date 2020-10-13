@@ -14,15 +14,17 @@ import {
 } from "../propTypes";
 import { Font } from "../../../types/font";
 import { Color } from "../../../types/color";
-import { DType } from "../../../types/dtypes";
+import { AlarmQuality, DType } from "../../../types/dtypes";
 
 export interface InputProps {
   pvName: string;
   value: string;
   readonly: boolean;
-  foregroundColor: Color;
-  backgroundColor: Color;
+  foregroundColor?: Color;
+  backgroundColor?: Color;
   transparent: boolean;
+  alarm: AlarmQuality;
+  alarmSensitive: boolean;
   onKeyDown: (event: React.KeyboardEvent<HTMLInputElement>) => void;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onBlur: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -34,7 +36,7 @@ export interface InputProps {
 export const InputComponent: React.FC<InputProps> = (
   props: InputProps
 ): JSX.Element => {
-  let allClasses = `Input ${classes.Input}`;
+  let allClasses = classes.Input;
   const style: CSSProperties = {
     ...props.font?.css()
   };
@@ -48,7 +50,10 @@ export const InputComponent: React.FC<InputProps> = (
     style["backgroundColor"] = "transparent";
   }
   if (props.readonly) {
-    allClasses += ` ${classes.Readonly}`;
+    allClasses += ` ${classes.readonly}`;
+  }
+  if (props.alarmSensitive) {
+    allClasses += ` ${classes[props.alarm]}`;
   }
   return (
     <input
@@ -67,11 +72,12 @@ export const InputComponent: React.FC<InputProps> = (
 
 export const SmartInputComponent = (
   props: PVInputComponent & {
-    font: Font;
-    foregroundColor: Color;
-    backgroundColor: Color;
-    transparent: boolean;
-    textAlign: "left" | "center" | "right";
+    font?: Font;
+    foregroundColor?: Color;
+    backgroundColor?: Color;
+    transparent?: boolean;
+    alarmSensitive?: boolean;
+    textAlign?: "left" | "center" | "right";
   }
 ): JSX.Element => {
   const [inputValue, setInputValue] = useState("");
@@ -107,14 +113,18 @@ export const SmartInputComponent = (
     setInputValue(DType.coerceString(props.value));
   }
 
+  const alarmQuality = props.value?.getAlarm().quality ?? AlarmQuality.VALID;
+
   return (
     <InputComponent
       pvName={props.pvName}
       value={inputValue}
+      alarm={alarmQuality}
+      alarmSensitive={props.alarmSensitive || false}
       readonly={props.readonly}
       foregroundColor={props.foregroundColor}
       backgroundColor={props.backgroundColor}
-      transparent={props.transparent}
+      transparent={props.transparent ?? false}
       onKeyDown={onKeyDown}
       onChange={onChange}
       onBlur={onBlur}
@@ -131,6 +141,7 @@ const InputWidgetProps = {
   foregroundColor: ColorPropOpt,
   backgroundColor: ColorPropOpt,
   transparent: BoolPropOpt,
+  alarmSensitive: BoolPropOpt,
   textAlign: ChoicePropOpt(["left", "center", "right"])
 };
 
