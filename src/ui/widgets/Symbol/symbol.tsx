@@ -12,14 +12,13 @@ import {
 import { registerWidget } from "../register";
 import { ImageComponent } from "../Image/image";
 import { LabelComponent } from "../Label/label";
-import { GroupingContainerComponent } from "../GroupingContainer/groupingContainer";
 
 const SymbolProps = {
   src: StringPropOpt,
   alt: StringPropOpt,
   fill: BoolPropOpt,
   width: StringPropOpt,
-  text: StringPropOpt,
+  name: StringPropOpt,
   backgroundColor: ColorPropOpt,
   position: PositionProp
 };
@@ -28,13 +27,16 @@ export type SymbolComponentProps = InferWidgetProps<typeof SymbolProps> &
   PVComponent;
 
 export const SymbolComponent = (props: SymbolComponentProps): JSX.Element => {
-  console.log(props);
-
+  const { name } = props;
   return (
-    <GroupingContainerComponent name={"stuff"} {...props}>
+    <div
+      style={{
+        backgroundColor: props.backgroundColor?.rgbaString() || "white"
+      }}
+    >
       <ImageComponent {...props} />
-      <LabelComponent {...props} />
-    </GroupingContainerComponent>
+      <LabelComponent {...props} text={name} />
+    </div>
   );
 };
 
