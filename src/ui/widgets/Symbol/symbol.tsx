@@ -28,8 +28,10 @@ export type SymbolComponentProps = InferWidgetProps<typeof SymbolProps> &
   PVComponent;
 
 export const SymbolComponent = (props: SymbolComponentProps): JSX.Element => {
+  console.log(props);
+
   return (
-    <GroupingContainerComponent name={props.id} {...props}>
+    <GroupingContainerComponent name={"stuff"} {...props}>
       <ImageComponent {...props} />
       <LabelComponent {...props} />
     </GroupingContainerComponent>
