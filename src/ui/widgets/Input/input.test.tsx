@@ -1,45 +1,32 @@
 import React from "react";
-import { InputComponent, InputProps } from "./input";
-import { configure, shallow, ShallowWrapper } from "enzyme";
+import { SmartInputComponent } from "./input";
+import { configure } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
-import { create, ReactTestRenderer } from "react-test-renderer";
-import { Color } from "../../../types/color";
+import { render } from "@testing-library/react";
+import { DAlarm } from "../../../types/dtypes";
+import { dstring } from "../../../setupTests";
 
 configure({ adapter: new Adapter() });
 
-let snapshot: ReactTestRenderer;
-let wrapper: ShallowWrapper<InputProps>;
+let input: JSX.Element;
 
 beforeEach((): void => {
-  const mock = (_: any): void => {
-    // pass
-  };
-  const input = (
-    <InputComponent
+  input = (
+    <SmartInputComponent
       pvName="pv"
-      value="hello"
+      value={dstring("hello", DAlarm.MINOR)}
+      connected={true}
       readonly={true}
-      transparent={true}
-      foregroundColor={Color.BLACK}
-      backgroundColor={Color.GREEN}
-      onKeyDown={mock}
-      onChange={mock}
-      onBlur={mock}
-      onClick={mock}
+      alarmSensitive={true}
     />
   );
-  wrapper = shallow(input);
-  snapshot = create(input);
 });
-
-describe("<Input Input />", (): void => {
-  test("it matches the snapshot", (): void => {
-    expect(snapshot.toJSON()).toMatchSnapshot();
-  });
-
-  test("it renders a basic element", (): void => {
-    const input = wrapper.find("input");
-    expect(input.get(0).type).toEqual("input");
-    expect(input.prop("value")).toEqual("hello");
+describe("<Input />", (): void => {
+  it("renders an input", (): void => {
+    const { getByDisplayValue } = render(input);
+    const renderedInput = getByDisplayValue("hello");
+    expect(renderedInput).toBeInTheDocument();
+    expect(renderedInput).toHaveClass("warning");
+    expect(renderedInput).toHaveClass("readonly");
   });
 });
