@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 
 import { Widget } from "../widget";
 import { PVWidgetPropType, PVComponent } from "../widgetProps";
@@ -7,27 +7,30 @@ import {
   BoolPropOpt,
   StringPropOpt,
   ColorPropOpt,
-  PositionProp
+  PositionProp,
+  BoolProp
 } from "../propTypes";
 import { registerWidget } from "../register";
-import { ImageComponent } from "../Image/image";
 import { LabelComponent } from "../Label/label";
+import { ImageComponent } from "../Image/image";
 
 const SymbolProps = {
   src: StringPropOpt,
   alt: StringPropOpt,
   fill: BoolPropOpt,
-  width: StringPropOpt,
   name: StringPropOpt,
   backgroundColor: ColorPropOpt,
-  position: PositionProp
+  position: PositionProp,
+  showLabel: BoolProp,
+  stretchToFit: BoolProp
 };
 
 export type SymbolComponentProps = InferWidgetProps<typeof SymbolProps> &
   PVComponent;
 
 export const SymbolComponent = (props: SymbolComponentProps): JSX.Element => {
-  const { name } = props;
+  const { name, showLabel, stretchToFit } = props;
+
   return (
     <div
       style={{
@@ -35,7 +38,7 @@ export const SymbolComponent = (props: SymbolComponentProps): JSX.Element => {
       }}
     >
       <ImageComponent {...props} />
-      <LabelComponent {...props} text={name} />
+      {showLabel && <LabelComponent {...props} text={name} />}
     </div>
   );
 };
