@@ -28,11 +28,12 @@ export function useCommonCss(props: {
   backgroundColor?: Color;
 }): CSSProperties {
   const { showOutlines } = useContext(OutlineContext);
+  const visible = props.visible === undefined || props.visible;
   return {
     ...props.border?.css(),
     ...props.font?.css(),
     backgroundColor: props.backgroundColor?.rgbaString(),
-    visibility: props.visible ? "hidden" : undefined,
+    visibility: visible ? undefined : "hidden",
     outline: showOutlines ? "1px dashed grey" : undefined,
     outlineOffset: showOutlines ? "-2px" : undefined
   };
