@@ -108,7 +108,11 @@ export const ConnectingComponent = (props: {
     props.containerProps.type
   );
 
-  if (props.alarmBorder) {
+  // Always indicate with border if PV is disconnected.
+  if (props.containerProps.pvName && connected === false) {
+    props.widgetProps.border = new Border(BorderStyle.Dotted, Color.WHITE, 3);
+  } else if (props.alarmBorder) {
+    // Implement alarm border for all widgets if configured.
     const severity = latestValue?.getAlarm()?.quality || AlarmQuality.VALID;
     const colors: { [key in AlarmQuality]: Color } = {
       [AlarmQuality.VALID]: Color.BLACK,
