@@ -67,7 +67,9 @@ export const SymbolComponent = (props: SymbolComponentProps): JSX.Element => {
       }}
     >
       <SvgImageComponent {...props} />
-      {showLabel && <LabelComponent {...props} text={name} />}
+      {showLabel && (
+        <LabelComponent {...{ ...props, visible: true }} text={name} />
+      )}
     </div>
   );
 };
