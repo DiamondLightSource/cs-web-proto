@@ -1,3 +1,5 @@
+import log from "loglevel";
+
 export { ActionButton } from "./ActionButton/actionButton";
 export { Display } from "./Display/display";
 export { DrawerWidget } from "./Drawer/drawer";
@@ -21,6 +23,8 @@ export { SlideControl } from "./SlideControl/slideControl";
 export { Slideshow } from "./Slideshow/slideshow";
 export { TabContainer } from "./Tabs/tabContainer";
 
-// By importing this you ensure all the above widgets are imported
-// and thus registered.
-export const TRIGGER_REGISTER = "trigger";
+// By importing and calling this function you ensure all the
+// above widgets are imported and thus registered.
+export function ensureWidgetsRegistered(): void {
+  log.debug("Triggering widget import.");
+}

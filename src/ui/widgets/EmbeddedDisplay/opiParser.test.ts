@@ -2,9 +2,10 @@ import log from "loglevel";
 import { Color } from "../../../types/color";
 import { Border } from "../../../types/border";
 import { Rule } from "../../../types/props";
-import { Label } from "..";
 import { parseOpi } from "./opiParser";
 import { AbsolutePosition, RelativePosition } from "../../../types/position";
+import { ensureWidgetsRegistered } from "..";
+ensureWidgetsRegistered();
 
 describe("opi widget parser", (): void => {
   const displayString = `
@@ -68,10 +69,6 @@ describe("opi widget parser", (): void => {
     </widget>
   </display>`;
 
-  /* We need to import widgets to register them, but don't need
-     the actual variable. */
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const label = Label;
   it("parses a label widget", (): void => {
     const widget = parseOpi(labelString, "ca").children[0];
     expect(widget.type).toEqual("label");
