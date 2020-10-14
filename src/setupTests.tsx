@@ -11,6 +11,7 @@ import { Provider } from "react-redux";
 import { MacroContext } from "./types/macros";
 import { csReducer, CsState } from "./redux/csState";
 import { createStore } from "redux";
+import { BrowserRouter as Router } from "react-router-dom";
 
 // Set up Enzyme.
 configure({ adapter: new Adapter() });
@@ -71,16 +72,18 @@ export function contextRender(
       initialCsState
     );
     return (
-      <Provider store={store}>
-        <MacroContext.Provider value={macroContext}>
-          <FileProvider
-            initialPageState={initialPageState}
-            initialTabState={initialTabState}
-          >
-            {props.child}
-          </FileProvider>
-        </MacroContext.Provider>
-      </Provider>
+      <Router>
+        <Provider store={store}>
+          <MacroContext.Provider value={macroContext}>
+            <FileProvider
+              initialPageState={initialPageState}
+              initialTabState={initialTabState}
+            >
+              {props.child}
+            </FileProvider>
+          </MacroContext.Provider>
+        </Provider>
+      </Router>
     );
   };
   return render(<ParentComponent child={component}></ParentComponent>);

@@ -45,7 +45,6 @@ describe("<DynamicPage>", (): void => {
     const initialPageState: PageState = {
       testlocation: {
         path: "test.json",
-        type: "json",
         macros: {},
         defaultProtocol: "pva"
       }

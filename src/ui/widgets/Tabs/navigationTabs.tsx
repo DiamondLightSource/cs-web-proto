@@ -35,7 +35,6 @@ export const NavigationTabsComponent = (
       position={new RelativePosition()}
       file={{
         path: child?.path || "",
-        type: child?.type || "json",
         defaultProtocol: "pva",
         macros: child?.macros || {}
       }}

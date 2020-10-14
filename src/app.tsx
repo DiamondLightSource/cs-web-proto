@@ -10,10 +10,34 @@ import { onRenderCallback } from "./profilerCallback";
 import { RelativePosition } from "./types/position";
 import { Header } from "./ui/components/Header/header";
 import { Footer } from "./ui/components/Footer/footer";
+import { Redirect, Route, Switch, useRouteMatch } from "react-router-dom";
 
 const baseUrl = process.env.REACT_APP_BASE_URL ?? "http://localhost:3000";
 
 log.setLevel((process.env.REACT_APP_LOG_LEVEL as LogLevelDesc) ?? "info");
+
+const LoadEmbedded = (): JSX.Element => {
+  const match = useRouteMatch();
+  let path = match.url;
+  if (
+    !match.url.endsWith(".opi") ||
+    match.url.endsWith(".json") ||
+    match.url.endsWith(".bob")
+  ) {
+    path = `${match.url}.json`;
+  }
+
+  return (
+    <EmbeddedDisplay
+      position={new RelativePosition()}
+      file={{
+        path,
+        defaultProtocol: "pva",
+        macros: {}
+      }}
+    />
+  );
+};
 
 const App: React.FC = (): JSX.Element => {
   // Set dark or light mode using ThemeContext
@@ -29,16 +53,12 @@ const App: React.FC = (): JSX.Element => {
         <div className="App">
           <Header />
           <Profiler id="Dynamic Page Profiler" onRender={onRenderCallback}>
-            <EmbeddedDisplay
-              // RelativePosition returns CSS properties
-              position={new RelativePosition()}
-              file={{
-                path: "app.json",
-                type: "json",
-                defaultProtocol: "pva",
-                macros: {}
-              }}
-            />
+            <Switch>
+              <Redirect exact from="/" to="/app" />
+              <Route path="/*">
+                <LoadEmbedded />
+              </Route>
+            </Switch>
           </Profiler>
           <Footer />
         </div>

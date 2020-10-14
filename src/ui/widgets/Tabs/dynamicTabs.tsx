@@ -48,7 +48,6 @@ export const DynamicTabsComponent = (
           position={new RelativePosition()}
           file={{
             path: description?.path || "",
-            type: description?.type || "json",
             defaultProtocol: description?.defaultProtocol ?? "ca",
             macros: description?.macros || {}
           }}
