@@ -46,7 +46,8 @@ const OPI_WIDGET_MAPPING: { [key: string]: any } = {
   "org.csstudio.opibuilder.widgets.ActionButton": "actionbutton",
   "org.csstudio.opibuilder.widgets.MenuButton": "menubutton",
   "org.csstudio.opibuilder.widgets.symbol.multistate.MultistateMonitorWidget":
-    "symbol"
+    "symbol",
+  "org.csstudio.opibuilder.widgets.LED": "led"
 };
 
 /**
@@ -369,7 +370,8 @@ export const OPI_SIMPLE_PARSERS: ParserDict = {
   src: ["image_file", opiParseImageFile],
   showLabel: ["show_boolean_label", opiParseBoolean],
   width: ["width", opiParseNumber],
-  height: ["height", opiParseNumber]
+  height: ["height", opiParseNumber],
+  alarmSensitive: ["border_alarm_sensitive", opiParseBoolean]
 };
 
 /**
