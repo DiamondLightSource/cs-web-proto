@@ -67,10 +67,11 @@ describe("background color changes depending on color returned from rule", (): v
   });
 });
 
-describe("scale property is used", (): void => {
-  test("scale is added to properties", (): void => {
-    const renderedLed = renderLed({ scale: 2.0 });
+describe("width property is used", (): void => {
+  test("width changes the size of the LED", (): void => {
+    const renderedLed = renderLed({ width: 10 });
 
-    expect(renderedLed.props.style.transform).toBe("scale(2)");
+    expect(renderedLed.props.style.width).toBe("10px");
+    expect(renderedLed.props.style.height).toBe("10px");
   });
 });

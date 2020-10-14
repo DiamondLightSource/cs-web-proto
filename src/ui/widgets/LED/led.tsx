@@ -13,12 +13,12 @@ import { DAlarm } from "../../../types/dtypes";
 import { Color } from "../../../types/color";
 
 /**
- * scale: a scaling factor for the led from it's default value
+ * width: the diameter of the LED
  * userColor: the color associated with the resolved value of the user defined rule
  *  (if there is one)
  */
 export const LedProps = {
-  scale: FloatPropOpt,
+  width: FloatPropOpt,
   userColor: StringPropOpt,
   alarmSensitive: BoolProp
 };
@@ -26,19 +26,22 @@ export const LedProps = {
 export type LedComponentProps = InferWidgetProps<typeof LedProps> & PVComponent;
 
 /**
- * Creates a small led icon which can change color depending on connection
- * and alarm type, css file defines these colours
+ * Creates a small led icon which can change color depending on alarm type,
+ * css file defines these colours
  * @param props properties to pass in, these will be handled by the below LED
  * function and only extra props defined on LedProps need to be passed in as well,
  * to define some text explaining the meaning of the LED in different colours add a
  * tooltip property in a json file containing a led
  */
 export const LedComponent = (props: LedComponentProps): JSX.Element => {
-  const { value, userColor, alarmSensitive, scale = 1.0 } = props;
+  const { value, userColor, alarmSensitive, width } = props;
 
-  const style: any = {
-    transform: `scale(${scale})`
-  };
+  const style: any = {};
+
+  if (width) {
+    style.width = `${width}px`;
+    style.height = `${width}px`;
+  }
 
   let allClasses = classes.Led;
   // User defined rules take precedent over alarmSensitity
