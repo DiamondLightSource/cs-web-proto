@@ -4,32 +4,17 @@ import { InferWidgetProps, StringPropOpt, FloatPropOpt } from "../propTypes";
 import { PVComponent, PVWidgetPropType } from "../widgetProps";
 import { registerWidget } from "../register";
 import classes from "./led.module.css";
-import { DAlarm, AlarmQuality } from "../../../types/dtypes";
+import { DAlarm } from "../../../types/dtypes";
 import { Color } from "../../../types/color";
 
 /**
  * scale: a scaling factor for the led from it's default value
- * ruleRes: the resolved value of the user defined rule (if there is one)
- * useRule: whether to use the user defined rule instead of the PV alarm level
+ * userColor: the color associated with the resolved value of the user defined rule
+ *  (if there is one)
  */
 export const LedProps = {
   scale: FloatPropOpt,
-  ruleRes: StringPropOpt,
   userColor: StringPropOpt
-};
-
-const alarmToColor = (alarm: DAlarm): Color => {
-  const alarmQuality = alarm.quality;
-  let ledColor = Color.GREEN;
-  switch (alarmQuality) {
-    case AlarmQuality.WARNING:
-      ledColor = Color.YELLOW;
-      break;
-    case AlarmQuality.ALARM:
-      ledColor = Color.RED;
-      break;
-  }
-  return ledColor;
 };
 
 export type LedComponentProps = InferWidgetProps<typeof LedProps> & PVComponent;
@@ -43,29 +28,23 @@ export type LedComponentProps = InferWidgetProps<typeof LedProps> & PVComponent;
  * tooltip property in a json file containing a led
  */
 export const LedComponent = (props: LedComponentProps): JSX.Element => {
-  const { value, connected, userColor, scale = 1.0 } = props;
+  const { value, userColor, scale = 1.0 } = props;
 
-  let backgroundColor;
-  if (connected) {
-    if ("rules" in props) {
-      backgroundColor = Color.parse(userColor ? userColor : "green");
-    } else {
-      const alarm = value?.getAlarm() || DAlarm.NONE;
-      backgroundColor = alarmToColor(alarm);
-    }
+  const style: any = {
+    transform: `scale(${scale})`
+  };
+
+  let allClasses = classes.Led;
+  if ("rules" in props) {
+    style.backgroundColor = Color.parse(
+      userColor ? userColor : "#00ff00"
+    ).rgbaString();
   } else {
-    backgroundColor = Color.GREY;
+    const alarm = value?.getAlarm() || DAlarm.NONE;
+    allClasses += ` ${classes[alarm.quality]}`;
   }
 
-  return (
-    <div
-      className={classes.led}
-      style={{
-        backgroundColor: backgroundColor.rgbaString(),
-        transform: `scale(${scale})`
-      }}
-    />
-  );
+  return <div className={allClasses} style={style} />;
 };
 
 const LedWidgetProps = {
