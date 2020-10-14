@@ -7,8 +7,16 @@ describe("Border", () => {
     expect(border.css()).toEqual({
       borderStyle: "solid",
       borderWidth: "1px",
+      borderColor: "rgba(255, 0, 0, 255)"
+    });
+  });
+  it("sets border radius if defined", (): void => {
+    const border = new Border(BorderStyle.Line, Color.RED, 1, 2);
+    expect(border.css()).toEqual({
+      borderStyle: "solid",
+      borderWidth: "1px",
       borderColor: "rgba(255, 0, 0, 255)",
-      borderRadius: "0px"
+      borderRadius: "2px"
     });
   });
 });

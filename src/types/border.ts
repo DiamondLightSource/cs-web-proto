@@ -18,7 +18,7 @@ const CssBorders: { [key in BorderStyle]: string } = {
 };
 
 export class Border {
-  public static NONE = new Border(BorderStyle.None, Color.BLACK, 0, 0);
+  public static NONE = new Border(BorderStyle.None, Color.BLACK, 0);
 
   private style: BorderStyle;
   private color: Color;
@@ -36,7 +36,7 @@ export class Border {
     this.style = style;
     this.color = color;
     this.width = width;
-    this.radius = radius ?? 0;
+    this.radius = radius;
   }
 
   public css(): CSSProperties {
@@ -44,7 +44,7 @@ export class Border {
       borderStyle: CssBorders[this.style],
       borderWidth: `${this.width}px`,
       borderColor: this.color.rgbaString(),
-      borderRadius: `${this.radius}px`
+      borderRadius: this.radius ? `${this.radius}px` : undefined
     };
   }
 }
