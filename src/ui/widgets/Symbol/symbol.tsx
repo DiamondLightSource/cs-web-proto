@@ -35,7 +35,7 @@ const SvgImageComponent = (
   }
 
   return (
-    <div className="size">
+    <div style={{ backgroundColor: "transparent" }}>
       <img src={file} alt={""} style={style} />
     </div>
   );
@@ -63,7 +63,7 @@ export const SymbolComponent = (props: SymbolComponentProps): JSX.Element => {
   return (
     <div
       style={{
-        backgroundColor: props.backgroundColor?.rgbaString() || "white"
+        backgroundColor: "transparent"
       }}
     >
       <SvgImageComponent {...props} />
