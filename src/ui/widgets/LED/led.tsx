@@ -39,8 +39,10 @@ export const LedComponent = (props: LedComponentProps): JSX.Element => {
   const style: any = {};
 
   if (width) {
-    style.width = `${width}px`;
-    style.height = `${width}px`;
+    // make sizes similar to size in CS-Studio, five taken
+    // away from default in css file too
+    style.width = `${width - 5}px`;
+    style.height = `${width - 5}px`;
   }
 
   let allClasses = classes.Led;
