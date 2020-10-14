@@ -1,3 +1,11 @@
+/**
+ * Store information about open pages (used in the dynamic page widget)
+ * and tabs (used in the dynamic tabs widget).
+ * The information is stored in a history object, which allows you
+ * to navigate back and forward through these operations even though
+ * the URL doesn't change.
+ * It is provided to widgets using a React context.
+ */
 import React from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { MacroMap, macrosEqual } from "./types/macros";

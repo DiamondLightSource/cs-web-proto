@@ -1,3 +1,12 @@
+/**
+ * A widget that shows files stored in the file context
+ * under a specific 'location'.
+ *
+ * As the files are stored centrally, closing a tab in one such
+ * widget will close it in other widgets showing the same location.
+ *
+ * See also the tab container widget and the dynamic page widget.
+ */
 import React, { useContext } from "react";
 
 import { Widget } from "../widget";

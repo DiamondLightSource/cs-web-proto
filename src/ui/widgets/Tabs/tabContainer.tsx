@@ -1,3 +1,13 @@
+/**
+ * A widget that displays widgets in a number of pre-defined
+ * tabs.
+ *
+ * Previously we had a 'navigation tabs' widget that displayed
+ * an embedded display in each tab, but that is easy to recreate
+ * with this widget if needed.
+ *
+ * See also the dynamic tabs widget.
+ */
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import log from "loglevel";
