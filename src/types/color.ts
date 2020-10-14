@@ -8,6 +8,7 @@ export class Color {
   private a: number;
 
   public static WHITE = new Color(255, 255, 255);
+  public static GREY = new Color(220, 220, 220);
   public static BLACK = new Color(0, 0, 0);
   public static RED = new Color(255, 0, 0);
   public static GREEN = new Color(0, 128, 0);

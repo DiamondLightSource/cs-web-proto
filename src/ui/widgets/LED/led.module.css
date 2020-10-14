@@ -1,0 +1,20 @@
+.Led {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: #00ee00;
+}
+
+.Led.undefined,
+.Led.invalid,
+.Led.changing {
+  background-color: #ffffff;
+}
+
+.Led.warning {
+  background-color: #eeee00;
+}
+
+.Led.alarm {
+  background-color: #ee0000;
+}
