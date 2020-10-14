@@ -27,7 +27,8 @@ describe("led changes Css properties based on alarm", (): void => {
     const value = createValue(alarm as AlarmQuality);
 
     const ledProps = {
-      value
+      value,
+      alarmSensitive: true
     };
 
     const renderedLed = renderLed(ledProps);

@@ -1,6 +1,11 @@
 import React from "react";
 import { Widget } from "../widget";
-import { InferWidgetProps, StringPropOpt, FloatPropOpt } from "../propTypes";
+import {
+  InferWidgetProps,
+  StringPropOpt,
+  FloatPropOpt,
+  BoolProp
+} from "../propTypes";
 import { PVComponent, PVWidgetPropType } from "../widgetProps";
 import { registerWidget } from "../register";
 import classes from "./led.module.css";
@@ -14,7 +19,8 @@ import { Color } from "../../../types/color";
  */
 export const LedProps = {
   scale: FloatPropOpt,
-  userColor: StringPropOpt
+  userColor: StringPropOpt,
+  alarmSensitive: BoolProp
 };
 
 export type LedComponentProps = InferWidgetProps<typeof LedProps> & PVComponent;
@@ -28,22 +34,25 @@ export type LedComponentProps = InferWidgetProps<typeof LedProps> & PVComponent;
  * tooltip property in a json file containing a led
  */
 export const LedComponent = (props: LedComponentProps): JSX.Element => {
-  const { value, userColor, scale = 1.0 } = props;
+  const { value, userColor, alarmSensitive, scale = 1.0 } = props;
 
   const style: any = {
     transform: `scale(${scale})`
   };
 
   let allClasses = classes.Led;
+  // User defined rules take precedent over alarmSensitity
   if ("rules" in props) {
     style.backgroundColor = Color.parse(
       userColor ? userColor : "#00ff00"
     ).rgbaString();
   } else {
-    const alarm = value?.getAlarm() || DAlarm.NONE;
-    const css = classes[alarm.quality];
-    if (css) {
-      allClasses += ` ${css}`;
+    if (alarmSensitive) {
+      const alarm = value?.getAlarm() || DAlarm.NONE;
+      const css = classes[alarm.quality];
+      if (css) {
+        allClasses += ` ${css}`;
+      }
     }
   }
 
