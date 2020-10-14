@@ -17,7 +17,6 @@ export { SlideControl } from "./SlideControl/slideControl";
 export { DropDown } from "./DropDown/dropDown";
 export { Slideshow } from "./Slideshow/slideshow";
 export { DrawerWidget } from "./Drawer/drawer";
-export { NavigationTabs } from "./Tabs/navigationTabs";
 export { TabContainer } from "./Tabs/tabContainer";
 export { DynamicTabs } from "./Tabs/dynamicTabs";
 export { LED } from "./LED/led";
