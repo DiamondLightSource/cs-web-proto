@@ -10,7 +10,6 @@ log.debug(Display.name);
 
 const TAB_ONE: FileDescription = {
   path: "one.json",
-  type: "json",
   macros: {},
   defaultProtocol: "pva"
 };

@@ -49,10 +49,11 @@ export const EmbeddedDisplay = (
 ): JSX.Element => {
   const [contents, setContents] = useState<string>("");
   const baseUrl = useContext(BaseUrlContext);
+  const fileExt = props.file.path.split(".").pop();
 
   let file: string;
   if (!props.file.path.startsWith("http")) {
-    file = `${baseUrl}/${props.file.type}/${props.file.path}`;
+    file = `${baseUrl}/${fileExt}/${props.file.path}`;
   } else {
     file = props.file.path;
   }
@@ -84,7 +85,7 @@ export const EmbeddedDisplay = (
     let description = EMPTY_WIDGET;
     if (contents !== "") {
       // Convert the contents to widget description style object
-      switch (props.file.type) {
+      switch (fileExt) {
         case "bob":
           description = parseBob(contents, props.file.defaultProtocol);
           break;

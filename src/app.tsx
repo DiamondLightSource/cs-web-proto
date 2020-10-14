@@ -17,16 +17,13 @@ const baseUrl = process.env.REACT_APP_BASE_URL ?? "http://localhost:3000";
 log.setLevel((process.env.REACT_APP_LOG_LEVEL as LogLevelDesc) ?? "info");
 
 const LoadEmbedded = (): JSX.Element => {
-  let match = useRouteMatch();
-  let type = "json";
+  const match = useRouteMatch();
   let path = match.url;
-  if (match.url.endsWith(".opi")) {
-    type = "opi";
-  } else if (match.url.endsWith(".json")) {
-    type = "json";
-  } else if (match.url.endsWith(".bob")) {
-    type = "bob";
-  } else {
+  if (
+    !match.url.endsWith(".opi") ||
+    match.url.endsWith(".json") ||
+    match.url.endsWith(".bob")
+  ) {
     path = `${match.url}.json`;
   }
 
@@ -35,7 +32,6 @@ const LoadEmbedded = (): JSX.Element => {
       position={new RelativePosition()}
       file={{
         path,
-        type,
         defaultProtocol: "pva",
         macros: {}
       }}

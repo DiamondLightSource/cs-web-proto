@@ -5,7 +5,6 @@ import { MacroMap, macrosEqual } from "./types/macros";
 export interface FileDescription {
   // All information required for an embedded display
   path: string; // Name or file of path (without suffix ?)
-  type: "json" | "opi" | "bob"; // File type - which parser and suffix
   macros: MacroMap; // Macros
   defaultProtocol: string; // Default PV prefix for parser
 }
@@ -25,7 +24,6 @@ export function fileDescEqual(
   }
   const val =
     first.path === second.path &&
-    first.type === second.type &&
     first.defaultProtocol === second.defaultProtocol &&
     macrosEqual(first.macros, second.macros);
   return val;
@@ -183,7 +181,6 @@ const initialState: FileContextType = {
 const INITIAL_PAGE_STATE: PageState = {
   app: {
     path: "home.json",
-    type: "json",
     macros: {},
     defaultProtocol: "pva"
   }

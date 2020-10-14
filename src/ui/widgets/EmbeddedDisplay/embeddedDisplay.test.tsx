@@ -26,19 +26,15 @@ beforeEach((): void => {
 
 describe("<EmbeddedDisplay>", (): void => {
   it.each<any>([
-    ["TestFile", `${DEFAULT_BASE_URL}/bob/TestFile`, "bob"],
-    ["https://a.com/b.bob", "https://a.com/b.bob", "bob"],
-    ["TestFile", `${DEFAULT_BASE_URL}/json/TestFile`, "json"],
-    ["https://a.com/b.json", "https://a.com/b.json", "json"],
-    ["TestFile", `${DEFAULT_BASE_URL}/opi/TestFile`, "opi"],
-    ["https://a.com/b.opi", "https://a.com/b.opi", "opi"]
-  ] as [string, string, string][])(
+    ["TestFile.bob", `${DEFAULT_BASE_URL}/bob/TestFile.bob`],
+    ["https://a.com/b.bob", "https://a.com/b.bob"],
+    ["TestFile.json", `${DEFAULT_BASE_URL}/json/TestFile.json`],
+    ["https://a.com/b.json", "https://a.com/b.json"],
+    ["TestFile.opi", `${DEFAULT_BASE_URL}/opi/TestFile.opi`],
+    ["https://a.com/b.opi", "https://a.com/b.opi"]
+  ] as [string, string][])(
     "fetches a file from the server",
-    async (
-      inputFile: string,
-      resolvedFile: string,
-      filetype: string
-    ): Promise<void> => {
+    async (inputFile: string, resolvedFile: string): Promise<void> => {
       const mockSuccessResponse = {};
       const mockTextPromise = Promise.resolve(mockSuccessResponse);
       const mockFetchPromise = Promise.resolve({
@@ -55,7 +51,6 @@ describe("<EmbeddedDisplay>", (): void => {
           position={new RelativePosition()}
           file={{
             path: inputFile,
-            type: filetype,
             defaultProtocol: "ca",
             macros: {}
           }}
@@ -97,8 +92,7 @@ describe("<EmbeddedDisplay>", (): void => {
       <EmbeddedDisplay
         position={new RelativePosition()}
         file={{
-          path: "TestFile",
-          type: "bob",
+          path: "TestFile.bob",
           defaultProtocol: "ca",
           macros: {}
         }}
@@ -109,7 +103,7 @@ describe("<EmbeddedDisplay>", (): void => {
 
     expect(globalWithFetch.fetch).toHaveBeenCalledTimes(1);
     expect(globalWithFetch.fetch).toHaveBeenCalledWith(
-      `${DEFAULT_BASE_URL}/bob/TestFile`
+      `${DEFAULT_BASE_URL}/bob/TestFile.bob`
     );
 
     await waitFor((): void =>
@@ -146,8 +140,7 @@ describe("<EmbeddedDisplay>", (): void => {
       <EmbeddedDisplay
         position={new RelativePosition()}
         file={{
-          path: "TestFile",
-          type: "bob",
+          path: "TestFile.bob",
           defaultProtocol: "ca",
           macros: {}
         }}
@@ -158,7 +151,7 @@ describe("<EmbeddedDisplay>", (): void => {
 
     expect(globalWithFetch.fetch).toHaveBeenCalledTimes(1);
     expect(globalWithFetch.fetch).toHaveBeenCalledWith(
-      `${DEFAULT_BASE_URL}/bob/TestFile`
+      `${DEFAULT_BASE_URL}/bob/TestFile.bob`
     );
 
     await waitFor((): void =>
@@ -182,8 +175,7 @@ describe("<EmbeddedDisplay>", (): void => {
       <EmbeddedDisplay
         position={new RelativePosition()}
         file={{
-          path: "TestFile",
-          type: "json",
+          path: "TestFile.json",
           defaultProtocol: "ca",
           macros: {}
         }}
@@ -194,7 +186,7 @@ describe("<EmbeddedDisplay>", (): void => {
 
     expect(globalWithFetch.fetch).toHaveBeenCalledTimes(1);
     expect(globalWithFetch.fetch).toHaveBeenCalledWith(
-      `${DEFAULT_BASE_URL}/json/TestFile`
+      `${DEFAULT_BASE_URL}/json/TestFile.json`
     );
 
     await waitFor((): void => expect(queryByText("Test")).toBeInTheDocument());

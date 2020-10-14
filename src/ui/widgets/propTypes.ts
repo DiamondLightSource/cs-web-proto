@@ -118,7 +118,6 @@ const OpenWebpagePropType = PropTypes.shape({
 
 export const FilePropType = PropTypes.shape({
   path: StringProp,
-  type: PropTypes.oneOf(["json", "bob", "opi"]),
   macros: MacrosProp,
   defaultProtocol: StringProp
 }).isRequired;
