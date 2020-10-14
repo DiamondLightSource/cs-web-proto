@@ -5,14 +5,15 @@ import { WidgetPropType } from "../widgetProps";
 import {
   InferWidgetProps,
   BoolPropOpt,
-  StringPropOpt,
-  ColorPropOpt
+  StringProp,
+  ColorPropOpt,
+  StringPropOpt
 } from "../propTypes";
 import { registerWidget } from "../register";
 import { BaseUrlContext } from "../../../baseUrl";
 
 const ImageProps = {
-  src: StringPropOpt,
+  src: StringProp,
   alt: StringPropOpt,
   fill: BoolPropOpt,
   backgroundColor: ColorPropOpt
@@ -45,8 +46,7 @@ export const ImageComponent = (
         alt={props.alt || undefined}
         style={{
           height: imageSize,
-          width: imageSize,
-          backgroundColor: props.backgroundColor?.rgbaString()
+          width: imageSize
         }}
       />
     </div>
