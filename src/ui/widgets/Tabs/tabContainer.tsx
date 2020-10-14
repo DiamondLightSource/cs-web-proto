@@ -62,15 +62,15 @@ export const TabContainerComponent = (
   });
 
   const tabNames = Object.keys(props.tabs);
-  const onTabSelected = (tabName: string): void => {
-    setIndex(tabNames.indexOf(tabName));
+  const onTabSelected = (index: number): void => {
+    setIndex(index);
   };
 
   return (
     <div>
       <TabBar
         tabNames={tabNames}
-        selectedTab={tabNames[childIndex]}
+        selectedTab={childIndex}
         onTabSelected={onTabSelected}
       ></TabBar>
       {children[childIndex]}

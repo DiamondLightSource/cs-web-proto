@@ -26,7 +26,7 @@ describe("fileContext", (): void => {
     const initialTabs: TabState = {
       testing: {
         fileDetails: [["tab one", TAB_ONE]],
-        selectedTab: "tab one"
+        selectedTab: 0
       }
     };
     const { queryByText } = contextRender(

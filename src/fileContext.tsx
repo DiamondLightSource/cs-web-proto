@@ -44,7 +44,8 @@ export interface PageState {
 export interface TabState {
   [location: string]: {
     fileDetails: [string, FileDescription][];
-    selectedTab: string;
+    // -1 may be used if no files are open.
+    selectedTab: number;
   };
 }
 
@@ -82,18 +83,20 @@ export function addTab(
   const tabsCopy = { ...tabState };
   const locationTabs = tabsCopy[location] ?? {
     fileDetails: [],
-    selectedTab: ""
+    selectedTab: -1
   };
   let matched = false;
+  let index = 0;
   for (const [tabName1, desc1] of locationTabs.fileDetails) {
     if (fileDescEqual(desc, desc1) && tabName === tabName1) {
       matched = true;
-      locationTabs.selectedTab = tabName;
+      locationTabs.selectedTab = index;
     }
+    index += 1;
   }
   if (!matched) {
     locationTabs.fileDetails.push([tabName, desc]);
-    locationTabs.selectedTab = tabName;
+    locationTabs.selectedTab = locationTabs.fileDetails.length - 1;
   }
   const newTabState = {
     ...tabsCopy,
@@ -105,31 +108,29 @@ export function addTab(
 export function removeTab(
   tabState: TabState,
   location: string,
-  tabName: string
+  tabName: string,
+  fileDesc: FileDescription
 ): TabState {
   const tabsCopy = { ...tabState };
   const locationTabs = tabsCopy[location] ?? {
     fileDetails: [],
-    selectedTab: ""
+    selectedTab: -1
   };
-  let selectedTabRemoved = false;
   let selectedTab = locationTabs.selectedTab;
-  const filteredFileDetails = locationTabs.fileDetails.filter(([tabName1]) => {
-    if (tabName1 === tabName) {
-      if (tabName1 === locationTabs.selectedTab) {
-        selectedTabRemoved = true;
+  const filteredFileDetails = locationTabs.fileDetails.filter(
+    ([tabName1, fileDesc1], index) => {
+      if (tabName1 === tabName && fileDescEqual(fileDesc1, fileDesc)) {
+        // If a tab to the left of the selected tab is closed,
+        // or the selected tab is closed, the selected tab moves
+        // one to the left.
+        if (index <= locationTabs.selectedTab) {
+          selectedTab = selectedTab - 1;
+        }
+        return false;
       }
-      return false;
+      return true;
     }
-    return true;
-  });
-  if (selectedTabRemoved) {
-    if (filteredFileDetails.length > 0) {
-      selectedTab = filteredFileDetails[filteredFileDetails.length - 1][0];
-    } else {
-      selectedTab = "";
-    }
-  }
+  );
   const newTabState = {
     ...tabsCopy,
     [location]: {
@@ -143,18 +144,18 @@ export function removeTab(
 export function selectTab(
   tabState: TabState,
   location: string,
-  tabName: string
+  index: number
 ): TabState {
   const tabsCopy = { ...tabState };
   const locationTabs = tabsCopy[location] ?? {
     fileDetails: [],
-    selectedTab: ""
+    selectedTab: -1
   };
   return {
     ...tabsCopy,
     [location]: {
       ...locationTabs,
-      selectedTab: tabName
+      selectedTab: index
     }
   };
 }
@@ -169,8 +170,12 @@ export type FileContextType = {
     tabName: string,
     fileDesc: FileDescription
   ) => void;
-  removeTab: (location: string, tabName: string) => void;
-  selectTab: (location: string, tabName: string) => void;
+  removeTab: (
+    location: string,
+    tabName: string,
+    fileDesc: FileDescription
+  ) => void;
+  selectTab: (location: string, index: number) => void;
 };
 
 // React.useContext(FileContext) gives access to each of the
@@ -246,15 +251,19 @@ export const FileProvider: React.FC<FileProviderProps> = (
         tabState: newTabState
       });
     },
-    removeTab: (location: string, tabName: string): void => {
-      const newTabState = removeTab(tabState, location, tabName);
+    removeTab: (
+      location: string,
+      tabName: string,
+      fileDesc: FileDescription
+    ): void => {
+      const newTabState = removeTab(tabState, location, tabName, fileDesc);
       history.push(history.location.pathname, {
         pageState,
         tabState: newTabState
       });
     },
-    selectTab: (location: string, tabName: string): void => {
-      const newTabState = selectTab(tabState, location, tabName);
+    selectTab: (location: string, index: number): void => {
+      const newTabState = selectTab(tabState, location, index);
       history.push(history.location.pathname, {
         pageState,
         tabState: newTabState
