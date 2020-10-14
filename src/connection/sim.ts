@@ -7,7 +7,13 @@ import {
   nullConnCallback,
   nullValueCallback
 } from "./plugin";
-import { DType, dtimeNow, DAlarm, DDisplay } from "../types/dtypes";
+import {
+  DType,
+  dtimeNow,
+  DAlarm,
+  DDisplay,
+  AlarmQuality
+} from "../types/dtypes";
 
 type SimArgs = [
   string,
@@ -285,12 +291,21 @@ class LimitData extends SimPv {
 
   public updateValue(value: DType): void {
     // Set alarm status
-    let alarmSeverity = 0;
-    const v = value.getDoubleValue();
+    let alarmSeverity = AlarmQuality.VALID;
+    const v = DType.coerceDouble(value);
     if (v !== undefined) {
-      alarmSeverity = v < 10 ? 2 : v > 90 ? 2 : v < 20 ? 1 : v > 80 ? 1 : 0;
+      alarmSeverity =
+        v < 10
+          ? AlarmQuality.ALARM
+          : v > 90
+          ? AlarmQuality.ALARM
+          : v < 20
+          ? AlarmQuality.WARNING
+          : v > 80
+          ? AlarmQuality.WARNING
+          : AlarmQuality.VALID;
       this.value = new DType(
-        { doubleValue: value.getDoubleValue() },
+        { doubleValue: v },
         new DAlarm(alarmSeverity, ""),
         dtimeNow()
       );

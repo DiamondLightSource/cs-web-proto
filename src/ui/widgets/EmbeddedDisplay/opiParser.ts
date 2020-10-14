@@ -368,7 +368,6 @@ export const OPI_SIMPLE_PARSERS: ParserDict = {
   macroMap: ["macros", opiParseMacros],
   src: ["image_file", opiParseImageFile],
   showLabel: ["show_boolean_label", opiParseBoolean],
-  stretchToFit: ["stretch_to_fit", opiParseBoolean],
   width: ["width", opiParseNumber],
   height: ["height", opiParseNumber]
 };

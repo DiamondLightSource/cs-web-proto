@@ -28,11 +28,12 @@ export function useCommonCss(props: {
   backgroundColor?: Color;
 }): CSSProperties {
   const { showOutlines } = useContext(OutlineContext);
+  const visible = props.visible === undefined || props.visible;
   return {
     ...props.border?.css(),
     ...props.font?.css(),
     backgroundColor: props.backgroundColor?.rgbaString(),
-    visibility: props.visible ? "hidden" : undefined,
+    visibility: visible ? undefined : "hidden",
     outline: showOutlines ? "1px dashed grey" : undefined,
     outlineOffset: showOutlines ? "-2px" : undefined
   };
@@ -100,7 +101,8 @@ export const ConnectingComponent = (props: {
   widgetProps: any;
   alarmBorder: boolean;
 }): JSX.Element => {
-  /* Add connection to PV and then recursively wrap widgets */
+  // Allow modification of border prop.
+  let border = props.widgetProps.border;
 
   const [effectivePvName, connected, readonly, latestValue] = useConnection(
     props.containerProps.id,
@@ -108,7 +110,11 @@ export const ConnectingComponent = (props: {
     props.containerProps.type
   );
 
-  if (props.alarmBorder) {
+  // Always indicate with border if PV is disconnected.
+  if (props.containerProps.pvName && connected === false) {
+    border = new Border(BorderStyle.Dotted, Color.WHITE, 3);
+  } else if (props.alarmBorder) {
+    // Implement alarm border for all widgets if configured.
     const severity = latestValue?.getAlarm()?.quality || AlarmQuality.VALID;
     const colors: { [key in AlarmQuality]: Color } = {
       [AlarmQuality.VALID]: Color.BLACK,
@@ -119,11 +125,7 @@ export const ConnectingComponent = (props: {
       [AlarmQuality.CHANGING]: Color.WHITE
     };
     if (severity !== AlarmQuality.VALID) {
-      props.widgetProps.border = new Border(
-        BorderStyle.Line,
-        colors[severity],
-        2
-      );
+      border = new Border(BorderStyle.Line, colors[severity], 2);
     }
   }
 
@@ -142,7 +144,8 @@ export const ConnectingComponent = (props: {
       pvName: effectivePvName,
       connected: connected,
       readonly: readonly,
-      value: latestValue
+      value: latestValue,
+      border: border
     }
   );
 };

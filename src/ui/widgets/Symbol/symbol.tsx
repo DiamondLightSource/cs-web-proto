@@ -49,7 +49,6 @@ const SymbolProps = {
   backgroundColor: ColorPropOpt,
   position: PositionProp,
   showLabel: BoolProp,
-  stretchToFit: BoolProp,
   width: FloatPropOpt,
   height: FloatPropOpt
 };
