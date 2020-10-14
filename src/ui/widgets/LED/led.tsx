@@ -41,7 +41,10 @@ export const LedComponent = (props: LedComponentProps): JSX.Element => {
     ).rgbaString();
   } else {
     const alarm = value?.getAlarm() || DAlarm.NONE;
-    allClasses += ` ${classes[alarm.quality]}`;
+    const css = classes[alarm.quality];
+    if (css) {
+      allClasses += ` ${css}`;
+    }
   }
 
   return <div className={allClasses} style={style} />;
