@@ -8,11 +8,38 @@ import {
   StringPropOpt,
   ColorPropOpt,
   PositionProp,
-  BoolProp
+  BoolProp,
+  FloatPropOpt
 } from "../propTypes";
 import { registerWidget } from "../register";
 import { LabelComponent } from "../Label/label";
-import { ImageComponent } from "../Image/image";
+import { BaseUrlContext } from "../../../baseUrl";
+
+const SvgImageProps = {
+  src: StringPropOpt,
+  width: FloatPropOpt,
+  height: FloatPropOpt,
+  showLabel: BoolProp
+};
+
+const SvgImageComponent = (
+  props: InferWidgetProps<typeof SvgImageProps>
+): JSX.Element => {
+  const baseUrl = useContext(BaseUrlContext);
+  const file = `${baseUrl}/img/${props.src}`;
+
+  const style: any = {};
+  if (!props.showLabel) {
+    style.width = `${props.width}px`;
+    style.height = `${props.height}px`;
+  }
+
+  return (
+    <div className="size">
+      <img src={file} alt={""} style={style} />
+    </div>
+  );
+};
 
 const SymbolProps = {
   src: StringPropOpt,
@@ -22,14 +49,16 @@ const SymbolProps = {
   backgroundColor: ColorPropOpt,
   position: PositionProp,
   showLabel: BoolProp,
-  stretchToFit: BoolProp
+  stretchToFit: BoolProp,
+  width: FloatPropOpt,
+  height: FloatPropOpt
 };
 
 export type SymbolComponentProps = InferWidgetProps<typeof SymbolProps> &
   PVComponent;
 
 export const SymbolComponent = (props: SymbolComponentProps): JSX.Element => {
-  const { name, showLabel, stretchToFit } = props;
+  const { name, showLabel } = props;
 
   return (
     <div
@@ -37,7 +66,7 @@ export const SymbolComponent = (props: SymbolComponentProps): JSX.Element => {
         backgroundColor: props.backgroundColor?.rgbaString() || "white"
       }}
     >
-      <ImageComponent {...props} />
+      <SvgImageComponent {...props} />
       {showLabel && <LabelComponent {...props} text={name} />}
     </div>
   );
