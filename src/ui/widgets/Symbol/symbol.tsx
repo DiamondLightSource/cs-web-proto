@@ -14,6 +14,7 @@ import {
 import { registerWidget } from "../register";
 import { LabelComponent } from "../Label/label";
 import { BaseUrlContext } from "../../../baseUrl";
+import { Color } from "../../../types/color";
 
 const SvgImageProps = {
   src: StringPropOpt,
@@ -22,11 +23,21 @@ const SvgImageProps = {
   showLabel: BoolProp
 };
 
+// TODO: There is probably some room to merge the existing image component
+// together with this, would prefer to see how the pages look and to check
+// all properties are accounted for before doing this
+/**
+ * A component for loading SVG files
+ * @param props
+ */
 const SvgImageComponent = (
   props: InferWidgetProps<typeof SvgImageProps>
 ): JSX.Element => {
   const baseUrl = useContext(BaseUrlContext);
-  const file = `${baseUrl}/img/${props.src}`;
+  let file = `img/${props.src}`;
+  if (!file.startsWith("http")) {
+    file = `${baseUrl}/${file}`;
+  }
 
   const style: any = {};
   if (!props.showLabel) {
@@ -56,8 +67,15 @@ const SymbolProps = {
 export type SymbolComponentProps = InferWidgetProps<typeof SymbolProps> &
   PVComponent;
 
+/**
+ * This component combines the use of a svg with a label, and is used to replace
+ * the MultistateMonitorWidget from CS-Studio
+ * @param props
+ */
 export const SymbolComponent = (props: SymbolComponentProps): JSX.Element => {
   const { name, showLabel } = props;
+
+  const background = props.backgroundColor || Color.WHITE;
 
   return (
     <div
@@ -67,7 +85,10 @@ export const SymbolComponent = (props: SymbolComponentProps): JSX.Element => {
     >
       <SvgImageComponent {...props} />
       {showLabel && (
-        <LabelComponent {...{ ...props, visible: true }} text={name || ""} />
+        <LabelComponent
+          {...{ visible: true, backgroundColor: background }}
+          text={name || ""}
+        />
       )}
     </div>
   );
