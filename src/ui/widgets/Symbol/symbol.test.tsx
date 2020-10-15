@@ -1,11 +1,10 @@
 import React from "react";
-import renderer, { ReactTestRendererJSON } from "react-test-renderer";
+import renderer, { ReactTestRenderer } from "react-test-renderer";
 import { SymbolComponent } from "./symbol";
+import { LabelComponent } from "../Label/label";
 
-const renderSymbol = (symbolProps: any): ReactTestRendererJSON => {
-  return renderer
-    .create(<SymbolComponent {...symbolProps} readonly={true} />)
-    .toJSON() as ReactTestRendererJSON;
+const SymbolRenderer = (symbolProps: any): ReactTestRenderer => {
+  return renderer.create(<SymbolComponent {...symbolProps} readonly={true} />);
 };
 
 describe("properties are added to symbol", (): void => {
@@ -15,23 +14,34 @@ describe("properties are added to symbol", (): void => {
       showLabel: true
     };
 
-    const renderedSymbol = renderSymbol(symbolProps);
-    const labelChild = renderedSymbol.children[1] as ReactTestRendererJSON;
-    expect(labelChild.children[0]).toBe("test name");
-    expect(labelChild.children.length).toBe(1);
-    expect(labelChild.props.style.visibility).toBe("visible");
-    expect(labelChild.props.style.backgroundColor).toBe(
-      "rgba(255, 255, 255, 255)"
-    );
+    const testRenderer = SymbolRenderer(symbolProps);
+
+    const label = testRenderer.root.findByType(LabelComponent);
+    expect(label.props.visible).toBe(true);
+    expect(label.props.backgroundColor).toEqual({
+      a: 255,
+      b: 255,
+      g: 255,
+      r: 255
+    });
+    expect(label.props.text).toBe("test name");
+
+    const tree = testRenderer.toTree();
+    expect(tree?.props.showLabel).toBe(true);
+    expect(tree?.rendered?.rendered).toHaveLength(2);
+    expect(tree?.rendered?.props.style.backgroundColor).toBe("transparent");
   });
 
   test("label is not shown if showLabel is false", (): void => {
     const symbolProps = {
-      name: "test name"
+      name: "test name",
+      showLabel: false
     };
 
-    const renderedSymbol = renderSymbol(symbolProps);
+    const testRenderer = SymbolRenderer(symbolProps);
 
-    expect(renderedSymbol.children.length).toBe(1);
+    expect(() => testRenderer.root.findByType(LabelComponent)).toThrow(
+      'No instances found with node type: "LabelComponent"'
+    );
   });
 });
