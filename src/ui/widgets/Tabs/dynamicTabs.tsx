@@ -49,7 +49,6 @@ export const DynamicTabsComponent = (
     const openTabs = tabState.fileDetails;
     const selectedTab = tabState.selectedTab;
 
-    // Using object map method found here: https://stackoverflow.com/questions/14810506/map-function-for-objects-instead-of-arrays
     const children = Object.values(openTabs).map(([name, description]) => [
       <EmbeddedDisplay
         position={new RelativePosition()}

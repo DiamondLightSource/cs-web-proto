@@ -1,6 +1,8 @@
 language: node_js
 node_js:
-  - 12  # required for Object.fromEntries()
+  - 10  # LTS still in maintenance
+  - 12  # Active LTS
+  - 14  # latest version
 
 addons:
   chrome: stable # make Chrome available
