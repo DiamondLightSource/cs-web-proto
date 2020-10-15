@@ -86,7 +86,7 @@ export const SymbolComponent = (props: SymbolComponentProps): JSX.Element => {
       <SvgImageComponent {...props} />
       {showLabel && (
         <LabelComponent
-          {...{ visible: true, backgroundColor: background }}
+          {...{ visible: true, backgroundColor: background, ...props }}
           text={name || ""}
         />
       )}
