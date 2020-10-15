@@ -1,3 +1,12 @@
+/**
+ * A widget that shows files stored in the file context
+ * under a specific 'location'.
+ *
+ * As the files are stored centrally, closing a tab in one such
+ * widget will close it in other widgets showing the same location.
+ *
+ * See also the tab container widget and the dynamic page widget.
+ */
 import React, { useContext } from "react";
 
 import { Widget } from "../widget";
@@ -41,26 +50,24 @@ export const DynamicTabsComponent = (
     const selectedTab = tabState.selectedTab;
 
     // Using object map method found here: https://stackoverflow.com/questions/14810506/map-function-for-objects-instead-of-arrays
-    const children = Object.fromEntries(
-      Object.values(openTabs).map(([name, description]) => [
-        name,
-        <EmbeddedDisplay
-          position={new RelativePosition()}
-          file={{
-            path: description?.path || "",
-            defaultProtocol: description?.defaultProtocol ?? "ca",
-            macros: description?.macros || {}
-          }}
-          key={name}
-        />
-      ])
-    );
+    const children = Object.values(openTabs).map(([name, description]) => [
+      <EmbeddedDisplay
+        position={new RelativePosition()}
+        file={{
+          path: description?.path || "",
+          defaultProtocol: description?.defaultProtocol ?? "ca",
+          macros: description?.macros || {}
+        }}
+        key={name}
+      />
+    ]);
     const tabNames = openTabs.map(([name]) => name);
-    const onTabSelected = (tabName: string): void => {
-      fileContext.selectTab(props.location, tabName);
+    const onTabSelected = (index: number): void => {
+      fileContext.selectTab(props.location, index);
     };
-    const onTabClosed = (tabName: string): void => {
-      fileContext.removeTab(props.location, tabName);
+    const onTabClosed = (index: number): void => {
+      const [tabName, fileDesc] = openTabs[index];
+      fileContext.removeTab(props.location, tabName, fileDesc);
     };
 
     return (

@@ -1,3 +1,10 @@
+/**
+ * A widget that shows files stored in the file context under
+ * a specific 'location'. Unlike the dynamic tabs widget, only
+ * one file is shown.
+ *
+ * See also the dynamic tabs widget.
+ */
 import React, { useContext } from "react";
 
 import { Widget, useCommonCss } from "../widget";
