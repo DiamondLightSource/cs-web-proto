@@ -16,13 +16,13 @@
 .Readback.undefined,
 .Readback.invalid,
 .Readback.changing {
-  color: #ffffff;
+  color: var(--invalid);
 }
 
 .Readback.warning {
-  color: #eeee00;
+  color: var(--warning);
 }
 
 .Readback.alarm {
-  color: #ee0000;
+  color: var(--alarm);
 }
