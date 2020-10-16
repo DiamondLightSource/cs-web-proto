@@ -218,6 +218,8 @@ const PV_SUBSCRIPTION = gql`
           max
           min
         }
+        choices
+        precision
       }
     }
   }

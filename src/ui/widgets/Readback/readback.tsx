@@ -20,6 +20,7 @@ import { DAlarm, DType } from "../../../types/dtypes";
 const ReadbackProps = {
   precision: IntPropOpt,
   showUnits: BoolPropOpt,
+  precisionFromPv: BoolPropOpt,
   alarmSensitive: BoolPropOpt,
   textAlign: ChoicePropOpt(["left", "center", "right"]),
   transparent: BoolPropOpt,
@@ -46,17 +47,22 @@ export const ReadbackComponent = (
     alarmSensitive = false,
     transparent = false,
     textAlign = "center",
-    showUnits = false
+    showUnits = false,
+    precisionFromPv = false
   } = props;
   // Decide what to display.
   const alarm = value?.getAlarm() || DAlarm.NONE;
   const display = value?.getDisplay();
+  const prec = precisionFromPv ? display?.precision ?? precision : precision;
   let displayedValue;
   if (!value) {
     displayedValue = "######";
   } else {
-    if (precision !== undefined && !isNaN(DType.coerceDouble(value))) {
-      displayedValue = DType.coerceDouble(value).toFixed(precision);
+    if (value.display.choices) {
+      // Enum PV so use string representation.
+      displayedValue = DType.coerceString(value);
+    } else if (prec !== undefined && !isNaN(DType.coerceDouble(value))) {
+      displayedValue = DType.coerceDouble(value).toFixed(prec);
     } else {
       displayedValue = DType.coerceString(value);
     }

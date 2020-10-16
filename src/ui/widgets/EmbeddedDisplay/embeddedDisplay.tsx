@@ -18,6 +18,7 @@ import { BaseUrlContext } from "../../../baseUrl";
 import { parseOpi } from "./opiParser";
 import { parseJson } from "./jsonParser";
 import { parseBob } from "./bobParser";
+import { Border, BorderStyle } from "../../../types/border";
 
 const EMPTY_WIDGET: WidgetDescription = {
   type: "shape",
@@ -117,7 +118,9 @@ export const EmbeddedDisplay = (
     component = widgetDescriptionToComponent({
       type: "display",
       position: props.position,
-      border: props.border,
+      border:
+        props.border ??
+        new Border(BorderStyle.Line, Color.parse("lightgrey"), 1),
       overflow: overflow,
       children: [description]
     });
