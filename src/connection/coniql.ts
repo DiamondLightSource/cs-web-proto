@@ -4,7 +4,7 @@
 import log from "loglevel";
 import base64js from "base64-js";
 import { ApolloClient } from "apollo-client";
-import { ApolloLink } from "apollo-link";
+import { ApolloLink, from } from "apollo-link";
 import { HttpLink } from "apollo-link-http";
 import { WebSocketLink } from "apollo-link-ws";
 import { getMainDefinition } from "apollo-utilities";
@@ -14,6 +14,7 @@ import {
   NormalizedCacheObject,
   IntrospectionFragmentMatcher
 } from "apollo-cache-inmemory";
+import { onError } from "apollo-link-error";
 import introspectionQueryResultData from "./fragmentTypes.json";
 import {
   Connection,
@@ -277,6 +278,20 @@ export class ConiqlPlugin implements Connection {
   }
 
   public createLink(socket: string): ApolloLink {
+    const wsLink = new WebSocketLink(this.wsClient);
+    const errorLink = onError(({ graphQLErrors, networkError }) => {
+      if (graphQLErrors) {
+        log.error("GraphQL errors:");
+        graphQLErrors.forEach((error): void => {
+          log.error(error);
+        });
+      }
+      if (networkError) {
+        log.error("Network error:");
+        log.error(networkError);
+      }
+    });
+    const httpLink = new HttpLink({ uri: `http://${socket}/graphql` });
     const link: ApolloLink = ApolloLink.split(
       ({ query }): boolean => {
         // https://github.com/apollographql/apollo-client/issues/3090
@@ -286,8 +301,8 @@ export class ConiqlPlugin implements Connection {
           definition.operation === "subscription"
         );
       },
-      new WebSocketLink(this.wsClient),
-      new HttpLink({ uri: `http://${socket}/graphql` })
+      from([errorLink, wsLink]),
+      from([errorLink, httpLink])
     );
 
     return link;
@@ -357,7 +372,12 @@ export class ConiqlPlugin implements Connection {
       pvName: pvName,
       value: DType.coerceString(value)
     };
-    this.client.mutate({ mutation: PV_MUTATION, variables: variables });
+    this.client
+      .mutate({ mutation: PV_MUTATION, variables: variables })
+      .catch(error => {
+        log.error(`Failed to write ${value} to ${pvName}`);
+        log.error(error);
+      });
   }
 
   public unsubscribe(pvName: string): void {

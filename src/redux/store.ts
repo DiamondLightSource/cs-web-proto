@@ -17,11 +17,9 @@ const SIMULATION_TIME = parseFloat(
   process.env.REACT_APP_SIMULATION_TIME ?? "100"
 );
 const simulator = new SimulatorPlugin(SIMULATION_TIME);
-const fallbackPlugin = simulator;
 const plugins: [string, Connection][] = [
   ["sim://", simulator],
-  ["loc://", simulator],
-  ["", fallbackPlugin]
+  ["loc://", simulator]
 ];
 if (CONIQL_SOCKET !== undefined) {
   const coniql = new ConiqlPlugin(CONIQL_SOCKET);

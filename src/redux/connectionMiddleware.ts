@@ -1,3 +1,4 @@
+import log from "loglevel";
 import { MiddlewareAPI, Dispatch } from "redux";
 import { Connection, ConnectionState } from "../connection/plugin";
 import {
@@ -48,22 +49,32 @@ export const connectionMiddleware = (connection: Connection) => (
     case SUBSCRIBE: {
       const { pvName, type } = action.payload;
       // Are we already subscribed?
-      const effectivePvName = connection.subscribe(pvName, type);
-      action = {
-        ...action,
-        payload: {
-          ...action.payload,
-          effectivePvName: effectivePvName,
-          pvName: pvName
-        }
-      };
+      try {
+        const effectivePvName = connection.subscribe(pvName, type);
+        action = {
+          ...action,
+          payload: {
+            ...action.payload,
+            effectivePvName: effectivePvName,
+            pvName: pvName
+          }
+        };
+      } catch (error) {
+        log.error(`Failed to subscribe to pv ${pvName}`);
+        log.error(error);
+      }
       break;
     }
     case WRITE_PV: {
       const { pvName, value } = action.payload;
       const effectivePvName =
         store.getState().effectivePvNameMap[pvName] || pvName;
-      connection.putPv(effectivePvName, value);
+      try {
+        connection.putPv(effectivePvName, value);
+      } catch (error) {
+        log.error(`Failed to put to pv ${pvName}`);
+        log.error(error);
+      }
       break;
     }
     case UNSUBSCRIBE: {
@@ -78,7 +89,12 @@ export const connectionMiddleware = (connection: Connection) => (
         subs[effectivePvName].length === 1 &&
         subs[effectivePvName][0] === componentId
       ) {
-        connection.unsubscribe(pvName);
+        try {
+          connection.unsubscribe(pvName);
+        } catch (error) {
+          log.error(`Failed to unsubscribe from pv ${pvName}`);
+          log.error(error);
+        }
       }
     }
   }
