@@ -4,25 +4,29 @@ import { Widget } from "../widget";
 import { PVWidgetPropType, PVComponent } from "../widgetProps";
 import { InferWidgetProps, PositionProp, FloatPropOpt } from "../propTypes";
 import { registerWidget } from "../register";
+import { ShapeComponent } from "../Shape/shape";
+import { Color } from "../../../types/color";
+import { Border, BorderStyle } from "../../../types/border";
 
 const PolylineProps = {
   width: FloatPropOpt,
-  position: PositionProp
+  position: PositionProp,
+  lineWidth: FloatPropOpt
 };
 
 export type PolylineComponentProps = InferWidgetProps<typeof PolylineProps> &
   PVComponent;
 
-/**
- * This component combines the use of a svg with a label, and is used to replace
- * the MultistateMonitorWidget from CS-Studio
- * @param props
- */
 export const PolylineComponent = (
   props: PolylineComponentProps
 ): JSX.Element => {
-  console.log(props);
-  return <div>{"hi"}</div>;
+  const shapeProps = {
+    shapeWidth: `${props.width}px`,
+    shapeHeight: `${props.lineWidth}px`,
+    backgroundColor: Color.CYAN
+  };
+
+  return <ShapeComponent {...shapeProps} />;
 };
 
 const PolylineWidgetProps = {

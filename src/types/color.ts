@@ -18,6 +18,7 @@ export class Color {
   public static PINK = new Color(255, 192, 203);
   public static ORANGE = new Color(255, 165, 0);
   public static TRANSPARENT = new Color(0, 0, 0, 0);
+  public static CYAN = new Color(0, 255, 255);
 
   /**
    * Use the browser to compute colours from names.
