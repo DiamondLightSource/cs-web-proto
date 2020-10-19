@@ -22,6 +22,7 @@ export { TabContainer } from "./Tabs/tabContainer";
 export { DynamicTabs } from "./Tabs/dynamicTabs";
 export { Symbol } from "./Symbol/symbol";
 export { LED } from "./LED/led";
+export { Polyline } from "./Polyline/polyline";
 
 // By importing this you ensure all the above widgets are imported
 // and thus registered.
