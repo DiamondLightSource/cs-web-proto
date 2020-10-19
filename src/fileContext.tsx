@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
+import { useHistory, useLocation } from "react-router-dom";
 import { MacroMap, macrosEqual } from "./types/macros";
 
 export interface FileDescription {
   // All information required for an embedded display
   path: string; // Name or file of path (without suffix ?)
-  type: "json" | "opi" | "bob"; // File type - which parser and suffix
   macros: MacroMap; // Macros
   defaultProtocol: string; // Default PV prefix for parser
 }
@@ -24,7 +24,6 @@ export function fileDescEqual(
   }
   const val =
     first.path === second.path &&
-    first.type === second.type &&
     first.defaultProtocol === second.defaultProtocol &&
     macrosEqual(first.macros, second.macros);
   return val;
@@ -178,18 +177,20 @@ const initialState: FileContextType = {
   selectTab: () => {}
 };
 
-export const FileContext = React.createContext(initialState);
-
 /* Page that will be loaded at start. */
 const INITIAL_PAGE_STATE: PageState = {
   app: {
     path: "home.json",
-    type: "json",
     macros: {},
     defaultProtocol: "pva"
   }
 };
+interface FileHistory {
+  pageState: PageState;
+  tabState: TabState;
+}
 
+export const FileContext = React.createContext(initialState);
 interface FileProviderProps {
   initialPageState?: PageState;
   initialTabState?: TabState;
@@ -199,38 +200,59 @@ interface FileProviderProps {
 export const FileProvider: React.FC<FileProviderProps> = (
   props: FileProviderProps
 ): JSX.Element => {
-  // Set up the file context, which contains information about
-  // the open pages in DynamicPages and tabs in DynamicTabs.
   const initialPageState = props.initialPageState ?? INITIAL_PAGE_STATE;
   const initialTabState = props.initialTabState ?? {};
-  const [pageState, setPageState] = useState<PageState>(initialPageState);
-  const [tabState, setTabState] = useState<TabState>(initialTabState);
+  // Set up the file context, which contains information about
+  // the open pages in DynamicPages and tabs in DynamicTabs.
+  const history = useHistory<FileHistory>();
+  const location = useLocation<FileHistory>();
+  const { pageState, tabState } = location.state ?? {
+    pageState: initialPageState,
+    tabState: initialTabState
+  };
   const fileContext = {
     pageState,
     tabState,
     addPage: (location: string, fileDesc: FileDescription): void => {
-      setPageState(addPage(pageState, location, fileDesc));
+      const newPageState = addPage(pageState, location, fileDesc);
+      history.push(history.location.pathname, {
+        pageState: newPageState,
+        tabState
+      });
     },
     removePage: (location: string, fileDesc?: FileDescription): void => {
-      setPageState(removePage(pageState, location, fileDesc));
+      const newPageState = removePage(pageState, location, fileDesc);
+      history.push(history.location.pathname, {
+        pageState: newPageState,
+        tabState
+      });
     },
     addTab: (
       location: string,
       tabName: string,
       fileDesc: FileDescription
     ): void => {
-      setTabState(addTab(tabState, location, tabName, fileDesc));
+      const newTabState = addTab(tabState, location, tabName, fileDesc);
+      history.push(history.location.pathname, {
+        pageState,
+        tabState: newTabState
+      });
     },
     removeTab: (location: string, tabName: string): void => {
-      setTabState(removeTab(tabState, location, tabName));
+      const newTabState = removeTab(tabState, location, tabName);
+      history.push(history.location.pathname, {
+        pageState,
+        tabState: newTabState
+      });
     },
     selectTab: (location: string, tabName: string): void => {
-      setTabState(selectTab(tabState, location, tabName));
+      const newTabState = selectTab(tabState, location, tabName);
+      history.push(history.location.pathname, {
+        pageState,
+        tabState: newTabState
+      });
     }
   };
-  // All descendents of ThemeContext.provider re-render whenever
-  // the value property changes (whole app wrapped hence theme
-  // everywhere will change)
   return (
     <FileContext.Provider value={fileContext}>
       {props.children}
