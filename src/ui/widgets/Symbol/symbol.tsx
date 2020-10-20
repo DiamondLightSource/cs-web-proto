@@ -9,7 +9,8 @@ import {
   ColorPropOpt,
   PositionProp,
   BoolProp,
-  FloatPropOpt
+  FloatPropOpt,
+  BorderPropOpt
 } from "../propTypes";
 import { registerWidget } from "../register";
 import { LabelComponent } from "../Label/label";
@@ -61,7 +62,9 @@ const SymbolProps = {
   position: PositionProp,
   showLabel: BoolProp,
   width: FloatPropOpt,
-  height: FloatPropOpt
+  height: FloatPropOpt,
+  border: BorderPropOpt,
+  value: FloatPropOpt
 };
 
 export type SymbolComponentProps = InferWidgetProps<typeof SymbolProps> &
@@ -73,8 +76,7 @@ export type SymbolComponentProps = InferWidgetProps<typeof SymbolProps> &
  * @param props
  */
 export const SymbolComponent = (props: SymbolComponentProps): JSX.Element => {
-  const { name, showLabel } = props;
-
+  const { showLabel } = props;
   const background = props.backgroundColor || Color.WHITE;
 
   return (
@@ -87,7 +89,7 @@ export const SymbolComponent = (props: SymbolComponentProps): JSX.Element => {
       {showLabel && (
         <LabelComponent
           {...{ visible: true, backgroundColor: background, ...props }}
-          text={name || ""}
+          text={props.value?.getStringValue() ?? ""}
         />
       )}
     </div>
