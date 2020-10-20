@@ -32,6 +32,10 @@ export interface XmlDescription {
   [key: string]: any;
 }
 
+/**
+ * maps a widget typeId specified in an opi file to a corresponding registered
+ * widget name
+ */
 const OPI_WIDGET_MAPPING: { [key: string]: any } = {
   "org.csstudio.opibuilder.Display": "display",
   "org.csstudio.opibuilder.widgets.TextUpdate": "readback",
@@ -46,6 +50,10 @@ const OPI_WIDGET_MAPPING: { [key: string]: any } = {
   "org.csstudio.opibuilder.widgets.LED": "led"
 };
 
+/**
+ * Attempts to return the text from a json property, otherwise throws an error
+ * @param jsonProp
+ */
 function opiParseString(jsonProp: ElementCompact): string {
   if (typeof jsonProp._text === "string") {
     return jsonProp._text;
@@ -54,6 +62,11 @@ function opiParseString(jsonProp: ElementCompact): string {
   }
 }
 
+/**
+ * Attempts to return a boolean from the text representation of a boolean
+ * on a json property, otherwise throws an error
+ * @param jsonProp
+ */
 function opiParseBoolean(jsonProp: ElementCompact): boolean {
   const boolText = jsonProp._text;
   if (boolText === "false") {
@@ -69,6 +82,10 @@ export interface OpiColor {
   _attributes: { name: string; red: string; blue: string; green: string };
 }
 
+/**
+ * Returns a Color object from a json property
+ * @param jsonProp
+ */
 export function opiParseColor(jsonProp: ElementCompact): Color {
   const color = jsonProp.color as OpiColor;
   return new Color(
@@ -78,6 +95,10 @@ export function opiParseColor(jsonProp: ElementCompact): Color {
   );
 }
 
+/**
+ * Returns a Font object extracted from a json property
+ * @param jsonProp
+ */
 export function opiParseFont(jsonProp: ElementCompact): Font {
   const opiStyles: { [key: number]: FontStyle } = {
     0: FontStyle.Regular,
@@ -95,6 +116,10 @@ export function opiParseFont(jsonProp: ElementCompact): Font {
   return new Font(height, opiStyles[style], fontName);
 }
 
+/**
+ * Returns a macro map from a json object
+ * @param jsonProp
+ */
 function opiParseMacros(jsonProp: ElementCompact): MacroMap {
   const macroMap: MacroMap = {};
   Object.entries(jsonProp as object).forEach(([key, value]): void => {
@@ -103,6 +128,11 @@ function opiParseMacros(jsonProp: ElementCompact): MacroMap {
   return macroMap;
 }
 
+/**
+ * Creates a WidgetActions object from the actions tied to the json object
+ * @param jsonProp
+ * @param defaultProtocol
+ */
 export function opiParseActions(
   jsonProp: ElementCompact,
   defaultProtocol: string
@@ -155,6 +185,11 @@ export function opiParseActions(
   return processedActions;
 }
 
+/**
+ * Returns a rules object from a json element
+ * @param jsonProp
+ * @param defaultProtocol
+ */
 export const opiParseRules = (
   jsonProp: ElementCompact,
   defaultProtocol: string
@@ -195,10 +230,19 @@ export const opiParseRules = (
   }
 };
 
+/**
+ * Creates a Number object from a json properties object
+ * @param jsonProp
+ */
 function opiParseNumber(jsonProp: ElementCompact): number {
   return Number(jsonProp._text);
 }
 
+/**
+ * Creates a new PV object after extracting the pvName from the json object
+ * @param jsonProp
+ * @param defaultProtocol
+ */
 export function opiParsePvName(
   jsonProp: ElementCompact,
   defaultProtocol: string
@@ -207,6 +251,11 @@ export function opiParsePvName(
   return PV.parse(rawPv, defaultProtocol);
 }
 
+/**
+ * Converts an alignment number present in the json properties, into
+ * a string e.g. "left", "center", "right"
+ * @param jsonProp
+ */
 function opiParseHorizonalAlignment(jsonProp: ElementCompact): string {
   const alignments: { [key: number]: string } = {
     0: "left",
@@ -216,9 +265,17 @@ function opiParseHorizonalAlignment(jsonProp: ElementCompact): string {
   return alignments[opiParseNumber(jsonProp)];
 }
 
+/**
+ * Creates a new Border object
+ * @param props
+ */
 function opiParseBorder(props: any): Border {
   const borderStyles: { [key: number]: BorderStyle } = {
-    0: BorderStyle.None
+    0: BorderStyle.None,
+    1: BorderStyle.Line,
+    2: BorderStyle.Dashed,
+    3: BorderStyle.Dotted,
+    4: BorderStyle.GroupBox
   };
   let style = BorderStyle.None;
   let width = 0;
@@ -238,6 +295,11 @@ function opiParseBorder(props: any): Border {
   return new Border(actualStyle, actualColor, width);
 }
 
+/**
+ * Converts a typeId into a registered component name using the
+ * OPI_WIDGET_MAPPING object
+ * @param props
+ */
 function opiParseType(props: any): string {
   const typeId = props._attributes.typeId;
   if (OPI_WIDGET_MAPPING.hasOwnProperty(typeId)) {
@@ -247,6 +309,10 @@ function opiParseType(props: any): string {
   }
 }
 
+/**
+ * Parses a props object into AbsolutePosition object
+ * @param props
+ */
 function opiParsePosition(props: any): Position {
   const { x, y, width, height } = props;
   try {
@@ -273,6 +339,11 @@ function opiParseImageFile(props: any): string {
   return filename;
 }
 
+/**
+ * Attempt to return the widget associated with a props object, failing
+ * that will return a shape object
+ * @param props
+ */
 function opiGetTargetWidget(props: any): React.FC {
   const typeid = opiParseType(props);
   let targetWidget;
@@ -284,6 +355,10 @@ function opiGetTargetWidget(props: any): React.FC {
   return targetWidget;
 }
 
+/**
+ * Simple object types, with the name they appear under in the .opi file
+ * and the parsing function to use
+ */
 export const OPI_SIMPLE_PARSERS: ParserDict = {
   text: ["text", opiParseString],
   name: ["name", opiParseString],
@@ -297,13 +372,20 @@ export const OPI_SIMPLE_PARSERS: ParserDict = {
   transparent: ["transparent", opiParseBoolean],
   font: ["font", opiParseFont],
   macroMap: ["macros", opiParseMacros],
-  showLabel: ["show_boolean_label", opiParseBoolean],
-  alarmSensitive: ["border_alarm_sensitive", opiParseBoolean],
   src: ["image_file", opiParseImageFile],
+  showLabel: ["show_boolean_label", opiParseBoolean],
+  stretchToFit: ["stretch_to_fit", opiParseBoolean],
+  alarmSensitive: ["border_alarm_sensitive", opiParseBoolean],
+  lineWidth: ["line_width", opiParseNumber],
   width: ["width", opiParseNumber],
   height: ["height", opiParseNumber]
 };
 
+/**
+ * Complex object types, with the parsing function to use, no name
+ * like t he simple parser object because they do not have one name
+ * in the .opi file
+ */
 export const OPI_COMPLEX_PARSERS: ComplexParserDict = {
   type: opiParseType,
   position: opiParsePosition,
