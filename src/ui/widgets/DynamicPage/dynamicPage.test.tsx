@@ -1,14 +1,12 @@
 import React, * as ReactAll from "react";
-import log from "loglevel";
 
 import { waitFor } from "@testing-library/react";
 import { DynamicPageComponent } from "./dynamicPage";
 import { PageState } from "../../../fileContext";
 import { contextRender } from "../../../setupTests";
 
-// Import display widget to ensure that it is registered.
-import { Display } from "..";
-log.debug(Display.name);
+import { ensureWidgetsRegistered } from "..";
+ensureWidgetsRegistered();
 
 interface GlobalFetch extends NodeJS.Global {
   fetch: any;

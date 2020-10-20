@@ -6,13 +6,9 @@ import { DEFAULT_BASE_URL } from "../../../baseUrl";
 import { RelativePosition } from "../../../types/position";
 import { contextRender } from "../../../setupTests";
 import { waitFor } from "@testing-library/react";
+import { ensureWidgetsRegistered } from "..";
+ensureWidgetsRegistered();
 
-// Ensure that all widgets are registered by importing
-// from src/ui/wigets/index.ts, which in turn imports
-// all the widgets.
-import { Label } from "..";
-// We need to use the import for it to take effect.
-log.debug(Label.name);
 interface GlobalFetch extends NodeJS.Global {
   fetch: any;
 }

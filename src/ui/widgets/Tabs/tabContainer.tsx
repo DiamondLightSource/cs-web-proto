@@ -1,3 +1,13 @@
+/**
+ * A widget that displays widgets in a number of pre-defined
+ * tabs.
+ *
+ * Previously we had a 'navigation tabs' widget that displayed
+ * an embedded display in each tab, but that is easy to recreate
+ * with this widget if needed.
+ *
+ * See also the dynamic tabs widget.
+ */
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import log from "loglevel";
@@ -52,15 +62,15 @@ export const TabContainerComponent = (
   });
 
   const tabNames = Object.keys(props.tabs);
-  const onTabSelected = (tabName: string): void => {
-    setIndex(tabNames.indexOf(tabName));
+  const onTabSelected = (index: number): void => {
+    setIndex(index);
   };
 
   return (
     <div>
       <TabBar
         tabNames={tabNames}
-        selectedTab={tabNames[childIndex]}
+        selectedTab={childIndex}
         onTabSelected={onTabSelected}
       ></TabBar>
       {children[childIndex]}

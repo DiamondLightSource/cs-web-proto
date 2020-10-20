@@ -1,12 +1,10 @@
 import React from "react";
-import log from "loglevel";
 import { FileDescription, TabState } from "../../../fileContext";
 import { contextRender } from "../../../setupTests";
 import { DynamicTabsComponent } from "./dynamicTabs";
-
-// Import Display widget to ensure it is registered.
-import { Display } from "..";
-log.debug(Display.name);
+// Import to ensure that all widgets are registered.
+import { ensureWidgetsRegistered } from "..";
+ensureWidgetsRegistered();
 
 const TAB_ONE: FileDescription = {
   path: "one.json",
@@ -28,7 +26,7 @@ describe("fileContext", (): void => {
     const initialTabs: TabState = {
       testing: {
         fileDetails: [["tab one", TAB_ONE]],
-        selectedTab: "tab one"
+        selectedTab: 0
       }
     };
     const { queryByText } = contextRender(

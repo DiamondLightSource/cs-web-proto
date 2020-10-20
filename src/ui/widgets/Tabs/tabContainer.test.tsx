@@ -1,14 +1,12 @@
 import React from "react";
-
 import log from "loglevel";
 
 import { render, fireEvent } from "@testing-library/react";
 import { TabContainerComponent } from "./tabContainer";
 import { Provider } from "react-redux";
 import { store } from "../../../redux/store";
-// A little wart.
-import { TRIGGER_REGISTER } from "..";
-log.debug(TRIGGER_REGISTER);
+import { ensureWidgetsRegistered } from "..";
+ensureWidgetsRegistered();
 
 describe("<TabContainer>", (): void => {
   it("renders one child", () => {
