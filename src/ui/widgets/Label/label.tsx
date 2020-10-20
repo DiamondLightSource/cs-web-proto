@@ -6,7 +6,6 @@ import { WidgetPropType } from "../widgetProps";
 import { registerWidget } from "../register";
 import {
   BoolPropOpt,
-  StringProp,
   InferWidgetProps,
   StringPropOpt,
   ChoicePropOpt,
@@ -16,7 +15,7 @@ import {
 } from "../propTypes";
 
 const LabelProps = {
-  text: StringProp,
+  text: StringPropOpt,
   visible: BoolPropOpt,
   transparent: BoolPropOpt,
   className: StringPropOpt,

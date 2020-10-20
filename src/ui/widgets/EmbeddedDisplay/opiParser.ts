@@ -285,7 +285,9 @@ export const OPI_SIMPLE_PARSERS: ParserDict = {
   showUnits: ["show_units", opiParseBoolean],
   transparent: ["transparent", opiParseBoolean],
   font: ["font", opiParseFont],
-  macroMap: ["macros", opiParseMacros]
+  macroMap: ["macros", opiParseMacros],
+  showLabel: ["show_boolean_label", opiParseBoolean],
+  alarmSensitive: ["border_alarm_sensitive", opiParseBoolean]
 };
 
 export const OPI_COMPLEX_PARSERS: ComplexParserDict = {
