@@ -4,11 +4,11 @@ import { BaseUrlContext } from "../../../baseUrl";
 
 export interface TabBarProps {
   tabNames: string[];
-  selectedTab: string;
-  onTabSelected: (tabName: string) => void;
+  selectedTab?: number;
+  onTabSelected: (index: number) => void;
   // If onTabClosed is not provided then no close button
   // will be added to the tabs.
-  onTabClosed?: (tabName: string) => void;
+  onTabClosed?: (index: number) => void;
 }
 
 export const TabBar = (props: TabBarProps): JSX.Element => {
@@ -16,14 +16,14 @@ export const TabBar = (props: TabBarProps): JSX.Element => {
   return (
     <div className={classes.TabBar}>
       {props.tabNames.map(
-        (tabName): JSX.Element => (
+        (tabName, index): JSX.Element => (
           <div
-            key={tabName}
+            key={index}
             onClick={(): void => {
-              props.onTabSelected(tabName);
+              props.onTabSelected(index);
             }}
             className={
-              props.selectedTab === tabName
+              index === props.selectedTab
                 ? `${classes.Tab} ${classes.CloseableTab} ${classes.TabSelected}`
                 : `${classes.Tab} ${classes.CloseableTab}`
             }
@@ -33,7 +33,7 @@ export const TabBar = (props: TabBarProps): JSX.Element => {
               <button
                 className={classes.TabCloseButton}
                 onClick={(event): void => {
-                  props.onTabClosed?.(tabName);
+                  props.onTabClosed?.(index);
                   event.stopPropagation();
                 }}
               >

@@ -1,8 +1,9 @@
 import { Color } from "../../../types/color";
-import { Label } from "..";
 import { AbsolutePosition } from "../../../types/position";
 import { parseBob } from "./bobParser";
 import { PV } from "../../../types/pv";
+import { ensureWidgetsRegistered } from "..";
+ensureWidgetsRegistered();
 
 describe("opi widget parser", (): void => {
   const labelString = `
@@ -35,10 +36,6 @@ describe("opi widget parser", (): void => {
     <not_a_property>hello</not_a_property>
   </widget>
   </display>`;
-
-  /* We need to import widgets to register them... */
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const label = Label;
 
   it("parses a label widget", (): void => {
     const widget = parseBob(labelString, "ca").children[0];
