@@ -262,6 +262,17 @@ function opiParsePosition(props: any): Position {
   }
 }
 
+/**
+ * Parses a props object to extract the filename (NOT THE PATH) of an
+ * image file
+ * @param props
+ */
+function opiParseImageFile(props: any): string {
+  const splitDirectory = opiParseString(props).split("/");
+  const filename = splitDirectory[splitDirectory.length - 1];
+  return filename;
+}
+
 function opiGetTargetWidget(props: any): React.FC {
   const typeid = opiParseType(props);
   let targetWidget;
@@ -287,7 +298,10 @@ export const OPI_SIMPLE_PARSERS: ParserDict = {
   font: ["font", opiParseFont],
   macroMap: ["macros", opiParseMacros],
   showLabel: ["show_boolean_label", opiParseBoolean],
-  alarmSensitive: ["border_alarm_sensitive", opiParseBoolean]
+  alarmSensitive: ["border_alarm_sensitive", opiParseBoolean],
+  src: ["image_file", opiParseImageFile],
+  width: ["width", opiParseNumber],
+  height: ["height", opiParseNumber]
 };
 
 export const OPI_COMPLEX_PARSERS: ComplexParserDict = {
