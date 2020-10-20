@@ -40,7 +40,10 @@ const OPI_WIDGET_MAPPING: { [key: string]: any } = {
   "org.csstudio.opibuilder.widgets.groupingContainer": "grouping",
   "org.csstudio.opibuilder.widgets.Rectangle": "shape",
   "org.csstudio.opibuilder.widgets.ActionButton": "actionbutton",
-  "org.csstudio.opibuilder.widgets.MenuButton": "menubutton"
+  "org.csstudio.opibuilder.widgets.MenuButton": "menubutton",
+  "org.csstudio.opibuilder.widgets.symbol.multistate.MultistateMonitorWidget":
+    "symbol",
+  "org.csstudio.opibuilder.widgets.LED": "led"
 };
 
 function opiParseString(jsonProp: ElementCompact): string {
