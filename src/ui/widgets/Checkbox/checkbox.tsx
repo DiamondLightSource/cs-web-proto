@@ -1,10 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import { Widget } from "../widget";
-import { InferWidgetProps } from "../propTypes";
+import { InferWidgetProps, StringPropOpt, FloatPropOpt } from "../propTypes";
 import { PVComponent, PVWidgetPropType } from "../widgetProps";
 import { registerWidget } from "../register";
+import { Checkbox as MaterialCheckbox } from "@material-ui/core";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
 
-export const CheckboxProps = {};
+export const CheckboxProps = {
+  label: StringPropOpt,
+  width: FloatPropOpt,
+  height: FloatPropOpt
+};
 
 export type CheckboxComponentProps = InferWidgetProps<typeof CheckboxProps> &
   PVComponent;
@@ -12,7 +18,28 @@ export type CheckboxComponentProps = InferWidgetProps<typeof CheckboxProps> &
 export const CheckboxComponent = (
   props: CheckboxComponentProps
 ): JSX.Element => {
-  return <div>{"Component is rendered"}</div>;
+  const [checked, setChecked] = useState(false);
+
+  const toggle = (): void => {
+    setChecked(!checked);
+  };
+
+  return (
+    <div>
+      <FormControlLabel
+        control={
+          <MaterialCheckbox
+            checked={checked}
+            onChange={toggle}
+            name="checkedB"
+            color="primary"
+          />
+        }
+        label="Primary"
+      />
+      ;
+    </div>
+  );
 };
 
 const LedWidgetProps = {
