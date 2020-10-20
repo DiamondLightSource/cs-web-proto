@@ -14,13 +14,13 @@
 .Input.undefined,
 .Input.invalid,
 .Input.changing {
-  color: #ffffff;
+  color: var(--invalid);
 }
 
 .Input.warning {
-  color: #eeee00;
+  color: var(--warning);
 }
 
 .Input.alarm {
-  color: #ee0000;
+  color: var(--alarm);
 }

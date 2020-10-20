@@ -277,6 +277,7 @@ export const OPI_SIMPLE_PARSERS: ParserDict = {
   backgroundColor: ["background_color", opiParseColor],
   foregroundColor: ["foreground_color", opiParseColor],
   precision: ["precision", opiParseNumber],
+  precisionFromPv: ["precision_from_pv", opiParseBoolean],
   visible: ["visible", opiParseBoolean],
   showUnits: ["show_units", opiParseBoolean],
   transparent: ["transparent", opiParseBoolean],

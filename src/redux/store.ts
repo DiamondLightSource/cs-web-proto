@@ -17,17 +17,15 @@ const SIMULATION_TIME = parseFloat(
   process.env.REACT_APP_SIMULATION_TIME ?? "100"
 );
 const simulator = new SimulatorPlugin(SIMULATION_TIME);
-const fallbackPlugin = simulator;
 const plugins: [string, Connection][] = [
   ["sim://", simulator],
-  ["loc://", simulator],
-  ["", fallbackPlugin]
+  ["loc://", simulator]
 ];
 if (CONIQL_SOCKET !== undefined) {
   const coniql = new ConiqlPlugin(CONIQL_SOCKET);
   plugins.unshift(["pva://", coniql]);
   plugins.unshift(["ca://", coniql]);
-  plugins.unshift(["csim://", coniql]);
+  plugins.unshift(["ssim://", coniql]);
 }
 const connection = new ConnectionForwarder(plugins);
 

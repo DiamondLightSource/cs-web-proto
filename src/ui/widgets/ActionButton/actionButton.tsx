@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { WidgetActions, executeActions } from "../widgetActions";
-import { Widget } from "../widget";
+import { useCommonCss, Widget } from "../widget";
 import { PVWidgetPropType } from "../widgetProps";
 import classes from "./actionButton.module.css";
 import { registerWidget } from "../register";
@@ -34,6 +34,7 @@ export const ActionButtonComponent = (
   props: ActionButtonProps
 ): JSX.Element => {
   const baseUrl = useContext(BaseUrlContext);
+  const style = useCommonCss(props);
   let src = props.image;
   if (src !== undefined && !src?.startsWith("http")) {
     src = `${baseUrl}/img/${src}`;
@@ -42,12 +43,7 @@ export const ActionButtonComponent = (
     <button
       className={classes.actionbutton}
       onClick={props.onClick}
-      style={{
-        backgroundColor: props.backgroundColor?.rgbaString(),
-        color: props.foregroundColor?.rgbaString(),
-        ...props.font?.css(),
-        ...props.border?.css()
-      }}
+      style={style}
     >
       {src !== undefined ? (
         <figure className={classes.figure}>

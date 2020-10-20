@@ -19,6 +19,12 @@ export class Color {
   public static ORANGE = new Color(255, 165, 0);
   public static TRANSPARENT = new Color(0, 0, 0, 0);
 
+  public static DISCONNECTED = Color.fromName("var(--disconnected)");
+  public static INVALID = Color.fromName("var(--invalid)");
+  public static WARNING = Color.fromName("var(--warning)");
+  public static ALARM = Color.fromName("var(--alarm)");
+  public static CHANGING = Color.fromName("var(--changing)");
+
   /**
    * Use the browser to compute colours from names.
    * @param cssColorName string representing the color name
