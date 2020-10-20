@@ -272,7 +272,11 @@ function opiParseHorizonalAlignment(jsonProp: ElementCompact): string {
  */
 function opiParseBorder(props: any): Border {
   const borderStyles: { [key: number]: BorderStyle } = {
-    0: BorderStyle.None
+    0: BorderStyle.None,
+    1: BorderStyle.Line,
+    2: BorderStyle.Dashed,
+    3: BorderStyle.Dotted,
+    4: BorderStyle.GroupBox
   };
   let style = BorderStyle.None;
   let width = 0;
