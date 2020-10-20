@@ -17,6 +17,7 @@ export { LED } from "./LED/led";
 export { MenuButton } from "./MenuButton/menuButton";
 export { MenuMux } from "./MenuMux/menuMux";
 export { ProgressBar } from "./ProgressBar/progressBar";
+export { Polyline } from "./Polyline/polyline";
 export { Readback } from "./Readback/readback";
 export { Shape } from "./Shape/shape";
 export { SlideControl } from "./SlideControl/slideControl";
