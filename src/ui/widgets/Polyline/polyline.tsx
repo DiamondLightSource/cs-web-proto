@@ -6,7 +6,6 @@ import { InferWidgetProps, PositionProp, FloatPropOpt } from "../propTypes";
 import { registerWidget } from "../register";
 import { ShapeComponent } from "../Shape/shape";
 import { Color } from "../../../types/color";
-import { Border, BorderStyle } from "../../../types/border";
 
 const PolylineProps = {
   width: FloatPropOpt,
