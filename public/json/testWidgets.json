@@ -69,43 +69,10 @@
           "backgroundColor": "white"
         },
         {
-          "type": "led",
-          "position": "relative",
-          "pvName": "sim://sine",
-          "alarmSensitive": true,
-          "rules": [
-            {
-              "name": "limits",
-              "prop": "userColor",
-              "outExp": false,
-              "pvs": [
-                {
-                  "pvName": "sim://sine",
-                  "trigger": true
-                }
-              ],
-              "expressions": [
-                {
-                  "boolExp": "pv0 > 0.6",
-                  "value": "orange"
-                },
-                {
-                  "boolExp": "pv0 < -0.5",
-                  "value": "blue"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "type": "led",
-          "position": "relative",
-          "pvName": "sim://sine",
-          "alarmSensitive": true,
-          "width": 10
-        },
-        {
-          "type": "checkbox"
+          "type": "checkbox",
+          "width": 115,
+          "height": 20,
+          "label": "Here is a checkbox"
         }
       ]
     }

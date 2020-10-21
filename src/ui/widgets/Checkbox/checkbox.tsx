@@ -18,6 +18,8 @@ export type CheckboxComponentProps = InferWidgetProps<typeof CheckboxProps> &
 export const CheckboxComponent = (
   props: CheckboxComponentProps
 ): JSX.Element => {
+  const { label = "", width = 10, height = 10 } = props;
+
   const [checked, setChecked] = useState(false);
 
   const toggle = (): void => {
@@ -35,9 +37,12 @@ export const CheckboxComponent = (
             color="primary"
           />
         }
-        label="Primary"
+        label={label ?? ""}
+        style={{
+          width: `${width}px`,
+          height: `${height}px`
+        }}
       />
-      ;
     </div>
   );
 };
