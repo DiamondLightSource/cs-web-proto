@@ -5,6 +5,7 @@ import { PVComponent, PVWidgetPropType } from "../widgetProps";
 import { registerWidget } from "../register";
 import { Checkbox as MaterialCheckbox } from "@material-ui/core";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
+import { LabelComponent } from "../Label/label";
 
 export const CheckboxProps = {
   label: StringPropOpt,
@@ -37,7 +38,7 @@ export const CheckboxComponent = (
             color="primary"
           />
         }
-        label={label ?? ""}
+        label={<LabelComponent text={label} />}
         style={{
           width: `${width}px`,
           height: `${height}px`

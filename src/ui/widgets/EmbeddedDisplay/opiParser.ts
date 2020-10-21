@@ -44,7 +44,8 @@ const OPI_WIDGET_MAPPING: { [key: string]: any } = {
   "org.csstudio.opibuilder.widgets.groupingContainer": "grouping",
   "org.csstudio.opibuilder.widgets.Rectangle": "shape",
   "org.csstudio.opibuilder.widgets.ActionButton": "actionbutton",
-  "org.csstudio.opibuilder.widgets.MenuButton": "menubutton"
+  "org.csstudio.opibuilder.widgets.MenuButton": "menubutton",
+  "org.csstudio.opibuilder.widgets.checkbox": "checkbox"
 };
 
 /**
@@ -375,7 +376,8 @@ export const OPI_SIMPLE_PARSERS: ParserDict = {
   alarmSensitive: ["border_alarm_sensitive", opiParseBoolean],
   lineWidth: ["line_width", opiParseNumber],
   width: ["width", opiParseNumber],
-  height: ["height", opiParseNumber]
+  height: ["height", opiParseNumber],
+  label: ["label", opiParseString]
 };
 
 /**
