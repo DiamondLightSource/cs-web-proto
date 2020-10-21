@@ -25,7 +25,7 @@ describe("<TabContainer>", (): void => {
   });
   it("renders error widget for incorrect child", () => {
     const child = {
-      type: "label"
+      type: "image"
     };
     // Suppress logging for expected error.
     log.setLevel("error");
