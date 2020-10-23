@@ -5,6 +5,7 @@ import { PVComponent, PVWidgetPropType } from "../widgetProps";
 import { registerWidget } from "../register";
 import { Checkbox as MaterialCheckbox } from "@material-ui/core";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
+import { makeStyles } from "@material-ui/core/styles";
 import { LabelComponent } from "../Label/label";
 
 export const CheckboxProps = {
@@ -16,6 +17,36 @@ export const CheckboxProps = {
 export type CheckboxComponentProps = InferWidgetProps<typeof CheckboxProps> &
   PVComponent;
 
+/**
+ * This removes some of the frills of the default material ui checkbox, e.g.
+ * the animations when it is clicked, as well as the circular background when
+ * the cursor is hovered over it
+ */
+const useStyles = makeStyles(() => ({
+  root: {
+    // Edit this to change the unchecked border color
+    color: "#000000",
+    "&:hover": {
+      backgroundColor: "transparent"
+    },
+    "&$checked": {
+      // Edit this to change the checked color
+      color: "#000000",
+      "&:hover": {
+        backgroundColor: "transparent"
+      }
+    }
+  },
+  checked: {}
+}));
+
+/**
+ * Checkbox component, aka a toggleable component that places a tick
+ * inside it when toggled. Allows for a label to be placed to the right of
+ * the checkbox
+ * @param props CheckboxComponentProps, optional parameters on top of the normal
+ * widget parameters are: the label, the width, and the height
+ */
 export const CheckboxComponent = (
   props: CheckboxComponentProps
 ): JSX.Element => {
@@ -27,6 +58,8 @@ export const CheckboxComponent = (
     setChecked(!checked);
   };
 
+  const classes = useStyles();
+
   return (
     <div>
       <FormControlLabel
@@ -34,8 +67,11 @@ export const CheckboxComponent = (
           <MaterialCheckbox
             checked={checked}
             onChange={toggle}
-            name="checkedB"
-            color="primary"
+            disableRipple
+            classes={{
+              root: classes.root,
+              checked: classes.checked
+            }}
           />
         }
         label={<LabelComponent text={label} />}
