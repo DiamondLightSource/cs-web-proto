@@ -50,7 +50,7 @@ const useStyles = makeStyles(() => ({
 export const CheckboxComponent = (
   props: CheckboxComponentProps
 ): JSX.Element => {
-  const { label = "", width = 10, height = 10 } = props;
+  const { label, width = 10, height = 10 } = props;
 
   const [checked, setChecked] = useState(false);
 
@@ -74,7 +74,7 @@ export const CheckboxComponent = (
             }}
           />
         }
-        label={<LabelComponent text={label} />}
+        label={label && <LabelComponent text={label} />}
         style={{
           width: `${width}px`,
           height: `${height}px`
