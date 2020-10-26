@@ -130,7 +130,7 @@ function jsonGetTargetWidget(props: any): React.FC {
   return targetWidget;
 }
 
-export function parseJson(jsonString: string, defaultProtocol: string): any {
+export function parseObject(object: any, defaultProtocol: string): any {
   const simpleParsers: ParserDict = {
     ...SIMPLE_PARSERS,
     pvName: [
@@ -143,7 +143,7 @@ export function parseJson(jsonString: string, defaultProtocol: string): any {
     ]
   };
   return parseWidget(
-    JSON.parse(jsonString),
+    object,
     jsonGetTargetWidget,
     "children",
     simpleParsers,
@@ -151,4 +151,8 @@ export function parseJson(jsonString: string, defaultProtocol: string): any {
     true,
     []
   );
+}
+
+export function parseJson(jsonString: string, defaultProtocol: string): any {
+  return parseObject(JSON.parse(jsonString), defaultProtocol);
 }
