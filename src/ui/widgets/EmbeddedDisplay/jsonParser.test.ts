@@ -5,6 +5,7 @@ import { Font, FontStyle } from "../../../types/font";
 import { Border, BorderStyle } from "../../../types/border";
 import { Color } from "../../../types/color";
 import { PV } from "../../../types/pv";
+import { WidgetDescription } from "../createComponent";
 
 describe("json widget parser", (): void => {
   const displayString = `{
@@ -53,7 +54,8 @@ describe("json widget parser", (): void => {
     ]
   }`;
   it("handles font and position on a label widget", (): void => {
-    const widget = parseJson(fontLabelString, "ca").children[0];
+    const widget = parseJson(fontLabelString, "ca")
+      .children?.[0] as WidgetDescription;
     expect(widget.font).toEqual(new Font(13, FontStyle.Bold));
     expect(widget.position).toEqual(
       new AbsolutePosition("10", "20", "30", "40")
