@@ -410,7 +410,10 @@ function opiPatchRules(widgetDescription: WidgetDescription): void {
 
 export const OPI_PATCHERS: PatchFunction[] = [opiPatchRules];
 
-export function parseOpi(xmlString: string, defaultProtocol: string): any {
+export function parseOpi(
+  xmlString: string,
+  defaultProtocol: string
+): WidgetDescription {
   // Convert it to a "compact format"
   const compactJSON = xml2js(xmlString, {
     compact: true
