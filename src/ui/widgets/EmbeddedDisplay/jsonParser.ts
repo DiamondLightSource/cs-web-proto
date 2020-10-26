@@ -10,6 +10,7 @@ import {
   RelativePosition
 } from "../../../types/position";
 import { PV } from "../../../types/pv";
+import { WidgetDescription } from "../createComponent";
 
 interface JsonBorder {
   style: string;
@@ -130,7 +131,15 @@ function jsonGetTargetWidget(props: any): React.FC {
   return targetWidget;
 }
 
-export function parseObject(object: any, defaultProtocol: string): any {
+/**
+ * Parse a WidgetDescription from objects, typically parsed from JSON.
+ * @param jsonString objects in the correct format.
+ * @param defaultProtocol default protocol to use for PVs.
+ */
+export function parseObject(
+  object: any,
+  defaultProtocol: string
+): WidgetDescription {
   const simpleParsers: ParserDict = {
     ...SIMPLE_PARSERS,
     pvName: [
@@ -153,6 +162,14 @@ export function parseObject(object: any, defaultProtocol: string): any {
   );
 }
 
-export function parseJson(jsonString: string, defaultProtocol: string): any {
+/**
+ * Parse a WidgetDescription from a JSON string.
+ * @param jsonString JSON string in the correct format.
+ * @param defaultProtocol default protocol to use for PVs.
+ */
+export function parseJson(
+  jsonString: string,
+  defaultProtocol: string
+): WidgetDescription {
   return parseObject(JSON.parse(jsonString), defaultProtocol);
 }
