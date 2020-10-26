@@ -1,15 +1,15 @@
 import React from "react";
 import { Widget } from "../widget";
-import {
-  InferWidgetProps,
-  StringPropOpt,
-  FloatPropOpt,
-  BoolProp
-} from "../propTypes";
+import { InferWidgetProps, StringProp, MacrosProp } from "../propTypes";
 import { PVComponent, PVWidgetPropType } from "../widgetProps";
 import { registerWidget } from "../register";
+import { EmbeddedDisplay } from "../EmbeddedDisplay/embeddedDisplay";
+import { RelativePosition } from "../../../types/position";
 
-export const LinkingContainerProps = {};
+export const LinkingContainerProps = {
+  file: StringProp,
+  macroMap: MacrosProp
+};
 
 export type LinkingContainerComponentProps = InferWidgetProps<
   typeof LinkingContainerProps
@@ -19,7 +19,18 @@ export type LinkingContainerComponentProps = InferWidgetProps<
 export const LinkingContainerComponent = (
   props: LinkingContainerComponentProps
 ): JSX.Element => {
-  return <div>{"stuff"}</div>;
+  const splitPath = props.file.split("/");
+
+  const file = {
+    path: splitPath[splitPath.length - 1],
+    macros: props.macroMap,
+    defaultProtocol: "ca"
+  };
+
+  const position = new RelativePosition();
+
+  return <EmbeddedDisplay file={file} position={position} />;
+  // return <div>{"stuff"}</div>;
 };
 
 const LinkingContainerWidgetProps = {
