@@ -47,9 +47,7 @@ describe("background color changes depending on color returned from rule", (): v
 
     const renderedLed = renderLed(ledProps);
 
-    expect(renderedLed.props.style.backgroundColor).toBe(
-      "rgba(255, 0, 0, 255)"
-    );
+    expect(renderedLed.props.style.backgroundColor).toBe("red");
   });
 
   test("background color from user is applied 2", (): void => {
@@ -61,9 +59,7 @@ describe("background color changes depending on color returned from rule", (): v
 
     const renderedLed = renderLed(ledProps);
 
-    expect(renderedLed.props.style.backgroundColor).toBe(
-      "rgba(0, 0, 255, 255)"
-    );
+    expect(renderedLed.props.style.backgroundColor).toBe("blue");
   });
 });
 

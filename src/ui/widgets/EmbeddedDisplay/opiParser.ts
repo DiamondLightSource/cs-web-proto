@@ -85,7 +85,7 @@ export interface OpiColor {
  */
 export function opiParseColor(jsonProp: ElementCompact): Color {
   const color = jsonProp.color as OpiColor;
-  return new Color(
+  return Color.fromRgba(
     parseInt(color._attributes.red),
     parseInt(color._attributes.green),
     parseInt(color._attributes.blue)

@@ -107,7 +107,7 @@ describe("json widget parser", (): void => {
             width: 1,
             color: "red"
           },
-          convertedValue: new Border(BorderStyle.Line, Color.RED, 1)
+          convertedValue: new Border(BorderStyle.Line, new Color("red"), 1)
         }
       ]
     };

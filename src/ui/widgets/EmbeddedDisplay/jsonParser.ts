@@ -56,7 +56,7 @@ function jsonParsePosition(props: any): Position {
 }
 
 function jsonParseColor(jsonColor: string): Color {
-  return Color.parse(jsonColor);
+  return new Color(jsonColor);
 }
 
 function jsonParseBorder(jsonBorder: JsonBorder): Border {

@@ -10,7 +10,6 @@ import { PVComponent, PVWidgetPropType } from "../widgetProps";
 import { registerWidget } from "../register";
 import classes from "./led.module.css";
 import { DAlarm } from "../../../types/dtypes";
-import { Color } from "../../../types/color";
 
 /**
  * width: the diameter of the LED
@@ -48,9 +47,7 @@ export const LedComponent = (props: LedComponentProps): JSX.Element => {
   let allClasses = classes.Led;
   // User defined rules take precedent over alarmSensitity
   if ("rules" in props) {
-    style.backgroundColor = Color.parse(
-      userColor ? userColor : "#00ff00"
-    ).rgbaString();
+    style.backgroundColor = userColor ? userColor : "#00ff00";
   } else {
     if (alarmSensitive) {
       const alarm = value?.getAlarm() || DAlarm.NONE;
