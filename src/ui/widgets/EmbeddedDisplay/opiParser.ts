@@ -44,7 +44,8 @@ const OPI_WIDGET_MAPPING: { [key: string]: any } = {
   "org.csstudio.opibuilder.widgets.groupingContainer": "grouping",
   "org.csstudio.opibuilder.widgets.Rectangle": "shape",
   "org.csstudio.opibuilder.widgets.ActionButton": "actionbutton",
-  "org.csstudio.opibuilder.widgets.MenuButton": "menubutton"
+  "org.csstudio.opibuilder.widgets.MenuButton": "menubutton",
+  "org.csstudio.opibuilder.widgets.linkingContainer": "linkingcontainer"
 };
 
 /**
@@ -373,7 +374,8 @@ export const OPI_SIMPLE_PARSERS: ParserDict = {
   showLabel: ["show_boolean_label", opiParseBoolean],
   stretchToFit: ["stretch_to_fit", opiParseBoolean],
   alarmSensitive: ["border_alarm_sensitive", opiParseBoolean],
-  lineWidth: ["line_width", opiParseNumber]
+  lineWidth: ["line_width", opiParseNumber],
+  file: ["opi_file", opiParseString]
 };
 
 /**
