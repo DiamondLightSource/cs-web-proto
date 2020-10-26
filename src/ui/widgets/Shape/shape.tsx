@@ -25,10 +25,10 @@ export const ShapeComponent = (
 ): JSX.Element => {
   const style = {
     ...useCommonCss(props),
-    width: props.shapeWidth ? props.shapeWidth : "100%",
-    height: props.shapeHeight ? props.shapeHeight : "100%",
-    borderRadius: props.shapeRadius ? props.shapeRadius : "",
-    transform: props.shapeTransform ? props.shapeTransform : ""
+    width: props.shapeWidth ?? "100%",
+    height: props.shapeHeight ?? "100%",
+    borderRadius: props.shapeRadius ?? "",
+    transform: props.shapeTransform ?? ""
   };
   return <div style={style} />;
 };
