@@ -33,8 +33,8 @@ export function useCommonCss(props: {
   return {
     ...props.border?.css(),
     ...props.font?.css(),
-    color: props.foregroundColor?.rgbaString(),
-    backgroundColor: props.backgroundColor?.rgbaString(),
+    color: props.foregroundColor?.toString(),
+    backgroundColor: props.backgroundColor?.toString(),
     visibility: visible ? undefined : "hidden",
     outline: showOutlines ? "1px dashed grey" : undefined,
     outlineOffset: showOutlines ? "-2px" : undefined
@@ -114,17 +114,17 @@ export const ConnectingComponent = (props: {
 
   // Always indicate with border if PV is disconnected.
   if (props.containerProps.pvName && connected === false) {
-    border = new Border(BorderStyle.Dotted, Color.WHITE, 3);
+    border = new Border(BorderStyle.Dotted, Color.DISCONNECTED, 3);
   } else if (props.alarmBorder) {
     // Implement alarm border for all widgets if configured.
     const severity = latestValue?.getAlarm()?.quality || AlarmQuality.VALID;
     const colors: { [key in AlarmQuality]: Color } = {
       [AlarmQuality.VALID]: Color.BLACK,
-      [AlarmQuality.WARNING]: Color.YELLOW,
-      [AlarmQuality.ALARM]: Color.RED,
-      [AlarmQuality.INVALID]: Color.WHITE,
-      [AlarmQuality.UNDEFINED]: Color.WHITE,
-      [AlarmQuality.CHANGING]: Color.WHITE
+      [AlarmQuality.WARNING]: Color.WARNING,
+      [AlarmQuality.ALARM]: Color.ALARM,
+      [AlarmQuality.INVALID]: Color.INVALID,
+      [AlarmQuality.UNDEFINED]: Color.UNDEFINED,
+      [AlarmQuality.CHANGING]: Color.CHANGING
     };
     if (severity !== AlarmQuality.VALID) {
       border = new Border(BorderStyle.Line, colors[severity], 2);

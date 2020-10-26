@@ -59,8 +59,8 @@ export const DynamicPageComponent = (
           >
             <ActionButton
               position={new RelativePosition()}
-              backgroundColor={Color.parse("#ff3333")}
-              foregroundColor={Color.parse("#ffffff")}
+              backgroundColor={new Color("#ff3333")}
+              foregroundColor={new Color("#ffffff")}
               actions={{
                 executeAsOne: false,
                 actions: [
