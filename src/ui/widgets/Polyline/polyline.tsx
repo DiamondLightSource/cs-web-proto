@@ -2,7 +2,12 @@ import React from "react";
 
 import { Widget } from "../widget";
 import { PVWidgetPropType, PVComponent } from "../widgetProps";
-import { InferWidgetProps, PositionProp, FloatPropOpt } from "../propTypes";
+import {
+  InferWidgetProps,
+  PositionProp,
+  FloatPropOpt,
+  ColorPropOpt
+} from "../propTypes";
 import { registerWidget } from "../register";
 import { ShapeComponent } from "../Shape/shape";
 import { Color } from "../../../types/color";
@@ -10,7 +15,8 @@ import { Color } from "../../../types/color";
 const PolylineProps = {
   width: FloatPropOpt,
   position: PositionProp,
-  lineWidth: FloatPropOpt
+  lineWidth: FloatPropOpt,
+  backgroundColor: ColorPropOpt
 };
 
 export type PolylineComponentProps = InferWidgetProps<typeof PolylineProps> &
@@ -22,7 +28,7 @@ export const PolylineComponent = (
   const shapeProps = {
     shapeWidth: `${props.width}px`,
     shapeHeight: `${props.lineWidth}px`,
-    backgroundColor: Color.CYAN
+    backgroundColor: props.backgroundColor
   };
 
   return <ShapeComponent {...shapeProps} />;
