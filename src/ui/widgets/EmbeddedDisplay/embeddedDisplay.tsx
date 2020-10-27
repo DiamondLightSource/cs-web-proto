@@ -8,6 +8,7 @@ import {
   widgetDescriptionToComponent
 } from "../createComponent";
 import { Color } from "../../../types/color";
+import { Border, BorderStyle } from "../../../types/border";
 import { Font, FontStyle } from "../../../types/font";
 import { MacroContext, MacroContextType } from "../../../types/macros";
 import { RelativePosition, AbsolutePosition } from "../../../types/position";
@@ -18,7 +19,6 @@ import { BaseUrlContext } from "../../../baseUrl";
 import { parseOpi } from "./opiParser";
 import { parseJson } from "./jsonParser";
 import { parseBob } from "./bobParser";
-import { Border, BorderStyle } from "../../../types/border";
 
 const EMPTY_WIDGET: WidgetDescription = {
   type: "shape",
@@ -119,8 +119,7 @@ export const EmbeddedDisplay = (
       type: "display",
       position: props.position,
       border:
-        props.border ??
-        new Border(BorderStyle.Line, Color.parse("lightgrey"), 1),
+        props.border ?? new Border(BorderStyle.Line, new Color("lightgrey"), 1),
       overflow: overflow,
       children: [description]
     });

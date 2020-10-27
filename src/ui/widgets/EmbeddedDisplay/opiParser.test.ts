@@ -5,6 +5,7 @@ import { Rule } from "../../../types/props";
 import { parseOpi } from "./opiParser";
 import { AbsolutePosition, RelativePosition } from "../../../types/position";
 import { ensureWidgetsRegistered } from "..";
+import { WidgetDescription } from "../createComponent";
 ensureWidgetsRegistered();
 
 describe("opi widget parser", (): void => {
@@ -70,7 +71,8 @@ describe("opi widget parser", (): void => {
   </display>`;
 
   it("parses a label widget", (): void => {
-    const widget = parseOpi(labelString, "ca").children[0];
+    const widget = parseOpi(labelString, "ca")
+      .children?.[0] as WidgetDescription;
     expect(widget.type).toEqual("label");
     // Boolean type
     expect(widget.visible).toEqual(true);
@@ -118,7 +120,8 @@ describe("opi widget parser", (): void => {
   </display>`;
 
   it("parses a widget with a rule", (): void => {
-    const widget = parseOpi(ruleString, "ca").children[0];
+    const widget = parseOpi(ruleString, "ca")
+      .children?.[0] as WidgetDescription;
     expect(widget.rules.length).toEqual(1);
     const rule: Rule = widget.rules[0];
     expect(rule.name).toEqual("Rule");
@@ -152,7 +155,8 @@ describe("opi widget parser", (): void => {
   </display>`;
 
   it("parses a widget with a child widget", (): void => {
-    const widget = parseOpi(childString, "ca").children[0];
+    const widget = parseOpi(childString, "ca")
+      .children?.[0] as WidgetDescription;
     expect(widget.children?.length).toEqual(1);
   });
 
@@ -177,7 +181,8 @@ describe("opi widget parser", (): void => {
   </display>`;
 
   it("parses a widget with an action", (): void => {
-    const widget = parseOpi(actionString, "ca").children[0];
+    const widget = parseOpi(actionString, "ca")
+      .children?.[0] as WidgetDescription;
     expect(widget.actions.actions.length).toEqual(1);
     const action = widget.actions.actions[0];
     expect(action.type).toEqual("OPEN_WEBPAGE");
@@ -227,7 +232,8 @@ describe("opi widget parser", (): void => {
   </display>`;
 
   it("parses an input widget", (): void => {
-    const widget = parseOpi(inputString, "ca").children[0];
+    const widget = parseOpi(inputString, "ca")
+      .children?.[0] as WidgetDescription;
     expect(widget.textAlign).toEqual("right");
     // Adds ca:// prefix.
     expect(widget.pvName.qualifiedName()).toEqual("ca://SR-CS-RFFB-01:RFSTEP");
@@ -246,7 +252,8 @@ describe("opi widget parser", (): void => {
   it("doesn't parse an invalid string", (): void => {
     // Reduce logging when expecting error.
     log.setLevel("error");
-    const widget = parseOpi(invalidString, "ca").children[0];
+    const widget = parseOpi(invalidString, "ca")
+      .children?.[0] as WidgetDescription;
     expect(widget.text).toBeUndefined();
     log.setLevel("info");
   });
@@ -264,7 +271,8 @@ describe("opi widget parser", (): void => {
   it("doesn't parse an invalid bool", (): void => {
     // Reduce logging when expecting error.
     log.setLevel("error");
-    const widget = parseOpi(invalidBool, "ca").children[0];
+    const widget = parseOpi(invalidBool, "ca")
+      .children?.[0] as WidgetDescription;
     expect(widget.showUnits).toBeUndefined();
     log.setLevel("info");
   });

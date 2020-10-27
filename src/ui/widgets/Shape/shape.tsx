@@ -1,5 +1,5 @@
 import React from "react";
-import { Widget } from "../widget";
+import { useCommonCss, Widget } from "../widget";
 import { WidgetPropType } from "../widgetProps";
 import { registerWidget } from "../register";
 import {
@@ -23,18 +23,14 @@ const ShapeProps = {
 export const ShapeComponent = (
   props: InferWidgetProps<typeof ShapeProps>
 ): JSX.Element => {
-  const newStyle: any = {
-    width: props.shapeWidth ? props.shapeWidth : "100%",
-    height: props.shapeHeight ? props.shapeHeight : "100%",
-    borderRadius: props.shapeRadius ? props.shapeRadius : "",
-    transform: props.shapeTransform ? props.shapeTransform : "",
-    ...props.border?.css()
+  const style = {
+    ...useCommonCss(props),
+    width: props.shapeWidth ?? "100%",
+    height: props.shapeHeight ?? "100%",
+    borderRadius: props.shapeRadius ?? "",
+    transform: props.shapeTransform ?? ""
   };
-  newStyle["backgroundColor"] = props.backgroundColor?.rgbaString();
-  if (props.transparent !== undefined && props.transparent) {
-    newStyle["backgroundColor"] = "transparent";
-  }
-  return <div style={newStyle} />;
+  return <div style={style} />;
 };
 
 const ShapeWidgetProps = {

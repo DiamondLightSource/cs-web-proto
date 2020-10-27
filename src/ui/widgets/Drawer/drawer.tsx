@@ -44,8 +44,8 @@ export const DrawerComponent = (
           width: "100%",
           ...props.font?.css(),
           ...props.border?.css(),
-          color: props.foregroundColor?.rgbaString(),
-          backgroundColor: props.backgroundColor?.rgbaString()
+          color: props.foregroundColor?.toString(),
+          backgroundColor: props.backgroundColor?.toString()
         }}
       >
         {props.text ?? "\u2630"}

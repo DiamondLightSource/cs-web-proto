@@ -78,7 +78,7 @@ export const SlideshowComponent = (
         maxHeight: props.maxHeight ?? "",
         minHeight: props.minHeight ?? "",
         ...props.border?.css(),
-        backgroundColor: props.backgroundColor?.rgbaString()
+        backgroundColor: props.backgroundColor?.toString()
       }}
     >
       <button

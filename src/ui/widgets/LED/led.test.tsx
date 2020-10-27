@@ -47,9 +47,7 @@ describe("background color changes depending on color returned from rule", (): v
 
     const renderedLed = renderLed(ledProps);
 
-    expect(renderedLed.props.style.backgroundColor).toBe(
-      "rgba(255, 0, 0, 255)"
-    );
+    expect(renderedLed.props.style.backgroundColor).toBe("red");
   });
 
   test("background color from user is applied 2", (): void => {
@@ -61,9 +59,7 @@ describe("background color changes depending on color returned from rule", (): v
 
     const renderedLed = renderLed(ledProps);
 
-    expect(renderedLed.props.style.backgroundColor).toBe(
-      "rgba(0, 0, 255, 255)"
-    );
+    expect(renderedLed.props.style.backgroundColor).toBe("blue");
   });
 });
 
@@ -71,7 +67,10 @@ describe("width property is used", (): void => {
   test("width changes the size of the LED", (): void => {
     const renderedLed = renderLed({ width: 10 });
 
-    expect(renderedLed.props.style.width).toBe("10px");
-    expect(renderedLed.props.style.height).toBe("10px");
+    // Width in CS-Studio doesn't quite match width in the browser,
+    // so whatever is input has 5 subtracted from it, this makes it
+    // look more like CS-Studio
+    expect(renderedLed.props.style.width).toBe("5px");
+    expect(renderedLed.props.style.height).toBe("5px");
   });
 });

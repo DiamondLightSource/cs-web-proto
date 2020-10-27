@@ -48,8 +48,8 @@ export const LabelComponent = (
     alignment = "flex-end";
   }
   style["justifyContent"] = alignment;
-  style["color"] = props.foregroundColor?.rgbaString();
-  style["backgroundColor"] = props.backgroundColor?.rgbaString();
+  style["color"] = props.foregroundColor?.toString();
+  style["backgroundColor"] = props.backgroundColor?.toString();
   // Transparent prop overrides backgroundColor.
   if (transparent) {
     style["backgroundColor"] = "transparent";
