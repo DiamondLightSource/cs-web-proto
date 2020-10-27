@@ -1,14 +1,25 @@
 import React from "react";
 import { Widget } from "../widget";
-import { InferWidgetProps, StringProp, MacrosProp } from "../propTypes";
+import {
+  InferWidgetProps,
+  StringProp,
+  StringPropOpt,
+  FloatProp,
+  MacrosProp,
+  FloatPropOpt
+} from "../propTypes";
 import { PVComponent, PVWidgetPropType } from "../widgetProps";
 import { registerWidget } from "../register";
 import { EmbeddedDisplay } from "../EmbeddedDisplay/embeddedDisplay";
 import { RelativePosition } from "../../../types/position";
+import { GroupBoxComponent } from "../GroupBox/groupBox";
 
 export const LinkingContainerProps = {
-  file: StringProp,
-  macroMap: MacrosProp
+  opiFile: StringProp,
+  macroMap: MacrosProp,
+  height: FloatProp,
+  width: FloatProp,
+  name: StringPropOpt
 };
 
 export type LinkingContainerComponentProps = InferWidgetProps<
@@ -19,7 +30,7 @@ export type LinkingContainerComponentProps = InferWidgetProps<
 export const LinkingContainerComponent = (
   props: LinkingContainerComponentProps
 ): JSX.Element => {
-  const splitPath = props.file.split("/");
+  const splitPath = props.opiFile.split("/");
 
   const file = {
     path: splitPath[splitPath.length - 1],
@@ -27,10 +38,16 @@ export const LinkingContainerComponent = (
     defaultProtocol: "ca"
   };
 
-  const position = new RelativePosition();
+  const position = new RelativePosition(
+    `${props.width}px`,
+    `${props.height}px`
+  );
 
-  return <EmbeddedDisplay file={file} position={position} />;
-  // return <div>{"stuff"}</div>;
+  return (
+    <GroupBoxComponent name={props.name ?? ""}>
+      <EmbeddedDisplay file={file} position={position} />
+    </GroupBoxComponent>
+  );
 };
 
 const LinkingContainerWidgetProps = {

@@ -375,7 +375,9 @@ export const OPI_SIMPLE_PARSERS: ParserDict = {
   stretchToFit: ["stretch_to_fit", opiParseBoolean],
   alarmSensitive: ["border_alarm_sensitive", opiParseBoolean],
   lineWidth: ["line_width", opiParseNumber],
-  file: ["opi_file", opiParseString]
+  opiFile: ["opi_file", opiParseString],
+  height: ["height", opiParseNumber],
+  width: ["width", opiParseNumber]
 };
 
 /**
