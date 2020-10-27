@@ -1,75 +1,106 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<CheckboxComponent /> doesn't create a label if there is no text 1`] = `"No instances found with node type: \\"LabelComponent\\""`;
+exports[`<CheckboxComponent /> doesn't create a label if there is no text 1`] = `
+"Unable to find an accessible element with the role \\"checkbox\\" and name \`/Here is a label/i\`
+
+Here are the accessible roles:
+
+  checkbox:
+
+  Name \\"\\":
+  [36m<input[39m
+    [33mclass[39m=[32m\\"PrivateSwitchBase-input-6\\"[39m
+    [33mdata-indeterminate[39m=[32m\\"false\\"[39m
+    [33mtype[39m=[32m\\"checkbox\\"[39m
+    [33mvalue[39m=[32m\\"\\"[39m
+  [36m/>[39m
+
+  --------------------------------------------------
+
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div>[39m
+      [36m<label[39m
+        [33mclass[39m=[32m\\"MuiFormControlLabel-root\\"[39m
+        [33mstyle[39m=[32m\\"width: 10px; height: 10px;\\"[39m
+      [36m>[39m
+        [36m<span[39m
+          [33maria-disabled[39m=[32m\\"false\\"[39m
+          [33mclass[39m=[32m\\"MuiButtonBase-root MuiIconButton-root PrivateSwitchBase-root-3 MuiCheckbox-root makeStyles-root-1 MuiCheckbox-colorSecondary MuiIconButton-colorSecondary\\"[39m
+        [36m>[39m
+          [36m<span[39m
+            [33mclass[39m=[32m\\"MuiIconButton-label\\"[39m
+          [36m>[39m
+            [36m<input[39m
+              [33mclass[39m=[32m\\"PrivateSwitchBase-input-6\\"[39m
+              [33mdata-indeterminate[39m=[32m\\"false\\"[39m
+              [33mtype[39m=[32m\\"checkbox\\"[39m
+              [33mvalue[39m=[32m\\"\\"[39m
+            [36m/>[39m
+            [36m<svg[39m
+              [33maria-hidden[39m=[32m\\"true\\"[39m
+              [33mclass[39m=[32m\\"MuiSvgIcon-root\\"[39m
+              [33mfocusable[39m=[32m\\"false\\"[39m
+              [33mviewBox[39m=[32m\\"0 0 24 24\\"[39m
+            [36m>[39m
+              [36m<path[39m
+                [33md[39m=[32m\\"M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z\\"[39m
+              [36m/>[39m
+            [36m</svg>[39m
+          [36m</span>[39m
+        [36m</span>[39m
+        [36m<span[39m
+          [33mclass[39m=[32m\\"MuiTypography-root MuiFormControlLabel-label MuiTypography-body1\\"[39m
+        [36m/>[39m
+      [36m</label>[39m
+    [36m</div>[39m
+  [36m</div>[39m
+[36m</body>[39m"
+`;
 
 exports[`<CheckboxComponent /> matches snapshot 1`] = `
-<div>
-  <label
-    className="MuiFormControlLabel-root"
-    style={
-      Object {
-        "height": "20px",
-        "width": "15px",
-      }
-    }
-  >
-    <span
-      aria-disabled={false}
-      className="MuiButtonBase-root MuiIconButton-root PrivateSwitchBase-root-3 MuiCheckbox-root makeStyles-root-1 MuiCheckbox-colorSecondary MuiIconButton-colorSecondary"
-      onBlur={[Function]}
-      onDragLeave={[Function]}
-      onFocus={[Function]}
-      onKeyDown={[Function]}
-      onKeyUp={[Function]}
-      onMouseDown={[Function]}
-      onMouseLeave={[Function]}
-      onMouseUp={[Function]}
-      onTouchEnd={[Function]}
-      onTouchMove={[Function]}
-      onTouchStart={[Function]}
-      tabIndex={null}
+<DocumentFragment>
+  <div>
+    <label
+      class="MuiFormControlLabel-root"
+      style="width: 15px; height: 20px;"
     >
       <span
-        className="MuiIconButton-label"
+        aria-disabled="false"
+        class="MuiButtonBase-root MuiIconButton-root PrivateSwitchBase-root-3 MuiCheckbox-root makeStyles-root-1 MuiCheckbox-colorSecondary MuiIconButton-colorSecondary"
       >
-        <input
-          checked={false}
-          className="PrivateSwitchBase-input-6"
-          data-indeterminate={false}
-          onChange={[Function]}
-          type="checkbox"
-        />
-        <svg
-          aria-hidden={true}
-          className="MuiSvgIcon-root"
-          focusable="false"
-          viewBox="0 0 24 24"
+        <span
+          class="MuiIconButton-label"
         >
-          <path
-            d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"
+          <input
+            class="PrivateSwitchBase-input-6"
+            data-indeterminate="false"
+            type="checkbox"
+            value=""
           />
-        </svg>
+          <svg
+            aria-hidden="true"
+            class="MuiSvgIcon-root"
+            focusable="false"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"
+            />
+          </svg>
+        </span>
       </span>
-    </span>
-    <span
-      className="MuiTypography-root MuiFormControlLabel-label MuiTypography-body1"
-    >
-      <div
-        className="Label Label"
-        style={
-          Object {
-            "backgroundColor": undefined,
-            "color": undefined,
-            "justifyContent": "center",
-            "outline": undefined,
-            "outlineOffset": undefined,
-            "visibility": undefined,
-          }
-        }
+      <span
+        class="MuiTypography-root MuiFormControlLabel-label MuiTypography-body1"
       >
-        Here is a label
-      </div>
-    </span>
-  </label>
-</div>
+        <div
+          class="Label Label"
+          style="justify-content: center;"
+        >
+          Here is a label
+        </div>
+      </span>
+    </label>
+  </div>
+</DocumentFragment>
 `;

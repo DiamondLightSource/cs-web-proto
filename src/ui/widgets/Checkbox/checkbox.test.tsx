@@ -1,12 +1,12 @@
 import React from "react";
 import { CheckboxComponent, CheckboxProps } from "./checkbox";
 import renderer, { ReactTestRenderer } from "react-test-renderer";
+import { render, fireEvent, screen } from "@testing-library/react";
 import { InferWidgetProps } from "../propTypes";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
-import { LabelComponent } from "../Label/label";
-import { mount, shallow } from "enzyme";
 import { Checkbox as MaterialCheckbox } from "@material-ui/core";
-import { act } from "react-dom/test-utils";
+import { ensureWidgetsRegistered } from "..";
+ensureWidgetsRegistered();
 
 const checkboxRenderer = (checkboxProps: any): ReactTestRenderer => {
   return renderer.create(
@@ -52,71 +52,68 @@ describe("<CheckboxComponent />", (): void => {
       width: 15,
       height: 20
     };
+    const { asFragment } = render(
+      <CheckboxComponent {...checkboxProps} readonly={true} connected={true} />
+    );
 
-    const renderedCheckbox = checkboxRenderer(checkboxProps);
-    expect(renderedCheckbox).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   it("doesn't create a label if there is no text", (): void => {
-    const testRenderer = checkboxRenderer({});
+    const checkboxProps: CheckboxComponentProps = {};
 
-    const findLabel = (): void => {
-      testRenderer.root.findByType(LabelComponent);
-    };
+    render(
+      <CheckboxComponent {...checkboxProps} readonly={true} connected={true} />
+    );
 
-    expect(findLabel).toThrowErrorMatchingSnapshot();
-
-    const formProps = testRenderer.root.findByType(FormControlLabel).props;
-
-    expect(formProps).toHaveProperty("label");
-    expect(formProps.label).toBeUndefined();
-    expect.assertions(3);
+    expect((): void => {
+      screen.getByRole("checkbox", {
+        name: /Here is a label/i
+      });
+    }).toThrowErrorMatchingSnapshot();
   });
 
   it("creates a label when there is text", (): void => {
-    const testRenderer = checkboxRenderer({ label: "stuff" });
+    const checkboxProps: CheckboxComponentProps = {
+      label: "Here is a label",
+      width: 15,
+      height: 20
+    };
 
-    const label = testRenderer.root.findByType(LabelComponent);
-    expect(label.props.text).toBe("stuff");
-  });
-
-  it("styling is applied", (): void => {
-    const wrapper = mount(
-      <CheckboxComponent {...({} as any)} readonly={true} />
+    render(
+      <CheckboxComponent {...checkboxProps} readonly={true} connected={true} />
     );
 
-    const findComponent = (): any => wrapper.find(MaterialCheckbox);
-    expect(findComponent().props().checked).toBe(false);
-
-    expect(findComponent().props().classes).toEqual({
-      root: "makeStyles-root-1",
-      checked: "makeStyles-checked-2"
-    });
+    expect(
+      screen.getByRole("checkbox", {
+        name: /Here is a label/i
+      })
+    ).toBeInTheDocument();
   });
 
   describe("user input changes properties", (): void => {
     it("clicking on checkbox toggles it", (): void => {
-      const wrapper = mount(
-        <CheckboxComponent {...({ label: "stuff" } as any)} readonly={true} />
+      const checkboxProps: CheckboxComponentProps = {
+        label: "Here is a label",
+        width: 15,
+        height: 20
+      };
+
+      render(
+        <CheckboxComponent
+          {...checkboxProps}
+          connected={true}
+          readonly={true}
+        />
       );
 
-      const findComponent = (): any => wrapper.find(MaterialCheckbox);
-      expect(findComponent().props().checked).toBe(false);
-
-      // Method 1
-      // act(() => {
-      // findComponent()
-      // .props()
-      // .onChange();
-      // });
-      // Method 2
-      // findComponent().simulate("change");
-      // Method 3
-      findComponent().simulate("change", {
-        target: { name: "checked", value: true }
+      const items: any = screen.getByRole("checkbox", {
+        name: /Here is a label/i
       });
 
-      expect(findComponent().props().checked).toBe(true);
+      expect(items.checked).toBe(false);
+      fireEvent.click(items);
+      expect(items.checked).toBe(true);
     });
   });
 });
