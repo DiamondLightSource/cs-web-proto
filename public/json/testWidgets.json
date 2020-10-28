@@ -101,14 +101,20 @@
           "backgroundColor": "white"
         },
         {
-          "type": "image",
+          "type": "symbol",
+          "pvName": "sim://enum",
           "position": "relative",
+          "showLabel": true,
+          "labelPosition": "right",
+          "backgroundColor": "lightgrey",
           "width": "25%",
           "height": "80px",
           "src": "cpu 2.svg",
           "fitToHeight": true,
           "margin": "2% 4% 2% 4%",
-          "backgroundColor": "white"
+          "font": {
+            "size": "20"
+          }
         },
         {
           "type": "led",

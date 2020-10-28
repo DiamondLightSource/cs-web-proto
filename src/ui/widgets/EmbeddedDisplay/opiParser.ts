@@ -339,6 +339,22 @@ function opiParseImageFile(props: any): string {
   return filename;
 }
 
+function opiParseLabelPosition(props: any): string {
+  const num = opiParseNumber(props).toString();
+  const mapping: { [key: string]: string } = {
+    1: "top",
+    2: "left",
+    3: "center",
+    4: "right",
+    5: "bottom",
+    6: "top left",
+    7: "top right",
+    8: "bottom left",
+    9: "bottom right"
+  };
+  return mapping[num] || "top";
+}
+
 /**
  * Attempt to return the widget associated with a props object, failing
  * that will return a shape object
@@ -374,6 +390,7 @@ export const OPI_SIMPLE_PARSERS: ParserDict = {
   macroMap: ["macros", opiParseMacros],
   src: ["image_file", opiParseImageFile],
   showLabel: ["show_boolean_label", opiParseBoolean],
+  labelPosition: ["boolean_label_position", opiParseLabelPosition],
   stretchToFit: ["stretch_to_fit", opiParseBoolean],
   alarmSensitive: ["border_alarm_sensitive", opiParseBoolean],
   lineWidth: ["line_width", opiParseNumber],

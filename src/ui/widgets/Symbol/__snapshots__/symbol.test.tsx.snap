@@ -4,28 +4,28 @@ exports[`matches snapshot 1`] = `
 <div
   style={
     Object {
-      "backgroundColor": "transparent",
+      "backgroundColor": undefined,
+      "color": undefined,
+      "height": undefined,
+      "outline": undefined,
+      "outlineOffset": undefined,
+      "overflow": "hidden",
+      "textAlign": "left",
+      "visibility": undefined,
+      "width": undefined,
     }
   }
 >
-  <div
+  <img
+    src="http://localhost:3000/img/undefined"
     style={
       Object {
-        "overflow": "auto",
-        "textAlign": "left",
+        "display": "block",
+        "height": undefined,
+        "transform": "rotate(0deg) scaleX(1) scaleY(1)",
+        "width": undefined,
       }
     }
-  >
-    <img
-      src="http://localhost:3000/img/undefined"
-      style={
-        Object {
-          "height": "undefinedpx",
-          "transform": "rotate(0deg) scaleX(1) scaleY(1)",
-          "width": "undefinedpx",
-        }
-      }
-    />
-  </div>
+  />
 </div>
 `;
