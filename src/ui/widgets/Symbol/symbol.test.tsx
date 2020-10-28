@@ -22,12 +22,7 @@ describe("properties are added to symbol", (): void => {
 
     const label = testRenderer.root.findByType(LabelComponent);
     expect(label.props.visible).toBe(true);
-    expect(label.props.backgroundColor).toEqual({
-      a: 255,
-      b: 255,
-      g: 255,
-      r: 255
-    });
+    expect(label.props.backgroundColor.text).toEqual("rgba(255,255,255,255)");
     expect(label.props.text).toBe("Fake value");
 
     const tree = testRenderer.toTree();
