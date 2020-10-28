@@ -21,7 +21,10 @@ const SvgImageProps = {
   src: StringPropOpt,
   width: FloatPropOpt,
   height: FloatPropOpt,
-  showLabel: BoolProp
+  showLabel: BoolProp,
+  rotation: FloatPropOpt,
+  flipHorizontal: BoolPropOpt,
+  flipVertical: BoolPropOpt
 };
 
 // TODO: There is probably some room to merge the existing image component
@@ -34,13 +37,19 @@ const SvgImageProps = {
 const SvgImageComponent = (
   props: InferWidgetProps<typeof SvgImageProps>
 ): JSX.Element => {
+  const { rotation = 0, flipHorizontal = false, flipVertical = false } = props;
+
   const baseUrl = useContext(BaseUrlContext);
   let file = `img/${props.src}`;
   if (!file.startsWith("http")) {
     file = `${baseUrl}/${file}`;
   }
 
-  const style: any = {};
+  const style: any = {
+    transform: `rotate(${rotation}deg) scaleX(${
+      flipHorizontal ? -1 : 1
+    }) scaleY(${flipVertical ? -1 : 1})`
+  };
   if (!props.showLabel) {
     style.width = `${props.width}px`;
     style.height = `${props.height}px`;
@@ -64,7 +73,10 @@ const SymbolProps = {
   width: FloatPropOpt,
   height: FloatPropOpt,
   border: BorderPropOpt,
-  value: FloatPropOpt
+  value: FloatPropOpt,
+  rotation: FloatPropOpt,
+  flipHorizontal: BoolPropOpt,
+  flipVertical: BoolPropOpt
 };
 
 export type SymbolComponentProps = InferWidgetProps<typeof SymbolProps> &
