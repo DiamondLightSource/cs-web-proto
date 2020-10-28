@@ -256,7 +256,7 @@ export function opiParsePvName(
  * a string e.g. "left", "center", "right"
  * @param jsonProp
  */
-function opiParseHorizonalAlignment(jsonProp: ElementCompact): string {
+function opiParseHorizontalAlignment(jsonProp: ElementCompact): string {
   const alignments: { [key: number]: string } = {
     0: "left",
     1: "center",
@@ -362,7 +362,7 @@ function opiGetTargetWidget(props: any): React.FC {
 export const OPI_SIMPLE_PARSERS: ParserDict = {
   text: ["text", opiParseString],
   name: ["name", opiParseString],
-  textAlign: ["horizontal_alignment", opiParseHorizonalAlignment],
+  textAlign: ["horizontal_alignment", opiParseHorizontalAlignment],
   backgroundColor: ["background_color", opiParseColor],
   foregroundColor: ["foreground_color", opiParseColor],
   precision: ["precision", opiParseNumber],
