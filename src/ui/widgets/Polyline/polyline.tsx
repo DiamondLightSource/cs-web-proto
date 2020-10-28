@@ -1,22 +1,24 @@
 import React from "react";
-
 import { Widget } from "../widget";
 import { PVWidgetPropType, PVComponent } from "../widgetProps";
 import {
   InferWidgetProps,
-  PositionProp,
   FloatPropOpt,
-  ColorPropOpt
+  ColorPropOpt,
+  BoolPropOpt,
+  FloatProp
 } from "../propTypes";
 import { registerWidget } from "../register";
 import { ShapeComponent } from "../Shape/shape";
 import { Color } from "../../../types/color";
 
 const PolylineProps = {
-  width: FloatPropOpt,
-  position: PositionProp,
-  lineWidth: FloatPropOpt,
-  backgroundColor: ColorPropOpt
+  width: FloatProp,
+  lineWidth: FloatProp,
+  backgroundColor: ColorPropOpt,
+  visible: BoolPropOpt,
+  transparent: BoolPropOpt,
+  rotationAngle: FloatPropOpt
 };
 
 export type PolylineComponentProps = InferWidgetProps<typeof PolylineProps> &
@@ -25,13 +27,33 @@ export type PolylineComponentProps = InferWidgetProps<typeof PolylineProps> &
 export const PolylineComponent = (
   props: PolylineComponentProps
 ): JSX.Element => {
-  const shapeProps = {
-    shapeWidth: `${props.width}px`,
-    shapeHeight: `${props.lineWidth}px`,
-    backgroundColor: props.backgroundColor
+  const {
+    visible = true,
+    transparent = false,
+    backgroundColor,
+    rotationAngle = 0,
+    width,
+    lineWidth
+  } = props;
+
+  const styleProps = {
+    backgroundColor: transparent ? Color.TRANSPARENT : backgroundColor,
+    visible
   };
 
-  return <ShapeComponent {...shapeProps} />;
+  const shapeProps = {
+    shapeWidth: `${width}px`,
+    shapeHeight: `${lineWidth}px`
+  };
+
+  const transform = `rotate(${rotationAngle}deg)`;
+
+  return (
+    <ShapeComponent
+      {...{ ...shapeProps, ...styleProps }}
+      shapeTransform={transform}
+    />
+  );
 };
 
 const PolylineWidgetProps = {
