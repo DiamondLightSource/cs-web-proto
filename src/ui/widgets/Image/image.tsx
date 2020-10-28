@@ -6,7 +6,8 @@ import {
   InferWidgetProps,
   StringProp,
   BoolPropOpt,
-  StringPropOpt
+  StringPropOpt,
+  FloatPropOpt
 } from "../propTypes";
 import { registerWidget } from "../register";
 import { BaseUrlContext } from "../../../baseUrl";
@@ -14,12 +15,19 @@ import { BaseUrlContext } from "../../../baseUrl";
 const ImageProps = {
   src: StringProp,
   alt: StringPropOpt,
-  fill: BoolPropOpt
+  fill: BoolPropOpt,
+  width: StringPropOpt,
+  height: StringPropOpt,
+  rotation: FloatPropOpt,
+  flipHorizontal: BoolPropOpt,
+  flipVertical: BoolPropOpt
 };
 
 export const ImageComponent = (
   props: InferWidgetProps<typeof ImageProps>
 ): JSX.Element => {
+  const { rotation = 0, flipHorizontal, flipVertical } = props;
+
   const baseUrl = useContext(BaseUrlContext);
   let file = `img/${props.src}`;
   if (!file.startsWith("http")) {
@@ -27,13 +35,13 @@ export const ImageComponent = (
   }
   let imageSize: any = undefined;
   let overflow = "auto";
-  if (props.fill === true) {
+  if (props.fill) {
     imageSize = "100%";
     overflow = "hidden";
   }
 
   const style: CSSProperties = {
-    overflow: overflow,
+    overflow,
     textAlign: "left"
   };
 
@@ -43,8 +51,11 @@ export const ImageComponent = (
         src={file}
         alt={props.alt || undefined}
         style={{
-          height: imageSize,
-          width: imageSize
+          height: props.height ?? imageSize,
+          width: props.width ?? imageSize,
+          transform: `rotate(${rotation}deg) scaleX(${
+            flipHorizontal ? -1 : 1
+          }) scaleY(${flipVertical ? -1 : 1})`
         }}
       />
     </div>
