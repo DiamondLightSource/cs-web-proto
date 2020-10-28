@@ -374,7 +374,9 @@ export const OPI_SIMPLE_PARSERS: ParserDict = {
   showLabel: ["show_boolean_label", opiParseBoolean],
   stretchToFit: ["stretch_to_fit", opiParseBoolean],
   alarmSensitive: ["border_alarm_sensitive", opiParseBoolean],
-  lineWidth: ["line_width", opiParseNumber]
+  lineWidth: ["line_width", opiParseNumber],
+  rotationAngle: ["rotation_angle", opiParseNumber],
+  width: ["width", opiParseNumber]
 };
 
 /**
