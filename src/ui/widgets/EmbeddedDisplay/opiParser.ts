@@ -378,7 +378,10 @@ export const OPI_SIMPLE_PARSERS: ParserDict = {
   alarmSensitive: ["border_alarm_sensitive", opiParseBoolean],
   lineWidth: ["line_width", opiParseNumber],
   width: ["width", opiParseNumber],
-  height: ["height", opiParseNumber]
+  height: ["height", opiParseNumber],
+  rotation: ["degree", opiParseNumber],
+  flipHorizontal: ["flip_horizontal", opiParseBoolean],
+  flipVertical: ["flip_vertical", opiParseBoolean]
 };
 
 /**
