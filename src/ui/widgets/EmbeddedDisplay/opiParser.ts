@@ -45,7 +45,10 @@ const OPI_WIDGET_MAPPING: { [key: string]: any } = {
   "org.csstudio.opibuilder.widgets.Rectangle": "shape",
   "org.csstudio.opibuilder.widgets.ActionButton": "actionbutton",
   "org.csstudio.opibuilder.widgets.MenuButton": "menubutton",
-  "org.csstudio.opibuilder.widgets.polyline": "polyline"
+  "org.csstudio.opibuilder.widgets.polyline": "polyline",
+  "org.csstudio.opibuilder.widgets.symbol.multistate.MultistateMonitorWidget":
+    "symbol",
+  "org.csstudio.opibuilder.widgets.LED": "led"
 };
 
 /**
@@ -254,7 +257,7 @@ export function opiParsePvName(
  * a string e.g. "left", "center", "right"
  * @param jsonProp
  */
-function opiParseHorizonalAlignment(jsonProp: ElementCompact): string {
+function opiParseHorizontalAlignment(jsonProp: ElementCompact): string {
   const alignments: { [key: number]: string } = {
     0: "left",
     1: "center",
@@ -360,7 +363,7 @@ function opiGetTargetWidget(props: any): React.FC {
 export const OPI_SIMPLE_PARSERS: ParserDict = {
   text: ["text", opiParseString],
   name: ["name", opiParseString],
-  textAlign: ["horizontal_alignment", opiParseHorizonalAlignment],
+  textAlign: ["horizontal_alignment", opiParseHorizontalAlignment],
   backgroundColor: ["background_color", opiParseColor],
   foregroundColor: ["foreground_color", opiParseColor],
   precision: ["precision", opiParseNumber],
@@ -376,7 +379,11 @@ export const OPI_SIMPLE_PARSERS: ParserDict = {
   alarmSensitive: ["border_alarm_sensitive", opiParseBoolean],
   lineWidth: ["line_width", opiParseNumber],
   rotationAngle: ["rotation_angle", opiParseNumber],
-  width: ["width", opiParseNumber]
+  width: ["width", opiParseNumber],
+  height: ["height", opiParseNumber],
+  rotation: ["degree", opiParseNumber],
+  flipHorizontal: ["flip_horizontal", opiParseBoolean],
+  flipVertical: ["flip_vertical", opiParseBoolean]
 };
 
 /**

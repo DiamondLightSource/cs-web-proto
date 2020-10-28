@@ -1,7 +1,7 @@
 import React from "react";
 import { ImageComponent } from "./image";
 import { shallow, ShallowWrapper } from "enzyme";
-import { create, ReactTestRenderer } from "react-test-renderer";
+import renderer, { create, ReactTestRenderer } from "react-test-renderer";
 import { DEFAULT_BASE_URL } from "../../../baseUrl";
 
 let snapshot: ReactTestRenderer;
@@ -13,7 +13,7 @@ beforeEach((): void => {
   snapshot = create(image);
 });
 
-describe("<Image />", (): void => {
+describe("<ImageComponent />", (): void => {
   test("it matches the snapshot", (): void => {
     expect(snapshot.toJSON()).toMatchSnapshot();
   });
@@ -45,5 +45,37 @@ describe("<Image />", (): void => {
     wrapper = shallow(image);
     expect(wrapper.childAt(0).prop("style").height).toEqual("100%");
     expect(wrapper.childAt(0).prop("style").width).toEqual("100%");
+  });
+
+  test("width and height override fill property", (): void => {
+    const imageProps = {
+      src: "test",
+      width: "20px",
+      height: "15px"
+    };
+
+    const imageRenderedProps = renderer
+      .create(<ImageComponent {...imageProps} />)
+      .root.findByType("img").props;
+
+    expect(imageRenderedProps.style.height).toBe("15px");
+    expect(imageRenderedProps.style.width).toBe("20px");
+  });
+
+  test("flips and rotations are applied", (): void => {
+    const imageProps = {
+      src: "test",
+      flipHorizontal: true,
+      flipVertical: true,
+      rotation: 45
+    };
+
+    const imageRenderedProps = renderer
+      .create(<ImageComponent {...imageProps} />)
+      .root.findByType("img").props;
+
+    expect(imageRenderedProps.style.transform).toBe(
+      "rotate(45deg) scaleX(-1) scaleY(-1)"
+    );
   });
 });
