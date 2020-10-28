@@ -23,7 +23,8 @@ const LabelProps = {
   font: FontPropOpt,
   foregroundColor: ColorPropOpt,
   backgroundColor: ColorPropOpt,
-  border: BorderPropOpt
+  border: BorderPropOpt,
+  transform: StringPropOpt
 };
 
 const LabelWidgetProps = {
@@ -56,6 +57,10 @@ export const LabelComponent = (
   }
   if (props.visible) {
     style["visibility"] = "visible";
+  }
+
+  if (props.transform) {
+    style["transform"] = props.transform;
   }
   // Simple component to display text - defaults to black text and dark grey background
   return (

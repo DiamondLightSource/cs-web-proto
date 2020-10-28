@@ -29,7 +29,8 @@ const SymbolProps = {
   rotation: FloatPropOpt,
   flipHorizontal: BoolPropOpt,
   flipVertical: BoolPropOpt,
-  visible: BoolPropOpt
+  visible: BoolPropOpt,
+  stretchToFit: BoolPropOpt
 };
 
 export type SymbolComponentProps = InferWidgetProps<typeof SymbolProps> &
@@ -44,6 +45,12 @@ export const SymbolComponent = (props: SymbolComponentProps): JSX.Element => {
   const { showLabel, visible = true } = props;
   const background = props.backgroundColor || Color.WHITE;
 
+  const useSizeProperties = !props.showLabel || props.stretchToFit;
+  const sizeProps = {
+    width: useSizeProperties ? `${props.width}px` : undefined,
+    height: useSizeProperties ? `${props.height}px` : undefined
+  };
+
   return (
     <div
       style={{
@@ -53,14 +60,18 @@ export const SymbolComponent = (props: SymbolComponentProps): JSX.Element => {
       <ImageComponent
         {...{
           ...props,
-          width: !props.showLabel ? `${props.width}px` : undefined,
-          height: !props.showLabel ? `${props.height}px` : undefined
+          ...sizeProps
         }}
       />
       {showLabel && (
         <LabelComponent
           {...{ visible, backgroundColor: background, ...props }}
           text={props.value?.getStringValue() ?? ""}
+          // TODO: This is pretty hacky, on CS-Studio when using stretchToFit
+          // the text stays still while the image expands underneath, to compensate
+          // for expansion of the image the text is shifted a FIXED amount
+          transform={`translate(0px, ${props.stretchToFit ? -20 : 0}px)`}
+          transparent={true}
         />
       )}
     </div>
