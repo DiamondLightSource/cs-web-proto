@@ -23,6 +23,7 @@ import { WidgetActions } from "../widgetActions";
 import { Font, FontStyle } from "../../../types/font";
 import { Border, BorderStyle } from "../../../types/border";
 import { Color } from "../../../types/color";
+import { WidgetDescription } from "../createComponent";
 
 const BOB_WIDGET_MAPPING: { [key: string]: any } = {
   display: "display",
@@ -106,7 +107,10 @@ const BOB_COMPLEX_PARSERS: ComplexParserDict = {
   border: bobParseBorder
 };
 
-export function parseBob(xmlString: string, defaultProtocol: string): any {
+export function parseBob(
+  xmlString: string,
+  defaultProtocol: string
+): WidgetDescription {
   // Convert it to a "compact format"
   const compactJSON = xml2js(xmlString, {
     compact: true

@@ -39,8 +39,8 @@ export const DropDownComponent = (
     open={props.open ?? false}
     style={{
       ...props.border?.css(),
-      color: props.foregroundColor?.rgbaString() ?? "",
-      backgroundColor: props.backgroundColor?.rgbaString() ?? "",
+      color: props.foregroundColor?.toString() ?? "",
+      backgroundColor: props.backgroundColor?.toString() ?? "",
       minHeight: props.minHeight ?? ""
     }}
   >
