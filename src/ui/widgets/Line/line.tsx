@@ -12,7 +12,7 @@ import { registerWidget } from "../register";
 import { ShapeComponent } from "../Shape/shape";
 import { Color } from "../../../types/color";
 
-const PolylineProps = {
+const LineProps = {
   width: FloatProp,
   lineWidth: FloatProp,
   backgroundColor: ColorPropOpt,
@@ -21,12 +21,10 @@ const PolylineProps = {
   rotationAngle: FloatPropOpt
 };
 
-export type PolylineComponentProps = InferWidgetProps<typeof PolylineProps> &
+export type LineComponentProps = InferWidgetProps<typeof LineProps> &
   PVComponent;
 
-export const PolylineComponent = (
-  props: PolylineComponentProps
-): JSX.Element => {
+export const LineComponent = (props: LineComponentProps): JSX.Element => {
   const {
     visible = true,
     transparent = false,
@@ -56,13 +54,13 @@ export const PolylineComponent = (
   );
 };
 
-const PolylineWidgetProps = {
-  ...PolylineProps,
+const LineWidgetProps = {
+  ...LineProps,
   ...PVWidgetPropType
 };
 
-export const Polyline = (
-  props: InferWidgetProps<typeof PolylineWidgetProps>
-): JSX.Element => <Widget baseWidget={PolylineComponent} {...props} />;
+export const Line = (
+  props: InferWidgetProps<typeof LineWidgetProps>
+): JSX.Element => <Widget baseWidget={LineComponent} {...props} />;
 
-registerWidget(Polyline, PolylineWidgetProps, "polyline");
+registerWidget(Line, LineWidgetProps, "line");

@@ -1,20 +1,18 @@
 import React from "react";
 import renderer, { ReactTestRenderer } from "react-test-renderer";
 import { render } from "@testing-library/react";
-import { PolylineComponent } from "./polyline";
+import { LineComponent } from "./line";
 import { ShapeComponent } from "../Shape/shape";
 import { Color } from "../../../types/color";
 
-const PolylineRenderer = (polylineProps: any): ReactTestRenderer => {
-  return renderer.create(
-    <PolylineComponent {...polylineProps} readonly={true} />
-  );
+const LineRenderer = (lineProps: any): ReactTestRenderer => {
+  return renderer.create(<LineComponent {...lineProps} readonly={true} />);
 };
 
-describe("<PolylineComponent />", (): void => {
+describe("<LineComponent />", (): void => {
   test("matches snapshot", (): void => {
     const { asFragment } = render(
-      <PolylineComponent
+      <LineComponent
         {...({
           backgroundColor: Color.fromRgba(0, 255, 255),
           width: 50,
@@ -27,14 +25,14 @@ describe("<PolylineComponent />", (): void => {
     expect(asFragment()).toMatchSnapshot();
   });
 
-  test("default properties are added to polyline component", (): void => {
-    const polylineProps = {
+  test("default properties are added to line component", (): void => {
+    const lineProps = {
       width: 20,
       lineWidth: 4,
       backgroundColor: Color.fromRgba(0, 255, 255)
     };
 
-    const testRenderer = PolylineRenderer(polylineProps);
+    const testRenderer = LineRenderer(lineProps);
 
     const shapeProps = testRenderer.root.findByType(ShapeComponent).props;
 
@@ -45,7 +43,7 @@ describe("<PolylineComponent />", (): void => {
   });
 
   test("props override default properties", (): void => {
-    const polylineProps = {
+    const lineProps = {
       width: 15,
       lineWidth: 15,
       backgroundColor: Color.fromRgba(0, 255, 255),
@@ -54,7 +52,7 @@ describe("<PolylineComponent />", (): void => {
       visible: false
     };
 
-    const testRenderer = PolylineRenderer(polylineProps);
+    const testRenderer = LineRenderer(lineProps);
 
     const shapeProps = testRenderer.root.findByType(ShapeComponent).props;
 
