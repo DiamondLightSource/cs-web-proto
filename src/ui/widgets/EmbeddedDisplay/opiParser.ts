@@ -45,6 +45,7 @@ const OPI_WIDGET_MAPPING: { [key: string]: any } = {
   "org.csstudio.opibuilder.widgets.Rectangle": "shape",
   "org.csstudio.opibuilder.widgets.ActionButton": "actionbutton",
   "org.csstudio.opibuilder.widgets.MenuButton": "menubutton",
+  "org.csstudio.opibuilder.widgets.polyline": "polyline",
   "org.csstudio.opibuilder.widgets.symbol.multistate.MultistateMonitorWidget":
     "symbol",
   "org.csstudio.opibuilder.widgets.LED": "led"
@@ -377,6 +378,7 @@ export const OPI_SIMPLE_PARSERS: ParserDict = {
   stretchToFit: ["stretch_to_fit", opiParseBoolean],
   alarmSensitive: ["border_alarm_sensitive", opiParseBoolean],
   lineWidth: ["line_width", opiParseNumber],
+  rotationAngle: ["rotation_angle", opiParseNumber],
   width: ["width", opiParseNumber],
   height: ["height", opiParseNumber],
   rotation: ["degree", opiParseNumber],
