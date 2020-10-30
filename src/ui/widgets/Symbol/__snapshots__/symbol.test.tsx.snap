@@ -1,31 +1,28 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`matches snapshot 1`] = `
-<div
-  style={
-    Object {
-      "backgroundColor": undefined,
-      "color": undefined,
-      "height": undefined,
-      "outline": undefined,
-      "outlineOffset": undefined,
-      "overflow": "hidden",
-      "textAlign": "left",
-      "visibility": undefined,
-      "width": undefined,
-    }
-  }
->
-  <img
-    src="http://localhost:3000/img/undefined"
-    style={
-      Object {
-        "display": "block",
-        "height": undefined,
-        "transform": "rotate(0deg) scaleX(1) scaleY(1)",
-        "width": undefined,
-      }
-    }
-  />
-</div>
+exports[`<Symbol /> matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    style="overflow: hidden; text-align: left;"
+  >
+    <img
+      src="http://localhost:3000/img/undefined"
+      style="display: block; transform: rotate(0deg) scaleX(1) scaleY(1);"
+    />
+  </div>
+  <div
+    style="background-color: transparent; overflow: hidden; position: absolute; height: 100%; width: 100%; top: 0px; left: 0px; display: flex; align-items: center; justify-content: center;"
+  >
+    <div
+      style="padding: 5%;"
+    >
+      <div
+        class="Label Label"
+        style="background-color: rgba(0, 0, 0, 0); overflow: hidden; justify-content: center;"
+      >
+        Fake value
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
 `;
