@@ -1,15 +1,14 @@
-import React, { CSSProperties, useState } from "react";
+import React, { CSSProperties } from "react";
 import { LineChart, Line, XAxis, CartesianGrid } from "recharts";
 
 import { Widget } from "../widget";
 import { PVComponent, PVWidgetPropType } from "../widgetProps";
-import { InferWidgetProps, IntProp, ObjectPropOpt } from "../propTypes";
+import { InferWidgetProps, IntProp } from "../propTypes";
 import Plotly from "react-plotly.js";
 import { PlotData } from "plotly.js";
 import { registerWidget } from "../register";
 
 const PlotProps = {
-  data: ObjectPropOpt,
   width: IntProp,
   height: IntProp,
   mode: IntProp
@@ -25,16 +24,25 @@ type PlotComponentProps = InferWidgetProps<typeof PlotWidgetProps> &
 
 type dataPoint = { x: number; y: number };
 
+/**
+ * A plot component with several different plotting modes, currently a
+ * line chart, a scatter graph, and a default image
+ * @param props
+ *
+ */
 export const PlotComponent = (
   props: InferWidgetProps<PlotComponentProps>
 ): JSX.Element => {
   const dataPointSet: dataPoint[] = [];
-  const data: Partial<PlotData> = {};
-  data.type = "scatter";
-  data.mode = "lines+markers";
-  data.marker = { color: "#0000ff" };
-  data.line = { shape: "hv" };
+  const data: Partial<PlotData> = {
+    type: "scatter",
+    mode: "lines+markers",
+    marker: { color: "#0000ff" },
+    line: { shape: "hv" }
+  };
+
   const { value } = props;
+
   if (value) {
     const tmpX: number[] = [];
     const tmpY: number[] = [];
@@ -47,7 +55,7 @@ export const PlotComponent = (
     data.x = new Float64Array(tmpX);
     data.y = new Float64Array(tmpY);
   }
-  const [layout, setLayout] = useState({});
+
   const style: CSSProperties = {
     textAlign: "center"
   };
@@ -70,13 +78,14 @@ export const PlotComponent = (
     case 2:
       return (
         <div style={style}>
-          <Plotly data={[data]} layout={layout} />
+          <Plotly data={[data]} layout={{}} />
         </div>
       );
     case 3:
       return (
+        // TODO: Should use the image widget for this
         <div style={style}>
-          <img src={"http://localhost:8001"} />
+          <img src={"http://localhost:8001"} alt="" />
         </div>
       );
     default:
