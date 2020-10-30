@@ -261,11 +261,12 @@ export class ConiqlPlugin implements Connection {
     this.wsClient.onDisconnected((): void => {
       log.error("Websockect client disconnected.");
       for (const pvName of Object.keys(this.subscriptions)) {
-        if (this.subscriptions.hasOwnProperty(pvName)) {
-          if (this.subscriptions[pvName]) {
-            this.subscriptions[pvName].unsubscribe();
-            delete this.subscriptions[pvName];
-          }
+        if (
+          this.subscriptions.hasOwnProperty(pvName) &&
+          this.subscriptions[pvName]
+        ) {
+          this.subscriptions[pvName].unsubscribe();
+          delete this.subscriptions[pvName];
         } else {
           log.error(`Attempt to unsubscribe from ${pvName} failed`);
         }
