@@ -84,13 +84,13 @@ export const CheckboxComponent = (
   );
 };
 
-const LedWidgetProps = {
+const CheckboxWidgetProps = {
   ...CheckboxProps,
   ...PVWidgetPropType
 };
 
 export const Checkbox = (
-  props: InferWidgetProps<typeof LedWidgetProps>
+  props: InferWidgetProps<typeof CheckboxWidgetProps>
 ): JSX.Element => <Widget baseWidget={CheckboxComponent} {...props} />;
 
-registerWidget(Checkbox, LedWidgetProps, "checkbox");
+registerWidget(Checkbox, CheckboxWidgetProps, "checkbox");
