@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Widget } from "../widget";
+import { useCommonCss, Widget } from "../widget";
 import { PVWidgetPropType, PVComponent } from "../widgetProps";
 import {
   InferWidgetProps,
@@ -10,27 +10,41 @@ import {
   BoolProp,
   FloatPropOpt,
   BorderPropOpt,
-  StringProp
+  StringProp,
+  ChoicePropOpt,
+  FontPropOpt
 } from "../propTypes";
 import { registerWidget } from "../register";
+import { ImageComponent } from "../Image/image";
 import { LabelComponent } from "../Label/label";
 import { Color } from "../../../types/color";
-import { ImageComponent } from "../Image/image";
 
 const SymbolProps = {
   src: StringProp,
   alt: StringPropOpt,
   backgroundColor: ColorPropOpt,
   showLabel: BoolProp,
-  width: FloatPropOpt,
-  height: FloatPropOpt,
+  labelPosition: ChoicePropOpt([
+    "top",
+    "left",
+    "center",
+    "right",
+    "bottom",
+    "top left",
+    "top right",
+    "bottom left",
+    "bottom right"
+  ]),
   border: BorderPropOpt,
   value: FloatPropOpt,
   rotation: FloatPropOpt,
   flipHorizontal: BoolPropOpt,
   flipVertical: BoolPropOpt,
   visible: BoolPropOpt,
-  stretchToFit: BoolPropOpt
+  stretchToFit: BoolPropOpt,
+  fitToWidth: BoolPropOpt,
+  fitToHeight: BoolPropOpt,
+  font: FontPropOpt
 };
 
 export type SymbolComponentProps = InferWidgetProps<typeof SymbolProps> &
@@ -42,39 +56,71 @@ export type SymbolComponentProps = InferWidgetProps<typeof SymbolProps> &
  * @param props
  */
 export const SymbolComponent = (props: SymbolComponentProps): JSX.Element => {
-  const { showLabel, visible = true } = props;
-  const background = props.backgroundColor || Color.WHITE;
+  const style = useCommonCss(props as any);
 
-  const useSizeProperties = !props.showLabel || props.stretchToFit;
-  const sizeProps = {
-    width: useSizeProperties ? `${props.width}px` : undefined,
-    height: useSizeProperties ? `${props.height}px` : undefined
-  };
+  let alignItems = "center";
+  let justifyContent = "center";
+  switch (props.labelPosition) {
+    case "top":
+      alignItems = "start";
+      break;
+    case "right":
+      justifyContent = "end";
+      break;
+    case "bottom":
+      alignItems = "end";
+      break;
+    case "left":
+      justifyContent = "start";
+      break;
+    case "top right":
+      alignItems = "start";
+      justifyContent = "end";
+      break;
+    case "bottom right":
+      alignItems = "end";
+      justifyContent = "end";
+      break;
+    case "bottom left":
+      alignItems = "end";
+      justifyContent = "start";
+      break;
+    case "top left":
+      alignItems = "start";
+      justifyContent = "start";
+      break;
+  }
 
   return (
-    <div
-      style={{
-        backgroundColor: "transparent"
-      }}
-    >
-      <ImageComponent
-        {...{
-          ...props,
-          ...sizeProps
-        }}
-      />
-      {showLabel && (
-        <LabelComponent
-          {...{ visible, backgroundColor: background, ...props }}
-          text={props.value?.getStringValue() ?? ""}
-          // TODO: This is pretty hacky, on CS-Studio when using stretchToFit
-          // the text stays still while the image expands underneath, to compensate
-          // for expansion of the image the text is shifted a FIXED amount
-          transform={`translate(0px, ${props.stretchToFit ? -20 : 0}px)`}
-          transparent={true}
-        />
+    <>
+      <ImageComponent {...props} />
+      {props.showLabel && (
+        <>
+          <div
+            style={{
+              ...style,
+              backgroundColor: "transparent",
+              position: "absolute",
+              height: "100%",
+              width: "100%",
+              top: 0,
+              left: 0,
+              display: "flex",
+              alignItems,
+              justifyContent
+            }}
+          >
+            <div style={{ padding: "5%" }}>
+              <LabelComponent
+                {...props}
+                backgroundColor={Color.TRANSPARENT}
+                text={props.value?.getStringValue()}
+              ></LabelComponent>
+            </div>
+          </div>
+        </>
       )}
-    </div>
+    </>
   );
 };
 

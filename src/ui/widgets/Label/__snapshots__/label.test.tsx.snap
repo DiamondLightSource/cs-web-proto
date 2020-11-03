@@ -1,19 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<Label Label /> it matches the snapshot 1`] = `
-<div
-  className="Label Label"
-  style={
-    Object {
-      "backgroundColor": undefined,
-      "color": undefined,
-      "justifyContent": "center",
-      "outline": undefined,
-      "outlineOffset": undefined,
-      "visibility": undefined,
-    }
-  }
->
-  hello
-</div>
+exports[`<Label /> it matches the snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="Label Label"
+    style="overflow: hidden; justify-content: center;"
+  >
+    hello
+  </div>
+</DocumentFragment>
 `;

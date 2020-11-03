@@ -1,6 +1,6 @@
 import React, { CSSProperties, useContext } from "react";
 
-import { Widget } from "../widget";
+import { useCommonCss, Widget } from "../widget";
 import { WidgetPropType } from "../widgetProps";
 import {
   InferWidgetProps,
@@ -15,9 +15,9 @@ import { BaseUrlContext } from "../../../baseUrl";
 const ImageProps = {
   src: StringProp,
   alt: StringPropOpt,
-  fill: BoolPropOpt,
-  width: StringPropOpt,
-  height: StringPropOpt,
+  stretchToFit: BoolPropOpt,
+  fitToWidth: BoolPropOpt,
+  fitToHeight: BoolPropOpt,
   rotation: FloatPropOpt,
   flipHorizontal: BoolPropOpt,
   flipVertical: BoolPropOpt
@@ -33,16 +33,24 @@ export const ImageComponent = (
   if (!file.startsWith("http")) {
     file = `${baseUrl}/${file}`;
   }
-  let imageSize: any = undefined;
-  let overflow = "auto";
-  if (props.fill) {
-    imageSize = "100%";
-    overflow = "hidden";
+  let imageHeight: string | undefined = undefined;
+  let imageWidth: string | undefined = undefined;
+  const overflow = "hidden";
+  if (props.stretchToFit) {
+    imageWidth = "100%";
+    imageHeight = "100%";
+  } else if (props.fitToWidth) {
+    imageWidth = "100%";
+  } else if (props.fitToHeight) {
+    imageHeight = "100%";
   }
 
   const style: CSSProperties = {
+    ...useCommonCss(props as any),
     overflow,
-    textAlign: "left"
+    textAlign: "left",
+    width: imageWidth,
+    height: imageHeight
   };
 
   return (
@@ -51,8 +59,9 @@ export const ImageComponent = (
         src={file}
         alt={props.alt || undefined}
         style={{
-          height: props.height ?? imageSize,
-          width: props.width ?? imageSize,
+          width: imageWidth,
+          height: imageHeight,
+          display: "block",
           transform: `rotate(${rotation}deg) scaleX(${
             flipHorizontal ? -1 : 1
           }) scaleY(${flipVertical ? -1 : 1})`

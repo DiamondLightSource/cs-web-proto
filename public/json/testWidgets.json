@@ -18,7 +18,6 @@
       "margin": "auto",
       "width": "90%",
       "maxWidth": "600px",
-      "height": "200px",
       "backgroundColor": "white",
       "border": {
         "style": "line",
@@ -56,17 +55,66 @@
         {
           "type": "label",
           "position": "relative",
-          "width": "50%",
+          "width": "100%",
           "text": "Image"
         },
         {
           "type": "image",
           "position": "relative",
-          "width": "100%",
+          "width": "40%",
+          "height": "80px",
           "src": "Diamond_logo_col.jpg",
-          "fill": true,
+          "fitToWidth": true,
           "margin": "2% 5% 2% 5%",
           "backgroundColor": "white"
+        },
+        {
+          "type": "image",
+          "position": "relative",
+          "width": "40%",
+          "height": "80px",
+          "src": "Diamond_logo_col.jpg",
+          "fitToWidth": true,
+          "margin": "2% 5% 2% 5%",
+          "backgroundColor": "white",
+          "flipHorizontal": true,
+          "flipVertical": true
+        },
+        {
+          "type": "image",
+          "position": "relative",
+          "width": "25%",
+          "height": "80px",
+          "src": "cpu 0.svg",
+          "fitToHeight": true,
+          "margin": "2% 4% 2% 4%",
+          "backgroundColor": "white"
+        },
+        {
+          "type": "image",
+          "position": "relative",
+          "width": "25%",
+          "height": "80px",
+          "src": "cpu 1.svg",
+          "fitToHeight": true,
+          "margin": "2% 4% 2% 4%",
+          "backgroundColor": "white"
+        },
+        {
+          "type": "symbol",
+          "pvName": "sim://enum",
+          "position": "relative",
+          "showLabel": true,
+          "labelPosition": "right",
+          "backgroundColor": "lightgrey",
+          "width": "25%",
+          "height": "80px",
+          "src": "cpu 2.svg",
+          "fitToHeight": true,
+          "margin": "2% 4% 2% 4%",
+          "font": {
+            "size": "20"
+          }
         },
         {
           "type": "led",
