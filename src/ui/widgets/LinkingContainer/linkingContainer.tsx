@@ -6,20 +6,24 @@ import {
   StringPropOpt,
   FloatProp,
   MacrosProp,
-  FloatPropOpt
+  BorderPropOpt,
+  ColorPropOpt
 } from "../propTypes";
 import { PVComponent, PVWidgetPropType } from "../widgetProps";
 import { registerWidget } from "../register";
 import { EmbeddedDisplay } from "../EmbeddedDisplay/embeddedDisplay";
 import { RelativePosition } from "../../../types/position";
 import { GroupBoxComponent } from "../GroupBox/groupBox";
+import { Border } from "../../../types/border";
 
 export const LinkingContainerProps = {
   opiFile: StringProp,
   macroMap: MacrosProp,
   height: FloatProp,
   width: FloatProp,
-  name: StringPropOpt
+  name: StringPropOpt,
+  border: BorderPropOpt,
+  backgroundColor: ColorPropOpt
 };
 
 export type LinkingContainerComponentProps = InferWidgetProps<
@@ -43,11 +47,18 @@ export const LinkingContainerComponent = (
     `${props.height}px`
   );
 
-  return (
-    <GroupBoxComponent name={props.name ?? ""}>
-      <EmbeddedDisplay file={file} position={position} />
-    </GroupBoxComponent>
-  );
+  if (props?.border?.css().borderStyle === Border.GROUPBOX.css().borderStyle) {
+    return (
+      <GroupBoxComponent
+        name={props.name ?? ""}
+        backgroundColor={props.backgroundColor?.rgbaString()}
+      >
+        <EmbeddedDisplay file={file} position={position} />
+      </GroupBoxComponent>
+    );
+  } else {
+    return <EmbeddedDisplay file={file} position={position} />;
+  }
 };
 
 const LinkingContainerWidgetProps = {
