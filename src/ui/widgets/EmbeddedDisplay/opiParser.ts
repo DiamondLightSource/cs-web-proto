@@ -273,7 +273,7 @@ function opiParseBorder(props: any): Border {
     1: BorderStyle.Line,
     2: BorderStyle.Dashed,
     3: BorderStyle.Dotted,
-    4: BorderStyle.GroupBox
+    13: BorderStyle.GroupBox
   };
   let style = BorderStyle.None;
   let width = 0;
