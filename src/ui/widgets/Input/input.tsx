@@ -43,8 +43,8 @@ export const InputComponent: React.FC<InputProps> = (
   if (props.textAlign) {
     style.textAlign = props.textAlign;
   }
-  style.color = props.foregroundColor?.rgbaString();
-  style.backgroundColor = props.backgroundColor?.rgbaString();
+  style.color = props.foregroundColor?.toString();
+  style.backgroundColor = props.backgroundColor?.toString();
   // Transparent prop overrides backgroundColor.
   if (props.transparent) {
     style["backgroundColor"] = "transparent";

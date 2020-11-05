@@ -1,30 +1,24 @@
 import React from "react";
 import { LabelComponent } from "./label";
-import { shallow, ShallowWrapper } from "enzyme";
-import { create, ReactTestRenderer } from "react-test-renderer";
+import { render, screen } from "@testing-library/react";
 
-let snapshot: ReactTestRenderer;
-let wrapper: ShallowWrapper;
-
-beforeEach((): void => {
-  const label = <LabelComponent text="hello" />;
-  wrapper = shallow(label);
-  snapshot = create(label);
-});
-
-describe("<Label Label />", (): void => {
+describe("<Label />", (): void => {
   test("it matches the snapshot", (): void => {
-    expect(snapshot.toJSON()).toMatchSnapshot();
+    const { asFragment } = render(<LabelComponent text="hello" />);
+    expect(asFragment()).toMatchSnapshot();
   });
 
   test("it renders a basic element", (): void => {
-    expect(wrapper.text()).toEqual("hello");
+    render(<LabelComponent text="hello" />);
+    expect(screen.getByText("hello")).toBeInTheDocument();
   });
 
   test("it handles transparent prop", (): void => {
-    wrapper = shallow(<LabelComponent text={"hello"} transparent={true} />);
-    expect(
-      wrapper.find("div").getElement().props.style["backgroundColor"]
-    ).toEqual("transparent");
+    render(<LabelComponent text="hello" transparent={true} />);
+    const label = screen.getByText("hello");
+    if ("style" in label) {
+      expect(label.style).toHaveProperty("backgroundColor", "transparent");
+    }
+    expect.assertions(1);
   });
 });

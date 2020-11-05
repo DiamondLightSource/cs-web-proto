@@ -1,12 +1,13 @@
 import React, { CSSProperties, useContext } from "react";
 
-import { Widget } from "../widget";
+import { useCommonCss, Widget } from "../widget";
 import { WidgetPropType } from "../widgetProps";
 import {
   InferWidgetProps,
   StringProp,
   BoolPropOpt,
-  StringPropOpt
+  StringPropOpt,
+  FloatPropOpt
 } from "../propTypes";
 import { registerWidget } from "../register";
 import { BaseUrlContext } from "../../../baseUrl";
@@ -14,27 +15,42 @@ import { BaseUrlContext } from "../../../baseUrl";
 const ImageProps = {
   src: StringProp,
   alt: StringPropOpt,
-  fill: BoolPropOpt
+  stretchToFit: BoolPropOpt,
+  fitToWidth: BoolPropOpt,
+  fitToHeight: BoolPropOpt,
+  rotation: FloatPropOpt,
+  flipHorizontal: BoolPropOpt,
+  flipVertical: BoolPropOpt
 };
 
 export const ImageComponent = (
   props: InferWidgetProps<typeof ImageProps>
 ): JSX.Element => {
+  const { rotation = 0, flipHorizontal, flipVertical } = props;
+
   const baseUrl = useContext(BaseUrlContext);
   let file = `img/${props.src}`;
   if (!file.startsWith("http")) {
     file = `${baseUrl}/${file}`;
   }
-  let imageSize: any = undefined;
-  let overflow = "auto";
-  if (props.fill === true) {
-    imageSize = "100%";
-    overflow = "hidden";
+  let imageHeight: string | undefined = undefined;
+  let imageWidth: string | undefined = undefined;
+  const overflow = "hidden";
+  if (props.stretchToFit) {
+    imageWidth = "100%";
+    imageHeight = "100%";
+  } else if (props.fitToWidth) {
+    imageWidth = "100%";
+  } else if (props.fitToHeight) {
+    imageHeight = "100%";
   }
 
   const style: CSSProperties = {
-    overflow: overflow,
-    textAlign: "left"
+    ...useCommonCss(props as any),
+    overflow,
+    textAlign: "left",
+    width: imageWidth,
+    height: imageHeight
   };
 
   return (
@@ -43,8 +59,12 @@ export const ImageComponent = (
         src={file}
         alt={props.alt || undefined}
         style={{
-          height: imageSize,
-          width: imageSize
+          width: imageWidth,
+          height: imageHeight,
+          display: "block",
+          transform: `rotate(${rotation}deg) scaleX(${
+            flipHorizontal ? -1 : 1
+          }) scaleY(${flipVertical ? -1 : 1})`
         }}
       />
     </div>

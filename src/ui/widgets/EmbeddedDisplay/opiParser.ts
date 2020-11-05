@@ -45,7 +45,11 @@ const OPI_WIDGET_MAPPING: { [key: string]: any } = {
   "org.csstudio.opibuilder.widgets.Rectangle": "shape",
   "org.csstudio.opibuilder.widgets.ActionButton": "actionbutton",
   "org.csstudio.opibuilder.widgets.MenuButton": "menubutton",
-  "org.csstudio.opibuilder.widgets.linkingContainer": "linkingcontainer"
+  "org.csstudio.opibuilder.widgets.linkingContainer": "linkingcontainer",
+  "org.csstudio.opibuilder.widgets.polyline": "polyline",
+  "org.csstudio.opibuilder.widgets.symbol.multistate.MultistateMonitorWidget":
+    "symbol",
+  "org.csstudio.opibuilder.widgets.LED": "led"
 };
 
 /**
@@ -86,7 +90,7 @@ export interface OpiColor {
  */
 export function opiParseColor(jsonProp: ElementCompact): Color {
   const color = jsonProp.color as OpiColor;
-  return new Color(
+  return Color.fromRgba(
     parseInt(color._attributes.red),
     parseInt(color._attributes.green),
     parseInt(color._attributes.blue)
@@ -254,7 +258,7 @@ export function opiParsePvName(
  * a string e.g. "left", "center", "right"
  * @param jsonProp
  */
-function opiParseHorizonalAlignment(jsonProp: ElementCompact): string {
+function opiParseHorizontalAlignment(jsonProp: ElementCompact): string {
   const alignments: { [key: number]: string } = {
     0: "left",
     1: "center",
@@ -337,6 +341,22 @@ function opiParseImageFile(props: any): string {
   return filename;
 }
 
+function opiParseLabelPosition(props: any): string {
+  const num = opiParseNumber(props).toString();
+  const mapping: { [key: string]: string } = {
+    1: "top",
+    2: "left",
+    3: "center",
+    4: "right",
+    5: "bottom",
+    6: "top left",
+    7: "top right",
+    8: "bottom left",
+    9: "bottom right"
+  };
+  return mapping[num] || "top";
+}
+
 /**
  * Attempt to return the widget associated with a props object, failing
  * that will return a shape object
@@ -360,7 +380,7 @@ function opiGetTargetWidget(props: any): React.FC {
 export const OPI_SIMPLE_PARSERS: ParserDict = {
   text: ["text", opiParseString],
   name: ["name", opiParseString],
-  textAlign: ["horizontal_alignment", opiParseHorizonalAlignment],
+  textAlign: ["horizontal_alignment", opiParseHorizontalAlignment],
   backgroundColor: ["background_color", opiParseColor],
   foregroundColor: ["foreground_color", opiParseColor],
   precision: ["precision", opiParseNumber],
@@ -372,12 +392,17 @@ export const OPI_SIMPLE_PARSERS: ParserDict = {
   macroMap: ["macros", opiParseMacros],
   src: ["image_file", opiParseImageFile],
   showLabel: ["show_boolean_label", opiParseBoolean],
+  labelPosition: ["boolean_label_position", opiParseLabelPosition],
   stretchToFit: ["stretch_to_fit", opiParseBoolean],
   alarmSensitive: ["border_alarm_sensitive", opiParseBoolean],
   lineWidth: ["line_width", opiParseNumber],
   opiFile: ["opi_file", opiParseString],
   height: ["height", opiParseNumber],
-  width: ["width", opiParseNumber]
+  width: ["width", opiParseNumber],
+  rotationAngle: ["rotation_angle", opiParseNumber],
+  rotation: ["degree", opiParseNumber],
+  flipHorizontal: ["flip_horizontal", opiParseBoolean],
+  flipVertical: ["flip_vertical", opiParseBoolean]
 };
 
 /**
@@ -414,7 +439,10 @@ function opiPatchRules(widgetDescription: WidgetDescription): void {
 
 export const OPI_PATCHERS: PatchFunction[] = [opiPatchRules];
 
-export function parseOpi(xmlString: string, defaultProtocol: string): any {
+export function parseOpi(
+  xmlString: string,
+  defaultProtocol: string
+): WidgetDescription {
   // Convert it to a "compact format"
   const compactJSON = xml2js(xmlString, {
     compact: true

@@ -51,7 +51,7 @@ export const LinkingContainerComponent = (
     return (
       <GroupBoxComponent
         name={props.name ?? ""}
-        backgroundColor={props.backgroundColor?.rgbaString()}
+        backgroundColor={props.backgroundColor?.toString()}
       >
         <EmbeddedDisplay file={file} position={position} />
       </GroupBoxComponent>

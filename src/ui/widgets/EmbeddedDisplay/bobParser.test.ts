@@ -3,6 +3,7 @@ import { AbsolutePosition } from "../../../types/position";
 import { parseBob } from "./bobParser";
 import { PV } from "../../../types/pv";
 import { ensureWidgetsRegistered } from "..";
+import { WidgetDescription } from "../createComponent";
 ensureWidgetsRegistered();
 
 describe("opi widget parser", (): void => {
@@ -38,7 +39,8 @@ describe("opi widget parser", (): void => {
   </display>`;
 
   it("parses a label widget", (): void => {
-    const widget = parseBob(labelString, "ca").children[0];
+    const widget = parseBob(labelString, "ca")
+      .children?.[0] as WidgetDescription;
     expect(widget.type).toEqual("label");
     // Boolean type
     expect(widget.visible).toEqual(true);
@@ -70,7 +72,8 @@ describe("opi widget parser", (): void => {
     </widget>
   </display>`;
   it("parses a readback widget", (): void => {
-    const widget = parseBob(readbackString, "xxx").children[0];
+    const widget = parseBob(readbackString, "xxx")
+      .children?.[0] as WidgetDescription;
     expect(widget.pvName).toEqual(PV.parse("xxx://abc"));
   });
 

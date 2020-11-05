@@ -44,7 +44,7 @@ export class Border {
     return {
       borderStyle: CssBorders[this.style],
       borderWidth: `${this.width}px`,
-      borderColor: this.color.rgbaString(),
+      borderColor: this.color.toString(),
       borderRadius: this.radius ? `${this.radius}px` : undefined
     };
   }

@@ -23,7 +23,8 @@ const LabelProps = {
   font: FontPropOpt,
   foregroundColor: ColorPropOpt,
   backgroundColor: ColorPropOpt,
-  border: BorderPropOpt
+  border: BorderPropOpt,
+  transform: StringPropOpt
 };
 
 const LabelWidgetProps = {
@@ -37,7 +38,7 @@ export const LabelComponent = (
   props: InferWidgetProps<typeof LabelProps>
 ): JSX.Element => {
   const style: CSSProperties = useCommonCss(props);
-  const { transparent = false, textAlign = "center" } = props;
+  const { transparent = false, textAlign = "center", text = "" } = props;
   const className = props.className ?? `Label ${classes.Label}`;
   // Since display is "flex", use "flex-start" and "flex-end" to align
   // the content.
@@ -48,16 +49,23 @@ export const LabelComponent = (
     alignment = "flex-end";
   }
   style["justifyContent"] = alignment;
-  style["color"] = props.foregroundColor?.rgbaString();
-  style["backgroundColor"] = props.backgroundColor?.rgbaString();
+  style["color"] = props.foregroundColor?.toString();
+  style["backgroundColor"] = props.backgroundColor?.toString();
   // Transparent prop overrides backgroundColor.
   if (transparent) {
     style["backgroundColor"] = "transparent";
   }
+  if (props.visible) {
+    style["visibility"] = "visible";
+  }
+
+  if (props.transform) {
+    style["transform"] = props.transform;
+  }
   // Simple component to display text - defaults to black text and dark grey background
   return (
     <div className={className} style={style}>
-      {props.text}
+      {text}
     </div>
   );
 };

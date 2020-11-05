@@ -18,10 +18,12 @@ export { LinkingContainer } from "./LinkingContainer/linkingContainer";
 export { MenuButton } from "./MenuButton/menuButton";
 export { MenuMux } from "./MenuMux/menuMux";
 export { ProgressBar } from "./ProgressBar/progressBar";
+export { Line } from "./Line/line";
 export { Readback } from "./Readback/readback";
 export { Shape } from "./Shape/shape";
 export { SlideControl } from "./SlideControl/slideControl";
 export { Slideshow } from "./Slideshow/slideshow";
+export { Symbol } from "./Symbol/symbol";
 export { TabContainer } from "./Tabs/tabContainer";
 
 // By importing and calling this function you ensure all the
