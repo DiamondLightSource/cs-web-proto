@@ -45,6 +45,7 @@ const OPI_WIDGET_MAPPING: { [key: string]: any } = {
   "org.csstudio.opibuilder.widgets.Rectangle": "shape",
   "org.csstudio.opibuilder.widgets.ActionButton": "actionbutton",
   "org.csstudio.opibuilder.widgets.MenuButton": "menubutton",
+  "org.csstudio.opibuilder.widgets.linkingContainer": "linkingcontainer",
   "org.csstudio.opibuilder.widgets.polyline": "polyline",
   "org.csstudio.opibuilder.widgets.symbol.multistate.MultistateMonitorWidget":
     "symbol",
@@ -276,7 +277,7 @@ function opiParseBorder(props: any): Border {
     1: BorderStyle.Line,
     2: BorderStyle.Dashed,
     3: BorderStyle.Dotted,
-    4: BorderStyle.GroupBox
+    13: BorderStyle.GroupBox
   };
   let style = BorderStyle.None;
   let width = 0;
@@ -395,9 +396,10 @@ export const OPI_SIMPLE_PARSERS: ParserDict = {
   stretchToFit: ["stretch_to_fit", opiParseBoolean],
   alarmSensitive: ["border_alarm_sensitive", opiParseBoolean],
   lineWidth: ["line_width", opiParseNumber],
-  rotationAngle: ["rotation_angle", opiParseNumber],
-  width: ["width", opiParseNumber],
+  opiFile: ["opi_file", opiParseString],
   height: ["height", opiParseNumber],
+  width: ["width", opiParseNumber],
+  rotationAngle: ["rotation_angle", opiParseNumber],
   rotation: ["degree", opiParseNumber],
   flipHorizontal: ["flip_horizontal", opiParseBoolean],
   flipVertical: ["flip_vertical", opiParseBoolean]

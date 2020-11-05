@@ -9,11 +9,13 @@ let wrapper: ShallowWrapper;
 beforeEach((): void => {
   const grouping = <GroupBoxComponent name={"Test"} />;
   wrapper = shallow(grouping);
-  snapshot = create(grouping);
 });
 
 describe("<GroupingContainerComponent />", (): void => {
   test("it matches the snapshot", (): void => {
+    snapshot = create(
+      <GroupBoxComponent name={"Test"} backgroundColor={"white"} />
+    );
     expect(snapshot.toJSON()).toMatchSnapshot();
   });
 

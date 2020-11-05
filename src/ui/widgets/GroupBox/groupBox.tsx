@@ -8,6 +8,7 @@ import { StringProp, ChildrenPropOpt, InferWidgetProps } from "../propTypes";
 interface GroupBox {
   name: string;
   children?: JSX.Element;
+  backgroundColor?: string;
 }
 
 // Widget that renders a group-box style border showing the name prop.
@@ -17,9 +18,16 @@ export const GroupBoxComponent = (props: GroupBox): JSX.Element => (
   // Uses an inner margin for children similar to Phoebus
   // This prevents the title being overwritten
   // Could be changed or perhaps customisable as a prop
-  <fieldset>
+  <fieldset style={{ backgroundColor: props.backgroundColor }}>
     <legend>{props.name}</legend>
-    <div style={{ position: "relative", height: "100%", width: "100%" }}>
+    <div
+      style={{
+        position: "relative",
+        height: "100%",
+        width: "100%",
+        backgroundColor: props.backgroundColor
+      }}
+    >
       {props.children}
     </div>
   </fieldset>

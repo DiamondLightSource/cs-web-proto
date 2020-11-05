@@ -19,6 +19,7 @@ const CssBorders: { [key in BorderStyle]: string } = {
 
 export class Border {
   public static NONE = new Border(BorderStyle.None, Color.BLACK, 0);
+  public static GROUPBOX = new Border(BorderStyle.GroupBox, Color.BLACK, 0);
 
   private style: BorderStyle;
   private color: Color;
