@@ -19,6 +19,7 @@ export const TabBar = (props: TabBarProps): JSX.Element => {
         (tabName, index): JSX.Element => (
           <div
             key={index}
+            title={tabName}
             onClick={(): void => {
               props.onTabSelected(index);
             }}
@@ -28,10 +29,11 @@ export const TabBar = (props: TabBarProps): JSX.Element => {
                 : `${classes.Tab} ${classes.CloseableTab}`
             }
           >
-            <p className={classes.CloseableTabText}>{tabName}</p>
+            <span className={classes.CloseableTabText}>{tabName}</span>
             {props.onTabClosed && (
               <button
                 className={classes.TabCloseButton}
+                title="Close tab"
                 onClick={(event): void => {
                   props.onTabClosed?.(index);
                   event.stopPropagation();
