@@ -49,20 +49,24 @@ export const connectionMiddleware = (connection: Connection) => (
     case SUBSCRIBE: {
       const { pvName, type } = action.payload;
       // Are we already subscribed?
+      let effectivePvName = pvName;
       try {
-        const effectivePvName = connection.subscribe(pvName, type);
-        action = {
-          ...action,
-          payload: {
-            ...action.payload,
-            effectivePvName: effectivePvName,
-            pvName: pvName
-          }
-        };
+        effectivePvName = connection.subscribe(pvName, type);
       } catch (error) {
         log.error(`Failed to subscribe to pv ${pvName}`);
         log.error(error);
       }
+      // Even if there is a problem subscribing, the action is passed
+      // on so that there is a record of this subscription. This
+      // allows the unsubscription mechanism still to work.
+      action = {
+        ...action,
+        payload: {
+          ...action.payload,
+          effectivePvName: effectivePvName,
+          pvName: pvName
+        }
+      };
       break;
     }
     case WRITE_PV: {
