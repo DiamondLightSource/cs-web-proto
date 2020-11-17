@@ -69,88 +69,14 @@
           "backgroundColor": "white"
         },
         {
-          "type": "image",
-          "position": "relative",
-          "width": "40%",
-          "height": "80px",
-          "src": "Diamond_logo_col.jpg",
-          "fitToWidth": true,
-          "margin": "2% 5% 2% 5%",
-          "backgroundColor": "white",
-          "flipHorizontal": true,
-          "flipVertical": true
-        },
-        {
-          "type": "image",
-          "position": "relative",
-          "width": "25%",
-          "height": "80px",
-          "src": "cpu 0.svg",
-          "fitToHeight": true,
-          "margin": "2% 4% 2% 4%",
-          "backgroundColor": "white"
-        },
-        {
-          "type": "image",
-          "position": "relative",
-          "width": "25%",
-          "height": "80px",
-          "src": "cpu 1.svg",
-          "fitToHeight": true,
-          "margin": "2% 4% 2% 4%",
-          "backgroundColor": "white"
-        },
-        {
-          "type": "symbol",
-          "pvName": "sim://enum",
-          "position": "relative",
-          "showLabel": true,
-          "labelPosition": "right",
-          "backgroundColor": "lightgrey",
-          "width": "25%",
-          "height": "80px",
-          "src": "cpu 2.svg",
-          "fitToHeight": true,
-          "margin": "2% 4% 2% 4%",
+          "type": "checkbox",
+          "width": 115,
+          "height": 40,
+          "label": "Checkbox",
+          "foregroundColor": "white",
           "font": {
-            "size": "20"
+            "size": "15"
           }
-        },
-        {
-          "type": "led",
-          "position": "relative",
-          "pvName": "sim://sine",
-          "alarmSensitive": true,
-          "rules": [
-            {
-              "name": "limits",
-              "prop": "userColor",
-              "outExp": false,
-              "pvs": [
-                {
-                  "pvName": "sim://sine",
-                  "trigger": true
-                }
-              ],
-              "expressions": [
-                {
-                  "boolExp": "pv0 > 0.6",
-                  "value": "orange"
-                },
-                {
-                  "boolExp": "pv0 < -0.5",
-                  "value": "blue"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "type": "led",
-          "position": "relative",
-          "pvName": "sim://sine",
-          "alarmSensitive": true,
-          "width": 10
         }
       ]
     }
