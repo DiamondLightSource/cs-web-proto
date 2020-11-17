@@ -18,7 +18,15 @@ export const GroupBoxComponent = (props: GroupBox): JSX.Element => (
   // Uses an inner margin for children similar to Phoebus
   // This prevents the title being overwritten
   // Could be changed or perhaps customisable as a prop
-  <fieldset style={{ backgroundColor: props.backgroundColor }}>
+  <fieldset
+    style={{
+      height: "100%",
+      width: "100%",
+      backgroundColor: props.backgroundColor,
+      margin: 0,
+      padding: 0
+    }}
+  >
     <legend>{props.name}</legend>
     <div
       style={{

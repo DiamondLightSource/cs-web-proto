@@ -6,7 +6,6 @@ import classes from "./actionButton.module.css";
 import { registerWidget } from "../register";
 import {
   ActionsPropType,
-  StringProp,
   StringPropOpt,
   InferWidgetProps,
   ColorPropOpt,
@@ -58,7 +57,7 @@ export const ActionButtonComponent = (
 };
 
 const ActionButtonPropType = {
-  text: StringProp,
+  text: StringPropOpt,
   actions: ActionsPropType,
   image: StringPropOpt,
   backgroundColor: ColorPropOpt,
@@ -85,7 +84,7 @@ export const ActionButtonWidget = (
   }
   return (
     <ActionButtonComponent
-      text={props.text}
+      text={props.text ?? ""}
       onClick={onClick}
       image={props.image}
       backgroundColor={props.backgroundColor}

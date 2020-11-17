@@ -7,7 +7,7 @@
       "type": "image",
       "position": "relative",
       "width": "100%",
-      "src": "Diamond_logo_col.jpg",
+      "imageFile": "Diamond_logo_col.jpg",
       "fill": true,
       "margin": "2% 5% 2% 5%",
       "backgroundColor": "white"
@@ -365,6 +365,42 @@
                   "description": "",
                   "file": {
                     "path": "opiTesting.json",
+                    "macros": {},
+                    "defaultProtocol": "pva"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "actionbutton",
+          "text": "Opi View Page",
+          "position": "relative",
+          "width": "100%",
+          "height": "4rem",
+          "margin": "1% 5% 1% 5%",
+          "foregroundColor": "#012265",
+          "backgroundColor": "#ffcf00",
+          "font": {
+            "size": "25"
+          },
+          "border": {
+            "style": "none",
+            "color": "#ffcf00",
+            "width": 1
+          },
+          "actions": {
+            "executeAsOne": false,
+            "actions": [
+              {
+                "type": "OPEN_PAGE",
+                "dynamicInfo": {
+                  "name": "app",
+                  "location": "app",
+                  "description": "",
+                  "file": {
+                    "path": "opiView.json",
                     "macros": {},
                     "defaultProtocol": "pva"
                   }

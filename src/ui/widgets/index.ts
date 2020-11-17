@@ -15,7 +15,6 @@ export { Image } from "./Image/image";
 export { Input } from "./Input/input";
 export { Label } from "./Label/label";
 export { LED } from "./LED/led";
-export { LinkingContainer } from "./LinkingContainer/linkingContainer";
 export { MenuButton } from "./MenuButton/menuButton";
 export { MenuMux } from "./MenuMux/menuMux";
 export { ProgressBar } from "./ProgressBar/progressBar";

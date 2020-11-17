@@ -17,7 +17,8 @@ export type GenericProp =
   | Position
   | Rule[]
   | MacroMap
-  | WidgetActions;
+  | WidgetActions
+  | OpiFile;
 
 export interface Expression {
   boolExp: string;
@@ -36,4 +37,10 @@ export interface Rule {
   outExp: boolean;
   pvs: RulePV[];
   expressions: Expression[];
+}
+
+export interface OpiFile {
+  path: string;
+  macros: MacroMap;
+  defaultProtocol: string;
 }

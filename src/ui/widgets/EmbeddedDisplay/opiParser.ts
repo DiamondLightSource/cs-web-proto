@@ -1,7 +1,6 @@
 import log from "loglevel";
 import { ElementCompact, xml2js } from "xml-js";
-import { Rule, Expression } from "../../../types/props";
-import { WidgetActions, WRITE_PV, OPEN_WEBPAGE } from "../widgetActions";
+import { Rule, Expression, OpiFile } from "../../../types/props";
 import { MacroMap } from "../../../types/macros";
 import { Color } from "../../../types/color";
 import { FontStyle, Font } from "../../../types/font";
@@ -21,6 +20,12 @@ import {
 import { REGISTERED_WIDGETS } from "../register";
 import { WidgetDescription } from "../createComponent";
 import { PV } from "../../../types/pv";
+import {
+  WRITE_PV,
+  OPEN_WEBPAGE,
+  WidgetActions,
+  OPEN_TAB
+} from "../widgetActions";
 
 export interface XmlDescription {
   _attributes: { [key: string]: string };
@@ -46,8 +51,8 @@ const OPI_WIDGET_MAPPING: { [key: string]: any } = {
   "org.csstudio.opibuilder.widgets.ActionButton": "actionbutton",
   "org.csstudio.opibuilder.widgets.MenuButton": "menubutton",
   "org.csstudio.opibuilder.widgets.checkbox": "checkbox",
-  "org.csstudio.opibuilder.widgets.linkingContainer": "linkingcontainer",
-  "org.csstudio.opibuilder.widgets.polyline": "polyline",
+  "org.csstudio.opibuilder.widgets.linkingContainer": "embeddedDisplay",
+  "org.csstudio.opibuilder.widgets.polyline": "line",
   "org.csstudio.opibuilder.widgets.symbol.multistate.MultistateMonitorWidget":
     "symbol",
   "org.csstudio.opibuilder.widgets.LED": "led"
@@ -126,7 +131,7 @@ export function opiParseFont(jsonProp: ElementCompact): Font {
 function opiParseMacros(jsonProp: ElementCompact): MacroMap {
   const macroMap: MacroMap = {};
   Object.entries(jsonProp as object).forEach(([key, value]): void => {
-    macroMap[key] = value["_text"];
+    macroMap[key] = value["_text"] ?? "";
   });
   return macroMap;
 }
@@ -149,6 +154,18 @@ export function opiParseActions(
   const processedActions: WidgetActions = {
     executeAsOne: executeAsOne,
     actions: []
+  };
+
+  const modeToLocation = (action: ElementCompact): string => {
+    const mode = (action.mode && action.mode._text) || undefined;
+    switch (mode) {
+      case "1":
+        return "main";
+      case "3":
+        return "details";
+      default:
+        return "main";
+    }
   };
 
   actionsToProcess.forEach((action): void => {
@@ -175,6 +192,22 @@ export function opiParseActions(
             url: action.hyperlink._text,
             description:
               (action.description && action.description._text) || undefined
+          }
+        });
+      } else if (type === "OPEN_DISPLAY") {
+        processedActions.actions.push({
+          type: OPEN_TAB,
+          dynamicInfo: {
+            name: action.path._text,
+            location: modeToLocation(action),
+            description:
+              (action.description && action.description._text) || undefined,
+            file: {
+              path: action.path._text,
+              // TODO: Should probably be accessing properties of the element here
+              macros: {},
+              defaultProtocol: "pva"
+            }
           }
         });
       }
@@ -331,6 +364,19 @@ function opiParsePosition(props: any): Position {
   }
 }
 
+function opiParseFile(props: any): OpiFile {
+  // Temporary way of simplifying paths.
+  const filename =
+    opiParseString(props.opi_file)
+      .split("/")
+      .pop() || "";
+  return {
+    path: filename,
+    macros: opiParseMacros(props.macros),
+    defaultProtocol: "ca"
+  };
+}
+
 /**
  * Parses a props object to extract the filename (NOT THE PATH) of an
  * image file
@@ -391,7 +437,8 @@ export const OPI_SIMPLE_PARSERS: ParserDict = {
   transparent: ["transparent", opiParseBoolean],
   font: ["font", opiParseFont],
   macroMap: ["macros", opiParseMacros],
-  src: ["image_file", opiParseImageFile],
+  imageFile: ["image_file", opiParseImageFile],
+  image: ["image", opiParseImageFile],
   showLabel: ["show_boolean_label", opiParseBoolean],
   labelPosition: ["boolean_label_position", opiParseLabelPosition],
   stretchToFit: ["stretch_to_fit", opiParseBoolean],
@@ -415,7 +462,8 @@ export const OPI_SIMPLE_PARSERS: ParserDict = {
 export const OPI_COMPLEX_PARSERS: ComplexParserDict = {
   type: opiParseType,
   position: opiParsePosition,
-  border: opiParseBorder
+  border: opiParseBorder,
+  file: opiParseFile
 };
 
 function opiPatchRules(widgetDescription: WidgetDescription): void {

@@ -14,19 +14,21 @@ const CssBorders: { [key in BorderStyle]: string } = {
   [BorderStyle.Line]: "solid",
   [BorderStyle.Dashed]: "dashed",
   [BorderStyle.Dotted]: "dotted",
-  [BorderStyle.GroupBox]: "ridge"
+  // This should already be handled by adding a fieldset element around,
+  // although this work is not complete.
+  [BorderStyle.GroupBox]: "none"
 };
 
 export class Border {
   public static NONE = new Border(BorderStyle.None, Color.BLACK, 0);
   public static GROUPBOX = new Border(BorderStyle.GroupBox, Color.BLACK, 0);
 
-  private style: BorderStyle;
-  private color: Color;
+  public style: BorderStyle;
+  public color: Color;
   // This will render a border width in pixels. I expect that we will revisit this
   // at some later point, possibly to allow or fix to rems.
-  private width: number;
-  private radius?: number;
+  public width: number;
+  public radius?: number;
 
   public constructor(
     style: BorderStyle,

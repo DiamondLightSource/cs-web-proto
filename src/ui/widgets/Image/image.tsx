@@ -7,20 +7,22 @@ import {
   StringProp,
   BoolPropOpt,
   StringPropOpt,
-  FloatPropOpt
+  FloatPropOpt,
+  FuncPropOpt
 } from "../propTypes";
 import { registerWidget } from "../register";
 import { BaseUrlContext } from "../../../baseUrl";
 
 const ImageProps = {
-  src: StringProp,
+  imageFile: StringProp,
   alt: StringPropOpt,
   stretchToFit: BoolPropOpt,
   fitToWidth: BoolPropOpt,
   fitToHeight: BoolPropOpt,
   rotation: FloatPropOpt,
   flipHorizontal: BoolPropOpt,
-  flipVertical: BoolPropOpt
+  flipVertical: BoolPropOpt,
+  onClick: FuncPropOpt
 };
 
 export const ImageComponent = (
@@ -28,8 +30,14 @@ export const ImageComponent = (
 ): JSX.Element => {
   const { rotation = 0, flipHorizontal, flipVertical } = props;
 
+  const onClick = (event: React.MouseEvent<HTMLDivElement>): void => {
+    if (props.onClick) {
+      props.onClick(event);
+    }
+  };
+
   const baseUrl = useContext(BaseUrlContext);
-  let file = `img/${props.src}`;
+  let file = `img/${props.imageFile}`;
   if (!file.startsWith("http")) {
     file = `${baseUrl}/${file}`;
   }
@@ -54,7 +62,7 @@ export const ImageComponent = (
   };
 
   return (
-    <div style={style}>
+    <div style={style} onClick={onClick}>
       <img
         src={file}
         alt={props.alt || undefined}
