@@ -41,6 +41,9 @@ export const FontPropOpt = PropTypes.instanceOf(Font);
 export const BorderProp = PropTypes.instanceOf(Border).isRequired;
 export const BorderPropOpt = PropTypes.instanceOf(Border);
 
+export const FuncPropOpt = PropTypes.instanceOf(Function);
+export const FuncProp = FuncPropOpt.isRequired;
+
 export const PositionProp = PropTypes.oneOfType([
   PropTypes.instanceOf(AbsolutePosition),
   PropTypes.instanceOf(RelativePosition)

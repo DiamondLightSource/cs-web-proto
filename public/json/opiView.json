@@ -1,0 +1,36 @@
+{
+  "type": "flexcontainer",
+  "position": "relative",
+  "children": [
+    {
+      "type": "flexcontainer",
+      "position": "relative",
+      "children": [
+        {
+          "type": "dynamictabs",
+          "position": "relative",
+          "margin": "20px 0 0 0",
+          "width": "80%",
+          "location": "main"
+        },
+        {
+          "type": "dynamictabs",
+          "position": "relative",
+          "margin": "20px 0 0 0",
+          "width": "20%",
+          "location": "details"
+        }
+      ]
+    },
+    {
+      "type": "embeddedDisplay",
+      "position": "relative",
+      "margin": "10px",
+      "file": {
+        "path": "synoptic.opi",
+        "macros": {},
+        "defaultProtocol": "ca"
+      }
+    }
+  ]
+}

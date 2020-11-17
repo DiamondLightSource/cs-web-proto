@@ -10,15 +10,25 @@ import {
 import { Color } from "../../../types/color";
 import { Border, BorderStyle } from "../../../types/border";
 import { Font, FontStyle } from "../../../types/font";
-import { MacroContext, MacroContextType } from "../../../types/macros";
+import {
+  MacroContext,
+  MacroContextType,
+  resolveMacros
+} from "../../../types/macros";
 import { RelativePosition, AbsolutePosition } from "../../../types/position";
 import { WidgetPropType } from "../widgetProps";
 import { registerWidget } from "../register";
-import { InferWidgetProps, FilePropType } from "../propTypes";
+import {
+  InferWidgetProps,
+  FilePropType,
+  BoolPropOpt,
+  StringPropOpt
+} from "../propTypes";
 import { BaseUrlContext } from "../../../baseUrl";
 import { parseOpi } from "./opiParser";
 import { parseJson } from "./jsonParser";
 import { parseBob } from "./bobParser";
+import { GroupBoxComponent } from "../GroupBox/groupBox";
 
 const EMPTY_WIDGET: WidgetDescription = {
   type: "shape",
@@ -42,7 +52,9 @@ export function errorWidget(message: string): WidgetDescription {
 
 const EmbeddedDisplayProps = {
   ...WidgetPropType,
-  file: FilePropType
+  file: FilePropType,
+  name: StringPropOpt,
+  scroll: BoolPropOpt
 };
 
 export const EmbeddedDisplay = (
@@ -106,21 +118,12 @@ export const EmbeddedDisplay = (
       props.position.width = props.position.width || description.width;
     }
 
-    // Overflow set to scroll only if needed
-    // If height or width is defined and is smaller than Bob
-    const overflow =
-      props.position instanceof AbsolutePosition &&
-      (description.height > (props.position.height || 0) ||
-        description.width > (props.position.width || 0))
-        ? "scroll"
-        : "visible";
-
     component = widgetDescriptionToComponent({
       type: "display",
       position: props.position,
       border:
         props.border ?? new Border(BorderStyle.Line, new Color("lightgrey"), 1),
-      overflow: overflow,
+      overflow: props.scroll ? "scroll" : "visible",
       children: [description]
     });
   } catch (e) {
@@ -144,11 +147,25 @@ export const EmbeddedDisplay = (
     }
   };
 
-  return (
-    <MacroContext.Provider value={embeddedDisplayMacroContext}>
-      {component}
-    </MacroContext.Provider>
+  // Awkward to have to do this manually. Can we make this more elegant?
+  const resolvedName = resolveMacros(
+    props.name ?? "",
+    embeddedDisplayMacroContext.macros
   );
+
+  if (props.border?.style === BorderStyle.GroupBox) {
+    return (
+      <MacroContext.Provider value={embeddedDisplayMacroContext}>
+        <GroupBoxComponent name={resolvedName}>{component}</GroupBoxComponent>
+      </MacroContext.Provider>
+    );
+  } else {
+    return (
+      <MacroContext.Provider value={embeddedDisplayMacroContext}>
+        {component}
+      </MacroContext.Provider>
+    );
+  }
 };
 
 registerWidget(EmbeddedDisplay, EmbeddedDisplayProps, "embeddedDisplay");

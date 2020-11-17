@@ -6,7 +6,7 @@ import { render, screen } from "@testing-library/react";
 describe("<ImageComponent />", (): void => {
   describe("Visible tests", (): void => {
     test("it contains an image element", (): void => {
-      render(<ImageComponent src="test" />);
+      render(<ImageComponent imageFile="test" />);
       expect(screen.getByRole("img")).toBeInTheDocument();
 
       expect(screen.getByRole("img")).toHaveProperty(
@@ -16,7 +16,7 @@ describe("<ImageComponent />", (): void => {
     });
 
     test("it passes alternative text through", (): void => {
-      render(<ImageComponent src="test" alt="test text" />);
+      render(<ImageComponent imageFile="test" alt="test text" />);
 
       expect(screen.getByAltText("test text")).toBeInTheDocument();
     });
@@ -24,7 +24,7 @@ describe("<ImageComponent />", (): void => {
 
   describe("prop testing", (): void => {
     test("its source is passed through properly", (): void => {
-      render(<ImageComponent src="test" />);
+      render(<ImageComponent imageFile="test" />);
       expect(screen.getByRole("img")).toHaveProperty(
         "src",
         `${DEFAULT_BASE_URL}/img/test`
@@ -33,7 +33,7 @@ describe("<ImageComponent />", (): void => {
 
     test("flips and rotations are applied", (): void => {
       const imageProps = {
-        src: "test",
+        imageFile: "test",
         flipHorizontal: true,
         flipVertical: true,
         rotation: 45

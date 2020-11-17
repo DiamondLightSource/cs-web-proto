@@ -58,6 +58,7 @@ export const DynamicTabsComponent = (
           macros: description?.macros || {}
         }}
         key={name}
+        scroll={true}
       />
     ]);
     const tabNames = openTabs.map(([name]) => name);

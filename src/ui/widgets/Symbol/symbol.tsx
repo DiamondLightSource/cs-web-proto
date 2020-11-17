@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 
 import { useCommonCss, Widget } from "../widget";
 import { PVWidgetPropType, PVComponent } from "../widgetProps";
@@ -12,15 +12,19 @@ import {
   BorderPropOpt,
   StringProp,
   ChoicePropOpt,
-  FontPropOpt
+  FontPropOpt,
+  ActionsPropType
 } from "../propTypes";
 import { registerWidget } from "../register";
 import { ImageComponent } from "../Image/image";
 import { LabelComponent } from "../Label/label";
 import { Color } from "../../../types/color";
+import { executeActions, WidgetActions } from "../widgetActions";
+import { MacroContext } from "../../../types/macros";
+import { FileContext } from "../../../fileContext";
 
 const SymbolProps = {
-  src: StringProp,
+  imageFile: StringProp,
   alt: StringPropOpt,
   backgroundColor: ColorPropOpt,
   showLabel: BoolProp,
@@ -42,8 +46,7 @@ const SymbolProps = {
   flipVertical: BoolPropOpt,
   visible: BoolPropOpt,
   stretchToFit: BoolPropOpt,
-  fitToWidth: BoolPropOpt,
-  fitToHeight: BoolPropOpt,
+  actions: ActionsPropType,
   font: FontPropOpt
 };
 
@@ -91,14 +94,30 @@ export const SymbolComponent = (props: SymbolComponentProps): JSX.Element => {
       break;
   }
 
+  const files = useContext(FileContext);
+  const parentMacros = useContext(MacroContext).macros;
+  function onClick(event: React.MouseEvent<HTMLDivElement>): void {
+    if (props.actions !== undefined) {
+      executeActions(props.actions as WidgetActions, files, parentMacros);
+    }
+  }
+
+  const cursor =
+    props.actions && props.actions.actions.length > 0 ? "pointer" : "auto";
+
+  // Note: I would've preferred to define the onClick on div that wraps
+  // both sub-components, but replacing the fragment with a div, with the way
+  // the image component is written causes many images to be of the incorrect size
   return (
     <>
-      <ImageComponent {...props} />
+      <ImageComponent {...props} onClick={onClick} />
       {props.showLabel && (
         <>
           <div
+            onClick={onClick}
             style={{
               ...style,
+              cursor,
               backgroundColor: "transparent",
               position: "absolute",
               height: "100%",
