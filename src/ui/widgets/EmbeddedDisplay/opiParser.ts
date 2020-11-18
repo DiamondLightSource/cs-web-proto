@@ -370,9 +370,13 @@ function opiParseFile(props: any): OpiFile {
     opiParseString(props.opi_file)
       .split("/")
       .pop() || "";
+  let macros = {};
+  if (props.macros) {
+    macros = opiParseMacros(props.macros);
+  }
   return {
     path: filename,
-    macros: opiParseMacros(props.macros),
+    macros,
     defaultProtocol: "ca"
   };
 }

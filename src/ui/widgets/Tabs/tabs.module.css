@@ -10,12 +10,17 @@
   margin: 0.2em 0.2em 0 0.2em;
   border-radius: 0.2em 0.2em 0 0;
   font-size: 1.5rem;
-  min-width: 20%;
+  min-width: 100px;
+  max-width: 200px;
+  flex-grow: 2;
   border-bottom: 1px solid lightgrey;
 }
 
-.Tab p {
+.Tab span {
   cursor: default;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .TabSelected {
@@ -39,6 +44,7 @@
   display: inline;
   margin: 3px;
   padding: 0;
+  flex-shrink: 0;
 }
 
 .TabCloseButton:hover {

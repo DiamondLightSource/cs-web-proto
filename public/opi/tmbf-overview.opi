@@ -1,0 +1,112 @@
+<?xml version='1.0' encoding='utf-8'?>
+<display typeId="org.csstudio.opibuilder.Display" version="1.0">
+  <x>694</x>
+  <y>340</y>
+  <width>456</width>
+  <height>473</height>
+  <font>
+    <fontdata fontName="helvetica" height="8" pixels="true" style="0" />
+  </font>
+  <boy_version>4.0.0</boy_version>
+  <foreground_color>
+    <color blue="0" green="0" name="Black" red="0" />
+  </foreground_color>
+  <background_color>
+    <color blue="200" green="200" name="Canvas" red="200" />
+  </background_color>
+  <name>$(device):$(axis) Overview</name>
+  <show_grid>true</show_grid>
+  <grid_space>8</grid_space>
+  <auto_zoom_to_fit_all>true</auto_zoom_to_fit_all>
+  <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="1.0">
+    <actions hook="false" hook_all="false">
+      <action type="EXECUTE_CMD">
+        <command>../scripts/mbf-run-command -P 'Setup Tune Measurement only' mbf-setup-tune $(device):$(axis) TUNE</command>
+        <command_directory>$(opi.dir)</command_directory>
+        <description />
+      </action>
+    </actions>
+    <background_color>
+      <color blue="187" green="187" name="Button: On" red="187" />
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <font>
+      <fontdata fontName="helvetica" height="12" pixels="true" style="1" />
+    </font>
+    <foreground_color>
+      <color blue="255" green="0" name="Controller" red="0" />
+    </foreground_color>
+    <height>25</height>
+    <name>EDM shell command</name>
+    <text>Tune Only</text>
+    <width>137</width>
+    <x>8</x>
+    <y>440</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="1.0">
+    <actions hook="false" hook_all="false">
+      <action type="EXECUTE_CMD">
+        <command>../scripts/mbf-run-command -P 'Setup Closed Loop + SB Tune Meas.' mbf-setup-tune $(device):$(axis) FB</command>
+        <command_directory>$(opi.dir)</command_directory>
+        <description />
+      </action>
+    </actions>
+    <background_color>
+      <color blue="187" green="187" name="Button: On" red="187" />
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <font>
+      <fontdata fontName="helvetica" height="12" pixels="true" style="1" />
+    </font>
+    <foreground_color>
+      <color blue="255" green="0" name="Controller" red="0" />
+    </foreground_color>
+    <height>25</height>
+    <name>EDM shell command</name>
+    <text>Feedback On &amp; Tune</text>
+    <width>137</width>
+    <x>312</x>
+    <y>440</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="1.0">
+    <actions hook="false" hook_all="false">
+      <action type="EXECUTE_CMD">
+        <command>../scripts/mbf-run-command -P 'Setup Tune Measurement Special' mbf-setup-tune $(device):$(axis) AP</command>
+        <command_directory>$(opi.dir)</command_directory>
+        <description />
+      </action>
+    </actions>
+    <background_color>
+      <color blue="187" green="187" name="Button: On" red="187" />
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <font>
+      <fontdata fontName="helvetica" height="12" pixels="true" style="1" />
+    </font>
+    <foreground_color>
+      <color blue="255" green="0" name="Controller" red="0" />
+    </foreground_color>
+    <height>25</height>
+    <name>EDM shell command</name>
+    <text>Tune Special</text>
+    <width>137</width>
+    <x>160</x>
+    <y>440</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0">
+    <background_color>
+      <color blue="200" green="200" name="Canvas" red="200" />
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <foreground_color>
+      <color blue="0" green="0" name="Black" red="0" />
+    </foreground_color>
+    <height>436</height>
+    <name>EDM linkingContainer</name>
+    <resize_behaviour>2</resize_behaviour>
+    <opi_file>overview_core.opi</opi_file>
+    <width>456</width>
+    <x>0</x>
+    <y>0</y>
+  <border_style>0</border_style></widget>
+</display>

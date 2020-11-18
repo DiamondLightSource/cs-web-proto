@@ -39,9 +39,15 @@ export const DynamicTabsComponent = (
 ): JSX.Element => {
   const fileContext = useContext(FileContext);
   const tabState = fileContext.tabState[props.location];
+  const containerStyle = {
+    border: "1px solid lightgrey",
+    height: "100%",
+    width: "100%",
+    overflow: "auto"
+  };
   if (!tabState || tabState.fileDetails.length === 0) {
     return (
-      <div style={{ border: "1px solid black", minHeight: "50px" }}>
+      <div style={containerStyle}>
         <h3>Dynamic tabs &quot;{props.location}&quot;: no file loaded.</h3>
       </div>
     );
@@ -58,7 +64,7 @@ export const DynamicTabsComponent = (
           macros: description?.macros || {}
         }}
         key={name}
-        scroll={true}
+        scroll={false}
       />
     ]);
     const tabNames = openTabs.map(([name]) => name);
@@ -71,7 +77,7 @@ export const DynamicTabsComponent = (
     };
 
     return (
-      <div>
+      <div style={containerStyle}>
         <TabBar
           tabNames={tabNames}
           selectedTab={selectedTab}

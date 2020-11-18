@@ -34,7 +34,15 @@ export const DynamicPageComponent = (
 
   if (file === undefined) {
     return (
-      <div style={{ border: "1px solid black", minHeight: "100px", ...style }}>
+      <div
+        style={{
+          height: "100%",
+          width: "100%",
+          border: "1px solid black",
+          minHeight: "100px",
+          ...style
+        }}
+      >
         <h3>Dynamic page &quot;{props.location}&quot;: no file loaded.</h3>
       </div>
     );

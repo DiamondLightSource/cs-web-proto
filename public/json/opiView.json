@@ -5,19 +5,21 @@
     {
       "type": "flexcontainer",
       "position": "relative",
+      "width": "90%",
+      "height": "70vh",
       "children": [
         {
           "type": "dynamictabs",
           "position": "relative",
           "margin": "20px 0 0 0",
-          "width": "80%",
+          "width": "70%",
           "location": "main"
         },
         {
           "type": "dynamictabs",
           "position": "relative",
           "margin": "20px 0 0 0",
-          "width": "20%",
+          "width": "30%",
           "location": "details"
         }
       ]
@@ -26,6 +28,7 @@
       "type": "embeddedDisplay",
       "position": "relative",
       "margin": "10px",
+      "scroll": true,
       "file": {
         "path": "synoptic.opi",
         "macros": {},

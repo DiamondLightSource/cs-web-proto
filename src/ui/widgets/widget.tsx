@@ -27,18 +27,21 @@ export function useCommonCss(props: {
   visible?: boolean;
   foregroundColor?: Color;
   backgroundColor?: Color;
+  transparent?: boolean;
 }): CSSProperties {
   const { showOutlines } = useContext(OutlineContext);
   const visible = props.visible === undefined || props.visible;
+  const backgroundColor = props.transparent
+    ? "transparent"
+    : props.backgroundColor?.toString();
   return {
     ...props.border?.css(),
     ...props.font?.css(),
     color: props.foregroundColor?.toString(),
-    backgroundColor: props.backgroundColor?.toString(),
+    backgroundColor,
     visibility: visible ? undefined : "hidden",
     outline: showOutlines ? "1px dashed grey" : undefined,
-    outlineOffset: showOutlines ? "-2px" : undefined,
-    overflow: "hidden"
+    outlineOffset: showOutlines ? "-2px" : undefined
   };
 }
 
