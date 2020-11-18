@@ -63,7 +63,8 @@ export function contextRender(
 ): RenderResult {
   const ParentComponent = (props: { child: JSX.Element }): JSX.Element => {
     // Hard-code macros for now.
-    const contextMacros = { a: "A", b: "B", c: "C" };
+    // eslint-disable-next-line no-template-curly-in-string
+    const contextMacros = { a: "A", b: "B", c: "C", e: "${a}" };
     const globalMacros = { c: "D", d: "E" };
     initialCsState.globalMacros = globalMacros;
     const macroContext = { macros: contextMacros, updateMacro: (): void => {} };

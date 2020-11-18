@@ -33,7 +33,7 @@ it("line break characters are ignored", (): void => {
 });
 
 it("multiple substitutions are made", (): void => {
-  const substituted = resolveMacros("${A}${C}${E}A${F}${C)", macroMap);
+  const substituted = resolveMacros("${A}${C}${E}A${F}${C}", macroMap);
   expect(substituted).toEqual("BDA${F}D");
 });
 

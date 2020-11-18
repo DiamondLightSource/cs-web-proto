@@ -65,6 +65,10 @@ function interpolate(
     requiredMappings.push(result[1]);
   }
 
+  if (requiredMappings.length === 0) {
+    return str;
+  }
+
   const missingMappings = requiredMappings.filter(
     (x: string): boolean => substitutions[x] === undefined
   );
@@ -79,20 +83,24 @@ function interpolate(
 }
 
 /**
- * This maps an unresolvedPvName to the resolvedPvName, each macro in macroMap
- * is applied to the unresolvedPvName
+ * Apply substitutions from macroMap to unresolved.
  * Substitutions are made at all matching points, and if no mapping is provided
  * nothing is changed, ${} or $() are used to denote a substitution point
- * @param unresolvedPvName name to run through mapping
- * @param macroMap the mapping to apply to unresolvedPvName
- * @returns resolvedPvName: string (the name used in Coniql I believe)
- * @example unresolvedPvName: "AC${D}"
+ * @param unresolved name to run through mapping
+ * @param macroMap the mapping to apply to unresolved
+ * @returns resolved: string (the name used in Coniql I believe)
+ * @example unresolved: "AC${D}"
  * macroMap: {D: "F"}
  * resolveMacros(unresolvedPvName, macroMap) -> "ACF"
  */
-export function resolveMacros(
-  unresolvedPvName: string,
-  macroMap: MacroMap
-): string {
-  return interpolate(unresolvedPvName, macroMap);
+export function resolveMacros(unresolved: string, macroMap: MacroMap): string {
+  let lastTry = "";
+  let resolved = unresolved;
+  // A macro may contain another macro that in turn needs resolving.
+  // Re-apply until interpolating makes no difference.
+  while (resolved !== lastTry) {
+    lastTry = resolved;
+    resolved = interpolate(resolved, macroMap);
+  }
+  return resolved;
 }
