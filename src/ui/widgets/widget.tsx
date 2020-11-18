@@ -37,8 +37,7 @@ export function useCommonCss(props: {
     backgroundColor: props.backgroundColor?.toString(),
     visibility: visible ? undefined : "hidden",
     outline: showOutlines ? "1px dashed grey" : undefined,
-    outlineOffset: showOutlines ? "-2px" : undefined,
-    overflow: "hidden"
+    outlineOffset: showOutlines ? "-2px" : undefined
   };
 }
 
