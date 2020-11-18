@@ -1,0 +1,855 @@
+<?xml version='1.0' encoding='utf-8'?>
+<display typeId="org.csstudio.opibuilder.Display" version="1.0">
+  <x>87</x>
+  <y>387</y>
+  <width>456</width>
+  <height>473</height>
+  <font>
+    <fontdata fontName="helvetica" height="8" pixels="true" style="0" />
+  </font>
+  <boy_version>4.0.0</boy_version>
+  <foreground_color>
+    <color blue="0" green="0" name="Black" red="0" />
+  </foreground_color>
+  <background_color>
+    <color blue="200" green="200" name="Canvas" red="200" />
+  </background_color>
+  <name>$(device):$(axis) Overview</name>
+  <show_grid>true</show_grid>
+  <grid_space>8</grid_space>
+  <auto_zoom_to_fit_all>true</auto_zoom_to_fit_all>
+  <widget typeId="org.csstudio.opibuilder.widgets.Rectangle" version="1.0">
+    <background_color>
+      <color blue="187" green="187" name="Button: On" red="187" />
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <height>113</height>
+    <line_color>
+      <color blue="0" green="0" name="Black" red="0" />
+    </line_color>
+    <line_style>0</line_style>
+    <line_width>1</line_width>
+    <name>EDM Rectangle</name>
+    <transparent>false</transparent>
+    <visible>true</visible>
+    <width>233</width>
+    <x>8</x>
+    <y>48</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Rectangle" version="1.0">
+    <actions hook="true" hook_all="false">
+      <action type="OPEN_DISPLAY">
+        <path>./status.opi</path>
+        <macros>
+          <include_parent_macros>false</include_parent_macros>
+          <device>$(device)</device>
+          <axis0>$(axis0)</axis0>
+          <axis1>$(axis1)</axis1>
+          <axis01>$(axis01)</axis01>
+          <mode>$(mode)</mode>
+        </macros>
+        <mode>8</mode>
+        <description />
+      </action>
+    </actions>
+    <background_color>
+      <color blue="187" green="187" name="Button: On" red="187" />
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <font>
+      <fontdata fontName="helvetica" height="12" pixels="true" style="1" />
+    </font>
+    <foreground_color>
+      <color blue="60" green="110" name="Related display" red="160" />
+    </foreground_color>
+    <height>21</height>
+    <line_width>0</line_width>
+    <name>EDM related display</name>
+    <text />
+    <transparent>true</transparent>
+    <width>209</width>
+    <x>16</x>
+    <y>62</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Rectangle" version="1.0">
+    <actions hook="true" hook_all="false">
+      <action type="OPEN_DISPLAY">
+        <path>./tune_peaks.opi</path>
+        <macros>
+          <include_parent_macros>false</include_parent_macros>
+          <tune_prefix>$(device):$(axis)</tune_prefix>
+        </macros>
+        <mode>8</mode>
+        <description />
+      </action>
+    </actions>
+    <background_color>
+      <color blue="255" green="255" name="Disconn/Invalid" red="255" />
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <font>
+      <fontdata fontName="helvetica" height="18" pixels="true" style="0" />
+    </font>
+    <foreground_color>
+      <color blue="0" green="0" name="Black" red="0" />
+    </foreground_color>
+    <height>25</height>
+    <line_width>0</line_width>
+    <name>EDM related display</name>
+    <text />
+    <transparent>true</transparent>
+    <width>289</width>
+    <x>96</x>
+    <y>408</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Rectangle" version="1.0">
+    <background_color>
+      <color blue="187" green="187" name="Button: On" red="187" />
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <height>113</height>
+    <line_color>
+      <color blue="0" green="0" name="Black" red="0" />
+    </line_color>
+    <line_style>0</line_style>
+    <line_width>1</line_width>
+    <name>EDM Rectangle</name>
+    <transparent>false</transparent>
+    <visible>true</visible>
+    <width>201</width>
+    <x>248</x>
+    <y>48</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">
+    <auto_size>false</auto_size>
+    <background_color>
+      <color blue="198" green="181" name="DI title" red="198" />
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_color>
+      <color blue="0" green="0" name="Black" red="0" />
+    </border_color>
+    <border_style>0</border_style>
+    <font>
+      <fontdata fontName="helvetica" height="18" pixels="true" style="0" />
+    </font>
+    <foreground_color>
+      <color blue="0" green="0" name="Black" red="0" />
+    </foreground_color>
+    <height>32</height>
+    <horizontal_alignment>1</horizontal_alignment>
+    <name>EDM Label</name>
+    <text>$(device):$(axis) Overview</text>
+    <transparent>false</transparent>
+    <width>456</width>
+    <x>0</x>
+    <y>0</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="1.0">
+    <actions hook="false" hook_all="false">
+      <action type="EXECUTE_JAVASCRIPT">
+        <embedded>true</embedded>
+        <scriptText>importPackage(Packages.org.csstudio.opibuilder.scriptUtil);ScriptUtil.closeAssociatedOPI(widget);</scriptText>
+      </action>
+    </actions>
+    <background_color>
+      <color blue="187" green="187" name="Button: On" red="187" />
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <font>
+      <fontdata fontName="helvetica" height="12" pixels="true" style="1" />
+    </font>
+    <foreground_color>
+      <color blue="192" green="0" name="Exit/Quit/Kill" red="192" />
+    </foreground_color>
+    <height>25</height>
+    <name>EDM Exit Button</name>
+    <text>EXIT</text>
+    <width>57</width>
+    <x>392</x>
+    <y>408</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="1.0">
+    <actions hook="false" hook_all="false">
+      <action type="EXECUTE_CMD">
+        <command>../scripts/mbf-help overview</command>
+        <command_directory>$(opi.dir)</command_directory>
+        <description />
+      </action>
+    </actions>
+    <background_color>
+      <color blue="200" green="200" name="Canvas" red="200" />
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <font>
+      <fontdata fontName="helvetica" height="14" pixels="true" style="1" />
+    </font>
+    <foreground_color>
+      <color blue="0" green="0" name="Black" red="0" />
+    </foreground_color>
+    <height>25</height>
+    <name>EDM shell command</name>
+    <text>?</text>
+    <width>25</width>
+    <x>4</x>
+    <y>4</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">
+    <auto_size>true</auto_size>
+    <background_color>
+      <color blue="255" green="255" name="Disconn/Invalid" red="255" />
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_color>
+      <color blue="0" green="0" name="Black" red="0" />
+    </border_color>
+    <border_style>0</border_style>
+    <font>
+      <fontdata fontName="helvetica" height="12" pixels="true" style="1" />
+    </font>
+    <foreground_color>
+      <color blue="0" green="0" name="Black" red="0" />
+    </foreground_color>
+    <height>14</height>
+    <horizontal_alignment>0</horizontal_alignment>
+    <name>EDM Label</name>
+    <text>Gain:</text>
+    <transparent>true</transparent>
+    <width>31</width>
+    <x>256</x>
+    <y>64</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">
+    <auto_size>true</auto_size>
+    <background_color>
+      <color blue="255" green="255" name="Disconn/Invalid" red="255" />
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_color>
+      <color blue="0" green="0" name="Black" red="0" />
+    </border_color>
+    <border_style>0</border_style>
+    <font>
+      <fontdata fontName="helvetica" height="12" pixels="true" style="1" />
+    </font>
+    <foreground_color>
+      <color blue="0" green="0" name="Black" red="0" />
+    </foreground_color>
+    <height>14</height>
+    <horizontal_alignment>0</horizontal_alignment>
+    <name>EDM Label</name>
+    <text>Phase:</text>
+    <transparent>true</transparent>
+    <width>40</width>
+    <x>392</x>
+    <y>64</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.scaledslider" version="1.0">
+    <background_color>
+      <color blue="187" green="187" name="Button: On" red="187" />
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <font>
+      <fontdata fontName="helvetica" height="8" pixels="true" style="0" />
+    </font>
+    <foreground_color>
+      <color blue="158" green="158" name="Title" red="158" />
+    </foreground_color>
+    <height>24</height>
+    <horizontal>true</horizontal>
+    <limits_from_pv>false</limits_from_pv>
+    <log_scale>false</log_scale>
+    <maximum>360.0</maximum>
+    <minimum>-360.0</minimum>
+    <name>EDM Motif Slider</name>
+    <page_increment>10.0</page_increment>
+    <pv_name>$(device):$(axis):FIR:0:PHASE_S</pv_name>
+    <show_markers>false</show_markers>
+    <thumb_color>
+      <color blue="0" green="0" name="unknown" red="0" />
+    </thumb_color>
+    <transparent>true</transparent>
+    <width>184</width>
+    <x>256</x>
+    <y>108</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.dawn.xygraph" version="1.0">
+    <axis_0_auto_scale>false</axis_0_auto_scale>
+    <axis_0_auto_scale_threshold>0.95</axis_0_auto_scale_threshold>
+    <axis_0_axis_color>
+      <color blue="0" green="0" name="Black" red="0" />
+    </axis_0_axis_color>
+    <axis_0_axis_title />
+    <axis_0_grid_color>
+      <color blue="0" green="0" name="Black" red="0" />
+    </axis_0_grid_color>
+    <axis_0_log_scale>false</axis_0_log_scale>
+    <axis_0_maximum>1024.0</axis_0_maximum>
+    <axis_0_minimum>-10.0</axis_0_minimum>
+    <axis_0_scale_font>
+      <fontdata fontName="helvetica" height="12" pixels="true" style="0" />
+    </axis_0_scale_font>
+    <axis_0_show_grid>false</axis_0_show_grid>
+    <axis_0_time_format>0</axis_0_time_format>
+    <axis_0_title_font>
+      <fontdata fontName="helvetica" height="12" pixels="true" style="0" />
+    </axis_0_title_font>
+    <axis_0_visible>true</axis_0_visible>
+    <axis_1_auto_scale>true</axis_1_auto_scale>
+    <axis_1_auto_scale_threshold>0.95</axis_1_auto_scale_threshold>
+    <axis_1_axis_color>
+      <color blue="0" green="0" name="Black" red="0" />
+    </axis_1_axis_color>
+    <axis_1_axis_title />
+    <axis_1_grid_color>
+      <color blue="0" green="0" name="Black" red="0" />
+    </axis_1_grid_color>
+    <axis_1_logScale>false</axis_1_logScale>
+    <axis_1_log_scale>false</axis_1_log_scale>
+    <axis_1_maximum>1.0</axis_1_maximum>
+    <axis_1_minimum>0.0</axis_1_minimum>
+    <axis_1_scale_font>
+      <fontdata fontName="helvetica" height="12" pixels="true" style="0" />
+    </axis_1_scale_font>
+    <axis_1_show_grid>false</axis_1_show_grid>
+    <axis_1_time_format>0</axis_1_time_format>
+    <axis_1_title_font>
+      <fontdata fontName="helvetica" height="12" pixels="true" style="0" />
+    </axis_1_title_font>
+    <axis_1_visible>true</axis_1_visible>
+    <axis_2_auto_scale>true</axis_2_auto_scale>
+    <axis_2_axis_color>
+      <color blue="0" green="0" name="Black" red="0" />
+    </axis_2_axis_color>
+    <axis_2_axis_title />
+    <axis_2_grid_color>
+      <color blue="0" green="0" name="Black" red="0" />
+    </axis_2_grid_color>
+    <axis_2_left_bottom_side>false</axis_2_left_bottom_side>
+    <axis_2_logScale>false</axis_2_logScale>
+    <axis_2_maximum>16600.0</axis_2_maximum>
+    <axis_2_minimum>8300.0</axis_2_minimum>
+    <axis_2_show_grid>false</axis_2_show_grid>
+    <axis_2_time_format>0</axis_2_time_format>
+    <axis_2_visible>false</axis_2_visible>
+    <axis_count>3</axis_count>
+    <background_color>
+      <color blue="200" green="200" name="Canvas" red="200" />
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_style>0</border_style>
+    <border_width>0</border_width>
+    <font>
+      <fontdata fontName="helvetica" height="12" pixels="true" style="0" />
+    </font>
+    <foreground_color>
+      <color blue="0" green="0" name="Black" red="0" />
+    </foreground_color>
+    <height>200</height>
+    <name>EDM xyGraph</name>
+    <plot_area_background_color>
+      <color blue="200" green="200" name="Canvas" red="200" />
+    </plot_area_background_color>
+    <pv_name>$(trace_0_y_pv)</pv_name>
+    <show_legend>false</show_legend>
+    <show_plot_area_border>false</show_plot_area_border>
+    <show_toolbar>false</show_toolbar>
+    <title>Bunch motion standard deviation</title>
+    <title_font>
+      <fontdata fontName="helvetica" height="12" pixels="true" style="0" />
+    </title_font>
+    <tooltip>$(trace_0_y_pv)
+$(trace_0_y_pv_value)</tooltip>
+    <trace_0_anti_alias>false</trace_0_anti_alias>
+    <trace_0_buffer_size>65536</trace_0_buffer_size>
+    <trace_0_concatenate_data>false</trace_0_concatenate_data>
+    <trace_0_trace_color>
+      <color blue="192" green="0" name="blue-27" red="0" />
+    </trace_0_trace_color>
+    <trace_0_trace_type>0</trace_0_trace_type>
+    <trace_0_update_delay>0</trace_0_update_delay>
+    <trace_0_update_mode>3</trace_0_update_mode>
+    <trace_0_y_pv>$(device):$(adc_axis):ADC:MMS:STD</trace_0_y_pv>
+    <trace_count>1</trace_count>
+    <width>440</width>
+    <x>8</x>
+    <y>168</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">
+    <auto_size>true</auto_size>
+    <background_color>
+      <color blue="255" green="255" name="Disconn/Invalid" red="255" />
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_color>
+      <color blue="0" green="0" name="Black" red="0" />
+    </border_color>
+    <border_style>0</border_style>
+    <font>
+      <fontdata fontName="helvetica" height="18" pixels="true" style="0" />
+    </font>
+    <foreground_color>
+      <color blue="0" green="0" name="Black" red="0" />
+    </foreground_color>
+    <height>21</height>
+    <horizontal_alignment>0</horizontal_alignment>
+    <name>EDM Label</name>
+    <text>Tune:</text>
+    <transparent>true</transparent>
+    <width>47</width>
+    <x>96</x>
+    <y>408</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0">
+    <background_color>
+      <color blue="255" green="255" name="Disconn/Invalid" red="255" />
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_style>None</border_style>
+    <font>
+      <fontdata fontName="helvetica" height="18" pixels="true" style="0" />
+    </font>
+    <forecolor_alarm_sensitive>true</forecolor_alarm_sensitive>
+    <foreground_color>
+      <color blue="0" green="0" name="Black" red="0" />
+    </foreground_color>
+    <format_type>0</format_type>
+    <height>21</height>
+    <horizontal_alignment>0</horizontal_alignment>
+    <name>EDM TextInput</name>
+    <precision>5</precision>
+    <precision_from_pv>false</precision_from_pv>
+    <pv_name>$(device):$(axis):TUNE:TUNE</pv_name>
+    <show_units>false</show_units>
+    <transparent>true</transparent>
+    <width>72</width>
+    <x>152</x>
+    <y>408</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">
+    <auto_size>true</auto_size>
+    <background_color>
+      <color blue="255" green="255" name="Disconn/Invalid" red="255" />
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_color>
+      <color blue="0" green="0" name="Black" red="0" />
+    </border_color>
+    <border_style>0</border_style>
+    <font>
+      <fontdata fontName="helvetica" height="18" pixels="true" style="0" />
+    </font>
+    <foreground_color>
+      <color blue="0" green="0" name="Black" red="0" />
+    </foreground_color>
+    <height>21</height>
+    <horizontal_alignment>0</horizontal_alignment>
+    <name>EDM Label</name>
+    <text>Phase:</text>
+    <transparent>true</transparent>
+    <width>55</width>
+    <x>240</x>
+    <y>408</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0">
+    <background_color>
+      <color blue="255" green="255" name="Disconn/Invalid" red="255" />
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_style>None</border_style>
+    <font>
+      <fontdata fontName="helvetica" height="18" pixels="true" style="0" />
+    </font>
+    <forecolor_alarm_sensitive>true</forecolor_alarm_sensitive>
+    <foreground_color>
+      <color blue="0" green="0" name="Black" red="0" />
+    </foreground_color>
+    <format_type>0</format_type>
+    <height>21</height>
+    <horizontal_alignment>2</horizontal_alignment>
+    <name>EDM TextInput</name>
+    <precision_from_pv>true</precision_from_pv>
+    <pv_name>$(device):$(axis):TUNE:PHASE</pv_name>
+    <show_units>false</show_units>
+    <transparent>true</transparent>
+    <width>72</width>
+    <x>304</x>
+    <y>408</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.TextInput" version="1.0">
+    <background_color>
+      <color blue="255" green="255" name="Disconn/Invalid" red="255" />
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_style>3</border_style>
+    <font>
+      <fontdata fontName="helvetica" height="14" pixels="true" style="0" />
+    </font>
+    <foreground_color>
+      <color blue="0" green="0" name="Black" red="0" />
+    </foreground_color>
+    <format_type>0</format_type>
+    <height>20</height>
+    <horizontal_alignment>2</horizontal_alignment>
+    <name>EDM TextInput</name>
+    <precision_from_pv>true</precision_from_pv>
+    <pv_name>$(device):$(axis):FIR:0:PHASE_S</pv_name>
+    <show_units>false</show_units>
+    <transparent>true</transparent>
+    <width>48</width>
+    <x>390</x>
+    <y>84</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0">
+    <background_color>
+      <color blue="255" green="255" name="Disconn/Invalid" red="255" />
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_style>None</border_style>
+    <font>
+      <fontdata fontName="helvetica" height="12" pixels="true" style="0" />
+    </font>
+    <foreground_color>
+      <color blue="0" green="0" name="Black" red="0" />
+    </foreground_color>
+    <format_type>0</format_type>
+    <height>14</height>
+    <horizontal_alignment>0</horizontal_alignment>
+    <name>EDM TextInput</name>
+    <precision_from_pv>true</precision_from_pv>
+    <pv_name>$(device):$(axis):STA:STATUS.DESC</pv_name>
+    <show_units>false</show_units>
+    <transparent>true</transparent>
+    <width>184</width>
+    <x>40</x>
+    <y>64</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Rectangle" version="1.0">
+    <background_color>
+      <color blue="0" green="224" name="Monitor: NORMAL" red="0" />
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <height>17</height>
+    <line_color>
+      <color blue="0" green="0" name="Black" red="0" />
+    </line_color>
+    <line_style>0</line_style>
+    <line_width>1</line_width>
+    <name>EDM Rectangle</name>
+    <rules>
+      <rule name="backColorAlarmRule" out_exp="false" prop_id="background_color">
+        <exp bool_exp="pvSev0==-1">
+          <value>
+            <color name="Invalid" />
+          </value>
+        </exp>
+        <exp bool_exp="pvSev0==1">
+          <value>
+            <color name="Major" />
+          </value>
+        </exp>
+        <exp bool_exp="pvSev0==2">
+          <value>
+            <color name="Minor" />
+          </value>
+        </exp>
+        <pv trig="true">$(device):$(axis):STA:STATUS</pv>
+      </rule>
+    </rules>
+    <transparent>false</transparent>
+    <visible>true</visible>
+    <width>17</width>
+    <x>16</x>
+    <y>64</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">
+    <auto_size>false</auto_size>
+    <background_color>
+      <color blue="105" green="105" name="Monitor BG" red="105" />
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_color>
+      <color blue="236" green="236" name="Top Shadow" red="236" />
+    </border_color>
+    <border_style>0</border_style>
+    <font>
+      <fontdata fontName="helvetica" height="12" pixels="true" style="0" />
+    </font>
+    <foreground_color>
+      <color blue="236" green="236" name="Top Shadow" red="236" />
+    </foreground_color>
+    <height>16</height>
+    <horizontal_alignment>1</horizontal_alignment>
+    <name>EDM Label</name>
+    <text>System Status</text>
+    <transparent>false</transparent>
+    <width>120</width>
+    <x>8</x>
+    <y>40</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Rectangle" version="1.0">
+    <background_color>
+      <color blue="255" green="255" name="Disconn/Invalid" red="255" />
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <height>17</height>
+    <line_color>
+      <color blue="0" green="0" name="Black" red="0" />
+    </line_color>
+    <line_style>0</line_style>
+    <line_width>1</line_width>
+    <name>EDM Rectangle</name>
+    <transparent>true</transparent>
+    <visible>true</visible>
+    <width>121</width>
+    <x>8</x>
+    <y>40</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">
+    <auto_size>false</auto_size>
+    <background_color>
+      <color blue="255" green="255" name="Disconn/Invalid" red="255" />
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_color>
+      <color blue="0" green="0" name="Black" red="0" />
+    </border_color>
+    <border_style>0</border_style>
+    <font>
+      <fontdata fontName="helvetica" height="14" pixels="true" style="1" />
+    </font>
+    <foreground_color>
+      <color blue="0" green="0" name="Black" red="0" />
+    </foreground_color>
+    <height>24</height>
+    <horizontal_alignment>1</horizontal_alignment>
+    <name>EDM Label</name>
+    <text>Target tune phase is +-180 deg</text>
+    <transparent>true</transparent>
+    <width>440</width>
+    <x>8</x>
+    <y>376</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0">
+    <background_color>
+      <color blue="255" green="255" name="Disconn/Invalid" red="255" />
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_style>None</border_style>
+    <font>
+      <fontdata fontName="helvetica" height="14" pixels="true" style="1" />
+    </font>
+    <foreground_color>
+      <color blue="0" green="0" name="Black" red="0" />
+    </foreground_color>
+    <format_type>0</format_type>
+    <height>16</height>
+    <horizontal_alignment>0</horizontal_alignment>
+    <name>EDM TextInput</name>
+    <precision_from_pv>true</precision_from_pv>
+    <pv_name>$(device):$(axis):BUN:MODE</pv_name>
+    <show_units>false</show_units>
+    <transparent>true</transparent>
+    <width>184</width>
+    <x>256</x>
+    <y>136</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0">
+    <background_color>
+      <color blue="255" green="255" name="Disconn/Invalid" red="255" />
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_style>None</border_style>
+    <font>
+      <fontdata fontName="helvetica" height="12" pixels="true" style="1" />
+    </font>
+    <foreground_color>
+      <color blue="0" green="0" name="Black" red="0" />
+    </foreground_color>
+    <format_type>0</format_type>
+    <height>14</height>
+    <horizontal_alignment>0</horizontal_alignment>
+    <name>EDM TextInput</name>
+    <precision_from_pv>true</precision_from_pv>
+    <pv_name>$(device):$(axis):SEQ:MODE</pv_name>
+    <show_units>false</show_units>
+    <transparent>true</transparent>
+    <width>216</width>
+    <x>16</x>
+    <y>136</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">
+    <auto_size>false</auto_size>
+    <background_color>
+      <color blue="105" green="105" name="Monitor BG" red="105" />
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_color>
+      <color blue="236" green="236" name="Top Shadow" red="236" />
+    </border_color>
+    <border_style>0</border_style>
+    <font>
+      <fontdata fontName="helvetica" height="12" pixels="true" style="0" />
+    </font>
+    <foreground_color>
+      <color blue="236" green="236" name="Top Shadow" red="236" />
+    </foreground_color>
+    <height>16</height>
+    <horizontal_alignment>1</horizontal_alignment>
+    <name>EDM Label</name>
+    <text>Feedback Settings</text>
+    <transparent>false</transparent>
+    <width>120</width>
+    <x>248</x>
+    <y>40</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Rectangle" version="1.0">
+    <background_color>
+      <color blue="255" green="255" name="Disconn/Invalid" red="255" />
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <height>17</height>
+    <line_color>
+      <color blue="0" green="0" name="Black" red="0" />
+    </line_color>
+    <line_style>0</line_style>
+    <line_width>1</line_width>
+    <name>EDM Rectangle</name>
+    <transparent>true</transparent>
+    <visible>true</visible>
+    <width>121</width>
+    <x>248</x>
+    <y>40</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="1.0">
+    <actions hook="false" hook_all="false">
+      <action type="OPEN_DISPLAY">
+        <path>./$(mode).opi</path>
+        <macros>
+          <include_parent_macros>false</include_parent_macros>
+          <device>$(device)</device>
+          <axis0>$(axis0)</axis0>
+          <axis1>$(axis1)</axis1>
+          <axis01>$(axis01)</axis01>
+          <mode>$(mode)</mode>
+        </macros>
+        <mode>8</mode>
+        <description />
+      </action>
+    </actions>
+    <background_color>
+      <color blue="187" green="187" name="Button: On" red="187" />
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <font>
+      <fontdata fontName="helvetica" height="12" pixels="true" style="1" />
+    </font>
+    <foreground_color>
+      <color blue="60" green="110" name="Related display" red="160" />
+    </foreground_color>
+    <height>25</height>
+    <name>EDM related display</name>
+    <text>System</text>
+    <width>73</width>
+    <x>8</x>
+    <y>408</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0">
+    <background_color>
+      <color blue="187" green="187" name="Button: On" red="187" />
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_style>None</border_style>
+    <font>
+      <fontdata fontName="helvetica" height="14" pixels="true" style="1" />
+    </font>
+    <foreground_color>
+      <color blue="0" green="0" name="Black" red="0" />
+    </foreground_color>
+    <format_type>0</format_type>
+    <height>16</height>
+    <horizontal_alignment>2</horizontal_alignment>
+    <name>EDM TextInput</name>
+    <precision_from_pv>true</precision_from_pv>
+    <pv_name>$(device):$(axis):FIR:GAIN_S</pv_name>
+    <show_units>false</show_units>
+    <transparent>false</transparent>
+    <width>48</width>
+    <x>292</x>
+    <y>62</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="1.0">
+    <actions hook="true" hook_all="true">
+      <action type="WRITE_PV">
+        <pv_name>$(pv_name)</pv_name>
+        <value>0</value>
+      </action>
+    </actions>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <font>
+      <fontdata fontName="helvetica" height="12" pixels="true" style="1" />
+    </font>
+    <foreground_color>
+      <color blue="255" green="0" name="Controller" red="0" />
+    </foreground_color>
+    <height>23</height>
+    <name>EDM Message Button</name>
+    <pv_name>$(device):$(axis):FIR:GAIN:UP_S.PROC</pv_name>
+    <rules>
+      <rule name="OnOffBackgroundRule" out_exp="false" prop_id="background_color">
+        <exp bool_exp="widget.getValue() == 1">
+          <value>
+            <color blue="187" green="187" name="Button: On" red="187" />
+          </value>
+        </exp>
+        <exp bool_exp="true">
+          <value>
+            <color blue="200" green="200" name="Canvas" red="200" />
+          </value>
+        </exp>
+        <pv trig="true">$(device):$(axis):FIR:GAIN:UP_S.PROC</pv>
+      </rule>
+    </rules>
+    <text>Up</text>
+    <width>49</width>
+    <x>256</x>
+    <y>80</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="1.0">
+    <actions hook="true" hook_all="true">
+      <action type="WRITE_PV">
+        <pv_name>$(pv_name)</pv_name>
+        <value>0</value>
+      </action>
+    </actions>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <font>
+      <fontdata fontName="helvetica" height="12" pixels="true" style="1" />
+    </font>
+    <foreground_color>
+      <color blue="255" green="0" name="Controller" red="0" />
+    </foreground_color>
+    <height>23</height>
+    <name>EDM Message Button</name>
+    <pv_name>$(device):$(axis):FIR:GAIN:DN_S.PROC</pv_name>
+    <rules>
+      <rule name="OnOffBackgroundRule" out_exp="false" prop_id="background_color">
+        <exp bool_exp="widget.getValue() == 1">
+          <value>
+            <color blue="187" green="187" name="Button: On" red="187" />
+          </value>
+        </exp>
+        <exp bool_exp="true">
+          <value>
+            <color blue="200" green="200" name="Canvas" red="200" />
+          </value>
+        </exp>
+        <pv trig="true">$(device):$(axis):FIR:GAIN:DN_S.PROC</pv>
+      </rule>
+    </rules>
+    <text>Dn</text>
+    <width>49</width>
+    <x>312</x>
+    <y>80</y>
+  </widget>
+</display>
