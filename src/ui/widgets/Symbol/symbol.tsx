@@ -65,32 +65,32 @@ export const SymbolComponent = (props: SymbolComponentProps): JSX.Element => {
   let justifyContent = "center";
   switch (props.labelPosition) {
     case "top":
-      alignItems = "start";
+      alignItems = "flex-start";
       break;
     case "right":
-      justifyContent = "end";
+      justifyContent = "flex-end";
       break;
     case "bottom":
-      alignItems = "end";
+      alignItems = "flex-end";
       break;
     case "left":
-      justifyContent = "start";
+      justifyContent = "flex-start";
       break;
     case "top right":
-      alignItems = "start";
-      justifyContent = "end";
+      alignItems = "flex-start";
+      justifyContent = "flex-end";
       break;
     case "bottom right":
-      alignItems = "end";
-      justifyContent = "end";
+      alignItems = "flex-end";
+      justifyContent = "flex-end";
       break;
     case "bottom left":
-      alignItems = "end";
-      justifyContent = "start";
+      alignItems = "flex-end";
+      justifyContent = "flex-start";
       break;
     case "top left":
-      alignItems = "start";
-      justifyContent = "start";
+      alignItems = "flex-start";
+      justifyContent = "flex-start";
       break;
   }
 
