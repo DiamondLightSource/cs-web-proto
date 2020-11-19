@@ -18,21 +18,26 @@ describe("UpdateThrottle", (): void => {
   });
   it("collects updates", (): void => {
     const updater = new UpdateThrottle(100);
-    updater.queueUpdate({
-      type: VALUE_CHANGED,
-      payload: {
-        pvName: "PV",
-        value: ddouble(0)
-      }
-    });
-    updater.queueUpdate({
-      type: VALUE_CHANGED,
-      payload: {
-        pvName: "PV",
-        value: ddouble(1)
-      }
-    });
-    updater.clearQueue(mockStore);
+    updater.queueUpdate(
+      {
+        type: VALUE_CHANGED,
+        payload: {
+          pvName: "PV",
+          value: ddouble(0)
+        }
+      },
+      mockStore
+    );
+    updater.queueUpdate(
+      {
+        type: VALUE_CHANGED,
+        payload: {
+          pvName: "PV",
+          value: ddouble(1)
+        }
+      },
+      mockStore
+    );
     expect(mockStore.dispatch).toHaveBeenCalledTimes(1);
   });
 });

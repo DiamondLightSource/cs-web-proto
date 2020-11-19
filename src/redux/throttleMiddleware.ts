@@ -1,36 +1,30 @@
 import { VALUE_CHANGED, Action, VALUES_CHANGED } from "./actions";
 import { MiddlewareAPI, Dispatch } from "redux";
 
+/**
+ * Throttling helper class, lets a queue build up and then sends it
+ * at set intervals
+ * @param updateMillis: the interval to flush the queue at (in milliseconds)
+ */
 export class UpdateThrottle {
   private queue: Action[];
-  private started: boolean;
-  private updateMillis: number;
   public ready: boolean;
   constructor(updateMillis: number) {
     this.queue = [];
-    this.started = false;
-    this.updateMillis = updateMillis;
     this.ready = true;
-    this.queueUpdate = this.queueUpdate.bind(this);
-    this.clearQueue = this.clearQueue.bind(this);
-    this.setReady = this.setReady.bind(this);
+    setInterval(() => (this.ready = true), updateMillis);
   }
 
-  public queueUpdate(action: Action): void {
+  public queueUpdate(action: Action, store: MiddlewareAPI): void {
     this.queue.push(action);
-    if (!this.started) {
-      setInterval(this.setReady, this.updateMillis);
-      this.started = true;
+    if (this.ready) {
+      this.sendQueue(store);
     }
   }
 
-  public setReady(): void {
-    this.ready = true;
-  }
-
-  public clearQueue(store: MiddlewareAPI): void {
+  public sendQueue(store: MiddlewareAPI): void {
     store.dispatch({ type: VALUES_CHANGED, payload: [...this.queue] });
-    this.queue.length = 0;
+    this.queue = [];
     this.ready = false;
   }
 }
@@ -42,10 +36,7 @@ export const throttleMiddleware = (updater: UpdateThrottle) => (
   // this makes the return value 'Action | undefined'
 ) => (next: Dispatch<Action>) => (action: Action): Action | undefined => {
   if (action.type === VALUE_CHANGED) {
-    updater.queueUpdate(action);
-    if (updater.ready) {
-      updater.clearQueue(store);
-    }
+    updater.queueUpdate(action, store);
   } else {
     return next(action);
   }
