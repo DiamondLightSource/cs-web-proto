@@ -70,26 +70,14 @@ export const MenuWrapper = (props: {
     );
   }
 
-  if (contextOpen) {
-    return (
-      <div
-        style={props.style}
-        onContextMenu={handleClick}
-        onMouseLeave={handleMouseLeave}
-      >
-        {returnMenu(props.actions, x, y)}
-        {props.children}
-      </div>
-    );
-  } else {
-    return (
-      <div
-        style={props.style}
-        onContextMenu={handleClick}
-        onMouseLeave={handleMouseLeave}
-      >
-        {props.children}
-      </div>
-    );
-  }
+  return (
+    <div
+      style={props.style}
+      onContextMenu={handleClick}
+      onMouseLeave={handleMouseLeave}
+    >
+      {contextOpen && returnMenu(props.actions, x, y)}
+      {props.children}
+    </div>
+  );
 };
