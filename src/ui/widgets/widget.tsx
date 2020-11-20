@@ -1,8 +1,10 @@
-import React, { CSSProperties, useContext } from "react";
+import React, { CSSProperties, useContext, useState } from "react";
 import log from "loglevel";
+import copyToClipboard from "clipboard-copy";
 
-import { TooltipWrapper } from "../components/TooltipWrapper/tooltipWrapper";
-import { MenuWrapper } from "../components/MenuWrapper/menuWrapper";
+import { ContextMenu } from "../components/ContextMenu/contextMenu";
+import ctxtClasses from "../components/ContextMenu/contextMenu.module.css";
+import tooltipClasses from "./tooltip.module.css";
 import { useMacros } from "../hooks/useMacros";
 import { useConnection } from "../hooks/useConnection";
 import { useId } from "react-id-generator";
@@ -10,18 +12,20 @@ import { useRules } from "../hooks/useRules";
 import { PVWidgetComponent, WidgetComponent } from "./widgetProps";
 import { Border, BorderStyle } from "../../types/border";
 import { Color } from "../../types/color";
-import { Position, RelativePosition } from "../../types/position";
 import { AlarmQuality } from "../../types/dtypes";
 import { Font } from "../../types/font";
 import { OutlineContext } from "../../outlineContext";
+import { FileContext } from "../../fileContext";
+import { executeAction, WidgetAction, WidgetActions } from "./widgetActions";
+import Popover from "react-tiny-popover";
+import { resolveTooltip } from "./tooltip";
 
 /**
- * A custom hook returning a CSSProperties object that formats borders,
- * fonts, visiblity and background color that can be passed in as the style key
+ * Return a CSSProperties object for props that multiple widgets may have.
  * @param props properties of the widget to be formatted
  * @returns a CSSProperties object to pass into another element under the style key
  */
-export function useCommonCss(props: {
+export function commonCss(props: {
   border?: Border;
   font?: Font;
   visible?: boolean;
@@ -29,7 +33,6 @@ export function useCommonCss(props: {
   backgroundColor?: Color;
   transparent?: boolean;
 }): CSSProperties {
-  const { showOutlines } = useContext(OutlineContext);
   const visible = props.visible === undefined || props.visible;
   const backgroundColor = props.transparent
     ? "transparent"
@@ -39,87 +42,66 @@ export function useCommonCss(props: {
     ...props.font?.css(),
     color: props.foregroundColor?.toString(),
     backgroundColor,
-    visibility: visible ? undefined : "hidden",
-    outline: showOutlines ? "1px dashed grey" : undefined,
-    outlineOffset: showOutlines ? "-2px" : undefined
+    visibility: visible ? undefined : "hidden"
   };
 }
 
-// Function to recursively wrap a given set of widgets
 /**
- * A function that recursively wraps all components in an array in
- * order of entry, container properties are applied to all components
- * except the base child, of which the widget properties are applied.
- * @param components The list of functional components to wrap in eachother
- * @param position The position of the parent component
- * @param containerProps The properties to apply to each component
- * @param widgetProps Widget properties to pass into the base child component
- * @returns One component with each subsequent component wrapped in the last
- * @example recursiveWrapping([Label, Input, Image], position, containerProps, widgetProps) ->
- * <Label style={position.css()} {...containerProps}>
- * Indent <Input style={position.css()} {...containerProps}>
- * DoubleIndent <Image style={position.css()} {...widgetProps} />
- * Indent </Input>
- * </Label>
- */
-const recursiveWrapping = (
-  components: React.FC<any>[],
-  position: Position,
-  containerProps: object,
-  widgetProps: object
-): JSX.Element => {
-  const [Component, ...remainingComponents] = components;
-  if (components.length === 1) {
-    // Return the base widget
-    return <Component style={{ ...position.css() }} {...widgetProps} />;
-  }
-  // If container styling is not empty, use it on the wrapper widget
-  // and pass on an empty object, otherwise wrap and move down
-  else {
-    return (
-      <Component style={position.css()} {...containerProps}>
-        {recursiveWrapping(
-          remainingComponents,
-          new RelativePosition("100%", "100%"),
-          containerProps,
-          widgetProps
-        )}
-      </Component>
-    );
-  }
-};
-
-/* Separate this component because the connection to the primary
-   PV is likely to be the main source of updates. React can re-render
-   this component but need not re-render Widget every time.
-*/
-/**
- * This component creates the connection aspect of a widget, and can
- * be returned by another function to allow react to rerender the child component (this function)
- * only, as opposed to rendering the parent component
+ * This component creates the connection aspect of a widget.
+ * This is separate because the PV value changes more often than
+ * most props, so we allow this component to re-render without
+ * the other calculations in Widget being repeated.
  * @param props
- * @returns
+ * @returns JSX Element to render
  */
 export const ConnectingComponent = (props: {
-  components: React.FC<any>[];
-  containerStyling: Position;
-  containerProps: any & { id: string };
+  component: React.FC<any>;
   widgetProps: any;
-  alarmBorder: boolean;
+  containerStyle: CSSProperties;
+  onContextMenu?: (e: React.MouseEvent) => void;
 }): JSX.Element => {
-  // Allow modification of border prop.
-  let border = props.widgetProps.border;
+  const Component = props.component;
+  const { id, alarmBorder = false, pvName, type } = props.widgetProps;
+
+  // Popover logic, used for middle-click tooltip.
+  // Note that using ["top"] rather than "top" for the popover
+  // position caused us significant performance problems.
+  const [popoverOpen, setPopoverOpen] = useState(false);
+  const mouseDown = (e: React.MouseEvent): void => {
+    if (e.button === 1) {
+      setPopoverOpen(true);
+      if (pvName && e.currentTarget) {
+        (e.currentTarget as HTMLDivElement).classList.add(
+          tooltipClasses.Copying
+        );
+        copyToClipboard(pvName);
+      }
+      // Stop regular middle-click behaviour if showing tooltip.
+      e.preventDefault();
+      e.stopPropagation();
+    }
+  };
+  const mouseUp = (e: React.MouseEvent): void => {
+    if (e.button === 1 && e.currentTarget) {
+      setPopoverOpen(false);
+      (e.currentTarget as HTMLDivElement)?.classList.remove(
+        tooltipClasses.Copying
+      );
+      e.stopPropagation();
+    }
+  };
 
   const [effectivePvName, connected, readonly, latestValue] = useConnection(
-    props.containerProps.id,
-    props.containerProps.pvName?.qualifiedName(),
-    props.containerProps.type
+    id,
+    pvName?.qualifiedName(),
+    type
   );
 
   // Always indicate with border if PV is disconnected.
-  if (props.containerProps.pvName && connected === false) {
+  let border = props.widgetProps.border;
+  if (props.widgetProps.pvName && connected === false) {
     border = new Border(BorderStyle.Dotted, Color.DISCONNECTED, 3);
-  } else if (props.alarmBorder) {
+  } else if (alarmBorder) {
     // Implement alarm border for all widgets if configured.
     const severity = latestValue?.getAlarm()?.quality || AlarmQuality.VALID;
     const colors: { [key in AlarmQuality]: Color } = {
@@ -135,34 +117,104 @@ export const ConnectingComponent = (props: {
     }
   }
 
-  return recursiveWrapping(
-    props.components,
-    props.containerStyling,
-    {
-      ...props.containerProps,
-      pvName: effectivePvName,
-      connected: connected,
-      readonly: readonly,
-      value: latestValue
-    },
-    {
-      ...props.widgetProps,
-      pvName: effectivePvName,
-      connected: connected,
-      readonly: readonly,
-      value: latestValue,
-      border: border
-    }
+  const widgetProps = {
+    ...props.widgetProps,
+    pvName: effectivePvName,
+    value: latestValue,
+    connected,
+    readonly,
+    border
+  };
+
+  // The div rendered here is the container into which the widget
+  // will render itself.
+  const widgetDiv = (
+    <div
+      onContextMenu={props.onContextMenu}
+      onMouseDown={mouseDown}
+      onMouseUp={mouseUp}
+      style={props.containerStyle}
+    >
+      <Component {...widgetProps} />
+    </div>
   );
+  if (widgetProps.tooltip) {
+    const resolvedTooltip = resolveTooltip(widgetProps);
+    const popoverContent = (): JSX.Element => {
+      return <div className={tooltipClasses.Tooltip}>{resolvedTooltip}</div>;
+    };
+    return (
+      <Popover
+        isOpen={popoverOpen}
+        position="top"
+        onClickOutside={(): void => {
+          setPopoverOpen(false);
+        }}
+        content={popoverContent}
+      >
+        {widgetDiv}
+      </Popover>
+    );
+  } else {
+    return widgetDiv;
+  }
 };
 
 // eslint-disable-next-line no-template-curly-in-string
 const DEFAULT_TOOLTIP = "${pvName}\n${pvValue}";
 
+/**
+ * This component handles the widget props that do not change
+ * frequently.
+ * The ConnectingComponent widget handles any props that need
+ * to change on a PV update.
+ *
+ * Using ideas from
+ * https://www.pluralsight.com/guides/how-to-create-a-right-click-menu-using-react
+ * @param props
+ * @returns JSX Element to render
+ */
 export const Widget = (
   props: PVWidgetComponent | WidgetComponent
 ): JSX.Element => {
   const [id] = useId();
+  const files = useContext(FileContext);
+
+  // Logic for context menu.
+  const [contextOpen, setContextOpen] = useState(false);
+  const [coords, setCoords] = useState<[number, number]>([0, 0]);
+  let onContextMenu: ((e: React.MouseEvent) => void) | undefined = undefined;
+  const actionsPresent = props.actions && props.actions.actions.length > 0;
+  if (actionsPresent) {
+    onContextMenu = (e: React.MouseEvent): void => {
+      e.preventDefault();
+      e.stopPropagation();
+      setContextOpen(contextOpen ? false : true);
+      setCoords([e.clientX, e.clientY]);
+    };
+  }
+  if (contextOpen) {
+    // Cancel menu with a click anywhere other than on a context menu
+    // item. If it is a context menu item then the menu will be
+    // cancelled after executing.
+    document.addEventListener(
+      "mousedown",
+      (event: MouseEvent) => {
+        if (event.target instanceof HTMLDivElement) {
+          if (event.target.classList.contains(ctxtClasses.customContextItem)) {
+            return;
+          }
+        }
+        setContextOpen(false);
+      },
+      { once: true }
+    );
+  }
+
+  function triggerCallback(action: WidgetAction): void {
+    executeAction(action, files);
+    setContextOpen(false);
+  }
   let tooltip = props.tooltip;
   // Set default tooltip only for PV-enabled widgets.
   if ("pvName" in props && !props.tooltip) {
@@ -178,32 +230,32 @@ export const Widget = (
   log.debug(`ruleProps ${ruleProps}`);
   log.debug(ruleProps);
 
-  const { position, ...containerProps } = ruleProps;
-
   // Extract remaining parameters
-  const {
-    baseWidget,
-    alarmBorder = false,
-    ...baseWidgetProps
-  } = containerProps;
+  const { baseWidget, position, ...baseWidgetProps } = ruleProps;
 
-  const components = [];
+  // Calculate the inner div style here as it doesn't update frequently.
+  const { showOutlines } = useContext(OutlineContext);
+  const containerStyle = {
+    ...position.css(),
+    outline: showOutlines ? "1px dashed grey" : undefined,
+    outlineOffset: showOutlines ? "-2px" : undefined
+  };
 
-  if (props.actions && props.actions.actions.length > 0) {
-    components.push(MenuWrapper);
-  }
-  components.push(TooltipWrapper);
-  components.push(baseWidget);
-
-  // We could select the ConnectingComponent only if there is a PV
-  // to which to connect, if we felt that would be more efficient.
   return (
-    <ConnectingComponent
-      alarmBorder={alarmBorder}
-      components={components}
-      containerStyling={position}
-      containerProps={containerProps}
-      widgetProps={baseWidgetProps}
-    />
+    <>
+      {actionsPresent && contextOpen && (
+        <ContextMenu
+          actions={props.actions as WidgetActions}
+          coordinates={coords}
+          triggerCallback={triggerCallback}
+        />
+      )}
+      <ConnectingComponent
+        component={baseWidget}
+        widgetProps={baseWidgetProps}
+        containerStyle={containerStyle}
+        onContextMenu={onContextMenu}
+      />
+    </>
   );
 };

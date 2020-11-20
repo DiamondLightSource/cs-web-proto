@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useCommonCss, Widget } from "../widget";
+import { commonCss, Widget } from "../widget";
 import {
   InferWidgetProps,
   StringPropOpt,
@@ -32,7 +32,7 @@ export const CheckboxComponent = (
   props: CheckboxComponentProps
 ): JSX.Element => {
   const style = {
-    ...useCommonCss(props as any),
+    ...commonCss(props as any),
     display: "flex",
     alignItems: "center",
     cursor: "pointer"

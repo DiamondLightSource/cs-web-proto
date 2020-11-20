@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 
-import { useCommonCss, Widget } from "../widget";
+import { commonCss, Widget } from "../widget";
 import { PVWidgetPropType, PVComponent } from "../widgetProps";
 import {
   InferWidgetProps,
@@ -59,7 +59,7 @@ export type SymbolComponentProps = InferWidgetProps<typeof SymbolProps> &
  * @param props
  */
 export const SymbolComponent = (props: SymbolComponentProps): JSX.Element => {
-  const style = useCommonCss(props as any);
+  const style = commonCss(props as any);
 
   let alignItems = "center";
   let justifyContent = "center";

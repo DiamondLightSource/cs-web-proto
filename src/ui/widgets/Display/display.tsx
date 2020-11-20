@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 
-import { Widget, useCommonCss } from "../widget";
+import { Widget, commonCss } from "../widget";
 import { WidgetPropType } from "../widgetProps";
 import { registerWidget } from "../register";
 import {
@@ -46,7 +46,7 @@ export const DisplayComponent = (
       DID: props.id // highest priority
     }
   };
-  const style = useCommonCss(props);
+  const style = commonCss(props);
   style["position"] = "relative";
   style["overflow"] = props.overflow;
   style["height"] = "100%";

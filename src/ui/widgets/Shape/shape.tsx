@@ -1,5 +1,5 @@
 import React from "react";
-import { useCommonCss, Widget } from "../widget";
+import { commonCss, Widget } from "../widget";
 import { WidgetPropType } from "../widgetProps";
 import { registerWidget } from "../register";
 import {
@@ -24,7 +24,7 @@ export const ShapeComponent = (
   props: InferWidgetProps<typeof ShapeProps>
 ): JSX.Element => {
   const style = {
-    ...useCommonCss(props),
+    ...commonCss(props),
     width: props.shapeWidth ?? "100%",
     height: props.shapeHeight ?? "100%",
     borderRadius: props.shapeRadius ?? "",

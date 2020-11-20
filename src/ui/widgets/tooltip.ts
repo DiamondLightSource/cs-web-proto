@@ -31,7 +31,7 @@ export function resolveTooltip(props: any): string | undefined {
   const { connected, value, tooltip } = props;
   if (tooltip.match(pvValueRegex)) {
     const ttval = tooltipValue(connected, value);
-    return tooltip.replaceAll(pvValueRegex, ttval);
+    return tooltip.replace(pvValueRegex, ttval);
   } else {
     return tooltip;
   }
