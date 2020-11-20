@@ -8,6 +8,8 @@ import {
 import classes from "./menuWrapper.module.css";
 import { FileContext } from "../../../fileContext";
 
+// Using ideas from
+// https://www.pluralsight.com/guides/how-to-create-a-right-click-menu-using-react
 export const MenuWrapper = (props: {
   pvName: string;
   actions: WidgetActions;
@@ -23,12 +25,8 @@ export const MenuWrapper = (props: {
   const handleClick = (e: React.MouseEvent): void => {
     e.preventDefault();
     setContextOpen(contextOpen ? false : true);
-    setX(e.nativeEvent.offsetX);
-    setY(e.nativeEvent.offsetY);
-  };
-  const handleMouseLeave = (e: React.MouseEvent): void => {
-    e.preventDefault();
-    setContextOpen(false);
+    setX(e.nativeEvent.clientX);
+    setY(e.nativeEvent.clientY);
   };
 
   function triggerCallback(action: WidgetAction): void {
@@ -59,7 +57,7 @@ export const MenuWrapper = (props: {
       <div
         className={classes.customContext}
         style={{
-          position: "absolute",
+          position: "fixed",
           zIndex: 1000,
           top: `${y}px`,
           left: `${x}px`
@@ -70,12 +68,26 @@ export const MenuWrapper = (props: {
     );
   }
 
+  if (contextOpen) {
+    // Cancel menu with a click anywhere other than on a context menu
+    // item. If it is a context menu item then the menu will be
+    // cancelled after executing.
+    document.addEventListener(
+      "mousedown",
+      (event: MouseEvent) => {
+        if (event.target instanceof HTMLDivElement) {
+          if (event.target.classList.contains(classes.customContextItem)) {
+            return;
+          }
+        }
+        setContextOpen(false);
+      },
+      { once: true }
+    );
+  }
+
   return (
-    <div
-      style={props.style}
-      onContextMenu={handleClick}
-      onMouseLeave={handleMouseLeave}
-    >
+    <div style={props.style} onContextMenu={handleClick}>
       {contextOpen && returnMenu(props.actions, x, y)}
       {props.children}
     </div>
