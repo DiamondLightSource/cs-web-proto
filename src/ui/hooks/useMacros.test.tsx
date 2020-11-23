@@ -34,6 +34,13 @@ describe("useMacros", (): void => {
     const resolvedProps = substituteMacros(props);
     expect(resolvedProps.prop).toEqual("Ab");
   });
+  it("handles nested macros", (): void => {
+    // ${e} is ${a}, which in turn is A.
+    const props = { prop: "${e}b" };
+    const resolvedProps = substituteMacros(props);
+
+    expect(resolvedProps.prop).toEqual("Ab");
+  });
   it("resolves global macros", (): void => {
     const props = { prop: "${d}b" };
     const resolvedProps = substituteMacros(props);
@@ -51,6 +58,11 @@ describe("useMacros", (): void => {
   });
   it("does not resolve missing macros in object", (): void => {
     const props = { prop: "${z}b" };
+    const resolvedProps = substituteMacros(props);
+    expect(resolvedProps.prop).toEqual("${z}b");
+  });
+  it("changes parentheses in missing macro to braces", (): void => {
+    const props = { prop: "$(z)b" };
     const resolvedProps = substituteMacros(props);
     expect(resolvedProps.prop).toEqual("${z}b");
   });

@@ -44,7 +44,11 @@ function recursiveResolve(props: MacroProps, macroMap: MacroMap): AnyProps {
           resolvedProps[prop] = recursiveResolve(value, macroMap);
         }
       } else if (typeof value === "string") {
-        resolvedProps[prop] = resolveMacros(value, macroMap);
+        const resolved = resolveMacros(value, macroMap);
+        resolvedProps[prop] = resolved;
+        // Store resolved string in macroMap to avoid
+        // having to re-resolve later.
+        macroMap[prop] = resolved;
       } else {
         resolvedProps[prop] = value;
       }

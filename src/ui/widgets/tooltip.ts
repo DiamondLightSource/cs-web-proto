@@ -1,4 +1,3 @@
-import { MacroMap, resolveMacros } from "../../types/macros";
 import { DType } from "../../types/dtypes";
 
 function tooltipValue(connected?: boolean, value?: DType): string {
@@ -28,18 +27,12 @@ function tooltipValue(connected?: boolean, value?: DType): string {
 }
 
 export function resolveTooltip(props: any): string | undefined {
+  const pvValueRegex = /\${pvValue}/g;
   const { connected, value, tooltip } = props;
-  const ttval = tooltipValue(connected, value);
-  const valueProps = { ...props, pvValue: ttval };
-
-  const rawTooltip = tooltip;
-  const stringified: MacroMap = {};
-  for (const [key, value] of Object.entries(valueProps)) {
-    stringified[key] = String(value);
-  }
-  if (rawTooltip) {
-    return resolveMacros(rawTooltip, stringified);
+  if (tooltip.match(pvValueRegex)) {
+    const ttval = tooltipValue(connected, value);
+    return tooltip.replaceAll(pvValueRegex, ttval);
   } else {
-    return rawTooltip;
+    return tooltip;
   }
 }
