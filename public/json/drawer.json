@@ -103,7 +103,6 @@
             ]
           }
         },
-
         {
           "type": "actionbutton",
           "text": "Device Testing",
@@ -126,12 +125,14 @@
             "actions": [
               {
                 "type": "OPEN_PAGE",
-                "openPageInfo": {
-                  "page": "app",
-                  "pageDescription": {
-                    "filename": "device",
-                    "filetype": "json",
-                    "macros": {}
+                "dynamicInfo": {
+                  "name": "app",
+                  "location": "app",
+                  "description": "",
+                  "file": {
+                    "path": "xpress.json",
+                    "macros": {},
+                    "defaultProtocol": "pva"
                   }
                 }
               }

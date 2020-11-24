@@ -26,6 +26,7 @@ abstract class SimPv {
   private onConnectionUpdate: ConnectionChangedCallback;
   private onValueUpdate: ValueChangedCallback;
   protected subscribed: boolean;
+  protected subscribedDevice: boolean;
   public pvName: string;
   protected updateRate?: number;
   abstract getValue(): DType;
@@ -42,6 +43,7 @@ abstract class SimPv {
     this.updateRate = updateRate;
     this.publishConnection();
     this.subscribed = false;
+    this.subscribedDevice = false;
   }
 
   public getConnection(): ConnectionState {
@@ -53,13 +55,29 @@ abstract class SimPv {
     this.publish();
   }
 
+  public subscribeDevice(): void {
+    this.subscribedDevice = true;
+    this.publishDevice();
+  }
+
   public unsubscribe(): void {
     this.subscribed = false;
+  }
+
+  public unsubscribeDevice(): void {
+    this.subscribedDevice = false;
   }
 
   public publish(): void {
     if (this.subscribed) {
       this.onValueUpdate(this.pvName, this.getValue());
+    }
+  }
+
+  // TODO: This needs filling out
+  public publishDevice(): void {
+    if (this.subscribedDevice) {
+      this.onValueUpdate("fake device", this.getValue());
     }
   }
 
@@ -358,6 +376,11 @@ export class SimulatorPlugin implements Connection {
     return (simulator && simulator.pvName) || pvName;
   }
 
+  // TODO: Finish this function
+  public subscribeDevice(device: string): string {
+    return "";
+  }
+
   public connect(
     connectionCallback: ConnectionChangedCallback,
     valueCallback: ValueChangedCallback
@@ -530,5 +553,10 @@ export class SimulatorPlugin implements Connection {
         simulator.unsubscribe();
       }
     }
+  }
+
+  // TODO: Finish this function
+  public unsubscribeDevice(device: string): void {
+    log.debug(`Unsubscribing from ${device}`);
   }
 }

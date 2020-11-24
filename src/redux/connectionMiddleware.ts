@@ -6,8 +6,12 @@ import {
   SUBSCRIBE,
   WRITE_PV,
   VALUE_CHANGED,
+  DEVICE_CHANGED,
+  SUBSCRIBE_DEVICE,
   UNSUBSCRIBE,
-  Action
+  Action,
+  SubscribeDevice,
+  UNSUBSCRIBE_DEVICE
 } from "./actions";
 import { DType } from "../types/dtypes";
 
@@ -33,6 +37,17 @@ function valueChanged(
   });
 }
 
+function deviceChanged(
+  store: MiddlewareAPI,
+  device: string,
+  value: string
+): void {
+  store.dispatch({
+    type: DEVICE_CHANGED,
+    payload: { device: device, value: value }
+  });
+}
+
 export const connectionMiddleware = (connection: Connection) => (
   store: MiddlewareAPI
 ) => (next: Dispatch<Action>): any => (action: Action): Action => {
@@ -41,7 +56,10 @@ export const connectionMiddleware = (connection: Connection) => (
       // Partial function application.
       (pvName: string, value: ConnectionState): void =>
         connectionChanged(store, pvName, value),
-      (pvName: string, value: DType): void => valueChanged(store, pvName, value)
+      (pvName: string, value: DType): void =>
+        valueChanged(store, pvName, value),
+      // TODO: Be more specific with type here
+      (device: string, value: any): void => deviceChanged(store, device, value)
     );
   }
 
@@ -67,6 +85,38 @@ export const connectionMiddleware = (connection: Connection) => (
           pvName: pvName
         }
       };
+      break;
+    }
+    case SUBSCRIBE_DEVICE: {
+      const { device } = (action as SubscribeDevice).payload;
+
+      try {
+        connection.subscribeDevice(device);
+      } catch (error) {
+        log.error(`Failed to subscribe to device ${device}`);
+        log.error(error);
+      }
+
+      action = {
+        ...action,
+        payload: {
+          ...action.payload
+        }
+      };
+      break;
+    }
+    case UNSUBSCRIBE_DEVICE: {
+      const { componentId, device } = action.payload;
+      const subs = store.getState().deviceSubscriptions;
+
+      if (subs[device].length === 1 && subs[device][0] === componentId) {
+        try {
+          connection.unsubscribeDevice(device);
+        } catch (error) {
+          log.error(`Failed to unsubscribe from device ${device}`);
+          log.error(error);
+        }
+      }
       break;
     }
     case WRITE_PV: {

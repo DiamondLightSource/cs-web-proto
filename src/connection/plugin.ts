@@ -11,6 +11,7 @@ export interface SubscriptionType {
 
 export const nullConnCallback: ConnectionChangedCallback = (_p, _v): void => {};
 export const nullValueCallback: ValueChangedCallback = (_p, _v): void => {};
+export const nullDeviceCallback: DeviceCallback = (_d, _v): void => {};
 
 export interface ConnectionState {
   isConnected: boolean;
@@ -22,14 +23,18 @@ export type ConnectionChangedCallback = (
   value: ConnectionState
 ) => void;
 export type ValueChangedCallback = (pvName: string, value: DType) => void;
+export type DeviceCallback = (device: string, value: {}) => void;
 
 export interface Connection {
   subscribe: (pvName: string, type: SubscriptionType) => string; // must be idempotent
+  subscribeDevice: (device: string) => string;
   putPv: (pvName: string, value: DType) => void;
   connect: (
     connectionCallback: ConnectionChangedCallback,
-    valueCallback: ValueChangedCallback
+    valueCallback: ValueChangedCallback,
+    deviceCallback: DeviceCallback
   ) => void;
   isConnected: () => boolean;
   unsubscribe: (pvName: string) => void;
+  unsubscribeDevice: (device: string) => void;
 }

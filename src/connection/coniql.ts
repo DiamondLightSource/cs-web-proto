@@ -22,7 +22,9 @@ import {
   ValueChangedCallback,
   nullConnCallback,
   nullValueCallback,
-  SubscriptionType
+  SubscriptionType,
+  DeviceCallback,
+  nullDeviceCallback
 } from "./plugin";
 import { SubscriptionClient } from "subscriptions-transport-ws";
 import {
@@ -234,14 +236,45 @@ const PV_MUTATION = gql`
   }
 `;
 
+// TODO: Turn id into a variable
+const DEVICE_SUBSCRIPTION = gql`
+  query {
+    getDevice(id: "Xspress3") {
+      id
+      children(flatten: true) {
+        name
+        label
+        child {
+          __typename
+          ... on Channel {
+            id
+          }
+          ... on Device {
+            id
+          }
+          ... on Group {
+            layout
+            children {
+              name
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
 export class ConiqlPlugin implements Connection {
   private client: ApolloClient<NormalizedCacheObject>;
   private onConnectionUpdate: ConnectionChangedCallback;
   private onValueUpdate: ValueChangedCallback;
+  private onDeviceUpdate: DeviceCallback;
   private connected: boolean;
   private wsClient: SubscriptionClient;
   private disconnected: string[] = [];
+  private disconnectedDevices: string[] = [];
   private subscriptions: { [pvName: string]: Subscription };
+  private deviceSubscriptions: { [device: string]: Subscription };
 
   public constructor(socket: string) {
     const fragmentMatcher = new IntrospectionFragmentMatcher({
@@ -256,7 +289,11 @@ export class ConiqlPlugin implements Connection {
       for (const pvName of this.disconnected) {
         this._subscribe(pvName);
       }
+      for (const device of this.disconnectedDevices) {
+        this._subscribeDevice(device);
+      }
       this.disconnected = [];
+      this.disconnectedDevices = [];
     });
     this.wsClient.onDisconnected((): void => {
       log.error("Websockect client disconnected.");
@@ -275,13 +312,30 @@ export class ConiqlPlugin implements Connection {
           isReadonly: true
         });
       }
+      for (const device of Object.keys(this.deviceSubscriptions)) {
+        if (
+          this.deviceSubscriptions.hasOwnProperty(device) &&
+          this.deviceSubscriptions[device]
+        ) {
+          this.deviceSubscriptions[device].unsubscribe();
+          delete this.deviceSubscriptions[device];
+        } else {
+          log.error(`Attempt to unsubscribe from ${device} failed`);
+        }
+        this.onConnectionUpdate(device, {
+          isConnected: false,
+          isReadonly: true
+        });
+      }
     });
     const link = this.createLink(socket);
     this.client = new ApolloClient({ link, cache });
     this.onConnectionUpdate = nullConnCallback;
     this.onValueUpdate = nullValueCallback;
+    this.onDeviceUpdate = nullDeviceCallback;
     this.connected = false;
     this.subscriptions = {};
+    this.deviceSubscriptions = {};
   }
 
   public createLink(socket: string): ApolloLink {
@@ -317,10 +371,12 @@ export class ConiqlPlugin implements Connection {
 
   public connect(
     connectionCallback: ConnectionChangedCallback,
-    valueCallback: ValueChangedCallback
+    valueCallback: ValueChangedCallback,
+    deviceCallback: DeviceCallback
   ): void {
     this.onConnectionUpdate = connectionCallback;
     this.onValueUpdate = valueCallback;
+    this.onDeviceUpdate = deviceCallback;
     this.connected = true;
   }
 
@@ -339,6 +395,10 @@ export class ConiqlPlugin implements Connection {
     }
     const dtype = coniqlToDType(value, time, status, display);
     this.onValueUpdate(pvName, dtype);
+  }
+
+  private _processDevice(data: any, device: string, operation: string): void {
+    this.onDeviceUpdate(device, JSON.stringify(data.data));
   }
 
   private _subscribe(pvName: string): Subscription {
@@ -365,12 +425,42 @@ export class ConiqlPlugin implements Connection {
       });
   }
 
+  private _subscribeDevice(device: string): Subscription {
+    return this.client
+      .subscribe({
+        query: DEVICE_SUBSCRIPTION,
+        variables: { device: device }
+      })
+      .subscribe({
+        next: (data): void => {
+          this._processDevice(data, device, "subscribeDevice");
+        },
+        error: (err): void => {
+          log.error("err", err);
+        },
+        complete: (): void => {
+          this.onConnectionUpdate(device, {
+            isConnected: false,
+            isReadonly: true
+          });
+          this.disconnectedDevices.push(device);
+        }
+      });
+  }
+
   public subscribe(pvName: string, type: SubscriptionType): string {
     // TODO: How to handle multiple subscriptions of different types to the same channel?
     if (this.subscriptions[pvName] === undefined) {
       this.subscriptions[pvName] = this._subscribe(pvName);
     }
     return pvName;
+  }
+
+  public subscribeDevice(device: string): string {
+    if (this.deviceSubscriptions[device] === undefined) {
+      this.deviceSubscriptions[device] = this._subscribeDevice(device);
+    }
+    return device;
   }
 
   public putPv(pvName: string, value: DType): void {
@@ -396,5 +486,10 @@ export class ConiqlPlugin implements Connection {
     // https://github.com/tartiflette/tartiflette-aiohttp/pull/81
     this.subscriptions[pvName].unsubscribe();
     delete this.subscriptions[pvName];
+  }
+
+  public unsubscribeDevice(device: string): void {
+    this.deviceSubscriptions[device].unsubscribe();
+    delete this.deviceSubscriptions[device];
   }
 }

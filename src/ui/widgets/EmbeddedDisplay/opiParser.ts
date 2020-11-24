@@ -55,7 +55,8 @@ const OPI_WIDGET_MAPPING: { [key: string]: any } = {
   "org.csstudio.opibuilder.widgets.polyline": "line",
   "org.csstudio.opibuilder.widgets.symbol.multistate.MultistateMonitorWidget":
     "symbol",
-  "org.csstudio.opibuilder.widgets.LED": "led"
+  "org.csstudio.opibuilder.widgets.LED": "led",
+  "org.csstudio.opibuilder.widgets.detailpanel": "device"
 };
 
 /**

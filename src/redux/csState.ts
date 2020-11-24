@@ -4,10 +4,15 @@ import {
   VALUES_CHANGED,
   Action,
   SUBSCRIBE,
+  SUBSCRIBE_DEVICE,
   WRITE_PV,
   CONNECTION_CHANGED,
   UNSUBSCRIBE,
-  ValueChanged
+  ValueChanged,
+  UNSUBSCRIBE_DEVICE,
+  DEVICE_CHANGED,
+  DEVICES_CHANGED,
+  DeviceChanged
 } from "./actions";
 import { MacroMap } from "../types/macros";
 import { DType, mergeDType } from "../types/dtypes";
@@ -16,7 +21,9 @@ const initialState: CsState = {
   valueCache: {},
   globalMacros: { SUFFIX: "1" },
   effectivePvNameMap: {},
-  subscriptions: {}
+  subscriptions: {},
+  deviceSubscriptions: {},
+  deviceCache: {}
 };
 
 export interface PvState {
@@ -33,6 +40,11 @@ export interface ValueCache {
   [key: string]: FullPvState;
 }
 
+// TODO: Be more specific with type here
+export interface DeviceCache {
+  [key: string]: any;
+}
+
 export interface Subscriptions {
   [pv: string]: string[];
 }
@@ -43,8 +55,17 @@ export interface CsState {
   effectivePvNameMap: { [pvName: string]: string };
   globalMacros: MacroMap;
   subscriptions: Subscriptions;
+  deviceSubscriptions: Subscriptions;
+  deviceCache: DeviceCache;
 }
 
+/**
+ * Merges new value of a pv with the old
+ * pv metadata
+ * @param oldValueCache
+ * @param newValueCache
+ * @param action
+ */
 function updateValueCache(
   oldValueCache: ValueCache,
   newValueCache: ValueCache,
@@ -59,6 +80,17 @@ function updateValueCache(
   newValueCache[action.payload.pvName] = newPvState;
 }
 
+// TODO: Should probably make this a bit more extensive
+function updateDeviceCache(
+  oldDeviceCache: DeviceCache,
+  newDeviceCache: DeviceCache,
+  action: DeviceChanged
+): void {
+  const { value } = action.payload;
+  console.log("new value", value);
+  newDeviceCache[action.payload.device] = value;
+}
+
 export function csReducer(state = initialState, action: Action): CsState {
   log.debug(action);
   switch (action.type) {
@@ -66,6 +98,18 @@ export function csReducer(state = initialState, action: Action): CsState {
       const newValueCache: ValueCache = { ...state.valueCache };
       updateValueCache(state.valueCache, newValueCache, action);
       return { ...state, valueCache: newValueCache };
+    }
+    case DEVICE_CHANGED: {
+      const newDeviceCache: DeviceCache = { ...state.deviceCache };
+      updateDeviceCache(state.deviceCache, newDeviceCache, action);
+      return { ...state, deviceCache: newDeviceCache };
+    }
+    case DEVICES_CHANGED: {
+      const newDeviceCache: DeviceCache = { ...state.deviceCache };
+      for (const changedAction of action.payload) {
+        updateDeviceCache(state.deviceCache, newDeviceCache, changedAction);
+      }
+      return { ...state, deviceCache: newDeviceCache };
     }
     case VALUES_CHANGED: {
       const newValueCache: ValueCache = { ...state.valueCache };
@@ -138,6 +182,37 @@ export function csReducer(state = initialState, action: Action): CsState {
     case WRITE_PV: {
       // Handled by middleware.
       break;
+    }
+    case SUBSCRIBE_DEVICE: {
+      const { device, componentId } = action.payload;
+      const newDeviceSubscriptions = { ...state.deviceSubscriptions };
+      if (newDeviceSubscriptions.hasOwnProperty(device)) {
+        newDeviceSubscriptions[device].push(componentId);
+      } else {
+        newDeviceSubscriptions[device] = [componentId];
+      }
+      return {
+        ...state,
+        deviceSubscriptions: newDeviceSubscriptions
+      };
+    }
+    case UNSUBSCRIBE_DEVICE: {
+      const { device, componentId } = action.payload;
+
+      const newDeviceSubscriptions = { ...state.deviceSubscriptions };
+      const newDeviceSubs = state.deviceSubscriptions[device].filter(
+        (id): boolean => id !== componentId
+      );
+      if (newDeviceSubs.length > 0) {
+        newDeviceSubscriptions[device] = newDeviceSubs;
+      } else {
+        delete newDeviceSubscriptions[device];
+      }
+
+      return {
+        ...state,
+        deviceSubscriptions: newDeviceSubscriptions
+      };
     }
   }
   return state;

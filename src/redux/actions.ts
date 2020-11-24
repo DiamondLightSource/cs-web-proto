@@ -7,15 +7,10 @@ export const UNSUBSCRIBE = "unsubscribe";
 export const VALUE_CHANGED = "value_changed";
 export const VALUES_CHANGED = "values_changed";
 export const WRITE_PV = "write_pv";
-
-/* The never type in the constructor ensures that TypeScript
-   won't allow this error to be created. This is useful in
-   switch blocks to check that all cases have been handled. */
-export class InvalidAction extends Error {
-  public constructor(val: never) {
-    super(`Invalid action: ${val}`);
-  }
-}
+export const SUBSCRIBE_DEVICE = "subscribe_device";
+export const DEVICE_CHANGED = "device_changed";
+export const DEVICES_CHANGED = "devices_changed";
+export const UNSUBSCRIBE_DEVICE = "unsubscribe_device";
 
 export interface ConnectionChanged {
   type: typeof CONNECTION_CHANGED;
@@ -56,6 +51,38 @@ export interface ValuesChanged {
   payload: ValueChanged[];
 }
 
+// TODO: Be more specific with type on value here
+export interface SubscribeDevice {
+  type: typeof SUBSCRIBE_DEVICE;
+  payload: {
+    device: string;
+    componentId: string;
+  };
+}
+
+export interface UnsubscribeDevice {
+  type: typeof UNSUBSCRIBE_DEVICE;
+  payload: {
+    componentId: string;
+    device: string;
+  };
+}
+
+// TODO: Be more specific with type on value here
+export interface DeviceChanged {
+  type: typeof DEVICE_CHANGED;
+  payload: {
+    device: string;
+    componentId: string;
+    value: string;
+  };
+}
+
+export interface DevicesChanged {
+  type: typeof DEVICES_CHANGED;
+  payload: DeviceChanged[];
+}
+
 export interface WritePv {
   type: typeof WRITE_PV;
   payload: {
@@ -70,4 +97,8 @@ export type Action =
   | Unsubscribe
   | ValueChanged
   | ValuesChanged
-  | WritePv;
+  | WritePv
+  | DeviceChanged
+  | DevicesChanged
+  | UnsubscribeDevice
+  | SubscribeDevice;

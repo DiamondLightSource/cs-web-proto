@@ -26,6 +26,7 @@ if (CONIQL_SOCKET !== undefined) {
   plugins.unshift(["pva://", coniql]);
   plugins.unshift(["ca://", coniql]);
   plugins.unshift(["ssim://", coniql]);
+  plugins.unshift(["Xspress", coniql]);
 }
 const connection = new ConnectionForwarder(plugins);
 
@@ -34,10 +35,11 @@ const composeEnhancers =
 
 export const store = createStore(
   csReducer,
-  /* preloadedState, */ composeEnhancers(
+  composeEnhancers(
     applyMiddleware(
       connectionMiddleware(connection),
       throttleMiddleware(new UpdateThrottle(THROTTLE_PERIOD))
     )
+    // other store enhancers here
   )
 );

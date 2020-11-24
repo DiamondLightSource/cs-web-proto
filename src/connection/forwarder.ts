@@ -2,6 +2,7 @@ import {
   Connection,
   ConnectionChangedCallback,
   ValueChangedCallback,
+  DeviceCallback,
   SubscriptionType
 } from "./plugin";
 
@@ -35,6 +36,18 @@ export class ConnectionForwarder implements Connection {
     return connection.unsubscribe(pvName);
   }
 
+  // TODO: Finish this function
+  public subscribeDevice(device: string): string {
+    const connection = this.getConnection(device);
+    return connection.subscribeDevice(device);
+  }
+
+  // TODO: Finish this function
+  public unsubscribeDevice(device: string): void {
+    const connection = this.getConnection(device);
+    return connection.unsubscribeDevice(device);
+  }
+
   public isConnected(): boolean {
     return this.connected;
   }
@@ -46,12 +59,13 @@ export class ConnectionForwarder implements Connection {
 
   public connect(
     connectionCallback: ConnectionChangedCallback,
-    valueCallback: ValueChangedCallback
+    valueCallback: ValueChangedCallback,
+    deviceCallback: DeviceCallback
   ): void {
     for (const [, connection] of this.prefixConnections) {
       if (connection !== undefined) {
         if (!connection.isConnected()) {
-          connection.connect(connectionCallback, valueCallback);
+          connection.connect(connectionCallback, valueCallback, deviceCallback);
         }
       }
     }
