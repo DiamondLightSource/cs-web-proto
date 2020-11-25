@@ -259,7 +259,7 @@ export class ConiqlPlugin implements Connection {
       this.disconnected = [];
     });
     this.wsClient.onDisconnected((): void => {
-      log.error("Websockect client disconnected.");
+      log.error("Websocket client disconnected.");
       for (const pvName of Object.keys(this.subscriptions)) {
         if (
           this.subscriptions.hasOwnProperty(pvName) &&
