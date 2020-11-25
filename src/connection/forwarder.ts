@@ -1,9 +1,11 @@
 import {
   Connection,
+  ConiqlDeviceConnection,
   ConnectionChangedCallback,
   ValueChangedCallback,
-  DeviceCallback,
-  SubscriptionType
+  SubscriptionType,
+  DeviceChangedCallback,
+  PvConnection
 } from "./plugin";
 
 export class ConnectionForwarder implements Connection {
@@ -13,9 +15,11 @@ export class ConnectionForwarder implements Connection {
     this.prefixConnections = prefixConnections;
     this.connected = false;
   }
-  private getConnection(pvName: string): Connection {
+  private getConnection(
+    pvDevice: string
+  ): ConiqlDeviceConnection | PvConnection {
     for (const [prefix, connection] of this.prefixConnections) {
-      if (pvName.startsWith(prefix)) {
+      if (pvDevice.startsWith(prefix)) {
         if (connection !== undefined) {
           return connection;
         } else {
@@ -23,44 +27,32 @@ export class ConnectionForwarder implements Connection {
         }
       }
     }
-    throw new Error(`No connections for ${pvName}`);
+    throw new Error(`No connections for ${pvDevice}`);
   }
 
-  public subscribe(pvName: string, type: SubscriptionType): string {
-    const connection = this.getConnection(pvName);
-    return connection.subscribe(pvName, type);
+  public subscribe(pvDevice: string, type: SubscriptionType): string {
+    const connection = this.getConnection(pvDevice);
+    return connection.subscribe(pvDevice, type);
   }
 
-  public unsubscribe(pvName: string): void {
-    const connection = this.getConnection(pvName);
-    return connection.unsubscribe(pvName);
-  }
-
-  // TODO: Finish this function
-  public subscribeDevice(device: string): string {
-    const connection = this.getConnection(device);
-    return connection.subscribeDevice(device);
-  }
-
-  // TODO: Finish this function
-  public unsubscribeDevice(device: string): void {
-    const connection = this.getConnection(device);
-    return connection.unsubscribeDevice(device);
+  public unsubscribe(pvDevice: string): void {
+    const connection = this.getConnection(pvDevice);
+    return connection.unsubscribe(pvDevice);
   }
 
   public isConnected(): boolean {
     return this.connected;
   }
 
-  public putPv(pvName: string, value: any): void {
-    const connection = this.getConnection(pvName);
-    return connection.putPv(pvName, value);
+  public putPv(pvDevice: string, value: any): void {
+    const connection = this.getConnection(pvDevice) as PvConnection;
+    return connection.putPv(pvDevice, value);
   }
 
   public connect(
     connectionCallback: ConnectionChangedCallback,
     valueCallback: ValueChangedCallback,
-    deviceCallback: DeviceCallback
+    deviceCallback: DeviceChangedCallback
   ): void {
     for (const [, connection] of this.prefixConnections) {
       if (connection !== undefined) {

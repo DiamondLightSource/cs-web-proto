@@ -1,11 +1,11 @@
 import log from "loglevel";
 import {
-  Connection,
   ConnectionState,
   ConnectionChangedCallback,
   ValueChangedCallback,
   nullConnCallback,
-  nullValueCallback
+  nullValueCallback,
+  PvConnection
 } from "./plugin";
 import {
   DType,
@@ -26,7 +26,6 @@ abstract class SimPv {
   private onConnectionUpdate: ConnectionChangedCallback;
   private onValueUpdate: ValueChangedCallback;
   protected subscribed: boolean;
-  protected subscribedDevice: boolean;
   public pvName: string;
   protected updateRate?: number;
   abstract getValue(): DType;
@@ -43,7 +42,6 @@ abstract class SimPv {
     this.updateRate = updateRate;
     this.publishConnection();
     this.subscribed = false;
-    this.subscribedDevice = false;
   }
 
   public getConnection(): ConnectionState {
@@ -55,17 +53,8 @@ abstract class SimPv {
     this.publish();
   }
 
-  public subscribeDevice(): void {
-    this.subscribedDevice = true;
-    this.publishDevice();
-  }
-
   public unsubscribe(): void {
     this.subscribed = false;
-  }
-
-  public unsubscribeDevice(): void {
-    this.subscribedDevice = false;
   }
 
   public publish(): void {
@@ -74,15 +63,8 @@ abstract class SimPv {
     }
   }
 
-  // TODO: This needs filling out
-  public publishDevice(): void {
-    if (this.subscribedDevice) {
-      this.onValueUpdate("fake device", this.getValue());
-    }
-  }
-
   public publishConnection(): void {
-    this.onConnectionUpdate(this.pvName, this.getConnection());
+    this.onConnectionUpdate(this.pvName, "pv", this.getConnection());
   }
 
   public updateValue(_: DType): void {
@@ -352,7 +334,7 @@ class SimCache {
   }
 }
 
-export class SimulatorPlugin implements Connection {
+export class SimulatorPlugin implements PvConnection {
   private simPvs: SimCache;
   private onConnectionUpdate: ConnectionChangedCallback;
   private onValueUpdate: ValueChangedCallback;

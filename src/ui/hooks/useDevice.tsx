@@ -3,11 +3,17 @@ import { CsState } from "../../redux/csState";
 import { deviceSelector, deviceComparator } from "./utils";
 import { useDeviceSubscription } from "./useDeviceSubscription";
 
-export function useDevice(componentId: string, device: string): {} {
+export function useDevice(
+  componentId: string,
+  device: string
+): string | undefined {
   useDeviceSubscription(componentId, device);
-  const description = useSelector<CsState, {}>(
+  const description: any = useSelector<CsState, {}>(
     (state: CsState): {} => deviceSelector(device, state),
     deviceComparator
   );
-  return description;
+
+  if (description) {
+    return description.value.stringValue;
+  }
 }

@@ -15,7 +15,8 @@ export const UNSUBSCRIBE_DEVICE = "unsubscribe_device";
 export interface ConnectionChanged {
   type: typeof CONNECTION_CHANGED;
   payload: {
-    pvName: string;
+    pvDevice: string;
+    type: string;
     value: ConnectionState;
   };
 }

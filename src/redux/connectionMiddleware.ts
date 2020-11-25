@@ -1,12 +1,16 @@
 import log from "loglevel";
 import { MiddlewareAPI, Dispatch } from "redux";
-import { Connection, ConnectionState } from "../connection/plugin";
 import {
-  CONNECTION_CHANGED,
+  ConnectionState,
+  ConnectionTypes,
+  PvConnection
+} from "../connection/plugin";
+import {
   SUBSCRIBE,
   WRITE_PV,
   VALUE_CHANGED,
   DEVICE_CHANGED,
+  CONNECTION_CHANGED,
   SUBSCRIBE_DEVICE,
   UNSUBSCRIBE,
   Action,
@@ -17,12 +21,13 @@ import { DType } from "../types/dtypes";
 
 function connectionChanged(
   store: MiddlewareAPI,
-  pvName: string,
+  pvDevice: string,
+  type: string,
   value: ConnectionState
 ): void {
   store.dispatch({
     type: CONNECTION_CHANGED,
-    payload: { pvName: pvName, value: value }
+    payload: { pvDevice, value, type }
   });
 }
 
@@ -48,14 +53,14 @@ function deviceChanged(
   });
 }
 
-export const connectionMiddleware = (connection: Connection) => (
+export const connectionMiddleware = (connection: ConnectionTypes) => (
   store: MiddlewareAPI
 ) => (next: Dispatch<Action>): any => (action: Action): Action => {
   if (!connection.isConnected()) {
     connection.connect(
       // Partial function application.
-      (pvName: string, value: ConnectionState): void =>
-        connectionChanged(store, pvName, value),
+      (pvDevice: string, type: string, value: ConnectionState): void =>
+        connectionChanged(store, pvDevice, type, value),
       (pvName: string, value: DType): void =>
         valueChanged(store, pvName, value),
       // TODO: Be more specific with type here
@@ -91,7 +96,7 @@ export const connectionMiddleware = (connection: Connection) => (
       const { device } = (action as SubscribeDevice).payload;
 
       try {
-        connection.subscribeDevice(device);
+        connection.subscribe(device, { string: true });
       } catch (error) {
         log.error(`Failed to subscribe to device ${device}`);
         log.error(error);
@@ -111,7 +116,7 @@ export const connectionMiddleware = (connection: Connection) => (
 
       if (subs[device].length === 1 && subs[device][0] === componentId) {
         try {
-          connection.unsubscribeDevice(device);
+          connection.unsubscribe(device);
         } catch (error) {
           log.error(`Failed to unsubscribe from device ${device}`);
           log.error(error);
@@ -124,7 +129,7 @@ export const connectionMiddleware = (connection: Connection) => (
       const effectivePvName =
         store.getState().effectivePvNameMap[pvName] || pvName;
       try {
-        connection.putPv(effectivePvName, value);
+        (connection as PvConnection).putPv(effectivePvName, value);
       } catch (error) {
         log.error(`Failed to put to pv ${pvName}`);
         log.error(error);

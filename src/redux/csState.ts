@@ -119,16 +119,32 @@ export function csReducer(state = initialState, action: Action): CsState {
       return { ...state, valueCache: newValueCache };
     }
     case CONNECTION_CHANGED: {
-      const newValueCache: ValueCache = { ...state.valueCache };
-      const { pvName, value } = action.payload;
-      const pvState = state.valueCache[pvName];
-      const newPvState = {
-        ...pvState,
-        connected: value.isConnected,
-        readonly: value.isReadonly
-      };
-      newValueCache[action.payload.pvName] = newPvState;
-      return { ...state, valueCache: newValueCache };
+      console.log(action);
+      // TODO: Make this better
+      let cache;
+      const { pvDevice, type, value } = action.payload;
+      if (type === "pv") {
+        cache = state.valueCache;
+        const oldState = cache[pvDevice];
+        const newState = {
+          ...oldState,
+          connected: value.isConnected,
+          readonly: value.isReadonly
+        };
+        cache[pvDevice] = newState;
+        return { ...state, valueCache: cache as ValueCache };
+      } else if (type === "device") {
+        cache = state.deviceCache;
+        const oldState = cache[pvDevice];
+        const newState = {
+          ...oldState,
+          connected: value.isConnected,
+          readonly: value.isReadonly
+        };
+        cache[pvDevice] = newState;
+        return { ...state, deviceCache: cache };
+      }
+      break;
     }
     case SUBSCRIBE: {
       const { componentId, effectivePvName } = action.payload;

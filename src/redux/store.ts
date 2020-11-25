@@ -1,11 +1,10 @@
 import { createStore, applyMiddleware, compose } from "redux";
-
+import { Connection } from "../connection/plugin";
 import { csReducer } from "./csState";
 import { connectionMiddleware } from "./connectionMiddleware";
 import { throttleMiddleware, UpdateThrottle } from "./throttleMiddleware";
-import { Connection } from "../connection/plugin";
 import { SimulatorPlugin } from "../connection/sim";
-import { ConiqlPlugin } from "../connection/coniql";
+import { ConiqlPvPlugin, ConiqlDevicePlugin } from "../connection/coniql";
 import { ConnectionForwarder } from "../connection/forwarder";
 
 const CONIQL_SOCKET = process.env.REACT_APP_CONIQL_SOCKET;
@@ -16,17 +15,21 @@ const THROTTLE_PERIOD = parseFloat(
 const SIMULATION_TIME = parseFloat(
   process.env.REACT_APP_SIMULATION_TIME ?? "100"
 );
+
 const simulator = new SimulatorPlugin(SIMULATION_TIME);
 const plugins: [string, Connection][] = [
   ["sim://", simulator],
   ["loc://", simulator]
 ];
+
 if (CONIQL_SOCKET !== undefined) {
-  const coniql = new ConiqlPlugin(CONIQL_SOCKET);
-  plugins.unshift(["pva://", coniql]);
-  plugins.unshift(["ca://", coniql]);
-  plugins.unshift(["ssim://", coniql]);
-  plugins.unshift(["Xspress", coniql]);
+  const coniqlPv = new ConiqlPvPlugin(CONIQL_SOCKET);
+  plugins.unshift(["pva://", coniqlPv]);
+  plugins.unshift(["ca://", coniqlPv]);
+  plugins.unshift(["ssim://", coniqlPv]);
+  const coniqlDevice = new ConiqlDevicePlugin(CONIQL_SOCKET);
+  // TODO: Change this to device://
+  plugins.unshift(["device://", coniqlDevice]);
 }
 const connection = new ConnectionForwarder(plugins);
 

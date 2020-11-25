@@ -30,12 +30,7 @@ const DeviceComponent = (
   //   children: [description]
   // });
 
-  return (
-    <div>
-      {device}
-      {/* {component} */}
-    </div>
-  );
+  return <div>{device || ""}</div>;
 };
 
 const DeviceWidgetProps = {
