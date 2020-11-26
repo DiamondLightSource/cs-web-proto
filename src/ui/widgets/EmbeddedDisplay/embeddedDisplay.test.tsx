@@ -85,7 +85,7 @@ describe("<EmbeddedDisplay>", (): void => {
       <EmbeddedDisplay
         position={new RelativePosition()}
         file={{
-          path: "TestFile.bob",
+          path: "TestFile1.bob",
           defaultProtocol: "ca",
           macros: {}
         }}
@@ -96,7 +96,7 @@ describe("<EmbeddedDisplay>", (): void => {
 
     expect(globalWithFetch.fetch).toHaveBeenCalledTimes(1);
     expect(globalWithFetch.fetch).toHaveBeenCalledWith(
-      `${DEFAULT_BASE_URL}/TestFile.bob`
+      `${DEFAULT_BASE_URL}/TestFile1.bob`
     );
 
     await waitFor((): void =>
@@ -133,7 +133,7 @@ describe("<EmbeddedDisplay>", (): void => {
       <EmbeddedDisplay
         position={new RelativePosition()}
         file={{
-          path: "TestFile.bob",
+          path: "TestFile2.bob",
           defaultProtocol: "ca",
           macros: {}
         }}
@@ -144,7 +144,7 @@ describe("<EmbeddedDisplay>", (): void => {
 
     expect(globalWithFetch.fetch).toHaveBeenCalledTimes(1);
     expect(globalWithFetch.fetch).toHaveBeenCalledWith(
-      `${DEFAULT_BASE_URL}/TestFile.bob`
+      `${DEFAULT_BASE_URL}/TestFile2.bob`
     );
 
     await waitFor((): void =>
@@ -168,7 +168,7 @@ describe("<EmbeddedDisplay>", (): void => {
       <EmbeddedDisplay
         position={new RelativePosition()}
         file={{
-          path: "TestFile.json",
+          path: "TestFile3.json",
           defaultProtocol: "ca",
           macros: {}
         }}
@@ -179,7 +179,7 @@ describe("<EmbeddedDisplay>", (): void => {
 
     expect(globalWithFetch.fetch).toHaveBeenCalledTimes(1);
     expect(globalWithFetch.fetch).toHaveBeenCalledWith(
-      `${DEFAULT_BASE_URL}/TestFile.json`
+      `${DEFAULT_BASE_URL}/TestFile3.json`
     );
 
     await waitFor((): void => expect(queryByText("Test")).toBeInTheDocument());
