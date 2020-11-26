@@ -239,8 +239,8 @@ const PV_MUTATION = gql`
 `;
 
 const DEVICE_SUBSCRIPTION = gql`
-  query {
-    getDevice(id: "Xspress3") {
+  query deviceQuery($pvDevice: ID!) {
+    getDevice(id: $pvDevice) {
       id
       children(flatten: true) {
         name
@@ -405,8 +405,7 @@ export class ConiqlDevicePlugin extends ConiqlPlugin
     return this._client
       .subscribe({
         query: DEVICE_SUBSCRIPTION,
-        // variables: { pvDevice: pvDevice.split("://")[1] }
-        variables: { pvDevice: "Xspress3" }
+        variables: { pvDevice: pvDevice.split("://")[1] }
       })
       .subscribe({
         next: (data): void => {
