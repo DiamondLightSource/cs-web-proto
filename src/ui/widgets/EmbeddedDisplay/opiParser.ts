@@ -205,7 +205,6 @@ export function opiParseActions(
               (action.description && action.description._text) || undefined,
             file: {
               path: action.path._text,
-              // TODO: Should probably be accessing properties of the element here
               macros: {},
               defaultProtocol: "pva"
             }

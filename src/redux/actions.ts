@@ -52,7 +52,6 @@ export interface ValuesChanged {
   payload: ValueChanged[];
 }
 
-// TODO: Be more specific with type on value here
 export interface SubscribeDevice {
   type: typeof SUBSCRIBE_DEVICE;
   payload: {
@@ -69,13 +68,12 @@ export interface UnsubscribeDevice {
   };
 }
 
-// TODO: Be more specific with type on value here
 export interface DeviceChanged {
   type: typeof DEVICE_CHANGED;
   payload: {
     device: string;
     componentId: string;
-    value: string;
+    value: DType;
   };
 }
 

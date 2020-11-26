@@ -4,6 +4,10 @@ export interface PvArrayResults {
   [pvName: string]: [PvState, string];
 }
 
+export interface DeviceArrayResults {
+  [device: string]: [PvState, string];
+}
+
 export function pvStateSelector(
   pvNames: string[],
   state: CsState
@@ -45,7 +49,10 @@ export function pvStateComparator(
   return true;
 }
 
-export function deviceComparator(before: {}, after: {}): boolean {
+export function deviceComparator(
+  before: DeviceArrayResults,
+  after: DeviceArrayResults
+): boolean {
   if (Object.keys(before).length !== Object.keys(after).length) {
     return false;
   }

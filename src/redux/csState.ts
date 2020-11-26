@@ -40,9 +40,12 @@ export interface ValueCache {
   [key: string]: FullPvState;
 }
 
-// TODO: Be more specific with type here
+export interface FullDeviceState extends PvState {
+  device: string;
+}
+
 export interface DeviceCache {
-  [key: string]: any;
+  [key: string]: FullDeviceState;
 }
 
 export interface Subscriptions {
@@ -80,15 +83,16 @@ function updateValueCache(
   newValueCache[action.payload.pvName] = newPvState;
 }
 
-// TODO: Should probably make this a bit more extensive
 function updateDeviceCache(
   oldDeviceCache: DeviceCache,
   newDeviceCache: DeviceCache,
   action: DeviceChanged
 ): void {
-  const { value } = action.payload;
-  console.log("new value", value);
-  newDeviceCache[action.payload.device] = value;
+  newDeviceCache[action.payload.device] = {
+    ...action.payload,
+    connected: true,
+    readonly: false
+  };
 }
 
 export function csReducer(state = initialState, action: Action): CsState {
@@ -119,10 +123,9 @@ export function csReducer(state = initialState, action: Action): CsState {
       return { ...state, valueCache: newValueCache };
     }
     case CONNECTION_CHANGED: {
-      console.log(action);
-      // TODO: Make this better
-      let cache;
       const { pvDevice, type, value } = action.payload;
+
+      let cache;
       if (type === "pv") {
         cache = state.valueCache;
         const oldState = cache[pvDevice];
@@ -143,8 +146,9 @@ export function csReducer(state = initialState, action: Action): CsState {
         };
         cache[pvDevice] = newState;
         return { ...state, deviceCache: cache };
+      } else {
+        break;
       }
-      break;
     }
     case SUBSCRIBE: {
       const { componentId, effectivePvName } = action.payload;

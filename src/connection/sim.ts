@@ -358,11 +358,6 @@ export class SimulatorPlugin implements PvConnection {
     return (simulator && simulator.pvName) || pvName;
   }
 
-  // TODO: Finish this function
-  public subscribeDevice(device: string): string {
-    return "";
-  }
-
   public connect(
     connectionCallback: ConnectionChangedCallback,
     valueCallback: ValueChangedCallback
@@ -535,10 +530,5 @@ export class SimulatorPlugin implements PvConnection {
         simulator.unsubscribe();
       }
     }
-  }
-
-  // TODO: Finish this function
-  public unsubscribeDevice(device: string): void {
-    log.debug(`Unsubscribing from ${device}`);
   }
 }

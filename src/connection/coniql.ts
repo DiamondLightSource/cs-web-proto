@@ -238,7 +238,6 @@ const PV_MUTATION = gql`
   }
 `;
 
-// TODO: Turn id into a variable
 const DEVICE_SUBSCRIPTION = gql`
   query {
     getDevice(id: "Xspress3") {
@@ -315,7 +314,6 @@ class ConiqlPlugin implements Connection {
   }
 
   public connect(
-    // TODO: connectionCallback needs to be changed to accomodate devices
     connectionCallback: ConnectionChangedCallback,
     valueCallback: ValueChangedCallback,
     deviceCallback: DeviceChangedCallback
@@ -361,6 +359,11 @@ class ConiqlPlugin implements Connection {
     return link;
   }
 
+  /**
+   * This should be overridden in the child class, and it's implementation
+   * will depend on the type of subscription (currently device of PV)
+   * @param pvDevice
+   */
   protected _subscribe(pvDevice: string): Subscription {
     throw new Error("_subscribe method not implemented");
   }
@@ -402,7 +405,8 @@ export class ConiqlDevicePlugin extends ConiqlPlugin
     return this._client
       .subscribe({
         query: DEVICE_SUBSCRIPTION,
-        variables: { device: pvDevice }
+        // variables: { pvDevice: pvDevice.split("://")[1] }
+        variables: { pvDevice: "Xspress3" }
       })
       .subscribe({
         next: (data): void => {

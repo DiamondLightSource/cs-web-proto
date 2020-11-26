@@ -28,7 +28,6 @@ if (CONIQL_SOCKET !== undefined) {
   plugins.unshift(["ca://", coniqlPv]);
   plugins.unshift(["ssim://", coniqlPv]);
   const coniqlDevice = new ConiqlDevicePlugin(CONIQL_SOCKET);
-  // TODO: Change this to device://
   plugins.unshift(["device://", coniqlDevice]);
 }
 const connection = new ConnectionForwarder(plugins);

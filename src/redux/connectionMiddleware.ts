@@ -38,18 +38,18 @@ function valueChanged(
 ): void {
   store.dispatch({
     type: VALUE_CHANGED,
-    payload: { pvName: pvName, value: value }
+    payload: { pvName, value }
   });
 }
 
 function deviceChanged(
   store: MiddlewareAPI,
   device: string,
-  value: string
+  value: DType
 ): void {
   store.dispatch({
     type: DEVICE_CHANGED,
-    payload: { device: device, value: value }
+    payload: { device, value }
   });
 }
 
@@ -63,8 +63,8 @@ export const connectionMiddleware = (connection: ConnectionTypes) => (
         connectionChanged(store, pvDevice, type, value),
       (pvName: string, value: DType): void =>
         valueChanged(store, pvName, value),
-      // TODO: Be more specific with type here
-      (device: string, value: any): void => deviceChanged(store, device, value)
+      (device: string, value: DType): void =>
+        deviceChanged(store, device, value)
     );
   }
 

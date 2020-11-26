@@ -19,7 +19,7 @@ const DeviceComponent = (
   props: InferWidgetProps<typeof DeviceProps>
 ): JSX.Element => {
   // let components = "";
-  const device = useDevice(props.id || "", props.deviceName);
+  const description = useDevice(props.id || "", props.deviceName);
   // const components = coniqlToJSON(device);
 
   // const description = parseJson(components, "pva");
@@ -29,8 +29,7 @@ const DeviceComponent = (
   //   type: "display",
   //   children: [description]
   // });
-
-  return <div>{device || ""}</div>;
+  return <div>{(description && description.value.toString()) || ""}</div>;
 };
 
 const DeviceWidgetProps = {
