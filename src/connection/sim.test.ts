@@ -1,5 +1,9 @@
 import { SimulatorPlugin } from "./sim";
-import { nullConnCallback, nullValueCallback } from "./plugin";
+import {
+  nullConnCallback,
+  nullValueCallback,
+  nullDeviceCallback
+} from "./plugin";
 import { ddouble, dstring } from "../setupTests";
 import { DType } from "../types/dtypes";
 
@@ -9,13 +13,17 @@ beforeEach((): void => {
 });
 
 function getValue(pvName: string, callback: Function): void {
-  simulator.connect(nullConnCallback, function(updatePvName, value): void {
-    const nameInfo1 = SimulatorPlugin.parseName(updatePvName);
-    const nameInfo2 = SimulatorPlugin.parseName(updatePvName);
-    if (nameInfo1.keyName === nameInfo2.keyName) {
-      callback(value);
-    }
-  });
+  simulator.connect(
+    nullConnCallback,
+    function(updatePvName, value): void {
+      const nameInfo1 = SimulatorPlugin.parseName(updatePvName);
+      const nameInfo2 = SimulatorPlugin.parseName(updatePvName);
+      if (nameInfo1.keyName === nameInfo2.keyName) {
+        callback(value);
+      }
+    },
+    nullDeviceCallback
+  );
 }
 
 const assertValue = (
@@ -209,9 +217,13 @@ describe("LimitData", (): void => {
     const iter = repeatedCallback();
     iter.next();
 
-    simulator.connect(nullConnCallback, function(name, value): void {
-      iter.next({ name: name, value: value });
-    });
+    simulator.connect(
+      nullConnCallback,
+      function(name, value): void {
+        iter.next({ name: name, value: value });
+      },
+      nullDeviceCallback
+    );
 
     simulator.subscribe("sim://limit#one");
     simulator.subscribe("sim://limit#two");
@@ -224,7 +236,7 @@ it("test disconnector", (done): void => {
   let wasConnected = false;
   let wasDisconnected = false;
   simulator = new SimulatorPlugin(50);
-  function callback(pvName: string, state: any): void {
+  function callback(pvName: string, type: string, state: any): void {
     expect(pvName).toBe("sim://disconnector");
     if (state.isConnected) {
       wasConnected = true;
@@ -236,8 +248,7 @@ it("test disconnector", (done): void => {
       done();
     }
   }
-
-  simulator.connect(callback, nullValueCallback);
+  simulator.connect(callback, nullValueCallback, nullDeviceCallback);
   simulator.subscribe("sim://disconnector");
 });
 
@@ -288,9 +299,13 @@ it("distinguish sine values", (done): void => {
     }
   }
 
-  simulator.connect(nullConnCallback, function(name, value): void {
-    callback({ name: name, value: value });
-  });
+  simulator.connect(
+    nullConnCallback,
+    function(name, value): void {
+      callback({ name: name, value: value });
+    },
+    nullDeviceCallback
+  );
 
   simulator.subscribe("sim://sine#one");
   simulator.subscribe("sim://sine#two");
@@ -400,7 +415,8 @@ it("unsubscribe stops updates for simulated values", (done): void => {
 
   simulator.connect(
     nullConnCallback,
-    callbacks.callback(client.callback(callback))
+    callbacks.callback(client.callback(callback)),
+    nullDeviceCallback
   );
   client.subscribe();
 });
@@ -436,7 +452,8 @@ it("unsubscribe stops updates, but maintains value", (done): void => {
 
   simulator.connect(
     nullConnCallback,
-    callbacks.callback(client.callback(callback))
+    callbacks.callback(client.callback(callback)),
+    nullDeviceCallback
   );
   client.subscribe();
 });

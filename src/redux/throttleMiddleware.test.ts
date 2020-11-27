@@ -3,10 +3,12 @@ import {
   VALUE_CHANGED,
   CONNECTION_CHANGED,
   VALUES_CHANGED,
+  DEVICE_CHANGED,
   ValueChanged,
   ConnectionChanged
 } from "./actions";
 import { ddouble } from "../setupTests";
+import { DType } from "../types/dtypes";
 
 // Mock setInterval.
 jest.useFakeTimers();
@@ -38,7 +40,18 @@ describe("UpdateThrottle", (): void => {
       },
       mockStore
     );
-    expect(mockStore.dispatch).toHaveBeenCalledTimes(1);
+    updater.queueUpdate(
+      {
+        type: DEVICE_CHANGED,
+        payload: {
+          device: "test",
+          componentId: "12",
+          value: new DType({ stringValue: "15" })
+        }
+      },
+      mockStore
+    );
+    expect(mockStore.dispatch).toHaveBeenCalledTimes(2);
   });
 });
 
@@ -59,7 +72,7 @@ describe("throttleMidddlware", (): void => {
       payload: { pvName: "pv", value: ddouble(0) }
     };
     actionHandler(valueAction);
-    expect(mockStore.dispatch).toHaveBeenCalledTimes(1);
+    expect(mockStore.dispatch).toHaveBeenCalledTimes(2);
     // The value update is not passed on.
     expect(mockNext).not.toHaveBeenCalled();
     expect(mockStore.dispatch.mock.calls[0][0].type).toEqual(VALUES_CHANGED);
@@ -73,7 +86,11 @@ describe("throttleMidddlware", (): void => {
     const actionHandler = nextHandler(mockNext);
     const connectionAction: ConnectionChanged = {
       type: CONNECTION_CHANGED,
-      payload: { pvName: "pv", value: { isReadonly: false, isConnected: true } }
+      payload: {
+        pvDevice: "pv",
+        type: "pv",
+        value: { isReadonly: false, isConnected: true }
+      }
     };
     actionHandler(connectionAction);
     expect(mockStore.dispatch).toHaveBeenCalledTimes(0);

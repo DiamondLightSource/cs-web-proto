@@ -15,7 +15,9 @@ const state: CsState = {
   valueCache: { pv1: pvState },
   globalMacros: {},
   effectivePvNameMap: { pv1: "pv1", pv2: "pv3" },
-  subscriptions: {}
+  subscriptions: {},
+  deviceCache: {},
+  deviceSubscriptions: {}
 };
 
 describe("pvStateSelector", (): void => {

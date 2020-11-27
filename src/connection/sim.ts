@@ -3,8 +3,10 @@ import {
   ConnectionState,
   ConnectionChangedCallback,
   ValueChangedCallback,
+  DeviceChangedCallback,
   nullConnCallback,
   nullValueCallback,
+  nullDeviceCallback,
   PvConnection
 } from "./plugin";
 import {
@@ -338,6 +340,7 @@ export class SimulatorPlugin implements PvConnection {
   private simPvs: SimCache;
   private onConnectionUpdate: ConnectionChangedCallback;
   private onValueUpdate: ValueChangedCallback;
+  private onDeviceUpdate: DeviceChangedCallback;
   private updateRate: number;
   private connected: boolean;
 
@@ -345,6 +348,7 @@ export class SimulatorPlugin implements PvConnection {
     this.simPvs = new SimCache();
     this.onConnectionUpdate = nullConnCallback;
     this.onValueUpdate = nullValueCallback;
+    this.onDeviceUpdate = nullDeviceCallback;
     this.putPv = this.putPv.bind(this);
     this.updateRate = updateRate || 2000;
     this.connected = false;
@@ -360,7 +364,8 @@ export class SimulatorPlugin implements PvConnection {
 
   public connect(
     connectionCallback: ConnectionChangedCallback,
-    valueCallback: ValueChangedCallback
+    valueCallback: ValueChangedCallback,
+    deviceCallback: DeviceChangedCallback
   ): void {
     if (this.connected) {
       throw new Error("Can only connect once");
@@ -368,6 +373,7 @@ export class SimulatorPlugin implements PvConnection {
 
     this.onConnectionUpdate = connectionCallback;
     this.onValueUpdate = valueCallback;
+    this.onDeviceUpdate = deviceCallback;
     this.connected = true;
   }
 

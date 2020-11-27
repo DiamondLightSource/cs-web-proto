@@ -1,6 +1,6 @@
 import { ApolloClient } from "apollo-client";
 import {
-  ConiqlPlugin,
+  ConiqlPvPlugin,
   ConiqlStatus,
   ConiqlTime,
   ConiqlBase64Array
@@ -48,14 +48,16 @@ class MockObservable {
 }
 
 describe("ConiqlPlugin", (): void => {
-  let cp: ConiqlPlugin;
+  let cp: ConiqlPvPlugin;
   let mockConnUpdate: jest.Mock;
   let mockValUpdate: jest.Mock;
+  let mockDevUpdate: jest.Mock;
   beforeEach((): void => {
-    cp = new ConiqlPlugin("a.b.c:100");
+    cp = new ConiqlPvPlugin("a.b.c:100");
     mockConnUpdate = jest.fn();
     mockValUpdate = jest.fn();
-    cp.connect(mockConnUpdate, mockValUpdate);
+    mockDevUpdate = jest.fn();
+    cp.connect(mockConnUpdate, mockValUpdate, mockDevUpdate);
   });
 
   it("handles update to value", (): void => {

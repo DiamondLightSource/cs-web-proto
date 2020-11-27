@@ -27,7 +27,9 @@ function getCsState(value: DType): CsState {
     },
     subscriptions: { "ca://PV1": [] },
     globalMacros: {},
-    effectivePvNameMap: {}
+    effectivePvNameMap: {},
+    deviceCache: {},
+    deviceSubscriptions: {}
   };
 }
 

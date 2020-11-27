@@ -23,8 +23,10 @@ const initialState: CsState = {
       initializingPvName: ""
     }
   },
+  deviceCache: {},
   globalMacros: {},
   subscriptions: {},
+  deviceSubscriptions: {},
   effectivePvNameMap: {}
 };
 
@@ -98,7 +100,11 @@ describe("CONNECTION_CHANGED", (): void => {
   test("csReducer handles value update", (): void => {
     const action: ConnectionChanged = {
       type: CONNECTION_CHANGED,
-      payload: { pvName: "PV", value: { isConnected: false, isReadonly: true } }
+      payload: {
+        pvDevice: "PV",
+        type: "pv",
+        value: { isConnected: false, isReadonly: true }
+      }
     };
     const newState = csReducer(initialState, action);
     expect(newState.valueCache["PV"].connected).toEqual(false);
