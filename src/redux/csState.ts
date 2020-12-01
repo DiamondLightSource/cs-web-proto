@@ -41,6 +41,7 @@ export interface ValueCache {
 }
 
 export interface FullDeviceState extends PvState {
+  [index: string]: any;
   device: string;
 }
 

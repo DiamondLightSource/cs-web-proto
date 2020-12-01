@@ -35,10 +35,14 @@ export class UpdateThrottle {
   }
 
   public sendQueue(store: MiddlewareAPI): void {
-    store.dispatch({ type: VALUES_CHANGED, payload: [...this.pvQueue] });
-    store.dispatch({ type: DEVICES_CHANGED, payload: [...this.deviceQueue] });
-    this.pvQueue = [];
-    this.deviceQueue = [];
+    if (this.pvQueue.length > 0) {
+      store.dispatch({ type: VALUES_CHANGED, payload: [...this.pvQueue] });
+      this.pvQueue = [];
+    }
+    if (this.deviceQueue.length > 0) {
+      store.dispatch({ type: DEVICES_CHANGED, payload: [...this.deviceQueue] });
+      this.deviceQueue = [];
+    }
     this.ready = false;
   }
 }

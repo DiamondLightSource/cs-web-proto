@@ -1,11 +1,7 @@
-import { PvState, CsState } from "../../redux/csState";
+import { PvState, CsState, FullDeviceState } from "../../redux/csState";
 
 export interface PvArrayResults {
   [pvName: string]: [PvState, string];
-}
-
-export interface DeviceArrayResults {
-  [device: string]: [PvState, string];
 }
 
 export function pvStateSelector(
@@ -20,7 +16,10 @@ export function pvStateSelector(
   return results;
 }
 
-export function deviceSelector(device: string, state: CsState): {} {
+export function deviceSelector(
+  device: string,
+  state: CsState
+): FullDeviceState {
   return state.deviceCache[device];
 }
 
@@ -50,11 +49,18 @@ export function pvStateComparator(
 }
 
 export function deviceComparator(
-  before: DeviceArrayResults,
-  after: DeviceArrayResults
+  before: FullDeviceState,
+  after: FullDeviceState
 ): boolean {
   if (Object.keys(before).length !== Object.keys(after).length) {
     return false;
+  }
+
+  for (const [property, beforeValue] of Object.entries(before)) {
+    const afterValue = after[property];
+    if (afterValue !== beforeValue) {
+      return false;
+    }
   }
   return true;
 }

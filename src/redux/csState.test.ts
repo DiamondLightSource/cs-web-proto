@@ -9,9 +9,13 @@ import {
   Unsubscribe,
   ValueChanged,
   ValuesChanged,
-  VALUES_CHANGED
+  VALUES_CHANGED,
+  DeviceChanged,
+  DEVICE_CHANGED,
+  DevicesChanged,
+  DEVICES_CHANGED
 } from "./actions";
-import { DAlarm } from "../types/dtypes";
+import { DAlarm, DType } from "../types/dtypes";
 import { ddouble, dstring, ddoubleArray } from "../setupTests";
 
 const initialState: CsState = {
@@ -96,6 +100,47 @@ describe("VALUE_CHANGED", (): void => {
   });
 });
 
+describe("DEVICE_CHANGED", (): void => {
+  test("csReducer handles DEVICE_CHANGED", (): void => {
+    const value = new DType({ stringValue: "6" });
+    const action: DeviceChanged = {
+      type: DEVICE_CHANGED,
+      payload: {
+        device: "new device",
+        componentId: "5",
+        value: value
+      }
+    };
+    const newState = csReducer(initialState, action);
+    expect(newState.deviceCache["new device"].value).toEqual(value);
+  });
+
+  test("csReducer handles DEVICES_CHANGED", (): void => {
+    const value1 = new DType({ stringValue: "1" });
+    const value2 = new DType({ stringValue: "2" });
+    const payload1 = {
+      device: "device1",
+      componentId: "1",
+      value: value1
+    };
+    const payload2 = {
+      device: "device2",
+      componentId: "2",
+      value: value2
+    };
+    const devicesChanged: DevicesChanged = {
+      type: DEVICES_CHANGED,
+      payload: [
+        { type: DEVICE_CHANGED, payload: payload1 },
+        { type: DEVICE_CHANGED, payload: payload2 }
+      ]
+    };
+    const newState = csReducer(initialState, devicesChanged);
+    expect(newState.deviceCache["device1"].value).toEqual(value1);
+    expect(newState.deviceCache["device2"].value).toEqual(value2);
+  });
+});
+
 describe("CONNECTION_CHANGED", (): void => {
   test("csReducer handles value update", (): void => {
     const action: ConnectionChanged = {
@@ -108,6 +153,19 @@ describe("CONNECTION_CHANGED", (): void => {
     };
     const newState = csReducer(initialState, action);
     expect(newState.valueCache["PV"].connected).toEqual(false);
+  });
+
+  test("csReducer handles device update", (): void => {
+    const action: ConnectionChanged = {
+      type: CONNECTION_CHANGED,
+      payload: {
+        pvDevice: "device",
+        type: "device",
+        value: { isConnected: false, isReadonly: true }
+      }
+    };
+    const newState = csReducer(initialState, action);
+    expect(newState.deviceCache["device"].connected).toEqual(false);
   });
 });
 

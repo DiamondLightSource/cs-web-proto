@@ -24,7 +24,7 @@ const DeviceComponent = (
   //   type: "display",
   //   children: [description]
   // });
-  return <div>{(description && description.value.toString()) || ""}</div>;
+  return <div>{(description && description.value?.toString()) || ""}</div>;
 };
 
 const DeviceWidgetProps = {

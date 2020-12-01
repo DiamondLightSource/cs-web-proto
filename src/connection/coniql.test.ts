@@ -3,7 +3,8 @@ import {
   ConiqlPvPlugin,
   ConiqlStatus,
   ConiqlTime,
-  ConiqlBase64Array
+  ConiqlBase64Array,
+  ConiqlDevicePlugin
 } from "./coniql";
 import { DType } from "../types/dtypes";
 
@@ -47,7 +48,41 @@ class MockObservable {
   }
 }
 
-describe("ConiqlPlugin", (): void => {
+describe("ConiqlDevicePlugin", (): void => {
+  let cp: ConiqlDevicePlugin;
+  let mockConnUpdate: jest.Mock;
+  let mockValUpdate: jest.Mock;
+  let mockDevUpdate: jest.Mock;
+  beforeEach((): void => {
+    cp = new ConiqlDevicePlugin("x.y.z:1000");
+    mockConnUpdate = jest.fn();
+    mockValUpdate = jest.fn();
+    mockDevUpdate = jest.fn();
+    cp.connect(mockConnUpdate, mockValUpdate, mockDevUpdate);
+  });
+
+  it("subscribes to a device", (): void => {
+    ApolloClient.prototype.subscribe = jest.fn(
+      (_): MockObservable => new MockObservable(42)
+    ) as jest.Mock;
+    cp.subscribe("pvDevice", {});
+    expect(ApolloClient.prototype.subscribe).toHaveBeenCalled();
+    expect(mockDevUpdate).toHaveBeenCalledWith(
+      "pvDevice",
+      new DType({
+        stringValue: JSON.stringify({
+          subscribeChannel: {
+            value: {
+              float: 42
+            }
+          }
+        })
+      })
+    );
+  });
+});
+
+describe("ConiqlPvPlugin", (): void => {
   let cp: ConiqlPvPlugin;
   let mockConnUpdate: jest.Mock;
   let mockValUpdate: jest.Mock;

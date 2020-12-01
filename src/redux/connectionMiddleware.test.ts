@@ -1,4 +1,11 @@
-import { SUBSCRIBE, Subscribe, WRITE_PV, WritePv } from "./actions";
+import {
+  SUBSCRIBE,
+  Subscribe,
+  WRITE_PV,
+  WritePv,
+  SUBSCRIBE_DEVICE,
+  SubscribeDevice
+} from "./actions";
 import { connectionMiddleware } from "./connectionMiddleware";
 import { ddouble } from "../setupTests";
 
@@ -40,6 +47,26 @@ describe("connectionMiddleware", (): void => {
     // The action is passed on.
     expect(mockNext).toHaveBeenCalledTimes(1);
     expect(mockNext.mock.calls[0][0].type).toEqual(SUBSCRIBE);
+  });
+  it("calls subscribe() when receiving SUBSCRIBE_DEVICE", (): void => {
+    const middleware = connectionMiddleware(mockConnection);
+    // nextHandler takes next() and returns the actual middleware function
+    const nextHandler = middleware(mockStore);
+    const mockNext = jest.fn();
+    // actionHandler takes an action
+    const actionHandler = nextHandler(mockNext);
+    const subscribeAction: SubscribeDevice = {
+      type: SUBSCRIBE_DEVICE,
+      payload: {
+        device: "device",
+        componentId: "2"
+      }
+    };
+    actionHandler(subscribeAction);
+    expect(mockConnection.subscribe).toHaveBeenCalledTimes(1);
+    // The action is passed on.
+    expect(mockNext).toHaveBeenCalledTimes(1);
+    expect(mockNext.mock.calls[0][0].type).toEqual(SUBSCRIBE_DEVICE);
   });
   it("calls putPv() when receiving WritePv", (): void => {
     // Set up state
