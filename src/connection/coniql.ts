@@ -241,22 +241,12 @@ const PV_MUTATION = gql`
 const DEVICE_SUBSCRIPTION = gql`
   query deviceQuery($pvDevice: ID!) {
     getDevice(id: $pvDevice) {
-      id
       children(flatten: true) {
-        name
         label
         child {
-          __typename
           ... on Channel {
-            id
-          }
-          ... on Device {
-            id
-          }
-          ... on Group {
-            layout
-            children {
-              name
+            value {
+              string
             }
           }
         }
