@@ -4,6 +4,11 @@ import { WidgetPropType } from "./../widgetProps";
 import { InferWidgetProps, StringPropOpt, StringProp } from "./../propTypes";
 import { registerWidget } from "./../register";
 import { useDevice } from "../../hooks/useDevice";
+import { deviceParser } from "./deviceParser";
+import { parseJson } from "../EmbeddedDisplay/jsonParser";
+import { widgetDescriptionToComponent } from "../createComponent";
+import { RelativePosition } from "../../../types/position";
+import { GroupBoxComponent } from "../GroupBox/groupBox";
 
 const DeviceProps = {
   deviceName: StringProp,
@@ -13,19 +18,19 @@ const DeviceProps = {
 const DeviceComponent = (
   props: InferWidgetProps<typeof DeviceProps>
 ): JSX.Element => {
-  // let components = "";
   const description = useDevice(props.id || "", props.deviceName);
-  // const components = coniqlToJSON(device);
+  const jsonString = deviceParser(description?.value?.toString());
 
-  // const description = parseJson(components, "pva");
+  const componentDescription = parseJson(jsonString, "pva");
 
-  // const component = widgetDescriptionToComponent({
-  //   position: new RelativePosition("100%", "100%"),
-  //   type: "display",
-  //   children: [description]
-  // });
-  console.log(description);
-  return <div>{(description && description.value?.toString()) || ""}</div>;
+  const component = widgetDescriptionToComponent({
+    position: new RelativePosition("100%", "100%"),
+    type: "display",
+    children: [componentDescription]
+  });
+  return (
+    <GroupBoxComponent name={props.deviceName}>{component}</GroupBoxComponent>
+  );
 };
 
 const DeviceWidgetProps = {

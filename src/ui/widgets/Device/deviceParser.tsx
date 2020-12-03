@@ -1,39 +1,50 @@
 export interface Child {
-  name: string;
+  __typename: string;
+  value?: {
+    string: string;
+    __typename: string;
+  };
+}
+
+export interface Parent {
   label: string;
-  subChild: Child;
+  child: Child;
+  __typename: string;
+}
+
+export interface DeviceResponse {
+  children: Parent[];
   __typename: string;
 }
 
 export const deviceParser = (response = ""): string => {
-  if (response.length >= 0) {
-    let children = '"children": [';
-
-    const json = JSON.parse(response.substring(7)).getDevice;
-    for (const child of json.children) {
-      children += parseChild(child);
+  let children = '"children": [';
+  if (response.length > 0) {
+    const json: DeviceResponse = JSON.parse(response.substring(7)).getDevice;
+    for (const parent of json.children) {
+      children += parseChild(parent);
     }
 
-    return `{"type": "display", "position": "relative", "overflow": "auto", ${children} }`;
+    // remove extra comma on children
+    children = children.substring(0, children.length - 1);
   }
-  return "";
+  children += "]";
+  return `{"type": "flexcontainer", "position": "relative", "overflow": "auto", ${children} }`;
 };
 
-export const parseChild = (child: Child): string => {
-  const { name, label, subChild, __typename } = child;
+export const parseChild = (parent: Parent): string => {
+  const { label, child } = parent;
 
-  const children =
-    '{"type": "flexcontainer",\
-  "position": "relative",\
-  "children": [\
-    {\
-      "type": "label",\
-      "position": "relative",\
-      "text":"' +
-    label +
-    '",\
-      "width":"50%",\
-      "backgroundColor": "transparent"\
-    }';
-  return children;
+  const valueString = createLabel(child.value?.string);
+  const labelString = createLabel(label);
+  return labelString + valueString;
+};
+
+export const createLabel = (value = "-"): string => {
+  let label = '{"type": "label", "position": "relative", "text":"';
+  label += value;
+  label +=
+    '", "width":"45%", "backgroundColor": "transparent", "margin": "5px 0 0 0"},';
+
+  return label;
 };

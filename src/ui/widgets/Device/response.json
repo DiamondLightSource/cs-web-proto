@@ -1,0 +1,206 @@
+{
+  "getDevice": {
+    "children": [
+      {
+        "label": "Demand",
+        "child": {
+          "value": { "string": "0.005100", "__typename": "ChannelValue" },
+          "__typename": "Channel"
+        },
+        "__typename": "NamedChild"
+      },
+      {
+        "label": "Readback",
+        "child": {
+          "value": { "string": "0.005100", "__typename": "ChannelValue" },
+          "__typename": "Channel"
+        },
+        "__typename": "NamedChild"
+      },
+      {
+        "label": "Stop",
+        "child": {
+          "value": { "string": "0", "__typename": "ChannelValue" },
+          "__typename": "Channel"
+        },
+        "__typename": "NamedChild"
+      },
+      {
+        "label": "Kill",
+        "child": {
+          "value": { "string": "0", "__typename": "ChannelValue" },
+          "__typename": "Channel"
+        },
+        "__typename": "NamedChild"
+      },
+      {
+        "label": "Limits",
+        "child": { "__typename": "Group" },
+        "__typename": "NamedChild"
+      },
+      {
+        "label": "Limit Violation",
+        "child": {
+          "value": { "string": "0", "__typename": "ChannelValue" },
+          "__typename": "Channel"
+        },
+        "__typename": "NamedChild"
+      },
+      {
+        "label": "High Limit Violation",
+        "child": {
+          "value": { "string": "0", "__typename": "ChannelValue" },
+          "__typename": "Channel"
+        },
+        "__typename": "NamedChild"
+      },
+      {
+        "label": "Low Limit Violation",
+        "child": {
+          "value": { "string": "0", "__typename": "ChannelValue" },
+          "__typename": "Channel"
+        },
+        "__typename": "NamedChild"
+      },
+      {
+        "label": "User High Limit",
+        "child": {
+          "value": { "string": "999.977000", "__typename": "ChannelValue" },
+          "__typename": "Channel"
+        },
+        "__typename": "NamedChild"
+      },
+      {
+        "label": "User Low Limit",
+        "child": {
+          "value": { "string": "-1000.023000", "__typename": "ChannelValue" },
+          "__typename": "Channel"
+        },
+        "__typename": "NamedChild"
+      },
+      {
+        "label": "Dial High Limit",
+        "child": {
+          "value": { "string": "1000.000000", "__typename": "ChannelValue" },
+          "__typename": "Channel"
+        },
+        "__typename": "NamedChild"
+      },
+      {
+        "label": "Dial Low Limit",
+        "child": {
+          "value": { "string": "-1000.000000", "__typename": "ChannelValue" },
+          "__typename": "Channel"
+        },
+        "__typename": "NamedChild"
+      },
+      {
+        "label": "Commands",
+        "child": { "__typename": "Group" },
+        "__typename": "NamedChild"
+      },
+      {
+        "label": "Home Forward",
+        "child": {
+          "value": { "string": "0", "__typename": "ChannelValue" },
+          "__typename": "Channel"
+        },
+        "__typename": "NamedChild"
+      },
+      {
+        "label": "Home Reverse",
+        "child": {
+          "value": { "string": "0", "__typename": "ChannelValue" },
+          "__typename": "Channel"
+        },
+        "__typename": "NamedChild"
+      },
+      {
+        "label": "Jog Forward",
+        "child": {
+          "value": { "string": "0", "__typename": "ChannelValue" },
+          "__typename": "Channel"
+        },
+        "__typename": "NamedChild"
+      },
+      {
+        "label": "Jog Reverse",
+        "child": {
+          "value": { "string": "0", "__typename": "ChannelValue" },
+          "__typename": "Channel"
+        },
+        "__typename": "NamedChild"
+      },
+      {
+        "label": "Tweak Forward",
+        "child": {
+          "value": { "string": "0", "__typename": "ChannelValue" },
+          "__typename": "Channel"
+        },
+        "__typename": "NamedChild"
+      },
+      {
+        "label": "Tweak Reverse",
+        "child": {
+          "value": { "string": "0", "__typename": "ChannelValue" },
+          "__typename": "Channel"
+        },
+        "__typename": "NamedChild"
+      },
+      {
+        "label": "Tweak Step",
+        "child": {
+          "value": { "string": "1.000000", "__typename": "ChannelValue" },
+          "__typename": "Channel"
+        },
+        "__typename": "NamedChild"
+      },
+      {
+        "label": "Sync",
+        "child": {
+          "value": { "string": "0", "__typename": "ChannelValue" },
+          "__typename": "Channel"
+        },
+        "__typename": "NamedChild"
+      },
+      {
+        "label": "Calibration",
+        "child": { "__typename": "Group" },
+        "__typename": "NamedChild"
+      },
+      {
+        "label": "Direction",
+        "child": {
+          "value": { "string": "Pos", "__typename": "ChannelValue" },
+          "__typename": "Channel"
+        },
+        "__typename": "NamedChild"
+      },
+      {
+        "label": "User Offset",
+        "child": {
+          "value": { "string": "-0.023000", "__typename": "ChannelValue" },
+          "__typename": "Channel"
+        },
+        "__typename": "NamedChild"
+      },
+      {
+        "label": "Set/Use",
+        "child": {
+          "value": { "string": "Use", "__typename": "ChannelValue" },
+          "__typename": "Channel"
+        },
+        "__typename": "NamedChild"
+      },
+      {
+        "label": "Offset Mode",
+        "child": {
+          "value": { "string": "Variable", "__typename": "ChannelValue" },
+          "__typename": "Channel"
+        },
+        "__typename": "NamedChild"
+      }
+    ],
+    "__typename": "Device"
+  }
+}
