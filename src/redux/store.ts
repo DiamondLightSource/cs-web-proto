@@ -13,10 +13,7 @@ const THROTTLE_PERIOD = parseFloat(
   process.env.REACT_APP_THROTTLE_PERIOD ?? "100"
 );
 
-const SIMULATION_TIME = parseFloat(
-  process.env.REACT_APP_SIMULATION_TIME ?? "100"
-);
-const simulator = new SimulatorPlugin(SIMULATION_TIME);
+const simulator = new SimulatorPlugin();
 const plugins: [string, Connection][] = [
   ["sim://", simulator],
   ["loc://", simulator]

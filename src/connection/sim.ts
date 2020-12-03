@@ -338,7 +338,6 @@ export class SimulatorPlugin implements Connection {
   private simPvs: SimCache;
   private onConnectionUpdate: ConnectionChangedCallback;
   private onValueUpdate: ValueChangedCallback;
-  private updateRate: number;
   private connected: boolean;
 
   public constructor(updateRate?: number) {
@@ -346,7 +345,6 @@ export class SimulatorPlugin implements Connection {
     this.onConnectionUpdate = nullConnCallback;
     this.onValueUpdate = nullValueCallback;
     this.putPv = this.putPv.bind(this);
-    this.updateRate = updateRate || 2000;
     this.connected = false;
   }
 
@@ -427,12 +425,13 @@ export class SimulatorPlugin implements Connection {
   protected makeSimulator(
     pvName: string,
     onConnectionUpdate: ConnectionChangedCallback,
-    onValueUpdate: ValueChangedCallback,
-    updateRate: number
+    onValueUpdate: ValueChangedCallback
   ): { simulator: SimPv | undefined; initialValue: any } {
     let cls;
     const nameInfo = SimulatorPlugin.parseName(pvName);
     let initial;
+    // Default update rate.
+    let updateRate = 500;
 
     if (nameInfo.protocol === "loc://") {
       cls = LocalPv;
@@ -468,6 +467,7 @@ export class SimulatorPlugin implements Connection {
       cls = LimitData;
     } else if (nameInfo.protocol === "sim://ramp") {
       initial = undefined;
+      updateRate = 100;
       cls = RampPv;
     } else {
       return { simulator: undefined, initialValue: undefined };
@@ -488,8 +488,7 @@ export class SimulatorPlugin implements Connection {
       const simulatorInfo = this.makeSimulator(
         pvName,
         this.onConnectionUpdate,
-        this.onValueUpdate,
-        this.updateRate
+        this.onValueUpdate
       );
 
       if (simulatorInfo.simulator) {
