@@ -11,7 +11,8 @@ import {
   ChoicePropOpt,
   FontPropOpt,
   ColorPropOpt,
-  BorderPropOpt
+  BorderPropOpt,
+  StringPropOpt
 } from "../propTypes";
 import { registerWidget } from "../register";
 import { LabelComponent } from "../Label/label";
@@ -22,6 +23,7 @@ const ReadbackProps = {
   showUnits: BoolPropOpt,
   precisionFromPv: BoolPropOpt,
   alarmSensitive: BoolPropOpt,
+  text: StringPropOpt,
   textAlign: ChoicePropOpt(["left", "center", "right"]),
   transparent: BoolPropOpt,
   font: FontPropOpt,
@@ -46,6 +48,7 @@ export const ReadbackComponent = (
     border,
     alarmSensitive = false,
     transparent = false,
+    text = "######",
     textAlign = "center",
     showUnits = false,
     precisionFromPv = false
@@ -56,7 +59,7 @@ export const ReadbackComponent = (
   const prec = precisionFromPv ? display?.precision ?? precision : precision;
   let displayedValue;
   if (!value) {
-    displayedValue = "######";
+    displayedValue = text;
   } else {
     if (value.display.choices) {
       // Enum PV so use string representation.
