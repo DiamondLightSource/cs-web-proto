@@ -309,8 +309,9 @@ function opiParseBorder(props: any): Border {
   const borderStyles: { [key: number]: BorderStyle } = {
     0: BorderStyle.None,
     1: BorderStyle.Line,
-    2: BorderStyle.Dashed,
-    3: BorderStyle.Dotted,
+    2: BorderStyle.Outset,
+    8: BorderStyle.Dotted,
+    9: BorderStyle.Dashed,
     13: BorderStyle.GroupBox
   };
   let style = BorderStyle.None;
@@ -325,6 +326,11 @@ function opiParseBorder(props: any): Border {
     lineColor = opiParseColor(props.line_color);
   } catch {
     // If we can't parse these, assume the defaults.
+  }
+  // Raised border in opis hard-codes width and color.
+  if (style === BorderStyle.Outset) {
+    width = 1;
+    borderColor = Color.GREY;
   }
   const actualColor = width < 2 && lineColor ? lineColor : borderColor;
   const actualStyle = width < 2 && lineColor ? BorderStyle.Line : style;
