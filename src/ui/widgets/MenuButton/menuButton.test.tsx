@@ -4,14 +4,12 @@ import { configure, shallow, ShallowWrapper } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import { create, ReactTestRenderer } from "react-test-renderer";
 import { dtimeNow, DAlarm, DType, DDisplay } from "../../../types/dtypes";
-import { ddouble, dstring } from "../../../setupTests";
 
 configure({ adapter: new Adapter() });
 
 let snapshot: ReactTestRenderer;
 let enumwrapper: ShallowWrapper<MenuButtonProps>;
-let stringwrapper: ShallowWrapper<MenuButtonProps>;
-let numberwrapper: ShallowWrapper<MenuButtonProps>;
+let labelwrapper: ShallowWrapper<MenuButtonProps>;
 
 beforeEach((): void => {
   const mock = (_: any): void => {
@@ -34,25 +32,16 @@ beforeEach((): void => {
       onChange={mock}
     />
   );
-  const menuButtonString = (
+  const menuButtonLabel = (
     <MenuButtonComponent
       connected={true}
-      value={dstring("testing enum")}
-      readonly={false}
-      onChange={mock}
-    />
-  );
-  const menuButtonNumber = (
-    <MenuButtonComponent
-      connected={true}
-      value={ddouble(3.14159)}
+      label="menulabel"
       readonly={false}
       onChange={mock}
     />
   );
   enumwrapper = shallow(menubutton);
-  stringwrapper = shallow(menuButtonString);
-  numberwrapper = shallow(menuButtonNumber);
+  labelwrapper = shallow(menuButtonLabel);
   snapshot = create(menubutton);
 });
 
@@ -96,19 +85,12 @@ describe("<MenuButton />", (): void => {
     expect(select.get(0).type).toEqual("select");
     expect(select.prop("value")).toEqual(5);
   });
-  test("it takes VString", (): void => {
-    const select = stringwrapper.find("select");
+  test("it uses a label", (): void => {
+    const select = labelwrapper.find("select");
     expect(select.prop("value")).toEqual(0);
-    const options = stringwrapper.find("option");
+    const options = labelwrapper.find("option");
     expect(options.length).toBe(1);
-    expect(options.text()).toBe("testing enum");
-  });
-  test("it takes VDouble", (): void => {
-    const select = numberwrapper.find("select");
-    expect(select.prop("value")).toEqual(0);
-    const options = numberwrapper.find("option");
-    expect(options.length).toBe(1);
-    expect(options.text()).toBe("3.14159");
+    expect(options.text()).toBe("menulabel");
   });
 
   test("preventDefault is not called when enabled", (): void => {
@@ -120,7 +102,7 @@ describe("<MenuButton />", (): void => {
   test("preventDefault is called when disabled", (): void => {
     const mockPreventDefault = jest.fn();
     const event = { preventDefault: mockPreventDefault };
-    stringwrapper.find("select").simulate("mousedown", event);
+    labelwrapper.find("select").simulate("mousedown", event);
     expect(mockPreventDefault).toHaveBeenCalled();
   });
 });

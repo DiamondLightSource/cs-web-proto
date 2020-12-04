@@ -4,7 +4,7 @@ import { writePv } from "../../hooks/useSubscription";
 import { Widget } from "../widget";
 import { PVWidgetPropType } from "../widgetProps";
 import { registerWidget } from "../register";
-import { InferWidgetProps } from "../propTypes";
+import { InferWidgetProps, StringPropOpt } from "../propTypes";
 import { DType } from "../../../types/dtypes";
 
 export interface MenuButtonProps {
@@ -13,17 +13,22 @@ export interface MenuButtonProps {
   value?: DType;
   readonly: boolean;
   style?: {};
+  label?: string;
 }
 
 export const MenuButtonComponent = (props: MenuButtonProps): JSX.Element => {
-  const { connected, value = null, style = { color: "#000000" } } = props;
+  const {
+    connected,
+    value = null,
+    label,
+    style = { color: "#000000" }
+  } = props;
 
   // Store whether component is disabled or not
   let disabled = false;
 
-  const defaultText = "Waiting for value";
+  let options: string[] = label ? [label] : [];
 
-  let options = [defaultText];
   // Using value to dictate displayed value as described here: https://reactjs.org/docs/forms.html#the-select-tag
   // Show 0 by default where there is only one option
   let displayIndex = 0;
@@ -37,17 +42,23 @@ export const MenuButtonComponent = (props: MenuButtonProps): JSX.Element => {
   if (!connected || value === null) {
     disabled = true;
   } else if (value?.display?.choices) {
-    options = value?.display?.choices;
+    options = options.concat(value?.display?.choices);
     displayIndex = value.getDoubleValue() ?? 0;
+    if (label) {
+      displayIndex += 1;
+    }
   } else {
-    options = [DType.coerceString(value)];
     disabled = true;
   }
 
   const mappedOptions = options.map(
     (text, index): JSX.Element => {
       return (
-        <option key={index} value={index}>
+        <option
+          key={index}
+          value={index}
+          disabled={index === 0 && text === label}
+        >
           {text}
         </option>
       );
@@ -81,6 +92,7 @@ export const SmartMenuButton = (props: {
   value?: DType;
   readonly: boolean;
   style?: {};
+  label?: string;
 }): JSX.Element => {
   // Function to send the value on to the PV
   function onChange(event: React.ChangeEvent<HTMLSelectElement>): void {
@@ -99,12 +111,18 @@ export const SmartMenuButton = (props: {
       style={props.style}
       readonly={props.readonly}
       onChange={onChange}
+      label={props.label}
     />
   );
 };
 
+const MenuButtonWidgetProps = {
+  ...PVWidgetPropType,
+  label: StringPropOpt
+};
+
 export const MenuButton = (
-  props: InferWidgetProps<typeof PVWidgetPropType>
+  props: InferWidgetProps<typeof MenuButtonWidgetProps>
 ): JSX.Element => <Widget baseWidget={SmartMenuButton} {...props} />;
 
-registerWidget(MenuButton, PVWidgetPropType, "menubutton");
+registerWidget(MenuButton, MenuButtonWidgetProps, "menubutton");
