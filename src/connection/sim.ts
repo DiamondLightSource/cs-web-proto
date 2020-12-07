@@ -132,9 +132,9 @@ class RampPv extends SimPv {
       (d.getSeconds() % 10) * 10 + Math.floor(d.getMilliseconds() / 100);
     let rampAlarm = DAlarm.NONE;
     if (val > 90 || val < 10) {
-      rampAlarm = DAlarm.MINOR;
-    } else if (val > 80 || val < 20) {
       rampAlarm = DAlarm.MAJOR;
+    } else if (val > 80 || val < 20) {
+      rampAlarm = DAlarm.MINOR;
     }
     return new DType({ doubleValue: val }, rampAlarm);
   }
