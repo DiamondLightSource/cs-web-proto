@@ -253,6 +253,7 @@ export class ConiqlPlugin implements Connection {
       reconnect: true
     });
     this.wsClient.onReconnecting((): void => {
+      log.info("Websocket client reconnected.");
       for (const pvName of this.disconnected) {
         this._subscribe(pvName);
       }
@@ -267,6 +268,7 @@ export class ConiqlPlugin implements Connection {
         ) {
           this.subscriptions[pvName].unsubscribe();
           delete this.subscriptions[pvName];
+          this.disconnected.push(pvName);
         } else {
           log.error(`Attempt to unsubscribe from ${pvName} failed`);
         }

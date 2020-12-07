@@ -4,6 +4,7 @@ import { Color } from "./color";
 export enum BorderStyle {
   None,
   Line,
+  Outset,
   Dashed,
   Dotted,
   GroupBox
@@ -12,6 +13,7 @@ export enum BorderStyle {
 const CssBorders: { [key in BorderStyle]: string } = {
   [BorderStyle.None]: "none",
   [BorderStyle.Line]: "solid",
+  [BorderStyle.Outset]: "outset",
   [BorderStyle.Dashed]: "dashed",
   [BorderStyle.Dotted]: "dotted",
   // This should already be handled by adding a fieldset element around,

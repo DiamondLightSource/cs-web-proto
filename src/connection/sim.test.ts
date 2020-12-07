@@ -133,16 +133,17 @@ it("test enum", (): void => {
 
 it("test receive updates", (done): void => {
   const values = [];
-  simulator = new SimulatorPlugin(50);
+  simulator = new SimulatorPlugin();
+  // Ramp PV updates every 100ms; expect three updates
+  // by 250ms.
   setTimeout((): void => {
-    expect(values.length).toBeGreaterThan(15);
-    expect(values.length).toBeLessThan(25);
+    expect(values.length).toEqual(3);
     done();
-  }, 1000);
-  getValue("sim://sine", (value: DType): void => {
+  }, 250);
+  getValue("sim://ramp", (value: DType): void => {
     values.push(value);
   });
-  simulator.subscribe("sim://sine");
+  simulator.subscribe("sim://ramp");
 });
 
 describe("LimitData", (): void => {
