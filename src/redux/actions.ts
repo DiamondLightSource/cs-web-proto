@@ -7,6 +7,8 @@ export const UNSUBSCRIBE = "unsubscribe";
 export const VALUE_CHANGED = "value_changed";
 export const VALUES_CHANGED = "values_changed";
 export const WRITE_PV = "write_pv";
+export const DEVICE_QUERIED = "device_queried";
+export const QUERY_DEVICE = "query_device";
 
 /* The never type in the constructor ensures that TypeScript
    won't allow this error to be created. This is useful in
@@ -64,10 +66,27 @@ export interface WritePv {
   };
 }
 
+export interface DeviceQueried {
+  type: typeof DEVICE_QUERIED;
+  payload: {
+    device: string;
+    value: DType;
+  };
+}
+
+export interface QueryDevice {
+  type: typeof QUERY_DEVICE;
+  payload: {
+    device: string;
+  };
+}
+
 export type Action =
   | ConnectionChanged
   | Subscribe
   | Unsubscribe
   | ValueChanged
   | ValuesChanged
-  | WritePv;
+  | WritePv
+  | DeviceQueried
+  | QueryDevice;

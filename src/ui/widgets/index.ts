@@ -2,6 +2,7 @@ import log from "loglevel";
 
 export { ActionButton } from "./ActionButton/actionButton";
 export { Checkbox } from "./Checkbox/checkbox";
+export { Device } from "./Device/device";
 export { Display } from "./Display/display";
 export { DrawerWidget } from "./Drawer/drawer";
 export { DropDown } from "./DropDown/dropDown";

@@ -9,9 +9,11 @@ import {
   Unsubscribe,
   ValueChanged,
   ValuesChanged,
-  VALUES_CHANGED
+  VALUES_CHANGED,
+  DeviceQueried,
+  DEVICE_QUERIED
 } from "./actions";
-import { DAlarm } from "../types/dtypes";
+import { DAlarm, DType } from "../types/dtypes";
 import { ddouble, dstring, ddoubleArray } from "../setupTests";
 
 const initialState: CsState = {
@@ -25,7 +27,8 @@ const initialState: CsState = {
   },
   globalMacros: {},
   subscriptions: {},
-  effectivePvNameMap: {}
+  effectivePvNameMap: {},
+  deviceCache: {}
 };
 
 describe("VALUES_CHANGED", (): void => {
@@ -102,6 +105,20 @@ describe("CONNECTION_CHANGED", (): void => {
     };
     const newState = csReducer(initialState, action);
     expect(newState.valueCache["PV"].connected).toEqual(false);
+  });
+});
+
+describe("DEVICE_QUERIED", (): void => {
+  test("csReducer adds device to deviceCache", (): void => {
+    const dtype = new DType({ stringValue: "42" });
+    const deviceName = "testDevice";
+    const action: DeviceQueried = {
+      type: DEVICE_QUERIED,
+      payload: { device: deviceName, value: dtype }
+    };
+
+    const newState = csReducer(initialState, action);
+    expect(newState.deviceCache[deviceName]).toEqual(dtype);
   });
 });
 

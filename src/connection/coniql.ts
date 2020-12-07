@@ -22,7 +22,9 @@ import {
   ValueChangedCallback,
   nullConnCallback,
   nullValueCallback,
-  SubscriptionType
+  SubscriptionType,
+  DeviceQueriedCallback,
+  nullDeviceCallback
 } from "./plugin";
 import { SubscriptionClient } from "subscriptions-transport-ws";
 import {
@@ -234,10 +236,38 @@ const PV_MUTATION = gql`
   }
 `;
 
+export const DEVICE_QUERY = gql`
+  query deviceQuery($device: ID!) {
+    getDevice(id: $device) {
+      id
+      children(flatten: true) {
+        name
+        label
+        child {
+          __typename
+          ... on Channel {
+            id
+          }
+          ... on Device {
+            id
+          }
+          ... on Group {
+            layout
+            children {
+              name
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
 export class ConiqlPlugin implements Connection {
   private client: ApolloClient<NormalizedCacheObject>;
   private onConnectionUpdate: ConnectionChangedCallback;
   private onValueUpdate: ValueChangedCallback;
+  private deviceQueried: DeviceQueriedCallback;
   private connected: boolean;
   private wsClient: SubscriptionClient;
   private disconnected: string[] = [];
@@ -282,6 +312,7 @@ export class ConiqlPlugin implements Connection {
     this.client = new ApolloClient({ link, cache });
     this.onConnectionUpdate = nullConnCallback;
     this.onValueUpdate = nullValueCallback;
+    this.deviceQueried = nullDeviceCallback;
     this.connected = false;
     this.subscriptions = {};
   }
@@ -319,10 +350,12 @@ export class ConiqlPlugin implements Connection {
 
   public connect(
     connectionCallback: ConnectionChangedCallback,
-    valueCallback: ValueChangedCallback
+    valueCallback: ValueChangedCallback,
+    deviceQueried: DeviceQueriedCallback
   ): void {
     this.onConnectionUpdate = connectionCallback;
     this.onValueUpdate = valueCallback;
+    this.deviceQueried = deviceQueried;
     this.connected = true;
   }
 
@@ -341,6 +374,13 @@ export class ConiqlPlugin implements Connection {
     }
     const dtype = coniqlToDType(value, time, status, display);
     this.onValueUpdate(pvName, dtype);
+  }
+
+  private _processDevice(data: any, device: string): void {
+    this.deviceQueried(
+      device,
+      new DType({ stringValue: JSON.stringify(data.data) })
+    );
   }
 
   private _subscribe(pvName: string): Subscription {
@@ -373,6 +413,21 @@ export class ConiqlPlugin implements Connection {
       this.subscriptions[pvName] = this._subscribe(pvName);
     }
     return pvName;
+  }
+
+  public getDevice(device: string): void {
+    this.client
+      .query({
+        query: DEVICE_QUERY,
+        // Note: This currently splits the prefix, as currently devices are not
+        // accessible on ca or pva
+        variables: { device: device.split("://")[1] }
+      })
+      .then(response => this._processDevice(response, device))
+      .catch(error => {
+        log.error(`Failed to query device ${device}`);
+        log.error(error);
+      });
   }
 
   public putPv(pvName: string, value: DType): void {

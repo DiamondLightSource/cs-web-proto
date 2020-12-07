@@ -23,6 +23,7 @@ if (CONIQL_SOCKET !== undefined) {
   plugins.unshift(["pva://", coniql]);
   plugins.unshift(["ca://", coniql]);
   plugins.unshift(["ssim://", coniql]);
+  plugins.unshift(["dev://", coniql]);
 }
 const connection = new ConnectionForwarder(plugins);
 

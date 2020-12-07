@@ -1,4 +1,5 @@
 import { PvState, CsState } from "../../redux/csState";
+import { DType } from "../../types/dtypes";
 
 export interface PvArrayResults {
   [pvName: string]: [PvState, string];
@@ -14,6 +15,16 @@ export function pvStateSelector(
     results[pvName] = [state.valueCache[effectivePvName], effectivePvName];
   }
   return results;
+}
+
+export function deviceSelector(device: string, state: CsState): DType {
+  return state.deviceCache[device];
+}
+
+export function deviceComparator(before: DType, after: DType): boolean {
+  // Note: comparing objects properly is difficult, given device queries
+  // are very infrequent can just always update
+  return false;
 }
 
 /* Used for preventing re-rendering if the results are equivalent.

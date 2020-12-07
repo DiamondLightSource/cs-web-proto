@@ -6,8 +6,10 @@ import {
   SUBSCRIBE,
   WRITE_PV,
   VALUE_CHANGED,
+  QUERY_DEVICE,
   UNSUBSCRIBE,
-  Action
+  Action,
+  DEVICE_QUERIED
 } from "./actions";
 import { DType } from "../types/dtypes";
 
@@ -33,6 +35,17 @@ function valueChanged(
   });
 }
 
+function deviceQueried(
+  store: MiddlewareAPI,
+  device: string,
+  value: DType
+): void {
+  store.dispatch({
+    type: DEVICE_QUERIED,
+    payload: { device, value }
+  });
+}
+
 export const connectionMiddleware = (connection: Connection) => (
   store: MiddlewareAPI
 ) => (next: Dispatch<Action>): any => (action: Action): Action => {
@@ -41,7 +54,10 @@ export const connectionMiddleware = (connection: Connection) => (
       // Partial function application.
       (pvName: string, value: ConnectionState): void =>
         connectionChanged(store, pvName, value),
-      (pvName: string, value: DType): void => valueChanged(store, pvName, value)
+      (pvName: string, value: DType): void =>
+        valueChanged(store, pvName, value),
+      (device: string, value: DType): void =>
+        deviceQueried(store, device, value)
     );
   }
 
@@ -100,6 +116,15 @@ export const connectionMiddleware = (connection: Connection) => (
           log.error(error);
         }
       }
+      break;
+    }
+    case QUERY_DEVICE: {
+      const { device } = action.payload;
+      // Devices should be queried once and then stored
+      if (!store.getState().deviceCache[device]) {
+        connection.getDevice(device);
+      }
+      break;
     }
   }
   return next(action);
