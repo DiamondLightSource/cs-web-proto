@@ -5,7 +5,7 @@ import { LabelComponent } from "./Label/label";
 import { RelativePosition } from "../../types/position";
 import { PV } from "../../types/pv";
 import { contextRender } from "../../setupTests";
-import { fireEvent, waitFor } from "@testing-library/react";
+import { fireEvent } from "@testing-library/react";
 import copyToClipboard from "clipboard-copy";
 
 const PV_NAME = "ca://pv";
@@ -30,7 +30,7 @@ describe("<Widget />", (): void => {
     expect(queryByText("Test")).toBeInTheDocument();
   });
 
-  test("it loads TooltipWrapper on middle click", async (): Promise<void> => {
+  test("it loads tooltip on middle click", async (): Promise<void> => {
     // We have to provide a valid subscriptions dict otherwise
     // we get an error when the widget comes to unsubscribe.
     const initialCsState = {
@@ -40,10 +40,11 @@ describe("<Widget />", (): void => {
       valueCache: {},
       deviceCache: {}
     };
+    const pv = new PV("pv");
 
     const { getByText } = contextRender(
       <Widget
-        pvName={new PV(PV_NAME)}
+        pvName={pv}
         baseWidget={TestLabel}
         position={new RelativePosition()}
         tooltip="hi there"
@@ -55,9 +56,7 @@ describe("<Widget />", (): void => {
     const label = getByText("Test");
     // simulate middle click
     fireEvent.mouseDown(label, { button: 1 });
-    await waitFor((): void => {
-      expect(getByText(/.*hi.*/)).toBeInTheDocument();
-      expect(copyToClipboard).toHaveBeenCalledWith("ca://pv");
-    });
+    expect(getByText(/.*hi.*/)).toBeInTheDocument();
+    expect(copyToClipboard).toHaveBeenCalledWith(pv);
   });
 });

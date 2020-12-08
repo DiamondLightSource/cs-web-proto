@@ -19,8 +19,6 @@ export const WidgetPropType = {
   rules: RulesPropOpt,
   actions: ActionsPropType,
   tooltip: StringPropOpt,
-  resolvedTooltip: StringPropOpt,
-  menuWrapper: BoolPropOpt,
   border: BorderPropOpt,
   visible: BoolPropOpt
 };

@@ -1,7 +1,7 @@
 import React, { CSSProperties } from "react";
 
 import classes from "./label.module.css";
-import { Widget, useCommonCss } from "../widget";
+import { Widget, commonCss } from "../widget";
 import { WidgetPropType } from "../widgetProps";
 import { registerWidget } from "../register";
 import {
@@ -23,8 +23,7 @@ const LabelProps = {
   font: FontPropOpt,
   foregroundColor: ColorPropOpt,
   backgroundColor: ColorPropOpt,
-  border: BorderPropOpt,
-  transform: StringPropOpt
+  border: BorderPropOpt
 };
 
 const LabelWidgetProps = {
@@ -32,13 +31,11 @@ const LabelWidgetProps = {
   ...WidgetPropType
 };
 
-type LabelWidget = InferWidgetProps<typeof LabelWidgetProps>;
-
 export const LabelComponent = (
   props: InferWidgetProps<typeof LabelProps>
 ): JSX.Element => {
-  const style: CSSProperties = useCommonCss(props);
-  const { transparent = false, textAlign = "center", text = "" } = props;
+  const style: CSSProperties = commonCss(props);
+  const { textAlign = "center", text = "" } = props;
   const className = props.className ?? `Label ${classes.Label}`;
   // Since display is "flex", use "flex-start" and "flex-end" to align
   // the content.
@@ -49,19 +46,7 @@ export const LabelComponent = (
     alignment = "flex-end";
   }
   style["justifyContent"] = alignment;
-  style["color"] = props.foregroundColor?.toString();
-  style["backgroundColor"] = props.backgroundColor?.toString();
-  // Transparent prop overrides backgroundColor.
-  if (transparent) {
-    style["backgroundColor"] = "transparent";
-  }
-  if (props.visible) {
-    style["visibility"] = "visible";
-  }
 
-  if (props.transform) {
-    style["transform"] = props.transform;
-  }
   // Simple component to display text - defaults to black text and dark grey background
   return (
     <div className={className} style={style}>
@@ -70,8 +55,8 @@ export const LabelComponent = (
   );
 };
 
-export const Label = (props: LabelWidget): JSX.Element => (
-  <Widget baseWidget={LabelComponent} {...props} />
-);
+export const Label = (
+  props: InferWidgetProps<typeof LabelWidgetProps>
+): JSX.Element => <Widget baseWidget={LabelComponent} {...props} />;
 
 registerWidget(Label, LabelWidgetProps, "label");

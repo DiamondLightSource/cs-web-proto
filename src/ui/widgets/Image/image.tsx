@@ -1,6 +1,6 @@
 import React, { CSSProperties, useContext } from "react";
 
-import { useCommonCss, Widget } from "../widget";
+import { commonCss, Widget } from "../widget";
 import { WidgetPropType } from "../widgetProps";
 import {
   InferWidgetProps,
@@ -54,7 +54,7 @@ export const ImageComponent = (
   }
 
   const style: CSSProperties = {
-    ...useCommonCss(props as any),
+    ...commonCss(props as any),
     overflow,
     textAlign: "left",
     width: imageWidth,
