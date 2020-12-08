@@ -37,7 +37,8 @@ describe("<Widget />", (): void => {
       effectivePvNameMap: {},
       globalMacros: {},
       subscriptions: { [PV_NAME]: [] },
-      valueCache: {}
+      valueCache: {},
+      deviceCache: {}
     };
 
     const { getByText } = contextRender(

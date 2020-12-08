@@ -1,5 +1,12 @@
 import { CsState, PvState, FullPvState } from "../../redux/csState";
-import { pvStateSelector, pvStateComparator, PvArrayResults } from "./utils";
+import { DType } from "../../types/dtypes";
+import {
+  pvStateSelector,
+  pvStateComparator,
+  PvArrayResults,
+  deviceSelector,
+  deviceComparator
+} from "./utils";
 
 const pv1 = "pv1";
 const pv2 = "pv2";
@@ -15,7 +22,8 @@ const state: CsState = {
   valueCache: { pv1: pvState },
   globalMacros: {},
   effectivePvNameMap: { pv1: "pv1", pv2: "pv3" },
-  subscriptions: {}
+  subscriptions: {},
+  deviceCache: {}
 };
 
 describe("pvStateSelector", (): void => {
@@ -67,5 +75,26 @@ describe("pvStateComparator", (): void => {
       pv1: [similarPvState, "pv1"]
     };
     expect(pvStateComparator(singleResult, anotherSingleResult)).toBe(false);
+  });
+});
+
+describe("deviceComparator", (): void => {
+  it("returns false always", (): void => {
+    const dtype = new DType({ stringValue: "42" });
+    expect(deviceComparator(dtype, dtype)).toBe(false);
+  });
+});
+
+describe("deviceSelector", (): void => {
+  it("finds device in deviceCache", (): void => {
+    const dtype = new DType({ stringValue: "testDeviceValue" });
+    state.deviceCache["testDevice"] = dtype;
+
+    expect(deviceSelector("testDevice", state)).toEqual(dtype);
+  });
+
+  it("returns undefined if device not in cache", (): void => {
+    state.deviceCache = {};
+    expect(deviceSelector("testDevice", state)).toBeUndefined();
   });
 });

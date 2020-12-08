@@ -33,7 +33,8 @@ function getConnectionState(pvName: string, value: DType): CsState {
     },
     subscriptions: { [pvName]: [] },
     globalMacros: {},
-    effectivePvNameMap: {}
+    effectivePvNameMap: {},
+    deviceCache: {}
   };
 }
 

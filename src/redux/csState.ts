@@ -2,6 +2,7 @@ import log from "loglevel";
 import {
   VALUE_CHANGED,
   VALUES_CHANGED,
+  DEVICE_QUERIED,
   Action,
   SUBSCRIBE,
   WRITE_PV,
@@ -16,7 +17,8 @@ const initialState: CsState = {
   valueCache: {},
   globalMacros: { SUFFIX: "1" },
   effectivePvNameMap: {},
-  subscriptions: {}
+  subscriptions: {},
+  deviceCache: {}
 };
 
 export interface PvState {
@@ -37,12 +39,17 @@ export interface Subscriptions {
   [pv: string]: string[];
 }
 
+export interface DeviceCache {
+  [key: string]: DType;
+}
+
 /* The shape of the store for the entire application. */
 export interface CsState {
   valueCache: ValueCache;
   effectivePvNameMap: { [pvName: string]: string };
   globalMacros: MacroMap;
   subscriptions: Subscriptions;
+  deviceCache: DeviceCache;
 }
 
 function updateValueCache(
@@ -138,6 +145,15 @@ export function csReducer(state = initialState, action: Action): CsState {
     case WRITE_PV: {
       // Handled by middleware.
       break;
+    }
+    case DEVICE_QUERIED: {
+      const { device, value } = action.payload;
+      const newDeviceState = { ...state.deviceCache };
+      newDeviceState[device] = value;
+      return {
+        ...state,
+        deviceCache: newDeviceState
+      };
     }
   }
   return state;

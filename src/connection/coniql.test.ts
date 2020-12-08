@@ -3,7 +3,8 @@ import {
   ConiqlPlugin,
   ConiqlStatus,
   ConiqlTime,
-  ConiqlBase64Array
+  ConiqlBase64Array,
+  DEVICE_QUERY
 } from "./coniql";
 import { DType } from "../types/dtypes";
 
@@ -51,11 +52,13 @@ describe("ConiqlPlugin", (): void => {
   let cp: ConiqlPlugin;
   let mockConnUpdate: jest.Mock;
   let mockValUpdate: jest.Mock;
+  let mockDevUpdate: jest.Mock;
   beforeEach((): void => {
     cp = new ConiqlPlugin("a.b.c:100");
     mockConnUpdate = jest.fn();
     mockValUpdate = jest.fn();
-    cp.connect(mockConnUpdate, mockValUpdate);
+    mockDevUpdate = jest.fn();
+    cp.connect(mockConnUpdate, mockValUpdate, mockDevUpdate);
   });
 
   it("handles update to value", (): void => {
@@ -111,5 +114,23 @@ describe("ConiqlPlugin", (): void => {
     const [pv, value] = mockValUpdate.mock.calls[0];
     expect(pv).toBe("hello");
     expect(value.time?.datetime?.getFullYear()).toBe(2017);
+  });
+
+  it("queries with device query", (): void => {
+    const catchFunc = jest.fn();
+    const thenFunc = jest.fn(() => {
+      return { catch: catchFunc };
+    });
+    const query: any = jest.fn(() => {
+      return { then: thenFunc };
+    });
+
+    // 'as any' as client is a private property
+    (cp as any).client.query = query;
+    cp.getDevice("dev://stuff");
+    expect((cp as any).client.query).toHaveBeenCalledWith({
+      query: DEVICE_QUERY,
+      variables: { device: "stuff" }
+    });
   });
 });

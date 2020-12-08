@@ -58,7 +58,8 @@ export function contextRender(
     effectivePvNameMap: {},
     globalMacros: {},
     subscriptions: {},
-    valueCache: {}
+    valueCache: {},
+    deviceCache: {}
   }
 ): RenderResult {
   const ParentComponent = (props: { child: JSX.Element }): JSX.Element => {

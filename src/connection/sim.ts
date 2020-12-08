@@ -373,6 +373,10 @@ export class SimulatorPlugin implements Connection {
     return this.onConnectionUpdate !== nullConnCallback;
   }
 
+  public getDevice(device: string): void {
+    log.info("getDevice not implemented on simulator");
+  }
+
   public static parseName(
     pvName: string
   ): { initialValue: any; protocol: string; keyName: string } {
