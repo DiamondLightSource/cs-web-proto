@@ -56,7 +56,8 @@ const OPI_WIDGET_MAPPING: { [key: string]: any } = {
   "org.csstudio.opibuilder.widgets.symbol.multistate.MultistateMonitorWidget":
     "symbol",
   "org.csstudio.opibuilder.widgets.progressbar": "progressbar",
-  "org.csstudio.opibuilder.widgets.LED": "led"
+  "org.csstudio.opibuilder.widgets.LED": "led",
+  "org.csstudio.opibuilder.widgets.detailpanel": "device"
 };
 
 /**
@@ -462,7 +463,8 @@ export const OPI_SIMPLE_PARSERS: ParserDict = {
   rotationAngle: ["rotation_angle", opiParseNumber],
   rotation: ["degree", opiParseNumber],
   flipHorizontal: ["flip_horizontal", opiParseBoolean],
-  flipVertical: ["flip_vertical", opiParseBoolean]
+  flipVertical: ["flip_vertical", opiParseBoolean],
+  deviceName: ["device_name", opiParseString]
 };
 
 /**

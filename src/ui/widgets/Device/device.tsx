@@ -1,36 +1,39 @@
 import React from "react";
 import { Widget } from "./../widget";
 import { WidgetPropType } from "./../widgetProps";
-import { InferWidgetProps, StringPropOpt, StringProp } from "./../propTypes";
+import { InferWidgetProps, StringProp } from "./../propTypes";
 import { registerWidget } from "./../register";
 import { useDevice } from "../../hooks/useDevice";
-// import { parseJson } from "../EmbeddedDisplay/jsonParser";
-// import { widgetDescriptionToComponent } from "../createComponent";
-// import { RelativePosition } from "../../../types/position";
-// import { GroupBoxComponent } from "../GroupBox/groupBox";
+import { parseResponse } from "./deviceParser";
+import { parseJson } from "../EmbeddedDisplay/jsonParser";
+import { widgetDescriptionToComponent } from "../createComponent";
+import { RelativePosition } from "../../../types/position";
 
 const DeviceProps = {
-  deviceName: StringProp,
-  id: StringPropOpt
+  deviceName: StringProp
 };
 
-const DeviceComponent = (
+export const DeviceComponent = (
   props: InferWidgetProps<typeof DeviceProps>
 ): JSX.Element => {
-  const description = useDevice(props.deviceName);
-  // const jsonString = deviceParser(description?.value?.toString());
-  //
-  // const componentDescription = parseJson(jsonString, "pva");
-  //
-  // const component = widgetDescriptionToComponent({
-  // position: new RelativePosition("100%", "100%"),
-  // type: "display",
-  // children: [componentDescription]
-  // });
-  // return (
-  // <GroupBoxComponent name={props.deviceName}>{component}</GroupBoxComponent>
-  // );
-  return <p>{description?.value?.stringValue || "Device"}</p>;
+  // Remove spaces from input
+  const description = useDevice("dev://" + props.deviceName.replace(/\s/g, ""));
+
+  let jsonResponse = {};
+  if (description && description.value) {
+    jsonResponse = JSON.parse(description?.value?.stringValue || "");
+  }
+  const jsonString = parseResponse(jsonResponse as any);
+
+  const componentDescription = parseJson(jsonString, "pva");
+
+  const Component = widgetDescriptionToComponent({
+    position: new RelativePosition("100%", "100%"),
+    type: "display",
+    children: [componentDescription]
+  });
+
+  return Component;
 };
 
 const DeviceWidgetProps = {
