@@ -3,18 +3,21 @@ import { MiddlewareAPI, Dispatch } from "redux";
 
 export class UpdateThrottle {
   private queue: Action[];
-  public ready: boolean;
+  private started: boolean;
+  private updateMillis: number;
+
   constructor(updateMillis: number) {
     this.queue = [];
-    this.ready = false;
-    setInterval(() => (this.ready = true), updateMillis);
+    this.started = false;
+    this.updateMillis = updateMillis;
   }
 
   public queueUpdate(action: Action, store: MiddlewareAPI): void {
-    this.queue.push(action);
-    if (this.ready) {
-      this.sendQueue(store);
+    if (!this.started) {
+      setInterval(() => this.sendQueue(store), this.updateMillis);
+      this.started = true;
     }
+    this.queue.push(action);
   }
 
   public sendQueue(store: MiddlewareAPI): void {
@@ -22,7 +25,6 @@ export class UpdateThrottle {
       store.dispatch({ type: VALUES_CHANGED, payload: [...this.queue] });
       this.queue = [];
     }
-    this.ready = false;
   }
 }
 
