@@ -53,7 +53,6 @@ describe("throttleMidddlware", (): void => {
   });
   it("dispatches ValuesChanged when receiving ValueChanged", (): void => {
     const middleware = throttleMiddleware(updater);
-    updater.ready = true;
     // nextHandler takes next() and returns the actual middleware function
     const nextHandler = middleware(mockStore);
     const mockNext = jest.fn();
@@ -64,10 +63,13 @@ describe("throttleMidddlware", (): void => {
       payload: { pvName: "pv", value: ddouble(0) }
     };
     actionHandler(valueAction);
+
+    // manually trigger the dispatch
+    updater.sendQueue(mockStore);
     expect(mockStore.dispatch).toHaveBeenCalledTimes(1);
+    expect(mockStore.dispatch.mock.calls[0][0].type).toEqual(VALUES_CHANGED);
     // The value update is not passed on.
     expect(mockNext).not.toHaveBeenCalled();
-    expect(mockStore.dispatch.mock.calls[0][0].type).toEqual(VALUES_CHANGED);
   });
 
   it("doesn't dispatch when receiving ConnectionChanged", (): void => {

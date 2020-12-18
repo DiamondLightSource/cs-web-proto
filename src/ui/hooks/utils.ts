@@ -22,9 +22,13 @@ export function deviceSelector(device: string, state: CsState): DType {
 }
 
 export function deviceComparator(before: DType, after: DType): boolean {
-  // Note: comparing objects properly is difficult, given device queries
-  // are very infrequent can just always update
-  return false;
+  if (Object.keys(before).length !== Object.keys(after).length) {
+    return false;
+  }
+  if (before.value.stringValue !== after.value.stringValue) {
+    return false;
+  }
+  return true;
 }
 
 /* Used for preventing re-rendering if the results are equivalent.

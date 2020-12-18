@@ -120,9 +120,14 @@ export const connectionMiddleware = (connection: Connection) => (
     }
     case QUERY_DEVICE: {
       const { device } = action.payload;
-      // Devices should be queried once and then stored
-      if (!store.getState().deviceCache[device]) {
-        connection.getDevice(device);
+      try {
+        // Devices should be queried once and then stored
+        if (!store.getState().deviceCache[device]) {
+          connection.getDevice(device);
+        }
+      } catch (error) {
+        log.error(`Failed to query device ${device}`);
+        log.error(error);
       }
       break;
     }

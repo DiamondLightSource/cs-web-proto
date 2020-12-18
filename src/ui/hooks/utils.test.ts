@@ -79,9 +79,15 @@ describe("pvStateComparator", (): void => {
 });
 
 describe("deviceComparator", (): void => {
-  it("returns false always", (): void => {
+  it("returns false if string values don't match", (): void => {
+    const dtype1 = new DType({ stringValue: "42" });
+    const dtype2 = new DType({ stringValue: "43" });
+    expect(deviceComparator(dtype1, dtype2)).toBe(false);
+  });
+
+  it("returns true if string values do match", (): void => {
     const dtype = new DType({ stringValue: "42" });
-    expect(deviceComparator(dtype, dtype)).toBe(false);
+    expect(deviceComparator(dtype, dtype)).toBe(true);
   });
 });
 
