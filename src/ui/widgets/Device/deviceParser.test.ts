@@ -23,21 +23,21 @@ describe("wordSplitter", (): void => {
 
 describe("createLabel", (): void => {
   test("Empty label fills in with placeholder", (): void => {
-    expect(createLabel()).toMatch(`"text":"-"`);
+    expect(createLabel().text).toBe("-");
   });
 
   test("Value is placed into label", (): void => {
-    expect(createLabel("ValueHere")).toMatch("Value Here");
+    expect(createLabel("ValueHere").text).toBe("Value Here");
   });
 });
 
 describe("createReadback", (): void => {
   test("Empty pv fills in with placeholder", (): void => {
-    expect(createReadback()).toMatch(`"pvName": ""`);
+    expect(createReadback().pvName).toBe("");
   });
 
   test("pv is placed into readback", (): void => {
-    expect(createReadback("PvName")).toMatch(`"pvName": "PvName"`);
+    expect(createReadback("PvName").pvName).toBe("PvName");
   });
 });
 
@@ -113,26 +113,26 @@ describe("parseResponseIntoObject", (): void => {
 describe("parseResponse", (): void => {
   test("empty response gives empty groupbox", (): void => {
     const component = parseResponse({} as Response);
-    expect(component).toMatch(`"type": "groupbox"`);
-    expect(component).toMatch(`"name": "Device"`);
-    expect(component).toMatch(`"children": []`);
+    expect(component.type).toBe("groupbox");
+    expect(component.name).toBe("Device");
+    expect(component.children[0].children.length).toBe(0);
   });
 
   test("response is parsed", (): void => {
     const component = parseResponse(fakeResponseJson);
-    expect(component).toMatch(`"name": "M1 Yaw"`);
+    expect(component.name).toMatch("M1 Yaw");
 
-    // Check labels corresponding to PVs are present
-    expect(component).toMatch("Direction");
-    expect(component).toMatch("Limit Violation");
-    expect(component).toMatch("Readback");
+    const children = component.children[0].children;
 
-    // Check group label is present
-    expect(component).toMatch("Limits");
+    // Individual pvs are first
+    expect(children[0].text).toBe("Readback");
+    expect(children[1].pvName).toBe("ca://BL21I-OP-MIRR-01:YAW.RBV");
+    expect(children[2].text).toBe("Direction");
+    expect(children[3].pvName).toBe("ca://BL21I-OP-MIRR-01:YAW.DIR");
 
-    // Check PV names are present
-    expect(component).toMatch("ca://BL21I-OP-MIRR-01:YAW.RBV");
-    expect(component).toMatch("ca://BL21I-OP-MIRR-01:YAW.LVIO");
-    expect(component).toMatch("ca://BL21I-OP-MIRR-01:YAW.DIR");
+    // Groups are next
+    const subChild = children[4].children[0].children;
+    expect(subChild[0].text).toBe("Limit Violation");
+    expect(subChild[1].pvName).toBe("ca://BL21I-OP-MIRR-01:YAW.LVIO");
   });
 });

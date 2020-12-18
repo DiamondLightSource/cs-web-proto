@@ -5,7 +5,7 @@ import { InferWidgetProps, StringProp } from "./../propTypes";
 import { registerWidget } from "./../register";
 import { useDevice } from "../../hooks/useDevice";
 import { parseResponse } from "./deviceParser";
-import { parseJson } from "../EmbeddedDisplay/jsonParser";
+import { parseObject } from "../EmbeddedDisplay/jsonParser";
 import { widgetDescriptionToComponent } from "../createComponent";
 import { RelativePosition } from "../../../types/position";
 import { BorderStyle, Border } from "../../../types/border";
@@ -27,9 +27,9 @@ export const DeviceComponent = (
     jsonResponse = JSON.parse(description?.value?.stringValue || "");
     border = Border.NONE;
   }
-  const jsonString = parseResponse(jsonResponse as any);
+  const jsonObject = parseResponse(jsonResponse as any);
 
-  const componentDescription = parseJson(jsonString, "pva");
+  const componentDescription = parseObject(jsonObject, "pva");
 
   const Component = widgetDescriptionToComponent({
     position: new RelativePosition("100%", "100%"),

@@ -44,19 +44,25 @@ export interface Response {
 export const wordSplitter = (word: string): string =>
   word.replace(/([A-Z])/g, " $1").trim();
 
-export const createLabel = (value = "-"): string => {
-  let label = '{"type": "label", "position": "relative", "text":"';
-  // Put spaces between each capital letter
-  label += wordSplitter(value);
-  label += `", "width": "45%", "backgroundColor": "transparent", "margin": "5px 0 0 0"},`;
-  return label;
+export const createLabel = (value = "-"): any => {
+  return {
+    type: "label",
+    position: "relative",
+    text: `${wordSplitter(value)}`,
+    width: "45%",
+    backgroundColor: "transparent",
+    margin: "5px 0 0 0"
+  };
 };
 
-export const createReadback = (pv = ""): string => {
-  let readback =
-    '{"type": "readback", "position": "relative", "width": "45%", "margin": "5px 0 0 0", ';
-  readback += `"pvName": "${pv}"},`;
-  return readback;
+export const createReadback = (pv = ""): any => {
+  return {
+    type: "readback",
+    position: "relative",
+    width: "45%",
+    margin: "5px 0 0 0",
+    pvName: `${pv}`
+  };
 };
 
 export interface Groups {
@@ -95,8 +101,8 @@ export const parseResponseIntoObject = (response: Response): any => {
   return [deviceName, pvIds, groups];
 };
 
-export const parseResponse = (response: Response): string => {
-  let childrenComponents = '"children": [';
+export const parseResponse = (response: Response): any => {
+  const deviceChildren: any[] = [];
 
   let deviceName = "Device";
   if (response.getDevice) {
@@ -111,43 +117,55 @@ export const parseResponse = (response: Response): string => {
     const groupStrings = Object.entries(groups).map(data => {
       const [groupName, pvNames] = data;
 
-      let child = `{"type": "groupbox", "width": "95%", "name": "${wordSplitter(
-        groupName
-      )}", "position": "relative", "margin": "10px 0 10px 0", "children": [{"type": "flexcontainer", "position": "relative", "overflow": "auto", "children": [`;
-      // For each pv in group find the PV id and display it with a readback and label
+      const groupChildren = [];
+
       for (const pvName of pvNames) {
         const id = pvIds[pvName];
         delete pvIds[pvName];
-        child += createLabel(pvName);
-        child += createReadback(id);
+        groupChildren.push(createLabel(pvName));
+        groupChildren.push(createReadback(id));
       }
 
-      // Chop off trailing comma
-      child = child.substring(0, child.length - 1);
-      child += "]}]},";
-      return child;
+      return {
+        type: "groupbox",
+        width: "95%",
+        name: `${wordSplitter(groupName)}`,
+        position: "relative",
+        margin: "10px 0 10px 0",
+        children: [
+          {
+            type: "flexcontainer",
+            position: "relative",
+            overflow: "auto",
+            children: groupChildren
+          }
+        ]
+      };
     });
 
     // PVs that aren't in a group are displayed first
     Object.entries(pvIds).forEach(data => {
       const [pvName, id] = data;
-      childrenComponents += createLabel(pvName);
-      childrenComponents += createReadback(id);
+      deviceChildren.push(createLabel(pvName));
+      deviceChildren.push(createReadback(id));
     });
 
     // Then groups are displayed after
-    groupStrings.forEach(child => (childrenComponents += child));
-
-    // Chop off trailing comma
-    childrenComponents = childrenComponents.substring(
-      0,
-      childrenComponents.length - 1
-    );
+    groupStrings.forEach(child => deviceChildren.push(child));
   }
 
-  childrenComponents += "]";
-
-  return `{"type": "groupbox", "name": "${wordSplitter(
-    deviceName
-  )}", "position": "relative", "margin": "5px 0 0 0", "children": [{"type": "flexcontainer", "position": "relative", "overflow": "auto", ${childrenComponents} }]}`;
+  return {
+    type: "groupbox",
+    name: `${wordSplitter(deviceName)}`,
+    position: "relative",
+    margin: "5px 0 0 0",
+    children: [
+      {
+        type: "flexcontainer",
+        position: "relative",
+        overflow: "auto",
+        children: deviceChildren
+      }
+    ]
+  };
 };
