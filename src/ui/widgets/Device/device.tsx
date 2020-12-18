@@ -1,5 +1,5 @@
 import React from "react";
-import { Widget } from "./../widget";
+import { Widget, commonCss } from "./../widget";
 import { WidgetPropType } from "./../widgetProps";
 import { InferWidgetProps, StringProp } from "./../propTypes";
 import { registerWidget } from "./../register";
@@ -8,6 +8,8 @@ import { parseResponse } from "./deviceParser";
 import { parseJson } from "../EmbeddedDisplay/jsonParser";
 import { widgetDescriptionToComponent } from "../createComponent";
 import { RelativePosition } from "../../../types/position";
+import { BorderStyle, Border } from "../../../types/border";
+import { Color } from "../../../types/color";
 
 const DeviceProps = {
   deviceName: StringProp
@@ -19,9 +21,11 @@ export const DeviceComponent = (
   // Remove spaces from input
   const description = useDevice("dev://" + props.deviceName.replace(/\s/g, ""));
 
+  let border = new Border(BorderStyle.Dotted, Color.DISCONNECTED, 3);
   let jsonResponse = {};
   if (description && description.value) {
     jsonResponse = JSON.parse(description?.value?.stringValue || "");
+    border = Border.NONE;
   }
   const jsonString = parseResponse(jsonResponse as any);
 
@@ -33,7 +37,8 @@ export const DeviceComponent = (
     children: [componentDescription]
   });
 
-  return Component;
+  const style = commonCss({ border });
+  return <div style={style}>{Component}</div>;
 };
 
 const DeviceWidgetProps = {
