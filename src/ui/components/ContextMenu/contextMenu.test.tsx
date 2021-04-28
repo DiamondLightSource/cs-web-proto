@@ -7,11 +7,14 @@ import { RelativePosition } from "../../../types/position";
 import { contextRender } from "../../../setupTests";
 
 // Mock the useHistory hook
-jest.mock("react-router-dom", (): object => ({
-  useHistory: (): object => ({
-    push: jest.fn()
+jest.mock(
+  "react-router-dom",
+  (): Record<string, unknown> => ({
+    useHistory: (): Record<string, unknown> => ({
+      push: jest.fn()
+    })
   })
-}));
+);
 
 // Clear the window.open mock (set up in setupTests.ts).
 afterEach((): void => {

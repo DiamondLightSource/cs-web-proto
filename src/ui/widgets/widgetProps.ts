@@ -54,7 +54,7 @@ export type AnyProps = PVWidgetComponent & {
 };
 
 export interface Component {
-  style?: object;
+  style?: Record<string, string>;
 }
 
 export type PVComponent = Component & PvState;

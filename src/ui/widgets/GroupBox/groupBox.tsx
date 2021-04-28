@@ -3,18 +3,25 @@ import React from "react";
 import { Widget } from "../widget";
 import { WidgetPropType } from "../widgetProps";
 import { registerWidget } from "../register";
-import { StringProp, ChildrenPropOpt, InferWidgetProps } from "../propTypes";
+import {
+  StringProp,
+  ChildrenPropOpt,
+  InferWidgetProps,
+  ColorPropOpt
+} from "../propTypes";
 
-interface GroupBox {
-  name: string;
-  children?: JSX.Element;
-  backgroundColor?: string;
-}
+const GroupBoxProps = {
+  name: StringProp,
+  children: ChildrenPropOpt,
+  backgroundColor: ColorPropOpt
+};
 
 // Widget that renders a group-box style border showing the name prop.
 // This could be replaced if we can implement this as part of the
 // border prop.
-export const GroupBoxComponent = (props: GroupBox): JSX.Element => (
+export const GroupBoxComponent = (
+  props: InferWidgetProps<typeof GroupBoxProps>
+): JSX.Element => (
   // Uses an inner margin for children similar to Phoebus
   // This prevents the title being overwritten
   // Could be changed or perhaps customisable as a prop
@@ -22,7 +29,7 @@ export const GroupBoxComponent = (props: GroupBox): JSX.Element => (
     style={{
       height: "100%",
       width: "100%",
-      backgroundColor: props.backgroundColor,
+      backgroundColor: props.backgroundColor?.toString(),
       margin: 0,
       padding: 0
     }}
@@ -33,7 +40,7 @@ export const GroupBoxComponent = (props: GroupBox): JSX.Element => (
         position: "relative",
         height: "100%",
         width: "100%",
-        backgroundColor: props.backgroundColor
+        backgroundColor: props.backgroundColor?.toString()
       }}
     >
       {props.children}
@@ -41,14 +48,14 @@ export const GroupBoxComponent = (props: GroupBox): JSX.Element => (
   </fieldset>
 );
 
-const GroupBoxProps = {
+const GroupBoxWidgetProps = {
   ...WidgetPropType,
   name: StringProp,
   children: ChildrenPropOpt
 };
 
 export const GroupBox = (
-  props: InferWidgetProps<typeof GroupBoxProps>
+  props: InferWidgetProps<typeof GroupBoxWidgetProps>
 ): JSX.Element => <Widget baseWidget={GroupBoxComponent} {...props} />;
 
-registerWidget(GroupBox, GroupBoxProps, "groupbox");
+registerWidget(GroupBox, GroupBoxWidgetProps, "groupbox");

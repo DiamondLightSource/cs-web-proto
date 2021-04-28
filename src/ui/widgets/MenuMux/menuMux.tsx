@@ -58,14 +58,14 @@ export const SmartMenuMux = (props: {
   );
 };
 
-const MenuMuxProps = {
+const MenuMuxWidgetProps = {
   ...PVWidgetPropType,
   symbol: StringProp,
   values: MacrosProp
 };
 
 export const MenuMux = (
-  props: InferWidgetProps<typeof MenuMuxProps>
+  props: InferWidgetProps<typeof MenuMuxWidgetProps>
 ): JSX.Element => <Widget baseWidget={SmartMenuMux} {...props} />;
 
-registerWidget(MenuMux, MenuMuxProps, "menumux");
+registerWidget(MenuMux, MenuMuxWidgetProps, "menumux");

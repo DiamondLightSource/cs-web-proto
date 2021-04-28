@@ -14,8 +14,8 @@ export interface WidgetDescription {
 }
 
 class PropCheckFailed extends Error {
-  public details: object;
-  constructor(msg: string, details: object) {
+  public details: Record<string, unknown>;
+  constructor(msg: string, details: Record<string, unknown>) {
     super(msg);
     // Set the prototype explicitly.
     Object.setPrototypeOf(this, PropCheckFailed.prototype);

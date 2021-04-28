@@ -11,7 +11,7 @@ const initialState = {
 
 export const OutlineContext = createContext(initialState);
 
-export const OutlineProvider: React.FC<{}> = ({
+export const OutlineProvider: React.FC<Record<string, unknown>> = ({
   children
 }: any): JSX.Element => {
   const [showOutlines, setShowOutlines] = useState(

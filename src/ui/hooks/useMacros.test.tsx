@@ -8,7 +8,7 @@ import { contextRender } from "../../setupTests";
   excessive mocking.
   https://kentcdodds.com/blog/how-to-test-custom-react-hooks
 */
-export function substituteMacros(props: any): any {
+export function substituteMacros(props: Record<string, unknown>): any {
   let resolvedProps = {};
   function MacrosTester(): JSX.Element {
     resolvedProps = useMacros(props);

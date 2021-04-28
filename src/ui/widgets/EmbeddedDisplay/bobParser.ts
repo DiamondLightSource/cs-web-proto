@@ -32,7 +32,7 @@ const BOB_WIDGET_MAPPING: { [key: string]: any } = {
   label: "label",
   group: "grouping",
   rectangle: "shape",
-  action_button: "actionbutton" // eslint-disable-line @typescript-eslint/camelcase
+  action_button: "actionbutton"
 };
 
 function bobParseType(props: any): string {

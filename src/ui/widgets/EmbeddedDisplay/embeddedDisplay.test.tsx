@@ -1,4 +1,4 @@
-import React, * as ReactAll from "react";
+import React from "react";
 import log from "loglevel";
 import { EmbeddedDisplay } from "./embeddedDisplay";
 
@@ -33,11 +33,11 @@ describe("<EmbeddedDisplay>", (): void => {
       const mockSuccessResponse = {};
       const mockTextPromise = Promise.resolve(mockSuccessResponse);
       const mockFetchPromise = Promise.resolve({
-        text: (): Promise<{}> => mockTextPromise
+        text: (): Promise<unknown> => mockTextPromise
       });
       jest
         .spyOn(globalWithFetch, "fetch")
-        .mockImplementation((): Promise<{}> => mockFetchPromise);
+        .mockImplementation((): Promise<unknown> => mockFetchPromise);
 
       // Suppress logging for expected error.
       log.setLevel("error");
@@ -74,12 +74,12 @@ describe("<EmbeddedDisplay>", (): void => {
     </widget>`;
     const mockTextPromise = Promise.resolve(mockSuccessResponse);
     const mockFetchPromise = Promise.resolve({
-      text: (): Promise<{}> => mockTextPromise
+      text: (): Promise<unknown> => mockTextPromise
     });
 
     jest
       .spyOn(globalWithFetch, "fetch")
-      .mockImplementation((): Promise<{}> => mockFetchPromise);
+      .mockImplementation((): Promise<unknown> => mockFetchPromise);
 
     // Suppress logging for expected error.
     log.setLevel("error");
@@ -124,12 +124,12 @@ describe("<EmbeddedDisplay>", (): void => {
     </display>`;
     const mockTextPromise = Promise.resolve(mockSuccessResponse);
     const mockFetchPromise = Promise.resolve({
-      text: (): Promise<{}> => mockTextPromise
+      text: (): Promise<unknown> => mockTextPromise
     });
 
     jest
       .spyOn(globalWithFetch, "fetch")
-      .mockImplementation((): Promise<{}> => mockFetchPromise);
+      .mockImplementation((): Promise<unknown> => mockFetchPromise);
 
     const { queryByText } = contextRender(
       <EmbeddedDisplay
@@ -159,12 +159,12 @@ describe("<EmbeddedDisplay>", (): void => {
       '{ "type": "display", "position": "relative", "children": [{ "type": "label", "position": "relative", "text": "Test" }] }';
     const mockJsonPromise = Promise.resolve(mockSuccessResponse);
     const mockFetchPromise = Promise.resolve({
-      text: (): Promise<{}> => mockJsonPromise
+      text: (): Promise<unknown> => mockJsonPromise
     });
 
     jest
       .spyOn(globalWithFetch, "fetch")
-      .mockImplementation((): Promise<{}> => mockFetchPromise);
+      .mockImplementation((): Promise<unknown> => mockFetchPromise);
 
     const { queryByText } = contextRender(
       <EmbeddedDisplay

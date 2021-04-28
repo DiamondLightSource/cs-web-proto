@@ -1,4 +1,4 @@
-import React, * as ReactAll from "react";
+import React from "react";
 
 import { waitFor } from "@testing-library/react";
 import { DynamicPageComponent } from "./dynamicPage";
@@ -33,11 +33,10 @@ describe("<DynamicPage>", (): void => {
       '{"type": "display", "position": "relative", "children": [ { "type": "label", "position": "relative", "text": "hello" } ] }';
     const mockJsonPromise = Promise.resolve(mockSuccessResponse);
     const mockFetchPromise = Promise.resolve({
-      text: (): Promise<{}> => mockJsonPromise
+      text: (): Promise<unknown> => mockJsonPromise
     });
-    jest
-      .spyOn(globalWithFetch, "fetch")
-      .mockImplementation((): Promise<{}> => mockFetchPromise);
+    const mockFetch = (): Promise<unknown> => mockFetchPromise;
+    jest.spyOn(globalWithFetch, "fetch").mockImplementation(mockFetch);
 
     const initialPageState: PageState = {
       testlocation: {

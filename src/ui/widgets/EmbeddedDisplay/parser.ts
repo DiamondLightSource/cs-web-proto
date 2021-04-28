@@ -45,7 +45,7 @@ export type PatchFunction = (props: WidgetDescription) => void;
 
 /* Take an object representing a widget and return our widget description. */
 export function genericParser(
-  widget: any,
+  widget: any, // eslint-disable-line @typescript-eslint/explicit-module-boundary-types
   targetWidget: React.FC,
   simpleParsers: ParserDict,
   complexParsers: ComplexParserDict,
@@ -100,7 +100,7 @@ export function genericParser(
 }
 
 export function parseWidget(
-  props: any,
+  props: any, // eslint-disable-line @typescript-eslint/explicit-module-boundary-types
   getTargetWidget: (props: any) => React.FC,
   childrenName: string,
   simpleParsers: ParserDict,

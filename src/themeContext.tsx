@@ -42,7 +42,9 @@ export const ThemeContext = React.createContext(initialState);
  * preference, toggle accessed using
  * const { toggle } = useContext(ThemeContext)
  */
-export const ThemeProvider: React.FC<{}> = ({ children }: any): JSX.Element => {
+export const ThemeProvider: React.FC<Record<string, unknown>> = ({
+  children
+}: any): JSX.Element => {
   // dark represents dark mode or light mode
   const [dark, setIsDark] = useState(localStorage.getItem("dark") === "true");
 
