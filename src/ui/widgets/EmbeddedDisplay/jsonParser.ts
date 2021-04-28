@@ -120,7 +120,8 @@ export const COMPLEX_PARSERS: ComplexParserDict = {
   position: jsonParsePosition
 };
 
-function jsonGetTargetWidget(props: Record<string, unknown>): React.FC {
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+function jsonGetTargetWidget(props: any): React.FC {
   const typeid = props.type;
   let targetWidget;
   try {

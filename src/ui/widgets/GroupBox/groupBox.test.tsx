@@ -2,6 +2,7 @@ import React from "react";
 import { GroupBoxComponent } from "./groupBox";
 import { shallow, ShallowWrapper } from "enzyme";
 import { create, ReactTestRenderer } from "react-test-renderer";
+import { Color } from "../../../types/color";
 
 let snapshot: ReactTestRenderer;
 let wrapper: ShallowWrapper;
@@ -14,7 +15,7 @@ beforeEach((): void => {
 describe("<GroupingContainerComponent />", (): void => {
   test("it matches the snapshot", (): void => {
     snapshot = create(
-      <GroupBoxComponent name={"Test"} backgroundColor={"white"} />
+      <GroupBoxComponent name={"Test"} backgroundColor={Color.WHITE} />
     );
     expect(snapshot.toJSON()).toMatchSnapshot();
   });
