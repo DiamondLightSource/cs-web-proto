@@ -6,12 +6,16 @@ import {
   WidgetActions
 } from "./widgetActions";
 import { writePv } from "../hooks/useSubscription";
+import { DType } from "../../types/dtypes";
 
-jest.mock("../hooks/useSubscription", (): object => {
-  return {
-    writePv: jest.fn()
-  };
-});
+jest.mock(
+  "../hooks/useSubscription",
+  (): Record<string, (pvName: string, value: DType) => void> => {
+    return {
+      writePv: jest.fn()
+    };
+  }
+);
 
 const WRITE_PV_ACTION: WritePv = {
   type: WRITE_PV,
@@ -52,10 +56,10 @@ describe("getActionDescription", (): void => {
 });
 
 describe("executeActions", (): void => {
-  it.each<[WidgetActions, number]>([
-    [ACTIONS_EX_AS_ONE, 2],
-    [ACTIONS_EX_FIRST, 3] // cumulative? we should reset it
-  ])("executes %d actions", (actions, num): void => {
+  it.each<[number, WidgetActions]>([
+    [2, ACTIONS_EX_AS_ONE],
+    [1, ACTIONS_EX_FIRST]
+  ])("executes %d actions", (num, actions): void => {
     executeActions(actions);
     expect(writePv).toHaveBeenCalledTimes(num);
   });

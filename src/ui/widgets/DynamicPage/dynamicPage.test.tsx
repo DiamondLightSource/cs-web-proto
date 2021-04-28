@@ -12,7 +12,6 @@ interface GlobalFetch extends NodeJS.Global {
   fetch: any;
 }
 const globalWithFetch = global as GlobalFetch;
-jest.spyOn(ReactAll, "useEffect").mockImplementation((f): any => f());
 
 beforeEach((): void => {
   // Ensure the fetch() function mock is always cleared.
