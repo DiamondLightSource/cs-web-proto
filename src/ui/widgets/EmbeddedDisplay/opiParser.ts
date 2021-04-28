@@ -134,7 +134,7 @@ export function opiParseFont(jsonProp: ElementCompact): Font {
  */
 function opiParseMacros(jsonProp: ElementCompact): MacroMap {
   const macroMap: MacroMap = {};
-  Object.entries(jsonProp as Record<string, unknown>).forEach(
+  Object.entries(jsonProp as Record<string, any>).forEach(
     ([key, value]): void => {
       macroMap[key] = value["_text"] ?? "";
     }
