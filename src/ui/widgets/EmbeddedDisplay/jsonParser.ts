@@ -29,7 +29,7 @@ interface JsonFont {
 function jsonParsePvName(pvName: string, defaultProtocol: string): PV {
   return PV.parse(pvName, defaultProtocol);
 }
-function jsonParsePosition(props: any): Position {
+function jsonParsePosition(props: Record<string, string>): Position {
   if (props.position === "absolute") {
     return new AbsolutePosition(
       props.x,
@@ -120,6 +120,7 @@ export const COMPLEX_PARSERS: ComplexParserDict = {
   position: jsonParsePosition
 };
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 function jsonGetTargetWidget(props: any): React.FC {
   const typeid = props.type;
   let targetWidget;
@@ -137,7 +138,7 @@ function jsonGetTargetWidget(props: any): React.FC {
  * @param defaultProtocol default protocol to use for PVs.
  */
 export function parseObject(
-  object: any,
+  object: any, // eslint-disable-line @typescript-eslint/explicit-module-boundary-types
   defaultProtocol: string
 ): WidgetDescription {
   const simpleParsers: ParserDict = {

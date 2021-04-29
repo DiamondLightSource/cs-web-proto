@@ -12,7 +12,7 @@ export interface MenuButtonProps {
   onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
   value?: DType;
   readonly: boolean;
-  style?: {};
+  style?: Record<string, string>;
   label?: string;
 }
 
@@ -91,7 +91,7 @@ export const SmartMenuButton = (props: {
   pvName: string;
   value?: DType;
   readonly: boolean;
-  style?: {};
+  style?: Record<string, string>;
   label?: string;
 }): JSX.Element => {
   // Function to send the value on to the PV

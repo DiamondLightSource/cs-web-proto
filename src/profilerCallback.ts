@@ -67,7 +67,7 @@ export function onRenderCallback(
   baseDuration: number,
   startTime: number,
   commitTime: number,
-  interactions: any
+  interactions: unknown
 ): void {
   if (PROFILE_ENABLED) {
     const reconciliationTime = commitTime - startTime;

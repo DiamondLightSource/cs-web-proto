@@ -26,7 +26,11 @@ function tooltipValue(connected?: boolean, value?: DType): string {
   }
 }
 
-export function resolveTooltip(props: any): string | undefined {
+export function resolveTooltip(props: {
+  connected: boolean;
+  value: DType;
+  tooltip: string;
+}): string | undefined {
   const pvValueRegex = /\${pvValue}/g;
   const { connected, value, tooltip } = props;
   if (tooltip.match(pvValueRegex)) {

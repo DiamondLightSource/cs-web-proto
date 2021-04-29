@@ -1,3 +1,5 @@
+// Allow use of any for parsing JSON.
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import log from "loglevel";
 import { ElementCompact, xml2js } from "xml-js";
 import { Rule, Expression, OpiFile } from "../../../types/props";
@@ -132,9 +134,11 @@ export function opiParseFont(jsonProp: ElementCompact): Font {
  */
 function opiParseMacros(jsonProp: ElementCompact): MacroMap {
   const macroMap: MacroMap = {};
-  Object.entries(jsonProp as object).forEach(([key, value]): void => {
-    macroMap[key] = value["_text"] ?? "";
-  });
+  Object.entries(jsonProp as Record<string, any>).forEach(
+    ([key, value]): void => {
+      macroMap[key] = value["_text"] ?? "";
+    }
+  );
   return macroMap;
 }
 

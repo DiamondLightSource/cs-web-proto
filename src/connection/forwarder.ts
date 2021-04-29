@@ -1,3 +1,4 @@
+import { DType } from "../types/dtypes";
 import {
   Connection,
   ConnectionChangedCallback,
@@ -40,7 +41,7 @@ export class ConnectionForwarder implements Connection {
     return this.connected;
   }
 
-  public putPv(pvName: string, value: any): void {
+  public putPv(pvName: string, value: DType): void {
     const connection = this.getConnection(pvName);
     return connection.putPv(pvName, value);
   }

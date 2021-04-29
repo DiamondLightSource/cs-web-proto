@@ -1,5 +1,9 @@
 import { SimulatorPlugin } from "./sim";
-import { nullConnCallback, nullValueCallback } from "./plugin";
+import {
+  nullConnCallback,
+  nullValueCallback,
+  ValueChangedCallback
+} from "./plugin";
 import { ddouble, dstring } from "../setupTests";
 import { DType } from "../types/dtypes";
 
@@ -8,7 +12,7 @@ beforeEach((): void => {
   simulator = new SimulatorPlugin();
 });
 
-function getValue(pvName: string, callback: Function): void {
+function getValue(pvName: string, callback: (value: DType) => void): void {
   simulator.connect(nullConnCallback, function(updatePvName, value): void {
     const nameInfo1 = SimulatorPlugin.parseName(updatePvName);
     const nameInfo2 = SimulatorPlugin.parseName(updatePvName);
@@ -304,6 +308,8 @@ it("return undefined for bad pvs", (): void => {
   simulator.subscribe("bad pv");
 });
 
+type dataCallback = (data: { name: string; value: DType }) => void;
+
 class ConnectionClient {
   public expectedValue: DType;
   public subscribed: boolean;
@@ -340,7 +346,9 @@ class ConnectionClient {
     this.simulator.putPv(this._key(key), ddouble(value));
   }
 
-  public callback(callback: Function): Function {
+  public callback(
+    callback: dataCallback
+  ): (name: string, value: DType) => void {
     return function(name: string, value: DType): void {
       return callback({ name: name, value: value });
     };
@@ -358,18 +366,18 @@ class StagedCallbacks {
   public constructor() {
     this.doneStages = [];
   }
-  public stage(name: string, f: Function, ...args: any[]): void {
+  public stage(name: string, f: () => void): void {
     if (this.doneStages.indexOf(name) === -1) {
       this.doneStages.push(name);
-      f(...args);
+      f();
       throw new StageFinished(name);
     }
   }
 
-  public callback(callback: Function): any {
-    return function(...args: any[]): void {
+  public callback(callback: ValueChangedCallback): ValueChangedCallback {
+    return function(name: string, value: DType): void {
       try {
-        return callback(...args);
+        return callback(name, value);
       } catch (e) {
         if (e instanceof StageFinished) {
           return;

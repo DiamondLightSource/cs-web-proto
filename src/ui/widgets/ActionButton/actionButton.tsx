@@ -66,7 +66,7 @@ const ActionButtonPropType = {
   border: BorderPropOpt
 };
 
-const ActionButtonProps = {
+const ActionButtonWidgetProps = {
   ...ActionButtonPropType,
   ...PVWidgetPropType
 };
@@ -96,7 +96,7 @@ export const ActionButtonWidget = (
 };
 
 export const ActionButton = (
-  props: InferWidgetProps<typeof ActionButtonProps>
+  props: InferWidgetProps<typeof ActionButtonWidgetProps>
 ): JSX.Element => <Widget baseWidget={ActionButtonWidget} {...props} />;
 
-registerWidget(ActionButton, ActionButtonProps, "actionbutton");
+registerWidget(ActionButton, ActionButtonWidgetProps, "actionbutton");
