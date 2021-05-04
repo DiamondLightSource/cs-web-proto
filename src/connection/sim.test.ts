@@ -13,7 +13,7 @@ beforeEach((): void => {
 });
 
 function getValue(pvName: string, callback: (value: DType) => void): void {
-  simulator.connect(nullConnCallback, function(updatePvName, value): void {
+  simulator.connect(nullConnCallback, function (updatePvName, value): void {
     const nameInfo1 = SimulatorPlugin.parseName(updatePvName);
     const nameInfo2 = SimulatorPlugin.parseName(updatePvName);
     if (nameInfo1.keyName === nameInfo2.keyName) {
@@ -214,7 +214,7 @@ describe("LimitData", (): void => {
     const iter = repeatedCallback();
     iter.next();
 
-    simulator.connect(nullConnCallback, function(name, value): void {
+    simulator.connect(nullConnCallback, function (name, value): void {
       iter.next({ name: name, value: value });
     });
 
@@ -293,7 +293,7 @@ it("distinguish sine values", (done): void => {
     }
   }
 
-  simulator.connect(nullConnCallback, function(name, value): void {
+  simulator.connect(nullConnCallback, function (name, value): void {
     callback({ name: name, value: value });
   });
 
@@ -349,7 +349,7 @@ class ConnectionClient {
   public callback(
     callback: dataCallback
   ): (name: string, value: DType) => void {
-    return function(name: string, value: DType): void {
+    return function (name: string, value: DType): void {
       return callback({ name: name, value: value });
     };
   }
@@ -375,7 +375,7 @@ class StagedCallbacks {
   }
 
   public callback(callback: ValueChangedCallback): ValueChangedCallback {
-    return function(name: string, value: DType): void {
+    return function (name: string, value: DType): void {
       try {
         return callback(name, value);
       } catch (e) {
@@ -430,7 +430,7 @@ it("unsubscribe stops updates, but maintains value", (done): void => {
       callbacks.stage("one", (): void => {
         client.unsubscribe();
         client.putPv(3.0);
-        setTimeout(function(): void {
+        setTimeout(function (): void {
           client.subscribe();
           client.putPv(4.0);
         }, 100);

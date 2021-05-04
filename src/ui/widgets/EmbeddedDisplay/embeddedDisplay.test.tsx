@@ -61,9 +61,7 @@ describe("<EmbeddedDisplay>", (): void => {
       log.setLevel("info");
     }
   );
-  it("returns an error label when embedding a widget only", async (): Promise<
-    void
-  > => {
+  it("returns an error label when embedding a widget only", async (): Promise<void> => {
     const mockSuccessResponse = `
     <widget type="label" version="2.0.0">
         <name>Label</name>
