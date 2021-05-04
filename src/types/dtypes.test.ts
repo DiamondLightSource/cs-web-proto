@@ -39,6 +39,9 @@ describe("DType coercion", (): void => {
   test("coerceDouble() returns double if defined", (): void => {
     expect(DType.coerceDouble(doubleDType)).toEqual(42);
   });
+  test("coerceDouble() returns NaN if invalid string", (): void => {
+    expect(DType.coerceDouble(dstring("2 or 3"))).toBeNaN();
+  });
 
   test("coerceDouble() returns NaN if undefined", (): void => {
     expect(DType.coerceDouble(undefined)).toBeNaN();
