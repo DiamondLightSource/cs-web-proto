@@ -17,7 +17,7 @@ import { Font } from "../../types/font";
 import { OutlineContext } from "../../outlineContext";
 import { FileContext } from "../../fileContext";
 import { executeAction, WidgetAction, WidgetActions } from "./widgetActions";
-import Popover from "react-tiny-popover";
+import { Popover } from "react-tiny-popover";
 import { resolveTooltip } from "./tooltip";
 
 /**
@@ -64,8 +64,6 @@ export const ConnectingComponent = (props: {
   const { id, alarmBorder = false, pvName, type } = props.widgetProps;
 
   // Popover logic, used for middle-click tooltip.
-  // Note that using ["top"] rather than "top" for the popover
-  // position caused us significant performance problems.
   const [popoverOpen, setPopoverOpen] = useState(false);
   const mouseDown = (e: React.MouseEvent): void => {
     if (e.button === 1) {
@@ -143,10 +141,14 @@ export const ConnectingComponent = (props: {
     const popoverContent = (): JSX.Element => {
       return <div className={tooltipClasses.Tooltip}>{resolvedTooltip}</div>;
     };
+    // Note that using ["top"] rather than "top" for the popover
+    // position caused us significant performance problems in an older
+    // version. This is now the only API, so beware of performance problems
+    // here.
     return (
       <Popover
         isOpen={popoverOpen}
-        position="top"
+        positions={["top"]}
         onClickOutside={(): void => {
           setPopoverOpen(false);
         }}
