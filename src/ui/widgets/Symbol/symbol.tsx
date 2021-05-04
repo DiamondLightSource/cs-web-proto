@@ -22,6 +22,7 @@ import { Color } from "../../../types/color";
 import { executeActions, WidgetActions } from "../widgetActions";
 import { MacroContext } from "../../../types/macros";
 import { FileContext } from "../../../fileContext";
+import { DType } from "../../../types/dtypes";
 
 const SymbolProps = {
   imageFile: StringProp,
@@ -40,7 +41,6 @@ const SymbolProps = {
     "bottom right"
   ]),
   border: BorderPropOpt,
-  value: FloatPropOpt,
   rotation: FloatPropOpt,
   flipHorizontal: BoolPropOpt,
   flipVertical: BoolPropOpt,
@@ -60,6 +60,13 @@ export type SymbolComponentProps = InferWidgetProps<typeof SymbolProps> &
  */
 export const SymbolComponent = (props: SymbolComponentProps): JSX.Element => {
   const style = commonCss(props as any);
+
+  let imageFile = props.imageFile;
+  const regex = / [0-9]\./;
+  const intValue = DType.coerceDouble(props.value);
+  if (!isNaN(intValue)) {
+    imageFile = props.imageFile.replace(regex, ` ${intValue.toFixed(0)}.`);
+  }
 
   let alignItems = "center";
   let justifyContent = "center";
@@ -110,7 +117,7 @@ export const SymbolComponent = (props: SymbolComponentProps): JSX.Element => {
   // the image component is written causes many images to be of the incorrect size
   return (
     <>
-      <ImageComponent {...props} onClick={onClick} />
+      <ImageComponent {...props} imageFile={imageFile} onClick={onClick} />
       {props.showLabel && (
         <>
           <div
