@@ -8,7 +8,7 @@ import { ApolloLink, from } from "apollo-link";
 import { HttpLink } from "apollo-link-http";
 import { WebSocketLink } from "apollo-link-ws";
 import { getMainDefinition } from "apollo-utilities";
-import gql from "graphql-tag";
+import { gql } from "graphql-tag";
 import {
   InMemoryCache,
   NormalizedCacheObject,
