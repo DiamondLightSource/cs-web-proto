@@ -1,6 +1,6 @@
 import React from "react";
 import log from "loglevel";
-import checkPropTypes from "check-prop-types";
+import { checkPropTypes } from "./checkPropTypes";
 
 import { Color } from "../../types/color";
 import { Shape } from "./Shape/shape";

@@ -44,11 +44,6 @@ describe("<GroupingContainerComponent />", (): void => {
       </GroupBoxComponent>
     );
     const wrapperWithChild = shallow(groupingWithChild);
-    expect(
-      wrapperWithChild
-        .childAt(1)
-        .childAt(0)
-        .text()
-    ).toEqual(childText);
+    expect(wrapperWithChild.childAt(1).childAt(0).text()).toEqual(childText);
   });
 });

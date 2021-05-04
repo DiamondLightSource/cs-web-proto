@@ -378,10 +378,7 @@ function opiParsePosition(props: any): Position {
 
 function opiParseFile(props: any): OpiFile {
   // Temporary way of simplifying paths.
-  const filename =
-    opiParseString(props.opi_file)
-      .split("/")
-      .pop() || "";
+  const filename = opiParseString(props.opi_file).split("/").pop() || "";
   let macros = {};
   if (props.macros) {
     macros = opiParseMacros(props.macros);
