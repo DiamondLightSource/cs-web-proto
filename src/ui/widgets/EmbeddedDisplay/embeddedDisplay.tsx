@@ -126,8 +126,9 @@ export const EmbeddedDisplay = (
     component = widgetDescriptionToComponent({
       type: "display",
       position: props.position,
+      backgroundColor: new Color("rgb(200,200,200"),
       border:
-        props.border ?? new Border(BorderStyle.Line, new Color("lightgrey"), 1),
+        props.border ?? new Border(BorderStyle.Line, new Color("white"), 1),
       overflow: props.scroll ? "scroll" : "visible",
       children: [description]
     });
