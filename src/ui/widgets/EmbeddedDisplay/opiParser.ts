@@ -212,7 +212,7 @@ export function opiParseActions(
               path: action.path._text,
               // TODO: Should probably be accessing properties of the element here
               macros: {},
-              defaultProtocol: "pva"
+              defaultProtocol: "ca"
             }
           }
         });
