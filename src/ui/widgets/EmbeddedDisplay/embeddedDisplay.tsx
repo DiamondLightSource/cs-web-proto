@@ -37,9 +37,10 @@ const EMPTY_WIDGET: WidgetDescription = {
 
 const ERROR_WIDGET: WidgetDescription = {
   type: "label",
-  position: new RelativePosition(),
+  position: new RelativePosition("100%", "50px"),
   font: new Font(16, FontStyle.Bold),
-  backgroundColor: Color.RED,
+  backgroundColor: Color.TRANSPARENT,
+  border: new Border(BorderStyle.Line, Color.RED, 2),
   text: "Error"
 };
 
@@ -96,6 +97,10 @@ export const EmbeddedDisplay = (
   let component: JSX.Element;
   try {
     let description = EMPTY_WIDGET;
+    // We should handle missing files more cleanly.
+    if (contents.startsWith("<!DOCTYPE html>")) {
+      throw new Error("File " + props.file.path + " not found");
+    }
     if (contents !== "") {
       // Convert the contents to widget description style object
       switch (fileExt) {
@@ -127,11 +132,10 @@ export const EmbeddedDisplay = (
       children: [description]
     });
   } catch (e) {
-    const message = `Error converting file ${file} into components.`;
+    const message = `Error loading ${file}: ${e}.`;
+    log.warn("contents" + contents);
     log.warn(message);
     log.warn(e);
-    log.warn(e.msg);
-    log.warn(e.details);
     component = widgetDescriptionToComponent(errorWidget(message));
   }
 

@@ -8,11 +8,19 @@ exports[`<ActionButton /> it matches the snapshot 1`] = `
     Object {
       "backgroundColor": undefined,
       "color": undefined,
+      "cursor": "auto",
       "visibility": undefined,
+      "whiteSpace": "normal",
     }
   }
 >
-  <span>
+  <span
+    style={
+      Object {
+        "whiteSpace": "normal",
+      }
+    }
+  >
     hello
   </span>
 </button>

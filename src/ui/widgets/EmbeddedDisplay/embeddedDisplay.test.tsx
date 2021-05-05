@@ -56,7 +56,7 @@ describe("<EmbeddedDisplay>", (): void => {
       expect(globalWithFetch.fetch).toHaveBeenCalledWith(resolvedFile);
 
       await waitFor((): void =>
-        expect(queryByText(/Error converting.*/)).toBeInTheDocument()
+        expect(queryByText(/Error loading.*/)).toBeInTheDocument()
       );
       log.setLevel("info");
     }
@@ -100,7 +100,7 @@ describe("<EmbeddedDisplay>", (): void => {
     );
 
     await waitFor((): void =>
-      expect(queryByText(/Error converting.*/)).toBeInTheDocument()
+      expect(queryByText(/Error loading.*/)).toBeInTheDocument()
     );
     log.setLevel("info");
   });
