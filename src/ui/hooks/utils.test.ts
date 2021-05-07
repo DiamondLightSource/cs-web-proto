@@ -58,6 +58,13 @@ describe("pvStateComparator", (): void => {
     expect(pvStateComparator(singleResult, singleResult)).toBe(true);
   });
 
+  it("returns false if results are for a different PV", (): void => {
+    const otherResult: PvArrayResults = {
+      pv2: [pvState, "pv2"]
+    };
+    expect(pvStateComparator(singleResult, otherResult)).toBe(false);
+  });
+
   it("returns true if different objects have a reference to the same PvState objects", (): void => {
     const anotherSingleResult: PvArrayResults = {
       pv1: [pvState, "pv1"]
