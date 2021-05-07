@@ -63,7 +63,7 @@
           "position": "relative",
           "width": "40%",
           "height": "80px",
-          "imageFile": "Diamond_logo_col.jpg",
+          "imageFile": "img/Diamond_logo_col.jpg",
           "fitToWidth": true,
           "margin": "2% 5% 2% 5%",
           "backgroundColor": "white"
@@ -76,6 +76,33 @@
           "foregroundColor": "white",
           "font": {
             "size": "15"
+          }
+        },
+        {
+          "type": "actionbutton",
+          "width": 115,
+          "height": 40,
+          "text": "Button",
+          "font": {
+            "size": "15"
+          },
+          "actions": {
+            "executeAsOne": false,
+            "actions": [
+              {
+                "type": "OPEN_PAGE",
+                "dynamicInfo": {
+                  "name": "app",
+                  "location": "app",
+                  "description": "",
+                  "file": {
+                    "path": "json/home.json",
+                    "macros": {},
+                    "defaultProtocol": "pva"
+                  }
+                }
+              }
+            ]
           }
         }
       ]

@@ -7,7 +7,7 @@
       "type": "image",
       "position": "relative",
       "width": "100%",
-      "imageFile": "Diamond_logo_col.jpg",
+      "imageFile": "img/Diamond_logo_col.jpg",
       "fill": true,
       "margin": "2% 5% 2% 5%",
       "backgroundColor": "white"
@@ -58,7 +58,7 @@
                   "location": "app",
                   "description": "",
                   "file": {
-                    "path": "home.json",
+                    "path": "json/home.json",
                     "macros": {},
                     "defaultProtocol": "pva"
                   }
@@ -94,7 +94,7 @@
                   "location": "app",
                   "description": "",
                   "file": {
-                    "path": "opidemos.json",
+                    "path": "json/opidemos.json",
                     "macros": {},
                     "defaultProtocol": "pva"
                   }
@@ -130,7 +130,7 @@
                   "location": "app",
                   "description": "",
                   "file": {
-                    "path": "devicePage.json",
+                    "path": "json/devicePage.json",
                     "macros": {},
                     "defaultProtocol": "pva"
                   }
@@ -166,7 +166,7 @@
                   "location": "app",
                   "description": "",
                   "file": {
-                    "path": "mobileDemo.json",
+                    "path": "json/mobileDemo.json",
                     "macros": {},
                     "defaultProtocol": "pva"
                   }
@@ -202,7 +202,7 @@
                   "location": "app",
                   "description": "",
                   "file": {
-                    "path": "machineStatus.json",
+                    "path": "json/machineStatus.json",
                     "macros": {},
                     "defaultProtocol": "pva"
                   }
@@ -238,7 +238,7 @@
                   "location": "app",
                   "description": "",
                   "file": {
-                    "path": "modernMachineStatus.json",
+                    "path": "json/modernMachineStatus.json",
                     "macros": {},
                     "defaultProtocol": "pva"
                   }
@@ -290,7 +290,7 @@
                       "location": "app",
                       "description": "",
                       "file": {
-                        "path": "performance.json",
+                        "path": "json/performance.json",
                         "macros": {},
                         "defaultProtocol": "pva"
                       }
@@ -326,7 +326,7 @@
                       "location": "app",
                       "description": "",
                       "file": {
-                        "path": "performanceDifferentPVs.json",
+                        "path": "json/performanceDifferentPVs.json",
                         "macros": {},
                         "defaultProtocol": "pva"
                       }
@@ -364,43 +364,7 @@
                   "location": "app",
                   "description": "",
                   "file": {
-                    "path": "testWidgets.json",
-                    "macros": {},
-                    "defaultProtocol": "pva"
-                  }
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "actionbutton",
-          "text": "Opi Testing Page",
-          "position": "relative",
-          "width": "100%",
-          "height": "4rem",
-          "margin": "1% 5% 1% 5%",
-          "foregroundColor": "#012265",
-          "backgroundColor": "#ffcf00",
-          "font": {
-            "size": "25"
-          },
-          "border": {
-            "style": "none",
-            "color": "#ffcf00",
-            "width": 1
-          },
-          "actions": {
-            "executeAsOne": false,
-            "actions": [
-              {
-                "type": "OPEN_PAGE",
-                "dynamicInfo": {
-                  "name": "app",
-                  "location": "app",
-                  "description": "",
-                  "file": {
-                    "path": "opiTesting.json",
+                    "path": "json/testWidgets.json",
                     "macros": {},
                     "defaultProtocol": "pva"
                   }
@@ -436,7 +400,7 @@
                   "location": "app",
                   "description": "",
                   "file": {
-                    "path": "i21.json",
+                    "path": "json/i21.json",
                     "macros": {},
                     "defaultProtocol": "ca"
                   }

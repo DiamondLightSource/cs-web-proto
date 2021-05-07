@@ -54,7 +54,7 @@ describe("<DynamicPage>", (): void => {
 
     expect(globalWithFetch.fetch).toHaveBeenCalledTimes(1);
     expect(globalWithFetch.fetch).toHaveBeenCalledWith(
-      "http://localhost:3000/json/test.json"
+      "http://localhost:3000/test.json"
     );
 
     waitFor((): void => {

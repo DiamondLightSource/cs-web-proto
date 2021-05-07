@@ -65,12 +65,11 @@ export const EmbeddedDisplay = (
   const baseUrl = useContext(BaseUrlContext);
   const fileExt = props.file.path.split(".").pop();
 
-  let file: string;
+  let file = props.file.path;
   if (!props.file.path.startsWith("http")) {
-    file = `${baseUrl}/${fileExt}/${props.file.path}`;
-  } else {
-    file = props.file.path;
+    file = `${baseUrl}/${props.file.path}`;
   }
+  const parentDir = props.file.path.substr(0, props.file.path.lastIndexOf("/"));
 
   useEffect((): (() => void) => {
     // Will be set on the first render
@@ -105,13 +104,25 @@ export const EmbeddedDisplay = (
       // Convert the contents to widget description style object
       switch (fileExt) {
         case "bob":
-          description = parseBob(contents, props.file.defaultProtocol);
+          description = parseBob(
+            contents,
+            props.file.defaultProtocol,
+            parentDir
+          );
           break;
         case "json":
-          description = parseJson(contents, props.file.defaultProtocol);
+          description = parseJson(
+            contents,
+            props.file.defaultProtocol,
+            parentDir
+          );
           break;
         case "opi":
-          description = parseOpi(contents, props.file.defaultProtocol);
+          description = parseOpi(
+            contents,
+            props.file.defaultProtocol,
+            parentDir
+          );
           break;
       }
     }

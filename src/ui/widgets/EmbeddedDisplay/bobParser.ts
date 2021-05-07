@@ -109,7 +109,8 @@ const BOB_COMPLEX_PARSERS: ComplexParserDict = {
 
 export function parseBob(
   xmlString: string,
-  defaultProtocol: string
+  defaultProtocol: string,
+  filepath: string
 ): WidgetDescription {
   // Convert it to a "compact format"
   const compactJSON = xml2js(xmlString, {
@@ -148,7 +149,8 @@ export function parseBob(
     simpleParsers,
     complexParsers,
     false,
-    OPI_PATCHERS
+    OPI_PATCHERS,
+    filepath
   );
 
   displayWidget.position = new RelativePosition(

@@ -41,7 +41,7 @@ export type ComplexParserDict = {
   [key: string]: (value: any) => GenericProp;
 };
 
-export type PatchFunction = (props: WidgetDescription) => void;
+export type PatchFunction = (props: WidgetDescription, path?: string) => void;
 
 /* Take an object representing a widget and return our widget description. */
 export function genericParser(
@@ -106,7 +106,8 @@ export function parseWidget(
   simpleParsers: ParserDict,
   complexParsers: ComplexParserDict,
   passThrough: boolean,
-  patchFunctions: PatchFunction[]
+  patchFunctions: PatchFunction[],
+  filepath?: string
 ): WidgetDescription {
   const targetWidget = getTargetWidget(props);
   const widgetDescription = genericParser(
@@ -118,7 +119,7 @@ export function parseWidget(
   );
   // Execute patch functions.
   for (const patcher of patchFunctions) {
-    patcher(widgetDescription);
+    patcher(widgetDescription, filepath);
   }
   /* Child widgets */
   const childWidgets = toArray(props[childrenName]);
@@ -130,7 +131,8 @@ export function parseWidget(
       simpleParsers,
       complexParsers,
       passThrough,
-      patchFunctions
+      patchFunctions,
+      filepath
     );
   });
   return widgetDescription;
