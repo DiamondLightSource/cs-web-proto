@@ -1,0 +1,275 @@
+<?xml version='1.0' encoding='utf-8'?>
+<display typeId="org.csstudio.opibuilder.Display" version="1.0">
+  <x>279</x>
+  <y>167</y>
+  <width>270</width>
+  <height>535</height>
+  <font>
+    <fontdata fontName="liberation sans" height="16" pixels="true" style="0" />
+  </font>
+  <boy_version>4.0.0</boy_version>
+  <foreground_color>
+    <color blue="0" green="0" name="Black" red="0" />
+  </foreground_color>
+  <background_color>
+    <color blue="200" green="200" name="Canvas" red="200" />
+  </background_color>
+  <name>Vacuum Valve - $(device)</name>
+  <show_grid>true</show_grid>
+  <grid_space>5</grid_space>
+  <auto_zoom_to_fit_all>true</auto_zoom_to_fit_all>
+  <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0">
+    <background_color>
+      <color blue="200" green="200" name="Canvas" red="200" />
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <foreground_color>
+      <color blue="0" green="0" name="Text: FG" red="0" />
+    </foreground_color>
+    <height>455</height>
+    <name>EDM linkingContainer</name>
+    <resize_behaviour>2</resize_behaviour>
+    <scripts>
+      <path checkConnect="true" pathString="EmbeddedJs" seoe="false" sfe="false">
+        <scriptName>OPIFileScript</scriptName>
+        <scriptText>importPackage(Packages.org.csstudio.opibuilder.scriptUtil);
+var pv0 = PVUtil.getLong(pvs[0]);
+if(pv0==0){
+var macroInput = DataUtil.createMacrosInput(true);
+macroInput.put("device", "$(device)");
+widget.setPropertyValue("macros", macroInput);
+widget.setPropertyValue("opi_file","./dlsPLC_interlock-embed.opi");
+}
+</scriptText>
+        <pv trig="true">loc://dummy0&lt;VDouble&gt;(0)</pv>
+      </path>
+    </scripts>
+    <width>250</width>
+    <x>10</x>
+    <y>40</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="1.0">
+    <actions hook="false" hook_all="false">
+      <action type="EXECUTE_JAVASCRIPT">
+        <embedded>true</embedded>
+        <scriptText>importPackage(Packages.org.csstudio.opibuilder.scriptUtil);ScriptUtil.closeAssociatedOPI(widget);</scriptText>
+      </action>
+    </actions>
+    <background_color>
+      <color blue="205" green="205" name="Controller: BG" red="205" />
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <font>
+      <fontdata fontName="liberation sans" height="18" pixels="true" style="0" />
+    </font>
+    <foreground_color>
+      <color blue="192" green="0" name="Exit: FG" red="192" />
+    </foreground_color>
+    <height>26</height>
+    <name>EDM Exit Button</name>
+    <text>EXIT</text>
+    <width>96</width>
+    <x>170</x>
+    <y>505</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0">
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_style>0</border_style>
+    <height>32</height>
+    <lock_children>true</lock_children>
+    <name>0</name>
+    <show_scrollbar>false</show_scrollbar>
+    <transparent>true</transparent>
+    <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0">
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <border_style>0</border_style>
+      <height>26</height>
+      <lock_children>true</lock_children>
+      <name>0</name>
+      <show_scrollbar>false</show_scrollbar>
+      <transparent>true</transparent>
+      <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0">
+        <background_color>
+          <color blue="159" green="223" name="VA title" red="202" />
+        </background_color>
+        <border_alarm_sensitive>false</border_alarm_sensitive>
+        <border_color>
+          <color blue="0" green="0" name="Black" red="0" />
+        </border_color>
+        <border_style>1</border_style>
+        <border_width>0</border_width>
+        <font>
+          <fontdata fontName="liberation sans" height="14" pixels="true" style="1" />
+        </font>
+        <forecolor_alarm_sensitive>true</forecolor_alarm_sensitive>
+        <foreground_color>
+          <color blue="0" green="0" name="Black" red="0" />
+        </foreground_color>
+        <format_type>0</format_type>
+        <height>25</height>
+        <horizontal_alignment>1</horizontal_alignment>
+        <line_width>1</line_width>
+        <name>EDM Text Update</name>
+        <precision>0</precision>
+        <precision_from_pv>true</precision_from_pv>
+        <pv_name>$(device):NAME</pv_name>
+        <show_units>true</show_units>
+        <transparent>false</transparent>
+        <width>271</width>
+        <x>0</x>
+        <y>0</y>
+      </widget>
+      <widget typeId="org.csstudio.opibuilder.widgets.polyline" version="1.0">
+        <background_color>
+          <color blue="230" green="230" name="Grey 90%" red="230" />
+        </background_color>
+        <border_alarm_sensitive>false</border_alarm_sensitive>
+        <fill_arrow>true</fill_arrow>
+        <fill_level>0.0</fill_level>
+        <height>25</height>
+        <line_style>0</line_style>
+        <line_width>1</line_width>
+        <name>EDM Line</name>
+        <points>
+          <point x="0" y="24" />
+          <point x="0" y="0" />
+          <point x="270" y="0" />
+        </points>
+        <width>271</width>
+        <x>0</x>
+        <y>0</y>
+      </widget>
+      <widget typeId="org.csstudio.opibuilder.widgets.polyline" version="1.0">
+        <background_color>
+          <color blue="102" green="102" name="Grey 40%" red="102" />
+        </background_color>
+        <border_alarm_sensitive>false</border_alarm_sensitive>
+        <fill_arrow>true</fill_arrow>
+        <fill_level>0.0</fill_level>
+        <height>26</height>
+        <line_style>0</line_style>
+        <line_width>1</line_width>
+        <name>EDM Line</name>
+        <points>
+          <point x="0" y="25" />
+          <point x="269" y="25" />
+          <point x="269" y="0" />
+        </points>
+        <width>270</width>
+        <x>0</x>
+        <y>0</y>
+      </widget>
+      <width>271</width>
+      <x>0</x>
+      <y>2</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0">
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <border_style>0</border_style>
+      <height>32</height>
+      <lock_children>true</lock_children>
+      <name>1</name>
+      <show_scrollbar>false</show_scrollbar>
+      <transparent>true</transparent>
+      <widget typeId="org.csstudio.opibuilder.widgets.Ellipse" version="1.0">
+        <background_color>
+          <color blue="207" green="207" name="CG title" red="158" />
+        </background_color>
+        <border_alarm_sensitive>false</border_alarm_sensitive>
+        <height>31</height>
+        <line_color>
+          <color blue="102" green="102" name="Grey 40%" red="102" />
+        </line_color>
+        <line_style>0</line_style>
+        <line_width>2</line_width>
+        <name>EDM Ellipse</name>
+        <transparent>true</transparent>
+        <width>50</width>
+        <x>1</x>
+        <y>1</y>
+      </widget>
+      <widget typeId="org.csstudio.opibuilder.widgets.Ellipse" version="1.0">
+        <background_color>
+          <color blue="207" green="207" name="CG title" red="158" />
+        </background_color>
+        <border_alarm_sensitive>false</border_alarm_sensitive>
+        <height>31</height>
+        <line_color>
+          <color blue="230" green="230" name="Grey 90%" red="230" />
+        </line_color>
+        <line_style>0</line_style>
+        <line_width>2</line_width>
+        <name>EDM Ellipse</name>
+        <transparent>true</transparent>
+        <width>50</width>
+        <x>-1</x>
+        <y>-1</y>
+      </widget>
+      <widget typeId="org.csstudio.opibuilder.widgets.Ellipse" version="1.0">
+        <background_color>
+          <color blue="159" green="223" name="VA title" red="202" />
+        </background_color>
+        <border_alarm_sensitive>false</border_alarm_sensitive>
+        <height>30</height>
+        <line_color>
+          <color blue="159" green="223" name="VA title" red="202" />
+        </line_color>
+        <line_style>0</line_style>
+        <line_width>3</line_width>
+        <name>EDM Ellipse</name>
+        <transparent>false</transparent>
+        <width>50</width>
+        <x>1</x>
+        <y>1</y>
+      </widget>
+      <widget typeId="org.csstudio.opibuilder.widgets.Ellipse" version="1.0">
+        <background_color>
+          <color blue="255" green="255" name="White" red="255" />
+        </background_color>
+        <border_alarm_sensitive>false</border_alarm_sensitive>
+        <height>5</height>
+        <line_color>
+          <color blue="230" green="230" name="Grey 90%" red="230" />
+        </line_color>
+        <line_style>0</line_style>
+        <line_width>2</line_width>
+        <name>EDM Ellipse</name>
+        <transparent>false</transparent>
+        <width>6</width>
+        <x>11</x>
+        <y>5</y>
+      </widget>
+      <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">
+        <auto_size>false</auto_size>
+        <background_color>
+          <color blue="200" green="200" name="Canvas" red="200" />
+        </background_color>
+        <border_alarm_sensitive>false</border_alarm_sensitive>
+        <border_color>
+          <color blue="0" green="0" name="Black" red="0" />
+        </border_color>
+        <border_style>0</border_style>
+        <font>
+          <fontdata fontName="liberation sans" height="14" pixels="true" style="1" />
+        </font>
+        <foreground_color>
+          <color blue="0" green="0" name="Text: FG" red="0" />
+        </foreground_color>
+        <height>30</height>
+        <horizontal_alignment>1</horizontal_alignment>
+        <name>EDM Label</name>
+        <text>Setup</text>
+        <transparent>true</transparent>
+        <width>50</width>
+        <x>0</x>
+        <y>0</y>
+      </widget>
+      <width>51</width>
+      <x>0</x>
+      <y>0</y>
+    </widget>
+    <width>271</width>
+    <x>0</x>
+    <y>0</y>
+  </widget>
+</display>

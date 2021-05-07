@@ -1,0 +1,103 @@
+# Stream Device Protocol for the MKS 937B Multi-Sensor System
+# This protocol uses features defined in Stream Device Version 2
+#
+# Ian Gillingham - April 2010
+#
+# $1 = address, Controller address (001 .. 253)
+# $2 = channel number: 1 - 5
+# $3 = setpoint: 1 - 12
+
+locktimeout = 5000;
+terminator   = ";FF";
+replytimeout = 1000;
+readtimeout  = 1000;
+extrainput   = Ignore;
+
+# The 937B appears to have preamble on all commands and responses
+# of the form '@<aaa>', where aaa is the unit number (1-254)
+# presumably to cater for multidrop RS485 for multiple controllers.
+# Default here to assume just one unit (as on RS232). Will need to make this variable if RS485 is ever implemented.
+unitid = 1;
+
+# Send an initial dummy command to clear out any garbage the mks has already received.
+# This makes it more likely that the first command sent is received OK.
+# NB we dont wait for a response to the dummy command because if it didnt arrive (e.g. rs232 unplugged) then
+# streams would issue a replyTimeout exception and stop the ioc.
+@init{out " ";}
+
+#pressure { out "@\$1PR\$2?"; in "\$1ACK%f"; @mismatch {in "\$1ACK%(\$3:STA.VAL){\?.|  \?E|OVER|ATM|<1.00E-11|RF_OFF|OFF|WAIT|L|CTRL_OFF|PROT_OFF|NOGAUGE|MISCONN|NOT|Not|C}";} }
+#raw      { out "@\$1PR\$2?"; in "\$1ACK%s"; }
+#status   { out "@\$1PR\$2?"; in "\$1ACK%{\?.|  \?E|OVER|ATM|<1.00E-11|RF_OFF|OFF|WAIT|L|CTRL_OFF|PROT_OFF|NOGAUGE|MISCONN|NOT|Not|C}"; }
+
+#
+# Use a regular expression to not care about anything before ACK.
+# This is important with the MKS firmware update in Feb 2012, where '@' will precede all responses,
+# but we still need backward compatibility with units which do not emit '@'.
+#
+pressure { out "@\$1PR\$2?"; in "%*/ACK/%f"; @mismatch {in "%*/ACK/%(\$3:STA.VAL){\?.|  \?E|OVER|ATM|<1.00E-11|RP_OFF|OFF|WAIT|L|CTRL_OFF|PROT_OFF|NOGAUGE|MISCONN|NOT|Not|C}";} }
+raw      { out "@\$1PR\$2?"; in "%*/ACK/%s"; }
+status   { out "@\$1PR\$2?"; in "%*/ACK/%{\?.|  \?E|OVER|ATM|<1.00E-11|RP_OFF|OFF|WAIT|L|CTRL_OFF|PROT_OFF|NOGAUGE|MISCONN|NOT|Not|C}"; }
+
+ccenable { out "@\$1%{CP\$2!OFF|CP\$2!ON}"; in "%*/ACK/%{OFF|ON}"; }
+get_cc_enabled{ out "@\$1CP\$2?"; in "%*/ACK/%{OFF|ON}"; }
+pirgenable { out "@\$1%{CP\$2!OFF|CP\$2!ON}"; in "%*/ACK/%{OFF|ON}"; }
+get_gauge_enabled { out "@\$1CP\$2?"; in "%*/ACK/%{OFF|ON}"; }
+
+# Relay setpoints
+getsp   { out "@\$1SP\$2?"; in "%*/ACK/%f"; @mismatch{} }
+setsp   { out "@\$1SP\$2!%0.1E"; in "%*/ACK/"; }
+dissp   { out "@\$1SP\$2!0"; in "%*/ACK/"; }
+
+# Relay Hysteresis
+getrelay_hyst   { out "@\$1SH\$2?"; in "%*/ACK/%f"; }
+setrelay_hyst   { out "@\$1SH\$2!%0.1E"; in "%*/ACK/"; }
+
+# Relay mode
+getrelay_mode   { out "@\$1EN\$2?"; in "%*/ACK/%{SET|CLEAR|ENABLE}"; }
+setrelay_mode   { out "@\$1EN\$2!%{SET|CLEAR|ENABLE}"; in "%*/ACK/"; }
+
+# Relay direction
+getrelay_direction   { out "@\$1SD\$2?"; in "%*/ACK/%{ABOVE|BELOW}"; }
+setrelay_direction   { out "@\$1SD\$2!%{ABOVE|BELOW}"; in "%*/ACK/"; }
+
+# Protection (overpressure) setpoints
+getpro   { out "@\$1PRO\$2?"; in "%*/ACK/%f"; }
+setpro   { out "@\$1PRO\$2!%0.1E"; in "%*/ACK/"; }
+dispro   { out "@\$1PRO\$2!0"; in "%*/ACK/"; }
+
+# TTL trigger setpoints
+getfrc_sp  { out "@\$1FRC\$2?"; in "%*/ACK/%f"; @mismatch{in "%*/NAK/%(\$3.VAL)f";} }
+setfrc_sp  { out "@\$1FRC\$2!%0.1E"; in "%*/ACK/"; }
+
+# CC control
+getcc_sp   { out "@\$1CSP\$2?"; in "%*/ACK/%f"; }
+setcc_sp   { out "@\$1CSP\$2!%0.1E"; in "%*/ACK/"; }
+discc_sp   { out "@\$1CSP\$2!%0.1E"; in "%*/ACK/"; }
+getcc_hyst { out "@\$1CHP\$2?"; in "%*/ACK/%f"; }
+setcc_hyst { out "@\$1CHP\$2!%0.1E"; in "%*/ACK/"; }
+getcc_ctl  { out "@\$1CTL\$2?"; in "%*/ACK/%{OFF|SAFE|AUTO}"; }
+setcc_ctl  { out "@\$1CTL\$2!%{OFF|SAFE|AUTO}"; in "%*/ACK/";}
+getcc_ctrl_chan  { out "@\$1CSE\$2?"; in "%*/ACK/%{C1|C2|OFF|A1|B1|A2|B2}"; }
+setcc_ctrl_chan  { out "@\$1CSE\$2!%{C1|C2|OFF|A1|B1|A2|B2}"; in "%*/ACK/";}
+
+setcc_extended_range  { out "@\$1XCS\$2!ON"; in "%*/ACK/"; }
+
+# HC control (added IJG 16/3/12)
+# The hot cathode can be enabled and disabled using the cold cathode commands:
+# ccenable() and get_cc_enabled()
+#
+degas_enable { out "@\$1%{DG\$2!OFF|DG\$2!ON}"; in "%*/ACK/%{OFF|ON}"; }
+get_degas_enabled{ out "@\$1DG\$2?"; in "%*/ACK/%{OFF|ON}"; }
+
+# Controller parameters
+
+unit    { out "@\$1U?"; in "%*/ACK/%s"; }
+ctlv    { out "@\$1FV6?"; in "%*/ACK/%f"; }
+comv    { out "@\$1FV5?"; in "%*/ACK/%f";  @mismatch{};}
+modcc   { out "@\$1MT?"; in "%*/ACK/%{HC|CC|PR|CV|TC|CM|P1|C1|T1|M1|NC|WC}"; }
+moda    { out "@\$1MT?"; in "%*/ACK/\?\?,%{HC|CC|PR|CV|TC|CM|P1|C1|T1|M1|NC|WC}"; }
+modb    { out "@\$1MT?"; in "%*/ACK/\?\?,\?\?,%{HC|CC|PR|CV|TC|CM|P1|C1|T1|M1|NC|WC}"; }
+
+
+#debug
+debug { ExtraInput = Ignore; out "%s"; in "%s"}

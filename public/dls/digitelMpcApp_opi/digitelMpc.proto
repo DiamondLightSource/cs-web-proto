@@ -1,0 +1,114 @@
+# digitelMpc.proto
+# Stream Device Protocol for Gamma Vacuum Digitel MPC
+# This protocol uses features defined in Stream Device 2
+#
+# Pete Owens 17-10-07
+#
+# Message format is:
+#      <START>" "<ADR>" "<CMD>" "<DATA>" "<CKSUM><TERM>
+# where
+#      <START> : Start character(1 byte) = '~'
+#      <ADR>   : Address(2 bytes) - address of unit in hex (defalut = 05)
+#      <CMD>   : Command code (2 bytes) - hex
+#      <DATA>  : Optional - depends on <CMD>
+#      <CHK>   : Checksum (2 bytes) - hex
+#      <TERM>  : Terminator character (1 byte) = '\r'
+#
+# Reply format is:
+#      <ADR>" "<STA>" "<CODE>" "<DATA>" "<CKSUM><TERM>
+# where
+#      <ADR>   : Address(2 bytes) - address of unit in hex (default = 05)
+#      <STA>   : Status Mnemonic(2 bytes) "OK" or "ER"
+#      <CODE>  : Response code(2 bytes) Error number
+#      <DATA>  : Optional - depends on <CMD>
+#      <CHK>   : Checksum (2 bytes) - hex
+#      <TERM>  : Terminator character (1 byte) = '\r'#
+#
+# Arguments:
+# $1 = address: (2 hex digits - default 05){1|2|3|4}
+# $2 = parameter: (ion pump/filament (1,2 or 3)
+
+
+locktimeout = 5000;
+terminator   = CR;
+replytimeout = 1000;
+readtimeout  = 1000;
+extrainput   = Ignore;
+
+#
+# Controller Protocols
+#
+model     { out "~ \$1 01 %01<sum8>"            ; in "\$1 OK %*2x %[^0-9.]"            ; }
+version   { out "~ \$1 02 %01<sum8>"            ; in "\$1 OK %*2x %*s %*s %s %0<sum8>" ; }
+linev     { out "~ \$1 22 %01<sum8>"            ; in "\$1 OK %*2x %d %0<sum8>"         ; }
+linef     { out "~ \$1 24 %01<sum8>"            ; in "\$1 OK %*2x %d Hz %*?/\(.*\) /%0<sum8>"; }
+#linef     { out "~ \$1 24 %01<sum8>"            ; in "\$1 OK %*2x %d Hz %0<sum8>"; @mismatch { in "\$1 OK %*2x %d Hz (TSP %*i Hz) %0<sum8>";} }
+autost    { out "~ \$1 34 %01<sum8>"            ; in "\$1 OK %*2x %{NO|YES} %0<sum8>"  ; }
+
+setlinev  { out "~ \$1 23 %d %01<sum8>"         ; in "\$1 OK %*2x %0<sum8>"            ; }
+fan       { out "~ \$1 32 %{OFF|ON} %01<sum8>"  ; in "\$1 OK %*2x %0<sum8>"            ; }
+setautost { out "~ \$1 33 %{NO|YES} %01<sum8>"  ; in "\$1 OK %*2x %0<sum8>"            ; }
+
+reset     { out "~ \$1 07 %01<sum8>"            ; }
+
+#
+# Ion Pump Protocols
+#
+current   { out "~ \$1 0A \$2 %01<sum8>"        ; in "\$1 OK %*2x %g %*{AMPS|Amps} %0<sum8>"    ; }
+pressure  { out "~ \$1 0B \$2 %01<sum8>"        ; in "\$1 OK %*2x %g%*s %0<sum8>"      ; }
+voltage   { out "~ \$1 0C \$2 %01<sum8>"        ; in "\$1 OK %*2x %d %0<sum8>"         ; }
+strap     { out "~ \$1 20 \$2 %01<sum8>"        ; in "\$1 OK %*2x %d %0<sum8>"         ; }
+status    { out "~ \$1 0D \$2 %01<sum8>"        ; in "\$1 OK %*2x %{X|W|ST|SA|R|CO|P|H|I|SH|CA}" ; }
+err       { out "~ \$1 0D \$2 %01<sum8>"        ; in "\$1 OK %*2x %*[^0-9]%d %0<sum8>" ; }
+size      { out "~ \$1 11 \$2 %01<sum8>"        ; in "\$1 OK %*2x %d L/S %0<sum8>"     ; }
+cal       { out "~ \$1 1D \$2 %01<sum8>"        ; in "\$1 OK %*2x %f %0<sum8>"         ; }
+
+# sps: Parameter 1) Unit number   2) Device base name    3) Logical setpoint number for this pump (1 | 2).
+sps       { out "~ \$1 3C %(C)d %01<sum8>"        ; in "\$1 OK %*2x %*i,%*i,%(\$2:SP\$3ON.VAL)g,%(\$2:SP\$3OFF.VAL)g,%(\$2:SP\$3STATE)i %0<sum8>"; @mismatch {in "\$1 OK %*2x %*i,%*i,%?g,%?g,%*i %0<sum8>";} }
+
+setsize   { out "~ \$1 12 \$2,%d %01<sum8>"     ; in "\$1 OK %*2x %0<sum8>"            ; }
+setcal    { out "~ \$1 1E \$2,%4.2f %01<sum8>"  ; in "\$1 OK %*2x %0<sum8>"            ; }
+setsps    { out "~ \$1 3D %(F)1d,%(C)1d, %(A)3.1E, %(B)3.1E %01<sum8>"; in "\$1 OK %*2x %0<sum8>"; @mismatch {in "\$1 OK %*2x %?g %0<sum8>";}}
+#settext   { out "~ \$1 ED \$2,%s %01<sum8>"     ; in "\$1 OK %*2x %0<sum8>"            ; }
+# ignore errors from old syle units that do not implement this protocol
+settext   { out "~ \$1 ED \$2,%s %01<sum8>"     ; in "\$1 "                            ; }
+
+start     { out "~ \$1 %{38|37} \$2 %01<sum8>"  ; in "\$1 OK %*2x %0<sum8>"            ; }
+
+#
+# TSP Protocols
+#
+#tspsta    { out "~ \$1 DE %01<sum8>"            ; in "\$1 OK %*2x %d %0<sum8>"             ; }
+tspsta    { out "~ \$1 DE %01<sum8>"            ; in "\$1 OK %*2x %?d"             ; }
+#filsta    { out "~ \$1 E9 \$2 %01<sum8>"        ; in "\$1 OK %*2x %{1|2|3|4|5|6}:%*s %0<sum8>" ; }
+filsta    { out "~ \$1 E9 \$2 %01<sum8>"        ; in "\$1 OK %*2x %{1|2|3|4|5|6|*ERROR}" ; }
+power     { out "~ \$1 74 %01<sum8>"            ; in "\$1 OK %*2x %?g W %0<sum8>"           ; @mismatch {in "\$1 OK %*2x %?g %0<sum8>";} }
+fil       { out "~ \$1 DA %01<sum8>"            ; in "\$1 OK %*2x %{1|2|3|4} %0<sum8>"; @mismatch {in "\$1 OK %*2x %?d %0<sum8>";} }
+#fil       { out "~ \$1 DA %01<sum8>"            ; in "\$1 OK %*2x %{1|2|3|4} %0<sum8>"     ; }
+left      { out "~ \$1 2A %01<sum8>"            ; in "\$1 OK %*2x %d,"
+                                                     "1-%(\$2:FIL1:USED.VAL)d,"
+                                                     "2-%(\$2:FIL2:USED.VAL)d,"
+                                                     "3-%(\$2:FIL3:USED.VAL)d,"
+                                                     "4-%(\$2:FIL4:USED.VAL)d %0<sum8>"    ; @mismatch {in "\$1 OK %*2x %?d %0<sum8>";} }
+
+setpower  { out "~ \$1 E2 %d,W %01<sum8>"       ; in "\$1 OK %*2x %0<sum8>"                ; }
+autofil   { out "~ \$1 2C %{NO|YES} %01<sum8>"  ; in "\$1 OK %*2x %0<sum8>"                ; }
+ctlsrc    { out "~ \$1 8B %d %01<sum8>"         ; in "\$1 OK %*2x %0<sum8>"                ; }
+thresh    { out "~ \$1 EA %3.1E %01<sum8>"      ; in "\$1 OK %*2x %0<sum8>"                ; }
+setfil    { out "~ \$1 29 %{1|2|3|4} %01<sum8>" ; in "\$1 OK %*2x %0<sum8>"                ; }
+
+tspoff    { out "~ \$1 28 %01<sum8>"            ; in "\$1 OK %*2x %0<sum8>"                ; }
+clear     { out "~ \$1 2B %01<sum8>"            ; in "\$1 OK %*2x %0<sum8>"                ; }
+
+getconfig { out "~ \$1 87 %01<sum8>"            ; in "\$1 OK %*2x %{0|1|2|3|4|5|6|7|8} %0<sum8>" ; @mismatch {in "\$1 OK %*2x %?d %0<sum8>";}}
+
+#debug
+debug { ExtraInput = Ignore; out "~ %s %01<sum8>"; in "%*d %*{OK|ER} %*2x %s %0<sum8>";}
+
+
+
+
+
+
+
+
