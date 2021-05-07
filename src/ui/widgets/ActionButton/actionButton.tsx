@@ -12,7 +12,6 @@ import {
   FontPropOpt,
   BorderPropOpt
 } from "../propTypes";
-import { BaseUrlContext } from "../../../baseUrl";
 import { Color } from "../../../types/color";
 import { Font } from "../../../types/font";
 import { Border, BorderStyle } from "../../../types/border";
@@ -33,7 +32,6 @@ export interface ActionButtonProps {
 export const ActionButtonComponent = (
   props: ActionButtonProps
 ): JSX.Element => {
-  const baseUrl = useContext(BaseUrlContext);
   const style = commonCss(props);
   style["whiteSpace"] = "normal";
   // Use default button style if no border defined.
@@ -41,19 +39,15 @@ export const ActionButtonComponent = (
     style["borderStyle"] = undefined;
     style["borderColor"] = undefined;
   }
-  let src = props.image;
-  if (src !== undefined && !src?.startsWith("http")) {
-    src = `${baseUrl}/img/${src}`;
-  }
   return (
     <button
       className={classes.actionbutton}
       onClick={props.onClick}
       style={style}
     >
-      {src !== undefined ? (
+      {props.image !== undefined ? (
         <figure className={classes.figure}>
-          <img src={src} alt={props.image}></img>
+          <img src={props.image} alt={props.image}></img>
           <figcaption>{props.text}</figcaption>
         </figure>
       ) : (

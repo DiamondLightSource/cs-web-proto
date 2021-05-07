@@ -1,4 +1,4 @@
-import React, { CSSProperties, useContext } from "react";
+import React, { CSSProperties } from "react";
 
 import { commonCss, Widget } from "../widget";
 import { WidgetPropType } from "../widgetProps";
@@ -11,7 +11,6 @@ import {
   FuncPropOpt
 } from "../propTypes";
 import { registerWidget } from "../register";
-import { BaseUrlContext } from "../../../baseUrl";
 
 const ImageProps = {
   imageFile: StringProp,
@@ -36,11 +35,6 @@ export const ImageComponent = (
     }
   };
 
-  const baseUrl = useContext(BaseUrlContext);
-  let file = `img/${props.imageFile}`;
-  if (!file.startsWith("http")) {
-    file = `${baseUrl}/${file}`;
-  }
   let imageHeight: string | undefined = undefined;
   let imageWidth: string | undefined = undefined;
   const overflow = "hidden";
@@ -64,7 +58,7 @@ export const ImageComponent = (
   return (
     <div style={style} onClick={onClick}>
       <img
-        src={file}
+        src={props.imageFile}
         alt={props.alt || undefined}
         style={{
           width: imageWidth,
