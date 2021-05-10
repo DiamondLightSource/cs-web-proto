@@ -61,7 +61,7 @@ export const EmbeddedDisplay = (
       children: [description]
     });
   } catch (e) {
-    const message = `Error converting file ${props.file} into components.`;
+    const message = `Error loading ${props.file.path}: ${e}.`;
     log.warn(message);
     log.warn(e);
     component = widgetDescriptionToComponent(errorWidget(message));

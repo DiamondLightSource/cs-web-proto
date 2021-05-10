@@ -163,15 +163,22 @@ export function opiParseActions(
     actions: []
   };
 
-  const modeToLocation = (action: ElementCompact): string => {
-    const mode = (action.mode && action.mode._text) || undefined;
+  const actionToLocation = (action: ElementCompact): string => {
+    // Handle both Position and mode for now.
+    const mode = action.mode?._text;
+    const position = action.Position?._text;
     switch (mode) {
       case "1":
         return "main";
       case "3":
         return "details";
       default:
-        return "main";
+        switch (position) {
+          case "1":
+            return "details";
+          default:
+            return "main";
+        }
     }
   };
 
@@ -201,12 +208,12 @@ export function opiParseActions(
               (action.description && action.description._text) || undefined
           }
         });
-      } else if (type === "OPEN_DISPLAY") {
+      } else if (type === "OPEN_DISPLAY" || type === "OPEN_OPI_IN_VIEW") {
         processedActions.actions.push({
           type: OPEN_TAB,
           dynamicInfo: {
             name: action.path._text,
-            location: modeToLocation(action),
+            location: actionToLocation(action),
             description:
               (action.description && action.description._text) || undefined,
             file: {

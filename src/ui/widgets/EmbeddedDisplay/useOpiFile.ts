@@ -1,6 +1,7 @@
 import log from "loglevel";
 import { useContext, useEffect, useState } from "react";
 import { BaseUrlContext } from "../../../baseUrl";
+import { Border, BorderStyle } from "../../../types/border";
 import { Color } from "../../../types/color";
 import { Font, FontStyle } from "../../../types/font";
 import { MacroMap } from "../../../types/macros";
@@ -23,7 +24,8 @@ const ERROR_WIDGET: WidgetDescription = {
   type: "label",
   position: new RelativePosition(),
   font: new Font(16, FontStyle.Bold),
-  backgroundColor: Color.RED,
+  backgroundColor: Color.TRANSPARENT,
+  border: new Border(BorderStyle.Line, Color.RED, 2),
   text: "Error"
 };
 
