@@ -46,6 +46,7 @@ export const LabelComponent = (
     alignment = "flex-end";
   }
   style["justifyContent"] = alignment;
+  style["cursor"] = "default";
 
   // Simple component to display text - defaults to black text and dark grey background
   return (
