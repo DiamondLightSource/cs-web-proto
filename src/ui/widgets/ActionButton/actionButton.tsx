@@ -37,7 +37,9 @@ export const ActionButtonComponent = (
   // Use default button style if no border defined.
   if (props.border?.style === BorderStyle.None) {
     style["borderStyle"] = undefined;
+    style["borderWidth"] = undefined;
     style["borderColor"] = undefined;
+    style["padding"] = "0";
   }
   return (
     <button
