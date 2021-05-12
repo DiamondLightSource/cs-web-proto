@@ -4,6 +4,8 @@ import { render } from "@testing-library/react";
 import * as deviceHook from "../../hooks/useDevice";
 import * as jsonParsing from "../createComponent";
 import { DType } from "../../../types/dtypes";
+import { ensureWidgetsRegistered } from "..";
+ensureWidgetsRegistered();
 
 const useDeviceMock = jest
   .spyOn(deviceHook, "useDevice")

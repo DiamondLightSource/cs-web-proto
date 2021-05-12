@@ -4,12 +4,14 @@ import { configure, shallow, ShallowWrapper } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import { create, ReactTestRenderer } from "react-test-renderer";
 import { dtimeNow, DAlarm, DType, DDisplay } from "../../../types/dtypes";
+import { ACTIONS_EX_FIRST } from "../widgetActions.test";
 
 configure({ adapter: new Adapter() });
 
 let snapshot: ReactTestRenderer;
 let enumwrapper: ShallowWrapper<MenuButtonProps>;
 let labelwrapper: ShallowWrapper<MenuButtonProps>;
+let actionswrapper: ShallowWrapper<MenuButtonProps>;
 
 beforeEach((): void => {
   const mock = (_: any): void => {
@@ -29,19 +31,34 @@ beforeEach((): void => {
         )
       }
       readonly={false}
+      pvName="testpv"
+      actionsFromPv={true}
       onChange={mock}
     />
   );
   const menuButtonLabel = (
     <MenuButtonComponent
       connected={true}
+      pvName="testpv"
       label="menulabel"
       readonly={false}
+      actionsFromPv={true}
+      onChange={mock}
+    />
+  );
+  const menuButtonActions = (
+    <MenuButtonComponent
+      connected={false}
+      readonly={false}
+      actionsFromPv={false}
+      actions={ACTIONS_EX_FIRST}
+      label="menubutton"
       onChange={mock}
     />
   );
   enumwrapper = shallow(menubutton);
   labelwrapper = shallow(menuButtonLabel);
+  actionswrapper = shallow(menuButtonActions);
   snapshot = create(menubutton);
 });
 
@@ -60,6 +77,11 @@ describe("<MenuButton />", (): void => {
     const options = enumwrapper.find("option");
     expect(options.length).toBe(6);
   });
+  test("it renders actions", (): void => {
+    const options = actionswrapper.find("option");
+    // two actions plus label
+    expect(options.length).toBe(3);
+  });
   test("it passes through the correct index", (): void => {
     const mock = (_: any): void => {
       // pass
@@ -67,6 +89,7 @@ describe("<MenuButton />", (): void => {
     const menubuttonwrap = shallow(
       <MenuButtonComponent
         connected={true}
+        pvName="testpv"
         value={
           new DType(
             { doubleValue: 5 },
@@ -78,6 +101,7 @@ describe("<MenuButton />", (): void => {
           )
         }
         readonly={false}
+        actionsFromPv={true}
         onChange={mock}
       />
     );

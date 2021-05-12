@@ -447,7 +447,6 @@ export const OPI_SIMPLE_PARSERS: ParserDict = {
   transparent: ["transparent", opiParseBoolean],
   font: ["font", opiParseFont],
   macroMap: ["macros", opiParseMacros],
-  tooltip: ["tooltip", opiParseString],
   imageFile: ["image_file", opiParseString],
   image: ["image", opiParseString],
   showLabel: ["show_boolean_label", opiParseBoolean],
@@ -464,6 +463,7 @@ export const OPI_SIMPLE_PARSERS: ParserDict = {
   flipHorizontal: ["flip_horizontal", opiParseBoolean],
   flipVertical: ["flip_vertical", opiParseBoolean],
   bit: ["bit", opiParseNumber],
+  actionsFromPv: ["actions_from_pv", opiParseBoolean],
   deviceName: ["device_name", opiParseString]
 };
 

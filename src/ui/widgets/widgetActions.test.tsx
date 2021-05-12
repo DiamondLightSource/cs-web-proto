@@ -39,7 +39,7 @@ const ACTIONS_EX_AS_ONE = {
   executeAsOne: true
 };
 
-const ACTIONS_EX_FIRST = {
+export const ACTIONS_EX_FIRST = {
   actions: [WRITE_PV_ACTION, WRITE_PV_ACTION_NO_DESC],
   executeAsOne: false
 };

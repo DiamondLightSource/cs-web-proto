@@ -1,55 +1,83 @@
-import React from "react";
-import { writePv } from "../../hooks/useSubscription";
+import React, { useContext } from "react";
 
-import { Widget } from "../widget";
+import { commonCss, Widget } from "../widget";
 import { PVWidgetPropType } from "../widgetProps";
 import { registerWidget } from "../register";
-import { InferWidgetProps, StringPropOpt } from "../propTypes";
+import { BoolProp, InferWidgetProps, StringPropOpt } from "../propTypes";
 import { DType } from "../../../types/dtypes";
+import {
+  executeAction,
+  getActionDescription,
+  WidgetAction,
+  WidgetActions,
+  WritePv,
+  WRITE_PV
+} from "../widgetActions";
+import { FileContext } from "../../../fileContext";
 
 export interface MenuButtonProps {
   connected: boolean;
-  onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
+  onChange: (action: WidgetAction) => void;
+  pvName?: string;
   value?: DType;
   readonly: boolean;
-  style?: Record<string, string>;
+  actionsFromPv: boolean;
   label?: string;
+  actions?: WidgetActions;
 }
 
 export const MenuButtonComponent = (props: MenuButtonProps): JSX.Element => {
   const {
     connected,
     value = null,
-    label,
-    style = { color: "#000000" }
+    readonly,
+    actionsFromPv,
+    pvName,
+    label
   } = props;
+  let actions: WidgetAction[] = props.actions?.actions || [];
 
   // Store whether component is disabled or not
-  let disabled = false;
+  let disabled = readonly;
 
   let options: string[] = label ? [label] : [];
+  const displayOffset = label ? 1 : 0;
 
   // Using value to dictate displayed value as described here: https://reactjs.org/docs/forms.html#the-select-tag
   // Show 0 by default where there is only one option
   let displayIndex = 0;
 
-  let readOnlyStyle = {};
-  if (props.readonly === true) {
-    disabled = true;
-    readOnlyStyle = { cursor: "not-allowed" };
-  }
-
-  if (!connected || value === null) {
-    disabled = true;
-  } else if (value?.display?.choices) {
-    options = options.concat(value?.display?.choices);
-    displayIndex = value.getDoubleValue() ?? 0;
-    if (label) {
-      displayIndex += 1;
+  if (actionsFromPv && pvName) {
+    if (!connected || value === null) {
+      disabled = true;
+    } else if (value?.display?.choices) {
+      options = options.concat(value?.display?.choices);
+      actions = options.map((option, i) => {
+        const writePv: WritePv = {
+          type: WRITE_PV,
+          writePvInfo: {
+            pvName: pvName,
+            value: i
+          }
+        };
+        return writePv;
+      });
+      displayIndex = (value.getDoubleValue() ?? 0) + displayOffset;
+    } else {
+      disabled = true;
     }
   } else {
-    disabled = true;
+    options = options.concat(
+      actions.map(action => {
+        return getActionDescription(action);
+      })
+    );
   }
+
+  const style = {
+    ...commonCss(props),
+    cursor: disabled ? "not-allowed" : "default"
+  };
 
   const mappedOptions = options.map(
     (text, index): JSX.Element => {
@@ -77,8 +105,12 @@ export const MenuButtonComponent = (props: MenuButtonProps): JSX.Element => {
     <select
       value={displayIndex}
       onMouseDown={onMouseDown}
-      style={{ width: "100%", ...readOnlyStyle, ...style }}
-      onChange={props.onChange}
+      style={style}
+      onChange={event => {
+        props.onChange(
+          actions[parseFloat(event.currentTarget.value) - displayOffset]
+        );
+      }}
     >
       {mappedOptions}
     </select>
@@ -91,25 +123,26 @@ export const SmartMenuButton = (props: {
   pvName: string;
   value?: DType;
   readonly: boolean;
-  style?: Record<string, string>;
+  actionsFromPv: boolean;
+  actions?: WidgetActions;
   label?: string;
 }): JSX.Element => {
+  const files = useContext(FileContext);
   // Function to send the value on to the PV
-  function onChange(event: React.ChangeEvent<HTMLSelectElement>): void {
+  function onChange(action: WidgetAction): void {
     // The value from the select element is an integer as a string,
     // so we parse it into a float.
-    writePv(
-      props.pvName,
-      new DType({ doubleValue: parseFloat(event.currentTarget.value) })
-    );
+    executeAction(action, files);
   }
 
   return (
     <MenuButtonComponent
+      pvName={props.pvName}
       connected={props.connected}
       value={props.value}
-      style={props.style}
       readonly={props.readonly}
+      actionsFromPv={props.actionsFromPv}
+      actions={props.actions}
       onChange={onChange}
       label={props.label}
     />
@@ -118,6 +151,7 @@ export const SmartMenuButton = (props: {
 
 const MenuButtonWidgetProps = {
   ...PVWidgetPropType,
+  actionsFromPv: BoolProp,
   label: StringPropOpt
 };
 

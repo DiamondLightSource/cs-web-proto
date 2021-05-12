@@ -7,7 +7,6 @@ import {
   BoolPropOpt,
   StringPropOpt,
   ColorPropOpt,
-  BoolProp,
   FloatPropOpt,
   BorderPropOpt,
   StringProp,
@@ -28,7 +27,7 @@ const SymbolProps = {
   imageFile: StringProp,
   alt: StringPropOpt,
   backgroundColor: ColorPropOpt,
-  showLabel: BoolProp,
+  showLabel: BoolPropOpt,
   labelPosition: ChoicePropOpt([
     "top",
     "left",
