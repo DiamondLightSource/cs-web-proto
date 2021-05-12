@@ -94,10 +94,11 @@ export function useRules(props: AnyProps): AnyProps {
             log.debug(newProps);
           } else {
             // 'Output expression' - evaluate 'value' and set the prop to the result.
+            const expression = "return " + (exp.convertedValue ?? exp.value);
+            log.debug(`Output expression ${expression}`);
             // eslint-disable-next-line no-new-func
-            const f = Function(...Object.keys(pvVars), "return " + exp.value);
+            const f = Function(...Object.keys(pvVars), expression);
             newProps[prop] = f(...Object.values(pvVars));
-            log.debug("Output expression");
           }
           log.debug("Props after rule evaluation:");
           log.debug(newProps);
