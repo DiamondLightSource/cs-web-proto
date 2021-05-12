@@ -1,12 +1,9 @@
 import log from "loglevel";
 import { useContext, useEffect, useState } from "react";
 import { BaseUrlContext } from "../../../baseUrl";
-import { Border, BorderStyle } from "../../../types/border";
-import { Color } from "../../../types/color";
-import { Font, FontStyle } from "../../../types/font";
 import { MacroMap } from "../../../types/macros";
-import { AbsolutePosition, RelativePosition } from "../../../types/position";
-import { WidgetDescription } from "../createComponent";
+import { AbsolutePosition } from "../../../types/position";
+import { errorWidget, WidgetDescription } from "../createComponent";
 import { parseBob } from "./bobParser";
 import { parseJson } from "./jsonParser";
 import { parseOpi } from "./opiParser";
@@ -20,22 +17,6 @@ interface File {
   macros: MacroMap;
   defaultProtocol: string;
 }
-const ERROR_WIDGET: WidgetDescription = {
-  type: "label",
-  position: new RelativePosition(),
-  font: new Font(16, FontStyle.Bold),
-  backgroundColor: Color.TRANSPARENT,
-  border: new Border(BorderStyle.Line, Color.RED, 2),
-  text: "Error"
-};
-
-export function errorWidget(message: string): WidgetDescription {
-  return {
-    ...ERROR_WIDGET,
-    text: message
-  };
-}
-
 const EMPTY_WIDGET: WidgetDescription = {
   type: "shape",
   position: new AbsolutePosition("0", "0", "0", "0")

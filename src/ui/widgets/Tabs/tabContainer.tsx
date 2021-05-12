@@ -22,10 +22,9 @@ import {
   ColorPropOpt
 } from "../propTypes";
 import { parseObject } from "../EmbeddedDisplay/jsonParser";
-import { widgetDescriptionToComponent } from "../createComponent";
+import { errorWidget, widgetDescriptionToComponent } from "../createComponent";
 
 import { TabBar } from "./tabs";
-import { errorWidget } from "../EmbeddedDisplay/useOpiFile";
 
 export const TabContainerProps = {
   tabs: PropTypes.objectOf(PropTypes.object).isRequired,

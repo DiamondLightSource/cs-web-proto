@@ -3,14 +3,31 @@ import log from "loglevel";
 import { checkPropTypes } from "./checkPropTypes";
 
 import { Color } from "../../types/color";
-import { Shape } from "./Shape/shape";
 import { REGISTERED_WIDGETS } from "./register";
+import { RelativePosition } from "../../types/position";
+import { Font, FontStyle } from "../../types/font";
+import { Border, BorderStyle } from "../../types/border";
 
 export interface WidgetDescription {
   type: string;
   // All other component properties
   [x: string]: any;
   children?: WidgetDescription[];
+}
+const ERROR_WIDGET: WidgetDescription = {
+  type: "label",
+  position: new RelativePosition(),
+  font: new Font(16, FontStyle.Bold),
+  backgroundColor: Color.TRANSPARENT,
+  border: new Border(BorderStyle.Line, Color.RED, 2),
+  text: "Error"
+};
+
+export function errorWidget(message: string): WidgetDescription {
+  return {
+    ...ERROR_WIDGET,
+    text: message
+  };
 }
 
 class PropCheckFailed extends Error {
@@ -40,10 +57,10 @@ export function widgetDescriptionToComponent(
   if (widgetDict.hasOwnProperty(type)) {
     Component = widgetDict[type];
   } else {
-    log.warn(`Failed to load unknown widget type ${type}:`);
+    const message = `Failed to load unknown widget type ${type}.`;
+    log.warn(message);
     log.warn(widgetDescription);
-    Component = Shape;
-    otherProps.backgroundColor = Color.PURPLE;
+    return widgetDescriptionToComponent(errorWidget(message));
   }
 
   // Perform checking on propTypes

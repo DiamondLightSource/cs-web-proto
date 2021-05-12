@@ -3,7 +3,7 @@
 import React, { useContext } from "react";
 import log from "loglevel";
 
-import { widgetDescriptionToComponent } from "../createComponent";
+import { errorWidget, widgetDescriptionToComponent } from "../createComponent";
 import { Color } from "../../../types/color";
 import { Border, BorderStyle } from "../../../types/border";
 import {
@@ -21,8 +21,7 @@ import {
   StringPropOpt
 } from "../propTypes";
 import { GroupBoxComponent } from "../GroupBox/groupBox";
-
-import { errorWidget, useOpiFile } from "./useOpiFile";
+import { useOpiFile } from "./useOpiFile";
 
 const EmbeddedDisplayProps = {
   ...WidgetPropType,
