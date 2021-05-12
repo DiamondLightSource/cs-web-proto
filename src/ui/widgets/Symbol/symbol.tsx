@@ -109,9 +109,6 @@ export const SymbolComponent = (props: SymbolComponentProps): JSX.Element => {
     }
   }
 
-  const cursor =
-    props.actions && props.actions.actions.length > 0 ? "pointer" : "auto";
-
   // Note: I would've preferred to define the onClick on div that wraps
   // both sub-components, but replacing the fragment with a div, with the way
   // the image component is written causes many images to be of the incorrect size
@@ -124,7 +121,6 @@ export const SymbolComponent = (props: SymbolComponentProps): JSX.Element => {
             onClick={onClick}
             style={{
               ...style,
-              cursor,
               backgroundColor: "transparent",
               position: "absolute",
               height: "100%",
