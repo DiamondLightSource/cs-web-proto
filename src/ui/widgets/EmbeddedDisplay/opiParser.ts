@@ -464,6 +464,7 @@ export const OPI_SIMPLE_PARSERS: ParserDict = {
   rotation: ["degree", opiParseNumber],
   flipHorizontal: ["flip_horizontal", opiParseBoolean],
   flipVertical: ["flip_vertical", opiParseBoolean],
+  bit: ["bit", opiParseNumber],
   deviceName: ["device_name", opiParseString]
 };
 
