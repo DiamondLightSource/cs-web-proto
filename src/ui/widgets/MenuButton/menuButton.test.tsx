@@ -1,12 +1,9 @@
 import React from "react";
 import { MenuButtonComponent, MenuButtonProps } from "./menuButton";
-import { configure, shallow, ShallowWrapper } from "enzyme";
-import Adapter from "enzyme-adapter-react-16";
+import { shallow, ShallowWrapper } from "enzyme";
 import { create, ReactTestRenderer } from "react-test-renderer";
 import { dtimeNow, DAlarm, DType, DDisplay } from "../../../types/dtypes";
-import { ACTIONS_EX_FIRST } from "../widgetActions.test";
-
-configure({ adapter: new Adapter() });
+import { ACTIONS_EX_FIRST } from "../../../testResources";
 
 let snapshot: ReactTestRenderer;
 let enumwrapper: ShallowWrapper<MenuButtonProps>;

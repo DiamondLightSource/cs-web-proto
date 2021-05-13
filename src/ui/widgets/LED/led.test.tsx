@@ -3,7 +3,7 @@ import { LedComponent, LedComponentProps } from "./led";
 import { DAlarm, DType, AlarmQuality } from "../../../types/dtypes";
 import renderer, { ReactTestRendererJSON } from "react-test-renderer";
 import { Color } from "../../../types/color";
-import { ddouble } from "../../../setupTests";
+import { ddouble } from "../../../testResources";
 
 const createValue = (alarmType: AlarmQuality): DType => {
   return new DType({ stringValue: "3.141" }, new DAlarm(alarmType, ""));

@@ -1,12 +1,8 @@
 import React from "react";
 import { SmartInputComponent } from "./input";
-import { configure } from "enzyme";
-import Adapter from "enzyme-adapter-react-16";
 import { render } from "@testing-library/react";
 import { DAlarm } from "../../../types/dtypes";
-import { dstring } from "../../../setupTests";
-
-configure({ adapter: new Adapter() });
+import { dstring } from "../../../testResources";
 
 let input: JSX.Element;
 

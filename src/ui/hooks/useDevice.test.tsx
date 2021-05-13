@@ -1,5 +1,5 @@
 import React from "react";
-import { contextRender } from "../../setupTests";
+import { contextRender } from "../../testResources";
 import { DType } from "../../types/dtypes";
 import { CsState } from "../../redux/csState";
 import { useDevice } from "./useDevice";

@@ -2,7 +2,7 @@
 import React from "react";
 import { useMacros } from "./useMacros";
 import { PV } from "../../types/pv";
-import { contextRender } from "../../setupTests";
+import { contextRender } from "../../testResources";
 
 /* Use one of the techniques described here for testing hooks without
   excessive mocking.

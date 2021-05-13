@@ -3,7 +3,7 @@ import React from "react";
 import { waitFor } from "@testing-library/react";
 import { DynamicPageComponent } from "./dynamicPage";
 import { PageState } from "../../../fileContext";
-import { contextRender } from "../../../setupTests";
+import { contextRender } from "../../../testResources";
 
 import { ensureWidgetsRegistered } from "..";
 ensureWidgetsRegistered();

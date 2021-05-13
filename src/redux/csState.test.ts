@@ -14,7 +14,7 @@ import {
   DEVICE_QUERIED
 } from "./actions";
 import { DAlarm, DType } from "../types/dtypes";
-import { ddouble, dstring, ddoubleArray } from "../setupTests";
+import { ddouble, dstring, ddoubleArray } from "../testResources";
 
 const initialState: CsState = {
   valueCache: {

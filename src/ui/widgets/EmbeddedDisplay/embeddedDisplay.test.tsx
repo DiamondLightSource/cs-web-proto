@@ -4,7 +4,7 @@ import { EmbeddedDisplay } from "./embeddedDisplay";
 
 import { DEFAULT_BASE_URL } from "../../../baseUrl";
 import { RelativePosition } from "../../../types/position";
-import { contextRender } from "../../../setupTests";
+import { contextRender } from "../../../testResources";
 import { waitFor } from "@testing-library/react";
 import { ensureWidgetsRegistered } from "..";
 ensureWidgetsRegistered();

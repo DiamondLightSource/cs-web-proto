@@ -1,6 +1,6 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import { ddouble } from "../../../setupTests";
+import { ddouble } from "../../../testResources";
 import { SlideControlComponent } from "./slideControl";
 
 test("slideControl", () => {

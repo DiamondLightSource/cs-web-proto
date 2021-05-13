@@ -7,7 +7,7 @@ import {
   QUERY_DEVICE
 } from "./actions";
 import { connectionMiddleware } from "./connectionMiddleware";
-import { ddouble } from "../setupTests";
+import { ddouble } from "../testResources";
 import { DType } from "../types/dtypes";
 
 const mockStore = { dispatch: jest.fn(), getState: jest.fn() };

@@ -1,4 +1,4 @@
-import { dstring, ddoubleArray, ddouble } from "../setupTests";
+import { dstring, ddoubleArray, ddouble } from "../testResources";
 import {
   mergeDType,
   DType,

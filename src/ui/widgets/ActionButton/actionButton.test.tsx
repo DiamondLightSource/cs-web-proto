@@ -1,10 +1,7 @@
 import React from "react";
 import { ActionButtonComponent, ActionButtonProps } from "./actionButton";
-import { configure, shallow, ShallowWrapper } from "enzyme";
-import Adapter from "enzyme-adapter-react-16";
+import { shallow, ShallowWrapper } from "enzyme";
 import { create, ReactTestRenderer } from "react-test-renderer";
-
-configure({ adapter: new Adapter() });
 
 let snapshot: ReactTestRenderer;
 let actionButtonWrapper: ShallowWrapper<ActionButtonProps>;
