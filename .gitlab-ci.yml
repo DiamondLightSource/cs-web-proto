@@ -7,6 +7,7 @@ default:
 stages:
   - test
   - build
+  - deploy
 
 
 .node_test:
@@ -27,7 +28,6 @@ node 12:
     .node_test
   image: node:12
 
-
 node 14:
   extends:
     .node_test
@@ -39,3 +39,10 @@ build_bundle:
   image: node:12
   script:
     - npm run build
+  artifacts:
+    paths:
+      - build
+
+deploy:
+  stage: deploy
+  trigger: controls/kubernetes/cs-web-proto
