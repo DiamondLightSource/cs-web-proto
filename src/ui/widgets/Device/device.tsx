@@ -29,7 +29,7 @@ export const DeviceComponent = (
   }
   const jsonObject = parseResponse(jsonResponse as any);
 
-  const componentDescription = parseObject(jsonObject, "pva");
+  const componentDescription = parseObject(jsonObject, "ca");
 
   const Component = widgetDescriptionToComponent({
     position: new RelativePosition("100%", "100%"),

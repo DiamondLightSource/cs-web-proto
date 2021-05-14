@@ -2,9 +2,8 @@ import React from "react";
 import log from "loglevel";
 import { EmbeddedDisplay } from "./embeddedDisplay";
 
-import { DEFAULT_BASE_URL } from "../../../baseUrl";
 import { RelativePosition } from "../../../types/position";
-import { contextRender } from "../../../setupTests";
+import { contextRender } from "../../../testResources";
 import { waitFor } from "@testing-library/react";
 import { ensureWidgetsRegistered } from "..";
 ensureWidgetsRegistered();
@@ -21,11 +20,11 @@ beforeEach((): void => {
 
 describe("<EmbeddedDisplay>", (): void => {
   it.each<any>([
-    ["TestFile.bob", `${DEFAULT_BASE_URL}/bob/TestFile.bob`],
+    ["/TestFile.bob", "/TestFile.bob"],
     ["https://a.com/b.bob", "https://a.com/b.bob"],
-    ["TestFile.json", `${DEFAULT_BASE_URL}/json/TestFile.json`],
+    ["/json/TestFile.json", "/json/TestFile.json"],
     ["https://a.com/b.json", "https://a.com/b.json"],
-    ["TestFile.opi", `${DEFAULT_BASE_URL}/opi/TestFile.opi`],
+    ["/TestFile.opi", "/TestFile.opi"],
     ["https://a.com/b.opi", "https://a.com/b.opi"]
   ] as [string, string][])(
     "fetches a file from the server",
@@ -56,7 +55,7 @@ describe("<EmbeddedDisplay>", (): void => {
       expect(globalWithFetch.fetch).toHaveBeenCalledWith(resolvedFile);
 
       await waitFor((): void =>
-        expect(queryByText(/Error converting.*/)).toBeInTheDocument()
+        expect(queryByText(/Error loading.*/)).toBeInTheDocument()
       );
       log.setLevel("info");
     }
@@ -85,7 +84,7 @@ describe("<EmbeddedDisplay>", (): void => {
       <EmbeddedDisplay
         position={new RelativePosition()}
         file={{
-          path: "TestFile.bob",
+          path: "/TestFile1.bob",
           defaultProtocol: "ca",
           macros: {}
         }}
@@ -95,12 +94,10 @@ describe("<EmbeddedDisplay>", (): void => {
     );
 
     expect(globalWithFetch.fetch).toHaveBeenCalledTimes(1);
-    expect(globalWithFetch.fetch).toHaveBeenCalledWith(
-      `${DEFAULT_BASE_URL}/bob/TestFile.bob`
-    );
+    expect(globalWithFetch.fetch).toHaveBeenCalledWith("/TestFile1.bob");
 
     await waitFor((): void =>
-      expect(queryByText(/Error converting.*/)).toBeInTheDocument()
+      expect(queryByText(/Error loading.*/)).toBeInTheDocument()
     );
     log.setLevel("info");
   });
@@ -133,7 +130,7 @@ describe("<EmbeddedDisplay>", (): void => {
       <EmbeddedDisplay
         position={new RelativePosition()}
         file={{
-          path: "TestFile.bob",
+          path: "/TestFile2.bob",
           defaultProtocol: "ca",
           macros: {}
         }}
@@ -143,9 +140,7 @@ describe("<EmbeddedDisplay>", (): void => {
     );
 
     expect(globalWithFetch.fetch).toHaveBeenCalledTimes(1);
-    expect(globalWithFetch.fetch).toHaveBeenCalledWith(
-      `${DEFAULT_BASE_URL}/bob/TestFile.bob`
-    );
+    expect(globalWithFetch.fetch).toHaveBeenCalledWith("/TestFile2.bob");
 
     await waitFor((): void =>
       expect(queryByText("From .bob file")).toBeInTheDocument()
@@ -168,7 +163,7 @@ describe("<EmbeddedDisplay>", (): void => {
       <EmbeddedDisplay
         position={new RelativePosition()}
         file={{
-          path: "TestFile.json",
+          path: "/TestFile3.json",
           defaultProtocol: "ca",
           macros: {}
         }}
@@ -178,9 +173,7 @@ describe("<EmbeddedDisplay>", (): void => {
     );
 
     expect(globalWithFetch.fetch).toHaveBeenCalledTimes(1);
-    expect(globalWithFetch.fetch).toHaveBeenCalledWith(
-      `${DEFAULT_BASE_URL}/json/TestFile.json`
-    );
+    expect(globalWithFetch.fetch).toHaveBeenCalledWith("/TestFile3.json");
 
     await waitFor((): void => expect(queryByText("Test")).toBeInTheDocument());
   });

@@ -1,6 +1,6 @@
 import React from "react";
 import { useConnection } from "./useConnection";
-import { contextRender, ddouble } from "../../setupTests";
+import { contextRender, ddouble } from "../../testResources";
 import { DType } from "../../types/dtypes";
 import { CsState } from "../../redux/csState";
 

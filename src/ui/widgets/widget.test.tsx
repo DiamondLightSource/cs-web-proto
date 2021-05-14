@@ -4,7 +4,7 @@ import { Widget } from "./widget";
 import { LabelComponent } from "./Label/label";
 import { RelativePosition } from "../../types/position";
 import { PV } from "../../types/pv";
-import { contextRender } from "../../setupTests";
+import { contextRender } from "../../testResources";
 import { fireEvent } from "@testing-library/react";
 import copyToClipboard from "clipboard-copy";
 

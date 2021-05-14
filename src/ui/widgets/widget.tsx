@@ -32,16 +32,20 @@ export function commonCss(props: {
   foregroundColor?: Color;
   backgroundColor?: Color;
   transparent?: boolean;
+  actions?: WidgetActions;
 }): CSSProperties {
   const visible = props.visible === undefined || props.visible;
   const backgroundColor = props.transparent
     ? "transparent"
     : props.backgroundColor?.toString();
+  const cursor =
+    props.actions && props.actions.actions.length > 0 ? "pointer" : "auto";
   return {
     ...props.border?.css(),
     ...props.font?.css(),
     color: props.foregroundColor?.toString(),
     backgroundColor,
+    cursor,
     visibility: visible ? undefined : "hidden"
   };
 }

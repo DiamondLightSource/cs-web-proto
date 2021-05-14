@@ -11,7 +11,8 @@ import {
   ChoicePropOpt,
   FontPropOpt,
   ColorPropOpt,
-  BorderPropOpt
+  BorderPropOpt,
+  FloatPropOpt
 } from "../propTypes";
 
 const LabelProps = {
@@ -23,7 +24,8 @@ const LabelProps = {
   font: FontPropOpt,
   foregroundColor: ColorPropOpt,
   backgroundColor: ColorPropOpt,
-  border: BorderPropOpt
+  border: BorderPropOpt,
+  rotationAngle: FloatPropOpt
 };
 
 const LabelWidgetProps = {
@@ -35,7 +37,7 @@ export const LabelComponent = (
   props: InferWidgetProps<typeof LabelProps>
 ): JSX.Element => {
   const style: CSSProperties = commonCss(props);
-  const { textAlign = "center", text = "" } = props;
+  const { textAlign = "center", text = "", rotationAngle } = props;
   const className = props.className ?? `Label ${classes.Label}`;
   // Since display is "flex", use "flex-start" and "flex-end" to align
   // the content.
@@ -46,6 +48,10 @@ export const LabelComponent = (
     alignment = "flex-end";
   }
   style["justifyContent"] = alignment;
+  style["cursor"] = "default";
+  if (rotationAngle) {
+    style["transform"] = `rotate(${rotationAngle}deg)`;
+  }
 
   // Simple component to display text - defaults to black text and dark grey background
   return (

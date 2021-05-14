@@ -46,6 +46,11 @@ export function pvStateComparator(
     return false;
   }
   for (const [pvName, [beforeVal, beforeEffPvName]] of Object.entries(before)) {
+    // If the PV name for a widget has changed the previous results may
+    // not resemble the new results at all.
+    if (!after.hasOwnProperty(pvName)) {
+      return false;
+    }
     const [afterVal, afterEffPvName] = after[pvName];
     // If the PV state hasn't changed in the store, we will receive the same
     // object when selecting that PV state.

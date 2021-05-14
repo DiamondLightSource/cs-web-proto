@@ -1,0 +1,4 @@
+#! /bin/bash
+IOC_TOP=$(readlink -m $(pwd)/../../../..)
+echo IOC Top is ${IOC_TOP}
+sed  -i s=TOP_OF_IOC=${IOC_TOP}= launch.nws

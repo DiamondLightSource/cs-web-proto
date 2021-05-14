@@ -12,10 +12,9 @@ import {
   FontPropOpt,
   BorderPropOpt
 } from "../propTypes";
-import { BaseUrlContext } from "../../../baseUrl";
 import { Color } from "../../../types/color";
 import { Font } from "../../../types/font";
-import { Border } from "../../../types/border";
+import { Border, BorderStyle } from "../../../types/border";
 import { MacroContext } from "../../../types/macros";
 import { FileContext } from "../../../fileContext";
 
@@ -27,16 +26,20 @@ export interface ActionButtonProps {
   foregroundColor?: Color;
   border?: Border;
   font?: Font;
+  actions?: WidgetActions;
 }
 
 export const ActionButtonComponent = (
   props: ActionButtonProps
 ): JSX.Element => {
-  const baseUrl = useContext(BaseUrlContext);
   const style = commonCss(props);
-  let src = props.image;
-  if (src !== undefined && !src?.startsWith("http")) {
-    src = `${baseUrl}/img/${src}`;
+  style["whiteSpace"] = "normal";
+  // Use default button style if no border defined.
+  if (props.border?.style === BorderStyle.None) {
+    style["borderStyle"] = undefined;
+    style["borderWidth"] = undefined;
+    style["borderColor"] = undefined;
+    style["padding"] = "0";
   }
   return (
     <button
@@ -44,13 +47,13 @@ export const ActionButtonComponent = (
       onClick={props.onClick}
       style={style}
     >
-      {src !== undefined ? (
+      {props.image !== undefined ? (
         <figure className={classes.figure}>
-          <img src={src} alt={props.image}></img>
+          <img src={props.image} alt={props.image}></img>
           <figcaption>{props.text}</figcaption>
         </figure>
       ) : (
-        <span>{props.text}</span>
+        <span style={{ whiteSpace: "normal" }}>{props.text}</span>
       )}
     </button>
   );
@@ -91,6 +94,7 @@ export const ActionButtonWidget = (
       foregroundColor={props.foregroundColor}
       font={props.font}
       border={props.border}
+      actions={props.actions as WidgetActions}
     />
   );
 };

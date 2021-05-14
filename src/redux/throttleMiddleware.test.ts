@@ -6,7 +6,7 @@ import {
   ValueChanged,
   ConnectionChanged
 } from "./actions";
-import { ddouble } from "../setupTests";
+import { ddouble } from "../testResources";
 
 // Mock setInterval.
 jest.useFakeTimers();

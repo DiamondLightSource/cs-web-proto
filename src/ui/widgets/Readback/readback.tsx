@@ -12,7 +12,8 @@ import {
   FontPropOpt,
   ColorPropOpt,
   BorderPropOpt,
-  StringPropOpt
+  StringPropOpt,
+  FloatPropOpt
 } from "../propTypes";
 import { registerWidget } from "../register";
 import { LabelComponent } from "../Label/label";
@@ -29,7 +30,8 @@ const ReadbackProps = {
   font: FontPropOpt,
   foregroundColor: ColorPropOpt,
   backgroundColor: ColorPropOpt,
-  border: BorderPropOpt
+  border: BorderPropOpt,
+  rotationAngle: FloatPropOpt
 };
 
 // Needs to be exported for testing
@@ -51,7 +53,8 @@ export const ReadbackComponent = (
     text = "######",
     textAlign = "center",
     showUnits = false,
-    precisionFromPv = false
+    precisionFromPv = false,
+    rotationAngle
   } = props;
   // Decide what to display.
   const alarm = value?.getAlarm() || DAlarm.NONE;
@@ -92,6 +95,7 @@ export const ReadbackComponent = (
       foregroundColor={foregroundColor}
       backgroundColor={backgroundColor}
       border={border}
+      rotationAngle={rotationAngle}
     ></LabelComponent>
   );
 };

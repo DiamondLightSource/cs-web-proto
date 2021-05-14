@@ -1,0 +1,2145 @@
+<?xml version='1.0' encoding='utf-8'?>
+<display typeId="org.csstudio.opibuilder.Display" version="1.0">
+  <x>405</x>
+  <y>684</y>
+  <width>814</width>
+  <height>53</height>
+  <font>
+    <fontdata fontName="liberation sans" height="18" pixels="true" style="3" />
+  </font>
+  <boy_version>4.0.0</boy_version>
+  <foreground_color>
+    <color blue="0" green="0" name="Black" red="0" />
+  </foreground_color>
+  <background_color>
+    <color blue="255" green="255" name="Disconn/Invalid" red="255" />
+  </background_color>
+  <show_grid>false</show_grid>
+  <auto_zoom_to_fit_all>true</auto_zoom_to_fit_all>
+  <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0">
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_style>0</border_style>
+    <height>34</height>
+    <lock_children>true</lock_children>
+    <name>0</name>
+    <show_scrollbar>false</show_scrollbar>
+    <transparent>true</transparent>
+    <widget typeId="org.csstudio.opibuilder.widgets.Rectangle" version="1.0">
+      <background_color>
+        <color blue="255" green="255" name="White" red="255" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <height>34</height>
+      <line_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </line_color>
+      <line_style>0</line_style>
+      <line_width>1</line_width>
+      <name>EDM Rectangle</name>
+      <transparent>true</transparent>
+      <visible>false</visible>
+      <width>34</width>
+      <x>0</x>
+      <y>0</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.Ellipse" version="1.0">
+      <background_color>
+        <color blue="255" green="255" name="White" red="255" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <height>32</height>
+      <line_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </line_color>
+      <line_style>0</line_style>
+      <line_width>1</line_width>
+      <name>EDM Ellipse</name>
+      <transparent>false</transparent>
+      <width>32</width>
+      <x>1</x>
+      <y>1</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.arc" version="1.0">
+      <background_color>
+        <color blue="255" green="255" name="White" red="255" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <fill>false</fill>
+      <foreground_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </foreground_color>
+      <height>16</height>
+      <line_style>0</line_style>
+      <line_width>2</line_width>
+      <name>EDM arc</name>
+      <start_angle>180.0</start_angle>
+      <total_angle>180.0</total_angle>
+      <transparent>true</transparent>
+      <width>20</width>
+      <x>6</x>
+      <y>-2</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.polyline" version="1.0">
+      <background_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <fill_arrow>true</fill_arrow>
+      <fill_level>0.0</fill_level>
+      <height>14</height>
+      <line_style>0</line_style>
+      <line_width>2</line_width>
+      <name>EDM Line</name>
+      <points>
+        <point x="16" y="18" />
+        <point x="16" y="30" />
+      </points>
+      <width>2</width>
+      <x>15</x>
+      <y>17</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.polyline" version="1.0">
+      <background_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <fill_arrow>true</fill_arrow>
+      <fill_level>0.0</fill_level>
+      <height>2</height>
+      <line_style>1</line_style>
+      <line_width>2</line_width>
+      <name>EDM Line</name>
+      <points>
+        <point x="4" y="15" />
+        <point x="30" y="15" />
+      </points>
+      <width>28</width>
+      <x>3</x>
+      <y>14</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.polyline" version="1.0">
+      <background_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <fill_arrow>true</fill_arrow>
+      <fill_level>0.0</fill_level>
+      <height>2</height>
+      <line_style>0</line_style>
+      <line_width>2</line_width>
+      <name>EDM Line</name>
+      <points>
+        <point x="7" y="18" />
+        <point x="26" y="18" />
+      </points>
+      <width>21</width>
+      <x>6</x>
+      <y>17</y>
+    </widget>
+    <width>34</width>
+    <x>10</x>
+    <y>10</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0">
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_style>0</border_style>
+    <height>34</height>
+    <lock_children>true</lock_children>
+    <name>1</name>
+    <show_scrollbar>false</show_scrollbar>
+    <transparent>true</transparent>
+    <widget typeId="org.csstudio.opibuilder.widgets.Rectangle" version="1.0">
+      <background_color>
+        <color blue="255" green="255" name="White" red="255" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <height>34</height>
+      <line_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </line_color>
+      <line_style>0</line_style>
+      <line_width>1</line_width>
+      <name>EDM Rectangle</name>
+      <transparent>true</transparent>
+      <visible>false</visible>
+      <width>34</width>
+      <x>0</x>
+      <y>0</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.Ellipse" version="1.0">
+      <background_color>
+        <color blue="0" green="192" name="Mid Green" red="0" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <height>32</height>
+      <line_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </line_color>
+      <line_style>0</line_style>
+      <line_width>1</line_width>
+      <name>EDM Ellipse</name>
+      <transparent>false</transparent>
+      <width>32</width>
+      <x>1</x>
+      <y>1</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.polyline" version="1.0">
+      <background_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <fill_arrow>true</fill_arrow>
+      <fill_level>0.0</fill_level>
+      <height>1</height>
+      <line_style>0</line_style>
+      <line_width>1</line_width>
+      <name>EDM Line</name>
+      <points>
+        <point x="1" y="32" />
+      </points>
+      <width>1</width>
+      <x>1</x>
+      <y>32</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.arc" version="1.0">
+      <background_color>
+        <color blue="255" green="255" name="White" red="255" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <fill>false</fill>
+      <foreground_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </foreground_color>
+      <height>16</height>
+      <line_style>0</line_style>
+      <line_width>2</line_width>
+      <name>EDM arc</name>
+      <start_angle>180.0</start_angle>
+      <total_angle>180.0</total_angle>
+      <transparent>true</transparent>
+      <width>20</width>
+      <x>6</x>
+      <y>-2</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.polyline" version="1.0">
+      <background_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <fill_arrow>true</fill_arrow>
+      <fill_level>0.0</fill_level>
+      <height>14</height>
+      <line_style>0</line_style>
+      <line_width>2</line_width>
+      <name>EDM Line</name>
+      <points>
+        <point x="16" y="18" />
+        <point x="16" y="30" />
+      </points>
+      <width>2</width>
+      <x>15</x>
+      <y>17</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.polyline" version="1.0">
+      <background_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <fill_arrow>true</fill_arrow>
+      <fill_level>0.0</fill_level>
+      <height>2</height>
+      <line_style>1</line_style>
+      <line_width>2</line_width>
+      <name>EDM Line</name>
+      <points>
+        <point x="4" y="15" />
+        <point x="30" y="15" />
+      </points>
+      <width>28</width>
+      <x>3</x>
+      <y>14</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.polyline" version="1.0">
+      <background_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <fill_arrow>true</fill_arrow>
+      <fill_level>0.0</fill_level>
+      <height>2</height>
+      <line_style>0</line_style>
+      <line_width>2</line_width>
+      <name>EDM Line</name>
+      <points>
+        <point x="7" y="18" />
+        <point x="26" y="18" />
+      </points>
+      <width>21</width>
+      <x>6</x>
+      <y>17</y>
+    </widget>
+    <width>34</width>
+    <x>58</x>
+    <y>10</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0">
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_style>0</border_style>
+    <height>34</height>
+    <lock_children>true</lock_children>
+    <name>2</name>
+    <show_scrollbar>false</show_scrollbar>
+    <transparent>true</transparent>
+    <widget typeId="org.csstudio.opibuilder.widgets.Rectangle" version="1.0">
+      <background_color>
+        <color blue="255" green="255" name="White" red="255" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <height>34</height>
+      <line_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </line_color>
+      <line_style>0</line_style>
+      <line_width>1</line_width>
+      <name>EDM Rectangle</name>
+      <transparent>true</transparent>
+      <visible>false</visible>
+      <width>34</width>
+      <x>0</x>
+      <y>0</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.Ellipse" version="1.0">
+      <background_color>
+        <color blue="0" green="192" name="Mid Green" red="0" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <height>32</height>
+      <line_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </line_color>
+      <line_style>0</line_style>
+      <line_width>1</line_width>
+      <name>EDM Ellipse</name>
+      <transparent>false</transparent>
+      <width>32</width>
+      <x>1</x>
+      <y>1</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.arc" version="1.0">
+      <background_color>
+        <color blue="255" green="255" name="White" red="255" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <fill>false</fill>
+      <foreground_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </foreground_color>
+      <height>16</height>
+      <line_style>0</line_style>
+      <line_width>2</line_width>
+      <name>EDM arc</name>
+      <start_angle>180.0</start_angle>
+      <total_angle>180.0</total_angle>
+      <transparent>true</transparent>
+      <width>20</width>
+      <x>6</x>
+      <y>-2</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.polyline" version="1.0">
+      <background_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <fill_arrow>true</fill_arrow>
+      <fill_level>0.0</fill_level>
+      <height>14</height>
+      <line_style>0</line_style>
+      <line_width>2</line_width>
+      <name>EDM Line</name>
+      <points>
+        <point x="16" y="18" />
+        <point x="16" y="30" />
+      </points>
+      <width>2</width>
+      <x>15</x>
+      <y>17</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.polyline" version="1.0">
+      <background_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <fill_arrow>true</fill_arrow>
+      <fill_level>0.0</fill_level>
+      <height>2</height>
+      <line_style>1</line_style>
+      <line_width>2</line_width>
+      <name>EDM Line</name>
+      <points>
+        <point x="4" y="15" />
+        <point x="30" y="15" />
+      </points>
+      <width>28</width>
+      <x>3</x>
+      <y>14</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.polyline" version="1.0">
+      <background_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <fill_arrow>true</fill_arrow>
+      <fill_level>0.0</fill_level>
+      <height>2</height>
+      <line_style>0</line_style>
+      <line_width>2</line_width>
+      <name>EDM Line</name>
+      <points>
+        <point x="7" y="18" />
+        <point x="26" y="18" />
+      </points>
+      <width>21</width>
+      <x>6</x>
+      <y>17</y>
+    </widget>
+    <width>34</width>
+    <x>106</x>
+    <y>10</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0">
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_style>0</border_style>
+    <height>34</height>
+    <lock_children>true</lock_children>
+    <name>3</name>
+    <show_scrollbar>false</show_scrollbar>
+    <transparent>true</transparent>
+    <widget typeId="org.csstudio.opibuilder.widgets.Rectangle" version="1.0">
+      <background_color>
+        <color blue="255" green="255" name="White" red="255" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <height>34</height>
+      <line_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </line_color>
+      <line_style>0</line_style>
+      <line_width>1</line_width>
+      <name>EDM Rectangle</name>
+      <transparent>true</transparent>
+      <visible>false</visible>
+      <width>34</width>
+      <x>0</x>
+      <y>0</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.Ellipse" version="1.0">
+      <background_color>
+        <color blue="0" green="192" name="Amber" red="255" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <height>32</height>
+      <line_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </line_color>
+      <line_style>0</line_style>
+      <line_width>1</line_width>
+      <name>EDM Ellipse</name>
+      <transparent>false</transparent>
+      <width>32</width>
+      <x>1</x>
+      <y>1</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.arc" version="1.0">
+      <background_color>
+        <color blue="255" green="255" name="White" red="255" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <fill>false</fill>
+      <foreground_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </foreground_color>
+      <height>16</height>
+      <line_style>0</line_style>
+      <line_width>2</line_width>
+      <name>EDM arc</name>
+      <start_angle>180.0</start_angle>
+      <total_angle>180.0</total_angle>
+      <transparent>true</transparent>
+      <width>20</width>
+      <x>6</x>
+      <y>-2</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.polyline" version="1.0">
+      <background_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <fill_arrow>true</fill_arrow>
+      <fill_level>0.0</fill_level>
+      <height>14</height>
+      <line_style>0</line_style>
+      <line_width>2</line_width>
+      <name>EDM Line</name>
+      <points>
+        <point x="16" y="18" />
+        <point x="16" y="30" />
+      </points>
+      <width>2</width>
+      <x>15</x>
+      <y>17</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.polyline" version="1.0">
+      <background_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <fill_arrow>true</fill_arrow>
+      <fill_level>0.0</fill_level>
+      <height>2</height>
+      <line_style>1</line_style>
+      <line_width>2</line_width>
+      <name>EDM Line</name>
+      <points>
+        <point x="4" y="15" />
+        <point x="30" y="15" />
+      </points>
+      <width>28</width>
+      <x>3</x>
+      <y>14</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.polyline" version="1.0">
+      <background_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <fill_arrow>true</fill_arrow>
+      <fill_level>0.0</fill_level>
+      <height>2</height>
+      <line_style>0</line_style>
+      <line_width>2</line_width>
+      <name>EDM Line</name>
+      <points>
+        <point x="7" y="18" />
+        <point x="26" y="18" />
+      </points>
+      <width>21</width>
+      <x>6</x>
+      <y>17</y>
+    </widget>
+    <width>34</width>
+    <x>154</x>
+    <y>10</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0">
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_style>0</border_style>
+    <height>34</height>
+    <lock_children>true</lock_children>
+    <name>4</name>
+    <show_scrollbar>false</show_scrollbar>
+    <transparent>true</transparent>
+    <widget typeId="org.csstudio.opibuilder.widgets.Rectangle" version="1.0">
+      <background_color>
+        <color blue="255" green="255" name="White" red="255" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <height>34</height>
+      <line_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </line_color>
+      <line_style>0</line_style>
+      <line_width>1</line_width>
+      <name>EDM Rectangle</name>
+      <transparent>true</transparent>
+      <visible>false</visible>
+      <width>34</width>
+      <x>0</x>
+      <y>0</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.Ellipse" version="1.0">
+      <background_color>
+        <color blue="0" green="192" name="Amber" red="255" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <height>32</height>
+      <line_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </line_color>
+      <line_style>0</line_style>
+      <line_width>1</line_width>
+      <name>EDM Ellipse</name>
+      <transparent>false</transparent>
+      <width>32</width>
+      <x>1</x>
+      <y>1</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.arc" version="1.0">
+      <background_color>
+        <color blue="255" green="255" name="White" red="255" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <fill>false</fill>
+      <foreground_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </foreground_color>
+      <height>16</height>
+      <line_style>0</line_style>
+      <line_width>2</line_width>
+      <name>EDM arc</name>
+      <start_angle>180.0</start_angle>
+      <total_angle>180.0</total_angle>
+      <transparent>true</transparent>
+      <width>20</width>
+      <x>6</x>
+      <y>-2</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.polyline" version="1.0">
+      <background_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <fill_arrow>true</fill_arrow>
+      <fill_level>0.0</fill_level>
+      <height>14</height>
+      <line_style>0</line_style>
+      <line_width>2</line_width>
+      <name>EDM Line</name>
+      <points>
+        <point x="16" y="18" />
+        <point x="16" y="30" />
+      </points>
+      <width>2</width>
+      <x>15</x>
+      <y>17</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.polyline" version="1.0">
+      <background_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <fill_arrow>true</fill_arrow>
+      <fill_level>0.0</fill_level>
+      <height>2</height>
+      <line_style>1</line_style>
+      <line_width>2</line_width>
+      <name>EDM Line</name>
+      <points>
+        <point x="4" y="15" />
+        <point x="30" y="15" />
+      </points>
+      <width>28</width>
+      <x>3</x>
+      <y>14</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.polyline" version="1.0">
+      <background_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <fill_arrow>true</fill_arrow>
+      <fill_level>0.0</fill_level>
+      <height>2</height>
+      <line_style>0</line_style>
+      <line_width>2</line_width>
+      <name>EDM Line</name>
+      <points>
+        <point x="7" y="18" />
+        <point x="26" y="18" />
+      </points>
+      <width>21</width>
+      <x>6</x>
+      <y>17</y>
+    </widget>
+    <width>34</width>
+    <x>202</x>
+    <y>10</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0">
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_style>0</border_style>
+    <height>34</height>
+    <lock_children>true</lock_children>
+    <name>5</name>
+    <show_scrollbar>false</show_scrollbar>
+    <transparent>true</transparent>
+    <widget typeId="org.csstudio.opibuilder.widgets.Rectangle" version="1.0">
+      <background_color>
+        <color blue="255" green="255" name="White" red="255" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <height>34</height>
+      <line_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </line_color>
+      <line_style>0</line_style>
+      <line_width>1</line_width>
+      <name>EDM Rectangle</name>
+      <transparent>true</transparent>
+      <visible>false</visible>
+      <width>34</width>
+      <x>0</x>
+      <y>0</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.Ellipse" version="1.0">
+      <background_color>
+        <color blue="0" green="0" name="Mid Red" red="192" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <height>32</height>
+      <line_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </line_color>
+      <line_style>0</line_style>
+      <line_width>1</line_width>
+      <name>EDM Ellipse</name>
+      <transparent>false</transparent>
+      <width>32</width>
+      <x>1</x>
+      <y>1</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.arc" version="1.0">
+      <background_color>
+        <color blue="255" green="255" name="White" red="255" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <fill>false</fill>
+      <foreground_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </foreground_color>
+      <height>16</height>
+      <line_style>0</line_style>
+      <line_width>2</line_width>
+      <name>EDM arc</name>
+      <start_angle>180.0</start_angle>
+      <total_angle>180.0</total_angle>
+      <transparent>true</transparent>
+      <width>20</width>
+      <x>6</x>
+      <y>-2</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.polyline" version="1.0">
+      <background_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <fill_arrow>true</fill_arrow>
+      <fill_level>0.0</fill_level>
+      <height>14</height>
+      <line_style>0</line_style>
+      <line_width>2</line_width>
+      <name>EDM Line</name>
+      <points>
+        <point x="16" y="18" />
+        <point x="16" y="30" />
+      </points>
+      <width>2</width>
+      <x>15</x>
+      <y>17</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.polyline" version="1.0">
+      <background_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <fill_arrow>true</fill_arrow>
+      <fill_level>0.0</fill_level>
+      <height>2</height>
+      <line_style>1</line_style>
+      <line_width>2</line_width>
+      <name>EDM Line</name>
+      <points>
+        <point x="4" y="15" />
+        <point x="30" y="15" />
+      </points>
+      <width>28</width>
+      <x>3</x>
+      <y>14</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.polyline" version="1.0">
+      <background_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <fill_arrow>true</fill_arrow>
+      <fill_level>0.0</fill_level>
+      <height>2</height>
+      <line_style>0</line_style>
+      <line_width>2</line_width>
+      <name>EDM Line</name>
+      <points>
+        <point x="7" y="18" />
+        <point x="26" y="18" />
+      </points>
+      <width>21</width>
+      <x>6</x>
+      <y>17</y>
+    </widget>
+    <width>34</width>
+    <x>250</x>
+    <y>10</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0">
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_style>0</border_style>
+    <height>34</height>
+    <lock_children>true</lock_children>
+    <name>6</name>
+    <show_scrollbar>false</show_scrollbar>
+    <transparent>true</transparent>
+    <widget typeId="org.csstudio.opibuilder.widgets.Rectangle" version="1.0">
+      <background_color>
+        <color blue="255" green="255" name="White" red="255" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <height>34</height>
+      <line_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </line_color>
+      <line_style>0</line_style>
+      <line_width>1</line_width>
+      <name>EDM Rectangle</name>
+      <transparent>true</transparent>
+      <visible>false</visible>
+      <width>34</width>
+      <x>0</x>
+      <y>0</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.Ellipse" version="1.0">
+      <background_color>
+        <color blue="0" green="0" name="Mid Red" red="192" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <height>32</height>
+      <line_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </line_color>
+      <line_style>0</line_style>
+      <line_width>1</line_width>
+      <name>EDM Ellipse</name>
+      <transparent>false</transparent>
+      <width>32</width>
+      <x>1</x>
+      <y>1</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.arc" version="1.0">
+      <background_color>
+        <color blue="255" green="255" name="White" red="255" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <fill>false</fill>
+      <foreground_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </foreground_color>
+      <height>16</height>
+      <line_style>0</line_style>
+      <line_width>2</line_width>
+      <name>EDM arc</name>
+      <start_angle>180.0</start_angle>
+      <total_angle>180.0</total_angle>
+      <transparent>true</transparent>
+      <width>20</width>
+      <x>6</x>
+      <y>-2</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.polyline" version="1.0">
+      <background_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <fill_arrow>true</fill_arrow>
+      <fill_level>0.0</fill_level>
+      <height>14</height>
+      <line_style>0</line_style>
+      <line_width>2</line_width>
+      <name>EDM Line</name>
+      <points>
+        <point x="16" y="18" />
+        <point x="16" y="30" />
+      </points>
+      <width>2</width>
+      <x>15</x>
+      <y>17</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.polyline" version="1.0">
+      <background_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <fill_arrow>true</fill_arrow>
+      <fill_level>0.0</fill_level>
+      <height>2</height>
+      <line_style>1</line_style>
+      <line_width>2</line_width>
+      <name>EDM Line</name>
+      <points>
+        <point x="4" y="15" />
+        <point x="30" y="15" />
+      </points>
+      <width>28</width>
+      <x>3</x>
+      <y>14</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.polyline" version="1.0">
+      <background_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <fill_arrow>true</fill_arrow>
+      <fill_level>0.0</fill_level>
+      <height>2</height>
+      <line_style>0</line_style>
+      <line_width>2</line_width>
+      <name>EDM Line</name>
+      <points>
+        <point x="7" y="18" />
+        <point x="26" y="18" />
+      </points>
+      <width>21</width>
+      <x>6</x>
+      <y>17</y>
+    </widget>
+    <width>34</width>
+    <x>298</x>
+    <y>10</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0">
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_style>0</border_style>
+    <height>34</height>
+    <lock_children>true</lock_children>
+    <name>7</name>
+    <show_scrollbar>false</show_scrollbar>
+    <transparent>true</transparent>
+    <widget typeId="org.csstudio.opibuilder.widgets.Rectangle" version="1.0">
+      <background_color>
+        <color blue="255" green="255" name="White" red="255" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <height>34</height>
+      <line_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </line_color>
+      <line_style>0</line_style>
+      <line_width>1</line_width>
+      <name>EDM Rectangle</name>
+      <transparent>true</transparent>
+      <visible>false</visible>
+      <width>34</width>
+      <x>0</x>
+      <y>0</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.Ellipse" version="1.0">
+      <background_color>
+        <color blue="0" green="0" name="Mid Red" red="192" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <height>32</height>
+      <line_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </line_color>
+      <line_style>0</line_style>
+      <line_width>1</line_width>
+      <name>EDM Ellipse</name>
+      <transparent>false</transparent>
+      <width>32</width>
+      <x>1</x>
+      <y>1</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.arc" version="1.0">
+      <background_color>
+        <color blue="255" green="255" name="White" red="255" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <fill>false</fill>
+      <foreground_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </foreground_color>
+      <height>16</height>
+      <line_style>0</line_style>
+      <line_width>2</line_width>
+      <name>EDM arc</name>
+      <start_angle>180.0</start_angle>
+      <total_angle>180.0</total_angle>
+      <transparent>true</transparent>
+      <width>20</width>
+      <x>6</x>
+      <y>-2</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.polyline" version="1.0">
+      <background_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <fill_arrow>true</fill_arrow>
+      <fill_level>0.0</fill_level>
+      <height>14</height>
+      <line_style>0</line_style>
+      <line_width>2</line_width>
+      <name>EDM Line</name>
+      <points>
+        <point x="16" y="18" />
+        <point x="16" y="30" />
+      </points>
+      <width>2</width>
+      <x>15</x>
+      <y>17</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.polyline" version="1.0">
+      <background_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <fill_arrow>true</fill_arrow>
+      <fill_level>0.0</fill_level>
+      <height>2</height>
+      <line_style>1</line_style>
+      <line_width>2</line_width>
+      <name>EDM Line</name>
+      <points>
+        <point x="4" y="15" />
+        <point x="30" y="15" />
+      </points>
+      <width>28</width>
+      <x>3</x>
+      <y>14</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.polyline" version="1.0">
+      <background_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <fill_arrow>true</fill_arrow>
+      <fill_level>0.0</fill_level>
+      <height>2</height>
+      <line_style>0</line_style>
+      <line_width>2</line_width>
+      <name>EDM Line</name>
+      <points>
+        <point x="7" y="18" />
+        <point x="26" y="18" />
+      </points>
+      <width>21</width>
+      <x>6</x>
+      <y>17</y>
+    </widget>
+    <width>34</width>
+    <x>346</x>
+    <y>10</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0">
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_style>0</border_style>
+    <height>34</height>
+    <lock_children>true</lock_children>
+    <name>8</name>
+    <show_scrollbar>false</show_scrollbar>
+    <transparent>true</transparent>
+    <widget typeId="org.csstudio.opibuilder.widgets.Rectangle" version="1.0">
+      <background_color>
+        <color blue="255" green="255" name="White" red="255" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <height>34</height>
+      <line_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </line_color>
+      <line_style>0</line_style>
+      <line_width>1</line_width>
+      <name>EDM Rectangle</name>
+      <transparent>true</transparent>
+      <visible>false</visible>
+      <width>34</width>
+      <x>0</x>
+      <y>0</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.Ellipse" version="1.0">
+      <background_color>
+        <color blue="0" green="0" name="Mid Red" red="192" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <height>32</height>
+      <line_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </line_color>
+      <line_style>0</line_style>
+      <line_width>1</line_width>
+      <name>EDM Ellipse</name>
+      <transparent>false</transparent>
+      <width>32</width>
+      <x>1</x>
+      <y>1</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.arc" version="1.0">
+      <background_color>
+        <color blue="255" green="255" name="White" red="255" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <fill>false</fill>
+      <foreground_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </foreground_color>
+      <height>16</height>
+      <line_style>0</line_style>
+      <line_width>2</line_width>
+      <name>EDM arc</name>
+      <start_angle>180.0</start_angle>
+      <total_angle>180.0</total_angle>
+      <transparent>true</transparent>
+      <width>20</width>
+      <x>7</x>
+      <y>-2</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.polyline" version="1.0">
+      <background_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <fill_arrow>true</fill_arrow>
+      <fill_level>0.0</fill_level>
+      <height>14</height>
+      <line_style>0</line_style>
+      <line_width>2</line_width>
+      <name>EDM Line</name>
+      <points>
+        <point x="17" y="18" />
+        <point x="17" y="30" />
+      </points>
+      <width>2</width>
+      <x>16</x>
+      <y>17</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.polyline" version="1.0">
+      <background_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <fill_arrow>true</fill_arrow>
+      <fill_level>0.0</fill_level>
+      <height>2</height>
+      <line_style>1</line_style>
+      <line_width>2</line_width>
+      <name>EDM Line</name>
+      <points>
+        <point x="5" y="15" />
+        <point x="31" y="15" />
+      </points>
+      <width>28</width>
+      <x>4</x>
+      <y>14</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.polyline" version="1.0">
+      <background_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <fill_arrow>true</fill_arrow>
+      <fill_level>0.0</fill_level>
+      <height>2</height>
+      <line_style>0</line_style>
+      <line_width>2</line_width>
+      <name>EDM Line</name>
+      <points>
+        <point x="8" y="18" />
+        <point x="27" y="18" />
+      </points>
+      <width>21</width>
+      <x>7</x>
+      <y>17</y>
+    </widget>
+    <width>34</width>
+    <x>393</x>
+    <y>10</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0">
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_style>0</border_style>
+    <height>34</height>
+    <lock_children>true</lock_children>
+    <name>9</name>
+    <show_scrollbar>false</show_scrollbar>
+    <transparent>true</transparent>
+    <widget typeId="org.csstudio.opibuilder.widgets.Rectangle" version="1.0">
+      <background_color>
+        <color blue="255" green="255" name="White" red="255" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <height>34</height>
+      <line_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </line_color>
+      <line_style>0</line_style>
+      <line_width>1</line_width>
+      <name>EDM Rectangle</name>
+      <transparent>true</transparent>
+      <visible>false</visible>
+      <width>34</width>
+      <x>0</x>
+      <y>0</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.Ellipse" version="1.0">
+      <background_color>
+        <color blue="0" green="192" name="Amber" red="255" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <height>32</height>
+      <line_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </line_color>
+      <line_style>0</line_style>
+      <line_width>1</line_width>
+      <name>EDM Ellipse</name>
+      <transparent>false</transparent>
+      <width>32</width>
+      <x>1</x>
+      <y>1</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.arc" version="1.0">
+      <background_color>
+        <color blue="255" green="255" name="White" red="255" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <fill>false</fill>
+      <foreground_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </foreground_color>
+      <height>16</height>
+      <line_style>0</line_style>
+      <line_width>2</line_width>
+      <name>EDM arc</name>
+      <start_angle>180.0</start_angle>
+      <total_angle>180.0</total_angle>
+      <transparent>true</transparent>
+      <width>20</width>
+      <x>6</x>
+      <y>-2</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.polyline" version="1.0">
+      <background_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <fill_arrow>true</fill_arrow>
+      <fill_level>0.0</fill_level>
+      <height>14</height>
+      <line_style>0</line_style>
+      <line_width>2</line_width>
+      <name>EDM Line</name>
+      <points>
+        <point x="16" y="18" />
+        <point x="16" y="30" />
+      </points>
+      <width>2</width>
+      <x>15</x>
+      <y>17</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.polyline" version="1.0">
+      <background_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <fill_arrow>true</fill_arrow>
+      <fill_level>0.0</fill_level>
+      <height>2</height>
+      <line_style>1</line_style>
+      <line_width>2</line_width>
+      <name>EDM Line</name>
+      <points>
+        <point x="4" y="15" />
+        <point x="30" y="15" />
+      </points>
+      <width>28</width>
+      <x>3</x>
+      <y>14</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.polyline" version="1.0">
+      <background_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <fill_arrow>true</fill_arrow>
+      <fill_level>0.0</fill_level>
+      <height>2</height>
+      <line_style>0</line_style>
+      <line_width>2</line_width>
+      <name>EDM Line</name>
+      <points>
+        <point x="7" y="18" />
+        <point x="26" y="18" />
+      </points>
+      <width>21</width>
+      <x>6</x>
+      <y>17</y>
+    </widget>
+    <width>34</width>
+    <x>442</x>
+    <y>10</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0">
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_style>0</border_style>
+    <height>34</height>
+    <lock_children>true</lock_children>
+    <name>10</name>
+    <show_scrollbar>false</show_scrollbar>
+    <transparent>true</transparent>
+    <widget typeId="org.csstudio.opibuilder.widgets.Rectangle" version="1.0">
+      <background_color>
+        <color blue="255" green="255" name="White" red="255" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <height>34</height>
+      <line_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </line_color>
+      <line_style>0</line_style>
+      <line_width>1</line_width>
+      <name>EDM Rectangle</name>
+      <transparent>true</transparent>
+      <visible>false</visible>
+      <width>34</width>
+      <x>0</x>
+      <y>0</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.Ellipse" version="1.0">
+      <background_color>
+        <color blue="0" green="192" name="Amber" red="255" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <height>32</height>
+      <line_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </line_color>
+      <line_style>0</line_style>
+      <line_width>1</line_width>
+      <name>EDM Ellipse</name>
+      <transparent>false</transparent>
+      <width>32</width>
+      <x>1</x>
+      <y>1</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.arc" version="1.0">
+      <background_color>
+        <color blue="255" green="255" name="White" red="255" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <fill>false</fill>
+      <foreground_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </foreground_color>
+      <height>16</height>
+      <line_style>0</line_style>
+      <line_width>2</line_width>
+      <name>EDM arc</name>
+      <start_angle>180.0</start_angle>
+      <total_angle>180.0</total_angle>
+      <transparent>true</transparent>
+      <width>20</width>
+      <x>6</x>
+      <y>-2</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.polyline" version="1.0">
+      <background_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <fill_arrow>true</fill_arrow>
+      <fill_level>0.0</fill_level>
+      <height>14</height>
+      <line_style>0</line_style>
+      <line_width>2</line_width>
+      <name>EDM Line</name>
+      <points>
+        <point x="16" y="18" />
+        <point x="16" y="30" />
+      </points>
+      <width>2</width>
+      <x>15</x>
+      <y>17</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.polyline" version="1.0">
+      <background_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <fill_arrow>true</fill_arrow>
+      <fill_level>0.0</fill_level>
+      <height>2</height>
+      <line_style>1</line_style>
+      <line_width>2</line_width>
+      <name>EDM Line</name>
+      <points>
+        <point x="4" y="15" />
+        <point x="30" y="15" />
+      </points>
+      <width>28</width>
+      <x>3</x>
+      <y>14</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.polyline" version="1.0">
+      <background_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <fill_arrow>true</fill_arrow>
+      <fill_level>0.0</fill_level>
+      <height>2</height>
+      <line_style>0</line_style>
+      <line_width>2</line_width>
+      <name>EDM Line</name>
+      <points>
+        <point x="7" y="18" />
+        <point x="26" y="18" />
+      </points>
+      <width>21</width>
+      <x>6</x>
+      <y>17</y>
+    </widget>
+    <width>34</width>
+    <x>490</x>
+    <y>10</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0">
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_style>0</border_style>
+    <height>34</height>
+    <lock_children>true</lock_children>
+    <name>11</name>
+    <show_scrollbar>false</show_scrollbar>
+    <transparent>true</transparent>
+    <widget typeId="org.csstudio.opibuilder.widgets.Rectangle" version="1.0">
+      <background_color>
+        <color blue="255" green="255" name="White" red="255" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <height>34</height>
+      <line_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </line_color>
+      <line_style>0</line_style>
+      <line_width>1</line_width>
+      <name>EDM Rectangle</name>
+      <transparent>true</transparent>
+      <visible>false</visible>
+      <width>34</width>
+      <x>0</x>
+      <y>0</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.Ellipse" version="1.0">
+      <background_color>
+        <color blue="0" green="192" name="Amber" red="255" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <height>32</height>
+      <line_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </line_color>
+      <line_style>0</line_style>
+      <line_width>1</line_width>
+      <name>EDM Ellipse</name>
+      <transparent>false</transparent>
+      <width>32</width>
+      <x>1</x>
+      <y>1</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.arc" version="1.0">
+      <background_color>
+        <color blue="255" green="255" name="White" red="255" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <fill>false</fill>
+      <foreground_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </foreground_color>
+      <height>16</height>
+      <line_style>0</line_style>
+      <line_width>2</line_width>
+      <name>EDM arc</name>
+      <start_angle>180.0</start_angle>
+      <total_angle>180.0</total_angle>
+      <transparent>true</transparent>
+      <width>20</width>
+      <x>6</x>
+      <y>-2</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.polyline" version="1.0">
+      <background_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <fill_arrow>true</fill_arrow>
+      <fill_level>0.0</fill_level>
+      <height>14</height>
+      <line_style>0</line_style>
+      <line_width>2</line_width>
+      <name>EDM Line</name>
+      <points>
+        <point x="16" y="18" />
+        <point x="16" y="30" />
+      </points>
+      <width>2</width>
+      <x>15</x>
+      <y>17</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.polyline" version="1.0">
+      <background_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <fill_arrow>true</fill_arrow>
+      <fill_level>0.0</fill_level>
+      <height>2</height>
+      <line_style>1</line_style>
+      <line_width>2</line_width>
+      <name>EDM Line</name>
+      <points>
+        <point x="4" y="15" />
+        <point x="30" y="15" />
+      </points>
+      <width>28</width>
+      <x>3</x>
+      <y>14</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.polyline" version="1.0">
+      <background_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <fill_arrow>true</fill_arrow>
+      <fill_level>0.0</fill_level>
+      <height>2</height>
+      <line_style>0</line_style>
+      <line_width>2</line_width>
+      <name>EDM Line</name>
+      <points>
+        <point x="7" y="18" />
+        <point x="26" y="18" />
+      </points>
+      <width>21</width>
+      <x>6</x>
+      <y>17</y>
+    </widget>
+    <width>34</width>
+    <x>538</x>
+    <y>10</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0">
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_style>0</border_style>
+    <height>34</height>
+    <lock_children>true</lock_children>
+    <name>12</name>
+    <show_scrollbar>false</show_scrollbar>
+    <transparent>true</transparent>
+    <widget typeId="org.csstudio.opibuilder.widgets.Rectangle" version="1.0">
+      <background_color>
+        <color blue="255" green="255" name="White" red="255" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <height>34</height>
+      <line_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </line_color>
+      <line_style>0</line_style>
+      <line_width>1</line_width>
+      <name>EDM Rectangle</name>
+      <transparent>true</transparent>
+      <visible>false</visible>
+      <width>34</width>
+      <x>0</x>
+      <y>0</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.Ellipse" version="1.0">
+      <background_color>
+        <color blue="0" green="0" name="Mid Red" red="192" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <height>32</height>
+      <line_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </line_color>
+      <line_style>0</line_style>
+      <line_width>1</line_width>
+      <name>EDM Ellipse</name>
+      <transparent>false</transparent>
+      <width>32</width>
+      <x>1</x>
+      <y>1</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.arc" version="1.0">
+      <background_color>
+        <color blue="255" green="255" name="White" red="255" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <fill>false</fill>
+      <foreground_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </foreground_color>
+      <height>16</height>
+      <line_style>0</line_style>
+      <line_width>2</line_width>
+      <name>EDM arc</name>
+      <start_angle>180.0</start_angle>
+      <total_angle>180.0</total_angle>
+      <transparent>true</transparent>
+      <width>20</width>
+      <x>7</x>
+      <y>-2</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.polyline" version="1.0">
+      <background_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <fill_arrow>true</fill_arrow>
+      <fill_level>0.0</fill_level>
+      <height>14</height>
+      <line_style>0</line_style>
+      <line_width>2</line_width>
+      <name>EDM Line</name>
+      <points>
+        <point x="17" y="18" />
+        <point x="17" y="30" />
+      </points>
+      <width>2</width>
+      <x>16</x>
+      <y>17</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.polyline" version="1.0">
+      <background_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <fill_arrow>true</fill_arrow>
+      <fill_level>0.0</fill_level>
+      <height>2</height>
+      <line_style>1</line_style>
+      <line_width>2</line_width>
+      <name>EDM Line</name>
+      <points>
+        <point x="5" y="15" />
+        <point x="31" y="15" />
+      </points>
+      <width>28</width>
+      <x>4</x>
+      <y>14</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.polyline" version="1.0">
+      <background_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <fill_arrow>true</fill_arrow>
+      <fill_level>0.0</fill_level>
+      <height>2</height>
+      <line_style>0</line_style>
+      <line_width>2</line_width>
+      <name>EDM Line</name>
+      <points>
+        <point x="8" y="18" />
+        <point x="27" y="18" />
+      </points>
+      <width>21</width>
+      <x>7</x>
+      <y>17</y>
+    </widget>
+    <width>34</width>
+    <x>585</x>
+    <y>10</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0">
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_style>0</border_style>
+    <height>34</height>
+    <lock_children>true</lock_children>
+    <name>13</name>
+    <show_scrollbar>false</show_scrollbar>
+    <transparent>true</transparent>
+    <widget typeId="org.csstudio.opibuilder.widgets.Rectangle" version="1.0">
+      <background_color>
+        <color blue="255" green="255" name="White" red="255" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <height>34</height>
+      <line_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </line_color>
+      <line_style>0</line_style>
+      <line_width>1</line_width>
+      <name>EDM Rectangle</name>
+      <transparent>true</transparent>
+      <visible>false</visible>
+      <width>34</width>
+      <x>0</x>
+      <y>0</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.Ellipse" version="1.0">
+      <background_color>
+        <color blue="255" green="255" name="White" red="255" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <height>32</height>
+      <line_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </line_color>
+      <line_style>0</line_style>
+      <line_width>1</line_width>
+      <name>EDM Ellipse</name>
+      <transparent>false</transparent>
+      <width>32</width>
+      <x>1</x>
+      <y>1</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.arc" version="1.0">
+      <background_color>
+        <color blue="255" green="255" name="White" red="255" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <fill>false</fill>
+      <foreground_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </foreground_color>
+      <height>16</height>
+      <line_style>0</line_style>
+      <line_width>2</line_width>
+      <name>EDM arc</name>
+      <start_angle>180.0</start_angle>
+      <total_angle>180.0</total_angle>
+      <transparent>true</transparent>
+      <width>20</width>
+      <x>6</x>
+      <y>-2</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.polyline" version="1.0">
+      <background_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <fill_arrow>true</fill_arrow>
+      <fill_level>0.0</fill_level>
+      <height>14</height>
+      <line_style>0</line_style>
+      <line_width>2</line_width>
+      <name>EDM Line</name>
+      <points>
+        <point x="16" y="18" />
+        <point x="16" y="30" />
+      </points>
+      <width>2</width>
+      <x>15</x>
+      <y>17</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.polyline" version="1.0">
+      <background_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <fill_arrow>true</fill_arrow>
+      <fill_level>0.0</fill_level>
+      <height>2</height>
+      <line_style>1</line_style>
+      <line_width>2</line_width>
+      <name>EDM Line</name>
+      <points>
+        <point x="4" y="15" />
+        <point x="30" y="15" />
+      </points>
+      <width>28</width>
+      <x>3</x>
+      <y>14</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.polyline" version="1.0">
+      <background_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <fill_arrow>true</fill_arrow>
+      <fill_level>0.0</fill_level>
+      <height>2</height>
+      <line_style>0</line_style>
+      <line_width>2</line_width>
+      <name>EDM Line</name>
+      <points>
+        <point x="7" y="18" />
+        <point x="26" y="18" />
+      </points>
+      <width>21</width>
+      <x>6</x>
+      <y>17</y>
+    </widget>
+    <width>34</width>
+    <x>634</x>
+    <y>10</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0">
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_style>0</border_style>
+    <height>34</height>
+    <lock_children>true</lock_children>
+    <name>14</name>
+    <show_scrollbar>false</show_scrollbar>
+    <transparent>true</transparent>
+    <widget typeId="org.csstudio.opibuilder.widgets.Rectangle" version="1.0">
+      <background_color>
+        <color blue="255" green="255" name="White" red="255" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <height>34</height>
+      <line_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </line_color>
+      <line_style>0</line_style>
+      <line_width>1</line_width>
+      <name>EDM Rectangle</name>
+      <transparent>true</transparent>
+      <visible>false</visible>
+      <width>34</width>
+      <x>0</x>
+      <y>0</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.Ellipse" version="1.0">
+      <background_color>
+        <color blue="0" green="0" name="Mid Red" red="192" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <height>32</height>
+      <line_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </line_color>
+      <line_style>0</line_style>
+      <line_width>1</line_width>
+      <name>EDM Ellipse</name>
+      <transparent>false</transparent>
+      <width>32</width>
+      <x>1</x>
+      <y>1</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.arc" version="1.0">
+      <background_color>
+        <color blue="255" green="255" name="White" red="255" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <fill>false</fill>
+      <foreground_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </foreground_color>
+      <height>16</height>
+      <line_style>0</line_style>
+      <line_width>2</line_width>
+      <name>EDM arc</name>
+      <start_angle>180.0</start_angle>
+      <total_angle>180.0</total_angle>
+      <transparent>true</transparent>
+      <width>20</width>
+      <x>6</x>
+      <y>-2</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.polyline" version="1.0">
+      <background_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <fill_arrow>true</fill_arrow>
+      <fill_level>0.0</fill_level>
+      <height>14</height>
+      <line_style>0</line_style>
+      <line_width>2</line_width>
+      <name>EDM Line</name>
+      <points>
+        <point x="16" y="18" />
+        <point x="16" y="30" />
+      </points>
+      <width>2</width>
+      <x>15</x>
+      <y>17</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.polyline" version="1.0">
+      <background_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <fill_arrow>true</fill_arrow>
+      <fill_level>0.0</fill_level>
+      <height>2</height>
+      <line_style>1</line_style>
+      <line_width>2</line_width>
+      <name>EDM Line</name>
+      <points>
+        <point x="4" y="15" />
+        <point x="30" y="15" />
+      </points>
+      <width>28</width>
+      <x>3</x>
+      <y>14</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.polyline" version="1.0">
+      <background_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <fill_arrow>true</fill_arrow>
+      <fill_level>0.0</fill_level>
+      <height>2</height>
+      <line_style>0</line_style>
+      <line_width>2</line_width>
+      <name>EDM Line</name>
+      <points>
+        <point x="7" y="18" />
+        <point x="26" y="18" />
+      </points>
+      <width>21</width>
+      <x>6</x>
+      <y>17</y>
+    </widget>
+    <width>34</width>
+    <x>679</x>
+    <y>10</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0">
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_style>0</border_style>
+    <height>34</height>
+    <lock_children>true</lock_children>
+    <name>15</name>
+    <show_scrollbar>false</show_scrollbar>
+    <transparent>true</transparent>
+    <widget typeId="org.csstudio.opibuilder.widgets.Rectangle" version="1.0">
+      <background_color>
+        <color blue="255" green="255" name="White" red="255" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <height>34</height>
+      <line_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </line_color>
+      <line_style>0</line_style>
+      <line_width>1</line_width>
+      <name>EDM Rectangle</name>
+      <transparent>true</transparent>
+      <visible>false</visible>
+      <width>34</width>
+      <x>0</x>
+      <y>0</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.Ellipse" version="1.0">
+      <background_color>
+        <color blue="0" green="0" name="Mid Red" red="192" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <height>32</height>
+      <line_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </line_color>
+      <line_style>0</line_style>
+      <line_width>1</line_width>
+      <name>EDM Ellipse</name>
+      <transparent>false</transparent>
+      <width>32</width>
+      <x>1</x>
+      <y>1</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.arc" version="1.0">
+      <background_color>
+        <color blue="255" green="255" name="White" red="255" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <fill>false</fill>
+      <foreground_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </foreground_color>
+      <height>16</height>
+      <line_style>0</line_style>
+      <line_width>2</line_width>
+      <name>EDM arc</name>
+      <start_angle>180.0</start_angle>
+      <total_angle>180.0</total_angle>
+      <transparent>true</transparent>
+      <width>20</width>
+      <x>6</x>
+      <y>-2</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.polyline" version="1.0">
+      <background_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <fill_arrow>true</fill_arrow>
+      <fill_level>0.0</fill_level>
+      <height>14</height>
+      <line_style>0</line_style>
+      <line_width>2</line_width>
+      <name>EDM Line</name>
+      <points>
+        <point x="16" y="18" />
+        <point x="16" y="30" />
+      </points>
+      <width>2</width>
+      <x>15</x>
+      <y>17</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.polyline" version="1.0">
+      <background_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <fill_arrow>true</fill_arrow>
+      <fill_level>0.0</fill_level>
+      <height>2</height>
+      <line_style>1</line_style>
+      <line_width>2</line_width>
+      <name>EDM Line</name>
+      <points>
+        <point x="4" y="15" />
+        <point x="30" y="15" />
+      </points>
+      <width>28</width>
+      <x>3</x>
+      <y>14</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.polyline" version="1.0">
+      <background_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <fill_arrow>true</fill_arrow>
+      <fill_level>0.0</fill_level>
+      <height>2</height>
+      <line_style>0</line_style>
+      <line_width>2</line_width>
+      <name>EDM Line</name>
+      <points>
+        <point x="7" y="18" />
+        <point x="26" y="18" />
+      </points>
+      <width>21</width>
+      <x>6</x>
+      <y>17</y>
+    </widget>
+    <width>34</width>
+    <x>727</x>
+    <y>10</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0">
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_style>0</border_style>
+    <height>34</height>
+    <lock_children>true</lock_children>
+    <name>16</name>
+    <show_scrollbar>false</show_scrollbar>
+    <transparent>true</transparent>
+    <widget typeId="org.csstudio.opibuilder.widgets.Rectangle" version="1.0">
+      <background_color>
+        <color blue="255" green="255" name="White" red="255" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <height>34</height>
+      <line_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </line_color>
+      <line_style>0</line_style>
+      <line_width>1</line_width>
+      <name>EDM Rectangle</name>
+      <transparent>true</transparent>
+      <visible>false</visible>
+      <width>34</width>
+      <x>0</x>
+      <y>0</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.Ellipse" version="1.0">
+      <background_color>
+        <color blue="0" green="0" name="Mid Red" red="192" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <height>32</height>
+      <line_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </line_color>
+      <line_style>0</line_style>
+      <line_width>1</line_width>
+      <name>EDM Ellipse</name>
+      <transparent>false</transparent>
+      <width>32</width>
+      <x>1</x>
+      <y>1</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.arc" version="1.0">
+      <background_color>
+        <color blue="255" green="255" name="White" red="255" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <fill>false</fill>
+      <foreground_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </foreground_color>
+      <height>16</height>
+      <line_style>0</line_style>
+      <line_width>2</line_width>
+      <name>EDM arc</name>
+      <start_angle>180.0</start_angle>
+      <total_angle>180.0</total_angle>
+      <transparent>true</transparent>
+      <width>20</width>
+      <x>6</x>
+      <y>-2</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.polyline" version="1.0">
+      <background_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <fill_arrow>true</fill_arrow>
+      <fill_level>0.0</fill_level>
+      <height>14</height>
+      <line_style>0</line_style>
+      <line_width>2</line_width>
+      <name>EDM Line</name>
+      <points>
+        <point x="16" y="18" />
+        <point x="16" y="30" />
+      </points>
+      <width>2</width>
+      <x>15</x>
+      <y>17</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.polyline" version="1.0">
+      <background_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <fill_arrow>true</fill_arrow>
+      <fill_level>0.0</fill_level>
+      <height>2</height>
+      <line_style>1</line_style>
+      <line_width>2</line_width>
+      <name>EDM Line</name>
+      <points>
+        <point x="4" y="15" />
+        <point x="30" y="15" />
+      </points>
+      <width>28</width>
+      <x>3</x>
+      <y>14</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.polyline" version="1.0">
+      <background_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <fill_arrow>true</fill_arrow>
+      <fill_level>0.0</fill_level>
+      <height>2</height>
+      <line_style>0</line_style>
+      <line_width>2</line_width>
+      <name>EDM Line</name>
+      <points>
+        <point x="7" y="18" />
+        <point x="26" y="18" />
+      </points>
+      <width>21</width>
+      <x>6</x>
+      <y>17</y>
+    </widget>
+    <width>34</width>
+    <x>772</x>
+    <y>10</y>
+  </widget>
+</display>

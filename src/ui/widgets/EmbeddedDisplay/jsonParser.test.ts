@@ -7,6 +7,8 @@ import { Color } from "../../../types/color";
 import { PV } from "../../../types/pv";
 import { WidgetDescription } from "../createComponent";
 
+const PREFIX = "prefix";
+
 describe("json widget parser", (): void => {
   const displayString = `{
   "type": "display",
@@ -28,7 +30,7 @@ describe("json widget parser", (): void => {
   const label = Label;
 
   it("parses a display widget", (): void => {
-    const widget = parseJson(displayString, "ca");
+    const widget = parseJson(displayString, "ca", PREFIX);
     expect(widget.type).toEqual("display");
     // Position type
     expect(widget.position).toEqual(new RelativePosition());
@@ -54,7 +56,7 @@ describe("json widget parser", (): void => {
     ]
   }`;
   it("handles font and position on a label widget", (): void => {
-    const widget = parseJson(fontLabelString, "ca")
+    const widget = parseJson(fontLabelString, "ca", PREFIX)
       .children?.[0] as WidgetDescription;
     expect(widget.font).toEqual(new Font(13, FontStyle.Bold));
     expect(widget.position).toEqual(
@@ -88,7 +90,7 @@ describe("json widget parser", (): void => {
     ]
   }`;
   it("handles a rule on a display widget", (): void => {
-    const widget = parseJson(ruleString, "ca");
+    const widget = parseJson(ruleString, "ca", PREFIX);
     const rule = {
       name: "border rule",
       prop: "border",

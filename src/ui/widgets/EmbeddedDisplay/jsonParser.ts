@@ -139,7 +139,8 @@ function jsonGetTargetWidget(props: any): React.FC {
  */
 export function parseObject(
   object: any, // eslint-disable-line @typescript-eslint/explicit-module-boundary-types
-  defaultProtocol: string
+  defaultProtocol: string,
+  path?: string
 ): WidgetDescription {
   const simpleParsers: ParserDict = {
     ...SIMPLE_PARSERS,
@@ -159,7 +160,8 @@ export function parseObject(
     simpleParsers,
     COMPLEX_PARSERS,
     true,
-    []
+    [],
+    path
   );
 }
 
@@ -170,7 +172,8 @@ export function parseObject(
  */
 export function parseJson(
   jsonString: string,
-  defaultProtocol: string
+  defaultProtocol: string,
+  path: string
 ): WidgetDescription {
-  return parseObject(JSON.parse(jsonString), defaultProtocol);
+  return parseObject(JSON.parse(jsonString), defaultProtocol, path);
 }

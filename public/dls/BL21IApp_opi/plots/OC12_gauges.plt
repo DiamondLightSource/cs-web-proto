@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databrowser>
+    <title></title>
+    <save_changes>false</save_changes>
+    <show_legend>false</show_legend>
+    <show_toolbar>true</show_toolbar>
+    <grid>false</grid>
+    <scroll>true</scroll>
+    <update_period>3.0</update_period>
+    <scroll_step>5</scroll_step>
+    <start>-5 minutes 0.0 seconds</start>
+    <end>now</end>
+    <archive_rescale>NONE</archive_rescale>
+    <background>
+        <red>255</red>
+        <green>255</green>
+        <blue>255</blue>
+    </background>
+    <title_font>Sans|15|1</title_font>
+    <label_font>Sans|10|1</label_font>
+    <scale_font>Sans|9|0</scale_font>
+    <legend_font>Sans|9|0</legend_font>
+    <axes>
+        <axis>
+            <visible>true</visible>
+            <name>Pressure</name>
+            <use_axis_name>false</use_axis_name>
+            <use_trace_names>true</use_trace_names>
+            <right>false</right>
+            <color>
+                <red>0</red>
+                <green>0</green>
+                <blue>0</blue>
+            </color>
+            <label_font>|10|0</label_font>
+            <scale_font>|10|0</scale_font>
+            <min>2.29086765276777E-10</min>
+            <max>0.003235936569296281</max>
+            <grid>false</grid>
+            <autoscale>true</autoscale>
+            <log_scale>true</log_scale>
+        </axis>
+    </axes>
+    <annotations>
+    </annotations>
+    <pvlist>
+        <pv>
+            <display_name>PGM Main Vacuum</display_name>
+            <visible>true</visible>
+            <name>BL21I-VA-GAUGE-09:P</name>
+            <axis>0</axis>
+            <color>
+                <red>255</red>
+                <green>0</green>
+                <blue>0</blue>
+            </color>
+            <trace_type>AREA</trace_type>
+            <linewidth>2</linewidth>
+            <point_type>NONE</point_type>
+            <point_size>2</point_size>
+            <waveform_index>0</waveform_index>
+            <period>0.0</period>
+            <ring_size>5000</ring_size>
+            <request>OPTIMIZED</request>
+            <archive>
+                <name>Primary Archiver Appliance</name>
+                <url>pbraw://archappl.diamond.ac.uk/retrieval</url>
+                <key>1</key>
+            </archive>
+            <archive>
+                <name>Standby Archiver Appliance</name>
+                <url>pbraw://sbarchappl.diamond.ac.uk/retrieval</url>
+                <key>2</key>
+            </archive>
+        </pv>
+        <pv>
+            <display_name>PGM Guard Vacuum</display_name>
+            <visible>true</visible>
+            <name>BL21I-VA-PIRG-40:P</name>
+            <axis>0</axis>
+            <color>
+                <red>255</red>
+                <green>165</green>
+                <blue>0</blue>
+            </color>
+            <trace_type>AREA</trace_type>
+            <linewidth>2</linewidth>
+            <point_type>NONE</point_type>
+            <point_size>2</point_size>
+            <waveform_index>0</waveform_index>
+            <period>0.0</period>
+            <ring_size>5000</ring_size>
+            <request>OPTIMIZED</request>
+            <archive>
+                <name>Primary Archiver Appliance</name>
+                <url>pbraw://archappl.diamond.ac.uk/retrieval</url>
+                <key>1</key>
+            </archive>
+            <archive>
+                <name>Standby Archiver Appliance</name>
+                <url>pbraw://sbarchappl.diamond.ac.uk/retrieval</url>
+                <key>2</key>
+            </archive>
+        </pv>
+        <pv>
+            <display_name>Slits 4 and Diagnostic 4</display_name>
+            <visible>true</visible>
+            <name>BL21I-VA-GAUGE-10:P</name>
+            <axis>0</axis>
+            <color>
+                <red>230</red>
+                <green>230</green>
+                <blue>250</blue>
+            </color>
+            <trace_type>AREA</trace_type>
+            <linewidth>2</linewidth>
+            <point_type>NONE</point_type>
+            <point_size>2</point_size>
+            <waveform_index>0</waveform_index>
+            <period>0.0</period>
+            <ring_size>5000</ring_size>
+            <request>OPTIMIZED</request>
+            <archive>
+                <name>Primary Archiver Appliance</name>
+                <url>pbraw://archappl.diamond.ac.uk/retrieval</url>
+                <key>1</key>
+            </archive>
+            <archive>
+                <name>Standby Archiver Appliance</name>
+                <url>pbraw://sbarchappl.diamond.ac.uk/retrieval</url>
+                <key>2</key>
+            </archive>
+        </pv>
+        <pv>
+            <display_name>Beam Tube between OC1 and OC2</display_name>
+            <visible>true</visible>
+            <name>BL21I-VA-GAUGE-11:P</name>
+            <axis>0</axis>
+            <color>
+                <red>0</red>
+                <green>0</green>
+                <blue>0</blue>
+            </color>
+            <trace_type>AREA</trace_type>
+            <linewidth>2</linewidth>
+            <point_type>NONE</point_type>
+            <point_size>2</point_size>
+            <waveform_index>0</waveform_index>
+            <period>0.0</period>
+            <ring_size>5000</ring_size>
+            <request>OPTIMIZED</request>
+            <archive>
+                <name>Primary Archiver Appliance</name>
+                <url>pbraw://archappl.diamond.ac.uk/retrieval</url>
+                <key>1</key>
+            </archive>
+            <archive>
+                <name>Standby Archiver Appliance</name>
+                <url>pbraw://sbarchappl.diamond.ac.uk/retrieval</url>
+                <key>2</key>
+            </archive>
+        </pv>
+        <pv>
+            <display_name>Slits 5 (Exit Slits)</display_name>
+            <visible>true</visible>
+            <name>BL21I-VA-GAUGE-12:P</name>
+            <axis>0</axis>
+            <color>
+                <red>127</red>
+                <green>127</green>
+                <blue>127</blue>
+            </color>
+            <trace_type>AREA</trace_type>
+            <linewidth>2</linewidth>
+            <point_type>NONE</point_type>
+            <point_size>2</point_size>
+            <waveform_index>0</waveform_index>
+            <period>0.0</period>
+            <ring_size>5000</ring_size>
+            <request>OPTIMIZED</request>
+            <archive>
+                <name>Primary Archiver Appliance</name>
+                <url>pbraw://archappl.diamond.ac.uk/retrieval</url>
+                <key>1</key>
+            </archive>
+            <archive>
+                <name>Standby Archiver Appliance</name>
+                <url>pbraw://sbarchappl.diamond.ac.uk/retrieval</url>
+                <key>2</key>
+            </archive>
+        </pv>
+        <pv>
+            <display_name>Beam Tube between Fast Valve and Window Valve</display_name>
+            <visible>true</visible>
+            <name>BL21I-VA-GAUGE-16:P</name>
+            <axis>0</axis>
+            <color>
+                <red>0</red>
+                <green>0</green>
+                <blue>0</blue>
+            </color>
+            <trace_type>AREA</trace_type>
+            <linewidth>2</linewidth>
+            <point_type>NONE</point_type>
+            <point_size>2</point_size>
+            <waveform_index>0</waveform_index>
+            <period>0.0</period>
+            <ring_size>5000</ring_size>
+            <request>OPTIMIZED</request>
+            <archive>
+                <name>Primary Archiver Appliance</name>
+                <url>pbraw://archappl.diamond.ac.uk/retrieval</url>
+                <key>1</key>
+            </archive>
+            <archive>
+                <name>Standby Archiver Appliance</name>
+                <url>pbraw://sbarchappl.diamond.ac.uk/retrieval</url>
+                <key>2</key>
+            </archive>
+        </pv>
+        <pv>
+            <display_name>Diagnostic 7 (Gas Cell)</display_name>
+            <visible>true</visible>
+            <name>BL21I-VA-GAUGE-17:P</name>
+            <axis>0</axis>
+            <color>
+                <red>255</red>
+                <green>255</green>
+                <blue>0</blue>
+            </color>
+            <trace_type>AREA</trace_type>
+            <linewidth>2</linewidth>
+            <point_type>NONE</point_type>
+            <point_size>2</point_size>
+            <waveform_index>0</waveform_index>
+            <period>0.0</period>
+            <ring_size>5000</ring_size>
+            <request>OPTIMIZED</request>
+            <archive>
+                <name>Primary Archiver Appliance</name>
+                <url>pbraw://archappl.diamond.ac.uk/retrieval</url>
+                <key>1</key>
+            </archive>
+            <archive>
+                <name>Standby Archiver Appliance</name>
+                <url>pbraw://sbarchappl.diamond.ac.uk/retrieval</url>
+                <key>2</key>
+            </archive>
+        </pv>
+        <pv>
+            <display_name>Fast Shutter</display_name>
+            <visible>true</visible>
+            <name>BL21I-VA-GAUGE-18:P</name>
+            <axis>0</axis>
+            <color>
+                <red>0</red>
+                <green>255</green>
+                <blue>0</blue>
+            </color>
+            <trace_type>AREA</trace_type>
+            <linewidth>2</linewidth>
+            <point_type>NONE</point_type>
+            <point_size>2</point_size>
+            <waveform_index>0</waveform_index>
+            <period>0.0</period>
+            <ring_size>5000</ring_size>
+            <request>OPTIMIZED</request>
+            <archive>
+                <name>Primary Archiver Appliance</name>
+                <url>pbraw://archappl.diamond.ac.uk/retrieval</url>
+                <key>1</key>
+            </archive>
+            <archive>
+                <name>Standby Archiver Appliance</name>
+                <url>pbraw://sbarchappl.diamond.ac.uk/retrieval</url>
+                <key>2</key>
+            </archive>
+        </pv>
+        <pv>
+            <display_name>Beam Tube between OC2 and Sample Area</display_name>
+            <visible>true</visible>
+            <name>BL21I-VA-GAUGE-19:P</name>
+            <axis>0</axis>
+            <color>
+                <red>191</red>
+                <green>191</green>
+                <blue>191</blue>
+            </color>
+            <trace_type>AREA</trace_type>
+            <linewidth>2</linewidth>
+            <point_type>NONE</point_type>
+            <point_size>2</point_size>
+            <waveform_index>0</waveform_index>
+            <period>0.0</period>
+            <ring_size>5000</ring_size>
+            <request>OPTIMIZED</request>
+            <archive>
+                <name>Primary Archiver Appliance</name>
+                <url>pbraw://archappl.diamond.ac.uk/retrieval</url>
+                <key>1</key>
+            </archive>
+            <archive>
+                <name>Standby Archiver Appliance</name>
+                <url>pbraw://sbarchappl.diamond.ac.uk/retrieval</url>
+                <key>2</key>
+            </archive>
+        </pv>
+    </pvlist>
+</databrowser>

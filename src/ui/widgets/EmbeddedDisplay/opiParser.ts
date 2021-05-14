@@ -59,7 +59,7 @@ const OPI_WIDGET_MAPPING: { [key: string]: any } = {
     "symbol",
   "org.csstudio.opibuilder.widgets.progressbar": "progressbar",
   "org.csstudio.opibuilder.widgets.LED": "led",
-  "org.csstudio.opibuilder.widgets.detailpanel": "device"
+  "org.csstudio.opibuilder.widgets.Image": "image"
 };
 
 /**
@@ -162,15 +162,22 @@ export function opiParseActions(
     actions: []
   };
 
-  const modeToLocation = (action: ElementCompact): string => {
-    const mode = (action.mode && action.mode._text) || undefined;
+  const actionToLocation = (action: ElementCompact): string => {
+    // Handle both Position and mode for now.
+    const mode = action.mode?._text;
+    const position = action.Position?._text;
     switch (mode) {
       case "1":
         return "main";
       case "3":
         return "details";
       default:
-        return "main";
+        switch (position) {
+          case "1":
+            return "details";
+          default:
+            return "main";
+        }
     }
   };
 
@@ -200,19 +207,19 @@ export function opiParseActions(
               (action.description && action.description._text) || undefined
           }
         });
-      } else if (type === "OPEN_DISPLAY") {
+      } else if (type === "OPEN_DISPLAY" || type === "OPEN_OPI_IN_VIEW") {
         processedActions.actions.push({
           type: OPEN_TAB,
           dynamicInfo: {
             name: action.path._text,
-            location: modeToLocation(action),
+            location: actionToLocation(action),
             description:
               (action.description && action.description._text) || undefined,
             file: {
               path: action.path._text,
               // TODO: Should probably be accessing properties of the element here
               macros: {},
-              defaultProtocol: "pva"
+              defaultProtocol: "ca"
             }
           }
         });
@@ -377,8 +384,7 @@ function opiParsePosition(props: any): Position {
 }
 
 function opiParseFile(props: any): OpiFile {
-  // Temporary way of simplifying paths.
-  const filename = opiParseString(props.opi_file).split("/").pop() || "";
+  const filename = opiParseString(props.opi_file);
   let macros = {};
   if (props.macros) {
     macros = opiParseMacros(props.macros);
@@ -388,17 +394,6 @@ function opiParseFile(props: any): OpiFile {
     macros,
     defaultProtocol: "ca"
   };
-}
-
-/**
- * Parses a props object to extract the filename (NOT THE PATH) of an
- * image file
- * @param props
- */
-function opiParseImageFile(props: any): string {
-  const splitDirectory = opiParseString(props).split("/");
-  const filename = splitDirectory[splitDirectory.length - 1];
-  return filename;
 }
 
 function opiParseLabelPosition(props: any): string {
@@ -443,16 +438,22 @@ export const OPI_SIMPLE_PARSERS: ParserDict = {
   textAlign: ["horizontal_alignment", opiParseHorizontalAlignment],
   backgroundColor: ["background_color", opiParseColor],
   foregroundColor: ["foreground_color", opiParseColor],
+  onColor: ["on_color", opiParseColor],
+  offColor: ["off_color", opiParseColor],
+  fillColor: ["fill_color", opiParseColor],
   precision: ["precision", opiParseNumber],
   precisionFromPv: ["precision_from_pv", opiParseBoolean],
   visible: ["visible", opiParseBoolean],
   showUnits: ["show_units", opiParseBoolean],
   transparent: ["transparent", opiParseBoolean],
+  horizontal: ["horizontal", opiParseBoolean],
+  logScale: ["log_scale", opiParseBoolean],
   font: ["font", opiParseFont],
   macroMap: ["macros", opiParseMacros],
-  imageFile: ["image_file", opiParseImageFile],
-  image: ["image", opiParseImageFile],
-  showLabel: ["show_boolean_label", opiParseBoolean],
+  imageFile: ["image_file", opiParseString],
+  image: ["image", opiParseString],
+  showBooleanLabel: ["show_boolean_label", opiParseBoolean],
+  showLabel: ["show_label", opiParseBoolean],
   labelPosition: ["boolean_label_position", opiParseLabelPosition],
   stretchToFit: ["stretch_to_fit", opiParseBoolean],
   alarmSensitive: ["border_alarm_sensitive", opiParseBoolean],
@@ -465,6 +466,8 @@ export const OPI_SIMPLE_PARSERS: ParserDict = {
   rotation: ["degree", opiParseNumber],
   flipHorizontal: ["flip_horizontal", opiParseBoolean],
   flipVertical: ["flip_vertical", opiParseBoolean],
+  bit: ["bit", opiParseNumber],
+  actionsFromPv: ["actions_from_pv", opiParseBoolean],
   deviceName: ["device_name", opiParseString]
 };
 
@@ -501,11 +504,58 @@ function opiPatchRules(widgetDescription: WidgetDescription): void {
   });
 }
 
-export const OPI_PATCHERS: PatchFunction[] = [opiPatchRules];
+function normalisePath(path: string, parentDir?: string): string {
+  let prefix = parentDir ?? "";
+  while (path.startsWith("../")) {
+    path = path.substr(3);
+    prefix = prefix.substr(0, prefix.lastIndexOf("/"));
+  }
+  return `${prefix}/${path}`;
+}
+
+function opiPatchPaths(
+  widgetDescription: WidgetDescription,
+  parentDir?: string
+): void {
+  log.debug(`opiPatchPaths ${parentDir}`);
+  // file: OpiFile type
+  if (widgetDescription["file"] && parentDir) {
+    widgetDescription["file"].path = normalisePath(
+      widgetDescription["file"].path,
+      parentDir
+    );
+    log.debug(`Corrected opi file to ${widgetDescription["file"].path}`);
+  }
+  // imageFile and image: just strings
+  for (const prop of ["imageFile", "image"]) {
+    if (widgetDescription[prop]) {
+      widgetDescription[prop] = normalisePath(
+        widgetDescription[prop],
+        parentDir
+      );
+      log.debug(`Corrected image file to ${widgetDescription.imageFile}`);
+    }
+  }
+  // action.file: OpiFile type
+  if (widgetDescription.actions && parentDir) {
+    for (const action of widgetDescription.actions.actions) {
+      if (action.dynamicInfo) {
+        action.dynamicInfo.file.path = normalisePath(
+          action.dynamicInfo.file.path,
+          parentDir
+        );
+        log.debug(`Corrected path to ${action.dynamicInfo.file.path}`);
+      }
+    }
+  }
+}
+
+export const OPI_PATCHERS: PatchFunction[] = [opiPatchRules, opiPatchPaths];
 
 export function parseOpi(
   xmlString: string,
-  defaultProtocol: string
+  defaultProtocol: string,
+  filepath: string
 ): WidgetDescription {
   // Convert it to a "compact format"
   const compactJSON = xml2js(xmlString, {
@@ -544,12 +594,14 @@ export function parseOpi(
     simpleParsers,
     complexParsers,
     false,
-    OPI_PATCHERS
+    OPI_PATCHERS,
+    filepath
   );
 
   displayWidget.position = new RelativePosition(
-    displayWidget.position.width,
-    displayWidget.position.height
+    // Handle generated display widgets with no width or height.
+    displayWidget.position?.width,
+    displayWidget.position?.height
   );
   return displayWidget;
 }

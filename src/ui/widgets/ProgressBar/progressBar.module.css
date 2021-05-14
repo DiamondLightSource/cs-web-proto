@@ -2,25 +2,17 @@
   text-align: center;
   font-weight: bold;
   font-size: 2em;
+  height: 100%;
+  width: 100%;
 }
 
-.on {
+.fill {
   position: absolute;
   max-width: 100%;
   min-width: 0%;
   max-height: 100%;
   bottom: 0px;
   left: 0px;
-  display: inline-block;
-}
-
-.off {
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  top: 0px;
-  right: 0px;
-  background-color: #c9c9c9;
   display: inline-block;
 }
 

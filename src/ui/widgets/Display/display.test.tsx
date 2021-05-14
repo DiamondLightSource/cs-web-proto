@@ -2,7 +2,7 @@ import React from "react";
 import { DisplayComponent } from "./display";
 import { Label } from "../Label/label";
 import { RelativePosition } from "../../../types/position";
-import { contextRender } from "../../../setupTests";
+import { contextRender } from "../../../testResources";
 
 const display = (
   <DisplayComponent id="id1">

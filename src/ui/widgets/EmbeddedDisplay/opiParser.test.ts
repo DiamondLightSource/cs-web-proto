@@ -8,6 +8,8 @@ import { ensureWidgetsRegistered } from "..";
 import { WidgetDescription } from "../createComponent";
 ensureWidgetsRegistered();
 
+const PREFIX = "prefix/pmacApp_opi";
+
 describe("opi widget parser", (): void => {
   const displayString = `
   <display typeId="org.csstudio.opibuilder.Display" version="1.0.0">
@@ -17,7 +19,7 @@ describe("opi widget parser", (): void => {
     <height>40</height>
   </display>`;
   it("parses a display widget", (): void => {
-    const displayWidget = parseOpi(displayString, "ca");
+    const displayWidget = parseOpi(displayString, "ca", PREFIX);
     expect(displayWidget.position).toEqual(
       new RelativePosition("30px", "40px")
     );
@@ -71,7 +73,7 @@ describe("opi widget parser", (): void => {
   </display>`;
 
   it("parses a label widget", (): void => {
-    const widget = parseOpi(labelString, "ca")
+    const widget = parseOpi(labelString, "ca", PREFIX)
       .children?.[0] as WidgetDescription;
     expect(widget.type).toEqual("label");
     // Boolean type
@@ -120,7 +122,7 @@ describe("opi widget parser", (): void => {
   </display>`;
 
   it("parses a widget with a rule", (): void => {
-    const widget = parseOpi(ruleString, "ca")
+    const widget = parseOpi(ruleString, "ca", PREFIX)
       .children?.[0] as WidgetDescription;
     expect(widget.rules.length).toEqual(1);
     const rule: Rule = widget.rules[0];
@@ -155,7 +157,7 @@ describe("opi widget parser", (): void => {
   </display>`;
 
   it("parses a widget with a child widget", (): void => {
-    const widget = parseOpi(childString, "ca")
+    const widget = parseOpi(childString, "ca", PREFIX)
       .children?.[0] as WidgetDescription;
     expect(widget.children?.length).toEqual(1);
   });
@@ -171,25 +173,28 @@ describe("opi widget parser", (): void => {
       <y>0</y>
       <height>20</height>
       <width>20</width>
-      <actions hook="false" hook_all="false">
-        <action type="OPEN_WEBPAGE">
-          <hyperlink>https://confluence.diamond.ac.uk/x/ZVhRBQ</hyperlink>
-          <description>Launch Help</description>
+      <actions hook="true" hook_all="false">
+        <action type="OPEN_DISPLAY">
+          <path>../dlsPLCApp_opi/vacValve_detail.opi</path>
+          <macros></macros>
+          <Position>1</Position>
+          <description>Open OPI</description>
         </action>
       </actions>
     </widget>
   </display>`;
 
   it("parses a widget with an action", (): void => {
-    const widget = parseOpi(actionString, "ca")
+    const widget = parseOpi(actionString, "ca", PREFIX)
       .children?.[0] as WidgetDescription;
     expect(widget.actions.actions.length).toEqual(1);
     const action = widget.actions.actions[0];
-    expect(action.type).toEqual("OPEN_WEBPAGE");
-    expect(action.openWebpageInfo.url).toEqual(
-      "https://confluence.diamond.ac.uk/x/ZVhRBQ"
+    expect(action.type).toEqual("OPEN_TAB");
+    // Relative paths handled.
+    expect(action.dynamicInfo.file.path).toEqual(
+      "prefix/dlsPLCApp_opi/vacValve_detail.opi"
     );
-    expect(action.openWebpageInfo.description).toEqual("Launch Help");
+    expect(action.dynamicInfo.description).toEqual("Open OPI");
   });
   const inputString = `
   <display typeId="org.csstudio.opibuilder.Display" version="1.0.0">
@@ -232,7 +237,7 @@ describe("opi widget parser", (): void => {
   </display>`;
 
   it("parses an input widget", (): void => {
-    const widget = parseOpi(inputString, "ca")
+    const widget = parseOpi(inputString, "ca", PREFIX)
       .children?.[0] as WidgetDescription;
     expect(widget.textAlign).toEqual("right");
     // Adds ca:// prefix.
@@ -252,7 +257,7 @@ describe("opi widget parser", (): void => {
   it("doesn't parse an invalid string", (): void => {
     // Reduce logging when expecting error.
     log.setLevel("error");
-    const widget = parseOpi(invalidString, "ca")
+    const widget = parseOpi(invalidString, "ca", PREFIX)
       .children?.[0] as WidgetDescription;
     expect(widget.text).toBeUndefined();
     log.setLevel("info");
@@ -271,7 +276,7 @@ describe("opi widget parser", (): void => {
   it("doesn't parse an invalid bool", (): void => {
     // Reduce logging when expecting error.
     log.setLevel("error");
-    const widget = parseOpi(invalidBool, "ca")
+    const widget = parseOpi(invalidBool, "ca", PREFIX)
       .children?.[0] as WidgetDescription;
     expect(widget.showUnits).toBeUndefined();
     log.setLevel("info");

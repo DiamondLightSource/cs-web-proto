@@ -8,7 +8,8 @@ const fakeValue = new DType({ stringValue: "Fake value" });
 describe("<Symbol />", (): void => {
   test("label is not shown if showLabel is false", (): void => {
     const symbolProps = {
-      showLabel: false
+      showBooleanLabel: false,
+      imageFile: "img 1.gif"
     };
 
     render(<SymbolComponent {...(symbolProps as any)} />);
@@ -18,7 +19,8 @@ describe("<Symbol />", (): void => {
 
   test("label is added", (): void => {
     const symbolProps = {
-      showLabel: true,
+      showBooleanLabel: true,
+      imageFile: "img 1.gif",
       value: fakeValue
     };
     render(<SymbolComponent {...(symbolProps as any)} />);
@@ -28,7 +30,8 @@ describe("<Symbol />", (): void => {
 
   test("matches snapshot", (): void => {
     const symbolProps = {
-      showLabel: true,
+      showBooleanLabel: true,
+      imageFile: "img 1.gif",
       value: fakeValue
     };
     const { asFragment } = render(

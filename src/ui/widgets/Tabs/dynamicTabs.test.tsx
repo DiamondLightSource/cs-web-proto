@@ -1,6 +1,6 @@
 import React from "react";
 import { FileDescription, TabState } from "../../../fileContext";
-import { contextRender } from "../../../setupTests";
+import { contextRender } from "../../../testResources";
 import { DynamicTabsComponent } from "./dynamicTabs";
 // Import to ensure that all widgets are registered.
 import { ensureWidgetsRegistered } from "..";

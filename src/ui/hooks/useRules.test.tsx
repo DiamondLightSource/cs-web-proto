@@ -3,7 +3,7 @@ import { useRules } from "./useRules";
 import { AnyProps } from "../widgets/widgetProps";
 import { Rule } from "../../types/props";
 import { PV } from "../../types/pv";
-import { contextRender, ddouble } from "../../setupTests";
+import { contextRender, ddouble } from "../../testResources";
 import { DType } from "../../types/dtypes";
 import { CsState } from "../../redux/csState";
 

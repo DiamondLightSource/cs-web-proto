@@ -1,0 +1,1363 @@
+<?xml version='1.0' encoding='utf-8'?>
+<display typeId="org.csstudio.opibuilder.Display" version="1.0">
+  <x>451</x>
+  <y>473</y>
+  <width>390</width>
+  <height>310</height>
+  <font>
+    <fontdata fontName="liberation sans" height="14" pixels="true" style="0" />
+  </font>
+  <boy_version>4.0.0</boy_version>
+  <foreground_color>
+    <color blue="0" green="0" name="Black" red="0" />
+  </foreground_color>
+  <background_color>
+    <color blue="172" green="201" name="TI title" red="210" />
+  </background_color>
+  <name>Tooltip</name>
+  <show_grid>true</show_grid>
+  <grid_space>5</grid_space>
+  <widget typeId="org.csstudio.opibuilder.widgets.polyline" version="1.0">
+    <background_color>
+      <color blue="102" green="102" name="Grey 40%" red="102" />
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <fill_arrow>true</fill_arrow>
+    <fill_level>0.0</fill_level>
+    <height>309</height>
+    <line_style>0</line_style>
+    <line_width>2</line_width>
+    <name>EDM Line</name>
+    <points>
+      <point x="2" y="309" />
+      <point x="389" y="309" />
+      <point x="389" y="2" />
+    </points>
+    <width>389</width>
+    <x>1</x>
+    <y>1</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.polyline" version="1.0">
+    <background_color>
+      <color blue="230" green="230" name="Grey 90%" red="230" />
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <fill_arrow>true</fill_arrow>
+    <fill_level>0.0</fill_level>
+    <height>311</height>
+    <line_style>0</line_style>
+    <line_width>2</line_width>
+    <name>EDM Line</name>
+    <points>
+      <point x="1" y="310" />
+      <point x="1" y="1" />
+      <point x="390" y="1" />
+    </points>
+    <width>391</width>
+    <x>0</x>
+    <y>0</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Rectangle" version="1.0">
+    <background_color>
+      <color blue="166" green="166" name="Grey 65%" red="166" />
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <height>105</height>
+    <line_color>
+      <color blue="0" green="0" name="Black" red="0" />
+    </line_color>
+    <line_style>0</line_style>
+    <line_width>1</line_width>
+    <name>EDM Rectangle</name>
+    <transparent>false</transparent>
+    <visible>true</visible>
+    <width>190</width>
+    <x>100</x>
+    <y>105</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="1.0">
+    <actions hook="true" hook_all="true">
+      <action type="WRITE_PV">
+        <pv_name>$(pv_name)</pv_name>
+        <value>1</value>
+      </action>
+    </actions>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <font>
+      <fontdata fontName="liberation sans" height="14" pixels="true" style="1" />
+    </font>
+    <foreground_color>
+      <color blue="0" green="0" name="Red" red="255" />
+    </foreground_color>
+    <height>23</height>
+    <name>EDM Message Button</name>
+    <pv_name>$(motor).STOP</pv_name>
+    <rules>
+      <rule name="OnOffBackgroundRule" out_exp="false" prop_id="background_color">
+        <exp bool_exp="widget.getValue() == 1">
+          <value>
+            <color blue="192" green="192" name="Grey 75%" red="192" />
+          </value>
+        </exp>
+        <exp bool_exp="true">
+          <value>
+            <color blue="205" green="205" name="Controller: BG" red="205" />
+          </value>
+        </exp>
+        <pv trig="true">$(motor).STOP</pv>
+      </rule>
+    </rules>
+    <text>STOP</text>
+    <width>53</width>
+    <x>233</x>
+    <y>183</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.edm.symbolwidget" version="1.0">
+    <background_color>
+      <color blue="200" green="200" name="Canvas" red="200" />
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_style>0</border_style>
+    <foreground_color>
+      <color blue="0" green="0" name="Text: FG" red="0" />
+    </foreground_color>
+    <group_name>1</group_name>
+    <height>20</height>
+    <name>DLS symbol</name>
+    <rules>
+      <rule name="symbol_single_pv" out_exp="true" prop_id="image_index">
+        <exp bool_exp="pvSev0==-1">
+          <value>0</value>
+        </exp>
+        <exp bool_exp="pv0&gt;=3.0&amp;&amp;pv0&lt;4.0">
+          <value>0</value>
+        </exp>
+        <exp bool_exp="pv0&gt;=0.0&amp;&amp;pv0&lt;0.0">
+          <value>1</value>
+        </exp>
+        <exp bool_exp="pv0&gt;=1.0&amp;&amp;pv0&lt;2.0">
+          <value>2</value>
+        </exp>
+        <exp bool_exp="pv0&gt;=2.0&amp;&amp;pv0&lt;3.0">
+          <value>3</value>
+        </exp>
+        <exp bool_exp="pv0&gt;=0.0&amp;&amp;pv0&lt;1.0">
+          <value>4</value>
+        </exp>
+        <exp bool_exp="true">
+          <value>0</value>
+        </exp>
+        <pv trig="true">$(pv_name)</pv>
+      </rule>
+    </rules>
+    <width>20</width>
+    <x>108</x>
+    <y>156</y>
+  <pv_name>$(motor).SEVR</pv_name><image_file>../motor/symbols-traffic-light-symbol-21.png</image_file><symbol_number>0</symbol_number><sub_image_width>21</sub_image_width></widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.edm.symbolwidget" version="1.0">
+    <background_color>
+      <color blue="200" green="200" name="Canvas" red="200" />
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_style>0</border_style>
+    <foreground_color>
+      <color blue="0" green="0" name="Text: FG" red="0" />
+    </foreground_color>
+    <group_name>1</group_name>
+    <height>20</height>
+    <name>DLS symbol</name>
+    <rules>
+      <rule name="symbol_single_pv" out_exp="true" prop_id="image_index">
+        <exp bool_exp="pvSev0==-1">
+          <value>0</value>
+        </exp>
+        <exp bool_exp="pv0&gt;=0.0&amp;&amp;pv0&lt;0.0">
+          <value>3</value>
+        </exp>
+        <exp bool_exp="pv0&gt;=1.0&amp;&amp;pv0&lt;2.0">
+          <value>4</value>
+        </exp>
+        <exp bool_exp="pv0&gt;=0.0&amp;&amp;pv0&lt;1.0">
+          <value>5</value>
+        </exp>
+        <exp bool_exp="true">
+          <value>0</value>
+        </exp>
+        <pv trig="true">$(pv_name)</pv>
+      </rule>
+    </rules>
+    <width>20</width>
+    <x>262</x>
+    <y>156</y>
+  <pv_name>$(motor).DMOV</pv_name><image_file>../motor/symbols-traffic-light-symbol-21.png</image_file><symbol_number>0</symbol_number><sub_image_width>21</sub_image_width></widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="1.0">
+    <actions hook="false" hook_all="false">
+      <action type="OPEN_DISPLAY">
+        <path>./motor.opi</path>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+          <motor>$(motor)</motor>
+        </macros>
+        <mode>8</mode>
+        <description />
+      </action>
+    </actions>
+    <background_color>
+      <color blue="205" green="205" name="Controller: BG" red="205" />
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <font>
+      <fontdata fontName="liberation sans" height="14" pixels="true" style="1" />
+    </font>
+    <foreground_color>
+      <color blue="32" green="64" name="Related Display: FG" red="128" />
+    </foreground_color>
+    <height>23</height>
+    <name>EDM related display</name>
+    <text>More</text>
+    <width>53</width>
+    <x>105</x>
+    <y>183</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">
+    <auto_size>true</auto_size>
+    <background_color>
+      <color blue="128" green="128" name="Grey 50%" red="128" />
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_color>
+      <color blue="0" green="0" name="Black" red="0" />
+    </border_color>
+    <border_style>1</border_style>
+    <font>
+      <fontdata fontName="liberation sans" height="12" pixels="true" style="0" />
+    </font>
+    <foreground_color>
+      <color blue="0" green="0" name="Text: FG" red="0" />
+    </foreground_color>
+    <height>13</height>
+    <horizontal_alignment>0</horizontal_alignment>
+    <name>EDM Label</name>
+    <text>  $(box-label)  </text>
+    <transparent>false</transparent>
+    <width>79</width>
+    <x>100</x>
+    <y>100</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0">
+    <background_color>
+      <color blue="64" green="64" name="Monitor: BG" red="64" />
+    </background_color>
+    <border_alarm_sensitive>true</border_alarm_sensitive>
+    <border_style>None</border_style>
+    <font>
+      <fontdata fontName="liberation sans" height="14" pixels="true" style="1" />
+    </font>
+    <forecolor_alarm_sensitive>true</forecolor_alarm_sensitive>
+    <foreground_color>
+      <color blue="0" green="255" name="Green" red="0" />
+    </foreground_color>
+    <format_type>0</format_type>
+    <height>20</height>
+    <horizontal_alignment>1</horizontal_alignment>
+    <name>EDM TextInput</name>
+    <precision>4</precision>
+    <precision_from_pv>true</precision_from_pv>
+    <pv_name>$(motor).RBV</pv_name>
+    <show_units>true</show_units>
+    <transparent>false</transparent>
+    <width>115</width>
+    <x>138</x>
+    <y>157</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.TextInput" version="1.0">
+    <background_color>
+      <color blue="205" green="205" name="Controller: BG" red="205" />
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_style>None</border_style>
+    <font>
+      <fontdata fontName="liberation sans" height="14" pixels="true" style="1" />
+    </font>
+    <foreground_color>
+      <color blue="0" green="0" name="Black" red="0" />
+    </foreground_color>
+    <format_type>0</format_type>
+    <height>16</height>
+    <horizontal_alignment>1</horizontal_alignment>
+    <name>EDM TextInput</name>
+    <precision>0</precision>
+    <precision_from_pv>true</precision_from_pv>
+    <pv_name>$(motor).TWV</pv_name>
+    <show_units>false</show_units>
+    <transparent>false</transparent>
+    <width>60</width>
+    <x>165</x>
+    <y>185</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="1.0">
+    <actions hook="true" hook_all="true">
+      <action type="WRITE_PV">
+        <pv_name>$(pv_name)</pv_name>
+        <value>1</value>
+      </action>
+    </actions>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <font>
+      <fontdata fontName="liberation sans" height="24" pixels="true" style="1" />
+    </font>
+    <foreground_color>
+      <color blue="192" green="0" name="Controller: FG" red="0" />
+    </foreground_color>
+    <height>30</height>
+    <name>EDM Message Button</name>
+    <pv_name>$(motor).TWR</pv_name>
+    <rules>
+      <rule name="OnOffBackgroundRule" out_exp="false" prop_id="background_color">
+        <exp bool_exp="widget.getValue() == 1">
+          <value>
+            <color blue="192" green="192" name="Grey 75%" red="192" />
+          </value>
+        </exp>
+        <exp bool_exp="true">
+          <value>
+            <color blue="205" green="205" name="Controller: BG" red="205" />
+          </value>
+        </exp>
+        <pv trig="true">$(motor).TWR</pv>
+      </rule>
+    </rules>
+    <text>-</text>
+    <width>44</width>
+    <x>105</x>
+    <y>121</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.TextInput" version="1.0">
+    <background_color>
+      <color blue="205" green="205" name="Controller: BG" red="205" />
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_color>
+      <color blue="255" green="0" name="Blue" red="0" />
+    </border_color>
+    <border_style>3</border_style>
+    <border_width>-2</border_width>
+    <font>
+      <fontdata fontName="liberation sans" height="14" pixels="true" style="1" />
+    </font>
+    <foreground_color>
+      <color blue="192" green="0" name="Controller: FG" red="0" />
+    </foreground_color>
+    <format_type>1</format_type>
+    <height>31</height>
+    <horizontal_alignment>1</horizontal_alignment>
+    <line_width>-2</line_width>
+    <name>EDM Text Entry</name>
+    <precision>4</precision>
+    <precision_from_pv>false</precision_from_pv>
+    <pv_name>$(motor)</pv_name>
+    <show_units>false</show_units>
+    <style>0</style>
+    <transparent>true</transparent>
+    <width>81</width>
+    <x>154</x>
+    <y>120</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="1.0">
+    <actions hook="true" hook_all="true">
+      <action type="WRITE_PV">
+        <pv_name>$(pv_name)</pv_name>
+        <value>1</value>
+      </action>
+    </actions>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <font>
+      <fontdata fontName="liberation sans" height="16" pixels="true" style="1" />
+    </font>
+    <foreground_color>
+      <color blue="192" green="0" name="Controller: FG" red="0" />
+    </foreground_color>
+    <height>30</height>
+    <name>EDM Message Button</name>
+    <pv_name>$(motor).TWF</pv_name>
+    <rules>
+      <rule name="OnOffBackgroundRule" out_exp="false" prop_id="background_color">
+        <exp bool_exp="widget.getValue() == 1">
+          <value>
+            <color blue="192" green="192" name="Grey 75%" red="192" />
+          </value>
+        </exp>
+        <exp bool_exp="true">
+          <value>
+            <color blue="205" green="205" name="Controller: BG" red="205" />
+          </value>
+        </exp>
+        <pv trig="true">$(motor).TWF</pv>
+      </rule>
+    </rules>
+    <text>+</text>
+    <width>44</width>
+    <x>241</x>
+    <y>121</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">
+    <auto_size>false</auto_size>
+    <background_color>
+      <color blue="128" green="128" name="Grey 50%" red="128" />
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_color>
+      <color blue="255" green="255" name="White" red="255" />
+    </border_color>
+    <border_style>0</border_style>
+    <font>
+      <fontdata fontName="liberation sans" height="14" pixels="true" style="1" />
+    </font>
+    <foreground_color>
+      <color blue="255" green="255" name="White" red="255" />
+    </foreground_color>
+    <height>30</height>
+    <horizontal_alignment>1</horizontal_alignment>
+    <name>EDM Label</name>
+    <text>Help</text>
+    <transparent>false</transparent>
+    <width>100</width>
+    <x>145</x>
+    <y>5</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">
+    <auto_size>true</auto_size>
+    <background_color>
+      <color blue="166" green="166" name="Grey 65%" red="166" />
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_color>
+      <color blue="0" green="0" name="Black" red="0" />
+    </border_color>
+    <border_style>0</border_style>
+    <font>
+      <fontdata fontName="liberation sans" height="12" pixels="true" style="0" />
+    </font>
+    <foreground_color>
+      <color blue="0" green="0" name="Text: FG" red="0" />
+    </foreground_color>
+    <height>13</height>
+    <horizontal_alignment>0</horizontal_alignment>
+    <name>EDM Label</name>
+    <text>Motor Description</text>
+    <transparent>true</transparent>
+    <width>97</width>
+    <x>145</x>
+    <y>50</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">
+    <auto_size>true</auto_size>
+    <background_color>
+      <color blue="166" green="166" name="Grey 65%" red="166" />
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_color>
+      <color blue="0" green="0" name="Black" red="0" />
+    </border_color>
+    <border_style>0</border_style>
+    <font>
+      <fontdata fontName="liberation sans" height="12" pixels="true" style="0" />
+    </font>
+    <foreground_color>
+      <color blue="0" green="0" name="Text: FG" red="0" />
+    </foreground_color>
+    <height>13</height>
+    <horizontal_alignment>0</horizontal_alignment>
+    <name>EDM Label</name>
+    <text>Demand Value</text>
+    <transparent>true</transparent>
+    <width>86</width>
+    <x>251</x>
+    <y>6</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">
+    <auto_size>true</auto_size>
+    <background_color>
+      <color blue="166" green="166" name="Grey 65%" red="166" />
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_color>
+      <color blue="0" green="0" name="Black" red="0" />
+    </border_color>
+    <border_style>0</border_style>
+    <font>
+      <fontdata fontName="liberation sans" height="12" pixels="true" style="0" />
+    </font>
+    <foreground_color>
+      <color blue="0" green="0" name="Text: FG" red="0" />
+    </foreground_color>
+    <height>26</height>
+    <horizontal_alignment>1</horizontal_alignment>
+    <name>EDM Label</name>
+    <text>Tweak +ve
+(by tweak step)</text>
+    <transparent>true</transparent>
+    <width>83</width>
+    <x>295</x>
+    <y>83</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">
+    <auto_size>true</auto_size>
+    <background_color>
+      <color blue="166" green="166" name="Grey 65%" red="166" />
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_color>
+      <color blue="0" green="0" name="Black" red="0" />
+    </border_color>
+    <border_style>0</border_style>
+    <font>
+      <fontdata fontName="liberation sans" height="12" pixels="true" style="0" />
+    </font>
+    <foreground_color>
+      <color blue="0" green="0" name="Text: FG" red="0" />
+    </foreground_color>
+    <height>26</height>
+    <horizontal_alignment>1</horizontal_alignment>
+    <name>EDM Label</name>
+    <text>Tweak -ve
+(by tweak step)</text>
+    <transparent>true</transparent>
+    <width>83</width>
+    <x>25</x>
+    <y>20</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">
+    <auto_size>true</auto_size>
+    <background_color>
+      <color blue="166" green="166" name="Grey 65%" red="166" />
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_color>
+      <color blue="0" green="0" name="Black" red="0" />
+    </border_color>
+    <border_style>0</border_style>
+    <font>
+      <fontdata fontName="liberation sans" height="12" pixels="true" style="0" />
+    </font>
+    <foreground_color>
+      <color blue="0" green="0" name="Text: FG" red="0" />
+    </foreground_color>
+    <height>39</height>
+    <horizontal_alignment>1</horizontal_alignment>
+    <name>EDM Label</name>
+    <text>Tweak step
+(amount to tweak
+by. Click to set)</text>
+    <transparent>true</transparent>
+    <width>96</width>
+    <x>190</x>
+    <y>230</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">
+    <auto_size>true</auto_size>
+    <background_color>
+      <color blue="166" green="166" name="Grey 65%" red="166" />
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_color>
+      <color blue="0" green="0" name="Black" red="0" />
+    </border_color>
+    <border_style>0</border_style>
+    <font>
+      <fontdata fontName="liberation sans" height="12" pixels="true" style="0" />
+    </font>
+    <foreground_color>
+      <color blue="0" green="0" name="Text: FG" red="0" />
+    </foreground_color>
+    <height>26</height>
+    <horizontal_alignment>1</horizontal_alignment>
+    <name>EDM Label</name>
+    <text>Stop button
+(stops motor moving)</text>
+    <transparent>true</transparent>
+    <width>117</width>
+    <x>260</x>
+    <y>270</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">
+    <auto_size>true</auto_size>
+    <background_color>
+      <color blue="166" green="166" name="Grey 65%" red="166" />
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_color>
+      <color blue="0" green="0" name="Black" red="0" />
+    </border_color>
+    <border_style>0</border_style>
+    <font>
+      <fontdata fontName="liberation sans" height="12" pixels="true" style="0" />
+    </font>
+    <foreground_color>
+      <color blue="0" green="0" name="Text: FG" red="0" />
+    </foreground_color>
+    <height>39</height>
+    <horizontal_alignment>1</horizontal_alignment>
+    <name>EDM Label</name>
+    <text>Motor setup button.
+(Brings up motor
+setup screen)</text>
+    <transparent>true</transparent>
+    <width>104</width>
+    <x>80</x>
+    <y>235</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">
+    <auto_size>true</auto_size>
+    <background_color>
+      <color blue="166" green="166" name="Grey 65%" red="166" />
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_color>
+      <color blue="0" green="0" name="Black" red="0" />
+    </border_color>
+    <border_style>0</border_style>
+    <font>
+      <fontdata fontName="liberation sans" height="12" pixels="true" style="0" />
+    </font>
+    <foreground_color>
+      <color blue="0" green="0" name="Text: FG" red="0" />
+    </foreground_color>
+    <height>78</height>
+    <horizontal_alignment>0</horizontal_alignment>
+    <name>EDM Label</name>
+    <text>Moving Status
+       Lamp.
+    
+Idle:       
+
+Moving:   </text>
+    <transparent>true</transparent>
+    <width>80</width>
+    <x>300</x>
+    <y>165</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">
+    <auto_size>true</auto_size>
+    <background_color>
+      <color blue="166" green="166" name="Grey 65%" red="166" />
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_color>
+      <color blue="0" green="0" name="Black" red="0" />
+    </border_color>
+    <border_style>0</border_style>
+    <font>
+      <fontdata fontName="liberation sans" height="12" pixels="true" style="0" />
+    </font>
+    <foreground_color>
+      <color blue="0" green="0" name="Text: FG" red="0" />
+    </foreground_color>
+    <height>130</height>
+    <horizontal_alignment>0</horizontal_alignment>
+    <name>EDM Label</name>
+    <text>Error Status
+       Lamp.
+    
+Ready:       
+
+Minor:  
+
+Major:
+
+Invalid: </text>
+    <transparent>true</transparent>
+    <width>66</width>
+    <x>10</x>
+    <y>80</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.edm.symbolwidget" version="1.0">
+    <background_color>
+      <color blue="200" green="200" name="Canvas" red="200" />
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_style>0</border_style>
+    <foreground_color>
+      <color blue="0" green="0" name="Text: FG" red="0" />
+    </foreground_color>
+    <group_name>1</group_name>
+    <height>20</height>
+    <name>DLS symbol</name>
+    <rules>
+      <rule name="symbol_single_pv" out_exp="true" prop_id="image_index">
+        <exp bool_exp="pvSev0==-1">
+          <value>0</value>
+        </exp>
+        <exp bool_exp="pv0&gt;=3.0&amp;&amp;pv0&lt;4.0">
+          <value>0</value>
+        </exp>
+        <exp bool_exp="pv0&gt;=0.0&amp;&amp;pv0&lt;0.0">
+          <value>1</value>
+        </exp>
+        <exp bool_exp="pv0&gt;=1.0&amp;&amp;pv0&lt;2.0">
+          <value>2</value>
+        </exp>
+        <exp bool_exp="pv0&gt;=2.0&amp;&amp;pv0&lt;3.0">
+          <value>3</value>
+        </exp>
+        <exp bool_exp="pv0&gt;=0.0&amp;&amp;pv0&lt;1.0">
+          <value>4</value>
+        </exp>
+        <exp bool_exp="true">
+          <value>0</value>
+        </exp>
+        <pv trig="true">$(pv_name)</pv>
+      </rule>
+    </rules>
+    <width>20</width>
+    <x>60</x>
+    <y>115</y>
+  <pv_name>loc://dummy0&lt;VDouble&gt;(0)</pv_name><image_file>../motor/symbols-traffic-light-symbol-21.png</image_file><symbol_number>0</symbol_number><sub_image_width>21</sub_image_width></widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.edm.symbolwidget" version="1.0">
+    <background_color>
+      <color blue="200" green="200" name="Canvas" red="200" />
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_style>0</border_style>
+    <foreground_color>
+      <color blue="0" green="0" name="Text: FG" red="0" />
+    </foreground_color>
+    <group_name>1</group_name>
+    <height>20</height>
+    <name>DLS symbol</name>
+    <rules>
+      <rule name="symbol_single_pv" out_exp="true" prop_id="image_index">
+        <exp bool_exp="pvSev0==-1">
+          <value>0</value>
+        </exp>
+        <exp bool_exp="pv0&gt;=3.0&amp;&amp;pv0&lt;4.0">
+          <value>0</value>
+        </exp>
+        <exp bool_exp="pv0&gt;=0.0&amp;&amp;pv0&lt;0.0">
+          <value>1</value>
+        </exp>
+        <exp bool_exp="pv0&gt;=1.0&amp;&amp;pv0&lt;2.0">
+          <value>2</value>
+        </exp>
+        <exp bool_exp="pv0&gt;=2.0&amp;&amp;pv0&lt;3.0">
+          <value>3</value>
+        </exp>
+        <exp bool_exp="pv0&gt;=0.0&amp;&amp;pv0&lt;1.0">
+          <value>4</value>
+        </exp>
+        <exp bool_exp="true">
+          <value>0</value>
+        </exp>
+        <pv trig="true">$(pv_name)</pv>
+      </rule>
+    </rules>
+    <width>20</width>
+    <x>60</x>
+    <y>145</y>
+  <pv_name>loc://dummy1&lt;VDouble&gt;(1)</pv_name><image_file>../motor/symbols-traffic-light-symbol-21.png</image_file><symbol_number>0</symbol_number><sub_image_width>21</sub_image_width></widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.edm.symbolwidget" version="1.0">
+    <background_color>
+      <color blue="200" green="200" name="Canvas" red="200" />
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_style>0</border_style>
+    <foreground_color>
+      <color blue="0" green="0" name="Text: FG" red="0" />
+    </foreground_color>
+    <group_name>1</group_name>
+    <height>20</height>
+    <name>DLS symbol</name>
+    <rules>
+      <rule name="symbol_single_pv" out_exp="true" prop_id="image_index">
+        <exp bool_exp="pvSev0==-1">
+          <value>0</value>
+        </exp>
+        <exp bool_exp="pv0&gt;=3.0&amp;&amp;pv0&lt;4.0">
+          <value>0</value>
+        </exp>
+        <exp bool_exp="pv0&gt;=0.0&amp;&amp;pv0&lt;0.0">
+          <value>1</value>
+        </exp>
+        <exp bool_exp="pv0&gt;=1.0&amp;&amp;pv0&lt;2.0">
+          <value>2</value>
+        </exp>
+        <exp bool_exp="pv0&gt;=2.0&amp;&amp;pv0&lt;3.0">
+          <value>3</value>
+        </exp>
+        <exp bool_exp="pv0&gt;=0.0&amp;&amp;pv0&lt;1.0">
+          <value>4</value>
+        </exp>
+        <exp bool_exp="true">
+          <value>0</value>
+        </exp>
+        <pv trig="true">$(pv_name)</pv>
+      </rule>
+    </rules>
+    <width>20</width>
+    <x>60</x>
+    <y>175</y>
+  <pv_name>loc://dummy2&lt;VDouble&gt;(2)</pv_name><image_file>../motor/symbols-traffic-light-symbol-21.png</image_file><symbol_number>0</symbol_number><sub_image_width>21</sub_image_width></widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.edm.symbolwidget" version="1.0">
+    <background_color>
+      <color blue="200" green="200" name="Canvas" red="200" />
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_style>0</border_style>
+    <foreground_color>
+      <color blue="0" green="0" name="Text: FG" red="0" />
+    </foreground_color>
+    <group_name>1</group_name>
+    <height>20</height>
+    <name>DLS symbol</name>
+    <rules>
+      <rule name="symbol_single_pv" out_exp="true" prop_id="image_index">
+        <exp bool_exp="pvSev0==-1">
+          <value>0</value>
+        </exp>
+        <exp bool_exp="pv0&gt;=3.0&amp;&amp;pv0&lt;4.0">
+          <value>0</value>
+        </exp>
+        <exp bool_exp="pv0&gt;=0.0&amp;&amp;pv0&lt;0.0">
+          <value>1</value>
+        </exp>
+        <exp bool_exp="pv0&gt;=1.0&amp;&amp;pv0&lt;2.0">
+          <value>2</value>
+        </exp>
+        <exp bool_exp="pv0&gt;=2.0&amp;&amp;pv0&lt;3.0">
+          <value>3</value>
+        </exp>
+        <exp bool_exp="pv0&gt;=0.0&amp;&amp;pv0&lt;1.0">
+          <value>4</value>
+        </exp>
+        <exp bool_exp="true">
+          <value>0</value>
+        </exp>
+        <pv trig="true">$(pv_name)</pv>
+      </rule>
+    </rules>
+    <width>20</width>
+    <x>60</x>
+    <y>205</y>
+  <pv_name>loc://dummy3&lt;VDouble&gt;(3)</pv_name><image_file>../motor/symbols-traffic-light-symbol-21.png</image_file><symbol_number>0</symbol_number><sub_image_width>21</sub_image_width></widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.polyline" version="1.0">
+    <arrows>2</arrows>
+    <background_color>
+      <color blue="0" green="0" name="Black" red="0" />
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <fill_arrow>true</fill_arrow>
+    <fill_level>0.0</fill_level>
+    <height>91</height>
+    <line_style>0</line_style>
+    <line_width>1</line_width>
+    <name>EDM Line</name>
+    <points>
+      <point x="65" y="45" />
+      <point x="105" y="135" />
+    </points>
+    <width>41</width>
+    <x>65</x>
+    <y>45</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.polyline" version="1.0">
+    <arrows>2</arrows>
+    <background_color>
+      <color blue="0" green="0" name="Black" red="0" />
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <fill_arrow>true</fill_arrow>
+    <fill_level>0.0</fill_level>
+    <height>31</height>
+    <line_style>0</line_style>
+    <line_width>1</line_width>
+    <name>EDM Line</name>
+    <points>
+      <point x="75" y="140" />
+      <point x="110" y="170" />
+    </points>
+    <width>36</width>
+    <x>75</x>
+    <y>140</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.polyline" version="1.0">
+    <arrows>2</arrows>
+    <background_color>
+      <color blue="0" green="0" name="Black" red="0" />
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <fill_arrow>true</fill_arrow>
+    <fill_level>0.0</fill_level>
+    <height>31</height>
+    <line_style>0</line_style>
+    <line_width>1</line_width>
+    <name>EDM Line</name>
+    <points>
+      <point x="230" y="230" />
+      <point x="210" y="200" />
+    </points>
+    <width>21</width>
+    <x>210</x>
+    <y>200</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.polyline" version="1.0">
+    <arrows>2</arrows>
+    <background_color>
+      <color blue="0" green="0" name="Black" red="0" />
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <fill_arrow>true</fill_arrow>
+    <fill_level>0.0</fill_level>
+    <height>66</height>
+    <line_style>0</line_style>
+    <line_width>1</line_width>
+    <name>EDM Line</name>
+    <points>
+      <point x="315" y="270" />
+      <point x="265" y="205" />
+    </points>
+    <width>51</width>
+    <x>265</x>
+    <y>205</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.polyline" version="1.0">
+    <arrows>2</arrows>
+    <background_color>
+      <color blue="0" green="0" name="Black" red="0" />
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <fill_arrow>true</fill_arrow>
+    <fill_level>0.0</fill_level>
+    <height>16</height>
+    <line_style>0</line_style>
+    <line_width>1</line_width>
+    <name>EDM Line</name>
+    <points>
+      <point x="325" y="145" />
+      <point x="245" y="160" />
+    </points>
+    <width>81</width>
+    <x>245</x>
+    <y>145</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.polyline" version="1.0">
+    <arrows>2</arrows>
+    <background_color>
+      <color blue="0" green="0" name="Black" red="0" />
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <fill_arrow>true</fill_arrow>
+    <fill_level>0.0</fill_level>
+    <height>33</height>
+    <line_style>0</line_style>
+    <line_width>1</line_width>
+    <name>EDM Line</name>
+    <points>
+      <point x="325" y="108" />
+      <point x="279" y="140" />
+    </points>
+    <width>47</width>
+    <x>279</x>
+    <y>108</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">
+    <auto_size>true</auto_size>
+    <background_color>
+      <color blue="166" green="166" name="Grey 65%" red="166" />
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_color>
+      <color blue="0" green="0" name="Black" red="0" />
+    </border_color>
+    <border_style>0</border_style>
+    <font>
+      <fontdata fontName="liberation sans" height="12" pixels="true" style="0" />
+    </font>
+    <foreground_color>
+      <color blue="0" green="0" name="Text: FG" red="0" />
+    </foreground_color>
+    <height>26</height>
+    <horizontal_alignment>1</horizontal_alignment>
+    <name>EDM Label</name>
+    <text>Readback
+Value</text>
+    <transparent>true</transparent>
+    <width>60</width>
+    <x>315</x>
+    <y>125</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.polyline" version="1.0">
+    <arrows>2</arrows>
+    <background_color>
+      <color blue="0" green="0" name="Black" red="0" />
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <fill_arrow>true</fill_arrow>
+    <fill_level>0.0</fill_level>
+    <height>112</height>
+    <line_style>0</line_style>
+    <line_width>1</line_width>
+    <name>EDM Line</name>
+    <points>
+      <point x="266" y="18" />
+      <point x="178" y="129" />
+    </points>
+    <width>89</width>
+    <x>178</x>
+    <y>18</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.polyline" version="1.0">
+    <arrows>2</arrows>
+    <background_color>
+      <color blue="0" green="0" name="Black" red="0" />
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <fill_arrow>true</fill_arrow>
+    <fill_level>0.0</fill_level>
+    <height>41</height>
+    <line_style>0</line_style>
+    <line_width>1</line_width>
+    <name>EDM Line</name>
+    <points>
+      <point x="195" y="60" />
+      <point x="145" y="100" />
+    </points>
+    <width>51</width>
+    <x>145</x>
+    <y>60</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.polyline" version="1.0">
+    <arrows>2</arrows>
+    <background_color>
+      <color blue="0" green="0" name="Black" red="0" />
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <fill_arrow>true</fill_arrow>
+    <fill_level>0.0</fill_level>
+    <height>36</height>
+    <line_style>0</line_style>
+    <line_width>1</line_width>
+    <name>EDM Line</name>
+    <points>
+      <point x="320" y="200" />
+      <point x="280" y="165" />
+    </points>
+    <width>41</width>
+    <x>280</x>
+    <y>165</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.polyline" version="1.0">
+    <arrows>2</arrows>
+    <background_color>
+      <color blue="0" green="0" name="Black" red="0" />
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <fill_arrow>true</fill_arrow>
+    <fill_level>0.0</fill_level>
+    <height>31</height>
+    <line_style>0</line_style>
+    <line_width>1</line_width>
+    <name>EDM Line</name>
+    <points>
+      <point x="140" y="235" />
+      <point x="125" y="205" />
+    </points>
+    <width>16</width>
+    <x>125</x>
+    <y>205</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">
+    <auto_size>true</auto_size>
+    <background_color>
+      <color blue="166" green="166" name="Grey 65%" red="166" />
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_color>
+      <color blue="0" green="0" name="Black" red="0" />
+    </border_color>
+    <border_style>0</border_style>
+    <font>
+      <fontdata fontName="liberation sans" height="12" pixels="true" style="1" />
+    </font>
+    <foreground_color>
+      <color blue="0" green="0" name="Text: FG" red="0" />
+    </foreground_color>
+    <height>13</height>
+    <horizontal_alignment>0</horizontal_alignment>
+    <name>EDM Label</name>
+    <text>Error Text</text>
+    <transparent>true</transparent>
+    <width>57</width>
+    <x>10</x>
+    <y>270</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0">
+    <background_color>
+      <color blue="64" green="64" name="Monitor: BG" red="64" />
+    </background_color>
+    <border_alarm_sensitive>true</border_alarm_sensitive>
+    <border_style>None</border_style>
+    <font>
+      <fontdata fontName="liberation sans" height="12" pixels="true" style="1" />
+    </font>
+    <forecolor_alarm_sensitive>true</forecolor_alarm_sensitive>
+    <foreground_color>
+      <color blue="0" green="255" name="Green" red="0" />
+    </foreground_color>
+    <format_type>0</format_type>
+    <height>20</height>
+    <horizontal_alignment>1</horizontal_alignment>
+    <name>EDM TextInput</name>
+    <precision>4</precision>
+    <precision_from_pv>true</precision_from_pv>
+    <pv_name>$(motor).STAT</pv_name>
+    <show_units>true</show_units>
+    <transparent>false</transparent>
+    <width>245</width>
+    <x>5</x>
+    <y>285</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.edm.symbolwidget" version="1.0">
+    <background_color>
+      <color blue="200" green="200" name="Canvas" red="200" />
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_style>0</border_style>
+    <foreground_color>
+      <color blue="0" green="0" name="Text: FG" red="0" />
+    </foreground_color>
+    <group_name>1</group_name>
+    <height>20</height>
+    <name>DLS symbol</name>
+    <rules>
+      <rule name="symbol_single_pv" out_exp="true" prop_id="image_index">
+        <exp bool_exp="pvSev0==-1">
+          <value>0</value>
+        </exp>
+        <exp bool_exp="pv0&gt;=0.0&amp;&amp;pv0&lt;0.0">
+          <value>3</value>
+        </exp>
+        <exp bool_exp="pv0&gt;=1.0&amp;&amp;pv0&lt;2.0">
+          <value>4</value>
+        </exp>
+        <exp bool_exp="pv0&gt;=0.0&amp;&amp;pv0&lt;1.0">
+          <value>5</value>
+        </exp>
+        <exp bool_exp="true">
+          <value>0</value>
+        </exp>
+        <pv trig="true">$(pv_name)</pv>
+      </rule>
+    </rules>
+    <width>20</width>
+    <x>350</x>
+    <y>205</y>
+  <pv_name>loc://dummy1&lt;VDouble&gt;(1)</pv_name><image_file>../motor/symbols-traffic-light-symbol-21.png</image_file><symbol_number>0</symbol_number><sub_image_width>21</sub_image_width></widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.edm.symbolwidget" version="1.0">
+    <background_color>
+      <color blue="200" green="200" name="Canvas" red="200" />
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_style>0</border_style>
+    <foreground_color>
+      <color blue="0" green="0" name="Text: FG" red="0" />
+    </foreground_color>
+    <group_name>1</group_name>
+    <height>20</height>
+    <name>DLS symbol</name>
+    <rules>
+      <rule name="symbol_single_pv" out_exp="true" prop_id="image_index">
+        <exp bool_exp="pvSev0==-1">
+          <value>0</value>
+        </exp>
+        <exp bool_exp="pv0&gt;=0.0&amp;&amp;pv0&lt;0.0">
+          <value>3</value>
+        </exp>
+        <exp bool_exp="pv0&gt;=1.0&amp;&amp;pv0&lt;2.0">
+          <value>4</value>
+        </exp>
+        <exp bool_exp="pv0&gt;=0.0&amp;&amp;pv0&lt;1.0">
+          <value>5</value>
+        </exp>
+        <exp bool_exp="true">
+          <value>0</value>
+        </exp>
+        <pv trig="true">$(pv_name)</pv>
+      </rule>
+    </rules>
+    <width>20</width>
+    <x>350</x>
+    <y>235</y>
+  <pv_name>loc://dummy0&lt;VDouble&gt;(0)</pv_name><image_file>../motor/symbols-traffic-light-symbol-21.png</image_file><symbol_number>0</symbol_number><sub_image_width>21</sub_image_width></widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.MenuButton" version="1.0">
+    <actions_from_pv>true</actions_from_pv>
+    <background_color>
+      <color blue="205" green="205" name="Controller: BG" red="205" />
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <font>
+      <fontdata fontName="liberation sans" height="8" pixels="true" style="0" />
+    </font>
+    <foreground_color>
+      <color blue="192" green="0" name="Controller: FG" red="0" />
+    </foreground_color>
+    <height>14</height>
+    <name>EDM menu button</name>
+    <pv_name>$(motor).SPMG</pv_name>
+    <show_down_arrow>true</show_down_arrow>
+    <width>44</width>
+    <x>241</x>
+    <y>106</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0">
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_style>0</border_style>
+    <height>12</height>
+    <lock_children>true</lock_children>
+    <name>0</name>
+    <rules>
+      <rule name="visibleRule" out_exp="false" prop_id="visible">
+        <exp bool_exp="pv0&gt;=0.0&amp;&amp; pv0&lt;1.0">
+          <value>true</value>
+        </exp>
+        <exp bool_exp="true">
+          <value>false</value>
+        </exp>
+        <pv trig="true">$(motor):KILL</pv>
+      </rule>
+    </rules>
+    <show_scrollbar>false</show_scrollbar>
+    <transparent>true</transparent>
+    <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="1.0">
+      <actions hook="true" hook_all="true">
+        <action type="WRITE_PV">
+          <pv_name>$(pv_name)</pv_name>
+          <value>1</value>
+        </action>
+      </actions>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <font>
+        <fontdata fontName="liberation sans" height="8" pixels="true" style="0" />
+      </font>
+      <foreground_color>
+        <color blue="0" green="0" name="Mid Red" red="192" />
+      </foreground_color>
+      <height>14</height>
+      <name>EDM Message Button</name>
+      <pv_name>$(motor):KILL.PROC</pv_name>
+      <rules>
+        <rule name="OnOffBackgroundRule" out_exp="false" prop_id="background_color">
+          <exp bool_exp="widget.getValue() == 1">
+            <value>
+              <color blue="192" green="192" name="Grey 75%" red="192" />
+            </value>
+          </exp>
+          <exp bool_exp="true">
+            <value>
+              <color blue="205" green="205" name="Controller: BG" red="205" />
+            </value>
+          </exp>
+          <pv trig="true">$(motor):KILL.PROC</pv>
+        </rule>
+      </rules>
+      <text>Kill</text>
+      <width>19</width>
+      <x>0</x>
+      <y>0</y>
+    </widget>
+    <width>19</width>
+    <x>221</x>
+    <y>106</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.polyline" version="1.0">
+    <arrows>2</arrows>
+    <background_color>
+      <color blue="0" green="0" name="Black" red="0" />
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <fill_arrow>true</fill_arrow>
+    <fill_level>0.0</fill_level>
+    <height>62</height>
+    <line_style>0</line_style>
+    <line_width>1</line_width>
+    <name>EDM Line</name>
+    <points>
+      <point x="283" y="45" />
+      <point x="226" y="106" />
+    </points>
+    <width>58</width>
+    <x>226</x>
+    <y>45</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">
+    <auto_size>true</auto_size>
+    <background_color>
+      <color blue="166" green="166" name="Grey 65%" red="166" />
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_color>
+      <color blue="0" green="0" name="Black" red="0" />
+    </border_color>
+    <border_style>0</border_style>
+    <font>
+      <fontdata fontName="liberation sans" height="12" pixels="true" style="0" />
+    </font>
+    <foreground_color>
+      <color blue="0" green="0" name="Text: FG" red="0" />
+    </foreground_color>
+    <height>26</height>
+    <horizontal_alignment>0</horizontal_alignment>
+    <name>EDM Label</name>
+    <text>Move Mode
+(Should be Go)</text>
+    <transparent>true</transparent>
+    <width>86</width>
+    <x>295</x>
+    <y>53</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.polyline" version="1.0">
+    <arrows>2</arrows>
+    <background_color>
+      <color blue="0" green="0" name="Black" red="0" />
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <fill_arrow>true</fill_arrow>
+    <fill_level>0.0</fill_level>
+    <height>42</height>
+    <line_style>0</line_style>
+    <line_width>1</line_width>
+    <name>EDM Line</name>
+    <points>
+      <point x="295" y="66" />
+      <point x="259" y="107" />
+    </points>
+    <width>37</width>
+    <x>259</x>
+    <y>66</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">
+    <auto_size>true</auto_size>
+    <background_color>
+      <color blue="166" green="166" name="Grey 65%" red="166" />
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_color>
+      <color blue="0" green="0" name="Black" red="0" />
+    </border_color>
+    <border_style>0</border_style>
+    <font>
+      <fontdata fontName="liberation sans" height="12" pixels="true" style="0" />
+    </font>
+    <foreground_color>
+      <color blue="0" green="0" name="Text: FG" red="0" />
+    </foreground_color>
+    <height>26</height>
+    <horizontal_alignment>0</horizontal_alignment>
+    <name>EDM Label</name>
+    <text>Kill (de-energise) 
+the motor</text>
+    <transparent>true</transparent>
+    <width>98</width>
+    <x>276</x>
+    <y>23</y>
+  </widget>
+</display>

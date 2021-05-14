@@ -202,7 +202,7 @@ export class DType {
         return doubleValue;
       } else if (stringValue !== undefined) {
         // Returns NaN if cannot parse.
-        return parseFloat(stringValue);
+        return Number(stringValue);
       } else {
         return NaN;
       }

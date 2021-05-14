@@ -207,12 +207,44 @@
           "position": "relative",
           "margin": "5px 0 0 0",
           "pvName": "loc://enum1"
+        }
+      ]
+    },
+    {
+      "type": "flexcontainer",
+      "position": "relative",
+      "children": [
+        {
+          "type": "label",
+          "position": "relative",
+          "width": "90%",
+          "text": "Invalid PVs",
+          "margin": "15px 0 0 0",
+          "font": {
+            "size": "15",
+            "style": "bold"
+          }
         },
         {
           "type": "readback",
           "position": "relative",
+          "width": "30%",
           "margin": "5px 0 0 0",
           "pvName": "enum://bad"
+        },
+        {
+          "type": "readback",
+          "position": "relative",
+          "width": "30%",
+          "margin": "5px 0 0 0",
+          "pvName": "ca://non-existent"
+        },
+        {
+          "type": "readback",
+          "position": "relative",
+          "width": "30%",
+          "margin": "5px 0 0 0",
+          "pvName": "xyz://abc"
         }
       ]
     },
@@ -440,7 +472,7 @@
                   "location": "testing",
                   "name": "One",
                   "file": {
-                    "path": "tab_embed.json",
+                    "path": "json/tab_embed.json",
                     "macros": {
                       "LABEL": "This is tab one",
                       "NUMBER": "1"
@@ -478,7 +510,7 @@
                   "location": "testing",
                   "name": "Two",
                   "file": {
-                    "path": "tab_embed.json",
+                    "path": "json/tab_embed.json",
                     "macros": {
                       "LABEL": "This is tab two",
                       "NUMBER": "2"
@@ -516,7 +548,7 @@
                   "location": "testing",
                   "name": "Three",
                   "file": {
-                    "path": "tab_embed.json",
+                    "path": "json/tab_embed.json",
                     "macros": {
                       "LABEL": "This is tab three",
                       "NUMBER": "3"
@@ -554,7 +586,7 @@
                   "location": "testing",
                   "name": "Four",
                   "file": {
-                    "path": "tab_embed.json",
+                    "path": "json/tab_embed.json",
                     "macros": {
                       "LABEL": "This is tab four",
                       "NUMBER": "4"

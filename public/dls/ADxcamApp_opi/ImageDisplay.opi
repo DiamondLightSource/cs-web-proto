@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<display typeId="org.csstudio.opibuilder.Display" version="1.0.0">
+  <actions hook="false" hook_all="false" />
+  <auto_scale_widgets>
+    <auto_scale_widgets>false</auto_scale_widgets>
+    <min_width>-1</min_width>
+    <min_height>-1</min_height>
+  </auto_scale_widgets>
+  <auto_zoom_to_fit_all>false</auto_zoom_to_fit_all>
+  <background_color>
+    <color red="240" green="240" blue="240" />
+  </background_color>
+  <boy_version>5.0.0.201512241344</boy_version>
+  <foreground_color>
+    <color red="192" green="192" blue="192" />
+  </foreground_color>
+  <grid_space>6</grid_space>
+  <height>400</height>
+  <macros>
+    <include_parent_macros>true</include_parent_macros>
+  </macros>
+  <name></name>
+  <rules />
+  <scripts />
+  <show_close_button>true</show_close_button>
+  <show_edit_range>true</show_edit_range>
+  <show_grid>true</show_grid>
+  <show_ruler>true</show_ruler>
+  <snap_to_geometry>true</snap_to_geometry>
+  <widget_type>Display</widget_type>
+  <width>800</width>
+  <wuid>36ba891b:1527f6921a5:-7dba</wuid>
+  <x>-1</x>
+  <y>-1</y>
+  <widget typeId="org.csstudio.opibuilder.widgets.intensityGraph" version="1.0.0">
+    <actions hook="false" hook_all="false" />
+    <alarm_pulsing>false</alarm_pulsing>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <background_color>
+      <color red="240" green="240" blue="240" />
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <border_style>0</border_style>
+    <border_width>1</border_width>
+    <color_map>
+      <interpolate>true</interpolate>
+      <autoscale>true</autoscale>
+      <map>2</map>
+    </color_map>
+    <crop_bottom>0</crop_bottom>
+    <crop_left>0</crop_left>
+    <crop_right>0</crop_right>
+    <crop_top>0</crop_top>
+    <data_height>502</data_height>
+    <data_width>1506</data_width>
+    <enabled>true</enabled>
+    <font>
+      <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
+    </font>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <foreground_color>
+      <color red="0" green="0" blue="0" />
+    </foreground_color>
+    <graph_area_height>351</graph_area_height>
+    <graph_area_width>671</graph_area_width>
+    <height>397</height>
+    <horizon_profile_x_pv_name></horizon_profile_x_pv_name>
+    <horizon_profile_x_pv_value />
+    <horizon_profile_y_pv_name></horizon_profile_y_pv_name>
+    <horizon_profile_y_pv_value />
+    <maximum>65535.0</maximum>
+    <minimum>0.0</minimum>
+    <name>IntensityGraph</name>
+    <pixel_info_pv_name></pixel_info_pv_name>
+    <pixel_info_pv_value />
+    <pv_name>$(P)image1:ArrayData</pv_name>
+    <pv_value />
+    <rgb_mode>false</rgb_mode>
+    <roi_color>
+      <color red="0" green="255" blue="255" />
+    </roi_color>
+    <roi_count>0</roi_count>
+    <rules>
+      <rule name="UpdateDataWidth" prop_id="data_width" out_exp="true">
+        <exp bool_exp="true">
+          <value>pv0</value>
+        </exp>
+        <pv trig="true">$(P)image1:ArraySize0_RBV</pv>
+      </rule>
+      <rule name="UpdateDataHeight" prop_id="data_height" out_exp="true">
+        <exp bool_exp="true">
+          <value>pv0</value>
+        </exp>
+        <pv trig="true">$(P)image1:ArraySize1_RBV</pv>
+      </rule>
+      <rule name="UpdateAxisMaximumX" prop_id="x_axis_maximum" out_exp="true">
+        <exp bool_exp="true">
+          <value>pv0 - 1</value>
+        </exp>
+        <pv trig="true">$(P)image1:ArraySize0_RBV</pv>
+      </rule>
+      <rule name="UpdateAxisMaximumY" prop_id="y_axis_maximum" out_exp="true">
+        <exp bool_exp="true">
+          <value>pv0 - 1</value>
+        </exp>
+        <pv trig="true">$(P)image1:ArraySize1_RBV</pv>
+      </rule>
+      <rule name="UpdateGraphHeight" prop_id="graph_area_height" out_exp="true">
+        <exp bool_exp="pv0 &gt; 0">
+          <value>671 * pv1 / pv0</value>
+        </exp>
+        <pv trig="true">$(P)image1:ArraySize0_RBV</pv>
+        <pv trig="true">$(P)image1:ArraySize1_RBV</pv>
+      </rule>
+    </rules>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>true</keep_wh_ratio>
+    </scale_options>
+    <scripts />
+    <show_ramp>true</show_ramp>
+    <single_line_profiling>false</single_line_profiling>
+    <tooltip>$(pv_name)</tooltip>
+    <vertial_profile_x_pv_value />
+    <vertial_profile_y_pv_value />
+    <vertical_profile_x_pv_name></vertical_profile_x_pv_name>
+    <vertical_profile_y_pv_name></vertical_profile_y_pv_name>
+    <visible>true</visible>
+    <widget_type>Intensity Graph</widget_type>
+    <width>793</width>
+    <wuid>36ba891b:1527f6921a5:-7c5d</wuid>
+    <x>0</x>
+    <x_axis_axis_color>
+      <color red="0" green="0" blue="0" />
+    </x_axis_axis_color>
+    <x_axis_axis_title>X Axis</x_axis_axis_title>
+    <x_axis_major_tick_step_hint>50</x_axis_major_tick_step_hint>
+    <x_axis_maximum>1505.0</x_axis_maximum>
+    <x_axis_minimum>0.0</x_axis_minimum>
+    <x_axis_scale_font>
+      <fontdata fontName="Segoe UI" height="9" style="0" />
+    </x_axis_scale_font>
+    <x_axis_show_minor_ticks>true</x_axis_show_minor_ticks>
+    <x_axis_title_font>
+      <fontdata fontName="Arial" height="9" style="1" />
+    </x_axis_title_font>
+    <x_axis_visible>true</x_axis_visible>
+    <y>0</y>
+    <y_axis_axis_color>
+      <color red="0" green="0" blue="0" />
+    </y_axis_axis_color>
+    <y_axis_axis_title>Y Axis</y_axis_axis_title>
+    <y_axis_major_tick_step_hint>50</y_axis_major_tick_step_hint>
+    <y_axis_maximum>501.0</y_axis_maximum>
+    <y_axis_minimum>0.0</y_axis_minimum>
+    <y_axis_scale_font>
+      <fontdata fontName="Segoe UI" height="9" style="0" />
+    </y_axis_scale_font>
+    <y_axis_show_minor_ticks>true</y_axis_show_minor_ticks>
+    <y_axis_title_font>
+      <fontdata fontName="Arial" height="9" style="1" />
+    </y_axis_title_font>
+    <y_axis_visible>true</y_axis_visible>
+  </widget>
+</display>

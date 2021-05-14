@@ -1,0 +1,121 @@
+<?xml version='1.0' encoding='utf-8'?>
+<display typeId="org.csstudio.opibuilder.Display" version="1.0">
+  <x>429</x>
+  <y>551</y>
+  <width>90</width>
+  <height>20</height>
+  <font>
+    <fontdata fontName="liberation sans" height="18" pixels="true" style="0" />
+  </font>
+  <boy_version>4.0.0</boy_version>
+  <foreground_color>
+    <color blue="0" green="0" name="Black" red="0" />
+  </foreground_color>
+  <background_color>
+    <color blue="200" green="200" name="Canvas" red="200" />
+  </background_color>
+  <show_grid>true</show_grid>
+  <grid_space>5</grid_space>
+  <auto_zoom_to_fit_all>true</auto_zoom_to_fit_all>
+  <widget typeId="org.csstudio.opibuilder.widgets.Rectangle" version="1.0">
+    <actions hook="true" hook_all="false">
+      <action type="OPEN_DISPLAY">
+        <path>./flow-tooltip.opi</path>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+          <flow>$(flow)</flow>
+          <label>$(label)</label>
+        </macros>
+        <mode>8</mode>
+        <description />
+      </action>
+    </actions>
+    <background_color>
+      <color blue="255" green="255" name="White" red="255" />
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <font>
+      <fontdata fontName="liberation sans" height="18" pixels="true" style="0" />
+    </font>
+    <foreground_color>
+      <color blue="0" green="0" name="Black" red="0" />
+    </foreground_color>
+    <height>21</height>
+    <line_width>0</line_width>
+    <name>EDM related display</name>
+    <text />
+    <transparent>true</transparent>
+    <width>91</width>
+    <x>0</x>
+    <y>0</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0">
+    <background_color>
+      <color blue="255" green="255" name="White" red="255" />
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_style>0</border_style>
+    <foreground_color>
+      <color blue="192" green="192" name="Grey 75%" red="192" />
+    </foreground_color>
+    <group_name>1</group_name>
+    <height>20</height>
+    <name>EDM Symbol</name>
+    <opi_file>symbols-traffic-light-symbol.opi</opi_file>
+    <rules>
+      <rule name="symbol_binary_truth_table" out_exp="false" prop_id="group_name">
+        <exp bool_exp="((pv0==0?0:1)*1.0+(pv1==0?0:1)*2.0)&gt;=-1.0&amp;&amp;((pv0==0?0:1)*1.0+(pv1==0?0:1)*2.0)&lt;0.0">
+          <value>0</value>
+        </exp>
+        <exp bool_exp="((pv0==0?0:1)*1.0+(pv1==0?0:1)*2.0)&gt;=3.0&amp;&amp;((pv0==0?0:1)*1.0+(pv1==0?0:1)*2.0)&lt;4.0">
+          <value>1</value>
+        </exp>
+        <exp bool_exp="((pv0==0?0:1)*1.0+(pv1==0?0:1)*2.0)&gt;=2.0&amp;&amp;((pv0==0?0:1)*1.0+(pv1==0?0:1)*2.0)&lt;3.0">
+          <value>2</value>
+        </exp>
+        <exp bool_exp="((pv0==0?0:1)*1.0+(pv1==0?0:1)*2.0)&gt;=0.0&amp;&amp;((pv0==0?0:1)*1.0+(pv1==0?0:1)*2.0)&lt;2.0">
+          <value>3</value>
+        </exp>
+        <exp bool_exp="true">
+          <value>0</value>
+        </exp>
+        <pv trig="true">$(flow):LO</pv>
+        <pv trig="true">$(flow):LOLO</pv>
+      </rule>
+    </rules>
+    <width>20</width>
+    <x>70</x>
+    <y>0</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="1.0">
+    <actions hook="false" hook_all="false">
+      <action type="OPEN_DISPLAY">
+        <path>./flow-config.opi</path>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+          <flow>$(flow)</flow>
+          <label>$(label)</label>
+          <P>$(P)</P>
+        </macros>
+        <mode>8</mode>
+        <description />
+      </action>
+    </actions>
+    <background_color>
+      <color blue="205" green="205" name="Controller: BG" red="205" />
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <font>
+      <fontdata fontName="liberation sans" height="14" pixels="true" style="1" />
+    </font>
+    <foreground_color>
+      <color blue="0" green="0" name="Text: FG" red="0" />
+    </foreground_color>
+    <height>21</height>
+    <name>EDM related display</name>
+    <text>$(label): </text>
+    <width>69</width>
+    <x>0</x>
+    <y>0</y>
+  </widget>
+</display>

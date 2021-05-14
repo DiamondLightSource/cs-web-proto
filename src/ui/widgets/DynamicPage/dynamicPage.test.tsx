@@ -3,7 +3,7 @@ import React from "react";
 import { waitFor } from "@testing-library/react";
 import { DynamicPageComponent } from "./dynamicPage";
 import { PageState } from "../../../fileContext";
-import { contextRender } from "../../../setupTests";
+import { contextRender } from "../../../testResources";
 
 import { ensureWidgetsRegistered } from "..";
 ensureWidgetsRegistered();
@@ -40,7 +40,7 @@ describe("<DynamicPage>", (): void => {
 
     const initialPageState: PageState = {
       testlocation: {
-        path: "test.json",
+        path: "/json/test.json",
         macros: {},
         defaultProtocol: "pva"
       }
@@ -53,9 +53,7 @@ describe("<DynamicPage>", (): void => {
     expect(queryByText("hello")).not.toBeInTheDocument();
 
     expect(globalWithFetch.fetch).toHaveBeenCalledTimes(1);
-    expect(globalWithFetch.fetch).toHaveBeenCalledWith(
-      "http://localhost:3000/json/test.json"
-    );
+    expect(globalWithFetch.fetch).toHaveBeenCalledWith("/json/test.json");
 
     waitFor((): void => {
       expect(queryByText("hello")).toBeInTheDocument();

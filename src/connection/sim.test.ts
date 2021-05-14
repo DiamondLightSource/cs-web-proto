@@ -4,7 +4,7 @@ import {
   nullValueCallback,
   ValueChangedCallback
 } from "./plugin";
-import { ddouble, dstring } from "../setupTests";
+import { ddouble, dstring } from "../testResources";
 import { DType } from "../types/dtypes";
 
 let simulator: SimulatorPlugin;

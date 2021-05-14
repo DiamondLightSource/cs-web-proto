@@ -1,6 +1,5 @@
-import React, { useContext } from "react";
+import React from "react";
 import classes from "./tabs.module.css";
-import { BaseUrlContext } from "../../../baseUrl";
 
 export interface TabBarProps {
   tabNames: string[];
@@ -12,7 +11,6 @@ export interface TabBarProps {
 }
 
 export const TabBar = (props: TabBarProps): JSX.Element => {
-  const baseUrl = useContext(BaseUrlContext);
   return (
     <div className={classes.TabBar}>
       {props.tabNames.map(
@@ -41,7 +39,7 @@ export const TabBar = (props: TabBarProps): JSX.Element => {
               >
                 <img
                   style={{ height: "15px", display: "block" }}
-                  src={`${baseUrl}/img/x.png`}
+                  src="/img/x.png"
                   alt="Close tab"
                 ></img>
               </button>

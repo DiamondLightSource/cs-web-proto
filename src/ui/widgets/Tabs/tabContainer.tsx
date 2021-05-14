@@ -21,9 +21,8 @@ import {
   BorderPropOpt,
   ColorPropOpt
 } from "../propTypes";
-import { errorWidget } from "../EmbeddedDisplay/embeddedDisplay";
 import { parseObject } from "../EmbeddedDisplay/jsonParser";
-import { widgetDescriptionToComponent } from "../createComponent";
+import { errorWidget, widgetDescriptionToComponent } from "../createComponent";
 
 import { TabBar } from "./tabs";
 
@@ -44,7 +43,7 @@ export const TabContainerComponent = (
   // TODO: Find out if this repeated calculation can be done in the useMemo hook for measurable performance gains
   const children = Object.values(props.tabs).map((child, index) => {
     try {
-      return widgetDescriptionToComponent(parseObject(child, "pva"), index);
+      return widgetDescriptionToComponent(parseObject(child, "ca"), index);
     } catch (e) {
       const message = `Error transforming children into components`;
       log.warn(message);

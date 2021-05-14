@@ -80,6 +80,7 @@ export const SlideControlComponent = (
           limitsFromPv={limitsFromPv}
           precision={precision}
           readonly={props.readonly}
+          showLabel={true}
         />
       </div>
       <div

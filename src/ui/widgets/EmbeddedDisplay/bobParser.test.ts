@@ -6,6 +6,8 @@ import { ensureWidgetsRegistered } from "..";
 import { WidgetDescription } from "../createComponent";
 ensureWidgetsRegistered();
 
+const PREFIX = "prefix";
+
 describe("opi widget parser", (): void => {
   const labelString = `
   <display version="2.0.0">
@@ -39,7 +41,7 @@ describe("opi widget parser", (): void => {
   </display>`;
 
   it("parses a label widget", (): void => {
-    const widget = parseBob(labelString, "ca")
+    const widget = parseBob(labelString, "ca", PREFIX)
       .children?.[0] as WidgetDescription;
     expect(widget.type).toEqual("label");
     // Boolean type
@@ -72,7 +74,7 @@ describe("opi widget parser", (): void => {
     </widget>
   </display>`;
   it("parses a readback widget", (): void => {
-    const widget = parseBob(readbackString, "xxx")
+    const widget = parseBob(readbackString, "xxx", PREFIX)
       .children?.[0] as WidgetDescription;
     expect(widget.pvName).toEqual(PV.parse("xxx://abc"));
   });
@@ -84,7 +86,7 @@ describe("opi widget parser", (): void => {
     <height>300</height>
   </display>`;
   it("handles a missing dimension", (): void => {
-    const display = parseBob(noXString, "xxx");
+    const display = parseBob(noXString, "xxx", "PREFIX");
     // Is this correct?
     expect(display.x).toEqual(undefined);
   });

@@ -1,0 +1,41 @@
+{
+  "type": "flexcontainer",
+  "position": "relative",
+  "margin": "20px 20px 20px 20px",
+  "children": [
+    {
+      "type": "flexcontainer",
+      "position": "relative",
+      "width": "100%",
+      "height": "70vh",
+      "children": [
+        {
+          "type": "dynamictabs",
+          "position": "relative",
+          "margin": "20px 0 0 0",
+          "width": "70%",
+          "location": "main"
+        },
+        {
+          "type": "dynamictabs",
+          "position": "relative",
+          "margin": "20px 0 0 0",
+          "width": "30%",
+          "location": "details"
+        }
+      ]
+    },
+    {
+      "type": "embeddedDisplay",
+      "position": "relative",
+      "margin": "10px",
+      "scroll": true,
+      "width": "100%",
+      "file": {
+        "path": "dls/BL21IApp_opi/synoptic.opi",
+        "macros": {},
+        "defaultProtocol": "ca"
+      }
+    }
+  ]
+}

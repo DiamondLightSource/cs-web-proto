@@ -193,7 +193,7 @@ const initialState: FileContextType = {
 /* Page that will be loaded at start. */
 const INITIAL_PAGE_STATE: PageState = {
   app: {
-    path: "home.json",
+    path: "json/home.json",
     macros: {},
     defaultProtocol: "pva"
   }

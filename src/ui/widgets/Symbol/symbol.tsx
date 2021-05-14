@@ -7,7 +7,6 @@ import {
   BoolPropOpt,
   StringPropOpt,
   ColorPropOpt,
-  BoolProp,
   FloatPropOpt,
   BorderPropOpt,
   StringProp,
@@ -22,12 +21,13 @@ import { Color } from "../../../types/color";
 import { executeActions, WidgetActions } from "../widgetActions";
 import { MacroContext } from "../../../types/macros";
 import { FileContext } from "../../../fileContext";
+import { DType } from "../../../types/dtypes";
 
 const SymbolProps = {
   imageFile: StringProp,
   alt: StringPropOpt,
   backgroundColor: ColorPropOpt,
-  showLabel: BoolProp,
+  showBooleanLabel: BoolPropOpt,
   labelPosition: ChoicePropOpt([
     "top",
     "left",
@@ -40,7 +40,6 @@ const SymbolProps = {
     "bottom right"
   ]),
   border: BorderPropOpt,
-  value: FloatPropOpt,
   rotation: FloatPropOpt,
   flipHorizontal: BoolPropOpt,
   flipVertical: BoolPropOpt,
@@ -60,6 +59,13 @@ export type SymbolComponentProps = InferWidgetProps<typeof SymbolProps> &
  */
 export const SymbolComponent = (props: SymbolComponentProps): JSX.Element => {
   const style = commonCss(props as any);
+
+  let imageFile = props.imageFile;
+  const regex = / [0-9]\./;
+  const intValue = DType.coerceDouble(props.value);
+  if (!isNaN(intValue)) {
+    imageFile = props.imageFile.replace(regex, ` ${intValue.toFixed(0)}.`);
+  }
 
   let alignItems = "center";
   let justifyContent = "center";
@@ -102,22 +108,18 @@ export const SymbolComponent = (props: SymbolComponentProps): JSX.Element => {
     }
   }
 
-  const cursor =
-    props.actions && props.actions.actions.length > 0 ? "pointer" : "auto";
-
   // Note: I would've preferred to define the onClick on div that wraps
   // both sub-components, but replacing the fragment with a div, with the way
   // the image component is written causes many images to be of the incorrect size
   return (
     <>
-      <ImageComponent {...props} onClick={onClick} />
-      {props.showLabel && (
+      <ImageComponent {...props} imageFile={imageFile} onClick={onClick} />
+      {props.showBooleanLabel && (
         <>
           <div
             onClick={onClick}
             style={{
               ...style,
-              cursor,
               backgroundColor: "transparent",
               position: "absolute",
               height: "100%",

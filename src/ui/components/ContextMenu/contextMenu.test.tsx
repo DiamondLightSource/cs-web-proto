@@ -1,30 +1,20 @@
 import React from "react";
 import { fireEvent } from "@testing-library/react";
 
-import { OPEN_WEBPAGE, WidgetAction } from "../../widgets/widgetActions";
 import { Widget } from "../../widgets/widget";
 import { RelativePosition } from "../../../types/position";
-import { contextRender } from "../../../setupTests";
+import { contextRender, OPEN_BBC_ACTION } from "../../../testResources";
+import * as ReactRouter from "react-router";
 
-// Mock the useHistory hook
-jest.mock(
-  "react-router-dom",
-  (): Record<string, unknown> => ({
-    useHistory: (): Record<string, unknown> => ({
-      push: jest.fn()
-    })
-  })
-);
+// Important to mock at the source (react-router) rather than somewhere
+// it is re-exported (react-router-dom).
+// https://stackoverflow.com/questions/53162001/typeerror-during-jests-spyon-cannot-set-property-getrequest-of-object-which
+jest.spyOn(ReactRouter, "useHistory").mockImplementation(jest.fn());
 
 // Clear the window.open mock (set up in setupTests.ts).
 afterEach((): void => {
   (window.open as jest.Mock).mockClear();
 });
-
-const BBC_ACTION: WidgetAction = {
-  type: OPEN_WEBPAGE,
-  openWebpageInfo: { url: "https://bbc.co.uk", description: "BBC" }
-};
 
 test("context menu opens on right click and executes action if clicked", async () => {
   // Add key attribute to suppress React warning about children.
@@ -32,7 +22,7 @@ test("context menu opens on right click and executes action if clicked", async (
   const { queryByText } = contextRender(
     <Widget
       actions={{
-        actions: [BBC_ACTION],
+        actions: [OPEN_BBC_ACTION],
         executeAsOne: false
       }}
       baseWidget={contents}
@@ -55,7 +45,7 @@ test("context menu cancels on click elsewhere in document", async () => {
   const { queryByText, container } = contextRender(
     <Widget
       actions={{
-        actions: [BBC_ACTION],
+        actions: [OPEN_BBC_ACTION],
         executeAsOne: false
       }}
       baseWidget={contents}

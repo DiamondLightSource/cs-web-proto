@@ -1,0 +1,200 @@
+<?xml version='1.0' encoding='utf-8'?>
+<display typeId="org.csstudio.opibuilder.Display" version="1.0">
+  <x>1258</x>
+  <y>966</y>
+  <width>190</width>
+  <height>20</height>
+  <font>
+    <fontdata fontName="liberation sans" height="18" pixels="true" style="0" />
+  </font>
+  <boy_version>4.0.0</boy_version>
+  <foreground_color>
+    <color blue="0" green="0" name="Black" red="0" />
+  </foreground_color>
+  <background_color>
+    <color blue="200" green="200" name="Canvas" red="200" />
+  </background_color>
+  <show_grid>true</show_grid>
+  <grid_space>5</grid_space>
+  <auto_zoom_to_fit_all>true</auto_zoom_to_fit_all>
+  <widget typeId="org.csstudio.opibuilder.widgets.Rectangle" version="1.0">
+    <actions hook="true" hook_all="false">
+      <action type="OPEN_DISPLAY">
+        <path>./temperature-tooltip.opi</path>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+          <temp>$(temp)</temp>
+          <label>$(label)</label>
+        </macros>
+        <mode>8</mode>
+        <description />
+      </action>
+    </actions>
+    <background_color>
+      <color blue="255" green="255" name="White" red="255" />
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <font>
+      <fontdata fontName="liberation sans" height="18" pixels="true" style="0" />
+    </font>
+    <foreground_color>
+      <color blue="0" green="0" name="Black" red="0" />
+    </foreground_color>
+    <height>21</height>
+    <line_width>0</line_width>
+    <name>EDM related display</name>
+    <text />
+    <transparent>true</transparent>
+    <width>191</width>
+    <x>0</x>
+    <y>0</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="1.0">
+    <actions hook="false" hook_all="false">
+      <action type="OPEN_DISPLAY">
+        <path>./temperature-config.opi</path>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+          <temp>$(temp)</temp>
+          <P>$(P)</P>
+        </macros>
+        <mode>8</mode>
+        <description />
+      </action>
+    </actions>
+    <background_color>
+      <color blue="205" green="205" name="Controller: BG" red="205" />
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <font>
+      <fontdata fontName="liberation sans" height="10" pixels="true" style="0" />
+    </font>
+    <foreground_color>
+      <color blue="0" green="0" name="Text: FG" red="0" />
+    </foreground_color>
+    <height>21</height>
+    <name>EDM related display</name>
+    <text>$(label):</text>
+    <width>81</width>
+    <x>0</x>
+    <y>0</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0">
+    <background_color>
+      <color blue="255" green="255" name="White" red="255" />
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_color>
+      <color blue="0" green="0" name="Black" red="0" />
+    </border_color>
+    <border_style>1</border_style>
+    <border_width>0</border_width>
+    <font>
+      <fontdata fontName="liberation sans" height="12" pixels="true" style="1" />
+    </font>
+    <foreground_color>
+      <color blue="0" green="0" name="Black" red="0" />
+    </foreground_color>
+    <format_type>0</format_type>
+    <height>21</height>
+    <horizontal_alignment>1</horizontal_alignment>
+    <line_width>1</line_width>
+    <name>EDM Text Update</name>
+    <precision>0</precision>
+    <precision_from_pv>true</precision_from_pv>
+    <pv_name>$(temp)</pv_name>
+    <show_units>true</show_units>
+    <transparent>true</transparent>
+    <width>91</width>
+    <x>80</x>
+    <y>0</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0">
+    <background_color>
+      <color blue="255" green="255" name="White" red="255" />
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_style>0</border_style>
+    <foreground_color>
+      <color blue="192" green="192" name="Grey 75%" red="192" />
+    </foreground_color>
+    <group_name>1</group_name>
+    <height>20</height>
+    <name>EDM Symbol</name>
+    <opi_file>symbols-traffic-light-symbol.opi</opi_file>
+    <rules>
+      <rule name="symbol_single_pv" out_exp="false" prop_id="group_name">
+        <exp bool_exp="pvSev0==-1">
+          <value>0</value>
+        </exp>
+        <exp bool_exp="pv0&gt;=-1.0&amp;&amp;pv0&lt;0.0">
+          <value>0</value>
+        </exp>
+        <exp bool_exp="pv0&gt;=0.0&amp;&amp;pv0&lt;1.0">
+          <value>1</value>
+        </exp>
+        <exp bool_exp="pv0&gt;=1.0&amp;&amp;pv0&lt;2.0">
+          <value>2</value>
+        </exp>
+        <exp bool_exp="pv0&gt;=2.0&amp;&amp;pv0&lt;3.0">
+          <value>3</value>
+        </exp>
+        <exp bool_exp="true">
+          <value>0</value>
+        </exp>
+        <pv trig="true">$(temp).SEVR</pv>
+      </rule>
+    </rules>
+    <width>20</width>
+    <x>170</x>
+    <y>0</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0">
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_style>0</border_style>
+    <height>21</height>
+    <lock_children>true</lock_children>
+    <name>0</name>
+    <rules>
+      <rule name="visibleRule" out_exp="false" prop_id="visible">
+        <exp bool_exp="pv0&gt;=1.0&amp;&amp; pv0&lt;2.0">
+          <value>true</value>
+        </exp>
+        <exp bool_exp="true">
+          <value>false</value>
+        </exp>
+        <pv trig="true">$(temp):DISABLED</pv>
+      </rule>
+    </rules>
+    <show_scrollbar>false</show_scrollbar>
+    <transparent>true</transparent>
+    <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">
+      <auto_size>false</auto_size>
+      <background_color>
+        <color blue="200" green="200" name="Canvas" red="200" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <border_color>
+        <color blue="0" green="0" name="Black" red="0" />
+      </border_color>
+      <border_style>0</border_style>
+      <font>
+        <fontdata fontName="liberation sans" height="14" pixels="true" style="1" />
+      </font>
+      <foreground_color>
+        <color blue="0" green="0" name="Text: FG" red="0" />
+      </foreground_color>
+      <height>20</height>
+      <horizontal_alignment>1</horizontal_alignment>
+      <name>EDM Label</name>
+      <text>Disabled</text>
+      <transparent>false</transparent>
+      <width>110</width>
+      <x>0</x>
+      <y>0</y>
+    </widget>
+    <width>111</width>
+    <x>80</x>
+    <y>0</y>
+  </widget>
+</display>
