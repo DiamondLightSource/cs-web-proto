@@ -27,7 +27,7 @@ const SymbolProps = {
   imageFile: StringProp,
   alt: StringPropOpt,
   backgroundColor: ColorPropOpt,
-  showLabel: BoolPropOpt,
+  showBooleanLabel: BoolPropOpt,
   labelPosition: ChoicePropOpt([
     "top",
     "left",
@@ -114,7 +114,7 @@ export const SymbolComponent = (props: SymbolComponentProps): JSX.Element => {
   return (
     <>
       <ImageComponent {...props} imageFile={imageFile} onClick={onClick} />
-      {props.showLabel && (
+      {props.showBooleanLabel && (
         <>
           <div
             onClick={onClick}

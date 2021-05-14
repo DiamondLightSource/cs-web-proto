@@ -1,89 +1,106 @@
-import React from "react";
+import React, { CSSProperties } from "react";
 
 import classes from "./progressBar.module.css";
-import { Widget } from "../widget";
+import { commonCss, Widget } from "../widget";
 import { PVComponent, PVWidgetPropType } from "../widgetProps";
 import { registerWidget } from "../register";
 import {
   FloatPropOpt,
   BoolPropOpt,
-  StringPropOpt,
   IntPropOpt,
   InferWidgetProps,
-  FontPropOpt
+  FontPropOpt,
+  ColorPropOpt,
+  BorderPropOpt
 } from "../propTypes";
 
 export const ProgressBarProps = {
   min: FloatPropOpt,
   max: FloatPropOpt,
   limitsFromPv: BoolPropOpt,
-  vertical: BoolPropOpt,
-  color: StringPropOpt,
+  logScale: BoolPropOpt,
+  horizontal: BoolPropOpt,
+  showLabel: BoolPropOpt,
+  fillColor: ColorPropOpt,
   precision: IntPropOpt,
-  font: FontPropOpt
+  font: FontPropOpt,
+  border: BorderPropOpt
 };
 
 export const ProgressBarComponent = (
   props: InferWidgetProps<typeof ProgressBarProps> & PVComponent
 ): JSX.Element => {
+  const style = commonCss(props);
   const {
     value,
     limitsFromPv = false,
+    showLabel = false,
     font,
-    vertical = false,
-    color = "#00aa00",
-    precision = undefined
+    horizontal = true,
+    fillColor = "#00aa00",
+    precision = undefined,
+    logScale = false
   } = props;
-  let { min = 0, max = 100 } = props;
+  let { min = 1e-10, max = 100 } = props;
 
   if (limitsFromPv && value?.display.controlRange) {
     min = value.display.controlRange?.min;
     max = value.display.controlRange?.max;
   }
-
   const numValue = value?.getDoubleValue() || 0;
-  const onPercent =
-    numValue < min
-      ? 0
-      : numValue > max
-      ? 100
-      : ((numValue - min) / (max - min)) * 100.0;
+  let fraction = 0;
+  if (logScale) {
+    fraction =
+      (Math.log10(numValue) - Math.log10(min)) /
+      (Math.log10(max) - Math.log10(min));
+  } else {
+    fraction = (numValue - min) / (max - min);
+  }
+
+  const onPercent = numValue < min ? 0 : numValue > max ? 100 : fraction * 100;
   // Store styles in these variables
   // Change the direction of the gradient depending on wehether the bar is vertical
-  const direction = vertical === true ? "to left" : "to top";
-  let onStyle = {};
-  const offStyle = {};
-  const barColor = {
-    backgroundImage: `linear-gradient(${direction}, ${color} 50%, #ffffff 130%)`
+  const direction = horizontal ? "to top" : "to left";
+  let fillStyle: CSSProperties = {
+    left: style.borderWidth,
+    bottom: style.borderWidth,
+    backgroundImage: `linear-gradient(${direction}, ${fillColor.toString()} 50%, #ffffff 130%)`
   };
-  if (vertical === true) {
-    onStyle = {
-      ...barColor,
-      width: "100%",
-      height: `${onPercent}%`
+  if (horizontal) {
+    fillStyle = {
+      ...fillStyle,
+      height: "100%",
+      top: style.borderWidth,
+      width: `${onPercent}%`
     };
   } else {
-    onStyle = {
-      ...barColor,
-      height: "100%",
-      width: `${onPercent}%`
+    fillStyle = {
+      ...fillStyle,
+      width: "100%",
+      left: style.borderWidth,
+      height: `${onPercent}%`
     };
   }
 
   // Show a warning if min is bigger than max and apply precision if provided
-  const valueText =
-    min > max
-      ? "Check min and max values"
-      : precision
-      ? numValue.toFixed(precision)
-      : numValue.toString();
+  let label = "";
+  if (showLabel) {
+    if (min > max) {
+      label = "Check min and max values";
+    } else {
+      if (precision) {
+        label = numValue.toFixed(precision);
+      } else {
+        label = numValue.toString();
+      }
+    }
+  }
 
   return (
-    <div className={classes.bar}>
-      <div className={classes.off} style={offStyle} />
-      <div className={classes.on} style={onStyle} />
+    <div className={classes.bar} style={style}>
+      <div className={classes.fill} style={fillStyle} />
       <div className={classes.label} style={{ ...font?.css() }}>
-        {valueText.toString()}
+        {label}
       </div>
     </div>
   );
