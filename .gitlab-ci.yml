@@ -35,4 +35,6 @@ node 14:
 
 deploy:
   stage: deploy
+  rules:
+    - if: '$CI_BRANCH_NAME == "master"'
   trigger: controls/kubernetes/cs-web-proto
