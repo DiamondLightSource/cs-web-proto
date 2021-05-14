@@ -1,6 +1,5 @@
 import log from "loglevel";
-import { useContext, useEffect, useState } from "react";
-import { BaseUrlContext } from "../../../baseUrl";
+import { useEffect, useState } from "react";
 import { MacroMap } from "../../../types/macros";
 import { AbsolutePosition } from "../../../types/position";
 import { errorWidget, WidgetDescription } from "../createComponent";
@@ -71,34 +70,29 @@ async function fetchAndConvert(
    and https://www.smashingmagazine.com/2020/07/custom-react-hook-fetch-cache-data/
 */
 export function useOpiFile(file: File): WidgetDescription {
-  const baseUrl = useContext(BaseUrlContext);
   const fileExt = file.path.split(".").pop() || "json";
   const [contents, setContents] = useState<WidgetDescription>(EMPTY_WIDGET);
-  let filepath = file.path;
-  if (!file.path.startsWith("http")) {
-    filepath = `${baseUrl}/${file.path}`;
-  }
 
   useEffect((): void => {
     const fetchData = async (): Promise<void> => {
-      if (fetchPromises.hasOwnProperty(filepath)) {
+      if (fetchPromises.hasOwnProperty(file.path)) {
         // This resource has been requested; once the cached
         // promise has been resolved the fileCache should be
         // populated.
-        await fetchPromises[filepath];
-        setContents(fileCache[filepath]);
+        await fetchPromises[file.path];
+        setContents(fileCache[file.path]);
       } else {
-        const fetchPromise = fetchAndConvert(filepath, file.defaultProtocol);
+        const fetchPromise = fetchAndConvert(file.path, file.defaultProtocol);
         // Populate the promises cache.
-        fetchPromises[filepath] = fetchPromise;
+        fetchPromises[file.path] = fetchPromise;
         const contents = await fetchPromise;
         // Populate the file cache.
-        fileCache[filepath] = contents;
+        fileCache[file.path] = contents;
         setContents(contents);
       }
     };
     fetchData();
-  }, [filepath, file.defaultProtocol, fileExt]);
+  }, [file.path, file.defaultProtocol, fileExt]);
 
   return contents;
 }
