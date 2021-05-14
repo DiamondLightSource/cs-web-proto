@@ -1,8 +1,6 @@
 default:
   tags:
     - rhel7
-  before_script:
-    - npm ci
 
 stages:
   - test
@@ -12,11 +10,12 @@ stages:
 
 .node_test:
   stage: test
+  before_script:
+    - npm ci
   script:
     - npm test -- --coverage
     - npm run lint
     - npx tsc
-
 
 node 10:
   extends:
@@ -33,15 +32,6 @@ node 14:
     .node_test
   image: node:14
 
-
-build_bundle:
-  stage: build
-  image: node:12
-  script:
-    - npm run build
-  artifacts:
-    paths:
-      - build
 
 deploy:
   stage: deploy
