@@ -36,7 +36,12 @@ const LabelWidgetProps = {
 export const LabelComponent = (
   props: InferWidgetProps<typeof LabelProps>
 ): JSX.Element => {
-  const style: CSSProperties = commonCss(props);
+  // Default labels to transparent.
+  const editedProps = {
+    ...props,
+    transparent: props.transparent ?? true
+  };
+  const style: CSSProperties = commonCss(editedProps);
   const { textAlign = "center", text = "", rotationAngle } = props;
   const className = props.className ?? `Label ${classes.Label}`;
   // Since display is "flex", use "flex-start" and "flex-end" to align
