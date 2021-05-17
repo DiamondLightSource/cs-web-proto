@@ -1,0 +1,11 @@
+"CVS Info: $Id: BR01C-PS-btsShutterPermit.csv,v 1.4 2006/04/26 10:39:56 karb Exp $ $Name:  $",,,,,,,,,,
+,"Id","Module","Input","Record","Label1","Label2","Label3","Type","LineEnd","RelDisp","Reset","PreviousId"
+0,0,0,"24v"," ","24v","24v","24v","no"," "," ",0
+1,13,1,"BR01C-PS-READY-01"," "," ","SR READY","dup","no","SR04C-PS-srReady.edl"," ",0
+2,13,2,"BR01C-PS-READY-02"," "," ","SR READY","dup","no","SR04C-PS-srReady.edl"," ",1
+3,8,3,"BR01C-PS-SRPMT-02"," "," ","SR PERMIT","serial","no","SR04C-PS-allSrZonesPermit.edl"," ",2
+4,8,4,"BR01C-PS-AZSEC-02"," ","BR ALL ZONES","SECURE","serial","no","BR01C-PS-allBrZonesSecure.edl"," ",3
+5,8,0,"BR01C-PS-IOC-02"," ","LOP6","BTS SHUTTER PERMIT","lop","yes"," "," ",4
+6,8,1,"BR01C-PS-OPKEY-06"," ","BR OPERATE","KEY OFF","serial","no"," "," ",0
+7,8,2,"BR01C-PS-SRKEY-01"," ","SR OPERATE","KEY OFF","serial","no"," "," ",6
+8,0,0,"bypass","bypass","bypass","bypass","bypass","yes"," "," ",7

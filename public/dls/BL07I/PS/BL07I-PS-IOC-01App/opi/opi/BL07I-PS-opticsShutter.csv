@@ -1,0 +1,17 @@
+"Dummy header. Was CVS keywords",,,,,,,,,,,
+"Id","Module","Input","Record","Label1","Label2","Label3","Type","LineEnd","RelDisp","Reset","PreviousId"
+0,0,0,"24v","24v","24v","24v","24v","no"," "," ",0
+1,10,3,"BL07I-PS-BOBIO-01:CR1:M10:S3","OH1","BEAM OFF  BUTTON","INDICATORS OK","serial","no"," "," ",0
+2,10,4,"BL07I-PS-GADL-01:CR1:M10:S4","OH1","GENERAL ACCESS","DOOR LOCKED","serial","no"," "," ",1
+3,9,1,"BL07I-PS-STIND-01:CR1:M09:S1"," ","OH1 STANDBY","INDICATORS OK","serial","no"," "," ",2
+4,9,2,"BL07I-PS-BOIND-01:CR1:M09:S2"," ","OH1 BEAM ON","INDICATORS OK","serial","no"," "," ",3
+5,19,3,"BL07I-PS-STRCL-01:CR1:M19:S3","EH1 BL07I-PS-SHTR-01","EXPERIMENT SHUTTER","CLOSED","dup","no"," "," ",4
+6,19,4,"BL07I-PS-STRCL-01:CR1:M19:S4","EH1 BL07I-PS-SHTR-01","EXPERIMENT SHUTTER","CLOSED","dup","no"," "," ",5
+7,19,1,"BL07I-PS-PERM-02:CR1:M19:S1","EH1 LOP 11 PERMIT 2","EXPERIMENT SHUTTER","BL07-PS-SHTR-01","dup","no","BL07I-PS-experimentShutter.edl"," ",4
+8,19,2,"BL07I-PS-PERM-02:CR1:M19:S2","EH1 LOP 11 PERMIT 2","EXPERIMENT SHUTTER","BL07-PS-SHTR-01","dup","yes","BL07I-PS-experimentShutter.edl"," ",7
+9,19,0,"BL07I-PS-IOC-01","OH1 LOP 2","MEDIUM LEVEL"," HEALTHY","lop","yes"," "," ",6
+10,22,1,"BL07I-PS-TRIP-01:CR1:M22:S1","OH1 LOP 2","MEDIUM LEVEL","TRIP LATCH","serial","no"," ","now",9
+11,22,2,"BL07I-PS-RADIN-01:CR1:M22:S2","OH1 RADIATION","MONITOR LEVELS","INSTANTANEOUS TRIP","serial","no"," ","now",10
+12,9,3,"BL07I-PS-HUEN-01:CR1:M09:S3"," ","OH1 OPTICS HUTCH","ENABLED","dup","no","BL07I-PS-opticsHutchEnabled.edl"," ",11
+13,9,4,"BL07I-PS-HUEN-01:CR1:M09:S4"," ","OH1 OPTICS HUTCH","ENABLED","dup","no","BL07I-PS-opticsHutchEnabled.edl"," ",12
+14,9,0,"BL07I-PS-IOC-01","OH1 LOP 6 PERMIT 1","FE07I-PS-SHTR-02","OPTICS SHUTTER","lop","no"," "," ",13

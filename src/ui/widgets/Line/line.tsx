@@ -14,7 +14,7 @@ import { Color } from "../../../types/color";
 
 const LineProps = {
   width: FloatProp,
-  lineWidth: FloatProp,
+  lineWidth: FloatPropOpt,
   backgroundColor: ColorPropOpt,
   visible: BoolPropOpt,
   transparent: BoolPropOpt,
@@ -31,7 +31,7 @@ export const LineComponent = (props: LineComponentProps): JSX.Element => {
     backgroundColor,
     rotationAngle = 0,
     width,
-    lineWidth
+    lineWidth = 1
   } = props;
 
   const styleProps = {

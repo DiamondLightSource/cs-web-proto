@@ -1,0 +1,42 @@
+file pss_module.template {
+pattern {dom,id,card}
+{SR04C,01,01}
+{SR04C,01,02}
+{SR04C,01,03}
+{SR04C,01,04}
+{SR04C,01,05}
+{SR04C,01,06}
+{SR04C,01,07}
+{SR04C,01,08}
+{SR04C,01,09}
+{SR04C,01,10}
+{SR04C,01,11}
+{SR04C,01,12}
+{SR04C,01,13}
+{SR04C,01,14}
+{SR04C,01,15}
+{SR04C,01,16}
+{SR04C,01,17}
+{SR04C,01,18}
+{SR04C,01,19}
+{SR04C,01,20}
+}
+
+
+file pss_search.template {
+pattern {dom,comp,id,startDevice,stopDevice}
+{SR04C,VAULT,01,SR04C-PS-ASB-01,SR04C-PS-SCMP-01}
+}
+
+file dlssrstatus.template {
+pattern {device, name}
+{SR04C-PS-IOCSR-01, SR04C-PS-IOCSR-01}
+}
+
+file dlssrfile.template {
+pattern {device, file}
+{SR04C-PS-IOCSR-01, 0}
+}
+
+file pss_device.template {
+pattern {dom,comp,id,card,signal}

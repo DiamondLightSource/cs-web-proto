@@ -1,0 +1,41 @@
+file pss_module.template {
+pattern {dom,id,card}
+{SR20C,01,01}
+{SR20C,01,02}
+{SR20C,01,03}
+{SR20C,01,04}
+{SR20C,01,05}
+{SR20C,01,06}
+{SR20C,01,07}
+{SR20C,01,08}
+{SR20C,01,09}
+{SR20C,01,10}
+{SR20C,01,11}
+{SR20C,01,12}
+{SR20C,01,13}
+{SR20C,01,14}
+{SR20C,01,16}
+{SR20C,01,17}
+{SR20C,01,18}
+{SR20C,01,20}
+{SR20C,01,22}
+}
+
+
+file pss_search.template {
+pattern {dom,comp,id,startDevice,stopDevice}
+{SR20C,VAULT,01,SR20C-PS-ASB-01,SR20C-PS-SCMP-01}
+}
+
+file dlssrstatus.template {
+pattern {device, name}
+{SR20C-PS-IOCSR-01, SR20C-PS-IOCSR-01}
+}
+
+file dlssrfile.template {
+pattern {device, file}
+{SR20C-PS-IOCSR-01, 0}
+}
+
+file pss_device.template {
+pattern {dom,comp,id,card,signal}

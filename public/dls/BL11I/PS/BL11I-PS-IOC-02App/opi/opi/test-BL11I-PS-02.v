@@ -1,0 +1,5 @@
+$table.parse("test-BL11I-PS-02.csv")
+#set($dom = "BL11I")
+#set($id = "02")
+#set($nPanels = 6)
+#parse("test_edl_template.v")

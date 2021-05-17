@@ -1,0 +1,27 @@
+"CVS Info: $Id: SR22C-PS-zonePermit.csv,v 1.2 2006/03/06 19:40:23 karb Exp $ $Name:  $",,,,,,,,,,
+,"Id","Module","Input","Record","Label1","Label2","Label3","Type","LineEnd","RelDisp","Reset","PreviousId"
+0,0,0,"24v"," ","24v","24v","24v","no"," "," ",0
+1,11,1,"SR22C-PS-LTDAC-01"," ","NOT LTD","ACCESS","serial","no","SR22C-PS-notLtdAccess.edl"," ",0
+2,11,2,"SR22C-PS-INTRP-01"," ","NOT INTERRUP-","TOR CLOSED","serial","no"," "," ",1
+3,10,1,"SR22C-PS-DKYP-01"," ","DOOR KEY","PRESS","serial","no"," "," ",2
+4,10,2,"SR22C-PS-SRCH-01"," "," ","SEARCH OK","serial","no","SR22C-PS-searchOk.edl"," ",3
+5,7,3,"SR22C-PS-BOBL-01"," "," ","BOB LAMPS OK","serial","no"," "," ",4
+6,7,4,"SR22C-PS-ILKS-01"," ","INTERLOCKS","SET","serial","no","SR22C-PS-interlocksSet.edl"," ",5
+7,18,1,"SR22C-PS-BLPMT-01"," "," ","BL22I PERMIT","serial","no","BL22I-PS-globalShutter.edl"," ",6
+8,18,2,"SR22C-PS-BLPMT-02"," "," ","BL22B PERMIT","serial","no","BL22B-PS-shutterCascade.edl"," ",7
+9,17,1,"SR22C-PS-BLPMT-03"," "," ","BL23I PERMIT","serial","no"," "," ",8
+10,17,2,"SR22C-PS-BLPMT-04"," "," ","BL23B PERMIT","serial","no","BL23B-PS-shutterCascade.edl"," ",9
+11,15,1,"SR22C-PS-BLPMT-05"," "," ","BL24I PERMIT","serial","no","BL24I-PS-globalShutter.edl"," ",10
+12,15,2,"SR22C-PS-BLPMT-06"," "," ","BL24B PERMIT","serial","no"," "," ",11
+13,15,3,"SR22C-PS-BLPMT-07"," "," ","BL01I PERMIT","serial","no"," "," ",12
+14,15,4,"SR22C-PS-BLPMT-08"," "," ","BL01B PERMIT","serial","no"," "," ",13
+15,11,3,"SR22C-PS-SZSEC-01"," ","SR ALL ZONES","SECURE","serial","no","SR04C-PS-zonePermit.edl"," ",14
+16,11,4,"SR22C-PS-OPKEY-01"," ","SR OPERATE","KEY ON","serial","no"," "," ",15
+17,18,3,"SR22C-PS-BODEL-01"," ","BEAM ON DELAY","COMPLETE","dup","no"," "," ",16
+18,18,4,"SR22C-PS-BODEL-02"," ","BEAM ON DELAY","COMPLETE","dup","no"," "," ",17
+19,11,0,"SR22C-PS-IOC-01"," ","LOP15","PA BEAM ON TIMER","lop","no"," "," ",16
+20,10,3,"SR22C-PS-BOLMP-01"," ","BEAM ON","LAMP OK","dup","no"," "," ",18
+21,10,4,"SR22C-PS-BOLMP-02"," ","BEAM ON","LAMP OK","dup","no"," "," ",20
+22,10,0,"SR22C-PS-IOC-01"," ","LOP7","SR22 ZONE PERMIT","lop","no"," "," ",21
+23,18,0,"SR22C-PS-IOC-01"," ","LOP10","BEAM ON LAMP","lop","no"," "," ",18
+24,15,0,"SR22C-PS-IOC-01"," ","LOP14","SR22 ZONE SECURE","lop","no"," "," ",14

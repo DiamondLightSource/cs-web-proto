@@ -1,0 +1,8 @@
+$table.parse("BL21I-PS-SpectHallBOIND.csv")
+#set($dom = "BL21I")
+#set($nSerial = 6)
+#set($nParIlk = 0)
+#set($nParLop = 0)
+#set($splitRowId = -1)
+#set($title = "PSS - BL21I:LOP 14 SPECTROMETER HALL SWITCH ON BEAM ON INDICATOR")
+#parse("pss_include.v")

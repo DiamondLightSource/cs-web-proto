@@ -1,0 +1,45 @@
+file pss_module.template {
+pattern {dom,id,card}
+{BR02C,01,01}
+{BR02C,01,02}
+{BR02C,01,04}
+{BR02C,01,05}
+{BR02C,01,06}
+{BR02C,01,07}
+{BR02C,01,08}
+{BR02C,01,09}
+{BR02C,01,10}
+{BR02C,01,11}
+{BR02C,01,12}
+{BR02C,01,13}
+{BR02C,01,14}
+{BR02C,01,15}
+{BR02C,01,16}
+{BR02C,01,17}
+{BR02C,01,18}
+{BR02C,01,19}
+}
+
+file pss_radState.template {
+pattern {dom,id,doseDevice,rateDevice}
+{BR02C,01,BR02C-PS-RDMND-01,BR02C-PS-RDMNR-01}
+{BR02C,02,BR02C-PS-RDMND-02,BR02C-PS-RDMNR-02}
+}
+
+file pss_search.template {
+pattern {dom,comp,id,startDevice,stopDevice}
+{BR02C,VAULT,01,BR02C-PS-BSP-01,BR02C-PS-SCMP-02}
+}
+
+file dlssrstatus.template {
+pattern {device, name}
+{BR02C-PS-IOCSR-01, BR02C-PS-IOCSR-01}
+}
+
+file dlssrfile.template {
+pattern {device, file}
+{BR02C-PS-IOCSR-01, 0}
+}
+
+file pss_device.template {
+pattern {dom,comp,id,card,signal}

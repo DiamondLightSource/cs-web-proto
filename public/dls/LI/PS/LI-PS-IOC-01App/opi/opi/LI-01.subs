@@ -1,0 +1,49 @@
+file pss_module.template {
+pattern {dom,id,card}
+{LI,01,01}
+{LI,01,02}
+{LI,01,03}
+{LI,01,04}
+{LI,01,05}
+{LI,01,06}
+{LI,01,07}
+{LI,01,08}
+{LI,01,09}
+{LI,01,10}
+{LI,01,11}
+{LI,01,12}
+{LI,01,13}
+{LI,01,14}
+{LI,01,15}
+{LI,01,16}
+{LI,01,17}
+{LI,01,18}
+{LI,01,19}
+{LI,01,20}
+{LI,01,21}
+{LI,01,22}
+}
+
+file pss_radState.template {
+pattern {dom,id,doseDevice,rateDevice}
+{LI,01,LI-PS-RDMND-01,LI-PS-RDMNR-01}
+{LI,02,LI-PS-RDMND-02,LI-PS-RDMNR-02}
+}
+
+file pss_search.template {
+pattern {dom,comp,id,startDevice,stopDevice}
+{LI,VAULT,01,LI-PS-ASP-01,LI-PS-SBLMP-01}
+}
+
+file dlssrstatus.template {
+pattern {device, name}
+{LI-PS-IOCSR-01, LI-PS-IOCSR-01}
+}
+
+file dlssrfile.template {
+pattern {device, file}
+{LI-PS-IOCSR-01, 0}
+}
+
+file pss_device.template {
+pattern {dom,comp,id,card,signal}

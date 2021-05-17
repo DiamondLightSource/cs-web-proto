@@ -1,0 +1,20 @@
+"CVS Info: $Id: SR02C-PS-searchOk.csv,v 1.1.1.1 2006/01/18 15:11:56 karb Exp $ $Name:  $",,,,,,,,,,
+,"Id","Module","Input","Record","Label1","Label2","Label3","Type","LineEnd","RelDisp","Reset","PreviousId"
+0,0,0,"24v"," ","24v","24v","24v","no"," "," ",0
+1,1,1,"SR02C-PS-ASB-01"," "," ","ASB1","serial","no"," "," ",0
+2,1,2,"SR02C-PS-ASB-02"," "," ","ASB2","serial","no"," "," ",1
+3,2,1,"SR02C-PS-ASB-03"," "," ","ASB3","serial","no"," "," ",2
+4,2,2,"SR02C-PS-ASB-04"," "," ","ASB4","serial","no"," "," ",3
+5,2,3,"SR02C-PS-ASB-05"," "," ","ASB5","serial","no"," "," ",4
+6,2,4,"SR02C-PS-ASB-06"," "," ","ASB6","serial","no"," "," ",5
+7,3,1,"SR02C-PS-ASB-07"," "," ","ASB7","serial","no"," "," ",6
+8,3,2,"SR02C-PS-ASB-08"," "," ","ASB8","serial","no"," "," ",7
+9,3,3,"SR02C-PS-SCMP-01"," ","SEARCH","COMPLETE","dup","no"," "," ",8
+10,3,4,"SR02C-PS-SCMP-02"," ","SEARCH","COMPLETE","dup","no"," "," ",9
+11,4,3,"SR02C-PS-LTDAC-03"," ","NOT LTD","ACCESS","serial","no","SR02C-PS-notLtdAccess.edl"," ",10
+12,4,4,"SR02C-PS-BOLMP-03"," ","NOT BEAM","ON LAMP","serial","no"," "," ",11
+13,4,0,"SR02C-PS-IOC-01"," ","LOP11","STANDBY LAMP","lop","yes"," "," ",12
+14,1,3,"SR02C-PS-SBLMP-01"," ","STANDBY","LAMP ON","serial","no"," "," ",10
+15,1,4,"SR02C-PS-SDCMP-01"," ","SEARCH DELAY","COMPLETE","serial","no"," "," ",14
+16,1,0,"SR02C-PS-IOC-01"," ","LOP1","SEARCH OK","lop","yes"," "," ",15
+17,3,0,"SR02C-PS-IOC-01"," ","LOP2","SEARCH COMPLETE","lop","no"," "," ",10

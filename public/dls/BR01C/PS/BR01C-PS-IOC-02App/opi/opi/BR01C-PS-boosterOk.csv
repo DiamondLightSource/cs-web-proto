@@ -1,0 +1,10 @@
+"CVS Info: $Id: BR01C-PS-boosterOk.csv,v 1.4 2005/08/31 12:55:49 karb Exp $ $Name:  $",,,,,,,,,,
+,"Id","Module","Input","Record","Label1","Label2","Label3","Type","LineEnd","RelDisp","Reset","PreviousId"
+0,0,0,"24v"," ","24v","24v","24v","no"," "," ",0
+1,3,1,"BR01C-PS-Z1PMT-01"," ","BR01C","PERMIT","serial","no","BR01C-PS-zonePermit.edl"," ",0
+2,3,2,"BR01C-PS-Z2PMT-01"," ","BR02C","PERMIT","serial","no","BR02C-PS-zonePermit.edl"," ",1
+3,3,3,"BR01C-PS-SRPMT-03"," "," ","SR PERMIT","serial","no","SR04C-PS-allSrZonesPermit.edl"," ",2
+4,3,4,"BR01C-PS-Z4PMT-01"," ","BR04C","PERMIT","serial","no","BR04C-PS-zonePermit.edl"," ",3
+5,2,1,"BR01C-PS-BSSAF-01"," "," ","BTS SAFE","serial","no","BR01C-PS-btsSafe.edl"," ",2
+6,2,2,"BR01C-PS-Z4PMT-02"," ","BR04C","PERMIT","serial","yes","BR04C-PS-zonePermit.edl"," ",5
+7,3,0,"BR01C-PS-IOC-02"," ","LOP9","BOOSTER OK","lop","yes"," "," ",4

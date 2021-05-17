@@ -1,0 +1,44 @@
+file pss_module.template {
+pattern {dom,id,card}
+{BL24I,01,02}
+{BL24I,01,03}
+{BL24I,01,04}
+{BL24I,01,05}
+{BL24I,01,06}
+{BL24I,01,07}
+{BL24I,01,08}
+{BL24I,01,09}
+{BL24I,01,10}
+{BL24I,01,11}
+{BL24I,01,12}
+{BL24I,01,14}
+{BL24I,01,15}
+{BL24I,01,16}
+{BL24I,01,17}
+{BL24I,01,18}
+{BL24I,01,22}
+}
+
+#file pss_radState.template {
+#pattern {dom,id,doseDevice,rateDevice}
+#{BL24I,01,BL24I-PS-RADTI-01:CR1:M22:S4,BL24I-PS-RADIN-01:CR1:M22:S2}
+#} No RADTI so no combined state possible unless duplicate same input?
+
+file pss_search.template {
+pattern {dom,comp,id,startDevice,stopDevice}
+{BL24I,OH,01,BL24I-PS-ASB-01:CR1:M02:S2,BL24I-PS-ASBF-01:CR1:M02:S4}
+{BL24I,OH,02,BL24I-PS-ASB-02:CR1:M12:S2,BL24I-PS-ASBF-02:CR1:M12:S4}
+}
+
+file dlssrstatus.template {
+pattern {device, name}
+{BL24I-PS-IOCSR-01, BL24I-PS-IOCSR-01}
+}
+
+file dlssrfile.template {
+pattern {device, file}
+{BL24I-PS-IOCSR-01, 0}
+}
+
+file pss_device.template {
+pattern {dom,comp,id,card,signal}

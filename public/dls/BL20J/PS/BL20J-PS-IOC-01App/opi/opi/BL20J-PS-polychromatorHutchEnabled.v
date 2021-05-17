@@ -1,0 +1,8 @@
+$table.parse("BL20J-PS-polychromatorHutchEnabled.csv")
+#set($dom = "BL20J")
+#set($nSerial = 8)
+#set($nParIlk = 0)
+#set($nParLop = 0)
+#set($splitRowId = -1)
+#set($title = "PSS - BL20J:LOP 5 PH POLYCHROMATOR HUTCH ENABLED")
+#parse("pss_include.v")

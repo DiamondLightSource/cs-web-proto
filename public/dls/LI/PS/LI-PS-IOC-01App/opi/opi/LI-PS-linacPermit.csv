@@ -1,0 +1,30 @@
+"CVS Info: $Id: LI-PS-linacPermit.csv,v 1.9 2006/01/05 14:19:20 karb Exp $ $Name:  $",,,,,,,,,,
+,"Id","Module","Input","Record","Label1","Label2","Label3","Type","LineEnd","RelDisp","Reset","PreviousId"
+0,0,0,"24v"," ","24v","24v","24v","no"," "," ",0
+1,15,1,"LI-PS-KEY-07"," "," ","LINAC KEY","serial","no"," "," ",0
+2,15,2,"LI-PS-SRCH-02"," "," ","SEARCH OK","serial","no","LI-PS-searchOk.edl"," ",1
+3,14,1,"LI-PS-RDMND-01"," ","RAD MON","1 ACCU","serial","no"," ","now",2
+4,14,2,"LI-PS-RDMNR-01"," ","RAD MON","1 RATE","serial","no"," ","now",3
+5,13,1,"LI-PS-AKP-01"," "," ","AUX KEYPRESS","serial","no"," "," ",4
+6,13,2,"LI-PS-MKP-01"," ","MAIN","KEYPRESS","serial","no"," "," ",5
+7,15,3,"LI-PS-BOBL-01"," "," ","BOB LAMPS OK","serial","no"," "," ",6
+8,15,4,"LI-PS-ILKS-01"," ","INTERLOCKS","SET","serial","no","LI-PS-interlocksSet.edl"," ",7
+9,14,3,"LI-PS-RDMND-02"," ","RAD MON","2 ACCU","serial","no"," ","now",8
+10,14,4,"LI-PS-RDMNR-02"," ","RAD MON","2 RATE","serial","no"," ","now",9
+11,13,3,"LI-PS-RDMON-01"," "," ","BOOSTER RAD","serial","no"," "," ",10
+12,13,4,"LI-PS-RDMON-02"," "," ","SR RAD","serial","no","SR04C-PS-radiationOk.edl"," ",11
+13,12,1,"LI-PS-LBPMT-03"," ","BOOSTER LTB","PERMIT","dup","no"," "," ",12
+14,12,2,"LI-PS-LBPMT-04"," ","BOOSTER LTB","PERMIT","dup","no"," "," ",13
+15,10,1,"LI-PS-KEY-08"," ","BOOSTER","KEY OFF","dup","no"," "," ",14
+16,10,2,"LI-PS-KEY-09"," ","BOOSTER","KEY OFF","dup","no"," "," ",15
+17,10,3,"LI-PS-READY-01"," "," ","SR READY","dup","no","SR04C-PS-srReady.edl"," ",14
+18,10,4,"LI-PS-READY-02"," "," ","SR READY","dup","yes","SR04C-PS-srReady.edl"," ",17
+19,10,0,"LI-PS-IOC-01"," ","LOP6","BEAM ON TIMER","lop","yes"," "," ",16
+20,9,3,"LI-PS-BODEL-01"," ","BEAM ON","DELAY","dup","no"," "," ",19
+21,9,4,"LI-PS-BODEL-02"," ","BEAM ON","DELAY","dup","no"," "," ",20
+22,8,3,"LI-PS-BOSGN-01"," ","BEAM ON","SIGN 1 OK","serial","no"," "," ",21
+23,8,4,"LI-PS-BOSGN-02"," ","BEAM ON","SIGN 2 OK","serial","no"," "," ",22
+24,8,0,"LI-PS-IOC-01"," ","LOP7","LINAC PERMIT","lop","yes"," "," ",23
+25,9,0,"LI-PS-IOC-01"," ","LOP10","BEAMON LAMP","lop","no"," "," ",21
+26,12,3,"LI-PS-LBSHT-02"," ","LTB SHUTTER","CLOSED","serial","no"," "," ",12
+27,12,4,"LI-PS-LBDIP-01"," ","LTB DIPOLE","PSU SAFE","serial","yes"," "," ",26

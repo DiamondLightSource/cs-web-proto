@@ -18,6 +18,7 @@ export { Label } from "./Label/label";
 export { LED } from "./LED/led";
 export { MenuButton } from "./MenuButton/menuButton";
 export { MenuMux } from "./MenuMux/menuMux";
+export { SimpleSymbol } from "./SimpleSymbol/simpleSymbol";
 export { ProgressBar } from "./ProgressBar/progressBar";
 export { Line } from "./Line/line";
 export { Readback } from "./Readback/readback";

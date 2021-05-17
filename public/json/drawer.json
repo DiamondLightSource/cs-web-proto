@@ -410,6 +410,55 @@
           }
         },
         {
+          "type": "actionbutton",
+          "text": "PSS",
+          "position": "relative",
+          "width": "100%",
+          "height": "4rem",
+          "margin": "1% 5% 1% 5%",
+          "foregroundColor": "#012265",
+          "backgroundColor": "#ffcf00",
+          "font": {
+            "size": "25"
+          },
+          "border": {
+            "style": "none",
+            "color": "#ffcf00",
+            "width": 1
+          },
+          "actions": {
+            "executeAsOne": true,
+            "actions": [
+              {
+                "type": "OPEN_PAGE",
+                "dynamicInfo": {
+                  "name": "app",
+                  "location": "app",
+                  "description": "",
+                  "file": {
+                    "path": "json/pss.json",
+                    "macros": {},
+                    "defaultProtocol": "ca"
+                  }
+                }
+              },
+              {
+                "type": "OPEN_TAB",
+                "dynamicInfo": {
+                  "name": "PSS Main",
+                  "location": "main",
+                  "description": "",
+                  "file": {
+                    "path": "dls/pss/pss_main.opi",
+                    "macros": {},
+                    "defaultProtocol": "ca"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
           "type": "shape",
           "position": "relative",
           "height": "3vh",

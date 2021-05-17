@@ -59,7 +59,8 @@ const OPI_WIDGET_MAPPING: { [key: string]: any } = {
     "symbol",
   "org.csstudio.opibuilder.widgets.progressbar": "progressbar",
   "org.csstudio.opibuilder.widgets.LED": "led",
-  "org.csstudio.opibuilder.widgets.Image": "image"
+  "org.csstudio.opibuilder.widgets.Image": "image",
+  "org.csstudio.opibuilder.widgets.edm.symbolwidget": "pngsymbol"
 };
 
 /**
@@ -451,6 +452,7 @@ export const OPI_SIMPLE_PARSERS: ParserDict = {
   font: ["font", opiParseFont],
   macroMap: ["macros", opiParseMacros],
   imageFile: ["image_file", opiParseString],
+  imageIndex: ["image_index", opiParseNumber],
   image: ["image", opiParseString],
   showBooleanLabel: ["show_boolean_label", opiParseBoolean],
   showLabel: ["show_label", opiParseBoolean],

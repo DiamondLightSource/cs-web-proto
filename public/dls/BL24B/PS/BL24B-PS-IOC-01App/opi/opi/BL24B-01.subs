@@ -1,0 +1,26 @@
+file pss_module.template {
+pattern {dom,id,card}
+{BL24B,01,01}
+{BL24B,01,02}
+{BL24B,01,03}
+{BL24B,01,04}
+{BL24B,01,05}
+{BL24B,01,06}
+{BL24B,01,07}
+{BL24B,01,08}
+{BL24B,01,09}
+{BL24B,01,10}
+}
+
+file dlssrstatus.template {
+pattern {device, name}
+{BL24B-PS-IOCSR-01, BL24B-PS-IOCSR-01}
+}
+
+file dlssrfile.template {
+pattern {device, file}
+{BL24B-PS-IOCSR-01, 0}
+}
+
+file pss_device.template {
+pattern {dom,comp,id,card,signal}

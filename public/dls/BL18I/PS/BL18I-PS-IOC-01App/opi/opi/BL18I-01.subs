@@ -1,0 +1,48 @@
+file pss_module.template {
+pattern {dom,id,card}
+{BL18I,01,01}
+{BL18I,01,02}
+{BL18I,01,03}
+{BL18I,01,04}
+{BL18I,01,05}
+{BL18I,01,06}
+{BL18I,01,07}
+{BL18I,01,08}
+{BL18I,01,09}
+{BL18I,01,10}
+{BL18I,01,11}
+{BL18I,01,12}
+{BL18I,01,14}
+{BL18I,01,15}
+{BL18I,01,16}
+{BL18I,01,17}
+{BL18I,01,18}
+{BL18I,01,19}
+{BL18I,01,20}
+{BL18I,01,21}
+{BL18I,01,22}
+}
+
+file pss_radState.template {
+pattern {dom,id,doseDevice,rateDevice}
+{BL18I,01,BL18I-PS-RADTI-01:CR1:M22:S4,BL18I-PS-RADIN-01:CR1:M21:S4}
+}
+
+file pss_search.template {
+pattern {dom,comp,id,startDevice,stopDevice}
+{BL18I,EH,01,BL18I-PS-ASB-05:CR1:M12:S2,BL18I-PS-ASBF-02:CR1:M12:S4}
+{BL18I,OH,01,BL18I-PS-ASB-01:CR1:M02:S2,BL18I-PS-ASBF-01:CR1:M01:S4}
+}
+
+file dlssrstatus.template {
+pattern {device, name}
+{BL18I-PS-IOCSR-01, BL18I-PS-IOCSR-01}
+}
+
+file dlssrfile.template {
+pattern {device, file}
+{BL18I-PS-IOCSR-01, 0}
+}
+
+file pss_device.template {
+pattern {dom,comp,id,card,signal}

@@ -1,0 +1,23 @@
+"CVS Info: $Id: SR20C-PS-zonePermit.csv,v 1.1.1.1 2006/01/18 15:12:37 karb Exp $ $Name:  $",,,,,,,,,,
+,"Id","Module","Input","Record","Label1","Label2","Label3","Type","LineEnd","RelDisp","Reset","PreviousId"
+0,0,0,"24v"," ","24v","24v","24v","no"," "," ",0
+1,11,1,"SR20C-PS-LTDAC-01"," ","NOT LTD","ACCESS","dup","no","SR20C-PS-notLtdAccess.edl"," ",0
+2,11,2,"SR20C-PS-LTDAC-02"," ","NOT LTD","ACCESS","dup","no","SR20C-PS-notLtdAccess.edl"," ",1
+3,10,1,"SR20C-PS-DKYP-01"," ","DOOR KEY","PRESS","serial","no"," "," ",2
+4,10,2,"SR20C-PS-SRCH-01"," "," ","SEARCH OK","serial","no","SR20C-PS-searchOk.edl"," ",3
+5,17,1,"SR20C-PS-BLPMT-01"," "," ","BL21I PERMIT","serial","no"," "," ",4
+6,17,2,"SR20C-PS-BLPMT-02"," "," ","BL21B PERMIT","serial","no"," "," ",5
+7,18,1,"SR20C-PS-BLPMT-03"," "," ","BL20I PERMIT","serial","no","BL20I-PS-globalShutter.edl"," ",6
+8,18,2,"SR20C-PS-BLPMT-04"," "," ","BL20B PERMIT","serial","no"," "," ",7
+9,7,3,"SR20C-PS-BOBL-01"," "," ","BOB LAMPS OK","serial","no"," "," ",8
+10,7,4,"SR20C-PS-ILKS-01"," ","INTERLOCKS","SET","serial","no","SR20C-PS-interlocksSet.edl"," ",9
+11,11,3,"SR20C-PS-SZSEC-01"," ","SR ALL ZONES","SECURE","serial","no","SR04C-PS-zonePermit.edl"," ",10
+12,11,4,"SR20C-PS-OPKEY-01"," ","SR OPERATE","KEY ON","serial","no"," "," ",11
+13,18,3,"SR20C-PS-BODEL-01"," ","BEAM ON DELAY","COMPLETE","dup","no"," "," ",12
+14,18,4,"SR20C-PS-BODEL-02"," ","BEAM ON DELAY","COMPLETE","dup","no"," "," ",13
+15,11,0,"SR20C-PS-IOC-01"," ","LOP15","BEAM ON TIMER","lop","no"," "," ",12
+16,10,3,"SR20C-PS-BOLMP-01"," ","BEAM ON","LAMP OK","dup","no"," "," ",14
+17,10,4,"SR20C-PS-BOLMP-02"," ","BEAM ON","LAMP OK","dup","no"," "," ",16
+18,10,0,"SR20C-PS-IOC-01"," ","LOP7","SR20 ZONE PERMIT","lop","no"," "," ",17
+19,18,0,"SR20C-PS-IOC-01"," ","LOP10","BEAM ON LAMP","lop","no"," "," ",14
+20,7,0,"SR20C-PS-IOC-01"," ","LOP14","SR20 ZONE SECURE","lop","no"," "," ",10

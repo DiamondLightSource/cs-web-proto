@@ -1,0 +1,42 @@
+file pss_module.template {
+pattern {dom,id,card}
+{SR14C,02,01}
+{SR14C,02,02}
+{SR14C,02,03}
+{SR14C,02,04}
+{SR14C,02,05}
+{SR14C,02,06}
+{SR14C,02,07}
+{SR14C,02,08}
+{SR14C,02,09}
+{SR14C,02,10}
+{SR14C,02,11}
+{SR14C,02,12}
+{SR14C,02,13}
+{SR14C,02,14}
+{SR14C,02,15}
+{SR14C,02,16}
+{SR14C,02,17}
+{SR14C,02,18}
+}
+
+file pss_radState.template {
+pattern {dom,id,doseDevice,rateDevice}
+{SR14C,01,SR14C-PS-RDMND-01,SR14C-PS-RDMNR-01}
+{SR14C,02,SR14C-PS-RDMND-02,SR14C-PS-RDMNR-02}
+{SR14C,03,SR14C-PS-RDMND-03,SR14C-PS-RDMNR-03}
+{SR14C,04,SR14C-PS-RDMND-04,SR14C-PS-RDMNR-04}
+}
+
+file dlssrstatus.template {
+pattern {device, name}
+{SR14C-PS-IOCSR-02, SR14C-PS-IOCSR-02}
+}
+
+file dlssrfile.template {
+pattern {device, file}
+{SR14C-PS-IOCSR-02, 0}
+}
+
+file pss_device.template {
+pattern {dom,comp,id,card,signal}

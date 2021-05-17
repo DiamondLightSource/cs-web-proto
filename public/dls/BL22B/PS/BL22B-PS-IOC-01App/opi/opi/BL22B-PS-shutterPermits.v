@@ -1,0 +1,8 @@
+$table.parse("BL22B-PS-shutterPermits.csv")
+#set($dom = "BL22B")
+#set($nSerial = 6)
+#set($nParIlk = 2)
+#set($nParLop = -1)
+#set($splitRowId = 5)
+#set($title = "PSS - BL22B: SHUTTER PERMITS")
+#parse("pss_include.v")

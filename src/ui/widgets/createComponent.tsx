@@ -4,7 +4,7 @@ import { checkPropTypes } from "./checkPropTypes";
 
 import { Color } from "../../types/color";
 import { REGISTERED_WIDGETS } from "./register";
-import { RelativePosition } from "../../types/position";
+import { Position, RelativePosition } from "../../types/position";
 import { Font, FontStyle } from "../../types/font";
 import { Border, BorderStyle } from "../../types/border";
 
@@ -20,13 +20,19 @@ const ERROR_WIDGET: WidgetDescription = {
   font: new Font(16, FontStyle.Bold),
   backgroundColor: Color.TRANSPARENT,
   border: new Border(BorderStyle.Line, Color.RED, 2),
-  text: "Error"
+  text: "Error",
+  tooltip: "Error"
 };
 
-export function errorWidget(message: string): WidgetDescription {
+export function errorWidget(
+  message: string,
+  position?: Position
+): WidgetDescription {
   return {
     ...ERROR_WIDGET,
-    text: message
+    text: message,
+    tooltip: message,
+    position: position ?? new RelativePosition()
   };
 }
 
@@ -60,7 +66,9 @@ export function widgetDescriptionToComponent(
     const message = `Failed to load unknown widget type ${type}.`;
     log.warn(message);
     log.warn(widgetDescription);
-    return widgetDescriptionToComponent(errorWidget(message));
+    return widgetDescriptionToComponent(
+      errorWidget(message, widgetDescription["position"])
+    );
   }
 
   // Perform checking on propTypes

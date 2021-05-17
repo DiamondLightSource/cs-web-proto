@@ -1,0 +1,8 @@
+$table.parse("BL23B-PS-beamlineOk.csv")
+#set($dom = "BL23B")
+#set($nSerial = 3)
+#set($nParIlk = 4)
+#set($nParLop = -1)
+#set($splitRowId = 4)
+#set($title = "PSS - BL23B: BEAMLINE OK")
+#parse("pss_include.v")

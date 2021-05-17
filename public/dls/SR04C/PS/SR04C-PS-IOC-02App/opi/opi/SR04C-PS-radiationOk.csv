@@ -1,0 +1,20 @@
+"CVS Info: $Id: SR04C-PS-radiationOk.csv,v 1.1.1.1 2006/03/20 16:32:19 karb Exp $ $Name:  $",,,,,,,,,,
+,"Id","Module","Input","Record","Label1","Label2","Label3","Type","LineEnd","RelDisp","Reset","PreviousId"
+0,0,0,"24v"," ","24v","24v","24v","no"," "," ",0
+1,13,1,"SR04C-PS-RDMNR-01"," ","RAD MON","SR04C RATE","serial","no"," ","now",0
+2,13,2,"SR04C-PS-RDMND-01"," ","RAD MON","SR04C ACCUM","serial","no"," ","now",1
+3,13,3,"SR04C-PS-RDMNR-02"," ","RAD MON","SR05C-1 RATE","serial","no"," ","now",2
+4,13,4,"SR04C-PS-RDMND-02"," ","RAD MON","SR05C-1 ACCUM","serial","no"," ","now",3
+5,7,3,"SR04C-PS-RDMON-01"," ","SR14 RAD","SUMMARY","dup","no","SR14C-PS-summaryRad.edl"," ",4
+6,7,4,"SR04C-PS-RDMON-02"," ","SR14 RAD","SUMMARY","dup","no","SR14C-PS-summaryRad.edl"," ",5
+7,6,1,"SR04C-PS-RDMON-03"," ","ZONE 10","RAD OK","serial","no","SR22C-PS-radiationOk.edl"," ",6
+8,6,2,"SR04C-PS-RDMON-04"," ","ZONE 1","RAD OK","serial","no","SR02C-PS-radiationOk.edl"," ",7
+9,10,3,"SR04C-PS-RDMON-05"," ","ZONE 3","RAD OK","serial","no","SR06C-PS-radiationOk.edl"," ",8
+10,10,4,"SR04C-PS-RDMON-06"," ","ZONE 4","RAD OK","serial","no","SR08C-PS-radiationOk.edl"," ",9
+11,10,0,"SR04C-PS-IOC-02"," ","LOP10","SR RAD OK","lop","yes"," "," ",10
+12,0,0,"bypass"," ","bypass","bypass","bypass","no"," "," ",0
+13,0,0,"bypass"," ","bypass","bypass","bypass","no"," "," ",12
+14,0,0,"bypass"," ","bypass","bypass","bypass","no"," "," ",13
+15,0,0,"bypass"," ","bypass","bypass","bypass","no"," "," ",14
+16,15,3,"SR04C-PS-SRKEY-05"," ","SR OPERATE","KEY OFF","dup","no"," "," ",15
+17,15,4,"SR04C-PS-SRKEY-06"," ","SR OPERATE","KEY OFF","dup","yes"," "," ",16

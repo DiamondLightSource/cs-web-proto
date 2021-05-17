@@ -1,0 +1,37 @@
+file pss_module.template {
+pattern {dom,id,card}
+{BL07B,01,01}
+{BL07B,01,02}
+{BL07B,01,03}
+{BL07B,01,04}
+{BL07B,01,05}
+{BL07B,01,06}
+{BL07B,01,07}
+{BL07B,01,08}
+{BL07B,01,09}
+{BL07B,01,10}
+{BL07B,01,11}
+{BL07B,01,12}
+{BL07B,01,13}
+{BL07B,01,14}
+{BL07B,01,15}
+{BL07B,01,16}
+{BL07B,01,17}
+{BL07B,01,18}
+{BL07B,01,19}
+{BL07B,01,21}
+{BL07B,01,22}
+}
+
+file dlssrstatus.template {
+pattern {device, name}
+{BL07B-PS-IOCSR-01, BL07B-PS-IOCSR-01}
+}
+
+file dlssrfile.template {
+pattern {device, file}
+{BL07B-PS-IOCSR-01, 0}
+}
+
+file pss_device.template {
+pattern {dom,comp,id,card,signal}

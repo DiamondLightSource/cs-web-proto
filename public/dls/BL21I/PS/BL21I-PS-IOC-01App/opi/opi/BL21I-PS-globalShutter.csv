@@ -1,0 +1,29 @@
+"Dummy header. Was CVS keywords",,,,,,,,,,,
+"Id","Module","Input","Record","Label1","Label2","Label3","Type","LineEnd","RelDisp","Reset","PreviousId"
+0,0,0,"24v","24v","24v","24v","24v","no"," "," ",0
+1,19,1,"BL21I-PS-STRCL-03:CR1:M19:S1","OH1OH2","FE21I-PS-SHTR-02","OPTICS SHTR CLOSED","dup","no"," "," ",0
+2,19,2,"BL21I-PS-STRCL-03:CR1:M19:S2","OH1OH2","FE21I-PS-SHTR-02","OPTICS SHTR CLOSED","dup","no"," "," ",1
+3,20,3,"BL21I-PS-HUEN-02:CR1:M20:S3"," ","OH2 OPTICS HUTCH","ENABLED","serial","no","BL21I-PS-opticsHutch2Enabled.edl"," ",0
+4,20,4,"BL21I-PS-HUEN-01:CR1:M20:S4"," ","OH1 OPTICS HUTCH","ENABLED","serial","yes","BL21I-PS-opticsHutch1Enabled.edl"," ",3
+5,8,1,"BL21I-PS-VACOK-01:CR1:M08:S1"," ","OC VACUUM","SWITCHES OK","serial","no"," "," ",2
+6,8,2,"BL21I-PS-VACOK-02:CR1:M08:S2"," "," ","OC SPARE","serial","no"," "," ",5
+7,15,1,"BL21I-PS-EXPOK-01:CR1:M15:S1","BL21I-PS-RACK-02","G EXPERIMENT","SHUTTERS OK","serial","no"," "," ",6
+8,15,2,"BL21I-PS-PKPE-01:CR1:M15:S2"," ","G BEAMLINE","ENABLED","serial","no"," "," ",7
+9,21,3,"BL21I-PS-TRIP-03:CR1:M21:S3","G LOP 16","PORT TRIP","LATCH","serial","no"," ","now",8
+10,21,4,"BL21I-PS-RADIN-01:CR1:M21:S4","OH1 RADIATION","MONITOR LEVELS","INSTANT. TRIP","serial","no"," ","now",9
+11,21,0,"BL21I-PS-IOC-01","LOP 13 G PERMIT 5","FE21I-PS-SHTR-01","PORT SHUTTER","lop","no"," "," ",10
+12,20,0,"BL21I-PS-IOC-01"," ","LOP 16 G","HUTCHES SAFE","lop","yes"," "," ",2
+13,20,-2,"gap","gap","gap","gap","gap","no"," "," ",0
+14,0,0,"24v","24v","24v","24v","24v","no"," "," ",13
+15,20,1,"BL21I-PS-PRTOK-01:CR1:M20:S1"," ","G PORT","SHUTTER OK","dup","no"," "," ",14
+16,20,2,"BL21I-PS-PRTOK-01:CR1:M20:S2"," ","G PORT","SHUTTER OK","dup","no"," "," ",15
+17,22,3,"BL21I-PS-TRIP-04:CR1:M22:S3","G PORT SHUTTER","CLOSED OR","HUTCHES SAFE","serial","no"," ","now",16
+18,22,4,"BL21I-PS-RADTI-01:CR1:M22:S4","OH1 RADIATION","MONITOR LEVELS","TIMED TRIP","serial","no"," ","now",17
+19,22,0,"BL21I-PS-IOC-01","LOP 14 G PERMIT 6","STORAGE RING","BEAM ON","lop","yes"," "," ",18
+20,0,45,"gap","gap","gap","gap","gap","no"," "," ",4
+21,0,0,"24v","24v","24v","24v","24v","no"," "," ",20
+22,13,1,"BL21I-PS-SHTOK-03:CR1:M13:S1","LOP 13 G PERMIT 5","FE21I-PS-SHTR-01","PORT SHUTTER","dup","no"," "," ",21
+23,13,2,"BL21I-PS-SHTOK-03:CR1:M13:S2","LOP 13 G PERMIT 5","FE21I-PS-SHTR-01","PORT SHUTTER","dup","no"," "," ",22
+24,13,3,"BL21I-PS-STRCL-04:CR1:M13:S3","G FE21I-PS-SHTR-01","PORT SHUTTER","CLOSED","dup","no"," "," ",21
+25,13,4,"BL21I-PS-STRCL-04:CR1:M13:S4","G FE21I-PS-SHTR-01","PORT SHUTTER","CLOSED","dup","yes"," "," ",24
+26,13,0,"BL21I-PS-IOC-01"," ","LOP 12 G","FE21I-PS-SHTR-01 OK","lop","yes"," "," ",23
