@@ -3,7 +3,12 @@ import React, { useContext } from "react";
 import { commonCss, Widget } from "../widget";
 import { PVWidgetPropType } from "../widgetProps";
 import { registerWidget } from "../register";
-import { BoolProp, InferWidgetProps, StringPropOpt } from "../propTypes";
+import {
+  BoolProp,
+  ColorPropOpt,
+  InferWidgetProps,
+  StringPropOpt
+} from "../propTypes";
 import { DType } from "../../../types/dtypes";
 import {
   executeAction,
@@ -14,6 +19,8 @@ import {
   WRITE_PV
 } from "../widgetActions";
 import { FileContext } from "../../../fileContext";
+import { Border } from "../../../types/border";
+import { Color } from "../../../types/color";
 
 export interface MenuButtonProps {
   connected: boolean;
@@ -24,6 +31,9 @@ export interface MenuButtonProps {
   actionsFromPv: boolean;
   label?: string;
   actions?: WidgetActions;
+  foregroundColor?: Color;
+  backgroundColor?: Color;
+  border?: Border;
 }
 
 export const MenuButtonComponent = (props: MenuButtonProps): JSX.Element => {
@@ -76,6 +86,9 @@ export const MenuButtonComponent = (props: MenuButtonProps): JSX.Element => {
 
   const style = {
     ...commonCss(props),
+    width: "100%",
+    height: "100%",
+    "text-align-last": "center",
     cursor: disabled ? "not-allowed" : "default"
   };
 
@@ -126,6 +139,9 @@ export const SmartMenuButton = (props: {
   actionsFromPv: boolean;
   actions?: WidgetActions;
   label?: string;
+  foregroundColor?: Color;
+  backgroundColor?: Color;
+  border?: Border;
 }): JSX.Element => {
   const files = useContext(FileContext);
   // Function to send the value on to the PV
@@ -145,6 +161,8 @@ export const SmartMenuButton = (props: {
       actions={props.actions}
       onChange={onChange}
       label={props.label}
+      foregroundColor={props.foregroundColor}
+      backgroundColor={props.backgroundColor}
     />
   );
 };
@@ -152,7 +170,9 @@ export const SmartMenuButton = (props: {
 const MenuButtonWidgetProps = {
   ...PVWidgetPropType,
   actionsFromPv: BoolProp,
-  label: StringPropOpt
+  label: StringPropOpt,
+  foregroundColor: ColorPropOpt,
+  backgroundColor: ColorPropOpt
 };
 
 export const MenuButton = (
