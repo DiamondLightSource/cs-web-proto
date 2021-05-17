@@ -64,7 +64,9 @@ export function useMacros<P extends MacroProps>(props: P): AnyProps {
   );
   const allMacros = {
     ...globalMacros, // lower priority
-    ...displayMacros // higher priority
+    ...displayMacros, // higher priority
+    pvName: props.pvName?.qualifiedName() || "",
+    pv_name: props.pvName?.qualifiedName() || ""
   };
   return recursiveResolve(props, allMacros);
 }

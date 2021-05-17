@@ -52,6 +52,7 @@ export function useRules(props: AnyProps): AnyProps {
       // Set up variables that might be used.
       const pvState = results[pvs[i].pvName.qualifiedName()][0];
       if (!pvState?.connected) {
+        log.debug(`Rule ${name}: pv ${pvs[i].pvName} not connected`);
         pvNotConnected = true;
       }
       const val = pvState?.value;

@@ -108,7 +108,6 @@ export const openPage = (
   fileContext?: FileContextType,
   parentMacros?: MacroMap
 ): void => {
-  //Find current browser path: currentPath
   const { location, file } = action.dynamicInfo;
   file.macros = {
     ...(parentMacros ?? {}),
@@ -210,7 +209,7 @@ export const executeActions = (
       toExecute = [actions.actions[0]];
     }
     for (const action of toExecute) {
-      log.debug(`executing an action: ${getActionDescription(action)}`);
+      log.info(`Executing an action: ${getActionDescription(action)}`);
       executeAction(action, files, parentMacros);
     }
   }
