@@ -1,29 +1,42 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<GroupingContainerComponent /> it matches the snapshot 1`] = `
-<fieldset
+<div
   style={
     Object {
-      "backgroundColor": "rgba(255,255,255,255)",
+      "backgroundColor": "transparent",
       "height": "100%",
-      "margin": 0,
-      "padding": 0,
+      "outline": "1px dotted black",
+      "outlineOffset": "-7px",
       "width": "100%",
     }
   }
 >
-  <legend>
-    Test
-  </legend>
   <div
     style={
       Object {
         "backgroundColor": "rgba(255,255,255,255)",
-        "height": "100%",
+        "fontSize": "13px",
+        "left": "20px",
+        "padding": "0 2px 0 2px",
+        "position": "absolute",
+        "top": "0",
+      }
+    }
+  >
+    Test
+  </div>
+  <div
+    style={
+      Object {
+        "height": "calc(100% - 35px)",
+        "left": "16px",
+        "overflow": "hidden",
         "position": "relative",
-        "width": "100%",
+        "top": "16px",
+        "width": "calc(100% - 35px)",
       }
     }
   />
-</fieldset>
+</div>
 `;

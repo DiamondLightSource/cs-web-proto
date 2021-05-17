@@ -20,12 +20,8 @@ describe("<GroupingContainerComponent />", (): void => {
     expect(snapshot.toJSON()).toMatchSnapshot();
   });
 
-  test("it is a fieldset HTML object", (): void => {
-    expect(wrapper.type()).toEqual("fieldset");
-  });
-
-  test("it has a legend element", (): void => {
-    expect(wrapper.childAt(0).type()).toEqual("legend");
+  test("it is a div HTML object", (): void => {
+    expect(wrapper.type()).toEqual("div");
   });
 
   test("name props is text of legend", (): void => {

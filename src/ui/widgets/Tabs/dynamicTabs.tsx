@@ -56,15 +56,16 @@ export const DynamicTabsComponent = (
     const selectedTab = tabState.selectedTab;
 
     const children = Object.values(openTabs).map(([name, description]) => [
+      // Choose dimensions to avoid additional scroll bars appearing.
       <EmbeddedDisplay
-        position={new RelativePosition()}
+        position={new RelativePosition("99%", "96%")}
         file={{
           path: description?.path || "",
           defaultProtocol: description?.defaultProtocol ?? "ca",
           macros: description?.macros || {}
         }}
         key={name}
-        scroll={false}
+        scroll={true}
       />
     ]);
     const tabNames = openTabs.map(([name]) => name);

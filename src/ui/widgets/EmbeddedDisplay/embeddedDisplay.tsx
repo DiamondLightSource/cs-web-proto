@@ -56,7 +56,7 @@ export const EmbeddedDisplay = (
       backgroundColor: new Color("rgb(200,200,200"),
       border:
         props.border ?? new Border(BorderStyle.Line, new Color("white"), 1),
-      overflow: props.scroll ? "scroll" : "visible",
+      overflow: props.scroll ? "scroll" : "hidden",
       children: [description]
     });
   } catch (e) {

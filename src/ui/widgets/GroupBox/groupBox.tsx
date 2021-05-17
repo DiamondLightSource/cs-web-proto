@@ -22,30 +22,42 @@ const GroupBoxProps = {
 export const GroupBoxComponent = (
   props: InferWidgetProps<typeof GroupBoxProps>
 ): JSX.Element => (
-  // Uses an inner margin for children similar to Phoebus
-  // This prevents the title being overwritten
-  // Could be changed or perhaps customisable as a prop
-  <fieldset
+  // Manually render a group-box style border.
+  // Dimensions match those in the opibuilder groupbox borders.
+  <div
     style={{
-      height: "100%",
       width: "100%",
-      backgroundColor: props.backgroundColor?.toString(),
-      margin: 0,
-      padding: 0
+      height: "100%",
+      outline: "1px dotted black",
+      outlineOffset: "-7px",
+      backgroundColor: "transparent"
     }}
   >
-    <legend>{props.name}</legend>
+    <div
+      style={{
+        position: "absolute",
+        top: "0",
+        left: "20px",
+        fontSize: "13px",
+        padding: "0 2px 0 2px",
+        backgroundColor: props.backgroundColor?.toString() ?? "rgb(200,200,200)"
+      }}
+    >
+      {props.name}
+    </div>
     <div
       style={{
         position: "relative",
-        height: "100%",
-        width: "100%",
-        backgroundColor: props.backgroundColor?.toString()
+        top: "16px",
+        left: "16px",
+        height: "calc(100% - 35px)",
+        width: "calc(100% - 35px)",
+        overflow: "hidden"
       }}
     >
       {props.children}
     </div>
-  </fieldset>
+  </div>
 );
 
 const GroupBoxWidgetProps = {

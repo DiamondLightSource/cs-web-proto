@@ -159,7 +159,8 @@
           "type": "menubutton",
           "position": "relative",
           "margin": "5px 0 0 0",
-          "pvName": "sim://enum"
+          "pvName": "sim://enum",
+          "actionsFromPv": true
         },
         {
           "type": "input",
@@ -194,7 +195,8 @@
           "type": "menubutton",
           "position": "relative",
           "margin": "5px 0 0 0",
-          "pvName": "loc://enum1<VEnum>(2, \"un\", \"deux\", \"trois\")"
+          "pvName": "loc://enum1<VEnum>(2, \"un\", \"deux\", \"trois\")",
+          "actionsFromPv": true
         },
         {
           "type": "input",
