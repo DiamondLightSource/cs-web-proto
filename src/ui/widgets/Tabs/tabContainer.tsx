@@ -43,7 +43,9 @@ export const TabContainerComponent = (
   // TODO: Find out if this repeated calculation can be done in the useMemo hook for measurable performance gains
   const children = Object.values(props.tabs).map((child, index) => {
     try {
-      return widgetDescriptionToComponent(parseObject(child, "ca"), index);
+      const childObject = parseObject(child, "ca");
+      childObject["scroll"] = true;
+      return widgetDescriptionToComponent(childObject, index);
     } catch (e) {
       const message = `Error transforming children into components`;
       log.warn(message);
