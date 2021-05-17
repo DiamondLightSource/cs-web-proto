@@ -1,0 +1,49 @@
+file pss_module.template {
+pattern {dom,id,card}
+{BL15I,02,01}
+{BL15I,02,02}
+{BL15I,02,03}
+{BL15I,02,04}
+{BL15I,02,05}
+{BL15I,02,06}
+{BL15I,02,07}
+{BL15I,02,08}
+{BL15I,02,09}
+{BL15I,02,10}
+{BL15I,02,11}
+{BL15I,02,12}
+{BL15I,02,13}
+{BL15I,02,14}
+{BL15I,02,15}
+{BL15I,02,16}
+{BL15I,02,17}
+{BL15I,02,18}
+{BL15I,02,19}
+{BL15I,02,20}
+{BL15I,02,21}
+{BL15I,02,22}
+}
+
+file pss_radState.template {
+pattern {dom,id,doseDevice,rateDevice}
+{BL15I,01,BL15I-PS-RADTI-01:CR2:M22:S4,BL15I-PS-RADIN-01:CR2:M21:S4}
+}
+
+file pss_search.template {
+pattern {dom,comp,id,startDevice,stopDevice}
+{BL15I,EH,02,BL15I-PS-ASB-04:CR2:M02:S2,BL15I-PS-ASBF-02:CR2:M01:S4}
+{BL15I,EH,03,BL15J-PS-ASB-01:CR2:M12:S2,BL15J-PS-ASBF-01:CR2:M12:S4}
+}
+
+file dlssrstatus.template {
+pattern {device, name}
+{BL15I-PS-IOCSR-02, BL15I-PS-IOCSR-02}
+}
+
+file dlssrfile.template {
+pattern {device, file}
+{BL15I-PS-IOCSR-02, 0}
+}
+
+file pss_device.template {
+pattern {dom,comp,id,card,signal}

@@ -1,0 +1,8 @@
+$table.parse("BL13I-PS-experiment1Shutter.csv")
+#set($dom = "BL13I")
+#set($nSerial = 8)
+#set($nParIlk = 0)
+#set($nParLop = 0)
+#set($splitRowId = -1)
+#set($title = "PSS - BL13I:LOP 11 EH1 PERMIT 6 EXPERIMENT SHUTTER BL13I-PS-SHTR-02")
+#parse("pss_include.v")

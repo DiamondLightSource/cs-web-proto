@@ -1,0 +1,12 @@
+"CVS Info: $Id: BR01C-PS-zoneDoorLock.csv,v 1.5 2006/04/26 10:39:54 karb Exp $ $Name:  $",,,,,,,,,,
+,"Id","Module","Input","Record","Label1","Label2","Label3","Type","LineEnd","RelDisp","Reset","PreviousId"
+0,0,0,"24v"," ","24v","24v","24v","no"," "," ",0
+1,13,1,"BR01C-PS-LTDAC-04"," "," ","LTD ACCESS","serial","no","BR01C-PS-keyPress.edl"," ",0
+2,13,2,"BR01C-PS-LDCL-02"," ","NOT LOBBY","DOOR CLOSED","serial","no"," "," ",1
+3,12,1,"BR01C-PS-CRREL-01"," ","CNTRL ROOM","RELEASE","dup","no"," "," ",0
+4,12,2,"BR01C-PS-CRREL-02"," "," "," ","dup","yes"," "," ",3
+5,14,1,"BR01C-PS-OPKEY-01"," ","BR OPERATE","KEY ON","dup","no"," "," ",0
+6,14,2,"BR01C-PS-OPKEY-02"," "," "," ","dup","yes"," "," ",5
+7,12,3,"BR01C-PS-BOB-02"," "," ","BOB","serial","no"," "," ",2
+8,12,4,"BR01C-PS-VDCO-03"," ","VAULT DOOR","CRASHOUT","serial","no"," "," ",7
+9,12,0,"BR01C-PS-IOC-01"," ","LOP8","ZONE 1 DOOR LOCK","lop","no"," "," ",8

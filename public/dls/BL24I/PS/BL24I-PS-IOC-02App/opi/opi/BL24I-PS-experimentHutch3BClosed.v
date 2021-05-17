@@ -1,0 +1,8 @@
+$table.parse("BL24I-PS-experimentHutch3BClosed.csv")
+#set($dom = "BL24I")
+#set($nSerial = 6)
+#set($nParIlk = 1)
+#set($nParLop = -1)
+#set($splitRowId = -1)
+#set($title = "PSS - BL24I:LOP 9 EH3B HUTCH SEARCHED & CLOSED")
+#parse("pss_include.v")

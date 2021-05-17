@@ -1,0 +1,16 @@
+"CVS Info: $Id: SR18C-PS-interlocksSet.csv,v 1.2 2006/04/21 15:35:45 karb Exp $ $Name:  $",,,,,,,,,,
+,"Id","Module","Input","Record","Label1","Label2","Label3","Type","LineEnd","RelDisp","Reset","PreviousId"
+0,0,0,"24v"," ","24v","24v","24v","no"," "," ",0
+1,5,3,"SR18C-PS-VDCO-01"," ","VAULT DOOR","CRASHOUT","dup","no"," "," ",0
+2,5,4,"SR18C-PS-VDCO-02"," ","VAULT DOOR","CRASHOUT","dup","no"," "," ",1
+3,6,1,"SR18C-PS-BOB-01"," "," ","BOB","serial","no"," "," ",2
+4,6,2,"SR18C-PS-SENKY-01"," ","SEARCH","ENABLE KEY","serial","no"," "," ",3
+5,5,1,"SR18C-PS-ZGATE-01"," ","ZONE 7-8","GATE","serial","no"," "," ",4
+6,5,2,"SR18C-PS-ZGATE-02"," ","ZONE 8-9","GATE","serial","no"," "," ",5
+7,4,1,"SR18C-PS-SCMP-03"," ","NOT SEARCH","COMPLETE","serial","no"," "," ",6
+8,4,2,"SR18C-PS-RLMP-01"," ","RESTRICTED","LAMP ON","serial","no","SR18C-PS-restrictedLamp.edl"," ",7
+9,7,1,"SR18C-PS-LDCL-01"," ","LOBBY DOOR","CLOSED","serial","no"," "," ",6
+10,7,2,"SR18C-PS-LTDAC-04"," "," ","LTD ACCESS","serial","yes","SR18C-PS-notLtdAccess.edl"," ",9
+11,6,3,"SR18C-PS-VDCL-01"," ","VAULT DOOR","CLOSED","dup","no"," "," ",6
+12,6,4,"SR18C-PS-VDCL-02"," ","VAULT DOOR","CLOSED","dup","yes"," "," ",11
+13,6,0,"SR18C-PS-IOC-01"," ","LOP3","INTERLOCKS SET","lop","yes"," "," ",8

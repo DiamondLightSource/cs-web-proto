@@ -1,0 +1,17 @@
+"CVS Info: $Id: BR02C-PS-zonePermit.csv,v 1.2 2007/01/03 14:22:59 karb Exp $ $Name:  $",,,,,,,,,,
+,"Id","Module","Input","Record","Label1","Label2","Label3","Type","LineEnd","RelDisp","Reset","PreviousId"
+0,0,0,"24v"," ","24v","24v","24v","no"," "," ",0
+1,10,1,"BR02C-PS-LTDAK-01"," ","LTD ACC","KEY PRESS OK","serial","no"," "," ",0
+2,10,2,"BR02C-PS-SRCH-01"," "," ","SEARCH OK","serial","no","BR02C-PS-searchOk.edl"," ",1
+3,7,3,"BR02C-PS-BOBL-01"," "," ","BOB LAMPS OK","serial","no"," "," ",2
+4,7,4,"BR02C-PS-ILKS-01"," ","INTERLOCKS","SET","serial","no","BR02C-PS-interlocksSet.edl"," ",3
+5,11,3,"BR02C-PS-AZSEC-01"," ","BR ALL ZONES","SECURE","serial","no","BR01C-PS-allBrZonesSecure.edl"," ",4
+6,11,4,"BR02C-PS-OPKEY-03"," ","BR OPERATE","KEY ON","serial","no"," "," ",5
+7,7,0,"BR02C-PS-IOC-01"," ","LOP14","ZONE 1 SECURE","lop","no"," "," ",4
+8,18,3,"BR02C-PS-BODEL-01"," ","BEAM ON","DELAY","dup","no"," "," ",6
+9,18,4,"BR02C-PS-BODEL-02"," "," "," ","dup","no"," "," ",8
+10,11,0,"BR02C-PS-IOC-01"," ","LOP15","BEAM ON TIMER","lop","no"," "," ",6
+11,10,3,"BR02C-PS-BOLMP-01"," ","BEAM ON","LAMP","dup","no"," "," ",9
+12,10,4,"BR02C-PS-BOLMP-02"," "," "," ","dup","no"," "," ",11
+13,18,0,"BR02C-PS-IOC-01"," ","LOP10","BEAM ON LAMP","lop","no"," "," ",9
+14,10,0,"BR02C-PS-IOC-01"," ","LOP7","ZONE PERMIT","lop","no"," "," ",12

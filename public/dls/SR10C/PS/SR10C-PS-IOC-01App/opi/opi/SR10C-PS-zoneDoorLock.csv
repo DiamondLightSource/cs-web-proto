@@ -1,0 +1,12 @@
+"CVS Info: $Id: SR10C-PS-zoneDoorLock.csv,v 1.1.1.1 2006/01/13 13:51:11 karb Exp $ $Name:  $",,,,,,,,,,
+,"Id","Module","Input","Record","Label1","Label2","Label3","Type","LineEnd","RelDisp","Reset","PreviousId"
+0,0,0,"24v"," ","24v","24v","24v","no"," "," ",0
+1,12,1,"SR10C-PS-CRREL-01"," ","CONTROL ROOM","RELEASE","dup","no"," "," ",0
+2,12,2,"SR10C-PS-CRREL-02"," ","CONTROL ROOM","RELEASE","dup","no"," "," ",1
+3,12,3,"SR10C-PS-BOB-02"," "," ","BOB","serial","no"," "," ",2
+4,12,4,"SR10C-PS-VDCO-03"," ","VAULT DOOR","CRASHOUT","serial","no"," "," ",3
+5,12,0,"SR10C-PS-IOC-01"," ","LOP8","ZONE 5 DOOR LOCK","lop","yes"," "," ",4
+6,14,1,"SR10C-PS-OPKEY-02"," ","SR OPERATE","KEY","dup","no"," "," ",0
+7,14,2,"SR10C-PS-OPKEY-03"," ","SR OPERATE","KEY","dup","yes"," "," ",6
+8,13,1,"SR10C-PS-LTDAC-06"," "," ","LTD ACCESS","serial","no","SR10C-PS-notLtdAccess.edl"," ",0
+9,13,2,"SR10C-PS-LDCL-02"," ","NOT LOBBY","DOOR CLOSED","serial","yes"," "," ",8

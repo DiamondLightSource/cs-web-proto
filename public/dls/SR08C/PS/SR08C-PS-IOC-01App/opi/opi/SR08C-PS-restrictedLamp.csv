@@ -1,0 +1,8 @@
+"CVS Info: $Id: SR08C-PS-restrictedLamp.csv,v 1.1.1.1 2006/01/18 15:12:25 karb Exp $ $Name:  $",,,,,,,,,,
+,"Id","Module","Input","Record","Label1","Label2","Label3","Type","LineEnd","RelDisp","Reset","PreviousId"
+0,0,0,"24v"," ","24v","24v","24v","no"," "," ",0
+1,16,1,"SR08C-PS-SRCH-02"," "," ","SEARCH OK","serial","no","SR08C-PS-searchOk.edl"," ",0
+2,16,2,"SR08C-PS-LTDAC-05"," "," ","LTD ACCESS","serial","no","SR08C-PS-notLtdAccess.edl"," ",1
+3,16,3,"SR08C-PS-INSCH-02"," ","SEARCH IN","PROGRESS","dup","no"," "," ",0
+4,16,4,"SR08C-PS-INSCH-03"," ","SEARCH IN","PROGRESS","dup","yes"," "," ",3
+5,16,0,"SR08C-PS-IOC-01"," ","LOP12","RESTRICTED LAMP","lop","yes"," "," ",2

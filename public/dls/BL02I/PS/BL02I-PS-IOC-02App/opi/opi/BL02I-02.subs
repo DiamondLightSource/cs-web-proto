@@ -1,0 +1,32 @@
+file pss_module.template {
+pattern {dom,id,card}
+{BL02I,02,06}
+{BL02I,02,10}
+{BL02I,02,11}
+{BL02I,02,12}
+{BL02I,02,13}
+{BL02I,02,14}
+{BL02I,02,15}
+{BL02I,02,16}
+{BL02I,02,17}
+{BL02I,02,18}
+{BL02I,02,21}
+}
+
+file pss_search.template {
+pattern {dom,comp,id,startDevice,stopDevice}
+{BL02I,EH,02,BL02I-PS-ASBF-03:CR2:M12:S4,BL02I-PS-ASBF-03:CR2:M12:S4}
+}
+
+file dlssrstatus.template {
+pattern {device, name}
+{BL02I-PS-IOCSR-02, BL02I-PS-IOCSR-02}
+}
+
+file dlssrfile.template {
+pattern {device, file}
+{BL02I-PS-IOCSR-02, 0}
+}
+
+file pss_device.template {
+pattern {dom,comp,id,card,signal}

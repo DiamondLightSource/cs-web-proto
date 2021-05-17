@@ -1,0 +1,8 @@
+$table.parse("BL20I-PS-opticsHutchClosed.csv")
+#set($dom = "BL20I")
+#set($nSerial = 6)
+#set($nParIlk = 0)
+#set($nParLop = 0)
+#set($splitRowId = -1)
+#set($title = "PSS - BL20I:LOP 4 OH1 HUTCH SEARCHED & CLOSED")
+#parse("pss_include.v")

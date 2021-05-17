@@ -1,0 +1,8 @@
+$table.parse("BL07I-PS-XraySource.csv")
+#set($dom = "BL07I")
+#set($nSerial = 4)
+#set($nParIlk = 1)
+#set($nParLop = 0)
+#set($splitRowId = -1)
+#set($title = "PSS - BL07I:LOP 6 EH2 PERMIT 7 XPS X-RAY SOURCE")
+#parse("pss_include.v")

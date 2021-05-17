@@ -1,0 +1,23 @@
+"Dummy header. Was CVS keywords",,,,,,,,,,,
+"Id","Module","Input","Record","Label1","Label2","Label3","Type","LineEnd","RelDisp","Reset","PreviousId"
+0,0,0,"24v","24v","24v","24v","24v","no"," "," ",0
+1,10,3,"BL24I-PS-BOBIO-01:CR1:M10:S3","OH1","BEAM OFF  BUTTON","INDICATORS OK","serial","no"," "," ",0
+2,10,4,"BL24I-PS-GADL-01:CR1:M10:S4","OH1","GENERAL ACCESS","DOOR LOCKED","serial","no"," "," ",1
+3,9,1,"BL24I-PS-STIND-01:CR1:M09:S1"," ","OH1 STANDBY","INDICATORS OK","serial","no"," "," ",2
+4,9,2,"BL24I-PS-BOIND-01:CR1:M09:S2"," ","OH1 BEAM ON","INDICATORS OK","serial","no"," "," ",3
+5,8,1,"BL24I-PS-HUEN-04:CR1:M08:S1"," ","EH3B EXPERIMENT","HUTCH 3B ENABLED","serial","no","BL24I-PS-experimentHutch3BEnabled.edl"," ",4
+6,8,2,"BL24I-PS-HUEN-03:CR1:M08:S2"," ","EH3A EXPERIMENT","HUTCH 3A ENABLED","serial","no","BL24I-PS-experimentHutch3AEnabled.edl"," ",5
+7,8,3,"BL24I-PS-STRCL-01:CR1:M08:S3","EH3AEH3B","BL24I-PS-SHTR-01","EXP. SHUTTER CLOSED","dup","no"," "," ",4
+8,8,4,"BL24I-PS-STRCL-01:CR1:M08:S4","EH3AEH3B","BL24I-PS-SHTR-01","EXP. SHUTTER CLOSED","dup","yes"," "," ",7
+9,18,1,"BL24I-PS-BOBIO-02:CR1:M18:S1","OH2","BEAM OFF BUTTON","INDICATORS OK","serial","no"," "," ",6
+10,18,2,"BL24I-PS-GADL-02:CR1:M18:S2","OH2","GENERAL ACCESS","DOOR LOCKED","serial","no"," "," ",9
+11,18,3,"BL24I-PS-STIND-02:CR1:M18:S3"," ","OH2 STANDBY","INDICATORS OK","serial","no"," "," ",10
+12,18,4,"BL24I-PS-BOIND-02:CR1:M18:S4"," ","OH2 BEAM ON","INDICATORS OK","serial","no"," "," ",11
+13,17,3,"BL24I-PS-VACOK-01:CR1:M17:S3"," ","OH1OH2 VACUUM","SWITCHES OK","dup","no"," "," ",12
+14,17,4,"BL24I-PS-VACOK-01:CR1:M17:S4"," ","OH1OH2 VACUUM","SWITCHES OK","dup","no"," "," ",13
+15,22,1,"BL24I-PS-TRIP-01:CR1:M22:S1","OH1OH2 LOP 2","MEDIUM LEVEL","TRIP LATCH","serial","no"," ","now",14
+16,22,2,"BL24I-PS-RADIN-01:CR1:M22:S2","OH1 RADIATION","MONITOR LEVELS","INSTANT. TRIP","serial","no"," ","now",15
+17,17,0,"BL24I-PS-IOC-01","LOP 2","OH1OH2 MEDIUM","LEVEL HEALTHY","lop","no"," "," ",14
+18,9,3,"BL24I-PS-HUEN-02:CR1:M09:S3","OH2","OPTICS HUTCH","ENABLED","serial","no","BL24I-PS-opticsHutch2Enabled.edl"," ",16
+19,9,4,"BL24I-PS-HUEN-01:CR1:M09:S4","OH1","OPTICS HUTCH","ENABLED","serial","no","BL24I-PS-opticsHutch1Enabled.edl"," ",18
+20,9,0,"BL24I-PS-IOC-01","LOP6 OH1OH2 PERMIT 1","FE24I-PS-SHTR-02","OPTICS SHUTTER","lop","no"," "," ",19

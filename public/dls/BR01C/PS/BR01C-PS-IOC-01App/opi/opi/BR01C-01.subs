@@ -1,0 +1,38 @@
+file pss_module.template {
+pattern {dom,id,card}
+{BR01C,01,01}
+{BR01C,01,02}
+{BR01C,01,04}
+{BR01C,01,05}
+{BR01C,01,06}
+{BR01C,01,07}
+{BR01C,01,08}
+{BR01C,01,09}
+{BR01C,01,10}
+{BR01C,01,11}
+{BR01C,01,12}
+{BR01C,01,13}
+{BR01C,01,14}
+{BR01C,01,15}
+{BR01C,01,16}
+{BR01C,01,17}
+{BR01C,01,18}
+}
+
+file pss_search.template {
+pattern {dom,comp,id,startDevice,stopDevice}
+{BR01C,VAULT,01,BR01C-PS-BSP-01,BR01C-PS-SCMP-02}
+}
+
+file dlssrstatus.template {
+pattern {device, name}
+{BR01C-PS-IOCSR-01, BR01C-PS-IOCSR-01}
+}
+
+file dlssrfile.template {
+pattern {device, file}
+{BR01C-PS-IOCSR-01, 0}
+}
+
+file pss_device.template {
+pattern {dom,comp,id,card,signal}

@@ -1,0 +1,8 @@
+$table.parse("BL02J-PS-opticsHutch2Enabled.csv")
+#set($dom = "BL02J")
+#set($nSerial = 8)
+#set($nParIlk = 1)
+#set($nParLop = -1)
+#set($splitRowId = -1)
+#set($title = "PSS - BL02J:LOP 10 OH2 OPTICS HUTCH ENABLED")
+#parse("pss_include.v")

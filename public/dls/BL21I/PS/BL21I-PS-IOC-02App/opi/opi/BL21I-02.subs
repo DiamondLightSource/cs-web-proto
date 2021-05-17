@@ -1,0 +1,24 @@
+file pss_module.template {
+pattern {dom,id,card}
+{BL21I,02,14}
+{BL21I,02,15}
+{BL21I,02,16}
+{BL21I,02,17}
+{BL21I,02,18}
+{BL21I,02,19}
+{BL21I,02,20}
+{BL21I,02,21}
+}
+
+file dlssrstatus.template {
+pattern {device, name}
+{BL21I-PS-IOCSR-02, BL21I-PS-IOCSR-02}
+}
+
+file dlssrfile.template {
+pattern {device, file}
+{BL21I-PS-IOCSR-02, 0}
+}
+
+file pss_device.template {
+pattern {dom,comp,id,card,signal}

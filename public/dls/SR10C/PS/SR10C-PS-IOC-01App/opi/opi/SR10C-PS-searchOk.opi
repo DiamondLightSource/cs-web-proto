@@ -1,0 +1,1297 @@
+<display typeId="org.csstudio.opibuilder.Display">
+  <auto_zoom_to_fit_all>false</auto_zoom_to_fit_all>
+  <background_color>
+    <color red="200" green="200" blue="200" name="Canvas"/>
+  </background_color>
+  <height>453</height>
+  <show_grid>true</show_grid>
+  <width>725</width>
+  <x>0</x>
+  <y>0</y>
+  <widget typeId="org.csstudio.opibuilder.widgets.Label">
+    <background_color>
+      <color red="64" green="64" blue="64" name="Monitor: BG"/>
+    </background_color>
+    <font>
+      <opifont.name fontName="Liberation Sans" height="12" style="0" pixels="true">Fine Print</opifont.name>
+    </font>
+    <height>16</height>
+    <horizontal_alignment>1</horizontal_alignment>
+    <text>24v</text>
+    <tooltip>24v</tooltip>
+    <width>24</width>
+    <x>10</x>
+    <y>78</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.polyline">
+    <background_color>
+      <color red="0" green="0" blue="0" name="Black"/>
+    </background_color>
+    <height>11</height>
+    <points>
+      <point x="20" y="91"/>
+      <point x="20" y="101"/>
+    </points>
+    <width>1</width>
+    <x>20</x>
+    <y>91</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.polyline">
+    <background_color>
+      <color red="0" green="0" blue="0" name="Black"/>
+    </background_color>
+    <height>1</height>
+    <points>
+      <point x="20" y="101"/>
+      <point x="60" y="101"/>
+    </points>
+    <width>41</width>
+    <x>20</x>
+    <y>101</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.polyline">
+    <background_color>
+      <color red="0" green="0" blue="0" name="Black"/>
+    </background_color>
+    <height>1</height>
+    <points>
+      <point x="80" y="101"/>
+      <point x="120" y="101"/>
+    </points>
+    <width>41</width>
+    <x>80</x>
+    <y>101</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Label">
+    <background_color>
+      <color red="64" green="64" blue="64" name="Monitor: BG"/>
+    </background_color>
+    <font>
+      <opifont.name fontName="Liberation Sans" height="12" style="0" pixels="true">Fine Print</opifont.name>
+    </font>
+    <height>16</height>
+    <horizontal_alignment>1</horizontal_alignment>
+    <text>ASB1</text>
+    <tooltip>ASB1</tooltip>
+    <width>99</width>
+    <x>21</x>
+    <y>64</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.edm.symbolwidget">
+    <actions hook="true" hook_all="false">
+      <action type="OPEN_DISPLAY">
+        <path>../../../../../pss/pss_ILK_detail.opi</path>
+        <mode>8</mode>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+          <ilk>$(pv_name)</ilk>
+        </macros>
+      </action>
+    </actions>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <height>41</height>
+    <image_file>../../../../../pss/pss_ILKSym-21.png</image_file>
+    <image_index>0</image_index>
+    <pv_name>SR10C-PS-ASB-01:ILKS</pv_name>
+    <rules>
+      <rule prop_id="image_index" name="RawRule"><exp bool_exp="pvSev0 == -1"><value>0</value></exp><exp bool_exp="pv0 == 0"><value>1</value></exp><exp bool_exp="pv0 == 15"> <value>3</value></exp> <exp bool_exp="pv0 &gt; 0 &amp;&amp; pv0 &lt; 15"><value>2</value></exp><exp bool_exp="true"><value>0</value></exp><pv trig="true">$(pv_name)</pv></rule>
+    </rules>
+    <sub_image_width>21</sub_image_width>
+    <width>21</width>
+    <x>60</x>
+    <y>81</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.polyline">
+    <background_color>
+      <color red="0" green="0" blue="0" name="Black"/>
+    </background_color>
+    <height>1</height>
+    <points>
+      <point x="120" y="101"/>
+      <point x="160" y="101"/>
+    </points>
+    <width>41</width>
+    <x>120</x>
+    <y>101</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.polyline">
+    <background_color>
+      <color red="0" green="0" blue="0" name="Black"/>
+    </background_color>
+    <height>1</height>
+    <points>
+      <point x="180" y="101"/>
+      <point x="220" y="101"/>
+    </points>
+    <width>41</width>
+    <x>180</x>
+    <y>101</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Label">
+    <background_color>
+      <color red="64" green="64" blue="64" name="Monitor: BG"/>
+    </background_color>
+    <font>
+      <opifont.name fontName="Liberation Sans" height="12" style="0" pixels="true">Fine Print</opifont.name>
+    </font>
+    <height>16</height>
+    <horizontal_alignment>1</horizontal_alignment>
+    <text>ASB2</text>
+    <tooltip>ASB2</tooltip>
+    <width>99</width>
+    <x>121</x>
+    <y>64</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.edm.symbolwidget">
+    <actions hook="true" hook_all="false">
+      <action type="OPEN_DISPLAY">
+        <path>../../../../../pss/pss_ILK_detail.opi</path>
+        <mode>8</mode>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+          <ilk>$(pv_name)</ilk>
+        </macros>
+      </action>
+    </actions>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <height>41</height>
+    <image_file>../../../../../pss/pss_ILKSym-21.png</image_file>
+    <image_index>0</image_index>
+    <pv_name>SR10C-PS-ASB-02:ILKS</pv_name>
+    <rules>
+      <rule prop_id="image_index" name="RawRule"><exp bool_exp="pvSev0 == -1"><value>0</value></exp><exp bool_exp="pv0 == 0"><value>1</value></exp><exp bool_exp="pv0 == 15"> <value>3</value></exp> <exp bool_exp="pv0 &gt; 0 &amp;&amp; pv0 &lt; 15"><value>2</value></exp><exp bool_exp="true"><value>0</value></exp><pv trig="true">$(pv_name)</pv></rule>
+    </rules>
+    <sub_image_width>21</sub_image_width>
+    <width>21</width>
+    <x>160</x>
+    <y>81</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.polyline">
+    <background_color>
+      <color red="0" green="0" blue="0" name="Black"/>
+    </background_color>
+    <height>1</height>
+    <points>
+      <point x="220" y="101"/>
+      <point x="260" y="101"/>
+    </points>
+    <width>41</width>
+    <x>220</x>
+    <y>101</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.polyline">
+    <background_color>
+      <color red="0" green="0" blue="0" name="Black"/>
+    </background_color>
+    <height>1</height>
+    <points>
+      <point x="280" y="101"/>
+      <point x="320" y="101"/>
+    </points>
+    <width>41</width>
+    <x>280</x>
+    <y>101</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Label">
+    <background_color>
+      <color red="64" green="64" blue="64" name="Monitor: BG"/>
+    </background_color>
+    <font>
+      <opifont.name fontName="Liberation Sans" height="12" style="0" pixels="true">Fine Print</opifont.name>
+    </font>
+    <height>16</height>
+    <horizontal_alignment>1</horizontal_alignment>
+    <text>ASB3</text>
+    <tooltip>ASB3</tooltip>
+    <width>99</width>
+    <x>221</x>
+    <y>64</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.edm.symbolwidget">
+    <actions hook="true" hook_all="false">
+      <action type="OPEN_DISPLAY">
+        <path>../../../../../pss/pss_ILK_detail.opi</path>
+        <mode>8</mode>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+          <ilk>$(pv_name)</ilk>
+        </macros>
+      </action>
+    </actions>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <height>41</height>
+    <image_file>../../../../../pss/pss_ILKSym-21.png</image_file>
+    <image_index>0</image_index>
+    <pv_name>SR10C-PS-ASB-03:ILKS</pv_name>
+    <rules>
+      <rule prop_id="image_index" name="RawRule"><exp bool_exp="pvSev0 == -1"><value>0</value></exp><exp bool_exp="pv0 == 0"><value>1</value></exp><exp bool_exp="pv0 == 15"> <value>3</value></exp> <exp bool_exp="pv0 &gt; 0 &amp;&amp; pv0 &lt; 15"><value>2</value></exp><exp bool_exp="true"><value>0</value></exp><pv trig="true">$(pv_name)</pv></rule>
+    </rules>
+    <sub_image_width>21</sub_image_width>
+    <width>21</width>
+    <x>260</x>
+    <y>81</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.polyline">
+    <background_color>
+      <color red="0" green="0" blue="0" name="Black"/>
+    </background_color>
+    <height>1</height>
+    <points>
+      <point x="320" y="101"/>
+      <point x="360" y="101"/>
+    </points>
+    <width>41</width>
+    <x>320</x>
+    <y>101</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.polyline">
+    <background_color>
+      <color red="0" green="0" blue="0" name="Black"/>
+    </background_color>
+    <height>1</height>
+    <points>
+      <point x="380" y="101"/>
+      <point x="420" y="101"/>
+    </points>
+    <width>41</width>
+    <x>380</x>
+    <y>101</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Label">
+    <background_color>
+      <color red="64" green="64" blue="64" name="Monitor: BG"/>
+    </background_color>
+    <font>
+      <opifont.name fontName="Liberation Sans" height="12" style="0" pixels="true">Fine Print</opifont.name>
+    </font>
+    <height>16</height>
+    <horizontal_alignment>1</horizontal_alignment>
+    <text>ASB4</text>
+    <tooltip>ASB4</tooltip>
+    <width>99</width>
+    <x>321</x>
+    <y>64</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.edm.symbolwidget">
+    <actions hook="true" hook_all="false">
+      <action type="OPEN_DISPLAY">
+        <path>../../../../../pss/pss_ILK_detail.opi</path>
+        <mode>8</mode>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+          <ilk>$(pv_name)</ilk>
+        </macros>
+      </action>
+    </actions>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <height>41</height>
+    <image_file>../../../../../pss/pss_ILKSym-21.png</image_file>
+    <image_index>0</image_index>
+    <pv_name>SR10C-PS-ASB-04:ILKS</pv_name>
+    <rules>
+      <rule prop_id="image_index" name="RawRule"><exp bool_exp="pvSev0 == -1"><value>0</value></exp><exp bool_exp="pv0 == 0"><value>1</value></exp><exp bool_exp="pv0 == 15"> <value>3</value></exp> <exp bool_exp="pv0 &gt; 0 &amp;&amp; pv0 &lt; 15"><value>2</value></exp><exp bool_exp="true"><value>0</value></exp><pv trig="true">$(pv_name)</pv></rule>
+    </rules>
+    <sub_image_width>21</sub_image_width>
+    <width>21</width>
+    <x>360</x>
+    <y>81</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.polyline">
+    <background_color>
+      <color red="0" green="0" blue="0" name="Black"/>
+    </background_color>
+    <height>1</height>
+    <points>
+      <point x="420" y="101"/>
+      <point x="460" y="101"/>
+    </points>
+    <width>41</width>
+    <x>420</x>
+    <y>101</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.polyline">
+    <background_color>
+      <color red="0" green="0" blue="0" name="Black"/>
+    </background_color>
+    <height>1</height>
+    <points>
+      <point x="480" y="101"/>
+      <point x="520" y="101"/>
+    </points>
+    <width>41</width>
+    <x>480</x>
+    <y>101</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Label">
+    <background_color>
+      <color red="64" green="64" blue="64" name="Monitor: BG"/>
+    </background_color>
+    <font>
+      <opifont.name fontName="Liberation Sans" height="12" style="0" pixels="true">Fine Print</opifont.name>
+    </font>
+    <height>16</height>
+    <horizontal_alignment>1</horizontal_alignment>
+    <text>ASB5</text>
+    <tooltip>ASB5</tooltip>
+    <width>99</width>
+    <x>421</x>
+    <y>64</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.edm.symbolwidget">
+    <actions hook="true" hook_all="false">
+      <action type="OPEN_DISPLAY">
+        <path>../../../../../pss/pss_ILK_detail.opi</path>
+        <mode>8</mode>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+          <ilk>$(pv_name)</ilk>
+        </macros>
+      </action>
+    </actions>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <height>41</height>
+    <image_file>../../../../../pss/pss_ILKSym-21.png</image_file>
+    <image_index>0</image_index>
+    <pv_name>SR10C-PS-ASB-05:ILKS</pv_name>
+    <rules>
+      <rule prop_id="image_index" name="RawRule"><exp bool_exp="pvSev0 == -1"><value>0</value></exp><exp bool_exp="pv0 == 0"><value>1</value></exp><exp bool_exp="pv0 == 15"> <value>3</value></exp> <exp bool_exp="pv0 &gt; 0 &amp;&amp; pv0 &lt; 15"><value>2</value></exp><exp bool_exp="true"><value>0</value></exp><pv trig="true">$(pv_name)</pv></rule>
+    </rules>
+    <sub_image_width>21</sub_image_width>
+    <width>21</width>
+    <x>460</x>
+    <y>81</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.polyline">
+    <background_color>
+      <color red="0" green="0" blue="0" name="Black"/>
+    </background_color>
+    <height>1</height>
+    <points>
+      <point x="520" y="101"/>
+      <point x="560" y="101"/>
+    </points>
+    <width>41</width>
+    <x>520</x>
+    <y>101</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.polyline">
+    <background_color>
+      <color red="0" green="0" blue="0" name="Black"/>
+    </background_color>
+    <height>1</height>
+    <points>
+      <point x="580" y="101"/>
+      <point x="620" y="101"/>
+    </points>
+    <width>41</width>
+    <x>580</x>
+    <y>101</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Label">
+    <background_color>
+      <color red="64" green="64" blue="64" name="Monitor: BG"/>
+    </background_color>
+    <font>
+      <opifont.name fontName="Liberation Sans" height="12" style="0" pixels="true">Fine Print</opifont.name>
+    </font>
+    <height>16</height>
+    <horizontal_alignment>1</horizontal_alignment>
+    <text>ASB6</text>
+    <tooltip>ASB6</tooltip>
+    <width>99</width>
+    <x>521</x>
+    <y>64</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.edm.symbolwidget">
+    <actions hook="true" hook_all="false">
+      <action type="OPEN_DISPLAY">
+        <path>../../../../../pss/pss_ILK_detail.opi</path>
+        <mode>8</mode>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+          <ilk>$(pv_name)</ilk>
+        </macros>
+      </action>
+    </actions>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <height>41</height>
+    <image_file>../../../../../pss/pss_ILKSym-21.png</image_file>
+    <image_index>0</image_index>
+    <pv_name>SR10C-PS-ASB-06:ILKS</pv_name>
+    <rules>
+      <rule prop_id="image_index" name="RawRule"><exp bool_exp="pvSev0 == -1"><value>0</value></exp><exp bool_exp="pv0 == 0"><value>1</value></exp><exp bool_exp="pv0 == 15"> <value>3</value></exp> <exp bool_exp="pv0 &gt; 0 &amp;&amp; pv0 &lt; 15"><value>2</value></exp><exp bool_exp="true"><value>0</value></exp><pv trig="true">$(pv_name)</pv></rule>
+    </rules>
+    <sub_image_width>21</sub_image_width>
+    <width>21</width>
+    <x>560</x>
+    <y>81</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.polyline">
+    <background_color>
+      <color red="0" green="0" blue="0" name="Black"/>
+    </background_color>
+    <height>1</height>
+    <points>
+      <point x="620" y="101"/>
+      <point x="660" y="101"/>
+    </points>
+    <width>41</width>
+    <x>620</x>
+    <y>101</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.polyline">
+    <background_color>
+      <color red="0" green="0" blue="0" name="Black"/>
+    </background_color>
+    <height>1</height>
+    <points>
+      <point x="680" y="101"/>
+      <point x="720" y="101"/>
+    </points>
+    <width>41</width>
+    <x>680</x>
+    <y>101</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Label">
+    <background_color>
+      <color red="64" green="64" blue="64" name="Monitor: BG"/>
+    </background_color>
+    <font>
+      <opifont.name fontName="Liberation Sans" height="12" style="0" pixels="true">Fine Print</opifont.name>
+    </font>
+    <height>16</height>
+    <horizontal_alignment>1</horizontal_alignment>
+    <text>ASB7</text>
+    <tooltip>ASB7</tooltip>
+    <width>99</width>
+    <x>621</x>
+    <y>64</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.edm.symbolwidget">
+    <actions hook="true" hook_all="false">
+      <action type="OPEN_DISPLAY">
+        <path>../../../../../pss/pss_ILK_detail.opi</path>
+        <mode>8</mode>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+          <ilk>$(pv_name)</ilk>
+        </macros>
+      </action>
+    </actions>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <height>41</height>
+    <image_file>../../../../../pss/pss_ILKSym-21.png</image_file>
+    <image_index>0</image_index>
+    <pv_name>SR10C-PS-ASB-07:ILKS</pv_name>
+    <rules>
+      <rule prop_id="image_index" name="RawRule"><exp bool_exp="pvSev0 == -1"><value>0</value></exp><exp bool_exp="pv0 == 0"><value>1</value></exp><exp bool_exp="pv0 == 15"> <value>3</value></exp> <exp bool_exp="pv0 &gt; 0 &amp;&amp; pv0 &lt; 15"><value>2</value></exp><exp bool_exp="true"><value>0</value></exp><pv trig="true">$(pv_name)</pv></rule>
+    </rules>
+    <sub_image_width>21</sub_image_width>
+    <width>21</width>
+    <x>660</x>
+    <y>81</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.polyline">
+    <background_color>
+      <color red="0" green="0" blue="0" name="Black"/>
+    </background_color>
+    <height>81</height>
+    <points>
+      <point x="720" y="101"/>
+      <point x="720" y="181"/>
+    </points>
+    <width>1</width>
+    <x>720</x>
+    <y>101</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.polyline">
+    <background_color>
+      <color red="0" green="0" blue="0" name="Black"/>
+    </background_color>
+    <height>1</height>
+    <points>
+      <point x="720" y="181"/>
+      <point x="20" y="181"/>
+    </points>
+    <width>701</width>
+    <x>20</x>
+    <y>181</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.polyline">
+    <background_color>
+      <color red="0" green="0" blue="0" name="Black"/>
+    </background_color>
+    <height>81</height>
+    <points>
+      <point x="20" y="181"/>
+      <point x="20" y="261"/>
+    </points>
+    <width>1</width>
+    <x>20</x>
+    <y>181</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.polyline">
+    <background_color>
+      <color red="0" green="0" blue="0" name="Black"/>
+    </background_color>
+    <height>1</height>
+    <points>
+      <point x="20" y="261"/>
+      <point x="60" y="261"/>
+    </points>
+    <width>41</width>
+    <x>20</x>
+    <y>261</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.polyline">
+    <background_color>
+      <color red="0" green="0" blue="0" name="Black"/>
+    </background_color>
+    <height>1</height>
+    <points>
+      <point x="80" y="261"/>
+      <point x="120" y="261"/>
+    </points>
+    <width>41</width>
+    <x>80</x>
+    <y>261</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Label">
+    <background_color>
+      <color red="64" green="64" blue="64" name="Monitor: BG"/>
+    </background_color>
+    <font>
+      <opifont.name fontName="Liberation Sans" height="12" style="0" pixels="true">Fine Print</opifont.name>
+    </font>
+    <height>16</height>
+    <horizontal_alignment>1</horizontal_alignment>
+    <text>ASB8</text>
+    <tooltip>ASB8</tooltip>
+    <width>99</width>
+    <x>21</x>
+    <y>224</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.edm.symbolwidget">
+    <actions hook="true" hook_all="false">
+      <action type="OPEN_DISPLAY">
+        <path>../../../../../pss/pss_ILK_detail.opi</path>
+        <mode>8</mode>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+          <ilk>$(pv_name)</ilk>
+        </macros>
+      </action>
+    </actions>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <height>41</height>
+    <image_file>../../../../../pss/pss_ILKSym-21.png</image_file>
+    <image_index>0</image_index>
+    <pv_name>SR10C-PS-ASB-08:ILKS</pv_name>
+    <rules>
+      <rule prop_id="image_index" name="RawRule"><exp bool_exp="pvSev0 == -1"><value>0</value></exp><exp bool_exp="pv0 == 0"><value>1</value></exp><exp bool_exp="pv0 == 15"> <value>3</value></exp> <exp bool_exp="pv0 &gt; 0 &amp;&amp; pv0 &lt; 15"><value>2</value></exp><exp bool_exp="true"><value>0</value></exp><pv trig="true">$(pv_name)</pv></rule>
+    </rules>
+    <sub_image_width>21</sub_image_width>
+    <width>21</width>
+    <x>60</x>
+    <y>241</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.edm.symbolwidget">
+    <actions hook="true" hook_all="false">
+      <action type="OPEN_DISPLAY">
+        <path>../../../../../pss/pss_ILK_detail.opi</path>
+        <mode>8</mode>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+          <ilk>$(pv_name)</ilk>
+        </macros>
+      </action>
+    </actions>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <height>41</height>
+    <image_file>../../../../../pss/pss_ILKSym-21.png</image_file>
+    <image_index>0</image_index>
+    <pv_name>SR10C-PS-SCMP-01:ILKS</pv_name>
+    <rules>
+      <rule prop_id="image_index" name="RawRule"><exp bool_exp="pvSev0 == -1"><value>0</value></exp><exp bool_exp="pv0 == 0"><value>1</value></exp><exp bool_exp="pv0 == 15"> <value>3</value></exp> <exp bool_exp="pv0 &gt; 0 &amp;&amp; pv0 &lt; 15"><value>2</value></exp><exp bool_exp="true"><value>0</value></exp><pv trig="true">$(pv_name)</pv></rule>
+    </rules>
+    <sub_image_width>21</sub_image_width>
+    <width>21</width>
+    <x>160</x>
+    <y>241</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.polyline">
+    <background_color>
+      <color red="0" green="0" blue="0" name="Black"/>
+    </background_color>
+    <height>1</height>
+    <points>
+      <point x="120" y="261"/>
+      <point x="160" y="261"/>
+    </points>
+    <width>41</width>
+    <x>120</x>
+    <y>261</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Label">
+    <background_color>
+      <color red="64" green="64" blue="64" name="Monitor: BG"/>
+    </background_color>
+    <font>
+      <opifont.name fontName="Liberation Sans" height="12" style="0" pixels="true">Fine Print</opifont.name>
+    </font>
+    <height>32</height>
+    <horizontal_alignment>1</horizontal_alignment>
+    <text>SEARCH
+COMPLETE</text>
+    <tooltip>SEARCH
+COMPLETE</tooltip>
+    <width>99</width>
+    <x>171</x>
+    <y>208</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.polyline">
+    <background_color>
+      <color red="0" green="0" blue="0" name="Black"/>
+    </background_color>
+    <height>1</height>
+    <points>
+      <point x="180" y="261"/>
+      <point x="220" y="261"/>
+    </points>
+    <width>41</width>
+    <x>180</x>
+    <y>261</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.polyline">
+    <background_color>
+      <color red="0" green="0" blue="0" name="Black"/>
+    </background_color>
+    <height>1</height>
+    <points>
+      <point x="180" y="251"/>
+      <point x="220" y="251"/>
+    </points>
+    <width>41</width>
+    <x>180</x>
+    <y>251</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.edm.symbolwidget">
+    <actions hook="true" hook_all="false">
+      <action type="OPEN_DISPLAY">
+        <path>../../../../../pss/pss_ILK_detail.opi</path>
+        <mode>8</mode>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+          <ilk>$(pv_name)</ilk>
+        </macros>
+      </action>
+    </actions>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <height>41</height>
+    <image_file>../../../../../pss/pss_ILKSym-21.png</image_file>
+    <image_index>0</image_index>
+    <pv_name>SR10C-PS-SCMP-02:ILKS</pv_name>
+    <rules>
+      <rule prop_id="image_index" name="RawRule"><exp bool_exp="pvSev0 == -1"><value>0</value></exp><exp bool_exp="pv0 == 0"><value>1</value></exp><exp bool_exp="pv0 == 15"> <value>3</value></exp> <exp bool_exp="pv0 &gt; 0 &amp;&amp; pv0 &lt; 15"><value>2</value></exp><exp bool_exp="true"><value>0</value></exp><pv trig="true">$(pv_name)</pv></rule>
+    </rules>
+    <sub_image_width>21</sub_image_width>
+    <width>21</width>
+    <x>260</x>
+    <y>241</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.polyline">
+    <background_color>
+      <color red="0" green="0" blue="0" name="Black"/>
+    </background_color>
+    <height>1</height>
+    <points>
+      <point x="220" y="251"/>
+      <point x="260" y="251"/>
+    </points>
+    <width>41</width>
+    <x>220</x>
+    <y>251</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.polyline">
+    <background_color>
+      <color red="0" green="0" blue="0" name="Black"/>
+    </background_color>
+    <height>1</height>
+    <points>
+      <point x="220" y="261"/>
+      <point x="260" y="261"/>
+    </points>
+    <width>41</width>
+    <x>220</x>
+    <y>261</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.polyline">
+    <background_color>
+      <color red="0" green="0" blue="0" name="Black"/>
+    </background_color>
+    <height>1</height>
+    <points>
+      <point x="280" y="261"/>
+      <point x="320" y="261"/>
+    </points>
+    <width>41</width>
+    <x>280</x>
+    <y>261</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.polyline">
+    <background_color>
+      <color red="0" green="0" blue="0" name="Black"/>
+    </background_color>
+    <height>1</height>
+    <points>
+      <point x="320" y="261"/>
+      <point x="360" y="261"/>
+    </points>
+    <width>41</width>
+    <x>320</x>
+    <y>261</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.polyline">
+    <background_color>
+      <color red="0" green="0" blue="0" name="Black"/>
+    </background_color>
+    <height>1</height>
+    <points>
+      <point x="380" y="261"/>
+      <point x="420" y="261"/>
+    </points>
+    <width>41</width>
+    <x>380</x>
+    <y>261</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.ActionButton">
+    <actions hook="true" hook_all="false">
+      <action type="OPEN_DISPLAY">
+        <path>SR10C-PS-notLtdAccess.opi</path>
+        <mode>8</mode>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+          <dom>SR10C</dom>
+        </macros>
+      </action>
+    </actions>
+    <background_color>
+      <color red="200" green="200" blue="200" name="Canvas"/>
+    </background_color>
+    <font>
+      <opifont.name fontName="Liberation Sans" height="12" style="0" pixels="true">Fine Print</opifont.name>
+    </font>
+    <foreground_color>
+      <color red="128" green="64" blue="0" name="Related Display: FG"/>
+    </foreground_color>
+    <height>32</height>
+    <scale_options>
+      <width_scalable>false</width_scalable>
+      <height_scalable>false</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <text>NOT LTD
+ACCESS</text>
+    <width>99</width>
+    <x>321</x>
+    <y>207</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.edm.symbolwidget">
+    <actions hook="true" hook_all="false">
+      <action type="OPEN_DISPLAY">
+        <path>../../../../../pss/pss_ILK_detail.opi</path>
+        <mode>8</mode>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+          <ilk>$(pv_name)</ilk>
+        </macros>
+      </action>
+    </actions>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <height>41</height>
+    <image_file>../../../../../pss/pss_ILKSym-21.png</image_file>
+    <image_index>0</image_index>
+    <pv_name>SR10C-PS-LTDAC-03:ILKS</pv_name>
+    <rules>
+      <rule prop_id="image_index" name="RawRule"><exp bool_exp="pvSev0 == -1"><value>0</value></exp><exp bool_exp="pv0 == 0"><value>1</value></exp><exp bool_exp="pv0 == 15"> <value>3</value></exp> <exp bool_exp="pv0 &gt; 0 &amp;&amp; pv0 &lt; 15"><value>2</value></exp><exp bool_exp="true"><value>0</value></exp><pv trig="true">$(pv_name)</pv></rule>
+    </rules>
+    <sub_image_width>21</sub_image_width>
+    <width>21</width>
+    <x>360</x>
+    <y>241</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.polyline">
+    <background_color>
+      <color red="0" green="0" blue="0" name="Black"/>
+    </background_color>
+    <height>1</height>
+    <points>
+      <point x="420" y="261"/>
+      <point x="460" y="261"/>
+    </points>
+    <width>41</width>
+    <x>420</x>
+    <y>261</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.polyline">
+    <background_color>
+      <color red="0" green="0" blue="0" name="Black"/>
+    </background_color>
+    <height>1</height>
+    <points>
+      <point x="480" y="261"/>
+      <point x="520" y="261"/>
+    </points>
+    <width>41</width>
+    <x>480</x>
+    <y>261</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Label">
+    <background_color>
+      <color red="64" green="64" blue="64" name="Monitor: BG"/>
+    </background_color>
+    <font>
+      <opifont.name fontName="Liberation Sans" height="12" style="0" pixels="true">Fine Print</opifont.name>
+    </font>
+    <height>32</height>
+    <horizontal_alignment>1</horizontal_alignment>
+    <text>NOT BEAM
+ON LAMP</text>
+    <tooltip>NOT BEAM
+ON LAMP</tooltip>
+    <width>99</width>
+    <x>421</x>
+    <y>208</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.edm.symbolwidget">
+    <actions hook="true" hook_all="false">
+      <action type="OPEN_DISPLAY">
+        <path>../../../../../pss/pss_ILK_detail.opi</path>
+        <mode>8</mode>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+          <ilk>$(pv_name)</ilk>
+        </macros>
+      </action>
+    </actions>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <height>41</height>
+    <image_file>../../../../../pss/pss_ILKSym-21.png</image_file>
+    <image_index>0</image_index>
+    <pv_name>SR10C-PS-BOLMP-03:ILKS</pv_name>
+    <rules>
+      <rule prop_id="image_index" name="RawRule"><exp bool_exp="pvSev0 == -1"><value>0</value></exp><exp bool_exp="pv0 == 0"><value>1</value></exp><exp bool_exp="pv0 == 15"> <value>3</value></exp> <exp bool_exp="pv0 &gt; 0 &amp;&amp; pv0 &lt; 15"><value>2</value></exp><exp bool_exp="true"><value>0</value></exp><pv trig="true">$(pv_name)</pv></rule>
+    </rules>
+    <sub_image_width>21</sub_image_width>
+    <width>21</width>
+    <x>460</x>
+    <y>241</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.polyline">
+    <background_color>
+      <color red="0" green="0" blue="0" name="Black"/>
+    </background_color>
+    <height>1</height>
+    <points>
+      <point x="520" y="261"/>
+      <point x="550" y="261"/>
+    </points>
+    <width>31</width>
+    <x>520</x>
+    <y>261</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.polyline">
+    <background_color>
+      <color red="0" green="0" blue="0" name="Black"/>
+    </background_color>
+    <height>21</height>
+    <points>
+      <point x="550" y="261"/>
+      <point x="550" y="281"/>
+    </points>
+    <width>1</width>
+    <x>550</x>
+    <y>261</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.edm.symbolwidget">
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <height>21</height>
+    <image_file>../../../../../pss/pss_guardlineSym-41.png</image_file>
+    <image_index>0</image_index>
+    <pv_name>SR10C-PS-IOC-01:M04:LOP</pv_name>
+    <rules>
+      <rule prop_id="image_index" name="GreaterThanRule">
+        <pv trig="true">$(pv_name)</pv>
+        <exp bool_exp="pvSev0 == -1">
+          <value>0</value>
+        </exp>
+        <exp bool_exp="pv0 &gt; 0">
+          <value>2</value>
+        </exp>
+        <exp bool_exp="true">
+          <value>1</value>
+        </exp>
+      </rule>
+    </rules>
+    <sub_image_width>41</sub_image_width>
+    <width>41</width>
+    <x>530</x>
+    <y>281</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Label">
+    <background_color>
+      <color red="64" green="64" blue="64" name="Monitor: BG"/>
+    </background_color>
+    <font>
+      <opifont.name fontName="Liberation Sans" height="12" style="0" pixels="true">Fine Print</opifont.name>
+    </font>
+    <height>32</height>
+    <horizontal_alignment>0</horizontal_alignment>
+    <text>LOP11
+STANDBY LAMP</text>
+    <tooltip>LOP11
+STANDBY LAMP</tooltip>
+    <width>104</width>
+    <x>530</x>
+    <y>301</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.polyline">
+    <background_color>
+      <color red="0" green="0" blue="0" name="Black"/>
+    </background_color>
+    <height>91</height>
+    <points>
+      <point x="320" y="261"/>
+      <point x="320" y="351"/>
+    </points>
+    <width>1</width>
+    <x>320</x>
+    <y>261</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.polyline">
+    <background_color>
+      <color red="0" green="0" blue="0" name="Black"/>
+    </background_color>
+    <height>1</height>
+    <points>
+      <point x="320" y="351"/>
+      <point x="360" y="351"/>
+    </points>
+    <width>41</width>
+    <x>320</x>
+    <y>351</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.polyline">
+    <background_color>
+      <color red="0" green="0" blue="0" name="Black"/>
+    </background_color>
+    <height>1</height>
+    <points>
+      <point x="380" y="351"/>
+      <point x="420" y="351"/>
+    </points>
+    <width>41</width>
+    <x>380</x>
+    <y>351</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Label">
+    <background_color>
+      <color red="64" green="64" blue="64" name="Monitor: BG"/>
+    </background_color>
+    <font>
+      <opifont.name fontName="Liberation Sans" height="12" style="0" pixels="true">Fine Print</opifont.name>
+    </font>
+    <height>32</height>
+    <horizontal_alignment>1</horizontal_alignment>
+    <text>STANDBY
+LAMP ON</text>
+    <tooltip>STANDBY
+LAMP ON</tooltip>
+    <width>99</width>
+    <x>321</x>
+    <y>298</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.edm.symbolwidget">
+    <actions hook="true" hook_all="false">
+      <action type="OPEN_DISPLAY">
+        <path>../../../../../pss/pss_ILK_detail.opi</path>
+        <mode>8</mode>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+          <ilk>$(pv_name)</ilk>
+        </macros>
+      </action>
+    </actions>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <height>41</height>
+    <image_file>../../../../../pss/pss_ILKSym-21.png</image_file>
+    <image_index>0</image_index>
+    <pv_name>SR10C-PS-SBLMP-01:ILKS</pv_name>
+    <rules>
+      <rule prop_id="image_index" name="RawRule"><exp bool_exp="pvSev0 == -1"><value>0</value></exp><exp bool_exp="pv0 == 0"><value>1</value></exp><exp bool_exp="pv0 == 15"> <value>3</value></exp> <exp bool_exp="pv0 &gt; 0 &amp;&amp; pv0 &lt; 15"><value>2</value></exp><exp bool_exp="true"><value>0</value></exp><pv trig="true">$(pv_name)</pv></rule>
+    </rules>
+    <sub_image_width>21</sub_image_width>
+    <width>21</width>
+    <x>360</x>
+    <y>331</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.polyline">
+    <background_color>
+      <color red="0" green="0" blue="0" name="Black"/>
+    </background_color>
+    <height>1</height>
+    <points>
+      <point x="420" y="351"/>
+      <point x="460" y="351"/>
+    </points>
+    <width>41</width>
+    <x>420</x>
+    <y>351</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.polyline">
+    <background_color>
+      <color red="0" green="0" blue="0" name="Black"/>
+    </background_color>
+    <height>1</height>
+    <points>
+      <point x="480" y="351"/>
+      <point x="520" y="351"/>
+    </points>
+    <width>41</width>
+    <x>480</x>
+    <y>351</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Label">
+    <background_color>
+      <color red="64" green="64" blue="64" name="Monitor: BG"/>
+    </background_color>
+    <font>
+      <opifont.name fontName="Liberation Sans" height="12" style="0" pixels="true">Fine Print</opifont.name>
+    </font>
+    <height>32</height>
+    <horizontal_alignment>1</horizontal_alignment>
+    <text>SEARCH DELAY
+COMPLETE</text>
+    <tooltip>SEARCH DELAY
+COMPLETE</tooltip>
+    <width>99</width>
+    <x>421</x>
+    <y>298</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.edm.symbolwidget">
+    <actions hook="true" hook_all="false">
+      <action type="OPEN_DISPLAY">
+        <path>../../../../../pss/pss_ILK_detail.opi</path>
+        <mode>8</mode>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+          <ilk>$(pv_name)</ilk>
+        </macros>
+      </action>
+    </actions>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <height>41</height>
+    <image_file>../../../../../pss/pss_ILKSym-21.png</image_file>
+    <image_index>0</image_index>
+    <pv_name>SR10C-PS-SDCMP-01:ILKS</pv_name>
+    <rules>
+      <rule prop_id="image_index" name="RawRule"><exp bool_exp="pvSev0 == -1"><value>0</value></exp><exp bool_exp="pv0 == 0"><value>1</value></exp><exp bool_exp="pv0 == 15"> <value>3</value></exp> <exp bool_exp="pv0 &gt; 0 &amp;&amp; pv0 &lt; 15"><value>2</value></exp><exp bool_exp="true"><value>0</value></exp><pv trig="true">$(pv_name)</pv></rule>
+    </rules>
+    <sub_image_width>21</sub_image_width>
+    <width>21</width>
+    <x>460</x>
+    <y>331</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.polyline">
+    <background_color>
+      <color red="0" green="0" blue="0" name="Black"/>
+    </background_color>
+    <height>1</height>
+    <points>
+      <point x="520" y="351"/>
+      <point x="550" y="351"/>
+    </points>
+    <width>31</width>
+    <x>520</x>
+    <y>351</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.polyline">
+    <background_color>
+      <color red="0" green="0" blue="0" name="Black"/>
+    </background_color>
+    <height>21</height>
+    <points>
+      <point x="550" y="351"/>
+      <point x="550" y="371"/>
+    </points>
+    <width>1</width>
+    <x>550</x>
+    <y>351</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.edm.symbolwidget">
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <height>21</height>
+    <image_file>../../../../../pss/pss_guardlineSym-41.png</image_file>
+    <image_index>0</image_index>
+    <pv_name>SR10C-PS-IOC-01:M01:LOP</pv_name>
+    <rules>
+      <rule prop_id="image_index" name="GreaterThanRule">
+        <pv trig="true">$(pv_name)</pv>
+        <exp bool_exp="pvSev0 == -1">
+          <value>0</value>
+        </exp>
+        <exp bool_exp="pv0 &gt; 0">
+          <value>2</value>
+        </exp>
+        <exp bool_exp="true">
+          <value>1</value>
+        </exp>
+      </rule>
+    </rules>
+    <sub_image_width>41</sub_image_width>
+    <width>41</width>
+    <x>530</x>
+    <y>371</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Label">
+    <background_color>
+      <color red="64" green="64" blue="64" name="Monitor: BG"/>
+    </background_color>
+    <font>
+      <opifont.name fontName="Liberation Sans" height="12" style="0" pixels="true">Fine Print</opifont.name>
+    </font>
+    <height>32</height>
+    <horizontal_alignment>0</horizontal_alignment>
+    <text>LOP1
+SEARCH OK</text>
+    <tooltip>LOP1
+SEARCH OK</tooltip>
+    <width>80</width>
+    <x>530</x>
+    <y>391</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.polyline">
+    <background_color>
+      <color red="0" green="0" blue="0" name="Black"/>
+    </background_color>
+    <height>21</height>
+    <points>
+      <point x="320" y="351"/>
+      <point x="320" y="371"/>
+    </points>
+    <width>1</width>
+    <x>320</x>
+    <y>351</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.edm.symbolwidget">
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <height>21</height>
+    <image_file>../../../../../pss/pss_guardlineSym-41.png</image_file>
+    <image_index>0</image_index>
+    <pv_name>SR10C-PS-IOC-01:M03:LOP</pv_name>
+    <rules>
+      <rule prop_id="image_index" name="GreaterThanRule">
+        <pv trig="true">$(pv_name)</pv>
+        <exp bool_exp="pvSev0 == -1">
+          <value>0</value>
+        </exp>
+        <exp bool_exp="pv0 &gt; 0">
+          <value>2</value>
+        </exp>
+        <exp bool_exp="true">
+          <value>1</value>
+        </exp>
+      </rule>
+    </rules>
+    <sub_image_width>41</sub_image_width>
+    <width>41</width>
+    <x>300</x>
+    <y>371</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Label">
+    <background_color>
+      <color red="64" green="64" blue="64" name="Monitor: BG"/>
+    </background_color>
+    <font>
+      <opifont.name fontName="Liberation Sans" height="12" style="0" pixels="true">Fine Print</opifont.name>
+    </font>
+    <height>32</height>
+    <horizontal_alignment>0</horizontal_alignment>
+    <text>LOP2
+SEARCH COMPLETE</text>
+    <tooltip>LOP2
+SEARCH COMPLETE</tooltip>
+    <width>128</width>
+    <x>300</x>
+    <y>391</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Label">
+    <background_color>
+      <color red="255" green="150" blue="168"/>
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_width>1</border_width>
+    <border_style>1</border_style>
+    <border_color>
+      <color red="0" green="0" blue="0" name="Black"/>
+    </border_color>
+    <font>
+      <opifont.name fontName="Liberation Sans" height="19" style="1" pixels="true">Header 2</opifont.name>
+    </font>
+    <height>30</height>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>false</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <text>PSS - SR10C:SEARCH OK</text>
+    <transparent>false</transparent>
+    <width>725</width>
+    <x>0</x>
+    <y>0</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.ActionButton">
+    <actions hook="true" hook_all="false">
+      <action type="EXECUTE_JAVASCRIPT">
+        <embedded>true</embedded>
+        <scriptText><![CDATA[importPackage(Packages.org.csstudio.opibuilder.scriptUtil);ScriptUtil.closeAssociatedOPI(widget);]]></scriptText>
+      </action>
+    </actions>
+    <background_color>
+      <color red="200" green="200" blue="200" name="Canvas"/>
+    </background_color>
+    <font>
+      <opifont.name fontName="Liberation Sans" height="15" style="1" pixels="true">Default Bold</opifont.name>
+    </font>
+    <foreground_color>
+      <color red="196" green="0" blue="196" name="Exit: FG"/>
+    </foreground_color>
+    <height>21</height>
+    <scale_options>
+      <width_scalable>false</width_scalable>
+      <height_scalable>false</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <text>EXIT</text>
+    <width>61</width>
+    <x>655</x>
+    <y>428</y>
+  </widget>
+</display>

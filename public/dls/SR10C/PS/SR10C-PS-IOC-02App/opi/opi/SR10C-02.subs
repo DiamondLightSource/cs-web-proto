@@ -1,0 +1,32 @@
+file pss_module.template {
+pattern {dom,id,card}
+{SR10C,02,01}
+{SR10C,02,02}
+{SR10C,02,03}
+{SR10C,02,04}
+{SR10C,02,07}
+{SR10C,02,10}
+{SR10C,02,11}
+{SR10C,02,15}
+{SR10C,02,16}
+}
+
+file pss_radState.template {
+pattern {dom,id,doseDevice,rateDevice}
+{SR10C,01,SR10C-PS-RDMND-01,SR10C-PS-RDMNR-01}
+{SR10C,02,SR10C-PS-RDMND-02,SR10C-PS-RDMNR-02}
+{SR10C,03,SR10C-PS-RDMND-03,SR10C-PS-RDMNR-03}
+}
+
+file dlssrstatus.template {
+pattern {device, name}
+{SR10C-PS-IOCSR-02, SR10C-PS-IOCSR-02}
+}
+
+file dlssrfile.template {
+pattern {device, file}
+{SR10C-PS-IOCSR-02, 0}
+}
+
+file pss_device.template {
+pattern {dom,comp,id,card,signal}

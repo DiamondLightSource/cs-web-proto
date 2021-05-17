@@ -1,0 +1,8 @@
+$table.parse("BL22I-PS-globalShutter.csv")
+#set($dom = "BL22I")
+#set($nSerial = 6)
+#set($nParIlk = 2)
+#set($nParLop = -1)
+#set($splitRowId = -1)
+#set($title = "PSS - BL22I:G LOP 13 PERMIT 3 FE22I-PS-SHTR-01 PORT SHUTTER")
+#parse("pss_include.v")

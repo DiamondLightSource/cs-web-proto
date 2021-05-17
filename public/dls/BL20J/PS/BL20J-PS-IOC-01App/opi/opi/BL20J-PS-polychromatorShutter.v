@@ -1,0 +1,8 @@
+$table.parse("BL20J-PS-polychromatorShutter.csv")
+#set($dom = "BL20J")
+#set($nSerial = 7)
+#set($nParIlk = 1)
+#set($nParLop = 0)
+#set($splitRowId = 8)
+#set($title = "PSS - BL20J:LOP 6 PH PERMIT 1 FE20J-PS-SHTR-02 POLYCHROMATOR SHUTTER")
+#parse("pss_include.v")

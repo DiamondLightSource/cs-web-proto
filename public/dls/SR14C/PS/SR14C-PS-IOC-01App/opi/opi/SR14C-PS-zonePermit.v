@@ -1,0 +1,10 @@
+## CVS Info: $Id: SR14C-PS-zonePermit.v,v 1.3 2006/04/27 10:31:41 karb Exp $ $Name:  $
+$table.parse("SR14C-PS-zonePermit.csv")
+#set($dom = "SR14C")
+#set($nSerial = 11)
+#set($nParIlk = 0)
+#set($nParLop = 0)
+#set($splitRowId = 10)
+#set($hSplit = 1)
+#set($title = "PSS - SR14C:SR14 ZONE PERMIT")
+#parse("pss_include.v")

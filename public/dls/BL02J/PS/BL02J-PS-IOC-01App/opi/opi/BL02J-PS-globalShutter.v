@@ -1,0 +1,8 @@
+$table.parse("BL02J-PS-globalShutter.csv")
+#set($dom = "BL02J")
+#set($nSerial = 8)
+#set($nParIlk = 1)
+#set($nParLop = 0)
+#set($splitRowId = -1)
+#set($title = "PSS - BL02J:LOP 13 G PERMIT 3 FE02J-PS-SHTR-01 PORT SHUTTER")
+#parse("pss_include.v")

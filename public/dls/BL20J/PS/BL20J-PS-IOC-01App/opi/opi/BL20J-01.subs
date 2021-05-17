@@ -1,0 +1,44 @@
+file pss_module.template {
+pattern {dom,id,card}
+{BL20J,01,01}
+{BL20J,01,02}
+{BL20J,01,03}
+{BL20J,01,04}
+{BL20J,01,05}
+{BL20J,01,06}
+{BL20J,01,07}
+{BL20J,01,08}
+{BL20J,01,09}
+{BL20J,01,10}
+{BL20J,01,11}
+{BL20J,01,12}
+{BL20J,01,13}
+{BL20J,01,14}
+{BL20J,01,15}
+{BL20J,01,16}
+{BL20J,01,17}
+{BL20J,01,18}
+{BL20J,01,19}
+{BL20J,01,20}
+{BL20J,01,21}
+{BL20J,01,22}
+}
+
+file pss_search.template {
+pattern {dom,comp,id,startDevice,stopDevice}
+{BL20J,EH,02,BL20J-PS-ASB-07:CR1:M13:S4,BL20J-PS-AFGO-01:CR1:M12:S4}
+{BL20J,PH,01,BL20J-PS-ASB-03:CR1:M02:S2,BL20J-PS-ASBF-02:CR1:M02:S4}
+}
+
+file dlssrstatus.template {
+pattern {device, name}
+{BL20J-PS-IOCSR-01, BL20J-PS-IOCSR-01}
+}
+
+file dlssrfile.template {
+pattern {device, file}
+{BL20J-PS-IOCSR-01, 0}
+}
+
+file pss_device.template {
+pattern {dom,comp,id,card,signal}

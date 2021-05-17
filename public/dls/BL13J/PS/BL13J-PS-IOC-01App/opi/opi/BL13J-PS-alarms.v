@@ -1,0 +1,8 @@
+$table.parse("BL13J-PS-alarms.csv")
+#set($dom = "BL13J")
+#set($nSerial = 5)
+#set($nParIlk = 0)
+#set($nParLop = -1)
+#set($splitRowId = 8)
+#set($title = "PSS - BL13J: ALARMS CRATE 2")
+#parse("pss_include.v")

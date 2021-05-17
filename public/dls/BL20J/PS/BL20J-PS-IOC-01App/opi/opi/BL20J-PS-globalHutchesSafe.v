@@ -1,0 +1,8 @@
+$table.parse("BL20J-PS-globalHutchesSafe.csv")
+#set($dom = "BL20J")
+#set($nSerial = 2)
+#set($nParIlk = 3)
+#set($nParLop = -1)
+#set($splitRowId = -1)
+#set($title = "PSS - BL20J:LOP 16 G HUTCHES SAFE")
+#parse("pss_include.v")

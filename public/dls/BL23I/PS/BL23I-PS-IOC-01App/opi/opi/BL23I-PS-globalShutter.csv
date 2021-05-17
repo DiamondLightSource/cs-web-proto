@@ -1,0 +1,23 @@
+"Dummy header. Was CVS keywords",,,,,,,,,,,
+"Id","Module","Input","Record","Label1","Label2","Label3","Type","LineEnd","RelDisp","Reset","PreviousId"
+0,0,0,"24v","24v","24v","24v","24v","no"," "," ",0
+1,19,1,"BL23I-PS-STRCL-02:CR1:M19:S1","OH1 FE23I-PS-SHTR-02","OPTICS SHUTTER","CLOSED","dup","no"," "," ",0
+2,19,2,"BL23I-PS-STRCL-02:CR1:M19:S2","OH1 FE23I-PS-SHTR-02","OPTICS SHUTTER","CLOSED","dup","no"," "," ",1
+3,15,1,"BL23I-PS-PKPE-01:CR1:M15:S1"," ","G BEAMLINE","ENABLED","dup","no"," "," ",2
+4,15,2,"BL23I-PS-PKPE-01:CR1:M15:S2"," ","G BEAMLINE","ENABLED","dup","no"," "," ",3
+5,21,3,"BL23I-PS-TRIP-03:CR1:M21:S3","G LOP 16","PORT TRIP","LATCH","serial","no"," ","now",4
+6,21,4,"BL23I-PS-RADIN-01:CR1:M21:S4","OH1 RADIATION","MONITOR LEVELS","INSTANT. TRIP","serial","no"," ","now",5
+7,21,0,"BL23I-PS-IOC-01","LOP 13 G PERMIT 3","FE23I-PS-SHTR-01","PORT SHUTTER","lop","no"," "," ",6
+8,20,1,"BL23I-PS-STRCL-01:CR1:M20:S1","EH1 BL23I-PS-SHTR-01","EXPERIMENT","SHUTTER CLOSED","serial","no"," "," ",0
+9,20,2,"BL23I-PS-HUEN-01:CR1:M20:S2"," ","OH1 OPTICS HUTCH","ENABLED","serial","yes","BL23I-PS-opticsHutchEnabled.edl"," ",8
+10,20,0,"BL23I-PS-IOC-01"," ","G LOP 16","HUTCHES SAFE","lop","yes"," "," ",9
+11,20,3,"BL23I-PS-HUEN-02:CR1:M20:S3"," ","EH1 EXPERIMENT","HUTCH ENABLED","serial","no","BL23I-PS-experimentHutchEnabled.edl"," ",0
+12,20,4,"BL23I-PS-HUEN-01:CR1:M20:S4"," ","OH1 OPTICS HUTCH","ENABLED","serial","yes","BL23I-PS-opticsHutchEnabled.edl"," ",11
+13,0,15,"gap","gap","gap","gap","gap","no"," "," ",9
+14,0,0,"24v","24v","24v","24v","24v","no"," "," ",13
+15,22,3,"BL23I-PS-TRIP-04:CR1:M22:S3","G PORT SHUTTER","CLOSED OR","HUTCHES SAFE","serial","no"," ","now",14
+16,22,4,"BL23I-PS-RADTI-01:CR1:M22:S4","OH1 RADIATION","MONITOR LEVELS","TIMED TRIP","serial","no"," ","now",15
+17,22,0,"BL23I-PS-IOC-01","LOP 14 G PERMIT 4","STORAGE RING","BEAM ON","lop","yes"," "," ",16
+18,0,15,"gap","gap","gap","gap","gap","no"," "," ",12
+19,19,3,"BL23I-PS-STRCL-03:CR1:M19:S3","G FE23I-PS-SHTR-01","PORT SHUTTER","CLOSED","dup","no"," "," ",18
+20,19,4,"BL23I-PS-STRCL-03:CR1:M19:S4","G FE23I-PS-SHTR-01","PORT SHUTTER","CLOSED","dup","no"," "," ",19

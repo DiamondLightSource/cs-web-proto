@@ -1,0 +1,8 @@
+$table.parse("BL14I-PS-optics3Shutter.csv")
+#set($dom = "BL14I")
+#set($nSerial = 10)
+#set($nParIlk = 1)
+#set($nParLop = -1)
+#set($splitRowId = 5)
+#set($title = "PSS - BL14I:OH3 LOP 6 PERMIT 5 BL14I-PS-SHTR-02 & BL14J-PS-SHTR-02 OPTICS SHUTTERS")
+#parse("pss_include.v")

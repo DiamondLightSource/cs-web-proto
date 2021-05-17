@@ -1,0 +1,8 @@
+$table.parse("BL07B-PS-BShutters.csv")
+#set($dom = "BL07B")
+#set($nSerial = 10)
+#set($nParIlk = 0)
+#set($nParLop = 0)
+#set($splitRowId = 14)
+#set($title = "PSS - BL07B: LOP 2 OC SHUTTER PERMIT 1 AND LOP 4 EC SHUTTER PERMIT 2")
+#parse("pss_include.v")

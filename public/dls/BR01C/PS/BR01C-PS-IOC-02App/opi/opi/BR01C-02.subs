@@ -1,0 +1,29 @@
+file pss_module.template {
+pattern {dom,id,card}
+{BR01C,02,01}
+{BR01C,02,02}
+{BR01C,02,03}
+{BR01C,02,04}
+{BR01C,02,05}
+{BR01C,02,06}
+{BR01C,02,07}
+{BR01C,02,08}
+{BR01C,02,09}
+{BR01C,02,10}
+{BR01C,02,11}
+{BR01C,02,12}
+{BR01C,02,13}
+}
+
+file dlssrstatus.template {
+pattern {device, name}
+{BR01C-PS-IOCSR-02, BR01C-PS-IOCSR-02}
+}
+
+file dlssrfile.template {
+pattern {device, file}
+{BR01C-PS-IOCSR-02, 0}
+}
+
+file pss_device.template {
+pattern {dom,comp,id,card,signal}

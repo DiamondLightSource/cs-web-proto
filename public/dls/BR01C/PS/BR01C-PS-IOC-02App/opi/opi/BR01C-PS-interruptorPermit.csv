@@ -1,0 +1,8 @@
+"CVS Info: $Id: BR01C-PS-interruptorPermit.csv,v 1.5 2006/04/26 10:39:57 karb Exp $ $Name:  $",,,,,,,,,,
+,"Id","Module","Input","Record","Label1","Label2","Label3","Type","LineEnd","RelDisp","Reset","PreviousId"
+0,0,0,"24v"," ","24v","24v","24v","no"," "," ",0
+1,5,3,"BR01C-PS-DPKEY-01"," ","NOT DIPOLE","TEST KEY","serial","no"," "," ",0
+2,5,4,"BR01C-PS-RFKEY-01"," ","NOT RF TEST","KEY","serial","no"," "," ",1
+3,5,1,"BR01C-PS-OPKEY-07"," ","BR OPERATE","KEY ON","dup","no"," "," ",0
+4,5,2,"BR01C-PS-OPKEY-08"," "," "," ","dup","yes"," "," ",3
+5,5,0,"BR01C-PS-IOC-02","LOP3","BR INTERRUPTOR","PERMIT","lop","yes"," "," ",2

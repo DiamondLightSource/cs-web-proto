@@ -1,0 +1,38 @@
+file pss_module.template {
+pattern {dom,id,card}
+{SR04C,02,01}
+{SR04C,02,02}
+{SR04C,02,03}
+{SR04C,02,04}
+{SR04C,02,05}
+{SR04C,02,06}
+{SR04C,02,07}
+{SR04C,02,08}
+{SR04C,02,09}
+{SR04C,02,10}
+{SR04C,02,11}
+{SR04C,02,12}
+{SR04C,02,13}
+{SR04C,02,14}
+{SR04C,02,15}
+{SR04C,02,16}
+}
+
+file pss_radState.template {
+pattern {dom,id,doseDevice,rateDevice}
+{SR04C,01,SR04C-PS-RDMND-01,SR04C-PS-RDMNR-01}
+{SR04C,02,SR04C-PS-RDMND-02,SR04C-PS-RDMNR-02}
+}
+
+file dlssrstatus.template {
+pattern {device, name}
+{SR04C-PS-IOCSR-02, SR04C-PS-IOCSR-02}
+}
+
+file dlssrfile.template {
+pattern {device, file}
+{SR04C-PS-IOCSR-02, 0}
+}
+
+file pss_device.template {
+pattern {dom,comp,id,card,signal}
