@@ -28,8 +28,8 @@ export const GroupBoxComponent = (
     style={{
       width: "100%",
       height: "100%",
-      outline: "1px solid black",
-      outlineOffset: "-5px",
+      outline: "1px dotted black",
+      outlineOffset: "-7px",
       backgroundColor: "transparent"
     }}
   >
@@ -38,6 +38,8 @@ export const GroupBoxComponent = (
         position: "absolute",
         top: "0",
         left: "20px",
+        fontSize: "13px",
+        padding: "0 2px 0 2px",
         backgroundColor: props.backgroundColor?.toString() ?? "rgb(200,200,200)"
       }}
     >
