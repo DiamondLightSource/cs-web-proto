@@ -94,7 +94,7 @@ function jsonParseRules(jsonRules: Rule[], defaultProtocol: string): Rule[] {
       pv.pvName = jsonParsePvName(
         // Typing: allow pvName to be a string so that we can use the same type
         // (Rule) for the unparsed as the parsed rule.
-        (pv.pvName as unknown) as string,
+        pv.pvName as unknown as string,
         defaultProtocol
       );
     }

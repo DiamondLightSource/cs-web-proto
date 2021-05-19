@@ -92,19 +92,17 @@ export const MenuButtonComponent = (props: MenuButtonProps): JSX.Element => {
     cursor: disabled ? "not-allowed" : "default"
   };
 
-  const mappedOptions = options.map(
-    (text, index): JSX.Element => {
-      return (
-        <option
-          key={index}
-          value={index}
-          disabled={index === 0 && text === label}
-        >
-          {text}
-        </option>
-      );
-    }
-  );
+  const mappedOptions = options.map((text, index): JSX.Element => {
+    return (
+      <option
+        key={index}
+        value={index}
+        disabled={index === 0 && text === label}
+      >
+        {text}
+      </option>
+    );
+  });
 
   /* Don't disable the element itself because that prevents
      any interaction even for ancestor elements, including middle-click copy. */

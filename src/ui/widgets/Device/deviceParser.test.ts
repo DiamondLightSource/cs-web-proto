@@ -88,9 +88,8 @@ const fakeResponseJson: Response = {
 };
 describe("parseResponseIntoObject", (): void => {
   test("properties are extracted", (): void => {
-    const [deviceName, pvIds, groups] = parseResponseIntoObject(
-      fakeResponseJson
-    );
+    const [deviceName, pvIds, groups] =
+      parseResponseIntoObject(fakeResponseJson);
     expect(deviceName).toEqual("M1Yaw");
     expect(groups).toEqual({
       Limits: ["LimitViolation"]

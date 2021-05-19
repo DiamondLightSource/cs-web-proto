@@ -106,11 +106,8 @@ export const parseResponse = (response: Response): any => {
 
   let deviceName = "Device";
   if (response.getDevice) {
-    const [name, pvIds, groups]: [
-      string,
-      Pvs,
-      Groups
-    ] = parseResponseIntoObject(response);
+    const [name, pvIds, groups]: [string, Pvs, Groups] =
+      parseResponseIntoObject(response);
     deviceName = name;
 
     // Parse groups into json string
