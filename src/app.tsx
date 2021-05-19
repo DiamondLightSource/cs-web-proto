@@ -10,6 +10,7 @@ import { RelativePosition } from "./types/position";
 import { Header } from "./ui/components/Header/header";
 import { Footer } from "./ui/components/Footer/footer";
 import { Redirect, Route, Switch, useRouteMatch } from "react-router-dom";
+import { LoadPerformancePage } from "./ui/components/PerformancePage/performancePage";
 
 log.setLevel((process.env.REACT_APP_LOG_LEVEL as LogLevelDesc) ?? "info");
 
@@ -51,6 +52,9 @@ const App: React.FC = (): JSX.Element => {
         <Profiler id="Dynamic Page Profiler" onRender={onRenderCallback}>
           <Switch>
             <Redirect exact from="/" to="/app" />
+            <Route exact path="/performance">
+              <LoadPerformancePage />
+            </Route>
             <Route path="/*">
               <LoadEmbedded />
             </Route>
