@@ -49,8 +49,9 @@ export const PositionProp = PropTypes.oneOfType([
   PropTypes.instanceOf(RelativePosition)
 ]).isRequired;
 
-export const MacrosProp = PropTypes.objectOf(PropTypes.string.isRequired)
-  .isRequired;
+export const MacrosProp = PropTypes.objectOf(
+  PropTypes.string.isRequired
+).isRequired;
 export const MacrosPropOpt = PropTypes.objectOf(PropTypes.string.isRequired);
 
 export const PvTypePropOpt = PropTypes.shape({

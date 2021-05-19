@@ -12,15 +12,12 @@ const PV_NAME = "ca://pv";
 
 // Mock copy-to-clipboard function.
 // See https://remarkablemark.org/blog/2018/06/28/jest-mock-default-named-export/
-jest.mock(
-  "clipboard-copy",
-  (): Record<string, unknown> => {
-    return {
-      __esModule: true,
-      default: jest.fn()
-    };
-  }
-);
+jest.mock("clipboard-copy", (): Record<string, unknown> => {
+  return {
+    __esModule: true,
+    default: jest.fn()
+  };
+});
 const TestLabel = (): JSX.Element => {
   return <LabelComponent text="Test" />;
 };

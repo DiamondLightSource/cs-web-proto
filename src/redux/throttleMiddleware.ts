@@ -28,14 +28,18 @@ export class UpdateThrottle {
   }
 }
 
-export const throttleMiddleware = (updater: UpdateThrottle) => (
-  store: MiddlewareAPI
-  // next(action) returns the action, but in the case of a value being cached,
-  // we don't call next(action) so return undefined.
-) => (next: Dispatch<Action>) => (action: Action): Action | undefined => {
-  if (action.type === VALUE_CHANGED) {
-    updater.queueUpdate(action, store);
-  } else {
-    return next(action);
-  }
-};
+export const throttleMiddleware =
+  (updater: UpdateThrottle) =>
+  (
+    store: MiddlewareAPI
+    // next(action) returns the action, but in the case of a value being cached,
+    // we don't call next(action) so return undefined.
+  ) =>
+  (next: Dispatch<Action>) =>
+  (action: Action): Action | undefined => {
+    if (action.type === VALUE_CHANGED) {
+      updater.queueUpdate(action, store);
+    } else {
+      return next(action);
+    }
+  };

@@ -377,9 +377,11 @@ export class SimulatorPlugin implements Connection {
     log.info("getDevice not implemented on simulator");
   }
 
-  public static parseName(
-    pvName: string
-  ): { initialValue: any; protocol: string; keyName: string } {
+  public static parseName(pvName: string): {
+    initialValue: any;
+    protocol: string;
+    keyName: string;
+  } {
     const parts = pvName.split("#");
     let keyName;
     let protocol: string;

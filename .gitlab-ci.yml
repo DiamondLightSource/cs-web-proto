@@ -17,11 +17,6 @@ stages:
     - npm run lint
     - npx tsc
 
-node 10:
-  extends:
-    .node_test
-  image: node:10
-
 node 12:
   extends:
     .node_test
@@ -31,6 +26,11 @@ node 14:
   extends:
     .node_test
   image: node:14
+
+node 16:
+  extends:
+    .node_test
+  image: node:16
 
 
 deploy:
