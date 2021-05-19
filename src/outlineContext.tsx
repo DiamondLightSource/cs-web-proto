@@ -24,7 +24,7 @@ export const OutlineProvider: React.FC<Record<string, unknown>> = ({
     setShowOutlines(toggledValue);
   };
 
-  // All descendents of ThemeContext.provider re-render whenever
+  // All descendants of OutlineContext.Provider re-render whenever
   // the value property changes (whole app wrapped hence theme
   // everywhere will change)
   return (

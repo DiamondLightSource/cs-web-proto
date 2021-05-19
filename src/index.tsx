@@ -3,7 +3,6 @@ import ReactDOM from "react-dom";
 import { BrowserRouter as Router } from "react-router-dom";
 import "./index.css";
 import App from "./app";
-import { ThemeProvider } from "./themeContext";
 import { OutlineProvider } from "./outlineContext";
 import { FileProvider } from "./fileContext";
 
@@ -13,9 +12,7 @@ ReactDOM.render(
   <Router>
     <FileProvider>
       <OutlineProvider>
-        <ThemeProvider>
-          <App />
-        </ThemeProvider>
+        <App />
       </OutlineProvider>
     </FileProvider>
   </Router>,
