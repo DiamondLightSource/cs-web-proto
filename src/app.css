@@ -6,6 +6,11 @@
   --alarm: red;
   --changing: white;
   --undefined: white;
+  --diamond-blue: #072b5d;
+  --diamond-yellow: #ffcf00;
+  --light-text: #cccccc;
+  --dark-text: #555555;
+  --light-background: #dddddd;
 }
 
 html,
@@ -13,13 +18,13 @@ body,
 #root {
   height: 100%;
   width: 100%;
-  background-color: var(--colour-background);
+  background-color: var(--diamond-blue);
 }
 html,
 body {
   margin: 0;
   padding: 0;
-  background: var(--colour-background);
+  background: var(--diamond-blue);
   color: var(--color-text);
   font-family: sans-serif;
 }
@@ -68,7 +73,7 @@ html {
 }
 .top {
   width: 100%;
-  background: var(--colour-background);
+  background: var(--diamond-blue);
   text-align: right;
   height: 200px;
 }

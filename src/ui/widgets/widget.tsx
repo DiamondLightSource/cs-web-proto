@@ -251,7 +251,7 @@ export const Widget = (
     <>
       {actionsPresent && contextOpen && (
         <ContextMenu
-          actions={props.actions as WidgetActions}
+          actions={ruleProps.actions as WidgetActions}
           coordinates={coords}
           triggerCallback={triggerCallback}
         />

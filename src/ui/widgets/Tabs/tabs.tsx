@@ -21,6 +21,12 @@ export const TabBar = (props: TabBarProps): JSX.Element => {
             onClick={(): void => {
               props.onTabSelected(index);
             }}
+            // Close tab on middle click.
+            onMouseDown={(e: React.MouseEvent): void => {
+              if (e.button === 1) {
+                props.onTabClosed?.(index);
+              }
+            }}
             className={
               index === props.selectedTab
                 ? `${classes.Tab} ${classes.CloseableTab} ${classes.TabSelected}`

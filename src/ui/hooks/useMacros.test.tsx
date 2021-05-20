@@ -23,7 +23,17 @@ const actionsProp = {
   actions: [
     {
       type: "WRITE_PV",
-      pvName: "${c}:SUFFIX"
+      writePvInfo: {
+        pvName: "${c}:SUFFIX",
+        value: 1
+      }
+    },
+    {
+      type: "WRITE_PV",
+      writePvInfo: {
+        pvName: "$(pv_name)",
+        value: 1
+      }
     }
   ]
 };
@@ -74,10 +84,13 @@ describe("useMacros", (): void => {
     expect(resolvedProps.prop.subprop).toEqual("Bb");
   });
   it("resolves macros in actions", (): void => {
-    const props = { actions: actionsProp };
+    const props = { pvName: new PV("hello", "loc"), actions: actionsProp };
     const resolvedProps = substituteMacros(props);
-    const action: any = resolvedProps?.actions?.actions[0];
-    expect(action.pvName).toEqual("C:SUFFIX");
+    const action1: any = resolvedProps?.actions?.actions[0];
+    expect(action1.writePvInfo.pvName).toEqual("C:SUFFIX");
+    const action2: any = resolvedProps?.actions?.actions[1];
+    // Note loc:// prefix is missed here.
+    expect(action2.writePvInfo.pvName).toEqual("hello");
   });
   it("resolves macros in PV object", (): void => {
     const props = { pvName: new PV("PREFIX:${c}", "xxx") };

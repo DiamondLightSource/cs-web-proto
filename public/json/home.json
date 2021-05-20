@@ -3,7 +3,7 @@
   "position": "relative",
   "height": "85vh",
   "width": "100%",
-  "backgroundColor": "#012265",
+  "backgroundColor": "var(--light-background)",
   "children": [
     {
       "type": "shape",
@@ -19,10 +19,10 @@
       "width": "90%",
       "maxWidth": "600px",
       "height": "200px",
-      "backgroundColor": "white",
+      "backgroundColor": "var(--light-background)",
       "border": {
         "style": "line",
-        "color": "#ffcf00",
+        "color": "var(--colour-background)",
         "width": 5,
         "radius": 10
       },
@@ -34,7 +34,7 @@
             "size": "40"
           },
           "transparent": true,
-          "foregroundColor": "#012265",
+          "foregroundColor": "var(--dark-text)",
           "text": "Welcome!"
         },
         {
@@ -44,7 +44,7 @@
             "size": "20"
           },
           "transparent": true,
-          "foregroundColor": "#012265",
+          "foregroundColor": "var(--dark-text)",
           "text": "This is the home page for the prototype web application\nunder development at Diamond Light Source.\n\nTo take a look around, open the menu with the button\nat the top left corner of the page."
         }
       ]
