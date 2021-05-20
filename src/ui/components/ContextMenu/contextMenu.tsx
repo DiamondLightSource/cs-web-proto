@@ -32,7 +32,6 @@ export function ContextMenu(props: {
       className={classes.customContext}
       style={{
         position: "fixed",
-        zIndex: 1000,
         top: `${y}px`,
         left: `${x}px`
       }}
