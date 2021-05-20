@@ -60,6 +60,6 @@ describe("readback component", (): void => {
 
     const { queryByText } = render(readback);
     // 'alarm' class added.
-    expect(queryByText("hello")).toHaveClass("alarm");
+    expect(queryByText("hello")).toHaveStyle("color: var(--alarm)");
   });
 });
