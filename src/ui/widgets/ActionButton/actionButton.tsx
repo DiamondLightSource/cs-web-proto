@@ -54,7 +54,11 @@ export const ActionButtonComponent = (
     >
       {props.image !== undefined ? (
         <figure className={classes.figure}>
-          <img src={props.image} alt={props.image}></img>
+          <img
+            style={{ width: "100%", display: "block" }}
+            src={props.image}
+            alt={props.image}
+          ></img>
           <figcaption>{props.text}</figcaption>
         </figure>
       ) : (

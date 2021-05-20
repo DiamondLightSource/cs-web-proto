@@ -2,7 +2,7 @@
   height: 5vh;
   width: 100%;
   position: relative;
-  background-color: white;
+  background-color: var(--diamond-blue);
   display: flex;
 }
 
@@ -28,6 +28,7 @@
   flex-basis: 0;
   min-width: 0;
   align-items: center;
+  color: #cccccc;
 }
 
 .buttonWrapper {
@@ -39,4 +40,5 @@
   justify-content: flex-end;
   align-items: center;
   border: 0;
+  margin: 1rem;
 }
