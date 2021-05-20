@@ -1,4 +1,4 @@
-import { DType } from "../../types/dtypes";
+import { AlarmQuality, DType } from "../../types/dtypes";
 
 function tooltipValue(connected?: boolean, value?: DType): string {
   if (value) {
@@ -12,6 +12,9 @@ function tooltipValue(connected?: boolean, value?: DType): string {
         displayValue = "Warning: Waiting for value";
       } else {
         displayValue = DType.coerceString(value);
+        if (alarm.quality !== AlarmQuality.VALID) {
+          displayValue += ` [${alarm.quality}]`;
+        }
       }
     }
     const dateAndAlarm = [
@@ -31,7 +34,7 @@ export function resolveTooltip(props: {
   value: DType;
   tooltip: string;
 }): string | undefined {
-  const pvValueRegex = /\${pvValue}/g;
+  const pvValueRegex = /\${pvValue}|\${pv_value}/g;
   const { connected, value, tooltip } = props;
   if (tooltip.match(pvValueRegex)) {
     const ttval = tooltipValue(connected, value);

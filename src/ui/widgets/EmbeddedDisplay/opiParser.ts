@@ -481,6 +481,7 @@ export const OPI_SIMPLE_PARSERS: ParserDict = {
   showBooleanLabel: ["show_boolean_label", opiParseBoolean],
   showLabel: ["show_label", opiParseBoolean],
   labelPosition: ["boolean_label_position", opiParseLabelPosition],
+  tooltip: ["tooltip", opiParseString],
   stretchToFit: ["stretch_to_fit", opiParseBoolean],
   lineWidth: ["line_width", opiParseNumber],
   width: ["width", opiParseNumber],
@@ -498,7 +499,7 @@ export const OPI_SIMPLE_PARSERS: ParserDict = {
 
 /**
  * Complex object types, with the parsing function to use, no name
- * like t he simple parser object because they do not have one name
+ * like the simple parser object because they do not have one name
  * in the .opi file
  */
 export const OPI_COMPLEX_PARSERS: ComplexParserDict = {
