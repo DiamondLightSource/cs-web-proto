@@ -1,0 +1,1169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>810</width>
+    <height>661</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0">
+     <widget class="EPICSAppTitleWidget" name="EPICSAppTitleWidget">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>5</width>
+        <height>20</height>
+       </size>
+      </property>
+      <property name="toolTip">
+       <string>Click and drag here</string>
+      </property>
+      <property name="whatsThis">
+       <string>The EPICSAppTitleWidget widget provides EPICS domain aware title</string>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(202, 223, 159);</string>
+      </property>
+      <property name="text">
+       <string>ddnnx-VA-RGA-0x</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <layout class="QVBoxLayout" name="verticalLayout_11">
+      <item>
+       <widget class="QFrame" name="frame">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>790</width>
+          <height>210</height>
+         </size>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <layout class="QGridLayout" name="gridLayout_5">
+         <item row="0" column="0">
+          <widget class="QLabel" name="label">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>17</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>17</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Current Data</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <spacer name="horizontalSpacer_10">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Preferred</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>11</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item row="0" column="2">
+          <widget class="EpicsTextWidget" name="EpicsTextWidget">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>150</width>
+             <height>25</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>25</height>
+            </size>
+           </property>
+           <property name="toolTip">
+            <string>Click and drag here</string>
+           </property>
+           <property name="whatsThis">
+            <string>The EpicsTextWidget widget provides EPICS aware text</string>
+           </property>
+           <property name="pv">
+            <string>VALAB-VA-RGA-01:DATA</string>
+           </property>
+           <property name="Format">
+            <string>s</string>
+           </property>
+           <property name="EpicsType" stdset="0">
+            <string>DBR_ENUM</string>
+           </property>
+           <property name="pvfield" stdset="0">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="3">
+          <spacer name="horizontalSpacer_14">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>26</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item row="0" column="4" colspan="2">
+          <spacer name="horizontalSpacer_16">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Expanding</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>30</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item row="0" column="6">
+          <widget class="QLabel" name="label_4">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>17</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>17</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>IMG Interlock</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="7">
+          <spacer name="horizontalSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Fixed</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>13</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item row="0" column="8">
+          <widget class="EpicsTextWidget" name="EpicsTextWidget_4">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>150</width>
+             <height>25</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>25</height>
+            </size>
+           </property>
+           <property name="toolTip">
+            <string>Click and drag here</string>
+           </property>
+           <property name="whatsThis">
+            <string>The EpicsTextWidget widget provides EPICS aware text</string>
+           </property>
+           <property name="pv">
+            <string>VALAB-VA-RGA-01:ILK</string>
+           </property>
+           <property name="Alignment">
+            <set>Qt::AlignCenter|Qt::AlignHCenter|Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+           </property>
+           <property name="Format">
+            <string>s</string>
+           </property>
+           <property name="pvfield" stdset="0">
+            <string>The specific record name</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="9">
+          <spacer name="horizontalSpacer_2">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>32</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="label_2">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>17</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>17</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Detector Setting</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <spacer name="horizontalSpacer_11">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Preferred</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>11</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item row="1" column="2">
+          <widget class="EpicsTextWidget" name="EpicsTextWidget_2">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>150</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>25</height>
+            </size>
+           </property>
+           <property name="toolTip">
+            <string>Click and drag here</string>
+           </property>
+           <property name="whatsThis">
+            <string>The EpicsTextWidget widget provides EPICS aware text</string>
+           </property>
+           <property name="pv">
+            <string>VALAB-VA-RGA-01:DET</string>
+           </property>
+           <property name="EpicsConnect" stdset="0">
+            <bool>true</bool>
+           </property>
+           <property name="UseEDMDATAFILES" stdset="0">
+            <bool>false</bool>
+           </property>
+           <property name="Format">
+            <string>s</string>
+           </property>
+           <property name="EpicsType" stdset="0">
+            <string>DBR_STRING</string>
+           </property>
+           <property name="pvfield" stdset="0">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="3">
+          <spacer name="horizontalSpacer_15">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>26</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item row="1" column="4" colspan="2">
+          <spacer name="horizontalSpacer_24">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Expanding</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>30</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item row="1" column="6">
+          <widget class="QLabel" name="label_5">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>17</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>17</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Sum of Peaks</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="7">
+          <spacer name="horizontalSpacer_5">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Fixed</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>13</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item row="1" column="8">
+          <widget class="EpicsTextWidget" name="EpicsTextWidget_5">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>150</width>
+             <height>25</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>25</height>
+            </size>
+           </property>
+           <property name="toolTip">
+            <string>Click and drag here</string>
+           </property>
+           <property name="whatsThis">
+            <string>The EpicsTextWidget widget provides EPICS aware text</string>
+           </property>
+           <property name="pv">
+            <string>VALAB-VA-RGA-01:SUMP</string>
+           </property>
+           <property name="Format">
+            <string>2.2e</string>
+           </property>
+           <property name="EpicsType" stdset="0">
+            <string>DBR_DOUBLE</string>
+           </property>
+           <property name="pvfield" stdset="0">
+            <string>The specific record name</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="9">
+          <widget class="QLabel" name="label_6">
+           <property name="text">
+            <string>mbar</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="0">
+          <widget class="QLabel" name="label_3">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>17</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>17</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Total Pressure</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <spacer name="horizontalSpacer_12">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Preferred</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>11</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item row="2" column="2">
+          <widget class="EpicsTextWidget" name="EpicsTextWidget_3">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>150</width>
+             <height>25</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>25</height>
+            </size>
+           </property>
+           <property name="toolTip">
+            <string>Click and drag here</string>
+           </property>
+           <property name="whatsThis">
+            <string>The EpicsTextWidget widget provides EPICS aware text</string>
+           </property>
+           <property name="pv">
+            <string>VALAB-VA-RGA-01:TOTP</string>
+           </property>
+           <property name="Format">
+            <string>2.2e</string>
+           </property>
+           <property name="EpicsType" stdset="0">
+            <string>DBR_DOUBLE</string>
+           </property>
+           <property name="pvfield" stdset="0">
+            <string>The specific record name</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="3" colspan="2">
+          <widget class="QLabel" name="label_11">
+           <property name="text">
+            <string>mbar</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="5">
+          <spacer name="horizontalSpacer_25">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Expanding</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>24</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item row="2" column="6">
+          <widget class="QLabel" name="label_9">
+           <property name="text">
+            <string>Scan Mode</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="7">
+          <spacer name="horizontalSpacer_8">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Fixed</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>13</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item row="2" column="8">
+          <widget class="MenuButtonWidget" name="MenuButtonWidget_2">
+           <property name="minimumSize">
+            <size>
+             <width>100</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="toolTip">
+            <string>Click and drag here</string>
+           </property>
+           <property name="whatsThis">
+            <string>The menu button widget</string>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QComboBox { background-color: #464646; color: #0000ff }</string>
+           </property>
+           <property name="ReadbackPV">
+            <string>VALAB-VA-RGA-01:SCAN</string>
+           </property>
+           <property name="ControlPV">
+            <string>VALAB-VA-RGA-01:SETSCAN</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="9">
+          <spacer name="horizontalSpacer_6">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>32</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item row="3" column="0">
+          <widget class="QLabel" name="label_7">
+           <property name="text">
+            <string>Head Status</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="1">
+          <spacer name="horizontalSpacer_13">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Preferred</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>11</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item row="3" column="2">
+          <widget class="MenuButtonWidget" name="MenuButtonWidget">
+           <property name="minimumSize">
+            <size>
+             <width>170</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="toolTip">
+            <string>Click and drag here</string>
+           </property>
+           <property name="whatsThis">
+            <string>The menu button widget</string>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QComboBox { background-color: #464646; color: #0000ff }</string>
+           </property>
+           <property name="ReadbackPV">
+            <string>VALAB-VA-RGA-01:HEADSTA</string>
+           </property>
+           <property name="ControlPV">
+            <string>VALAB-VA-RGA-01:CON</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="3">
+          <spacer name="horizontalSpacer_18">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>26</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item row="3" column="4" colspan="2">
+          <spacer name="horizontalSpacer_26">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Expanding</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>30</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item row="3" column="6">
+          <widget class="QLabel" name="label_10">
+           <property name="text">
+            <string>Multiplier</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="7">
+          <spacer name="horizontalSpacer_9">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Fixed</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>13</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item row="3" column="8">
+          <widget class="MenuButtonWidget" name="MenuButtonWidget_3">
+           <property name="minimumSize">
+            <size>
+             <width>100</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="toolTip">
+            <string>Click and drag here</string>
+           </property>
+           <property name="whatsThis">
+            <string>The menu button widget</string>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QComboBox { background-color: #464646; color: #0000ff }</string>
+           </property>
+           <property name="ReadbackPV">
+            <string>VALAB-VA-RGA-01:MLTSTA</string>
+           </property>
+           <property name="ControlPV">
+            <string>VALAB-VA-RGA-01:MLTCON</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="9">
+          <spacer name="horizontalSpacer_7">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>32</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item row="4" column="0">
+          <widget class="QLabel" name="label_8">
+           <property name="text">
+            <string>Filament Status</string>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="1">
+          <spacer name="horizontalSpacer_17">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Preferred</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>11</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item row="4" column="2">
+          <layout class="QHBoxLayout" name="horizontalLayout_4">
+           <item>
+            <widget class="MenuButtonWidget" name="MenuButtonWidget_4">
+             <property name="minimumSize">
+              <size>
+               <width>170</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="toolTip">
+              <string>Click and drag here</string>
+             </property>
+             <property name="whatsThis">
+              <string>The menu button widget</string>
+             </property>
+             <property name="ReadbackPV">
+              <string>VALAB-VA-RGA-01:FIL</string>
+             </property>
+             <property name="ControlPV">
+              <string>VALAB-VA-RGA-01:SETFIL</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="MenuButtonWidget" name="MenuButtonWidget_5">
+             <property name="maximumSize">
+              <size>
+               <width>70</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="toolTip">
+              <string>Click and drag here</string>
+             </property>
+             <property name="whatsThis">
+              <string>The menu button widget</string>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QComboBox { background-color: #464646; color: #0000ff }</string>
+             </property>
+             <property name="ReadbackPV">
+              <string>VALAB-VA-RGA-01:FILSTA</string>
+             </property>
+             <property name="ControlPV">
+              <string>VALAB-VA-RGA-01:FILCON</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item row="4" column="3">
+          <spacer name="horizontalSpacer_19">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>26</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item row="4" column="4" colspan="2">
+          <spacer name="horizontalSpacer_27">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Expanding</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>30</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item row="4" column="6">
+          <spacer name="horizontalSpacer_20">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>86</width>
+             <height>25</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item row="4" column="7">
+          <spacer name="horizontalSpacer_21">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Fixed</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>13</width>
+             <height>25</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item row="4" column="8">
+          <spacer name="horizontalSpacer_22">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>147</width>
+             <height>25</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item row="4" column="9">
+          <spacer name="horizontalSpacer_23">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>32</width>
+             <height>25</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QTabWidget" name="tabWidget">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>580</width>
+          <height>180</height>
+         </size>
+        </property>
+        <property name="currentIndex">
+         <number>0</number>
+        </property>
+        <widget class="QWidget" name="tab">
+         <attribute name="title">
+          <string>Full Scan</string>
+         </attribute>
+         <layout class="QGridLayout" name="gridLayout_4">
+          <item row="0" column="0">
+           <widget class="QwtPlot" name="qwtPlotFullScan">
+            <property name="minimumSize">
+             <size>
+              <width>280</width>
+              <height>100</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QCheckBox" name="checkBoxLog">
+            <property name="text">
+             <string>Log scale</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="tab_2">
+         <attribute name="title">
+          <string>Peak Jump</string>
+         </attribute>
+         <layout class="QGridLayout" name="gridLayout_3">
+          <item row="0" column="0">
+           <layout class="QGridLayout" name="gridLayout_2">
+            <item row="0" column="0">
+             <widget class="EpicsStripChart" name="stripChartPJ">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>100</width>
+                <height>50</height>
+               </size>
+              </property>
+              <property name="toolTip">
+               <string>Click and drag here</string>
+              </property>
+              <property name="whatsThis">
+               <string>The EpicsStripChart widget provides EPICS aware strip chart</string>
+              </property>
+              <property name="Title" stdset="0">
+               <string>Peak Jump</string>
+              </property>
+              <property name="XAxisTitle" stdset="0">
+               <string>Time</string>
+              </property>
+              <property name="YAxisTitle" stdset="0">
+               <string>Pressure (mBar)</string>
+              </property>
+              <property name="pvfield" stdset="0">
+               <string>The specific record name</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QFrame" name="frame_2">
+              <property name="minimumSize">
+               <size>
+                <width>100</width>
+                <height>38</height>
+               </size>
+              </property>
+              <property name="frameShape">
+               <enum>QFrame::StyledPanel</enum>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Sunken</enum>
+              </property>
+              <property name="lineWidth">
+               <number>1</number>
+              </property>
+              <property name="midLineWidth">
+               <number>0</number>
+              </property>
+              <widget class="QWidget" name="layoutWidget">
+               <property name="geometry">
+                <rect>
+                 <x>11</x>
+                 <y>7</y>
+                 <width>394</width>
+                 <height>29</height>
+                </rect>
+               </property>
+               <layout class="QHBoxLayout" name="horizontalLayout_8">
+                <item>
+                 <widget class="ButtonScript" name="ButtonPJSelect">
+                  <property name="toolTip">
+                   <string>Select masses for Peak Jump</string>
+                  </property>
+                  <property name="whatsThis">
+                   <string>Select masses for Peak Jump</string>
+                  </property>
+                  <property name="text">
+                   <string>Peak Select</string>
+                  </property>
+                  <property name="DialogueHandler" stdset="0">
+                   <string>PeakJumpSelectDlg</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <spacer name="horizontalSpacer_3">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>40</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item>
+                 <widget class="ButtonScript" name="ButtonPJTC">
+                  <property name="toolTip">
+                   <string>Select masses for Peak Jump</string>
+                  </property>
+                  <property name="whatsThis">
+                   <string>Select masses for Peak Jump</string>
+                  </property>
+                  <property name="text">
+                   <string>Time Constant</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <spacer name="horizontalSpacer_4">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>40</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item>
+                 <widget class="ButtonScript" name="ButtonPJST">
+                  <property name="toolTip">
+                   <string>Select masses for Peak Jump</string>
+                  </property>
+                  <property name="whatsThis">
+                   <string>Select masses for Peak Jump</string>
+                  </property>
+                  <property name="text">
+                   <string>Striptool</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="tab_3">
+         <attribute name="title">
+          <string>Analogue</string>
+         </attribute>
+        </widget>
+       </widget>
+      </item>
+     </layout>
+    </item>
+   </layout>
+   <widget class="QWidget" name="layoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>2</width>
+      <height>2</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout_10"/>
+   </widget>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>ButtonScript</class>
+   <extends>QPushButton</extends>
+   <header>buttonscript</header>
+  </customwidget>
+  <customwidget>
+   <class>EPICSAppTitleWidget</class>
+   <extends>QLabel</extends>
+   <header>epics_app_title_widget</header>
+  </customwidget>
+  <customwidget>
+   <class>EpicsStripChart</class>
+   <extends>QWidget</extends>
+   <header>stripchartwidget</header>
+  </customwidget>
+  <customwidget>
+   <class>EpicsTextWidget</class>
+   <extends>QWidget</extends>
+   <header>epics_epics_widget</header>
+  </customwidget>
+  <customwidget>
+   <class>MenuButtonWidget</class>
+   <extends>QComboBox</extends>
+   <header>menubuttonwidget</header>
+  </customwidget>
+  <customwidget>
+   <class>QwtPlot</class>
+   <extends>QFrame</extends>
+   <header>qwt_plot.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>
