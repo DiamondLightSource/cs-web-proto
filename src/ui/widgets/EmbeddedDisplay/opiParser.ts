@@ -397,6 +397,15 @@ function opiParseFile(props: any): OpiFile {
   };
 }
 
+function opiParseAlarmSensitive(props: any): boolean {
+  // Only one prop for alarm sensitivity at the moment.
+  return (
+    opiParseBoolean(props.forecolor_alarm_sensitive) ||
+    opiParseBoolean(props.backcolor_alarm_sensitive) ||
+    opiParseBoolean(props.border_alarm_sensitive)
+  );
+}
+
 function opiParseLabelPosition(props: any): string {
   const num = opiParseNumber(props).toString();
   const mapping: { [key: string]: string } = {
@@ -458,7 +467,6 @@ export const OPI_SIMPLE_PARSERS: ParserDict = {
   showLabel: ["show_label", opiParseBoolean],
   labelPosition: ["boolean_label_position", opiParseLabelPosition],
   stretchToFit: ["stretch_to_fit", opiParseBoolean],
-  alarmSensitive: ["border_alarm_sensitive", opiParseBoolean],
   lineWidth: ["line_width", opiParseNumber],
   width: ["width", opiParseNumber],
   height: ["height", opiParseNumber],
@@ -482,7 +490,8 @@ export const OPI_COMPLEX_PARSERS: ComplexParserDict = {
   type: opiParseType,
   position: opiParsePosition,
   border: opiParseBorder,
-  file: opiParseFile
+  file: opiParseFile,
+  alarmSensitive: opiParseAlarmSensitive
 };
 
 function opiPatchRules(widgetDescription: WidgetDescription): void {

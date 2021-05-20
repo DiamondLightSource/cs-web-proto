@@ -17,7 +17,8 @@ import {
 } from "../propTypes";
 import { registerWidget } from "../register";
 import { LabelComponent } from "../Label/label";
-import { DAlarm, DType } from "../../../types/dtypes";
+import { AlarmQuality, DAlarm, DType } from "../../../types/dtypes";
+import { Color } from "../../../types/color";
 
 const ReadbackProps = {
   precision: IntPropOpt,
@@ -45,10 +46,9 @@ export const ReadbackComponent = (
     value,
     precision,
     font,
-    foregroundColor,
     backgroundColor,
     border,
-    alarmSensitive = false,
+    alarmSensitive = true,
     transparent = false,
     text = "######",
     textAlign = "center",
@@ -56,6 +56,7 @@ export const ReadbackComponent = (
     precisionFromPv = false,
     rotationAngle
   } = props;
+  let { foregroundColor } = props;
   // Decide what to display.
   const alarm = value?.getAlarm() || DAlarm.NONE;
   const display = value?.getDisplay();
@@ -83,6 +84,21 @@ export const ReadbackComponent = (
   let className = classes.Readback;
   if (alarmSensitive) {
     className += ` ${classes[alarm.quality]}`;
+  }
+  if (alarmSensitive) {
+    switch (alarm.quality) {
+      case AlarmQuality.UNDEFINED:
+      case AlarmQuality.INVALID:
+      case AlarmQuality.CHANGING:
+        foregroundColor = new Color("var(--invalid)");
+        break;
+      case AlarmQuality.WARNING:
+        foregroundColor = new Color("var(--warning)");
+        break;
+      case AlarmQuality.ALARM:
+        foregroundColor = new Color("var(--alarm)");
+        break;
+    }
   }
   // Use a LabelComponent to display it.
   return (

@@ -1,8 +1,8 @@
-import React, { useState, CSSProperties } from "react";
+import React, { useState } from "react";
 
 import classes from "./input.module.css";
 import { writePv } from "../../hooks/useSubscription";
-import { Widget } from "../widget";
+import { commonCss, Widget } from "../widget";
 import { PVInputComponent, PVWidgetPropType } from "../widgetProps";
 import { registerWidget } from "../register";
 import {
@@ -37,9 +37,7 @@ export const InputComponent: React.FC<InputProps> = (
   props: InputProps
 ): JSX.Element => {
   let allClasses = classes.Input;
-  const style: CSSProperties = {
-    ...props.font?.css()
-  };
+  const style = commonCss(props);
   if (props.textAlign) {
     style.textAlign = props.textAlign;
   }
@@ -53,7 +51,19 @@ export const InputComponent: React.FC<InputProps> = (
     allClasses += ` ${classes.readonly}`;
   }
   if (props.alarmSensitive) {
-    allClasses += ` ${classes[props.alarm]}`;
+    switch (props.alarm) {
+      case AlarmQuality.UNDEFINED:
+      case AlarmQuality.INVALID:
+      case AlarmQuality.CHANGING:
+        style.color = "var(--invalid)";
+        break;
+      case AlarmQuality.WARNING:
+        style.color = "var(--alarm)";
+        break;
+      case AlarmQuality.ALARM:
+        style.color = "var(--alarm)";
+        break;
+    }
   }
   return (
     <input

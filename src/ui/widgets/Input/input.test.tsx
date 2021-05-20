@@ -22,7 +22,7 @@ describe("<Input />", (): void => {
     const { getByDisplayValue } = render(input);
     const renderedInput = getByDisplayValue("hello");
     expect(renderedInput).toBeInTheDocument();
-    expect(renderedInput).toHaveClass("warning");
+    expect(renderedInput).toHaveStyle("color: var(--warning)");
     expect(renderedInput).toHaveClass("readonly");
   });
 });
