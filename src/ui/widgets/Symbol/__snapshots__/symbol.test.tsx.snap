@@ -3,7 +3,7 @@
 exports[`<Symbol /> matches snapshot 1`] = `
 <DocumentFragment>
   <div
-    style="cursor: auto; overflow: hidden; text-align: left;"
+    style="overflow: hidden; text-align: left;"
   >
     <img
       src="img 1.gif"
@@ -11,7 +11,7 @@ exports[`<Symbol /> matches snapshot 1`] = `
     />
   </div>
   <div
-    style="background-color: transparent; cursor: auto; position: absolute; height: 100%; width: 100%; top: 0px; left: 0px; display: flex; align-items: center; justify-content: center;"
+    style="background-color: transparent; position: absolute; height: 100%; width: 100%; top: 0px; left: 0px; display: flex; align-items: center; justify-content: center;"
   >
     <div
       style="padding: 5%;"
@@ -20,7 +20,9 @@ exports[`<Symbol /> matches snapshot 1`] = `
         class="Label Label"
         style="background-color: transparent; cursor: default; justify-content: center;"
       >
-        Fake value
+        <span>
+           Fake value 
+        </span>
       </div>
     </div>
   </div>

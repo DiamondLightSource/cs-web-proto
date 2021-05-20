@@ -54,14 +54,15 @@ export const LabelComponent = (
   }
   style["justifyContent"] = alignment;
   style["cursor"] = "default";
+  let transform = undefined;
   if (rotationAngle) {
-    style["transform"] = `rotate(${rotationAngle}deg)`;
+    transform = `rotate(${rotationAngle}deg)`;
   }
 
   // Simple component to display text - defaults to black text and dark grey background
   return (
     <div className={className} style={style}>
-      {text}
+      <span style={{ transform }}> {text} </span>
     </div>
   );
 };

@@ -1,0 +1,29 @@
+<?xml version="1.0" ?>
+<types>
+  <device name="VA-RGA">
+    <property name="Hydrogen"                    readback=":BAR:M2"  />     
+    <property name="Helium"                      readback=":BAR:M4"  /> 
+    <property name="Methane"                     readback=":BAR:M16" />     
+    <property name="Ammonia"                     readback=":BAR:M17" />     
+    <property name="Water"                       readback=":BAR:M18" />     
+    <property name="Nitrogen"                    readback=":BAR:M28" />     
+    <property name="Oxygen"                      readback=":BAR:M32" />     
+    <property name="Argon"                       readback=":BAR:M40" />          
+    <property name="CO2"                         readback=":BAR:M44" />          
+    <property name="Head Status"     scon=":CON"     smon=":STA"     />
+    <property name="Filament"        scon=":SETFIL"  smon=":FIL"     />
+    <property name="Filament Status" scon=":FILCON"  smon=":FILSTA"  />  
+    <property name="Scan Mode"       scon=":SETSCAN" smon=":SCAN"    /> 
+    <property name="Multiplier"      scon=":MLTCON"  smon=":MLTSTA"  />          
+    <property name="Detector Setting"                smon=":DET"     />     
+    <property name="IMG Interlock"                   smon=":ILK"     />
+    <property name="Data to read"                    smon=":DATA"    /> 
+    <property name="Date"                        readback=":DATE"    /> 
+    <property name="Year"                        readback=":YEAR"    /> 
+    <property name="Mon"                         readback=":MON"     />     
+    <property name="Day"                         readback=":DAY"     />     
+    <property name="Hour"                        readback=":HOUR"    />     
+    <property name="Min"                         readback=":MIN"     />     
+    <property name="Sec"                         readback=":SEC"     />     
+  </device>        
+</types>

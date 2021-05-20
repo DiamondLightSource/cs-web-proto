@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { WidgetActions, executeActions } from "../widgetActions";
 import { commonCss, Widget } from "../widget";
-import { PVWidgetPropType } from "../widgetProps";
+import { PVComponent, PVWidgetPropType } from "../widgetProps";
 import classes from "./actionButton.module.css";
 import { registerWidget } from "../register";
 import {
@@ -20,6 +20,7 @@ import { FileContext } from "../../../fileContext";
 
 export interface ActionButtonProps {
   text: string;
+  disabled?: boolean;
   onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
   image?: string;
   backgroundColor?: Color;
@@ -33,6 +34,9 @@ export const ActionButtonComponent = (
   props: ActionButtonProps
 ): JSX.Element => {
   const style = commonCss(props);
+  if (props.disabled) {
+    style["cursor"] = "not-allowed";
+  }
   style["whiteSpace"] = "normal";
   // Use default button style if no border defined.
   if (props.border?.style === BorderStyle.None) {
@@ -44,6 +48,7 @@ export const ActionButtonComponent = (
   return (
     <button
       className={classes.actionbutton}
+      disabled={props.disabled}
       onClick={props.onClick}
       style={style}
     >
@@ -76,7 +81,7 @@ const ActionButtonWidgetProps = {
 
 // Menu button which also knows how to write to a PV
 export const ActionButtonWidget = (
-  props: InferWidgetProps<typeof ActionButtonPropType>
+  props: InferWidgetProps<typeof ActionButtonWidgetProps> & PVComponent
 ): JSX.Element => {
   // Function to send the value on to the PV
   const files = useContext(FileContext);
@@ -88,6 +93,7 @@ export const ActionButtonWidget = (
   return (
     <ActionButtonComponent
       text={props.text ?? ""}
+      disabled={props.readonly}
       onClick={onClick}
       image={props.image}
       backgroundColor={props.backgroundColor}

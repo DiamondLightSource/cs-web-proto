@@ -17,10 +17,12 @@ import {
 } from "../propTypes";
 import { registerWidget } from "../register";
 import { LabelComponent } from "../Label/label";
-import { DAlarm, DType } from "../../../types/dtypes";
+import { AlarmQuality, DAlarm, DType } from "../../../types/dtypes";
+import { Color } from "../../../types/color";
 
 const ReadbackProps = {
   precision: IntPropOpt,
+  formatType: ChoicePropOpt(["default", "decimal", "exponential"]),
   showUnits: BoolPropOpt,
   precisionFromPv: BoolPropOpt,
   alarmSensitive: BoolPropOpt,
@@ -44,11 +46,11 @@ export const ReadbackComponent = (
   const {
     value,
     precision,
+    formatType = "default",
     font,
-    foregroundColor,
     backgroundColor,
     border,
-    alarmSensitive = false,
+    alarmSensitive = true,
     transparent = false,
     text = "######",
     textAlign = "center",
@@ -56,6 +58,7 @@ export const ReadbackComponent = (
     precisionFromPv = false,
     rotationAngle
   } = props;
+  let { foregroundColor } = props;
   // Decide what to display.
   const alarm = value?.getAlarm() || DAlarm.NONE;
   const display = value?.getDisplay();
@@ -68,7 +71,11 @@ export const ReadbackComponent = (
       // Enum PV so use string representation.
       displayedValue = DType.coerceString(value);
     } else if (prec !== undefined && !isNaN(DType.coerceDouble(value))) {
-      displayedValue = DType.coerceDouble(value).toFixed(prec);
+      if (formatType === "exponential") {
+        displayedValue = DType.coerceDouble(value).toExponential(prec);
+      } else {
+        displayedValue = DType.coerceDouble(value).toFixed(prec);
+      }
     } else {
       displayedValue = DType.coerceString(value);
     }
@@ -83,6 +90,21 @@ export const ReadbackComponent = (
   let className = classes.Readback;
   if (alarmSensitive) {
     className += ` ${classes[alarm.quality]}`;
+  }
+  if (alarmSensitive) {
+    switch (alarm.quality) {
+      case AlarmQuality.UNDEFINED:
+      case AlarmQuality.INVALID:
+      case AlarmQuality.CHANGING:
+        foregroundColor = new Color("var(--invalid)");
+        break;
+      case AlarmQuality.WARNING:
+        foregroundColor = new Color("var(--warning)");
+        break;
+      case AlarmQuality.ALARM:
+        foregroundColor = new Color("var(--alarm)");
+        break;
+    }
   }
   // Use a LabelComponent to display it.
   return (

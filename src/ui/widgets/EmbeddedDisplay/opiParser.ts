@@ -316,6 +316,20 @@ function opiParseHorizontalAlignment(jsonProp: ElementCompact): string {
 }
 
 /**
+ * Converts an format type number present in the json properties, into
+ * a string e.g. "left", "center", "right"
+ * @param jsonProp
+ */
+function opiParseFormatType(jsonProp: ElementCompact): string {
+  const formats: { [key: number]: string } = {
+    0: "default",
+    1: "decimal",
+    2: "exponential"
+  };
+  return formats[opiParseNumber(jsonProp)];
+}
+
+/**
  * Creates a new Border object
  * @param props
  */
@@ -397,6 +411,15 @@ function opiParseFile(props: any): OpiFile {
   };
 }
 
+function opiParseAlarmSensitive(props: any): boolean {
+  // Only one prop for alarm sensitivity at the moment.
+  return (
+    opiParseBoolean(props.forecolor_alarm_sensitive) ||
+    opiParseBoolean(props.backcolor_alarm_sensitive) ||
+    opiParseBoolean(props.border_alarm_sensitive)
+  );
+}
+
 function opiParseLabelPosition(props: any): string {
   const num = opiParseNumber(props).toString();
   const mapping: { [key: string]: string } = {
@@ -443,6 +466,7 @@ export const OPI_SIMPLE_PARSERS: ParserDict = {
   offColor: ["off_color", opiParseColor],
   fillColor: ["fill_color", opiParseColor],
   precision: ["precision", opiParseNumber],
+  formatType: ["format_type", opiParseFormatType],
   precisionFromPv: ["precision_from_pv", opiParseBoolean],
   visible: ["visible", opiParseBoolean],
   showUnits: ["show_units", opiParseBoolean],
@@ -457,8 +481,8 @@ export const OPI_SIMPLE_PARSERS: ParserDict = {
   showBooleanLabel: ["show_boolean_label", opiParseBoolean],
   showLabel: ["show_label", opiParseBoolean],
   labelPosition: ["boolean_label_position", opiParseLabelPosition],
+  tooltip: ["tooltip", opiParseString],
   stretchToFit: ["stretch_to_fit", opiParseBoolean],
-  alarmSensitive: ["border_alarm_sensitive", opiParseBoolean],
   lineWidth: ["line_width", opiParseNumber],
   width: ["width", opiParseNumber],
   height: ["height", opiParseNumber],
@@ -475,14 +499,15 @@ export const OPI_SIMPLE_PARSERS: ParserDict = {
 
 /**
  * Complex object types, with the parsing function to use, no name
- * like t he simple parser object because they do not have one name
+ * like the simple parser object because they do not have one name
  * in the .opi file
  */
 export const OPI_COMPLEX_PARSERS: ComplexParserDict = {
   type: opiParseType,
   position: opiParsePosition,
   border: opiParseBorder,
-  file: opiParseFile
+  file: opiParseFile,
+  alarmSensitive: opiParseAlarmSensitive
 };
 
 function opiPatchRules(widgetDescription: WidgetDescription): void {

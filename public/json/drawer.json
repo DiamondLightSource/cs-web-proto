@@ -301,7 +301,7 @@
             "width": 1
           },
           "actions": {
-            "executeAsOne": false,
+            "executeAsOne": true,
             "actions": [
               {
                 "type": "OPEN_PAGE",
@@ -311,6 +311,19 @@
                   "description": "",
                   "file": {
                     "path": "json/i21.json",
+                    "macros": {},
+                    "defaultProtocol": "ca"
+                  }
+                }
+              },
+              {
+                "type": "OPEN_TAB",
+                "dynamicInfo": {
+                  "name": "BL21I hardware",
+                  "location": "main",
+                  "description": "",
+                  "file": {
+                    "path": "dls/BL21IApp_opi/BL21I-hardware.opi",
                     "macros": {},
                     "defaultProtocol": "ca"
                   }

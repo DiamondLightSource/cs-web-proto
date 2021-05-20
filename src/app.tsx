@@ -3,7 +3,6 @@ import "./app.css";
 import { Provider } from "react-redux";
 import { store } from "./redux/store";
 import log, { LogLevelDesc } from "loglevel";
-import { lightTheme, darkTheme, ThemeContext } from "./themeContext";
 import { EmbeddedDisplay } from "./ui/widgets";
 import { onRenderCallback } from "./profilerCallback";
 import { RelativePosition } from "./types/position";
@@ -37,33 +36,27 @@ const LoadEmbedded = (): JSX.Element => {
   );
 };
 
-const App: React.FC = (): JSX.Element => {
-  // Set dark or light mode using ThemeContext
-  const { dark, applyTheme } = React.useContext(ThemeContext);
-  applyTheme(dark ? darkTheme : lightTheme);
-
-  return (
-    // Each instance of context provider allows child components to access
-    // the properties on the object placed in value
-    // Profiler sends render information whenever child components rerender
-    <Provider store={store}>
-      <div className="App">
-        <Header />
-        <Profiler id="Dynamic Page Profiler" onRender={onRenderCallback}>
-          <Switch>
-            <Redirect exact from="/" to="/app" />
-            <Route exact path="/performance">
-              <LoadPerformancePage />
-            </Route>
-            <Route path="/*">
-              <LoadEmbedded />
-            </Route>
-          </Switch>
-        </Profiler>
-        <Footer />
-      </div>
-    </Provider>
-  );
-};
+const App: React.FC = (): JSX.Element => (
+  // Each instance of context provider allows child components to access
+  // the properties on the object placed in value
+  // Profiler sends render information whenever child components rerender
+  <Provider store={store}>
+    <div className="App">
+      <Header />
+      <Profiler id="Dynamic Page Profiler" onRender={onRenderCallback}>
+        <Switch>
+          <Redirect exact from="/" to="/app" />
+          <Route exact path="/performance">
+            <LoadPerformancePage />
+          </Route>
+          <Route path="/*">
+            <LoadEmbedded />
+          </Route>
+        </Switch>
+      </Profiler>
+      <Footer />
+    </div>
+  </Provider>
+);
 
 export default App;
