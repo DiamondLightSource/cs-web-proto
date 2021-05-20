@@ -22,6 +22,7 @@ import { Color } from "../../../types/color";
 
 const ReadbackProps = {
   precision: IntPropOpt,
+  formatType: ChoicePropOpt(["default", "decimal", "exponential"]),
   showUnits: BoolPropOpt,
   precisionFromPv: BoolPropOpt,
   alarmSensitive: BoolPropOpt,
@@ -45,6 +46,7 @@ export const ReadbackComponent = (
   const {
     value,
     precision,
+    formatType = "default",
     font,
     backgroundColor,
     border,
@@ -69,7 +71,11 @@ export const ReadbackComponent = (
       // Enum PV so use string representation.
       displayedValue = DType.coerceString(value);
     } else if (prec !== undefined && !isNaN(DType.coerceDouble(value))) {
-      displayedValue = DType.coerceDouble(value).toFixed(prec);
+      if (formatType === "exponential") {
+        displayedValue = DType.coerceDouble(value).toExponential(prec);
+      } else {
+        displayedValue = DType.coerceDouble(value).toFixed(prec);
+      }
     } else {
       displayedValue = DType.coerceString(value);
     }

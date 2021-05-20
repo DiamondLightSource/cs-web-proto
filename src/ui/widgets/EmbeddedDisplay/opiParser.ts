@@ -316,6 +316,20 @@ function opiParseHorizontalAlignment(jsonProp: ElementCompact): string {
 }
 
 /**
+ * Converts an format type number present in the json properties, into
+ * a string e.g. "left", "center", "right"
+ * @param jsonProp
+ */
+function opiParseFormatType(jsonProp: ElementCompact): string {
+  const formats: { [key: number]: string } = {
+    0: "default",
+    1: "decimal",
+    2: "exponential"
+  };
+  return formats[opiParseNumber(jsonProp)];
+}
+
+/**
  * Creates a new Border object
  * @param props
  */
@@ -452,6 +466,7 @@ export const OPI_SIMPLE_PARSERS: ParserDict = {
   offColor: ["off_color", opiParseColor],
   fillColor: ["fill_color", opiParseColor],
   precision: ["precision", opiParseNumber],
+  formatType: ["format_type", opiParseFormatType],
   precisionFromPv: ["precision_from_pv", opiParseBoolean],
   visible: ["visible", opiParseBoolean],
   showUnits: ["show_units", opiParseBoolean],
