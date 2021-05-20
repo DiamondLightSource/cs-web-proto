@@ -39,7 +39,7 @@ export function commonCss(props: {
     ? "transparent"
     : props.backgroundColor?.toString();
   const cursor =
-    props.actions && props.actions.actions.length > 0 ? "pointer" : "auto";
+    props.actions && props.actions.actions.length > 0 ? "pointer" : undefined;
   return {
     ...props.border?.css(),
     ...props.font?.css(),
