@@ -30,7 +30,7 @@ export const DrawerProps = {
 export const DrawerComponent = (
   props: InferWidgetProps<typeof DrawerProps>
 ): JSX.Element => {
-  const [drawOpen, setDrawOpen] = React.useState(false);
+  const [drawerOpen, setDrawerOpen] = React.useState(false);
 
   // To satisfy the typing for the literals
   type anchorType = "left" | "right" | "top" | "bottom";
@@ -38,7 +38,7 @@ export const DrawerComponent = (
   return (
     <React.Fragment>
       <button
-        onClick={(): void => setDrawOpen(true)}
+        onClick={(): void => setDrawerOpen(true)}
         style={{
           height: "100%",
           width: "100%",
@@ -52,10 +52,11 @@ export const DrawerComponent = (
       </button>
       <Drawer
         anchor={(props.anchor ?? "left") as anchorType}
-        open={drawOpen}
-        onClose={(): void => setDrawOpen(false)}
+        open={drawerOpen}
+        onClose={(): void => setDrawerOpen(false)}
       >
         <div
+          onClick={() => setDrawerOpen(false)}
           style={{
             width: props.drawerWidth ?? "80vw",
             maxWidth: props.drawerMaxWidth ?? "400px"
