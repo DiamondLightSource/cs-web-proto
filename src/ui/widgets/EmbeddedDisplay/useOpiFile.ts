@@ -58,7 +58,7 @@ async function fetchAndConvert(
     }
     return description;
   } catch (error) {
-    const message = `Error loading ${filepath}: ${error}.`;
+    const message = `Error parsing ${filepath}: ${error}.`;
     log.warn(message);
     log.warn(error);
     return errorWidget(message);

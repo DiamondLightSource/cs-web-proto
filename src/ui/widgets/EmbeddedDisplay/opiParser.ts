@@ -60,7 +60,8 @@ const OPI_WIDGET_MAPPING: { [key: string]: any } = {
   "org.csstudio.opibuilder.widgets.progressbar": "progressbar",
   "org.csstudio.opibuilder.widgets.LED": "led",
   "org.csstudio.opibuilder.widgets.Image": "image",
-  "org.csstudio.opibuilder.widgets.edm.symbolwidget": "pngsymbol"
+  "org.csstudio.opibuilder.widgets.edm.symbolwidget": "pngsymbol",
+  "org.csstudio.opibuilder.widgets.detailpanel": "device"
 };
 
 /**

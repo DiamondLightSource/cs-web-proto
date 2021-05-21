@@ -55,7 +55,7 @@ describe("<EmbeddedDisplay>", (): void => {
       expect(globalWithFetch.fetch).toHaveBeenCalledWith(resolvedFile);
 
       await waitFor((): void =>
-        expect(queryByText(/Error loading.*/)).toBeInTheDocument()
+        expect(queryByText(/Error parsing.*/)).toBeInTheDocument()
       );
       log.setLevel("info");
     }
@@ -97,7 +97,7 @@ describe("<EmbeddedDisplay>", (): void => {
     expect(globalWithFetch.fetch).toHaveBeenCalledWith("/TestFile1.bob");
 
     await waitFor((): void =>
-      expect(queryByText(/Error loading.*/)).toBeInTheDocument()
+      expect(queryByText(/Error parsing.*/)).toBeInTheDocument()
     );
     log.setLevel("info");
   });
