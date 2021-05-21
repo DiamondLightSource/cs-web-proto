@@ -38,6 +38,10 @@ async function fetchAndConvert(
   const contents = await filePromise.text();
   let description = EMPTY_WIDGET;
   try {
+    // Hack!
+    if (contents.startsWith("<!DOCTYPE html>")) {
+      throw new Error("File not found");
+    }
     if (contents !== "") {
       // Convert the contents to widget description style object
       switch (fileExt) {
@@ -54,7 +58,7 @@ async function fetchAndConvert(
     }
     return description;
   } catch (error) {
-    const message = `Error loading ${filepath}: ${error}.`;
+    const message = `Error parsing ${filepath}: ${error}.`;
     log.warn(message);
     log.warn(error);
     return errorWidget(message);

@@ -1,36 +1,56 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Widget, commonCss } from "./../widget";
 import { WidgetPropType } from "./../widgetProps";
-import { InferWidgetProps, StringProp } from "./../propTypes";
+import { InferWidgetProps, StringPropOpt } from "./../propTypes";
 import { registerWidget } from "./../register";
 import { useDevice } from "../../hooks/useDevice";
 import { parseResponse } from "./deviceParser";
 import { parseObject } from "../EmbeddedDisplay/jsonParser";
-import { widgetDescriptionToComponent } from "../createComponent";
+import {
+  errorWidget,
+  WidgetDescription,
+  widgetDescriptionToComponent
+} from "../createComponent";
 import { RelativePosition } from "../../../types/position";
 import { BorderStyle, Border } from "../../../types/border";
 import { Color } from "../../../types/color";
+import { MacroContext } from "../../../types/macros";
 
 const DeviceProps = {
-  deviceName: StringProp
+  deviceName: StringPropOpt,
+  name: StringPropOpt
 };
 
 export const DeviceComponent = (
   props: InferWidgetProps<typeof DeviceProps>
 ): JSX.Element => {
-  // Remove spaces from input
-  const description = useDevice("dev://" + props.deviceName.replace(/\s/g, ""));
-
+  // When replacing a detail panel, you can deduce device name
+  // from the macro DESC on the screen.
+  const displayMacros = useContext(MacroContext).macros;
+  const deviceName = props.deviceName ?? displayMacros["DESC"];
+  let componentDescription: WidgetDescription;
   let border = new Border(BorderStyle.Dotted, Color.DISCONNECTED, 3);
-  let jsonResponse = {};
-  if (description && description.value) {
-    jsonResponse = JSON.parse(description?.value?.stringValue || "");
-    border = Border.NONE;
+  const replacedDeviceName = `dev://${deviceName.replace(/\s/g, "")}`;
+  const description = useDevice(replacedDeviceName);
+  try {
+    let jsonResponse = {};
+    if (description && description.value) {
+      jsonResponse = JSON.parse(description?.value?.stringValue || "");
+      border = Border.NONE;
+      const jsonObject = parseResponse(jsonResponse as any);
+
+      componentDescription = parseObject(jsonObject, "ca");
+    } else {
+      componentDescription = errorWidget(
+        `No device ${replacedDeviceName} found.`,
+        new RelativePosition("100%", "50px")
+      );
+    }
+  } catch {
+    componentDescription = errorWidget(
+      `Failed to load device widget ${deviceName}`
+    );
   }
-  const jsonObject = parseResponse(jsonResponse as any);
-
-  const componentDescription = parseObject(jsonObject, "ca");
-
   const Component = widgetDescriptionToComponent({
     position: new RelativePosition("100%", "100%"),
     type: "display",
