@@ -27,7 +27,7 @@ export const DeviceComponent = (
   // When replacing a detail panel, you can deduce device name
   // from the macro DESC on the screen.
   const displayMacros = useContext(MacroContext).macros;
-  const deviceName = props.deviceName ?? displayMacros["DESC"];
+  const deviceName = props.deviceName ?? (displayMacros["DESC"] || "");
   let componentDescription: WidgetDescription;
   let border = new Border(BorderStyle.Dotted, Color.DISCONNECTED, 3);
   const replacedDeviceName = `dev://${deviceName.replace(/\s/g, "")}`;
