@@ -16,7 +16,7 @@ import { StringProp, InferWidgetProps, BorderPropOpt } from "../propTypes";
 import { EmbeddedDisplay } from "../EmbeddedDisplay/embeddedDisplay";
 import { Color } from "../../../types/color";
 import { RelativePosition } from "../../../types/position";
-import { FileContext } from "../../../fileContext";
+import { ExitFileContext, FileContext } from "../../../fileContext";
 
 const DynamicPageProps = {
   location: StringProp,
@@ -48,40 +48,44 @@ export const DynamicPageComponent = (
     );
   } else {
     return (
-      <div style={style}>
-        <EmbeddedDisplay file={file} position={new RelativePosition()} />
-        <div
-          style={{
-            position: "absolute",
-            right: "5px",
-            top: "5px",
-            width: "25px",
-            height: "25px",
-            backgroundColor: "green"
-          }}
-        >
-          <ActionButton
-            position={new RelativePosition("25px", "25px")}
-            backgroundColor={new Color("var(--light-background)")}
-            foregroundColor={new Color("#ffffff")}
-            actions={{
-              executeAsOne: false,
-              actions: [
-                {
-                  type: CLOSE_PAGE,
-                  dynamicInfo: {
-                    name: props.location,
-                    location: props.location,
-                    file: file,
-                    description: "Close"
-                  }
-                }
-              ]
+      <ExitFileContext.Provider
+        value={() => fileContext.removePage(props.location)}
+      >
+        <div style={style}>
+          <EmbeddedDisplay file={file} position={new RelativePosition()} />
+          <div
+            style={{
+              position: "absolute",
+              right: "5px",
+              top: "5px",
+              width: "25px",
+              height: "25px",
+              backgroundColor: "green"
             }}
-            image="/img/x.png"
-          />
+          >
+            <ActionButton
+              position={new RelativePosition("25px", "25px")}
+              backgroundColor={new Color("var(--light-background)")}
+              foregroundColor={new Color("#ffffff")}
+              actions={{
+                executeAsOne: false,
+                actions: [
+                  {
+                    type: CLOSE_PAGE,
+                    dynamicInfo: {
+                      name: props.location,
+                      location: props.location,
+                      file: file,
+                      description: "Close"
+                    }
+                  }
+                ]
+              }}
+              image="/img/x.png"
+            />
+          </div>
         </div>
-      </div>
+      </ExitFileContext.Provider>
     );
   }
 };

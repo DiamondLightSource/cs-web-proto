@@ -15,7 +15,7 @@ import { Color } from "../../types/color";
 import { AlarmQuality } from "../../types/dtypes";
 import { Font } from "../../types/font";
 import { OutlineContext } from "../../outlineContext";
-import { FileContext } from "../../fileContext";
+import { ExitFileContext, FileContext } from "../../fileContext";
 import { executeAction, WidgetAction, WidgetActions } from "./widgetActions";
 import { Popover } from "react-tiny-popover";
 import { resolveTooltip } from "./tooltip";
@@ -185,6 +185,7 @@ export const Widget = (
 ): JSX.Element => {
   const [id] = useId();
   const files = useContext(FileContext);
+  const exitContext = useContext(ExitFileContext);
 
   // Logic for context menu.
   const [contextOpen, setContextOpen] = useState(false);
@@ -218,7 +219,7 @@ export const Widget = (
   }
 
   function triggerCallback(action: WidgetAction): void {
-    executeAction(action, files);
+    executeAction(action, files, exitContext);
     setContextOpen(false);
   }
   let tooltip = props.tooltip;
