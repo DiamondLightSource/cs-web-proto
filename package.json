@@ -38,8 +38,11 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "coveralls": "cat ./coverage/lcov.info | node node_modules/.bin/coveralls",
-    "lint": "node_modules/.bin/eslint 'src/**/*.{ts,tsx}' --max-warnings=0",
-    "prettier-check": "node_modules/.bin/prettier --check 'src/**/*.{ts,tsx}'"
+    "lint": "eslint 'src/**/*.{ts,tsx}' --max-warnings=0",
+    "prettier-check": "prettier --check 'src/**/*.{ts,tsx}'",
+    "check-types": "tsc",
+    "all-checks": "npm run lint && npm run prettier-check && npm run check-types",
+    "prepare": "husky install"
   },
   "browserslist": {
     "production": [
@@ -72,6 +75,7 @@
     "eslint-plugin-import": "^2.20.0",
     "eslint-plugin-prettier": "^3.1.2",
     "eslint-plugin-unicorn": "^32.0.1",
+    "husky": "^6.0.0",
     "lint-staged": "^11.0.0",
     "prettier": "^2.2.1",
     "react-test-renderer": "^16.12.0",
