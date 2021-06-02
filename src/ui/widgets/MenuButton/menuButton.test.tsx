@@ -1,25 +1,27 @@
 import React from "react";
-import { MenuButtonComponent, MenuButtonProps } from "./menuButton";
-import { shallow, ShallowWrapper } from "enzyme";
-import { create, ReactTestRenderer } from "react-test-renderer";
+import { MenuButtonComponent } from "./menuButton";
+import { create } from "react-test-renderer";
 import { dtimeNow, DAlarm, DType, DDisplay } from "../../../types/dtypes";
-import { ACTIONS_EX_FIRST } from "../../../testResources";
+import { ACTIONS_EX_FIRST, WRITE_PV_ACTION } from "../../../testResources";
+import { fireEvent, render, waitFor } from "@testing-library/react";
 
-let snapshot: ReactTestRenderer;
-let enumwrapper: ShallowWrapper<MenuButtonProps>;
-let labelwrapper: ShallowWrapper<MenuButtonProps>;
-let actionswrapper: ShallowWrapper<MenuButtonProps>;
-
+const mock = jest.fn();
 beforeEach((): void => {
-  const mock = (_: any): void => {
-    // pass
-  };
-  const menubutton = (
+  mock.mockReset();
+});
+
+function getMenubuttonComponent(
+  value?: number,
+  readonly?: boolean
+): JSX.Element {
+  const val = value ?? 0;
+  const disabled = readonly ?? false;
+  return (
     <MenuButtonComponent
       connected={true}
       value={
         new DType(
-          { doubleValue: 0 },
+          { doubleValue: val },
           DAlarm.NONE,
           dtimeNow(),
           new DDisplay({
@@ -27,103 +29,73 @@ beforeEach((): void => {
           })
         )
       }
-      readonly={false}
+      readonly={disabled}
       pvName="testpv"
       actionsFromPv={true}
       onChange={mock}
     />
   );
-  const menuButtonLabel = (
-    <MenuButtonComponent
-      connected={true}
-      pvName="testpv"
-      label="menulabel"
-      readonly={false}
-      actionsFromPv={true}
-      onChange={mock}
-    />
-  );
-  const menuButtonActions = (
-    <MenuButtonComponent
-      connected={false}
-      readonly={false}
-      actionsFromPv={false}
-      actions={ACTIONS_EX_FIRST}
-      label="menubutton"
-      onChange={mock}
-    />
-  );
-  enumwrapper = shallow(menubutton);
-  labelwrapper = shallow(menuButtonLabel);
-  actionswrapper = shallow(menuButtonActions);
-  snapshot = create(menubutton);
-});
+}
+
+const menuButtonActions = (
+  <MenuButtonComponent
+    connected={false}
+    readonly={false}
+    actionsFromPv={false}
+    actions={ACTIONS_EX_FIRST}
+    label="menu button with label"
+    onChange={mock}
+  />
+);
+const menuButtonActionsDisabled = (
+  <MenuButtonComponent
+    connected={false}
+    readonly={true}
+    actionsFromPv={false}
+    actions={ACTIONS_EX_FIRST}
+    label="menu button with label"
+    onChange={mock}
+  />
+);
 
 describe("<MenuButton />", (): void => {
   test("it matches the snapshot", (): void => {
+    const snapshot = create(getMenubuttonComponent());
     expect(snapshot.toJSON()).toMatchSnapshot();
   });
 
-  test("it renders a basic element", (): void => {
-    const select = enumwrapper.find("select");
-    expect(select.get(0).type).toEqual("select");
-    expect(select.prop("value")).toEqual(0);
-  });
-
   test("it renders all the choices", (): void => {
-    const options = enumwrapper.find("option");
-    expect(options.length).toBe(6);
+    const { getByRole } = render(getMenubuttonComponent());
+    const select = getByRole("combobox");
+    expect(select.childElementCount).toBe(6);
   });
   test("it renders actions", (): void => {
-    const options = actionswrapper.find("option");
-    // two actions plus label
-    expect(options.length).toBe(3);
+    const { getByRole } = render(menuButtonActions);
+    const select = getByRole("combobox");
+    expect(select.firstChild?.textContent).toEqual("menu button with label");
+    // Two actions plus label.
+    expect(select.childElementCount).toBe(3);
   });
-  test("it passes through the correct index", (): void => {
-    const mock = (_: any): void => {
-      // pass
-    };
-    const menubuttonwrap = shallow(
-      <MenuButtonComponent
-        connected={true}
-        pvName="testpv"
-        value={
-          new DType(
-            { doubleValue: 5 },
-            DAlarm.NONE,
-            dtimeNow(),
-            new DDisplay({
-              choices: ["zero", "one", "two", "three", "four", "five"]
-            })
-          )
-        }
-        readonly={false}
-        actionsFromPv={true}
-        onChange={mock}
-      />
-    );
-    const select = menubuttonwrap.find("select");
-    expect(select.get(0).type).toEqual("select");
-    expect(select.prop("value")).toEqual(5);
-  });
-  test("it uses a label", (): void => {
-    const select = labelwrapper.find("select");
-    expect(select.prop("value")).toEqual(0);
-    const options = labelwrapper.find("option");
-    expect(options.length).toBe(1);
-    expect(options.text()).toBe("menulabel");
+  test("it renders the option with the correct index", (): void => {
+    const { getByText } = render(getMenubuttonComponent(5));
+    expect((getByText("zero") as HTMLOptionElement).selected).toBe(false);
+    expect((getByText("five") as HTMLOptionElement).selected).toBe(true);
   });
 
-  test("preventDefault is not called when enabled", (): void => {
-    const mockPreventDefault = jest.fn();
-    const event = { preventDefault: mockPreventDefault };
-    enumwrapper.find("select").simulate("mousedown", event);
-    expect(mockPreventDefault).not.toHaveBeenCalled();
+  test("function called on click", async (): Promise<void> => {
+    const { getByRole } = render(menuButtonActions);
+    // Select the 1st option (0th option is the label)
+    fireEvent.change(getByRole("combobox"), {
+      target: { value: 1 }
+    });
+    expect(mock).toHaveBeenCalledWith(WRITE_PV_ACTION);
   });
-  test("preventDefault is called when disabled", (): void => {
+  test("preventDefault called on mousedown when widget is disabled", async (): Promise<void> => {
+    const { getByRole } = render(getMenubuttonComponent(0, true));
     const mockPreventDefault = jest.fn();
-    const event = { preventDefault: mockPreventDefault };
-    labelwrapper.find("select").simulate("mousedown", event);
+    const event = new MouseEvent("mousedown", { bubbles: true });
+    event.preventDefault = mockPreventDefault;
+    fireEvent(getByRole("combobox"), event);
     expect(mockPreventDefault).toHaveBeenCalled();
   });
 });
