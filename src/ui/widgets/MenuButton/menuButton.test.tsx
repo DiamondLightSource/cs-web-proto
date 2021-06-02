@@ -3,7 +3,7 @@ import { MenuButtonComponent } from "./menuButton";
 import { create } from "react-test-renderer";
 import { dtimeNow, DAlarm, DType, DDisplay } from "../../../types/dtypes";
 import { ACTIONS_EX_FIRST, WRITE_PV_ACTION } from "../../../testResources";
-import { fireEvent, render, waitFor } from "@testing-library/react";
+import { fireEvent, render } from "@testing-library/react";
 
 const mock = jest.fn();
 beforeEach((): void => {
@@ -41,16 +41,6 @@ const menuButtonActions = (
   <MenuButtonComponent
     connected={false}
     readonly={false}
-    actionsFromPv={false}
-    actions={ACTIONS_EX_FIRST}
-    label="menu button with label"
-    onChange={mock}
-  />
-);
-const menuButtonActionsDisabled = (
-  <MenuButtonComponent
-    connected={false}
-    readonly={true}
     actionsFromPv={false}
     actions={ACTIONS_EX_FIRST}
     label="menu button with label"

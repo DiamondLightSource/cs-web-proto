@@ -18,10 +18,10 @@ describe("<ActionButton />", (): void => {
     expect(button.textContent).toEqual("hello");
   });
 
-  test("function called on click", (): void => {
+  test("function called on click", async (): Promise<void> => {
     const { getByRole } = render(actionButton);
     const button = getByRole("button") as HTMLButtonElement;
     fireEvent.click(button);
-    waitFor(() => expect(mock).toHaveBeenCalled());
+    await waitFor(() => expect(mock).toHaveBeenCalled());
   });
 });

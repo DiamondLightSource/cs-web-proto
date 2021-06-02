@@ -14,14 +14,16 @@ describe("<DropDownComponent />", (): void => {
     expect(snapshot.toJSON()).toMatchSnapshot();
   });
 
-  test("details node opens on click", (): void => {
+  test("details node opens on click", async (): Promise<void> => {
     const { getByRole, getByText } = render(grouping);
     // Content text there even when closed.
     expect(getByText("Test Text")).toBeInTheDocument();
-    const dropDown = getByRole("group");
-    expect(dropDown).not.toHaveAttribute("open");
-    fireEvent.click(dropDown);
+    const dropDown = getByRole("group") as HTMLDetailsElement;
+    expect(dropDown.open).not.toBe(true);
+    // Click needs to be on summary element rather than details element.
+    const summary = getByText("Test");
+    fireEvent.click(summary);
     // Wait for the event loop.
-    waitFor(() => expect(dropDown).toHaveAttribute("open"));
+    await waitFor(() => expect(dropDown.open).toBe(true));
   });
 });
