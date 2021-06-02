@@ -1,27 +1,27 @@
 import React from "react";
-import { ActionButtonComponent, ActionButtonProps } from "./actionButton";
-import { shallow, ShallowWrapper } from "enzyme";
-import { create, ReactTestRenderer } from "react-test-renderer";
+import { ActionButtonComponent } from "./actionButton";
+import { create } from "react-test-renderer";
+import { fireEvent, render, waitFor } from "@testing-library/react";
 
-let snapshot: ReactTestRenderer;
-let actionButtonWrapper: ShallowWrapper<ActionButtonProps>;
-beforeEach((): void => {
-  const mock = (_: any): void => {
-    // pass
-  };
-  const actionButton = <ActionButtonComponent text={"hello"} onClick={mock} />;
-  snapshot = create(actionButton);
-  actionButtonWrapper = shallow(actionButton);
-});
+const mock = jest.fn();
+const actionButton = <ActionButtonComponent text={"hello"} onClick={mock} />;
 
 describe("<ActionButton />", (): void => {
   test("it matches the snapshot", (): void => {
+    const snapshot = create(actionButton);
     expect(snapshot.toJSON()).toMatchSnapshot();
   });
 
-  test("it renders a basic element", (): void => {
-    const button = actionButtonWrapper.find("button");
-    expect(button.get(0).type).toEqual("button");
-    expect(button.text()).toEqual("hello");
+  test("it renders a button", (): void => {
+    const { getByRole } = render(actionButton);
+    const button = getByRole("button") as HTMLButtonElement;
+    expect(button.textContent).toEqual("hello");
+  });
+
+  test("function called on click", async (): Promise<void> => {
+    const { getByRole } = render(actionButton);
+    const button = getByRole("button") as HTMLButtonElement;
+    fireEvent.click(button);
+    await waitFor(() => expect(mock).toHaveBeenCalled());
   });
 });

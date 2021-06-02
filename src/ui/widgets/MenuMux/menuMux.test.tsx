@@ -1,23 +1,19 @@
 import React from "react";
-import { MenuMuxComponent, MenuMuxProps } from "./menuMux";
-import { shallow, ShallowWrapper } from "enzyme";
+import { MenuMuxComponent } from "./menuMux";
 import { create, ReactTestRenderer } from "react-test-renderer";
+import { render } from "@testing-library/react";
 
 let snapshot: ReactTestRenderer;
-let wrapper: ShallowWrapper<MenuMuxProps>;
+
+const menuMux = (
+  <MenuMuxComponent
+    onChange={jest.fn()}
+    values={{ A: "a", B: "b" }}
+    selected={"a"}
+  />
+);
 
 beforeEach((): void => {
-  const mock = (_: any): void => {
-    // pass
-  };
-  const menuMux = (
-    <MenuMuxComponent
-      onChange={mock}
-      values={{ A: "a", B: "b" }}
-      selected={"a"}
-    />
-  );
-  wrapper = shallow(menuMux);
   snapshot = create(menuMux);
 });
 
@@ -26,14 +22,9 @@ describe("<MenuMux />", (): void => {
     expect(snapshot.toJSON()).toMatchSnapshot();
   });
 
-  test("it renders a basic element", (): void => {
-    const select = wrapper.find("select");
-    expect(select.get(0).type).toEqual("select");
-    expect(select.prop("value")).toEqual("a");
-  });
-
-  test("it renders all the choices", (): void => {
-    const options = wrapper.find("option");
-    expect(options.length).toBe(2);
+  test("it renders both options", (): void => {
+    const { getByRole } = render(menuMux);
+    const select = getByRole("combobox") as HTMLSelectElement;
+    expect(select.childElementCount).toEqual(2);
   });
 });

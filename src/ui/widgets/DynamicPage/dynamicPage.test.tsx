@@ -28,7 +28,7 @@ describe("<DynamicPage>", (): void => {
     expect(queryByText(/.*no file loaded/)).toBeInTheDocument();
   });
 
-  it("loads a page", () => {
+  it("loads a page", async (): Promise<void> => {
     const mockSuccessResponse =
       '{"type": "display", "position": "relative", "children": [ { "type": "label", "position": "relative", "text": "hello" } ] }';
     const mockJsonPromise = Promise.resolve(mockSuccessResponse);
@@ -55,7 +55,7 @@ describe("<DynamicPage>", (): void => {
     expect(globalWithFetch.fetch).toHaveBeenCalledTimes(1);
     expect(globalWithFetch.fetch).toHaveBeenCalledWith("/json/test.json");
 
-    waitFor((): void => {
+    await waitFor((): void => {
       expect(queryByText("hello")).toBeInTheDocument();
     });
   });
