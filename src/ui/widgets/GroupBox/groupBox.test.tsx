@@ -1,35 +1,21 @@
 import React from "react";
 import { GroupBoxComponent } from "./groupBox";
-import { shallow, ShallowWrapper } from "enzyme";
-import { create, ReactTestRenderer } from "react-test-renderer";
+import { create } from "react-test-renderer";
 import { Color } from "../../../types/color";
-
-let snapshot: ReactTestRenderer;
-let wrapper: ShallowWrapper;
-
-beforeEach((): void => {
-  const grouping = <GroupBoxComponent name={"Test"} />;
-  wrapper = shallow(grouping);
-});
+import { render } from "@testing-library/react";
 
 describe("<GroupingContainerComponent />", (): void => {
   test("it matches the snapshot", (): void => {
-    snapshot = create(
+    const snapshot = create(
       <GroupBoxComponent name={"Test"} backgroundColor={Color.WHITE} />
     );
     expect(snapshot.toJSON()).toMatchSnapshot();
   });
 
-  test("it is a div HTML object", (): void => {
-    expect(wrapper.type()).toEqual("div");
-  });
-
-  test("name props is text of legend", (): void => {
-    expect(wrapper.childAt(0).text()).toEqual("Test");
-  });
-
-  test("it has a div for other children", (): void => {
-    expect(wrapper.childAt(1).type()).toEqual("div");
+  test("it renders the title", (): void => {
+    const grouping = <GroupBoxComponent name={"Test"} />;
+    const { getByText } = render(grouping);
+    expect(getByText("Test")).toBeInTheDocument();
   });
 
   test("it renders child div with text", (): void => {
@@ -39,7 +25,7 @@ describe("<GroupingContainerComponent />", (): void => {
         <div>{childText}</div>
       </GroupBoxComponent>
     );
-    const wrapperWithChild = shallow(groupingWithChild);
-    expect(wrapperWithChild.childAt(1).childAt(0).text()).toEqual(childText);
+    const { getByText } = render(groupingWithChild);
+    expect(getByText("Test")).toBeInTheDocument();
   });
 });
