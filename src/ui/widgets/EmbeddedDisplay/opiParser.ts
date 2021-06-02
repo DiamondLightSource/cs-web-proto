@@ -26,7 +26,8 @@ import {
   WRITE_PV,
   OPEN_WEBPAGE,
   WidgetActions,
-  OPEN_TAB
+  OPEN_TAB,
+  EXIT
 } from "../widgetActions";
 
 export interface XmlDescription {
@@ -578,7 +579,36 @@ function opiPatchPaths(
   }
 }
 
-export const OPI_PATCHERS: PatchFunction[] = [opiPatchRules, opiPatchPaths];
+function opiPatchActions(widgetDescription: WidgetDescription): void {
+  if (
+    widgetDescription.type === "actionbutton" &&
+    widgetDescription.text &&
+    widgetDescription.text.toLowerCase() === "exit"
+  ) {
+    if (
+      !widgetDescription.actions ||
+      widgetDescription.actions.actions.length === 0
+    ) {
+      widgetDescription.actions = {
+        executeAsOne: false,
+        actions: [
+          {
+            type: EXIT,
+            exitInfo: {
+              description: "Exit"
+            }
+          }
+        ]
+      };
+    }
+  }
+}
+
+export const OPI_PATCHERS: PatchFunction[] = [
+  opiPatchRules,
+  opiPatchPaths,
+  opiPatchActions
+];
 
 export function parseOpi(
   xmlString: string,

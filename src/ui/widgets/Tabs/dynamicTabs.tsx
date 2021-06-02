@@ -22,7 +22,7 @@ import {
 import { EmbeddedDisplay } from "../EmbeddedDisplay/embeddedDisplay";
 import { RelativePosition } from "../../../types/position";
 
-import { FileContext } from "../../../fileContext";
+import { ExitFileContext, FileContext } from "../../../fileContext";
 import { TabBar } from "./tabs";
 
 export const DynamicTabsProps = {
@@ -76,17 +76,23 @@ export const DynamicTabsComponent = (
       const [tabName, fileDesc] = openTabs[index];
       fileContext.removeTab(props.location, tabName, fileDesc);
     };
+    const closeCurrentTab = (): void => {
+      const [tabName, fileDesc] = openTabs[selectedTab];
+      fileContext.removeTab(props.location, tabName, fileDesc);
+    };
 
     return (
-      <div style={containerStyle}>
-        <TabBar
-          tabNames={tabNames}
-          selectedTab={selectedTab}
-          onTabSelected={onTabSelected}
-          onTabClosed={onTabClosed}
-        ></TabBar>
-        {children[selectedTab]}
-      </div>
+      <ExitFileContext.Provider value={() => closeCurrentTab()}>
+        <div style={containerStyle}>
+          <TabBar
+            tabNames={tabNames}
+            selectedTab={selectedTab}
+            onTabSelected={onTabSelected}
+            onTabClosed={onTabClosed}
+          ></TabBar>
+          {children[selectedTab]}
+        </div>
+      </ExitFileContext.Provider>
     );
   }
 };

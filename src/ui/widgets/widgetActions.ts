@@ -4,7 +4,7 @@ import log from "loglevel";
 import { MacroMap } from "../../types/macros";
 import { DType } from "../../types/dtypes";
 import { DynamicContent } from "./propTypes";
-import { FileContextType } from "../../fileContext";
+import { ExitContextType, FileContextType } from "../../fileContext";
 
 export const OPEN_PAGE = "OPEN_PAGE";
 export const CLOSE_PAGE = "CLOSE_PAGE";
@@ -12,6 +12,7 @@ export const OPEN_TAB = "OPEN_TAB";
 export const CLOSE_TAB = "CLOSE_TAB";
 export const OPEN_WEBPAGE = "OPEN_WEBPAGE";
 export const WRITE_PV = "WRITE_PV";
+export const EXIT = "EXIT";
 
 /* Giving info properties to each of the following works around a
    difficulty with TypeScript and PropTypes, where there's a problem
@@ -46,7 +47,14 @@ export interface WritePv {
   };
 }
 
-export type WidgetAction = OpenWebpage | WritePv | DynamicAction;
+export interface Exit {
+  type: typeof EXIT;
+  exitInfo: {
+    description?: string;
+  };
+}
+
+export type WidgetAction = OpenWebpage | WritePv | DynamicAction | Exit;
 
 export interface WidgetActions {
   actions: WidgetAction[];
@@ -98,6 +106,12 @@ export const getActionDescription = (action: WidgetAction): string => {
       } else {
         return `Close tab ${action.dynamicInfo.name}`;
       }
+    case EXIT:
+      if (action.exitInfo.description) {
+        return action.exitInfo.description;
+      } else {
+        return `Close current screen`;
+      }
     default:
       throw new InvalidAction(action);
   }
@@ -148,6 +162,7 @@ export const closeTab = (
 export const executeAction = (
   action: WidgetAction,
   files?: FileContextType,
+  exitContext?: ExitContextType,
   parentMacros?: MacroMap
 ): void => {
   switch (action.type) {
@@ -191,6 +206,13 @@ export const executeAction = (
       }
       writePv(action.writePvInfo.pvName, dtypeVal);
       break;
+    case EXIT:
+      if (exitContext) {
+        exitContext();
+      } else {
+        log.error("Tried to exit but no exit context passed");
+      }
+      break;
     default:
       throw new InvalidAction(action);
   }
@@ -199,6 +221,7 @@ export const executeAction = (
 export const executeActions = (
   actions: WidgetActions,
   files?: FileContextType,
+  exitContext?: ExitContextType,
   parentMacros?: MacroMap
 ): void => {
   if (actions.actions.length > 0) {
@@ -210,7 +233,7 @@ export const executeActions = (
     }
     for (const action of toExecute) {
       log.info(`Executing an action: ${getActionDescription(action)}`);
-      executeAction(action, files, parentMacros);
+      executeAction(action, files, exitContext, parentMacros);
     }
   }
 };

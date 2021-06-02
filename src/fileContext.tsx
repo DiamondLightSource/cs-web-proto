@@ -7,6 +7,7 @@
  * It is provided to widgets using a React context.
  */
 import React from "react";
+import log from "loglevel";
 import { useHistory, useLocation } from "react-router-dom";
 import { MacroMap, macrosEqual } from "./types/macros";
 
@@ -280,3 +281,11 @@ export const FileProvider: React.FC<FileProviderProps> = (
     </FileContext.Provider>
   );
 };
+
+// Special context for exit buttons.
+// A widget can register itself as handling exit actions and provide
+// the function to do so via this context.
+export type ExitContextType = () => void;
+export const ExitFileContext = React.createContext(() => {
+  log.warn("Exit action has no consumer.");
+});

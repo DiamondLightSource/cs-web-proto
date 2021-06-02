@@ -16,7 +16,7 @@ import {
 import { registerWidget } from "../register";
 import { executeActions, WidgetActions } from "../widgetActions";
 import { MacroContext } from "../../../types/macros";
-import { FileContext } from "../../../fileContext";
+import { ExitFileContext, FileContext } from "../../../fileContext";
 
 const SimpleSymbolProps = {
   imageFile: StringProp,
@@ -45,10 +45,16 @@ export const SimpleSymbolComponent = (
   props: SimpleSymbolComponentProps
 ): JSX.Element => {
   const files = useContext(FileContext);
+  const exitContext = useContext(ExitFileContext);
   const parentMacros = useContext(MacroContext).macros;
   function onClick(event: React.MouseEvent<HTMLDivElement>): void {
     if (props.actions !== undefined) {
-      executeActions(props.actions as WidgetActions, files, parentMacros);
+      executeActions(
+        props.actions as WidgetActions,
+        files,
+        exitContext,
+        parentMacros
+      );
     }
   }
   // Render the imageIndex-th part of the larger png.
