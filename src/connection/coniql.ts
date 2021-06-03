@@ -3,19 +3,16 @@
  */
 import log from "loglevel";
 import base64js from "base64-js";
-import { ApolloClient } from "apollo-client";
-import { ApolloLink, from } from "apollo-link";
-import { HttpLink } from "apollo-link-http";
-import { WebSocketLink } from "apollo-link-ws";
-import { getMainDefinition } from "apollo-utilities";
-import { gql } from "graphql-tag";
+import { ApolloClient, ApolloLink, from } from "@apollo/client";
+import { HttpLink } from "@apollo/client/link/http";
+import { WebSocketLink } from "@apollo/client/link/ws";
+import { onError } from "@apollo/client/link/error";
+import { InMemoryCache, NormalizedCacheObject } from "@apollo/client/cache";
 import {
-  InMemoryCache,
-  NormalizedCacheObject,
-  IntrospectionFragmentMatcher
-} from "apollo-cache-inmemory";
-import { onError } from "apollo-link-error";
-import introspectionQueryResultData from "./fragmentTypes.json";
+  ObservableSubscription,
+  getMainDefinition
+} from "@apollo/client/utilities";
+import { gql } from "graphql-tag";
 import {
   Connection,
   ConnectionChangedCallback,
@@ -37,7 +34,6 @@ import {
   ChannelRole,
   DisplayForm
 } from "../types/dtypes";
-import { Subscription } from "apollo-client/util/Observable";
 
 export interface ConiqlStatus {
   quality: "ALARM" | "WARNING" | "VALID" | "INVALID" | "UNDEFINED" | "CHANGING";
@@ -271,14 +267,20 @@ export class ConiqlPlugin implements Connection {
   private connected: boolean;
   private wsClient: SubscriptionClient;
   private disconnected: string[] = [];
-  private subscriptions: { [pvName: string]: Subscription };
+  private subscriptions: { [pvName: string]: ObservableSubscription };
 
   public constructor(socket: string) {
-    const fragmentMatcher = new IntrospectionFragmentMatcher({
-      introspectionQueryResultData
+    const cache = new InMemoryCache({
+      possibleTypes: {
+        name: [
+          "FunctionMeta",
+          "ObjectMeta",
+          "EnumMeta",
+          "NumberMeta",
+          "TableMeta"
+        ]
+      }
     });
-
-    const cache = new InMemoryCache({ fragmentMatcher });
     this.wsClient = new SubscriptionClient(`ws://${socket}/ws`, {
       reconnect: true
     });
@@ -383,7 +385,7 @@ export class ConiqlPlugin implements Connection {
     );
   }
 
-  private _subscribe(pvName: string): Subscription {
+  private _subscribe(pvName: string): ObservableSubscription {
     return this.client
       .subscribe({
         query: PV_SUBSCRIPTION,
