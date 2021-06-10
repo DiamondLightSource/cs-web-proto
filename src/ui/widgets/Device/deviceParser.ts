@@ -214,7 +214,6 @@ export const parseResponse = (response: Response): any => {
     type: "groupbox",
     name: `${wordSplitter(deviceName)}`,
     position: "relative",
-    margin: "5px 0 0 0",
     children: [
       {
         type: "flexcontainer",
