@@ -1,9 +1,14 @@
 import log from "loglevel";
+import { WidgetDescription } from "../createComponent";
 
 type Typename = "NamedChild" | "Channel" | "Group" | "Device";
 
 export interface Channel {
   id: string;
+  display: {
+    description: string;
+    widget: string;
+  };
   __typename: Typename;
 }
 
@@ -44,7 +49,7 @@ export interface Response {
 export const wordSplitter = (word: string): string =>
   word.replace(/([A-Z])/g, " $1").trim();
 
-export const createLabel = (value = "-"): any => {
+export function createLabel(value: string): WidgetDescription {
   return {
     type: "label",
     position: "relative",
@@ -53,9 +58,9 @@ export const createLabel = (value = "-"): any => {
     backgroundColor: "transparent",
     margin: "5px 0 0 0"
   };
-};
+}
 
-export const createReadback = (pv = ""): any => {
+export function createReadback(pv: string): WidgetDescription {
   return {
     type: "readback",
     position: "relative",
@@ -63,14 +68,58 @@ export const createReadback = (pv = ""): any => {
     margin: "5px 0 0 0",
     pvName: `${pv}`
   };
-};
+}
 
+export function createInput(pv: string): WidgetDescription {
+  return {
+    type: "input",
+    position: "relative",
+    width: "45%",
+    margin: "5px 0 0 0",
+    pvName: `${pv}`
+  };
+}
+
+export function createButton(
+  pv: string,
+  description?: string
+): WidgetDescription {
+  return {
+    type: "actionbutton",
+    position: "relative",
+    width: "45%",
+    margin: "5px 0 0 0",
+    pvName: pv,
+    text: description,
+    actions: {
+      executeAsOne: false,
+      actions: [
+        {
+          type: "WRITE_PV",
+          writePvInfo: {
+            pvName: pv,
+            value: 0,
+            description: description
+          }
+        }
+      ]
+    }
+  };
+}
+
+const WIDGET_FUNCTIONS: {
+  [name: string]: (pv: string, description?: string) => WidgetDescription;
+} = {
+  TEXTUPDATE: createReadback,
+  TEXTINPUT: createInput,
+  BUTTON: createButton
+};
 export interface Groups {
   [key: string]: Array<string>;
 }
 
 export interface Pvs {
-  [key: string]: string;
+  [key: string]: Channel;
 }
 
 /**
@@ -78,7 +127,9 @@ export interface Pvs {
  * of the PVs that should be in that group
  * @param response
  */
-export const parseResponseIntoObject = (response: Response): any => {
+export const parseResponseIntoObject = (
+  response: Response
+): [string, Pvs, Groups] => {
   const pvIds: Pvs = {};
   const groups: Groups = {};
   let deviceName = "";
@@ -92,7 +143,7 @@ export const parseResponseIntoObject = (response: Response): any => {
           groupChild => groupChild.name
         );
       } else if (namedChild.child.__typename === "Channel") {
-        pvIds[namedChild.name] = (namedChild.child as Channel).id;
+        pvIds[namedChild.name] = namedChild.child as Channel;
       } else {
         log.error("Typename not handled");
       }
@@ -101,12 +152,20 @@ export const parseResponseIntoObject = (response: Response): any => {
   return [deviceName, pvIds, groups];
 };
 
+function createWidget(label: string, channel: Channel): any {
+  if (WIDGET_FUNCTIONS.hasOwnProperty(channel.display.widget)) {
+    return WIDGET_FUNCTIONS[channel.display.widget](channel.id, label);
+  } else {
+    return createReadback(channel.id);
+  }
+}
+
 export const parseResponse = (response: Response): any => {
   const deviceChildren: any[] = [];
 
   let deviceName = "Device";
   if (response.getDevice) {
-    const [name, pvIds, groups]: [string, Pvs, Groups] =
+    const [name, channels, groups]: [string, Pvs, Groups] =
       parseResponseIntoObject(response);
     deviceName = name;
 
@@ -117,10 +176,10 @@ export const parseResponse = (response: Response): any => {
       const groupChildren = [];
 
       for (const pvName of pvNames) {
-        const id = pvIds[pvName];
-        delete pvIds[pvName];
+        const channel = channels[pvName];
+        delete channels[pvName];
         groupChildren.push(createLabel(pvName));
-        groupChildren.push(createReadback(id));
+        groupChildren.push(createWidget(pvName, channel));
       }
 
       return {
@@ -141,10 +200,10 @@ export const parseResponse = (response: Response): any => {
     });
 
     // PVs that aren't in a group are displayed first
-    Object.entries(pvIds).forEach(data => {
-      const [pvName, id] = data;
-      deviceChildren.push(createLabel(pvName));
-      deviceChildren.push(createReadback(id));
+    Object.entries(channels).forEach(data => {
+      const [label, channel] = data;
+      deviceChildren.push(createLabel(label));
+      deviceChildren.push(createWidget(label, channel));
     });
 
     // Then groups are displayed after

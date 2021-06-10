@@ -243,6 +243,10 @@ export const DEVICE_QUERY = gql`
           __typename
           ... on Channel {
             id
+            display {
+              description
+              widget
+            }
           }
           ... on Device {
             id
