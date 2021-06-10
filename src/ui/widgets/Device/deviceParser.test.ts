@@ -22,20 +22,12 @@ describe("wordSplitter", (): void => {
 });
 
 describe("createLabel", (): void => {
-  test("Empty label fills in with placeholder", (): void => {
-    expect(createLabel().text).toBe("-");
-  });
-
   test("Value is placed into label", (): void => {
     expect(createLabel("ValueHere").text).toBe("Value Here");
   });
 });
 
 describe("createReadback", (): void => {
-  test("Empty pv fills in with placeholder", (): void => {
-    expect(createReadback().pvName).toBe("");
-  });
-
   test("pv is placed into readback", (): void => {
     expect(createReadback("PvName").pvName).toBe("PvName");
   });
@@ -50,7 +42,11 @@ const fakeResponseJson: Response = {
         label: "Readback",
         child: {
           __typename: "Channel",
-          id: "ca://BL21I-OP-MIRR-01:YAW.RBV"
+          id: "ca://BL21I-OP-MIRR-01:YAW.RBV",
+          display: {
+            description: "Readback",
+            widget: "TEXTUPDATE"
+          }
         },
         __typename: "NamedChild"
       },
@@ -69,7 +65,11 @@ const fakeResponseJson: Response = {
         label: "Limit Violation",
         child: {
           __typename: "Channel",
-          id: "ca://BL21I-OP-MIRR-01:YAW.LVIO"
+          id: "ca://BL21I-OP-MIRR-01:YAW.LVIO",
+          display: {
+            description: "Limit Violation",
+            widget: "TEXTUPDATE"
+          }
         },
         __typename: "NamedChild"
       },
@@ -78,7 +78,11 @@ const fakeResponseJson: Response = {
         label: "Direction",
         child: {
           __typename: "Channel",
-          id: "ca://BL21I-OP-MIRR-01:YAW.DIR"
+          id: "ca://BL21I-OP-MIRR-01:YAW.DIR",
+          display: {
+            description: "Direction",
+            widget: "TEXTUPDATE"
+          }
         },
         __typename: "NamedChild"
       }
@@ -94,11 +98,11 @@ describe("parseResponseIntoObject", (): void => {
     expect(groups).toEqual({
       Limits: ["LimitViolation"]
     });
-    expect(pvIds).toEqual({
-      Readback: "ca://BL21I-OP-MIRR-01:YAW.RBV",
-      LimitViolation: "ca://BL21I-OP-MIRR-01:YAW.LVIO",
-      Direction: "ca://BL21I-OP-MIRR-01:YAW.DIR"
-    });
+    expect(Object.values(pvIds).map(channel => channel.id)).toEqual([
+      "ca://BL21I-OP-MIRR-01:YAW.RBV",
+      "ca://BL21I-OP-MIRR-01:YAW.LVIO",
+      "ca://BL21I-OP-MIRR-01:YAW.DIR"
+    ]);
   });
 
   test("empty response returns empty objects", (): void => {

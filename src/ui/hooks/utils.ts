@@ -22,6 +22,9 @@ export function deviceSelector(device: string, state: CsState): DType {
 }
 
 export function deviceComparator(before: DType, after: DType): boolean {
+  if (!before || !after) {
+    return false;
+  }
   if (Object.keys(before).length !== Object.keys(after).length) {
     return false;
   }
