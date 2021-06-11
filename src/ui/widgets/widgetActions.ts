@@ -232,7 +232,7 @@ export const executeActions = (
       toExecute = [actions.actions[0]];
     }
     for (const action of toExecute) {
-      log.info(`Executing an action: ${getActionDescription(action)}`);
+      log.debug(`Executing an action: ${getActionDescription(action)}`);
       executeAction(action, files, exitContext, parentMacros);
     }
   }
