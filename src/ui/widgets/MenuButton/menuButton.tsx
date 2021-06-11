@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { CSSProperties, useContext } from "react";
 
 import { commonCss, Widget } from "../widget";
 import { PVWidgetPropType } from "../widgetProps";
@@ -84,11 +84,11 @@ export const MenuButtonComponent = (props: MenuButtonProps): JSX.Element => {
     );
   }
 
-  const style = {
+  const style: CSSProperties = {
     ...commonCss(props),
     width: "100%",
     height: "100%",
-    "text-align-last": "center",
+    textAlignLast: "center",
     cursor: disabled ? "not-allowed" : "default"
   };
 

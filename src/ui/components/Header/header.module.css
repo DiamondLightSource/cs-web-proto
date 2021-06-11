@@ -1,9 +1,10 @@
 .header {
-  height: 5vh;
+  height: 6vh;
   width: 100%;
   position: relative;
   background-color: var(--diamond-blue);
   display: flex;
+  font-size: 2vh;
 }
 
 .imgWrapper {
@@ -19,16 +20,25 @@
   height: 50%;
 }
 
+a {
+  padding: 20px;
+}
+
+
 .h1 {
   clear: none;
-  font-size: 2vh;
   display: flex;
   justify-content: center;
   flex-grow: 1;
   flex-basis: 0;
   min-width: 0;
   align-items: center;
-  color: #cccccc;
+  color: var(--light-text);
+}
+
+.h1 a,a:visited {
+  text-decoration: none;
+  color: var(--light-text);
 }
 
 .buttonWrapper {
@@ -41,4 +51,18 @@
   align-items: center;
   border: 0;
   margin: 1rem;
+}
+
+.button {
+  background-color: transparent;
+  color: var(--light-text);
+  margin: 10px;
+  font-size: 1.4rem;
+  border: outset;
+  text-decoration: none;
+  padding: 4px;
+}
+
+.button:visited {
+  color: var(--light-text);
 }

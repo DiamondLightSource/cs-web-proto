@@ -1,10 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import classes from "./performancePage.module.css";
 import { RelativePosition } from "../../../types/position";
 import { PV } from "../../../types/pv";
 import { Readback } from "../../widgets/Readback/readback";
+import { InputComponent } from "../input/input";
 
-const DEFAULT_ROWS = 20;
+const SIMPLE_COMPONENTS = "simple-components";
+const READBACKS = "readbacks";
+type WidgetType = typeof SIMPLE_COMPONENTS | typeof READBACKS;
+const ONE_PV = "one-pv";
+const MULTIPLE_PVS = "multiple-pvs";
+type ReadbackType = typeof ONE_PV | typeof MULTIPLE_PVS;
+const DEFAULT_ROWS = 10;
 const DEFAULT_COLUMNS = 10;
 
 function readback(
@@ -19,32 +26,101 @@ function readback(
   }
   return (
     <Readback
-      position={new RelativePosition(`${width}%`, `${height}%`)}
+      position={new RelativePosition(`${width}%`, `20px`)}
       pvName={new PV(pvName, "sim")}
     ></Readback>
   );
 }
 
-export const LoadPerformancePage = (): JSX.Element => {
-  const location = useLocation();
-  const params = new URLSearchParams(location.search);
-  const rows = parseFloat(params.get("rows") ?? "") || DEFAULT_ROWS;
-  const columns = parseFloat(params.get("columns") ?? "") || DEFAULT_COLUMNS;
-  const differentPvs = params.get("differentPvs") === "true" ?? false;
-  const simpleComponents = params.get("simpleComponents") === "true" ?? false;
-  if (simpleComponents) {
-    return <SimpleUpdaterPage rows={rows} columns={columns} />;
+export const PerformancePage = (): JSX.Element => {
+  const [rows, setRows] = useState(DEFAULT_ROWS);
+  const [columns, setColumns] = useState(DEFAULT_COLUMNS);
+  const [widgetType, setWidgetType] = useState<WidgetType>(READBACKS);
+  const [readbackType, setReadbackType] = useState<ReadbackType>(ONE_PV);
+  let child: JSX.Element;
+  if (widgetType === SIMPLE_COMPONENTS) {
+    child = <SimpleUpdaters rows={rows} columns={columns} />;
+  } else {
+    child = (
+      <ReadbackWidgets
+        rows={rows}
+        columns={columns}
+        differentPvs={readbackType === MULTIPLE_PVS}
+      />
+    );
   }
+
   return (
-    <PerformancePage
-      rows={rows}
-      columns={columns}
-      differentPvs={differentPvs}
-    />
+    <>
+      <div className={classes.widgetContainer}>
+        <div className={classes.widgetSelector}>
+          <p>No. of rows:</p>
+          <InputComponent
+            value={rows.toString()}
+            onEnter={(value: string) => setRows(parseFloat(value))}
+          />
+          <p>No. of columns:</p>
+          <InputComponent
+            value={columns.toString()}
+            onEnter={(value: string) => setColumns(parseFloat(value))}
+          />
+          <div className={classes.radioButtonSet}>
+            <input
+              type="radio"
+              id={SIMPLE_COMPONENTS}
+              value={SIMPLE_COMPONENTS}
+              checked={widgetType === SIMPLE_COMPONENTS}
+              onChange={event =>
+                setWidgetType(event.currentTarget.value as WidgetType)
+              }
+            ></input>
+            <label htmlFor={SIMPLE_COMPONENTS}>Simple components</label>
+            <input
+              type="radio"
+              id={READBACKS}
+              value={READBACKS}
+              checked={widgetType === READBACKS}
+              onChange={event =>
+                setWidgetType(event.currentTarget.value as WidgetType)
+              }
+            ></input>
+            <label htmlFor={READBACKS}>PV Readbacks</label>
+          </div>
+          <div
+            className={classes.radioButtonSet}
+            style={{
+              visibility: widgetType === READBACKS ? "visible" : "hidden"
+            }}
+          >
+            <input
+              type="radio"
+              id={ONE_PV}
+              value={ONE_PV}
+              checked={readbackType === ONE_PV}
+              onChange={event =>
+                setReadbackType(event.currentTarget.value as ReadbackType)
+              }
+            ></input>
+            <label htmlFor={ONE_PV}>One PV</label>
+            <input
+              type="radio"
+              id={MULTIPLE_PVS}
+              value={MULTIPLE_PVS}
+              checked={readbackType === MULTIPLE_PVS}
+              onChange={event =>
+                setReadbackType(event.currentTarget.value as ReadbackType)
+              }
+            ></input>
+            <label htmlFor={MULTIPLE_PVS}>Multiple PVs</label>
+          </div>
+        </div>
+        {child}
+      </div>
+    </>
   );
 };
 
-const PerformancePage = (props: {
+const ReadbackWidgets = (props: {
   rows: number;
   columns: number;
   differentPvs: boolean;
@@ -54,13 +130,13 @@ const PerformancePage = (props: {
   for (let i = 0; i < rows; i++) {
     for (let j = 0; j < columns; j++) {
       const n = i * rows + j;
-      const width = 100 / rows;
-      const height = 100 / columns;
+      const width = 100 / columns;
+      const height = 100 / rows;
       widgets.push(readback(width, height, differentPvs, n));
     }
   }
   return (
-    <div style={{ width: "80%", margin: "auto" }}>
+    <div>
       <h1>Readback widgets using simulated PVs</h1>
       <div style={{ width: "100%", display: "flex", flexWrap: "wrap" }}>
         {widgets}
@@ -69,29 +145,7 @@ const PerformancePage = (props: {
   );
 };
 
-const MinUpdater = (props: {
-  width: number;
-  height: number;
-  val: number;
-}): JSX.Element => {
-  return (
-    <div
-      style={{
-        width: `${props.width}%`,
-        height: `${props.height}%`,
-        display: "flex",
-        minHeight: "20px",
-        backgroundColor: "#383838",
-        color: "#00bb00",
-        font: "14px helvetica"
-      }}
-    >
-      {props.val}
-    </div>
-  );
-};
-
-const SimpleUpdaterPage = (props: {
+const SimpleUpdaters = (props: {
   rows: number;
   columns: number;
 }): JSX.Element => {
@@ -108,15 +162,24 @@ const SimpleUpdaterPage = (props: {
   const components = [];
   for (let i = 0; i < rows; i++) {
     for (let j = 0; j < columns; j++) {
-      const width = 100 / rows;
-      const height = 100 / columns;
-      components.push(<MinUpdater width={width} height={height} val={value} />);
+      const width = 100 / columns;
+      components.push(
+        <div className={classes.simpleUpdater} style={{ width: `${width}%` }}>
+          {value}
+        </div>
+      );
     }
   }
   return (
-    <div style={{ width: "80%", margin: "auto" }}>
+    <div>
       <h1>Simple React components</h1>
-      <div style={{ width: "100%", display: "flex", flexWrap: "wrap" }}>
+      <div
+        style={{
+          width: "100%",
+          display: "flex",
+          flexWrap: "wrap"
+        }}
+      >
         {components}
       </div>
     </div>

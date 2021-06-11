@@ -8,7 +8,7 @@ import { EmbeddedDisplay } from "../../widgets";
 import { DrawerWidget } from "../../widgets/Drawer/drawer";
 import classes from "./header.module.css";
 
-export const Header = (): JSX.Element => {
+export const Header = (props: { drawer: boolean }): JSX.Element => {
   const { toggleOutlines } = React.useContext(OutlineContext);
   const children = [
     <EmbeddedDisplay
@@ -20,22 +20,36 @@ export const Header = (): JSX.Element => {
   return (
     <header className={classes.header}>
       <div className={classes.imgWrapper}>
-        <DrawerWidget
-          text="Open screens"
-          position={new RelativePosition(undefined, "4rem", "1rem")}
-          font={new Font(20, FontStyle.Regular)}
-          border={
-            new Border(BorderStyle.Line, new Color("var(--diamond-yellow)"), 3)
-          }
-          foregroundColor={new Color("var(--diamond-yellow)")}
-          backgroundColor={new Color("var(--diamond-blue)")}
-        >
-          {children}
-        </DrawerWidget>
+        {props.drawer ? (
+          <DrawerWidget
+            text="Open screens"
+            position={new RelativePosition(undefined, "4rem", "1rem")}
+            font={new Font(20, FontStyle.Regular)}
+            border={
+              new Border(
+                BorderStyle.Line,
+                new Color("var(--diamond-yellow)"),
+                3
+              )
+            }
+            foregroundColor={new Color("var(--diamond-yellow)")}
+            backgroundColor={new Color("var(--diamond-blue)")}
+          >
+            {children}
+          </DrawerWidget>
+        ) : (
+          <a href="/">Back to app</a>
+        )}
       </div>
-      <h1 className={classes.h1}>cs-web-proto</h1>
+      <h1 className={classes.h1}>
+        <a href="/">cs-web-proto</a>
+      </h1>
       <div className={classes.buttonWrapper}>
-        <button type="button" onClick={toggleOutlines}>
+        <button
+          className={classes.button}
+          type="button"
+          onClick={toggleOutlines}
+        >
           Show outlines
         </button>
       </div>

@@ -4,22 +4,18 @@ exports[`<Footer /> it matches the snapshot 1`] = `
 <footer
   style={
     Object {
-      "color": "#cccccc",
+      "color": "var(--light-text)",
+      "fontSize": "1.3rem",
       "height": "5vh",
     }
   }
 >
   <p>
-    Copyright © 2020 Diamond Light Source Ltd.
+    Copyright © 2021 Diamond Light Source Ltd.
   </p>
   <p>
     <a
       href="https://www.diamond.ac.uk"
-      style={
-        Object {
-          "color": "#cccccc",
-        }
-      }
     >
       www.diamond.ac.uk
     </a>
