@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 import classes from "./input.module.css";
 import { writePv } from "../../hooks/useSubscription";
@@ -15,6 +15,7 @@ import {
 import { Font } from "../../../types/font";
 import { Color } from "../../../types/color";
 import { AlarmQuality, DType } from "../../../types/dtypes";
+import { InputComponent } from "../../components/input/input";
 
 export interface InputProps {
   pvName: string;
@@ -33,9 +34,17 @@ export interface InputProps {
   textAlign?: "left" | "center" | "right";
 }
 
-export const InputComponent: React.FC<InputProps> = (
-  props: InputProps
+export const SmartInputComponent = (
+  props: PVInputComponent & {
+    font?: Font;
+    foregroundColor?: Color;
+    backgroundColor?: Color;
+    transparent?: boolean;
+    alarmSensitive?: boolean;
+    textAlign?: "left" | "center" | "right";
+  }
 ): JSX.Element => {
+  const alarmQuality = props.value?.getAlarm().quality ?? AlarmQuality.VALID;
   let allClasses = classes.Input;
   const style = commonCss(props);
   if (props.textAlign) {
@@ -51,7 +60,7 @@ export const InputComponent: React.FC<InputProps> = (
     allClasses += ` ${classes.readonly}`;
   }
   if (props.alarmSensitive) {
-    switch (props.alarm) {
+    switch (alarmQuality) {
       case AlarmQuality.UNDEFINED:
       case AlarmQuality.INVALID:
       case AlarmQuality.CHANGING:
@@ -65,82 +74,17 @@ export const InputComponent: React.FC<InputProps> = (
         break;
     }
   }
-  return (
-    <input
-      type="text"
-      value={props.value}
-      onKeyDown={props.onKeyDown}
-      onChange={props.onChange}
-      onBlur={props.onBlur}
-      onClick={props.onClick}
-      className={allClasses}
-      style={style}
-      readOnly={props.readonly}
-    />
-  );
-};
-
-export const SmartInputComponent = (
-  props: PVInputComponent & {
-    font?: Font;
-    foregroundColor?: Color;
-    backgroundColor?: Color;
-    transparent?: boolean;
-    alarmSensitive?: boolean;
-    textAlign?: "left" | "center" | "right";
+  function onEnter(value: string): void {
+    writePv(props.pvName, new DType({ stringValue: value }));
   }
-): JSX.Element => {
-  const [inputValue, setInputValue] = useState("");
-  const [editing, setEditing] = useState(false);
-  function onKeyDown(event: React.KeyboardEvent<HTMLInputElement>): void {
-    if (event.key === "Enter") {
-      writePv(
-        props.pvName,
-        new DType({ stringValue: event.currentTarget.value })
-      );
-      setInputValue("");
-      setEditing(false);
-      event.currentTarget.blur();
-    }
-  }
-  function onChange(event: React.ChangeEvent<HTMLInputElement>): void {
-    setInputValue(event.currentTarget.value);
-  }
-  function onClick(event: React.MouseEvent<HTMLInputElement>): void {
-    /* When focus gained allow editing. */
-    if (!props.readonly && !editing) {
-      setInputValue("");
-      setEditing(true);
-    }
-  }
-  function onBlur(event: React.ChangeEvent<HTMLInputElement>): void {
-    setEditing(false);
-    /* When focus lost show PV value. */
-    setInputValue(DType.coerceString(props.value));
-  }
-
-  if (!editing && inputValue !== DType.coerceString(props.value)) {
-    setInputValue(DType.coerceString(props.value));
-  }
-
-  const alarmQuality = props.value?.getAlarm().quality ?? AlarmQuality.VALID;
 
   return (
     <InputComponent
-      pvName={props.pvName}
-      value={inputValue}
-      alarm={alarmQuality}
-      alarmSensitive={props.alarmSensitive || false}
+      value={DType.coerceString(props.value)}
       readonly={props.readonly}
-      foregroundColor={props.foregroundColor}
-      backgroundColor={props.backgroundColor}
-      transparent={props.transparent ?? false}
-      onKeyDown={onKeyDown}
-      onChange={onChange}
-      onBlur={onBlur}
-      onClick={onClick}
-      font={props.font}
-      textAlign={props.textAlign}
+      onEnter={onEnter}
+      style={style}
+      className={allClasses}
     />
   );
 };
