@@ -53,6 +53,7 @@ const OPI_WIDGET_MAPPING: { [key: string]: any } = {
   "org.csstudio.opibuilder.widgets.Rectangle": "shape",
   "org.csstudio.opibuilder.widgets.ActionButton": "actionbutton",
   "org.csstudio.opibuilder.widgets.MenuButton": "menubutton",
+  "org.csstudio.opibuilder.widgets.combo": "menubutton",
   "org.csstudio.opibuilder.widgets.checkbox": "checkbox",
   "org.csstudio.opibuilder.widgets.linkingContainer": "embeddedDisplay",
   "org.csstudio.opibuilder.widgets.polyline": "line",
@@ -496,6 +497,7 @@ export const OPI_SIMPLE_PARSERS: ParserDict = {
   flipVertical: ["flip_vertical", opiParseBoolean],
   bit: ["bit", opiParseNumber],
   actionsFromPv: ["actions_from_pv", opiParseBoolean],
+  itemsFromPv: ["items_from_pv", opiParseBoolean],
   deviceName: ["device_name", opiParseString]
 };
 

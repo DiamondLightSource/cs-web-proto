@@ -4,7 +4,7 @@ import { commonCss, Widget } from "../widget";
 import { PVWidgetPropType } from "../widgetProps";
 import { registerWidget } from "../register";
 import {
-  BoolProp,
+  BoolPropOpt,
   ColorPropOpt,
   InferWidgetProps,
   StringPropOpt
@@ -28,7 +28,8 @@ export interface MenuButtonProps {
   pvName?: string;
   value?: DType;
   readonly: boolean;
-  actionsFromPv: boolean;
+  actionsFromPv?: boolean;
+  itemsFromPv?: boolean;
   label?: string;
   actions?: WidgetActions;
   foregroundColor?: Color;
@@ -41,10 +42,12 @@ export const MenuButtonComponent = (props: MenuButtonProps): JSX.Element => {
     connected,
     value = null,
     readonly,
-    actionsFromPv,
+    actionsFromPv = true,
+    itemsFromPv = false,
     pvName,
     label
   } = props;
+  const fromPv = actionsFromPv || itemsFromPv;
   let actions: WidgetAction[] = props.actions?.actions || [];
 
   // Store whether component is disabled or not
@@ -57,7 +60,7 @@ export const MenuButtonComponent = (props: MenuButtonProps): JSX.Element => {
   // Show 0 by default where there is only one option
   let displayIndex = 0;
 
-  if (actionsFromPv && pvName) {
+  if (fromPv && pvName) {
     if (!connected || value === null) {
       disabled = true;
     } else if (value?.display?.choices) {
@@ -134,7 +137,7 @@ export const SmartMenuButton = (props: {
   pvName: string;
   value?: DType;
   readonly: boolean;
-  actionsFromPv: boolean;
+  actionsFromPv?: boolean;
   actions?: WidgetActions;
   label?: string;
   foregroundColor?: Color;
@@ -167,7 +170,8 @@ export const SmartMenuButton = (props: {
 
 const MenuButtonWidgetProps = {
   ...PVWidgetPropType,
-  actionsFromPv: BoolProp,
+  actionsFromPv: BoolPropOpt,
+  itemsFromPv: BoolPropOpt,
   label: StringPropOpt,
   foregroundColor: ColorPropOpt,
   backgroundColor: ColorPropOpt
