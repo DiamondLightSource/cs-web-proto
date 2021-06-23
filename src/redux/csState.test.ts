@@ -13,7 +13,7 @@ import {
   DeviceQueried,
   DEVICE_QUERIED
 } from "./actions";
-import { DAlarm, DType } from "../types/dtypes";
+import { AlarmQuality, DAlarm, DType } from "../types/dtypes";
 import { ddouble, dstring, ddoubleArray } from "../testResources";
 
 const initialState: CsState = {
@@ -41,8 +41,35 @@ describe("VALUES_CHANGED", (): void => {
       ]
     };
     const newState = csReducer(initialState, action);
-    // expect the latter value to
+    // expect the latter value
     expect(newState.valueCache["PV"].value?.getDoubleValue()).toEqual(2);
+  });
+  test("csReducer merges multiple value updates", (): void => {
+    const action: ValuesChanged = {
+      type: VALUES_CHANGED,
+      payload: [
+        { type: VALUE_CHANGED, payload: { pvName: "PV", value: ddouble(1) } },
+        {
+          type: VALUE_CHANGED,
+          payload: {
+            pvName: "PV",
+            value: new DType(
+              {},
+              new DAlarm(AlarmQuality.ALARM, ""),
+              undefined,
+              undefined,
+              true
+            )
+          }
+        }
+      ]
+    };
+    const newState = csReducer(initialState, action);
+    // value from first update and alarm from second update
+    expect(newState.valueCache["PV"].value?.getDoubleValue()).toEqual(1);
+    expect(newState.valueCache["PV"].value?.getAlarm().quality).toEqual(
+      AlarmQuality.ALARM
+    );
   });
 });
 

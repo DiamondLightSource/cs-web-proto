@@ -32,15 +32,15 @@ export interface FullPvState extends PvState {
 }
 
 export interface ValueCache {
-  [key: string]: FullPvState;
+  [pvName: string]: FullPvState;
 }
 
 export interface Subscriptions {
-  [pv: string]: string[];
+  [pvName: string]: string[];
 }
 
 export interface DeviceCache {
-  [key: string]: DType;
+  [deviceName: string]: DType;
 }
 
 /* The shape of the store for the entire application. */
@@ -52,18 +52,19 @@ export interface CsState {
   deviceCache: DeviceCache;
 }
 
+/* Given a new object that is a shallow copy of the original
+   valueCache, update with contents of a ValueChanged action. */
 function updateValueCache(
-  oldValueCache: ValueCache,
   newValueCache: ValueCache,
   action: ValueChanged
 ): void {
   const { pvName, value } = action.payload;
-  const pvState = oldValueCache[pvName];
-  const newValue = mergeDType(pvState.value, value);
-  const newPvState = Object.assign({}, pvState, {
-    value: newValue
-  });
-  newValueCache[action.payload.pvName] = newPvState;
+  // New PvState object.
+  const newPvState = { ...newValueCache[pvName] };
+  // New DType object.
+  const newValue = mergeDType(newPvState.value, value);
+  newPvState.value = newValue;
+  newValueCache[pvName] = newPvState;
 }
 
 export function csReducer(state = initialState, action: Action): CsState {
@@ -71,20 +72,20 @@ export function csReducer(state = initialState, action: Action): CsState {
   switch (action.type) {
     case VALUE_CHANGED: {
       const newValueCache: ValueCache = { ...state.valueCache };
-      updateValueCache(state.valueCache, newValueCache, action);
+      updateValueCache(newValueCache, action);
       return { ...state, valueCache: newValueCache };
     }
     case VALUES_CHANGED: {
       const newValueCache: ValueCache = { ...state.valueCache };
       for (const changedAction of action.payload) {
-        updateValueCache(state.valueCache, newValueCache, changedAction);
+        updateValueCache(newValueCache, changedAction);
       }
       return { ...state, valueCache: newValueCache };
     }
     case CONNECTION_CHANGED: {
       const newValueCache: ValueCache = { ...state.valueCache };
       const { pvName, value } = action.payload;
-      const pvState = state.valueCache[pvName];
+      const pvState = newValueCache[pvName];
       const newPvState = {
         ...pvState,
         connected: value.isConnected,
