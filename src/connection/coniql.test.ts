@@ -18,13 +18,14 @@ class MockObservable {
   private time?: ConiqlTime;
   private status?: ConiqlStatus;
 
-  public constructor(
-    float?: number,
-    string?: string,
-    array?: ConiqlBase64Array,
-    time?: ConiqlTime,
-    status?: ConiqlStatus
-  ) {
+  public constructor(content: {
+    float?: number;
+    string?: string;
+    array?: ConiqlBase64Array;
+    time?: ConiqlTime;
+    status?: ConiqlStatus;
+  }) {
+    const { float, string, array, time, status } = content;
     this.float = float;
     this.string = string;
     this.array = array;
@@ -63,7 +64,7 @@ describe("ConiqlPlugin", (): void => {
 
   it("handles update to value", (): void => {
     ApolloClient.prototype.subscribe = jest.fn(
-      (_): MockObservable => new MockObservable(42)
+      (_): MockObservable => new MockObservable({ float: 42 })
     ) as jest.Mock;
     cp.subscribe("hello", { string: true });
     expect(ApolloClient.prototype.subscribe).toHaveBeenCalled();
@@ -77,12 +78,12 @@ describe("ConiqlPlugin", (): void => {
     ApolloClient.prototype.subscribe = jest.fn(
       (_): MockObservable =>
         new MockObservable(
-          undefined,
-          undefined,
           // Corresponds to Int32Array with values [0, 1, 2]
           {
-            numberType: "INT32",
-            base64: "AAAAAAEAAAACAAAA"
+            array: {
+              numberType: "INT32",
+              base64: "AAAAAAEAAAACAAAA"
+            }
           }
         )
     ) as jest.Mock;
@@ -103,8 +104,10 @@ describe("ConiqlPlugin", (): void => {
   it("handles update to time", (): void => {
     ApolloClient.prototype.subscribe = jest.fn(
       (_): MockObservable =>
-        new MockObservable(undefined, undefined, undefined, {
-          datetime: new Date(2017, 1, 1)
+        new MockObservable({
+          time: {
+            datetime: new Date(2017, 1, 1)
+          }
         })
     ) as jest.Mock;
     cp.subscribe("hello", { string: true });
