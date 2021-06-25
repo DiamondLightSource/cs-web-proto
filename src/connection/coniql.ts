@@ -291,7 +291,7 @@ export class ConiqlPlugin implements Connection {
     this.wsClient.onReconnecting((): void => {
       log.info("Websocket client reconnected.");
       for (const pvName of this.disconnected) {
-        this._subscribe(pvName);
+        this.subscribe(pvName);
       }
       this.disconnected = [];
     });
@@ -323,7 +323,7 @@ export class ConiqlPlugin implements Connection {
     this.subscriptions = {};
   }
 
-  public createLink(socket: string): ApolloLink {
+  private createLink(socket: string): ApolloLink {
     const wsLink = new WebSocketLink(this.wsClient);
     const errorLink = onError(({ graphQLErrors, networkError }) => {
       if (graphQLErrors) {
@@ -413,7 +413,7 @@ export class ConiqlPlugin implements Connection {
       });
   }
 
-  public subscribe(pvName: string, type: SubscriptionType): string {
+  public subscribe(pvName: string, type?: SubscriptionType): string {
     // TODO: How to handle multiple subscriptions of different types to the same channel?
     if (this.subscriptions[pvName] === undefined) {
       this.subscriptions[pvName] = this._subscribe(pvName);
@@ -454,9 +454,6 @@ export class ConiqlPlugin implements Connection {
     // Note that connectionMiddleware handles multiple subscriptions
     // for the same PV at present, so if this method is called then
     // there is no further need for this PV.
-    // Note that a bug in tartiflette-aiohttp means that the
-    // unsubscribe does not work on Python 3.8.
-    // https://github.com/tartiflette/tartiflette-aiohttp/pull/81
     this.subscriptions[pvName].unsubscribe();
     delete this.subscriptions[pvName];
   }
