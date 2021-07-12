@@ -55,6 +55,34 @@
             },
             {
               "type": "actionbutton",
+              "text": "Tune feedback",
+              "position": "relative",
+              "height": "4rem",
+              "margin": "1% 5% 1% 5%",
+              "font": {
+                "size": "25"
+              },
+              "actions": {
+                "executeAsOne": false,
+                "actions": [
+                  {
+                    "type": "OPEN_PAGE",
+                    "dynamicInfo": {
+                      "name": "app",
+                      "location": "opi",
+                      "description": "",
+                      "file": {
+                        "path": "opi/tfb.opi",
+                        "macros": {},
+                        "defaultProtocol": "ca"
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "type": "actionbutton",
               "text": "Diagnostics SR overview",
               "position": "relative",
               "height": "4rem",
