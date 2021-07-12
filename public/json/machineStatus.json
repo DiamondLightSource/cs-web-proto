@@ -1,10 +1,142 @@
 {
-  "type": "embeddedDisplay",
-  "file": {
-    "path": "bob/FE1.bob",
-    "macros": {},
-    "defaultProtocol": "ca"
-  },
+  "type": "flexcontainer",
   "position": "relative",
-  "margin": "10px"
+  "backgroundColor": "white",
+  "flexFlow": "column",
+  "children": [
+    {
+      "type": "flexcontainer",
+      "position": "relative",
+      "backgroundColor": "white",
+      "flexFlow": "row",
+      "children": [
+        {
+          "type": "actionbutton",
+          "text": "Day",
+          "position": "relative",
+          "height": "4rem",
+          "width": "15%",
+          "margin": "1% 5% 1% 5%",
+          "font": {
+            "size": "25"
+          },
+          "actions": {
+            "executeAsOne": false,
+            "actions": [
+              {
+                "type": "OPEN_PAGE",
+                "dynamicInfo": {
+                  "name": "app",
+                  "location": "opi",
+                  "description": "",
+                  "file": {
+                    "path": "dls/machineStatusClient/Pday.opi",
+                    "macros": {},
+                    "defaultProtocol": "ca"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "actionbutton",
+          "text": "Week",
+          "position": "relative",
+          "height": "4rem",
+          "width": "15%",
+          "margin": "1% 5% 1% 5%",
+          "font": {
+            "size": "25"
+          },
+          "actions": {
+            "executeAsOne": false,
+            "actions": [
+              {
+                "type": "OPEN_PAGE",
+                "dynamicInfo": {
+                  "name": "app",
+                  "location": "opi",
+                  "description": "",
+                  "file": {
+                    "path": "dls/machineStatusClient/Pweek.opi",
+                    "macros": {},
+                    "defaultProtocol": "ca"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "actionbutton",
+          "text": "Front Ends 1",
+          "position": "relative",
+          "height": "4rem",
+          "width": "15%",
+          "margin": "1% 5% 1% 5%",
+          "font": {
+            "size": "25"
+          },
+          "actions": {
+            "executeAsOne": false,
+            "actions": [
+              {
+                "type": "OPEN_PAGE",
+                "dynamicInfo": {
+                  "name": "app",
+                  "location": "opi",
+                  "description": "",
+                  "file": {
+                    "path": "dls/machineStatusClient/FE1.opi",
+                    "macros": {},
+                    "defaultProtocol": "ca"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "actionbutton",
+          "text": "Front Ends 2",
+          "position": "relative",
+          "height": "4rem",
+          "width": "15%",
+          "margin": "1% 5% 1% 5%",
+          "font": {
+            "size": "25"
+          },
+          "actions": {
+            "executeAsOne": false,
+            "actions": [
+              {
+                "type": "OPEN_PAGE",
+                "dynamicInfo": {
+                  "name": "app",
+                  "location": "opi",
+                  "description": "",
+                  "file": {
+                    "path": "dls/machineStatusClient/FE2.opi",
+                    "macros": {
+                      "device": "SR23C-DI-TMBF-01",
+                      "axis": "X",
+                      "axis0": "X",
+                      "axis1": "X"
+                    },
+                    "defaultProtocol": "ca"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "type": "dynamicpage",
+      "position": "relative",
+      "location": "opi"
+    }
+  ]
 }

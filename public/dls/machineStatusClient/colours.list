@@ -1,0 +1,30 @@
+4 0 0
+
+blinkms=750
+max=0x10000
+columns=5
+
+static 0  "Disconn/Invalid"  { 65535 65535 65535 }
+static 1  "White"            { 60652 60652 60652 }
+static 2  "Canvas"           { 51400 51400 51400 }
+static 3  "Grey"             { 37265 37265 37265 }
+static 4  "Black"            {     0     0     0 }
+static 5  "Monitor: NORMAL"  {     0 57568     0 }
+static 6  "Monitor: MAJOR"   { 57568     0     0 }
+static 7  "Monitor: MINOR"   { 65535 61680     0 }
+static 8  "Amber"            { 65535 52428     0 }
+static 9  "Red"              { 65535     0     0 }
+
+rule 10 machineStatusRule {
+ = 1 : "Monitor: NORMAL"
+ default : "Red" 
+}
+
+alarm { 
+  disconnected : "Disconn/Invalid"
+  invalid      : "Disconn/Invalid"
+  minor        : "Monitor: MINOR"
+  major        : "Monitor: MAJOR"
+  noalarm      : *
+ }
+

@@ -14,6 +14,12 @@ import {
 
 const FlexProps = {
   flexFlow: ChoicePropOpt(["rowWrap", "column", "row", "columnWrap"]),
+  justifyContent: ChoicePropOpt([
+    "space-around",
+    "center",
+    "flex-start",
+    "flex-end"
+  ]),
   children: ChildrenPropOpt,
   backgroundColor: ColorPropOpt,
   border: BorderPropOpt
@@ -22,14 +28,14 @@ const FlexProps = {
 export const FlexContainerComponent = (
   props: InferWidgetProps<typeof FlexProps>
 ): JSX.Element => {
-  const style = commonCss(props);
-  const classNames = [classes.FlexContainer];
-  const { flexFlow = null } = props;
-  if (flexFlow !== null) {
-    classNames.push(classes[flexFlow]);
-  }
+  const { flexFlow = undefined, justifyContent = undefined } = props;
+  const style = {
+    ...commonCss(props),
+    flexFlow,
+    justifyContent
+  };
   return (
-    <div className={classNames.join(" ")} style={style}>
+    <div className={classes.FlexContainer} style={style}>
       {props.children}
     </div>
   );

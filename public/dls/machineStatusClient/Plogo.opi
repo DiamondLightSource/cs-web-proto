@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='utf-8'?>
+<display typeId="org.csstudio.opibuilder.Display" version="1.0">
+  <x>389</x>
+  <y>50</y>
+  <width>1280</width>
+  <height>1024</height>
+  <font>
+    <fontdata fontName="liberation sans" height="18" pixels="true" style="0" />
+  </font>
+  <boy_version>4.0.0</boy_version>
+  <foreground_color>
+    <color blue="0" green="0" name="Black" red="0" />
+  </foreground_color>
+  <background_color>
+    <color blue="255" green="255" name="Disconn/Invalid" red="255" />
+  </background_color>
+  <name>Plogo</name>
+  <show_grid>false</show_grid>
+  <auto_zoom_to_fit_all>true</auto_zoom_to_fit_all>
+  <widget typeId="org.csstudio.opibuilder.widgets.Image" version="1.0">
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <height>280</height>
+    <image_file>./logo994x280.png</image_file>
+    <name>EDM Png</name>
+    <width>994</width>
+    <x>143</x>
+    <y>372</y>
+  </widget>
+</display>

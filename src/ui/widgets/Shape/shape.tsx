@@ -7,10 +7,12 @@ import {
   StringPropOpt,
   InferWidgetProps,
   BorderPropOpt,
-  ColorPropOpt
+  ColorPropOpt,
+  PvPropOpt
 } from "../propTypes";
 
 const ShapeProps = {
+  pvName: PvPropOpt,
   shapeWidth: StringPropOpt,
   shapeHeight: StringPropOpt,
   shapeRadius: StringPropOpt,

@@ -559,6 +559,10 @@ function opiPatchPaths(
   }
   // imageFile and image: just strings
   for (const prop of ["imageFile", "image"]) {
+    // If image over http do not manipulate path.
+    if (widgetDescription[prop]?.startsWith("http")) {
+      continue;
+    }
     if (widgetDescription[prop]) {
       widgetDescription[prop] = normalisePath(
         widgetDescription[prop],
