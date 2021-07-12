@@ -13,9 +13,64 @@
           "type": "label",
           "position": "relative",
           "width": "100%",
+          "padding": "20px",
           "backgroundColor": "transparent",
           "transparent": false,
-          "text": "Background changes colour based on PV below",
+          "text": "Some example widgets",
+          "font": {
+            "size": 30
+          }
+        },
+        {
+          "type": "label",
+          "text": "loc://pv1",
+          "width": "30%"
+        },
+        {
+          "type": "input",
+          "position": "relative",
+          "width": "30%",
+          "margin": "2%",
+          "macros": {
+            "COLOUR": "purple"
+          },
+          "color": "${COLOUR}",
+          "pvName": "loc://pv1"
+        },
+        {
+          "type": "readback",
+          "position": "relative",
+          "width": "30%",
+          "margin": "2%",
+          "pvName": "loc://pv1",
+          "tooltip": "Custom tooltip:\n${pvName}\n${pvValue}"
+        },
+        {
+          "type": "label",
+          "text": "loc://pv2",
+          "width": "30%"
+        },
+        {
+          "type": "input",
+          "position": "relative",
+          "width": "30%",
+          "margin": "2%",
+          "pvName": "loc://pv2(1)"
+        },
+        {
+          "type": "readback",
+          "position": "relative",
+          "width": "30%",
+          "margin": "2%",
+          "pvName": "loc://pv2"
+        },
+        {
+          "type": "label",
+          "position": "relative",
+          "width": "100%",
+          "backgroundColor": "transparent",
+          "transparent": false,
+          "text": "Background changes colour based on loc://pv1",
           "border": {
             "style": "line",
             "width": 2,
@@ -51,37 +106,15 @@
           ]
         },
         {
-          "type": "input",
+          "type": "label",
           "position": "relative",
-          "width": "45%",
-          "margin": "2%",
-          "macros": {
-            "COLOUR": "purple"
-          },
-          "color": "${COLOUR}",
-          "pvName": "loc://pv1"
-        },
-        {
-          "type": "readback",
-          "position": "relative",
-          "width": "45%",
-          "margin": "2%",
-          "pvName": "loc://pv1",
-          "tooltip": "Custom tooltip:\n${pvName}\n${pvValue}"
-        },
-        {
-          "type": "input",
-          "position": "relative",
-          "width": "45%",
-          "margin": "2%",
-          "pvName": "loc://pv2(1)"
-        },
-        {
-          "type": "readback",
-          "position": "relative",
-          "width": "45%",
-          "margin": "2%",
-          "pvName": "loc://pv2"
+          "width": "100%",
+          "padding": "10px 0 0 0",
+          "backgroundColor": "transparent",
+          "text": "sim://sine",
+          "font": {
+            "style": "bold"
+          }
         },
         {
           "type": "readback",
@@ -89,6 +122,7 @@
           "width": "45%",
           "margin": "2%",
           "pvName": "sim://sine",
+          "precision": 2,
           "showUnits": true
         },
         {
@@ -97,7 +131,7 @@
           "width": "45%",
           "margin": "2%",
           "pvName": "sim://sine",
-          "precision": 3
+          "precision": 4
         }
       ]
     },
@@ -345,35 +379,6 @@
       ]
     },
     {
-      "type": "slideshow",
-      "position": "relative",
-      "margin": "20px 0 0 0",
-      "height": "50px",
-      "children": [
-        {
-          "type": "label",
-          "position": "relative",
-          "width": "100%",
-          "text": "Widget 1",
-          "height": "100%"
-        },
-        {
-          "type": "label",
-          "position": "relative",
-          "width": "100%",
-          "text": "Widget 2",
-          "height": "100%"
-        },
-        {
-          "type": "label",
-          "position": "relative",
-          "width": "100%",
-          "text": "Widget 3",
-          "height": "100%"
-        }
-      ]
-    },
-    {
       "type": "tabcontainer",
       "position": "relative",
       "margin": "20px 0 0 0",
@@ -383,49 +388,84 @@
           "type": "label",
           "position": "relative",
           "width": "100%",
+          "padding": "10px",
           "text": "This is label one",
+          "font": {
+            "size": "30",
+            "style": "bold"
+          },
           "height": "100%"
         },
         "Two": {
           "type": "label",
           "position": "relative",
           "width": "100%",
+          "padding": "10px",
           "text": "This is label two",
+          "font": {
+            "size": "30",
+            "style": "bold"
+          },
           "height": "100%"
         },
         "Three": {
           "type": "label",
           "position": "relative",
           "width": "100%",
+          "padding": "10px",
           "text": "This is label three",
+          "font": {
+            "size": "30",
+            "style": "bold"
+          },
           "height": "100%"
         },
         "Four": {
           "type": "label",
           "position": "relative",
           "width": "100%",
+          "padding": "10px",
           "text": "This is label four",
+          "font": {
+            "size": "30",
+            "style": "bold"
+          },
           "height": "100%"
         },
         "Five": {
           "type": "label",
           "position": "relative",
           "width": "100%",
+          "padding": "10px",
           "text": "This is label five",
+          "font": {
+            "size": "30",
+            "style": "bold"
+          },
           "height": "100%"
         },
         "Six": {
           "type": "label",
           "position": "relative",
           "width": "100%",
+          "padding": "10px",
           "text": "This is label six",
+          "font": {
+            "size": "30",
+            "style": "bold"
+          },
           "height": "100%"
         },
         "Seven": {
           "type": "label",
           "position": "relative",
           "width": "100%",
+          "padding": "10px",
           "text": "This is label seven",
+          "font": {
+            "size": "30",
+            "style": "bold"
+          },
           "height": "100%"
         }
       }
