@@ -55,7 +55,7 @@ describe("ConiqlPlugin", (): void => {
   let mockValUpdate: jest.Mock;
   let mockDevUpdate: jest.Mock;
   beforeEach((): void => {
-    cp = new ConiqlPlugin("a.b.c:100");
+    cp = new ConiqlPlugin("a.b.c:100", false);
     mockConnUpdate = jest.fn();
     mockValUpdate = jest.fn();
     mockDevUpdate = jest.fn();

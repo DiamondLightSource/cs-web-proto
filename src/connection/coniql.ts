@@ -264,6 +264,8 @@ export const DEVICE_QUERY = gql`
 `;
 
 export class ConiqlPlugin implements Connection {
+  private wsProtocol = "ws";
+  private httpProtocol = "http";
   private client: ApolloClient<NormalizedCacheObject>;
   private onConnectionUpdate: ConnectionChangedCallback;
   private onValueUpdate: ValueChangedCallback;
@@ -273,7 +275,11 @@ export class ConiqlPlugin implements Connection {
   private disconnected: string[] = [];
   private subscriptions: { [pvName: string]: ObservableSubscription };
 
-  public constructor(socket: string) {
+  public constructor(socket: string, ssl: boolean) {
+    if (ssl) {
+      this.wsProtocol = "wss";
+      this.httpProtocol = "https";
+    }
     const cache = new InMemoryCache({
       possibleTypes: {
         name: [
@@ -285,9 +291,12 @@ export class ConiqlPlugin implements Connection {
         ]
       }
     });
-    this.wsClient = new SubscriptionClient(`ws://${socket}/ws`, {
-      reconnect: true
-    });
+    this.wsClient = new SubscriptionClient(
+      `${this.wsProtocol}://${socket}/ws`,
+      {
+        reconnect: true
+      }
+    );
     this.wsClient.onReconnecting((): void => {
       log.info("Websocket client reconnected.");
       for (const pvName of this.disconnected) {
@@ -337,7 +346,9 @@ export class ConiqlPlugin implements Connection {
         log.error(networkError);
       }
     });
-    const httpLink = new HttpLink({ uri: `http://${socket}/graphql` });
+    const httpLink = new HttpLink({
+      uri: `${this.httpProtocol}://${socket}/graphql`
+    });
     const link: ApolloLink = ApolloLink.split(
       ({ query }): boolean => {
         // https://github.com/apollographql/apollo-client/issues/3090
