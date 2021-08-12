@@ -9,6 +9,7 @@ import { ConiqlPlugin } from "../connection/coniql";
 import { ConnectionForwarder } from "../connection/forwarder";
 
 const CONIQL_SOCKET = process.env.REACT_APP_CONIQL_SOCKET;
+const CONIQL_SSL = process.env.REACT_APP_CONIQL_SSL === "true";
 const THROTTLE_PERIOD = parseFloat(
   process.env.REACT_APP_THROTTLE_PERIOD ?? "100"
 );
@@ -19,7 +20,7 @@ const plugins: [string, Connection][] = [
   ["loc://", simulator]
 ];
 if (CONIQL_SOCKET !== undefined) {
-  const coniql = new ConiqlPlugin(CONIQL_SOCKET);
+  const coniql = new ConiqlPlugin(CONIQL_SOCKET, CONIQL_SSL);
   plugins.unshift(["pva://", coniql]);
   plugins.unshift(["ca://", coniql]);
   plugins.unshift(["ssim://", coniql]);
