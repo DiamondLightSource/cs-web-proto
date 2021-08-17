@@ -18,8 +18,8 @@ type EnumDictionary<T extends string | symbol | number, U> = {
 
 const INT_SEVERITIES: EnumDictionary<AlarmQuality, number> = {
   [AlarmQuality.VALID]: 0,
-  [AlarmQuality.WARNING]: 1,
-  [AlarmQuality.ALARM]: 2,
+  [AlarmQuality.ALARM]: 1, // Curious alarm/warning numbering
+  [AlarmQuality.WARNING]: 2, // as in CS-Studio
   [AlarmQuality.INVALID]: -1,
   [AlarmQuality.UNDEFINED]: -1,
   [AlarmQuality.CHANGING]: -1
