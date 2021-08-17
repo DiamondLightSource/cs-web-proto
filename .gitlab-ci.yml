@@ -36,5 +36,7 @@ node 16:
 deploy:
   stage: deploy
   rules:
-    - if: '$CI_COMMIT_REF_NAME == "master"'
+    - if: $CI_COMMIT_TAG
   trigger: controls/kubernetes/cs-web-proto
+  variables:
+    CI_UPSTREAM_TAG: $CI_COMMIT_TAG
