@@ -121,10 +121,17 @@ export function removeTab(
   const filteredFileDetails = locationTabs.fileDetails.filter(
     ([tabName1, fileDesc1], index) => {
       if (tabName1 === tabName && fileDescEqual(fileDesc1, fileDesc)) {
-        // If a tab to the left of the selected tab is closed,
-        // or the selected tab is closed, the selected tab moves
-        // one to the left.
-        if (index <= locationTabs.selectedTab) {
+        if (index < locationTabs.selectedTab) {
+          // If a tab to the left of the selected tab is closed,
+          // the selected tab is closed, the selected tab moves
+          // one to the left.
+          selectedTab = selectedTab - 1;
+        } else if (
+          index === locationTabs.selectedTab &&
+          index === locationTabs.fileDetails.length - 1
+        ) {
+          // If the selected tab is closed, keep the index the same unless
+          // it was the right-most tab in which case reduce it by one.
           selectedTab = selectedTab - 1;
         }
         return false;
