@@ -10,7 +10,8 @@ import {
   InferWidgetProps,
   ColorPropOpt,
   FontPropOpt,
-  BorderPropOpt
+  BorderPropOpt,
+  BoolPropOpt
 } from "../propTypes";
 import { Color } from "../../../types/color";
 import { Font } from "../../../types/font";
@@ -28,6 +29,7 @@ export interface ActionButtonProps {
   border?: Border;
   font?: Font;
   actions?: WidgetActions;
+  visible?: boolean;
 }
 
 export const ActionButtonComponent = (
@@ -75,7 +77,8 @@ const ActionButtonPropType = {
   backgroundColor: ColorPropOpt,
   foregroundColor: ColorPropOpt,
   font: FontPropOpt,
-  border: BorderPropOpt
+  border: BorderPropOpt,
+  visible: BoolPropOpt
 };
 
 const ActionButtonWidgetProps = {
@@ -111,6 +114,7 @@ export const ActionButtonWidget = (
       font={props.font}
       border={props.border}
       actions={props.actions as WidgetActions}
+      visible={props.visible}
     />
   );
 };

@@ -22,6 +22,7 @@ import {
 } from "../propTypes";
 import { GroupBoxComponent } from "../GroupBox/groupBox";
 import { useOpiFile } from "./useOpiFile";
+import { useId } from "react-id-generator";
 
 const EmbeddedDisplayProps = {
   ...WidgetPropType,
@@ -34,6 +35,7 @@ export const EmbeddedDisplay = (
   props: InferWidgetProps<typeof EmbeddedDisplayProps>
 ): JSX.Element => {
   const description = useOpiFile(props.file);
+  const id = useId();
 
   log.debug(description);
 
@@ -74,7 +76,8 @@ export const EmbeddedDisplay = (
     updateMacro: (key: string, value: string): void => {},
     macros: {
       ...parentMacros, // lower priority
-      ...embeddedDisplayMacros // higher priority
+      ...embeddedDisplayMacros, // higher priority
+      LCID: id.toString() // highest priority
     }
   };
 

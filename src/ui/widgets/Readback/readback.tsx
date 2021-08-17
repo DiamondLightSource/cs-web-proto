@@ -33,7 +33,8 @@ const ReadbackProps = {
   foregroundColor: ColorPropOpt,
   backgroundColor: ColorPropOpt,
   border: BorderPropOpt,
-  rotationAngle: FloatPropOpt
+  rotationAngle: FloatPropOpt,
+  visible: BoolPropOpt
 };
 
 // Needs to be exported for testing
@@ -56,7 +57,8 @@ export const ReadbackComponent = (
     textAlign = "center",
     showUnits = false,
     precisionFromPv = false,
-    rotationAngle
+    rotationAngle,
+    visible
   } = props;
   let { foregroundColor } = props;
   // Decide what to display.
@@ -118,6 +120,7 @@ export const ReadbackComponent = (
       backgroundColor={backgroundColor}
       border={border}
       rotationAngle={rotationAngle}
+      visible={visible}
     ></LabelComponent>
   );
 };
