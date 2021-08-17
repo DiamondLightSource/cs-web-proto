@@ -40,7 +40,7 @@ export const DynamicTabsComponent = (
   const fileContext = useContext(FileContext);
   const tabState = fileContext.tabState[props.location];
   const containerStyle = {
-    border: "1px solid lightgrey",
+    border: "3px solid lightgrey",
     height: "100%",
     width: "100%",
     overflow: "auto"
