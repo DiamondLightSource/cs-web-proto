@@ -5,7 +5,6 @@
     "jest": true
   },
   "extends": [
-    "react-app",
     "plugin:react/recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:prettier/recommended",
@@ -18,7 +17,7 @@
     "SharedArrayBuffer": "readonly"
   },
   "parser": "@typescript-eslint/parser",
-  "plugins": ["react", "@typescript-eslint", "prettier", "unicorn"],
+  "plugins": ["react", "react-hooks", "@typescript-eslint", "prettier"],
   "rules": {
     "@typescript-eslint/no-explicit-any": 0,
     "@typescript-eslint/no-empty-function": [
@@ -33,15 +32,8 @@
         "trailingComma": "none"
       }
     ],
-    "no-console": "warn",
-    "unicorn/filename-case": [
-      "error",
-      {
-        "cases": {
-          "camelCase": true
-        }
-      }
-    ]
+    "@typescript-eslint/no-unused-vars" : "off",
+    "no-console": "warn"
   },
   "settings": {
     "react": {
