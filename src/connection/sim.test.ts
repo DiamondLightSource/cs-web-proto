@@ -49,8 +49,8 @@ test("local double updates", (done): void => {
       zeroDone = true;
     } else {
       expect(value.getDoubleValue()).toEqual(17.0);
+      done();
     }
-    done();
   });
   simulator.subscribe("loc://location");
   simulator.putPv("loc://location", ddouble(17));
@@ -65,8 +65,8 @@ test("local enum updates", (done): void => {
     } else {
       expect(value.getDoubleValue()).toEqual(0.0);
       expect(value.getStringValue()).toEqual("un");
+      done();
     }
-    done();
   });
   simulator.subscribe('loc://enum<VEnum>(2, "un", "deux", "trois")');
   simulator.putPv("loc://enum", ddouble(0));
@@ -82,8 +82,8 @@ test("local enum updates from string", (done): void => {
     } else {
       expect(value.getDoubleValue()).toEqual(0.0);
       expect(value.getStringValue()).toEqual("un");
+      done();
     }
-    done();
   });
   simulator.subscribe('loc://enum<VEnum>(2, "un", "deux", "trois")');
   simulator.putPv("loc://enum", dstring("un"));
