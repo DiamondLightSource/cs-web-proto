@@ -5,7 +5,6 @@ import log from "loglevel";
 import base64js from "base64-js";
 import { ApolloClient, ApolloLink, from } from "@apollo/client";
 import { HttpLink } from "@apollo/client/link/http";
-import { WebSocketLink } from "@apollo/client/link/ws";
 import { onError } from "@apollo/client/link/error";
 import { InMemoryCache, NormalizedCacheObject } from "@apollo/client/cache";
 import {
@@ -23,7 +22,8 @@ import {
   DeviceQueriedCallback,
   nullDeviceCallback
 } from "./plugin";
-import { SubscriptionClient } from "subscriptions-transport-ws";
+import { createClient } from "graphql-ws";
+import { GraphQLWsLink } from "@apollo/client/link/subscriptions";
 import {
   DType,
   DTime,
@@ -224,6 +224,16 @@ const PV_SUBSCRIPTION = gql`
   }
 `;
 
+const PV_SUBSCRIPTION_TEST = gql`
+  subscription sub1($pvName: ID!) {
+    subscribeChannel(id: $pvName) {
+      value {
+        float
+      }
+    }
+  }
+`;
+
 const PV_MUTATION = gql`
   mutation put1($pvName: ID!, $value: String!) {
     putChannels(ids: [$pvName], values: [$value]) {
@@ -271,7 +281,7 @@ export class ConiqlPlugin implements Connection {
   private onValueUpdate: ValueChangedCallback;
   private deviceQueried: DeviceQueriedCallback;
   private connected: boolean;
-  private wsClient: SubscriptionClient;
+  private wsClient: any;
   private disconnected: string[] = [];
   private subscriptions: { [pvName: string]: ObservableSubscription };
 
@@ -291,38 +301,12 @@ export class ConiqlPlugin implements Connection {
         ]
       }
     });
-    this.wsClient = new SubscriptionClient(
-      `${this.wsProtocol}://${socket}/ws`,
-      {
-        reconnect: true
-      }
-    );
-    this.wsClient.onReconnecting((): void => {
-      log.info("Websocket client reconnected.");
-      for (const pvName of this.disconnected) {
-        this.subscribe(pvName);
-      }
-      this.disconnected = [];
+    this.wsClient = createClient({
+      url: `${this.wsProtocol}://${socket}/ws`,
+      retryAttempts: Infinity,
+      shouldRetry: () => true
     });
-    this.wsClient.onDisconnected((): void => {
-      log.error("Websocket client disconnected.");
-      for (const pvName of Object.keys(this.subscriptions)) {
-        if (
-          this.subscriptions.hasOwnProperty(pvName) &&
-          this.subscriptions[pvName]
-        ) {
-          this.subscriptions[pvName].unsubscribe();
-          delete this.subscriptions[pvName];
-          this.disconnected.push(pvName);
-        } else {
-          log.error(`Attempt to unsubscribe from ${pvName} failed`);
-        }
-        this.onConnectionUpdate(pvName, {
-          isConnected: false,
-          isReadonly: true
-        });
-      }
-    });
+
     const link = this.createLink(socket);
     this.client = new ApolloClient({ link, cache });
     this.onConnectionUpdate = nullConnCallback;
@@ -333,7 +317,7 @@ export class ConiqlPlugin implements Connection {
   }
 
   private createLink(socket: string): ApolloLink {
-    const wsLink = new WebSocketLink(this.wsClient);
+    const wsLink = new GraphQLWsLink(this.wsClient);
     const errorLink = onError(({ graphQLErrors, networkError }) => {
       if (graphQLErrors) {
         log.error("GraphQL errors:");
@@ -403,7 +387,7 @@ export class ConiqlPlugin implements Connection {
   private _subscribe(pvName: string): ObservableSubscription {
     return this.client
       .subscribe({
-        query: PV_SUBSCRIPTION,
+        query: PV_SUBSCRIPTION_TEST,
         variables: { pvName: pvName }
       })
       .subscribe({
