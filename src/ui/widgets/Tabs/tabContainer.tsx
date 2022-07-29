@@ -50,8 +50,6 @@ export const TabContainerComponent = (
       const message = `Error transforming children into components`;
       log.warn(message);
       log.warn(e);
-      log.warn(e.msg);
-      log.warn(e.details);
       return widgetDescriptionToComponent(errorWidget(message), index);
     }
   });
