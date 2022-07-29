@@ -193,40 +193,6 @@ function coniqlToDType(
 const PV_SUBSCRIPTION = gql`
   subscription sub1($pvName: ID!) {
     subscribeChannel(id: $pvName) {
-      id
-      time {
-        datetime
-      }
-      value {
-        string
-        float
-        base64Array {
-          numberType
-          base64
-        }
-      }
-      status {
-        quality
-        message
-        mutable
-      }
-      display {
-        units
-        form
-        controlRange {
-          max
-          min
-        }
-        choices
-        precision
-      }
-    }
-  }
-`;
-
-const PV_SUBSCRIPTION_TEST = gql`
-  subscription sub1($pvName: ID!) {
-    subscribeChannel(id: $pvName) {
       value {
         float
       }
@@ -387,7 +353,7 @@ export class ConiqlPlugin implements Connection {
   private _subscribe(pvName: string): ObservableSubscription {
     return this.client
       .subscribe({
-        query: PV_SUBSCRIPTION_TEST,
+        query: PV_SUBSCRIPTION,
         variables: { pvName: pvName }
       })
       .subscribe({
