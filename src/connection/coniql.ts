@@ -22,7 +22,7 @@ import {
   DeviceQueriedCallback,
   nullDeviceCallback
 } from "./plugin";
-import { createClient } from "graphql-ws";
+import { Client, createClient } from "graphql-ws";
 import { GraphQLWsLink } from "@apollo/client/link/subscriptions";
 import {
   DType,
@@ -281,7 +281,7 @@ export class ConiqlPlugin implements Connection {
   private onValueUpdate: ValueChangedCallback;
   private deviceQueried: DeviceQueriedCallback;
   private connected: boolean;
-  private wsClient: any;
+  private wsClient: Client;
   private disconnected: string[] = [];
   private subscriptions: { [pvName: string]: ObservableSubscription };
 
