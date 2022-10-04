@@ -193,8 +193,32 @@ function coniqlToDType(
 const PV_SUBSCRIPTION = gql`
   subscription sub1($pvName: ID!) {
     subscribeChannel(id: $pvName) {
+      id
+      time {
+        datetime
+      }
       value {
+        string
         float
+        base64Array {
+          numberType
+          base64
+        }
+      }
+      status {
+        quality
+        message
+        mutable
+      }
+      display {
+        units
+        form
+        controlRange {
+          max
+          min
+        }
+        choices
+        precision
       }
     }
   }
