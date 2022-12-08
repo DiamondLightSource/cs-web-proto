@@ -27,6 +27,7 @@ export { SlideControl } from "./SlideControl/slideControl";
 export { Slideshow } from "./Slideshow/slideshow";
 export { Symbol } from "./Symbol/symbol";
 export { TabContainer } from "./Tabs/tabContainer";
+export { XYPlot } from "./XYPlot/xyPlot";
 
 // By importing and calling this function you ensure all the
 // above widgets are imported and thus registered.

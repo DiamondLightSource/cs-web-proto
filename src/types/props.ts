@@ -5,6 +5,8 @@ import { WidgetActions } from "../ui/widgets/widgetActions";
 import { Border } from "./border";
 import { Position } from "./position";
 import { PV } from "./pv";
+import { Traces } from "./traces";
+import { Axes } from "./axes";
 
 export type GenericProp =
   | string
@@ -18,7 +20,9 @@ export type GenericProp =
   | Rule[]
   | MacroMap
   | WidgetActions
-  | OpiFile;
+  | OpiFile
+  | Traces
+  | Axes;
 
 export interface Expression {
   boolExp: string;

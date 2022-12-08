@@ -12,6 +12,8 @@ import {
   AbsolutePosition,
   RelativePosition
 } from "../../../types/position";
+import { Traces, Trace } from "../../../types/traces";
+import { Axes, Axis } from "../../../types/axes";
 import {
   ComplexParserDict,
   ParserDict,
@@ -63,7 +65,9 @@ const OPI_WIDGET_MAPPING: { [key: string]: any } = {
   "org.csstudio.opibuilder.widgets.LED": "led",
   "org.csstudio.opibuilder.widgets.Image": "image",
   "org.csstudio.opibuilder.widgets.edm.symbolwidget": "pngsymbol",
-  "org.csstudio.opibuilder.widgets.detailpanel": "device"
+  "org.csstudio.opibuilder.widgets.detailpanel": "device",
+  "org.csstudio.opibuilder.widgets.dawn.xygraph": "xyplot",
+  "org.csstudio.opibuilder.widgets.xyGraph": "xyplot"
 };
 
 /**
@@ -440,6 +444,128 @@ function opiParseLabelPosition(props: any): string {
 }
 
 /**
+ * Parses a props object into an AllTraces object that
+ * contains an array of Trace objects
+ * @param props
+ * @returns allTraces
+ */
+function opiParseTraces(props: any): Traces {
+  const count = opiParseNumber(props.trace_count);
+  const traces: Trace[] = [];
+  for (let i = 0; i < count; i++) {
+    const _trace = parseMultipleNamedProps("trace", props, i);
+    traces.push(_trace);
+  }
+  return new Traces(count, traces);
+}
+
+/**
+ * Parses a props object into an AllAxes object that
+ * contains an array of Axis objects
+ * @param props
+ * @returns allAxes
+ */
+function opiParseAxes(props: any): Axes {
+  const count = opiParseNumber(props.axis_count);
+  const axes: Axis[] = [];
+  for (let i = 0; i < count; i++) {
+    const _axis = parseMultipleNamedProps("axis", props, i);
+    axes.push(_axis);
+  }
+  return new Axes(count, axes);
+}
+
+/**
+ * Converts property name from snake case to camel
+ * case. This is needed to dynamically sort through
+ * all of each traces properties, although it's a
+ * bit messy and clunky.
+ */
+function parseName(propName: string) {
+  const propStringArray = propName.split("_").slice(2);
+  let newName = propStringArray.shift();
+  propStringArray.forEach((word: string) => {
+    newName += word.charAt(0).toUpperCase() + word.slice(1);
+  });
+  return newName;
+}
+
+/**
+ * Not sure what to call this function, but
+ * it iterates over and parses props that have
+ * format {name}_{number}_{actual prop name}. Returns
+ * an array of these props
+ */
+function parseMultipleNamedProps(name: string, props: any, idx: number) {
+  const COLOR_PROPS = ["traceColor", "axisColor", "gridColor"];
+  const FONT_PROPS = ["scaleFont", "titleFont"];
+  const STRING_PROPS = [
+    "name",
+    "xPv",
+    "yPv",
+    "axisTitle",
+    "timeFormat",
+    "scaleFormat"
+  ];
+  const BOOL_PROPS = [
+    "antiAlias",
+    "concatenateData",
+    "visible",
+    "autoScale",
+    "autoScaleTight",
+    "showGrid",
+    "dashGridLine",
+    "logScale",
+    "leftBottomSide"
+  ];
+  const NUM_PROPS = [
+    "updateDelay",
+    "updateMode",
+    "bufferSize",
+    "plotMode",
+    "lineWidth",
+    "pointSize",
+    "pointStyle",
+    "traceType",
+    "xPvValue",
+    "yPvValue",
+    "xAxisIndex",
+    "yAxisIndex",
+    "maximum",
+    "minimum",
+    "autoScaleThreshold"
+  ];
+  type TempClass = {
+    [key: string]: string | boolean | number | Color | Font;
+  };
+  const _obj: TempClass = {};
+  const num = `${name}_${idx}_`;
+  const names = Object.getOwnPropertyNames(props);
+  const newProps = names.filter(s => s.includes(num));
+  newProps.forEach(item => {
+    const newName = parseName(item);
+    try {
+      if (newName) {
+        if (BOOL_PROPS.includes(newName)) {
+          _obj[newName] = opiParseBoolean(props[item]);
+        } else if (NUM_PROPS.includes(newName)) {
+          _obj[newName] = opiParseNumber(props[item]);
+        } else if (COLOR_PROPS.includes(newName)) {
+          _obj[newName] = opiParseColor(props[item]);
+        } else if (STRING_PROPS.includes(newName)) {
+          _obj[newName] = opiParseString(props[item]);
+        } else if (FONT_PROPS.includes(newName)) {
+          _obj[newName] = opiParseFont(props[item]);
+        }
+      }
+    } catch {
+      // do nothing
+    }
+  });
+  return _obj;
+}
+
+/**
  * Attempt to return the widget associated with a props object, failing
  * that will return a shape object
  * @param props
@@ -498,7 +624,13 @@ export const OPI_SIMPLE_PARSERS: ParserDict = {
   bit: ["bit", opiParseNumber],
   actionsFromPv: ["actions_from_pv", opiParseBoolean],
   itemsFromPv: ["items_from_pv", opiParseBoolean],
-  deviceName: ["device_name", opiParseString]
+  deviceName: ["device_name", opiParseString],
+  plotBackgroundColor: ["plot_area_background_color", opiParseColor], //these are all plot props
+  title: ["title", opiParseString],
+  titleFont: ["title_font", opiParseFont],
+  showLegend: ["show_legend", opiParseBoolean],
+  showPlotBorder: ["show_plot_area_border", opiParseBoolean],
+  showToolbar: ["show_toolbar", opiParseBoolean]
 };
 
 /**
@@ -511,7 +643,9 @@ export const OPI_COMPLEX_PARSERS: ComplexParserDict = {
   position: opiParsePosition,
   border: opiParseBorder,
   file: opiParseFile,
-  alarmSensitive: opiParseAlarmSensitive
+  alarmSensitive: opiParseAlarmSensitive,
+  traces: opiParseTraces,
+  axes: opiParseAxes
 };
 
 function opiPatchRules(widgetDescription: WidgetDescription): void {
