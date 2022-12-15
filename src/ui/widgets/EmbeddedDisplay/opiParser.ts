@@ -444,30 +444,37 @@ function opiParseLabelPosition(props: any): string {
 }
 
 /**
- * Parses a props object into an AllTraces object that
+ * Parses a props object into an Traces object that
  * contains an array of Trace objects
- * @param props
- * @returns allTraces
+ * @param props list of props for this element
+ * @returns a Traces object
  */
 function opiParseTraces(props: any): Traces {
+  // Find PV value if it's one of the trace properties
+  let pvName = opiParseString(props.pv_name);
+  if (pvName.includes("trace_")) {
+    pvName = opiParseString(props[pvName.slice(2, -1)]);
+  }
   const count = opiParseNumber(props.trace_count);
   const traces: Trace[] = [];
+  // Parse all of the 'trace' properties
   for (let i = 0; i < count; i++) {
     const _trace = parseMultipleNamedProps("trace", props, i);
     traces.push(_trace);
   }
-  return new Traces(count, traces);
+  return new Traces(count, pvName, traces);
 }
 
 /**
  * Parses a props object into an AllAxes object that
  * contains an array of Axis objects
  * @param props
- * @returns allAxes
+ * @returns an Axes object.
  */
 function opiParseAxes(props: any): Axes {
   const count = opiParseNumber(props.axis_count);
   const axes: Axis[] = [];
+  // Parse all of the 'axis' properties
   for (let i = 0; i < count; i++) {
     const _axis = parseMultipleNamedProps("axis", props, i);
     axes.push(_axis);
@@ -480,10 +487,15 @@ function opiParseAxes(props: any): Axes {
  * case. This is needed to dynamically sort through
  * all of each traces properties, although it's a
  * bit messy and clunky.
+ * @param propName string to convert
+ * @returns newly formatted string
  */
-function parseName(propName: string) {
+function snakeCaseToCamelCase(propName: string) {
+  // Split string by underscore
   const propStringArray = propName.split("_").slice(2);
+  // Remove first element, this shouldn't be uppercase
   let newName = propStringArray.shift();
+  // Loop over and capitalise first character of each string
   propStringArray.forEach((word: string) => {
     newName += word.charAt(0).toUpperCase() + word.slice(1);
   });
@@ -491,12 +503,16 @@ function parseName(propName: string) {
 }
 
 /**
- * Not sure what to call this function, but
- * it iterates over and parses props that have
+ * Iterate over and parse props that have
  * format {name}_{number}_{actual prop name}. Returns
- * an array of these props
+ * an array of these props.
+ * @param name string to search for in prop names
+ * @param props props to parse
+ * @param idx number to search for in prop names
+ * @returns object containing parsed props
  */
 function parseMultipleNamedProps(name: string, props: any, idx: number) {
+  // TO DO - this feels clunky, better way to do it?
   const COLOR_PROPS = ["traceColor", "axisColor", "gridColor"];
   const FONT_PROPS = ["scaleFont", "titleFont"];
   const STRING_PROPS = [
@@ -535,15 +551,18 @@ function parseMultipleNamedProps(name: string, props: any, idx: number) {
     "minimum",
     "autoScaleThreshold"
   ];
+  // Need to specify this so we can assign values
   type TempClass = {
     [key: string]: string | boolean | number | Color | Font;
   };
   const _obj: TempClass = {};
+  // Create keyword string and search for matches
   const num = `${name}_${idx}_`;
   const names = Object.getOwnPropertyNames(props);
   const newProps = names.filter(s => s.includes(num));
   newProps.forEach(item => {
-    const newName = parseName(item);
+    // For each match, convert the name and parse
+    const newName = snakeCaseToCamelCase(item);
     try {
       if (newName) {
         if (BOOL_PROPS.includes(newName)) {

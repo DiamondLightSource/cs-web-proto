@@ -95,6 +95,12 @@ export function genericParser(
       newProps[prop] = widget[prop];
     }
   }
+  // For XYPlot, pv name can be a trace value that we found and
+  // set as a property on our new trace prop, so set this here
+  // TO DO - find a better way of doing this?
+  if (newProps.hasOwnProperty("traces")) {
+    newProps.pvName.name = newProps.traces.pvName;
+  }
 
   return newProps;
 }

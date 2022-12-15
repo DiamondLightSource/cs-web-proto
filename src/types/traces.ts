@@ -68,10 +68,12 @@ export class Trace {
 
 export class Traces {
   public count: number;
+  public pvName: string;
   public traceOptions: Trace[];
 
-  public constructor(count: number, traces: Trace[]) {
+  public constructor(count: number, pvName: string, traces: Trace[]) {
     this.count = count;
+    this.pvName = pvName;
     this.traceOptions = traces;
   }
 }

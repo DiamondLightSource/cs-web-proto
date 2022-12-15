@@ -10,10 +10,10 @@ import {
   BoolPropOpt,
   FloatPropOpt
 } from "../propTypes";
-import { Axes } from "../../../types/axes";
 import { PVComponent, PVWidgetPropType } from "../widgetProps";
 import { registerWidget } from "../register";
 import Plot from "react-plotly.js";
+import { calculateAxisLimits, createAxes, createTraces } from "./xyPlotOptions";
 
 export const XYPlotProps = {
   height: FloatPropOpt,
@@ -41,95 +41,73 @@ export const XYPlotComponent = (props: XYPlotComponentProps): JSX.Element => {
     titleFont,
     showLegend,
     showPlotBorder,
-    showToolbar,
+    // showToolbar, // TO DO - do we want a toolbar as well?
     traces,
     axes
   } = props;
-  const font = titleFont?.css();
-  let fontSize = 10;
-  if (typeof font?.fontSize === "string") {
-    // weird stuff to convert it back to number we need
-    fontSize = parseFloat(font.fontSize.slice(0, -3)) * 10;
-  } else if (font?.fontSize) {
-    fontSize = font?.fontSize;
-  }
-  // fontsize could be string or number
 
-  const fakeData: any[] = [
-    {
-      name: "dataset1",
-      x: [0, 1, 2, 3, 4, 5],
-      y: [10, 15, 17, 19, 25],
-      type: "scatter",
-      mode: "lines",
-      marker: {
-        color: "red",
-        symbol: "circle"
-      }
+  // TO DO - having all these checks is not ideal
+  if (
+    value?.value.arrayValue &&
+    axes &&
+    traces &&
+    titleFont &&
+    width &&
+    height
+  ) {
+    // If data exists, creates traces to plot
+    const dataSet = createTraces(traces, value);
+    // Set up style
+    let style: CSSProperties = {};
+    if (showPlotBorder) {
+      style = { border: "1px solid black", padding: "1px" };
     }
-  ];
-  if (axes && traces && titleFont && plotBackgroundColor) {
+    const font = titleFont?.css();
+    // Sometimes font is a string with "px" on the end....
+    if (typeof font?.fontSize === "string") {
+      // Convert string to number
+      font.fontSize = parseFloat(font.fontSize.slice(0, -3)) * 10;
+    }
+
+    let newAxisOptions = createAxes(axes.axisOptions, font);
+    newAxisOptions = calculateAxisLimits(newAxisOptions, dataSet);
+    // Set up plot appearance
+    const plotLayout: any = {
+      margin: {
+        t: 20,
+        b: 5,
+        l: 5,
+        r: 5
+      },
+      overflow: "hidden",
+      paper_bgcolor: plotBackgroundColor
+        ? plotBackgroundColor.toString()
+        : "white",
+      plot_bgcolor: plotBackgroundColor
+        ? plotBackgroundColor.toString()
+        : "white",
+      showlegend: showLegend,
+      width: width - 5,
+      height: height - 5,
+      title: {
+        text: title,
+        font: {
+          family: font ? font.fontFamily : "Liberation sans, sans-serif",
+          size: font.fontSize ? font.fontSize : 12
+        }
+      },
+      uirevision: 1 // This number needs to stay same to persist zoom on refresh
+    };
+    // TO DO - better way of coordinating axis names
+    const axisNames = ["xaxis", "yaxis", "yaxis2", "yaxis3"];
+    const len = newAxisOptions.length;
+    for (let i = 0; i < len; i++) {
+      plotLayout[axisNames[i]] = newAxisOptions.shift();
+    }
     return (
-      <Plot
-        data={fakeData}
-        layout={{
-          margin: {
-            t: 20,
-            b: 5
-          },
-          paper_bgcolor: plotBackgroundColor.toString(),
-          plot_bgcolor: plotBackgroundColor.toString(),
-          showlegend: showLegend,
-          width: width,
-          height: height,
-          title: {
-            text: `<b>${title}</b>`,
-            font: {
-              family: font?.fontFamily,
-              size: fontSize
-            }
-          },
-          xaxis: {
-            showline: true,
-            visible: true,
-            showgrid: axes.axisOptions[0].showGrid,
-            gridwidth: 0.5,
-            gridcolor: axes.axisOptions[0].axisColor?.toString(),
-            tickcolor: axes.axisOptions[0].axisColor?.toString(),
-            zeroline: false,
-            automargin: true,
-            title: {
-              text: axes.axisOptions[0].axisTitle
-                ? axes.axisOptions[0].axisTitle
-                : "X",
-              standoff: 0
-            },
-            titlefont: {
-              family: font?.fontFamily,
-              size: fontSize
-            }
-          },
-          yaxis: {
-            showline: true,
-            showgrid: axes.axisOptions[1].showGrid,
-            gridwidth: 0.5,
-            gridcolor: axes.axisOptions[0].axisColor?.toString(),
-            tickcolor: axes.axisOptions[0].axisColor?.toString(),
-            zeroline: false,
-            automargin: true,
-            title: {
-              text: axes.axisOptions[0].axisTitle
-                ? axes.axisOptions[0].axisTitle
-                : "Y",
-              standoff: 0
-            },
-            titlefont: {
-              family: font?.fontFamily,
-              size: fontSize
-            }
-          }
-        }}
-      />
+      <div className={"showBorder"} style={style}>
+        <Plot data={dataSet} layout={plotLayout} />
+      </div>
     );
   }
   return <></>;
