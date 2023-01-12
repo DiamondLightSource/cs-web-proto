@@ -459,8 +459,9 @@ function opiParseTraces(props: any): Traces {
   const traces: Trace[] = [];
   // Parse all of the 'trace' properties
   for (let i = 0; i < count; i++) {
-    const _trace = parseMultipleNamedProps("trace", props, i);
-    traces.push(_trace);
+    const _obj = parseMultipleNamedProps("trace", props, i);
+    const trace = Object.assign(new Trace(), _obj);
+    traces.push(trace);
   }
   return new Traces(count, pvName, traces);
 }
@@ -476,8 +477,9 @@ function opiParseAxes(props: any): Axes {
   const axes: Axis[] = [];
   // Parse all of the 'axis' properties
   for (let i = 0; i < count; i++) {
-    const _axis = parseMultipleNamedProps("axis", props, i);
-    axes.push(_axis);
+    const _obj = parseMultipleNamedProps("axis", props, i);
+    const axis = Object.assign(new Axis(), _obj);
+    axes.push(axis);
   }
   return new Axes(count, axes);
 }
@@ -524,11 +526,9 @@ function parseMultipleNamedProps(name: string, props: any, idx: number) {
     "scaleFormat"
   ];
   const BOOL_PROPS = [
-    "antiAlias",
     "concatenateData",
     "visible",
     "autoScale",
-    "autoScaleTight",
     "showGrid",
     "dashGridLine",
     "logScale",
@@ -548,14 +548,15 @@ function parseMultipleNamedProps(name: string, props: any, idx: number) {
     "xAxisIndex",
     "yAxisIndex",
     "maximum",
-    "minimum",
-    "autoScaleThreshold"
+    "minimum"
   ];
   // Need to specify this so we can assign values
   type TempClass = {
     [key: string]: string | boolean | number | Color | Font;
   };
   const _obj: TempClass = {};
+  // Set the trace index
+  _obj.index = idx;
   // Create keyword string and search for matches
   const num = `${name}_${idx}_`;
   const names = Object.getOwnPropertyNames(props);

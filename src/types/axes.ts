@@ -1,18 +1,15 @@
 import { Color } from "./color";
-import { Font } from "./font";
-
-// TO DO - find out which variables always appear and which don't and add ?
+import { Font, FontStyle } from "./font";
 
 export class Axis {
+  public index?: number;
   public autoScale?: boolean;
-  public autoScaleThreshold?: number;
-  public autoScaleTight?: boolean;
   public axisColor?: Color;
   public axisTitle?: string;
   public showGrid?: boolean;
   public gridColor?: Color;
   public dashGridLine?: boolean;
-  public timeFormat?: string;
+  public timeFormat?: number;
   public scaleFormat?: string;
   public scaleFont?: Font;
   public titleFont?: Font;
@@ -22,42 +19,28 @@ export class Axis {
   public maximum?: number;
   public minimum?: number;
 
-  public constructor(
-    autoScale: boolean,
-    autoScaleThreshold: number,
-    autoScaleTight: boolean,
-    axisColor: Color,
-    axisTitle: string,
-    showGrid: boolean,
-    gridColor: Color,
-    dashGridLine: boolean,
-    timeFormat: string,
-    scaleFormat: string,
-    scaleFont: Font,
-    titleFont: Font,
-    visible: boolean,
-    logScale: boolean,
-    leftBottomSide: boolean,
-    maximum: number,
-    minimum: number
-  ) {
-    this.autoScale = autoScale;
-    this.autoScaleThreshold = autoScaleThreshold;
-    this.autoScaleTight = autoScaleTight;
-    this.axisColor = axisColor;
-    this.axisTitle = axisTitle;
-    this.showGrid = showGrid;
-    this.gridColor = gridColor;
-    this.dashGridLine = dashGridLine;
-    this.timeFormat = timeFormat;
-    this.scaleFormat = scaleFormat;
-    this.scaleFont = scaleFont;
-    this.titleFont = titleFont;
-    this.visible = visible;
-    this.logScale = logScale;
-    this.leftBottomSide = leftBottomSide;
-    this.maximum = maximum;
-    this.minimum = minimum;
+  /**
+   * Set default values for properties not yet
+   * set, otherwise use set property. Uses same
+   * default values as csstudio.opibuilder.xygraph.
+   */
+  public constructor() {
+    this.index = this.index ?? 0;
+    this.autoScale = this.autoScale ?? true;
+    this.axisColor = this.axisColor ?? new Color("rgb(0, 0, 0");
+    this.axisTitle = this.axisTitle ?? "";
+    this.showGrid = this.showGrid ?? false;
+    this.gridColor = this.gridColor ?? new Color("rgb(0, 0, 0");
+    this.dashGridLine = this.dashGridLine ?? true;
+    this.timeFormat = this.timeFormat ?? 0;
+    this.scaleFormat = this.scaleFormat ?? "";
+    this.scaleFont = this.scaleFont ?? new Font();
+    this.titleFont = this.titleFont ?? new Font(10, FontStyle.Bold);
+    this.visible = this.visible ?? true;
+    this.logScale = this.logScale ?? false;
+    this.leftBottomSide = this.leftBottomSide ?? true;
+    this.maximum = this.maximum ?? 0;
+    this.minimum = this.minimum ?? 100;
   }
 }
 
@@ -66,6 +49,11 @@ export class Axes {
   public axisOptions: Axis[];
 
   public constructor(count: number, axes: Axis[]) {
+    if (count !== axes.length) {
+      throw new Error(
+        `Count ${count} is not equal to number of axes ${axes.length}`
+      );
+    }
     this.count = count;
     this.axisOptions = axes;
   }
