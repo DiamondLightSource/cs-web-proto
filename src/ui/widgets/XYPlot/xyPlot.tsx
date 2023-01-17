@@ -13,7 +13,13 @@ import {
 import { PVComponent, PVWidgetPropType } from "../widgetProps";
 import { registerWidget } from "../register";
 import Plot from "react-plotly.js";
-import { calculateAxisLimits, createAxes, createTraces } from "./xyPlotOptions";
+import {
+  calculateAxisLimits,
+  createAxes,
+  createTraces,
+  NewAxisSettings
+} from "./xyPlotOptions";
+import { Color } from "../../../types/color";
 
 export const XYPlotProps = {
   height: FloatPropOpt,
@@ -33,19 +39,18 @@ export type XYPlotComponentProps = InferWidgetProps<typeof XYPlotProps> &
 
 export const XYPlotComponent = (props: XYPlotComponentProps): JSX.Element => {
   const {
-    height,
-    width,
+    height = 250,
+    width = 400,
     value,
-    plotBackgroundColor,
-    title,
+    plotBackgroundColor = Color.fromRgba(255, 255, 255),
+    title = "",
     titleFont,
-    showLegend,
+    showLegend = true,
     showPlotBorder,
     // showToolbar, // TO DO - do we want a toolbar as well?
     traces,
     axes
   } = props;
-
   // TO DO - having all these checks is not ideal
   if (
     value?.value.arrayValue &&
@@ -55,8 +60,9 @@ export const XYPlotComponent = (props: XYPlotComponentProps): JSX.Element => {
     width &&
     height
   ) {
+    const bytesPerElement = value.value.arrayValue.BYTES_PER_ELEMENT;
     // If data exists, creates traces to plot
-    const dataSet = createTraces(traces, value);
+    const dataSet = createTraces(traces, value, bytesPerElement);
     // Set up style
     let style: CSSProperties = {};
     if (showPlotBorder) {
@@ -69,8 +75,10 @@ export const XYPlotComponent = (props: XYPlotComponentProps): JSX.Element => {
       font.fontSize = parseFloat(font.fontSize.slice(0, -3)) * 10;
     }
 
-    let newAxisOptions = createAxes(axes.axisOptions, font);
-    newAxisOptions = calculateAxisLimits(newAxisOptions, dataSet);
+    const newAxisOptions = createAxes(axes.axisOptions, font);
+    newAxisOptions.forEach((newAxis: NewAxisSettings, index: number) => {
+      newAxis = calculateAxisLimits(axes.axisOptions[index], newAxis, dataSet);
+    });
     // Set up plot appearance
     const plotLayout: any = {
       margin: {
@@ -80,12 +88,8 @@ export const XYPlotComponent = (props: XYPlotComponentProps): JSX.Element => {
         r: 5
       },
       overflow: "hidden",
-      paper_bgcolor: plotBackgroundColor
-        ? plotBackgroundColor.toString()
-        : "white",
-      plot_bgcolor: plotBackgroundColor
-        ? plotBackgroundColor.toString()
-        : "white",
+      paper_bgcolor: plotBackgroundColor.toString(),
+      plot_bgcolor: plotBackgroundColor.toString(),
       showlegend: showLegend,
       width: width - 5,
       height: height - 5,

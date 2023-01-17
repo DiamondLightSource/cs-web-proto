@@ -5,6 +5,7 @@ describe("Traces", () => {
   it("creates the traces object", (): void => {
     const traceList: Trace[] = [
       {
+        index: 0,
         name: "trace 1",
         plotMode: 1,
         lineWidth: 2,
@@ -16,6 +17,7 @@ describe("Traces", () => {
         visible: true
       },
       {
+        index: 1,
         name: "trace 2",
         plotMode: 1,
         lineWidth: 2,
@@ -33,6 +35,7 @@ describe("Traces", () => {
       pvName: "test",
       traceOptions: [
         {
+          index: 0,
           name: "trace 1",
           plotMode: 1,
           lineWidth: 2,
@@ -44,6 +47,7 @@ describe("Traces", () => {
           visible: true
         },
         {
+          index: 1,
           name: "trace 2",
           plotMode: 1,
           lineWidth: 2,
@@ -60,6 +64,7 @@ describe("Traces", () => {
   it("throw error if count different to number of traces", (): void => {
     const traceList: Trace[] = [
       {
+        index: 0,
         name: "trace 3",
         plotMode: 2,
         lineWidth: 3,
@@ -83,7 +88,6 @@ describe("Trace", () => {
       [key: string]: any;
     };
     const baseObj: TempClass = {};
-    baseObj.index = 0;
     baseObj.name = "trace 4";
     baseObj.plotMode = 2;
     baseObj.lineWidth = 5;
@@ -104,7 +108,7 @@ describe("Trace", () => {
     baseObj.yAxisIndex = 1;
 
     // Construct trace from base object
-    const trace = Object.assign(new Trace(), baseObj);
+    const trace = Object.assign(new Trace(0), baseObj);
 
     expect(trace).toEqual({
       index: 0,
@@ -136,7 +140,7 @@ describe("Trace", () => {
     };
     const baseObj: TempClass = {};
     // Construct trace from base object
-    const trace = Object.assign(new Trace(), baseObj);
+    const trace = Object.assign(new Trace(0), baseObj);
 
     expect(trace).toEqual({
       index: 0,
@@ -144,7 +148,7 @@ describe("Trace", () => {
       plotMode: 0,
       lineWidth: 1,
       traceType: 0,
-      traceColor: new Color("rgb(255, 255, 255"),
+      traceColor: new Color("rgb(21, 21, 196)"),
       updateDelay: 100,
       updateMode: 0,
       pointStyle: 0,

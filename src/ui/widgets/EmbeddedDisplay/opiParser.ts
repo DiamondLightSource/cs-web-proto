@@ -460,7 +460,7 @@ function opiParseTraces(props: any): Traces {
   // Parse all of the 'trace' properties
   for (let i = 0; i < count; i++) {
     const _obj = parseMultipleNamedProps("trace", props, i);
-    const trace = Object.assign(new Trace(), _obj);
+    const trace = Object.assign(new Trace(i), _obj);
     traces.push(trace);
   }
   return new Traces(count, pvName, traces);
@@ -478,7 +478,7 @@ function opiParseAxes(props: any): Axes {
   // Parse all of the 'axis' properties
   for (let i = 0; i < count; i++) {
     const _obj = parseMultipleNamedProps("axis", props, i);
-    const axis = Object.assign(new Axis(), _obj);
+    const axis = Object.assign(new Axis(i), _obj);
     axes.push(axis);
   }
   return new Axes(count, axes);
@@ -532,7 +532,8 @@ function parseMultipleNamedProps(name: string, props: any, idx: number) {
     "showGrid",
     "dashGridLine",
     "logScale",
-    "leftBottomSide"
+    "leftBottomSide",
+    "yAxis"
   ];
   const NUM_PROPS = [
     "updateDelay",
@@ -555,8 +556,6 @@ function parseMultipleNamedProps(name: string, props: any, idx: number) {
     [key: string]: string | boolean | number | Color | Font;
   };
   const _obj: TempClass = {};
-  // Set the trace index
-  _obj.index = idx;
   // Create keyword string and search for matches
   const num = `${name}_${idx}_`;
   const names = Object.getOwnPropertyNames(props);

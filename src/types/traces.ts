@@ -26,7 +26,7 @@ const TRACE_COLOR_ARRAY: { [key: number]: Color } = {
 };
 
 export class Trace {
-  public index?: number;
+  public index: number;
   public name?: string;
   public plotMode?: number;
   public lineWidth?: number;
@@ -53,8 +53,8 @@ export class Trace {
    * are undefined. Uses same default values as
    * csstudio.opibuilder.xygraph.
    */
-  public constructor() {
-    this.index = this.index ?? 0;
+  public constructor(idx: number) {
+    this.index = idx ?? 0;
     this.name = this.name ?? "";
     this.plotMode = this.plotMode ?? 0;
     this.lineWidth = this.lineWidth ?? 1;

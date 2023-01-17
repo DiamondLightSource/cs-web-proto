@@ -6,6 +6,7 @@ describe("Axes", () => {
   it("creates the axes object", (): void => {
     const axesList: Axis[] = [
       {
+        index: 0,
         axisColor: new Color("rgb(256, 255, 254"),
         axisTitle: "X axis",
         showGrid: false,
@@ -18,6 +19,7 @@ describe("Axes", () => {
         minimum: 0
       },
       {
+        index: 1,
         axisColor: new Color("rgb(256, 255, 254"),
         axisTitle: "Y axis",
         showGrid: false,
@@ -34,6 +36,7 @@ describe("Axes", () => {
       count: 2,
       axisOptions: [
         {
+          index: 0,
           axisColor: new Color("rgb(256, 255, 254"),
           axisTitle: "X axis",
           showGrid: false,
@@ -46,6 +49,7 @@ describe("Axes", () => {
           minimum: 0
         },
         {
+          index: 1,
           axisColor: new Color("rgb(256, 255, 254"),
           axisTitle: "Y axis",
           showGrid: false,
@@ -62,6 +66,7 @@ describe("Axes", () => {
   it("throw error if count different to number of traces", (): void => {
     const axesList: Axis[] = [
       {
+        index: 0,
         axisColor: new Color("rgb(0, 0, 0"),
         axisTitle: "Z axis",
         showGrid: true,
@@ -86,8 +91,8 @@ describe("Axis", () => {
       [key: string]: any;
     };
     const baseObj: TempClass = {};
-    baseObj.index = 1;
     baseObj.autoScale = false;
+    baseObj.autoScaleThreshold = 0.7;
     baseObj.axisColor = new Color("rgb(255, 0, 0");
     baseObj.axisTitle = "Velocity";
     baseObj.showGrid = true;
@@ -102,12 +107,14 @@ describe("Axis", () => {
     baseObj.leftBottomSide = false;
     baseObj.maximum = 40;
     baseObj.minimum = 10;
+    baseObj.yAxis = true;
 
     // Construct trace from base object
-    const axis = Object.assign(new Axis(), baseObj);
+    const axis = Object.assign(new Axis(1), baseObj);
     expect(axis).toEqual({
       index: 1,
       autoScale: false,
+      autoScaleThreshold: 0.7,
       axisColor: new Color("rgb(255, 0, 0"),
       axisTitle: "Velocity",
       showGrid: true,
@@ -121,7 +128,8 @@ describe("Axis", () => {
       logScale: true,
       leftBottomSide: false,
       maximum: 40,
-      minimum: 10
+      minimum: 10,
+      yAxis: true
     });
     expect(axis).toBeInstanceOf(Axis);
   });
@@ -132,11 +140,12 @@ describe("Axis", () => {
     };
     const baseObj: TempClass = {};
     // Construct trace from base object
-    const axis = Object.assign(new Axis(), baseObj);
+    const axis = Object.assign(new Axis(0), baseObj);
 
     expect(axis).toEqual({
       index: 0,
       autoScale: true,
+      autoScaleThreshold: 0.95,
       axisColor: new Color("rgb(0, 0, 0"),
       axisTitle: "",
       showGrid: false,
@@ -150,7 +159,8 @@ describe("Axis", () => {
       logScale: false,
       leftBottomSide: true,
       maximum: 0,
-      minimum: 100
+      minimum: 100,
+      yAxis: false
     });
     expect(axis).toBeInstanceOf(Axis);
   });

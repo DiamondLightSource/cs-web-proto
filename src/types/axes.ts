@@ -2,8 +2,9 @@ import { Color } from "./color";
 import { Font, FontStyle } from "./font";
 
 export class Axis {
-  public index?: number;
+  public index: number;
   public autoScale?: boolean;
+  public autoScaleThreshold?: number;
   public axisColor?: Color;
   public axisTitle?: string;
   public showGrid?: boolean;
@@ -18,15 +19,17 @@ export class Axis {
   public leftBottomSide?: boolean;
   public maximum?: number;
   public minimum?: number;
+  public yAxis?: boolean;
 
   /**
    * Set default values for properties not yet
    * set, otherwise use set property. Uses same
    * default values as csstudio.opibuilder.xygraph.
    */
-  public constructor() {
-    this.index = this.index ?? 0;
+  public constructor(idx: number) {
+    this.index = idx ?? 0;
     this.autoScale = this.autoScale ?? true;
+    this.autoScaleThreshold = this.autoScaleThreshold ?? 0.95;
     this.axisColor = this.axisColor ?? new Color("rgb(0, 0, 0");
     this.axisTitle = this.axisTitle ?? "";
     this.showGrid = this.showGrid ?? false;
@@ -41,6 +44,12 @@ export class Axis {
     this.leftBottomSide = this.leftBottomSide ?? true;
     this.maximum = this.maximum ?? 0;
     this.minimum = this.minimum ?? 100;
+    // If axis has index 1 or above, assume y axis
+    let axisBool = false;
+    if (this.index > 0) {
+      axisBool = true;
+    }
+    this.yAxis = this.yAxis ?? axisBool;
   }
 }
 
