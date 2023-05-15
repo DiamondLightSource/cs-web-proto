@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import classes from "./performancePage.module.css";
-import { RelativePosition } from "../../../types/position";
-import { PV } from "../../../types/pv";
-import { Readback } from "../../widgets/Readback/readback";
-import { InputComponent } from "../input/input";
+import {
+  RelativePosition,
+  PV,
+  Readback,
+  InputComponent
+} from "@dls-controls/cs-web-lib";
 
 const SIMPLE_COMPONENTS = "simple-components";
 const READBACKS = "readbacks";

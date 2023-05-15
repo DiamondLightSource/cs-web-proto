@@ -1,15 +1,17 @@
 import React, { Profiler } from "react";
 import "./app.css";
 import { Provider } from "react-redux";
-import { store } from "./redux/store";
 import log, { LogLevelDesc } from "loglevel";
-import { EmbeddedDisplay } from "./ui/widgets";
-import { onRenderCallback } from "./profilerCallback";
-import { RelativePosition } from "./types/position";
-import { Header } from "./ui/components/Header/header";
-import { Footer } from "./ui/components/Footer/footer";
+import {
+  EmbeddedDisplay,
+  onRenderCallback,
+  RelativePosition,
+  Header,
+  Footer,
+  store
+} from "@dls-controls/cs-web-lib";
 import { Redirect, Route, Switch, useRouteMatch } from "react-router-dom";
-import { PerformancePage } from "./ui/components/PerformancePage/performancePage";
+import { PerformancePage } from "./components/PerformancePage/performancePage";
 
 log.setLevel((process.env.REACT_APP_LOG_LEVEL as LogLevelDesc) ?? "info");
 
