@@ -6,12 +6,12 @@ import {
   EmbeddedDisplay,
   onRenderCallback,
   RelativePosition,
-  Header,
-  Footer,
   store
 } from "@dls-controls/cs-web-lib";
 import { Redirect, Route, Switch, useRouteMatch } from "react-router-dom";
 import { PerformancePage } from "./components/PerformancePage/performancePage";
+import { Footer } from "./components/Footer/footer";
+import { Header } from "./components/Header/header";
 
 log.setLevel((process.env.REACT_APP_LOG_LEVEL as LogLevelDesc) ?? "info");
 
