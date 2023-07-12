@@ -1,12 +1,12 @@
+# Use controls group runners unless overrriden in jobs
 default:
   tags:
-    - rhel7
+    - controls
 
 stages:
   - test
-  - build
+  - build-app
   - deploy
-
 
 .node_test:
   stage: test
@@ -17,21 +17,24 @@ stages:
     - npm run lint
     - npx tsc
 
-node 12:
-  extends:
-    .node_test
-  image: node:12
-
-node 14:
-  extends:
-    .node_test
-  image: node:14
-
 node 16:
-  extends:
-    .node_test
+  extends: .node_test
   image: node:16
 
+build-app:
+  stage: build-app
+  image: node:16
+  script:
+    - npm ci
+    # Environment variables are captured at build time.
+    - export REACT_APP_CONIQL_SOCKET=coniql.diamond.ac.uk:443
+    - export REACT_APP_CONIQL_SSL=true
+    - export REACT_APP_VERSION=$CI_UPSTREAM_TAG
+    - export REACT_APP_BUILD_TIME=$(date --iso=minutes)
+    - npm run build
+  artifacts:
+    paths:
+      - build/
 
 deploy:
   stage: deploy
