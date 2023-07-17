@@ -6,6 +6,7 @@ default:
 stages:
   - test
   - build-app
+  - integration-build
   - deploy
 
 .node_test:
@@ -35,6 +36,13 @@ build-app:
   artifacts:
     paths:
       - build/
+
+integration-build:
+  only:
+    - integration
+  trigger:
+    project: controls/kubernetes/cs-web-proto
+    branch: integration
 
 deploy:
   stage: deploy
