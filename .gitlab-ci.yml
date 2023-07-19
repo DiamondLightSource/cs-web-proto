@@ -38,6 +38,7 @@ build-app:
       - build/
 
 integration-build:
+  stage: integration-build
   only:
     - integration
   trigger:
