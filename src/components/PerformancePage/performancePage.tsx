@@ -5,7 +5,7 @@ import {
   PV,
   Readback,
   InputComponent
-} from "@dls-controls/cs-web-lib";
+} from "@DiamondLightSource/cs-web-lib";
 
 const SIMPLE_COMPONENTS = "simple-components";
 const READBACKS = "readbacks";

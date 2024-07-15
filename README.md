@@ -1,16 +1,16 @@
-[![Build Status](https://travis-ci.com/dls-controls/cs-web-proto.svg?branch=master)](https://travis-ci.com/dls-controls/cs-web-proto)
-[![Coverage Status](https://coveralls.io/repos/github/dls-controls/cs-web-proto/badge.svg?branch=master)](https://coveralls.io/github/dls-controls/cs-web-proto?branch=master)
+[![Build Status](https://travis-ci.com/DiamondLightSource/cs-web-proto.svg?branch=master)](https://travis-ci.com/DiamondLightSource/cs-web-proto)
+[![Coverage Status](https://coveralls.io/repos/github/DiamondLightSource/cs-web-proto/badge.svg?branch=master)](https://coveralls.io/github/DiamondLightSource/cs-web-proto?branch=master)
 
 # CS Web Proto
 
 This project aims to be able to display control system data on web pages.
 
-It is hosted on [Github](https://github.com/dls-controls/cs-web-proto). It is
+It is hosted on [Github](https://github.com/DiamondLightSource/cs-web-proto). It is
 licensed with the Apache License: see `LICENSE`.
 
 ## Setup
 
-See [the development environment wiki page](https://github.com/dls-controls/cs-web-proto/wiki/Development-Environment)
+See [the development environment wiki page](https://github.com/DiamondLightSource/cs-web-proto/wiki/Development-Environment)
 for how to get started and notes on development.
 
 ## Libraries
@@ -44,13 +44,13 @@ You needn't set connection information if you don't need any external sources of
 
 ### Coniql
 
-The primary server that you will use is called [Coniql](https://github.com/dls-controls/coniql). It connects to the EPICS control system and provides data over GraphQL.
+The primary server that you will use is called [Coniql](https://github.com/DiamondLightSource/coniql). It connects to the EPICS control system and provides data over GraphQL.
 
-For more on how to set up Coniql see [this wiki page](https://github.com/dls-controls/cs-web-proto/wiki/Running-cs-web-proto-against-Coniql).
+For more on how to set up Coniql see [this wiki page](https://github.com/DiamondLightSource/cs-web-proto/wiki/Running-cs-web-proto-against-Coniql).
 
 ### Simulator
 
-There is a built-in simulator that can provide demo data. See [this wiki page](https://github.com/dls-controls/cs-web-proto/wiki/Simulating-a-control-system).
+There is a built-in simulator that can provide demo data. See [this wiki page](https://github.com/DiamondLightSource/cs-web-proto/wiki/Simulating-a-control-system).
 
 ## Debugging
 

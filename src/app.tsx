@@ -7,7 +7,7 @@ import {
   onRenderCallback,
   RelativePosition,
   store
-} from "@dls-controls/cs-web-lib";
+} from "@DiamondLightSource/cs-web-lib";
 import { Redirect, Route, Switch, useRouteMatch } from "react-router-dom";
 import { PerformancePage } from "./components/PerformancePage/performancePage";
 import { Footer } from "./components/Footer/footer";

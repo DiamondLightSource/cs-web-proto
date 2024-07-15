@@ -8,7 +8,7 @@ import {
   FontStyle,
   OutlineContext,
   RelativePosition
-} from "@dls-controls/cs-web-lib";
+} from "@DiamondLightSource/cs-web-lib";
 import React from "react";
 import classes from "./header.module.css";
 
